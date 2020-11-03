@@ -12,3 +12,4 @@ app.use(basicAuth(USER_NAME, PASSWORD))
 app.use(express.static('public'))
 
 module.exports = app
+
