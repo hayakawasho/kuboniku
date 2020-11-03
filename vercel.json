@@ -1,18 +1,10 @@
 {
-  "builds": [
-    {
-      "src": "index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/.*",
-      "dest": "index.js"
-    }
-  ],
-  "env": {
-    "BASIC_ID": "niku",
-    "BASIC_PASSWORD": "naa"
-  }
+  "builds": [{
+    "src": "index.js",
+    "use": "@vercel/node"
+  }],
+  "routes": [{
+    "src": "/.*",
+    "dest": "main.js"
+  }]
 }

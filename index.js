@@ -1,13 +1,18 @@
-const express = require('express');
-const app = express();
-const basicAuth = require('basic-auth-connect');
+const protect = require('static-auth');
+const safeCompare = require('safe-compare');
 
-app.set('port', process.env.PORT || 5000);
+const USER_NAME = process.env.USER_NAME || 'admin';
+const PASSWORD = process.env.PASSWORD || 'admin';
 
-app.use(basicAuth(process.env.BASIC_ID || 'id', process.env.BASIC_PASSWORD || 'password'));
+const app = protect(
+  '/',
+  (username, password) => safeCompare(username, USER_NAME) && safeCompare(password, PASSWORD), // timing attack 対策
+  {
+    directory: `${__dirname}/public`,
+    onAuthFailed: (res) => {
+      res.end('Authentication failed')
+    },
+  }
+)
 
-app.use('/', express.static(__dirname + '/public'));
-
-app.listen(app.get('port'), function () {
-	console.log('Node app is running at localhost:' + app.get('port'));
-});
+module.exports = app
