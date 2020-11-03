@@ -1,0 +1,21 @@
+.c-hgroup {
+  position: relative;
+}
+
+.c-hgroup__sub {
+  position: absolute;
+  font-family: var(--font-roboto);
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+
+  @media (--pc) {
+    font-size: 1.9rem;
+  }
+
+  & .icon-arrow-right {
+    display: inline-block;
+    transform: scale(0.5) translateY(0.2em);
+  }
+}

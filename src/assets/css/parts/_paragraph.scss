@@ -1,0 +1,28 @@
+.title {
+  font-family: var(--font-roboto);
+  font-size: 3.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #fff;
+
+  @media (--pc) {
+    font-size: 5.6rem;
+  }
+}
+
+.num {
+  font-family: var(--font-en);
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+
+  @media (--pc) {
+    font-size: 1.9rem;
+  }
+
+  & > span {
+    margin-left: 0.5em;
+    font-size: calc(26 / 38 * 100%);
+    letter-spacing: 0.02em;
+  }
+}

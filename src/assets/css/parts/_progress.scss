@@ -1,0 +1,33 @@
+.progress {
+  position: relative;
+  display: inline-block;
+  width: 1px;
+  height: 3.5rem;
+  vertical-align: middle;
+  background: currentColor;
+
+  @media (--pc) {
+    width: 2px;
+    height: 4rem;
+  }
+
+  & > span {
+    position: absolute;
+    top: 0;
+    display: block;
+    height: 100%;
+    transform-origin: top center;
+
+    &::before {
+      display: block;
+      width: 1px;
+      height: 100%;
+      content: '';
+      background-color: #17899d;
+
+      @media (--pc) {
+        width: 2px;
+      }
+    }
+  }
+}

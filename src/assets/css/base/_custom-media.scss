@@ -1,0 +1,7 @@
+@custom-media --retina (resolution >= 1.5dppx);
+@custom-media --landscape (orientation: landscape);
+@custom-media --portrait (orientation: portrait);
+@custom-media --mobile-small (width < 375px);
+@custom-media --mobile (width < 768px);
+@custom-media --pc (width >= 768px);
+@custom-media --max-width (width >= 1680px);
