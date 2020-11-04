@@ -56,15 +56,15 @@
     }
   }
 
-  [data-scroll-skew] {
-    backface-visibility: hidden;
-  }
+  // [data-scroll-skew] {
+  //   backface-visibility: hidden;
+  // }
 }
 
 .entry {
   position: relative;
   display: block;
-  margin-left: 3.2rem;
+  // margin-left: 3.2rem;
 
   @media (--pc) {
     margin-left: 0;

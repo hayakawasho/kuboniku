@@ -6,12 +6,11 @@
 @use './base/_keyframe';
 
 /* parts */
-// @use './parts/_elements';
+@use './parts/_elements';
 @use './parts/_burger';
 @use './parts/_link';
 @use './parts/_paragraph';
 @use './parts/_hgroup';
-@use './parts/_hero';
 @use './parts/_ctrl';
 @use './parts/_grid';
 @use './parts/_page';

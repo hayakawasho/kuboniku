@@ -6,6 +6,10 @@
   line-height: 1.4;
   line-height: 1;
   color: #fff;
+
+  @media (--pc) {
+    font-size: 7rem;
+  }
 }
 
 .kv {
@@ -69,6 +73,10 @@
   height: 100%;
   opacity: 0.8;
   backface-visibility: hidden;
+
+  div {
+    height: 100%;
+  }
 
   img {
     width: 100%;
@@ -221,7 +229,7 @@
   }
 }
 
-.cap {
+.captcha {
   :global {
     .blocks-gallery-grid {
       padding: 0 var(--margin-site);

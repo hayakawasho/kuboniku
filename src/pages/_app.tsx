@@ -1,29 +1,20 @@
-import { AppProps } from 'next/app'
-
 import '../assets/css/index.scss'
+
+import React, { useEffect } from 'react'
+import { AppProps } from 'next/app'
+import Layout from '../components/Layout'
 
 import { Provider } from 'react-redux'
 import store from '../state/store'
-
 import { EVENTS } from '../foundation/constants/const'
 
-// import { gsap } from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  )
-}
+let E;
+let isDomReady = false;
 
-export default App;
+if (process.browser) {
+  E = require('../foundation/utils/E').default;
 
-(() => {
-  if (!process.browser) return;
-
-  const E = require('../foundation/utils/E').default
   const mq = require('../foundation/constants/env').mq
   const ASScroll = require('@ashthornton/asscroll').default
   const Application = require('stimulus').Application
@@ -79,7 +70,7 @@ export default App;
     const smoothScroll = new ASScroll({
       element: '[data-smooth]',
       innerElement: '[data-smooth-item]',
-      ease: 0.15,
+      ease: 0.14,
       disableResize: true,
       disableOnTouch: true,
       customScrollbar: false
@@ -93,4 +84,23 @@ export default App;
 
     smoothScroll.enable();
   })
-})();
+};
+
+const App = ({ Component, pageProps }: AppProps) => {
+
+  useEffect(() => {
+    if (isDomReady) return;
+    isDomReady = true;
+    E.emit(EVENTS.DOM_READY);
+  });
+
+  return (
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
+  )
+}
+
+export default App;

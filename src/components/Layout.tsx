@@ -1,4 +1,4 @@
-import React, { ReactNode, useLayoutEffect } from 'react'
+import React, { ReactNode } from 'react'
 import Head from 'next/head'
 import ViewportRef from './viewportRef';
 import Cursor from './cursor';
@@ -11,21 +11,7 @@ type Props = {
   title?: string
 }
 
-let E;
-let isDomReady = false;
-
-if (process.browser) {
-  E = require('../foundation/utils/E').default;
-};
-
 const Layout = ({ children, title = 'KuboNiku.com' }: Props) => {
-
-  useLayoutEffect(() => {
-    if (isDomReady) return;
-    isDomReady = true;
-    E.emit(EVENTS.DOM_READY);
-  });
-
   return (
     <>
       <Head>
@@ -34,8 +20,8 @@ const Layout = ({ children, title = 'KuboNiku.com' }: Props) => {
         <meta name="format-detection" content="telephone=no" />
         <title>{title}</title>
         <meta name="description" content="" />
-        <meta http-equiv="Content-Type" content="text/html" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta httpEquiv="Content-Type" content="text/html" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content="" />
         <meta property="og:image" content="" />
