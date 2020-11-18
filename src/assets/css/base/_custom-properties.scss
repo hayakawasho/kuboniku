@@ -1,19 +1,11 @@
 :root {
-  /* typography */
-  --font:
-    'Noto Sans JP',
-    'Helvetica Neue',
-    Arial,
-    'Hiragino Kaku Gothic ProN',
-    'Hiragino Sans',
-    Meiryo,
-    sans-serif;
-  --font-en: 'Montserrat', sans-serif;
-  --font-roboto: 'Roboto Condensed', sans-serif;
+  --font: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+
   --margin-site: calc(30 / 750 * 100vw);
   --grid: calc(1 / 12 * 100vw);
   --gutter: 0;
   --grid-gutter: 1.6rem;
+
   --vh: 1vh;
 
   /* color */
@@ -31,5 +23,11 @@
   @media (--pc) {
     --margin-site: calc(40 / 1280 * 100vw);
     --gutter: calc(16 / 1280 * 100vw);
+  }
+
+  &.is-webfontLoaded {
+    --font: 'Noto Sans JP', sans-serif;
+    --font-en: 'Montserrat', sans-serif;
+    --font-roboto: 'Roboto Condensed', sans-serif;
   }
 }

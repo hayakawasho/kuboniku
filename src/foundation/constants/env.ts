@@ -15,4 +15,9 @@ export const isLandscape = window.matchMedia('(orientation:portrait)').matches;
 
 export const hasHover = window.matchMedia("(hover: hover)").matches;
 
-export const dpr = window.devicePixelRatio >= 2 ? 1.5 : 1;
+// export const dpr = window.devicePixelRatio >= 2 ? 1.5 : 1;
+export const dpr = 1;
+
+(window as any).KUBONIKU_APP = {}
+
+export const APP = (window as any).KUBONIKU_APP

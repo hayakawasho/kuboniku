@@ -1,24 +1,21 @@
 /* base */
 @use 'ress';
-@use './base/_custom-properties';
-@use './base/_custom-media';
-@use './base/_base';
-@use './base/_keyframe';
+@use './base/custom-properties';
+@use './base/custom-media';
+@use './base/base';
+@use './base/fonts';
 
 /* parts */
-@use './parts/_elements';
-@use './parts/_burger';
-@use './parts/_link';
-@use './parts/_paragraph';
-@use './parts/_hgroup';
-@use './parts/_ctrl';
-@use './parts/_grid';
-@use './parts/_page';
+@use './parts/elements';
+@use './parts/burger';
+@use './parts/link';
+@use './parts/paragraph';
+@use './parts/hgroup';
+@use './parts/ctrl';
+@use './parts/grid';
+@use './parts/page';
 
-/* other */
-@use 'tailwindcss/utilities';
-
-@use './_utils';
-// @use './_shame';
+@use './utils';
+@use './shame';
 
 

@@ -1,5 +1,5 @@
 .heading {
-  // position: sticky;
+  position: sticky;
   top: 10rem;
   padding: 0 calc(var(--margin-site) * 2);
   margin: 10rem 0 6rem;
@@ -10,6 +10,7 @@
   will-change: opacity;
 
   @media (--pc) {
+    position: relative;
     width: calc(var(--grid) * 10);
     padding: 0 0 0 calc(var(--grid) * 0.5 + var(--gutter));
     margin: 14rem auto 3.6rem;

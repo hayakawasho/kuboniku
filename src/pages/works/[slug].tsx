@@ -6,14 +6,13 @@ const Component: React.FC = () => {
   return (
     <>
       <div data-controller="skew">
-
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont}>
             <p className="num">01<span>Project</span></p>
             <h1 className={styles.heading}>Potanini</h1>
             <p>Official website</p>
           </div>
-          <div className={styles.kv__img}>
+          <div className={styles.kv__img} data-target="skew.item">
             <Image
               src={"/img/works1/kv1.jpg"}
               alt=""
@@ -26,7 +25,7 @@ const Component: React.FC = () => {
           </div>
         </div>
 
-        <div className={styles.content}>
+        <div className={styles.content} data-target="skew.item">
 
           <div className={styles.intro} data-smooth-item>
             <div className={styles.intro__info}>
@@ -41,7 +40,7 @@ const Component: React.FC = () => {
               </dl>
             </div>
             <div className={styles.intro__p}>
-              <p>2018年、MASTER WORKSは世に「傑作」を送るべく、ここ日本で生まれました。<br />
+              <p data-controller="splitText">2018年、MASTER WORKSは世に「傑作」を送るべく、ここ日本で生まれました。<br />
               ブランド由来は、MASTER（＝匠） WORKS（＝作品）。世界各地の優れた工房、メーカーを見出しそれぞれから素材、商品供給、支援を受けた職人たちのマスターピース。<br />
               それらを集め、最高レベルのジャパンクォリティで生み出すことMASTER WORKS。</p>
               <a className="c-link" href="#" target="_blank" rel="noopener">View website
@@ -85,7 +84,6 @@ const Component: React.FC = () => {
               />
             </div>
           </aside>
-
         </div>
       </div>
     </>
