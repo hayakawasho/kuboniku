@@ -76,7 +76,7 @@ export default class extends Module {
   }
 
   private _setCache() {
-    this.cache = this.itemTargets.reduce((acc, cur: HTMLElement, index) => {
+    this.cache = (this as any).itemTargets.reduce((acc, cur: HTMLElement, index) => {
       const { top, bottom, height } = this._getVars(cur);
 
       acc.push({
