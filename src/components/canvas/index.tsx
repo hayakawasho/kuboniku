@@ -1,36 +1,17 @@
-import React, { PureComponent } from 'react'
+import React, { useRef, useEffect } from 'react'
 import Webgl from './gl'
 
-class Component extends PureComponent {
-  private _canvasRef
+const Component = React.memo(() => {
+  const canvasRef = useRef(null)
 
-  constructor(props) {
-    super(props)
-
-    console.log('canvas: init')
-
-    this._canvasRef = React.createRef();
-  }
-
-  componentDidMount() {
-    console.log('canvas: mount', this._canvasRef)
-
+  useEffect(() => {
     const gl = new Webgl()
-    gl.setup(this._canvasRef.current)
-  }
+    gl.setup(canvasRef.current)
+  }, [])
 
-  componentDidUpdate(prevProps) {
-    console.log('canvas: update')
-  }
-
-  render() {
-    return (
-      <>
-        <canvas className="gl" ref={this._canvasRef} />
-      </>
-    )
-  }
-}
-
+  return (
+    <canvas className="gl" ref={canvasRef} />
+  )
+})
 
 export default Component

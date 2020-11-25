@@ -2,11 +2,11 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import loadable from '@loadable/component'
 
-import store from '../state/store';
-import { useSelector } from 'react-redux';
-import { uiSelector, SET_SCROLLING } from '../state/ui';
+import store from '../state/store'
+import { SET_SCROLLING } from '../state/ui';
 
 import Sh from './sh'
+const Mask = loadable(() => import('./mask'))
 const Gl = loadable(() => import('./canvas'))
 const ViewportRef = loadable(() => import('./viewportRef'))
 const Cursor = loadable(() => import('./cursor'))
@@ -22,7 +22,7 @@ let E;
 
 if (process.browser) {
   const env = require('../foundation/constants/env')
-  const { mq, APP, hasTouch } = env;
+  const { mq, APP, hasTouch, WP_API_END_POINT } = env;
 
   const ASScroll = require('@ashthornton/asscroll').default
 
@@ -141,7 +141,6 @@ const Layout = ({ children }: Props) => {
   const [domReady, setDomReady] = useState(false)
   const router = useRouter()
   const appRef = useRef(null)
-  const { scrolling } = useSelector(uiSelector)
 
   useEffect(() => {
     !domReady && requestAnimationFrame(() => (
@@ -171,8 +170,8 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <ViewportRef />
-      <div className={`mask || js-loader`} style={scrolling ? { pointerEvents: 'all' } : { pointerEvents: 'none' } } />
-      <div id="js-site-wrap" className="app" ref={appRef} data-controller="mainMenu">
+      <Mask />
+      <div id="app" ref={appRef} data-controller="mainMenu">
         <Sh />
         <main className="page" data-smooth>
           {children}

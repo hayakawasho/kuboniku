@@ -1,13 +1,16 @@
 import 'ress'
-import '../assets/css/index.scss'
+import '~/assets/css/index.scss'
 
 import React from 'react'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
-import Layout from '../components/Layout'
+import Layout from '~/components/Layout'
 
 import { Provider } from 'react-redux'
-import store from '../state/store'
+import store from '~/state/store'
+
+import { ApolloProvider } from '@apollo/client'
+import client from '~/apollo/client'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const title = 'KuboNiku.com'
@@ -114,9 +117,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
 
       <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ApolloProvider client={client} >
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApolloProvider>
       </Provider>
     </>
   )
