@@ -12,8 +12,6 @@ import store from '../state/store'
 const App = ({ Component, pageProps }: AppProps) => {
   const title = 'KuboNiku.com'
 
-  console.log(pageProps)
-
   return (
     <>
         <Head>

@@ -1,15 +1,15 @@
 import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
+import loadable from '@loadable/component'
 
 import store from '../state/store';
 import { useSelector } from 'react-redux';
 import { uiSelector, SET_SCROLLING } from '../state/ui';
 
 import Sh from './sh'
-const Gl = dynamic(() => import('./canvas'), { ssr: false })
-const ViewportRef = dynamic(() => import('./viewportRef'), { ssr: false })
-const Cursor = dynamic(() => import('./cursor'), { ssr: false })
+const Gl = loadable(() => import('./canvas'))
+const ViewportRef = loadable(() => import('./viewportRef'))
+const Cursor = loadable(() => import('./cursor'))
 
 import { EVENTS } from '../foundation/constants/const';
 

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ashthornton/asscroll": "^1.7.1",
+    "@loadable/component": "^5.14.1",
     "@reduxjs/toolkit": "^1.4.0",
     "dayjs": "^1.9.4",
     "detect-gpu": "^2.0.4",
