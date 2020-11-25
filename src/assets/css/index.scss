@@ -1,7 +1,6 @@
 /* base */
-@use 'ress';
+@use './base/import';
 @use './base/custom-properties';
-@use './base/custom-media';
 @use './base/base';
 @use './base/fonts';
 

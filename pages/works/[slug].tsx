@@ -77,7 +77,6 @@ const Component = ({ data }) => {
                         alt=""
                         width={i.mediaDetails.width}
                         height={i.mediaDetails.height}
-                        priority
                       />
                     </li>
                   )

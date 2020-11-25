@@ -7,13 +7,13 @@ const nextConfig = {
   },
 
 	sassOptions: {
-		fiber: Fiber,
-    includePaths: [path.join(__dirname, 'src/assets/css/base/_custom-media.scss')],
+		fiber: Fiber
   },
 
   webpack: (config, options) => {
 
     config.resolve.alias['~'] = path.join(__dirname, 'src'),
+    config.resolve.alias['~css'] = path.join(__dirname, 'src/assets/css'),
 
     config.module.rules.push({
       test: /\.(glsl|frag|vert)$/,
