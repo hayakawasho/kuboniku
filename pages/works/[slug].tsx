@@ -86,24 +86,29 @@ const Component = ({ data }) => {
             </ul>
           </div>
 
-          <aside className={`${styles.kv} is-next`} data-smooth-item>
-            <Link href={'/works/' + post.previous.slug}>
-              <a className="u-abs u-fit u-z-10"></a>
-            </Link>
-            <div className={styles.kv__cont}>
-              <h2 className={styles.heading}>Next Project</h2>
-              <p>{post.previous.title}</p>
-            </div>
-            <div className={styles.kv__img}>
-              <Image
-                src={post.previous.acf.eyecatch.sourceUrl}
-                alt=""
-                width={2535}
-                height={1538}
-                priority
-              />
-            </div>
-          </aside>
+          {
+            post.previous !== null ? (
+              <aside className={`${styles.kv} is-next`} data-smooth-item>
+                <Link href={'/works/' + post.previous.slug}>
+                  <a className="u-abs u-fit u-z-10"></a>
+                </Link>
+                <div className={styles.kv__cont}>
+                  <h2 className={styles.heading}>Next Project</h2>
+                  <p>{post.previous.title}</p>
+                </div>
+                <div className={styles.kv__img}>
+                  <Image
+                    src={post.previous.acf.eyecatch.sourceUrl}
+                    alt=""
+                    width={2535}
+                    height={1538}
+                    priority
+                  />
+                </div>
+              </aside>
+            ) : null
+          }
+
         </div>
       </div>
     </>
