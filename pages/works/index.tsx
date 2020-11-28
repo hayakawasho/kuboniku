@@ -35,10 +35,11 @@ const Component = ({ data }) => {
                             layout="fill"
                             objectFit="cover"
                             objectPosition="50% 50%"
+                            priority
                           />
                         </div>
                         <div className={styles.entry__hgroup}>
-                          <p>01<span>Project</span></p>
+                          <p>{index}<span>Project</span></p>
                           <h2>{item.node.title}</h2>
                         </div>
                       </div>

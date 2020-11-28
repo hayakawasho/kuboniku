@@ -77,6 +77,7 @@ const Component = ({ data }) => {
                         alt=""
                         width={i.mediaDetails.width}
                         height={i.mediaDetails.height}
+                        priority
                       />
                     </li>
                   )
@@ -86,16 +87,20 @@ const Component = ({ data }) => {
           </div>
 
           <aside className={`${styles.kv} is-next`} data-smooth-item>
+            <Link href={'/works/' + post.previous.slug}>
+              <a className="u-abs u-fit u-z-10"></a>
+            </Link>
             <div className={styles.kv__cont}>
               <h2 className={styles.heading}>Next Project</h2>
-              <p>PONCOTAN</p>
+              <p>{post.previous.title}</p>
             </div>
             <div className={styles.kv__img}>
               <Image
-                src={"/img/works2/kv1.jpg"}
+                src={post.previous.acf.eyecatch.sourceUrl}
                 alt=""
                 width={2535}
                 height={1538}
+                priority
               />
             </div>
           </aside>
@@ -111,6 +116,15 @@ export const GET_POST = gql`
   query GET_POST( $slug: String ) {
     post: postBy(slug: $slug) {
       title
+      previous {
+        title
+        slug
+        acf {
+          eyecatch {
+            sourceUrl
+          }
+        }
+      }
       acf {
         eyecatch {
           sourceUrl
@@ -142,14 +156,14 @@ export const GET_POST = gql`
 
 export const GET_POST_SLUGS = gql`
   query GET_POST_SLUGS {
-  posts: posts {
+  posts {
     edges {
       node {
         slug
       }
     }
-   }
   }
+}
 `
 
 export async function getStaticProps({ params }) {
