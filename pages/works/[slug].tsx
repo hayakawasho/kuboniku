@@ -16,7 +16,6 @@ const Component = ({ data }) => {
       <div data-controller="skew">
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont} data-target="skew.item">
-            <p className="num">01<span>Project</span></p>
             <h1 className={styles.heading}>{post.title}</h1>
             <p>{post.acf.category.name}</p>
           </div>
@@ -77,7 +76,6 @@ const Component = ({ data }) => {
                         alt=""
                         width={i.mediaDetails.width}
                         height={i.mediaDetails.height}
-                        priority
                       />
                     </li>
                   )
@@ -100,9 +98,9 @@ const Component = ({ data }) => {
                   <Image
                     src={post.previous.acf.eyecatch.sourceUrl}
                     alt=""
-                    width={2535}
-                    height={1538}
-                    priority
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="50% 50%"
                   />
                 </div>
               </aside>
