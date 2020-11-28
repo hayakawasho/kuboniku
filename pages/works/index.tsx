@@ -17,7 +17,7 @@ const Component = ({ data }) => {
         </h1>
 
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
-          { data.posts.edges.map((item, index) => <Entry data={item} index={index + 1} key={index} />) }
+          { data.posts.edges.map((item, index) => <Entry data={item} index={total - (index)} key={index} />) }
         </div>
         <div className={styles.loader} />
       </div>

@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import styles from './detail.module.scss'
+import styles from './slug.module.scss'
 import Image from 'next/image'
 import client from '~/apollo/client'
 import { gql } from '@apollo/client'
 import sanitize from 'sanitize-html'
 import loadable from '@loadable/component'
+
 const DayJS = loadable(() => import('react-dayjs'))
+const Img = loadable(() => import('~/components/img'))
 
 const Component = ({ data }) => {
 
@@ -44,45 +46,38 @@ const Component = ({ data }) => {
               </dl>
               <dl className={styles.dl}>
                 <dt>Role</dt>
-                {
-                  post.acf.role.map((i, index) => <dd className="u-uppercase" key={index}>{i.name}</dd>)
-                }
+                {post.acf.role.map((i, index) => <dd className="u-uppercase" key={index}>{i.name}</dd>)}
               </dl>
             </div>
             <div className={styles.intro__p}>
               {
-                post.acf.description ? (
+                post.acf.description && (
                   <div dangerouslySetInnerHTML={{__html: sanitize(post.acf.description)}}/>
-                ) : null
+                )
               }
               {
-                post.acf.url ? (
+                post.acf.url && (
                   <a className="c-link" href={post.acf.url} target="_blank" rel="noopener">View website
                     <div className="c-link__hr"></div>
                   </a>
-                ) : null
+                )
               }
             </div>
           </div>
 
-          <div className={styles.captcha} data-smooth-item>
-            <ul className="blocks-gallery-grid">
-              {
-                post.acf.gallery.map((i, index) => {
-                  return (
-                    <li key={index}>
-                      <Image
-                        src={i.sourceUrl}
-                        alt=""
-                        width={i.mediaDetails.width}
-                        height={i.mediaDetails.height}
-                      />
-                    </li>
-                  )
-                })
-              }
-            </ul>
-          </div>
+          <ul className={styles.captchaList} data-smooth-item>
+            {
+              post.acf.gallery.map((i, index) => {
+                const aspect = Math.round(i.mediaDetails.height / i.mediaDetails.width * 100);
+                return (
+                  <li className="u-rel" key={index}>
+                    <div className="c-aspect" style={{ paddingTop: `${aspect}%`, backgroundColor: `${post.acf.themeColor}`}} />
+                    <Img src={i.sourceUrl} />
+                  </li>
+                )
+              })
+            }
+          </ul>
 
           {
             post.previous !== null ? (
@@ -95,13 +90,7 @@ const Component = ({ data }) => {
                   <p>{post.previous.title}</p>
                 </div>
                 <div className={styles.kv__img}>
-                  <Image
-                    src={post.previous.acf.eyecatch.sourceUrl}
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="50% 50%"
-                  />
+                  <Img src={post.previous.acf.eyecatch.sourceUrl} />
                 </div>
               </aside>
             ) : null

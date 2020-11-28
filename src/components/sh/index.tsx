@@ -1,12 +1,16 @@
+import Link from 'next/link'
 import styles from './sh.module.scss'
 // import { useSelector, useDispatch } from 'react-redux';
 
 const Component: React.FC = () => {
   return (
     <header className="sh">
-      <a href="/" className={styles.logo}>
-        <i className="icon-logo" />
-      </a>
+      <Link href="/" >
+        <a className={styles.logo}>
+          <i className="icon-logo" />
+        </a>
+      </Link>
+
       <button type="button"
         id="js-menuButton"
         className={styles.menu}
@@ -20,9 +24,8 @@ const Component: React.FC = () => {
 
       <div className={`${styles.sns} u-text-center`}>
         <ul className="snsList">
-          <li><a href="#" target="_blank">Fb</a></li>
+          <li><a href="https://www.facebook.com/k.b.nagisa" target="_blank">Fb</a></li>
           <li><a href="#" target="_blank">Tw</a></li>
-          <li><a href="#" target="_blank">In</a></li>
         </ul>
         <button type="button" className="plus-icon" id="js-plus-toggle">
           <div className="plus-icon__x"></div>

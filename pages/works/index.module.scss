@@ -1,15 +1,16 @@
 @use '~css/base/_import.scss';
 
 .heading {
-  position: sticky;
-  top: 10rem;
+  // position: sticky;
+  // top: 10rem;
+  position: relative;
   padding: 0 calc(var(--gap) * 2);
   margin: 10rem 0 6rem;
   font-family: var(--font-roboto);
   font-size: 5.3rem;
   font-weight: bold;
   line-height: 1;
-  will-change: opacity;
+  // will-change: opacity;
 
   @media (--pc) {
     position: relative;

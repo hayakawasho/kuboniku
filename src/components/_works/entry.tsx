@@ -3,7 +3,6 @@ import Link from 'next/link'
 import styles from './entry.module.scss'
 
 import loadable from '@loadable/component'
-
 const Img = loadable(() => import('~/components/img'))
 
 import Utils from '~/foundation/utils/Utils'
@@ -21,7 +20,10 @@ const Component = React.memo((props: { data, index }) => {
                 <Img src={data.node.acf.eyecatch.sourceUrl} />
               </div>
               <div className={styles.entry__hgroup}>
-                <p className={styles.index}>{Utils.zeroPadding(index, 2)}<span>Project</span></p>
+                <p className={styles.num}>
+                  {Utils.zeroPadding(index, 2)}
+                  <span>Project</span>
+                </p>
                 <h2 className={styles.heading}>{data.node.title}</h2>
               </div>
             </div>

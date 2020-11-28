@@ -231,28 +231,26 @@
   }
 }
 
-.captcha {
-  :global {
-    .blocks-gallery-grid {
-      padding: 0 var(--gap);
-      margin-bottom: 10.5rem;
+.captchaList {
+  padding: 0 var(--gap);
+  margin-bottom: 10.5rem;
 
-      @media (--pc) {
-        width: calc(var(--grid) * 10);
-        padding: 0;
-        margin: 0 auto 12rem;
-      }
+  @media (--pc) {
+    width: calc(var(--grid) * 10);
+    padding: 0;
+    margin: 0 auto 12rem;
+  }
 
-      > li {
-        margin-bottom: 2rem;
+  > li {
+    margin-bottom: 2rem;
 
-        @media (--pc) {
-          margin-bottom: 6rem;
-        }
+    @media (--pc) {
+      margin-bottom: 6rem;
+    }
 
-        img {
-          width: 100%;
-        }
+    :global {
+      .c-aspect {
+        opacity: .2;
       }
     }
   }
