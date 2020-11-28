@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import styles from './index.module.scss'
-import Image from 'next/image'
 import client from '~/apollo/client'
 import { gql } from '@apollo/client'
+import Entry from '~/components/_works/entry'
 
 const Component = ({ data }) => {
 
@@ -13,42 +12,12 @@ const Component = ({ data }) => {
     <>
       <div data-controller="skew" data-skew-options='{ "val": 1.6 }'>
 
-        <h1 id="js-headingWorks" className={styles.heading}>
+        <h1 className={styles.heading}>
           Works<sup>{total}</sup>
         </h1>
 
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
-          {
-            data.posts.edges.map((item, index) => {
-              return (
-                <article className="o-grid__item || js-entryWorks" data-smooth-item key={index}>
-                  <Link href={'/works/' + item.node.slug}>
-                    <a className={styles.entry}>
-                      <div className="c-aspect" style={{
-                        backgroundColor: `${item.node.acf.themeColor}`,
-                      }} />
-                      <div className="u-abs u-pos-tl u-fit">
-                        <div className={styles.eyecatch}>
-                          <Image
-                            src={item.node.acf.eyecatch.sourceUrl}
-                            alt=""
-                            layout="fill"
-                            objectFit="cover"
-                            objectPosition="50% 50%"
-                            priority
-                          />
-                        </div>
-                        <div className={styles.entry__hgroup}>
-                          <p>{index}<span>Project</span></p>
-                          <h2>{item.node.title}</h2>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                </article>
-              )
-            })
-          }
+          { data.posts.edges.map((item, index) => <Entry data={item} index={index + 1} key={index} />) }
         </div>
         <div className={styles.loader} />
       </div>
