@@ -6,7 +6,7 @@ import store from '../state/store'
 import { SET_SCROLLING } from '../state/ui';
 
 import Sh from './sh'
-const Mask = loadable(() => import('./mask'))
+import Mask from './mask'
 const Gl = loadable(() => import('./canvas'))
 const ViewportRef = loadable(() => import('./viewportRef'))
 const Cursor = loadable(() => import('./cursor'))

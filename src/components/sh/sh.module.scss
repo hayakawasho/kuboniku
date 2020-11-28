@@ -1,6 +1,6 @@
 @use '~css/base/_import.scss';
 
-.sh-logo {
+.logo {
   position: fixed;
   top: 15px;
   left: 20px;
@@ -12,7 +12,7 @@
   pointer-events: auto;
 }
 
-.sh-menu {
+.menu {
   position: fixed;
   top: 25px;
   right: 20px;
@@ -26,13 +26,14 @@
   }
 }
 
-.sh-sns {
+.sns {
   position: fixed;
   bottom: 20px;
   left: 30px;
+  z-index: 101;
 }
 
-.sh-copy {
+.copy {
   pointer-events: none;
   position: fixed;
   right: 30px;
@@ -44,6 +45,7 @@
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.2em;
+  z-index: 101;
 
   @media (--pc) {
     font-size: 10px;

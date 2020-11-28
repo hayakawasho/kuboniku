@@ -151,7 +151,7 @@
 .intro {
   position: relative;
   width: 100%;
-  padding: 6rem calc(var(--margin-site) * 2) 7rem;
+  padding: 6rem calc(var(--gap) * 2) 7rem;
 
   @media (--pc) {
     display: flex;
@@ -234,7 +234,7 @@
 .captcha {
   :global {
     .blocks-gallery-grid {
-      padding: 0 var(--margin-site);
+      padding: 0 var(--gap);
       margin-bottom: 10.5rem;
 
       @media (--pc) {

@@ -24,6 +24,9 @@ const Component = ({ data }) => {
                 <article className="o-grid__item || js-entryWorks" data-smooth-item key={index}>
                   <Link href={'/works/' + item.node.slug}>
                     <a className={styles.entry}>
+                      <div className="c-aspect" style={{
+                        backgroundColor: `${item.node.acf.themeColor}`,
+                      }} />
                       <div className="u-abs u-pos-tl u-fit">
                         <div className={styles.eyecatch}>
                           <Image

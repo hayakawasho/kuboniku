@@ -18,7 +18,7 @@ const Component = ({ data }) => {
           <div className={styles.kv__cont} data-target="skew.item">
             <p className="num">01<span>Project</span></p>
             <h1 className={styles.heading}>{post.title}</h1>
-            <p>Official website</p>
+            <p>{post.acf.category.name}</p>
           </div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
@@ -117,6 +117,9 @@ export const GET_POST = gql`
         }
         eyecatchMobile {
           sourceUrl
+        }
+        category {
+          name
         }
         role {
           name
