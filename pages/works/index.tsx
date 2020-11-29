@@ -12,8 +12,10 @@ const Component = ({ data }) => {
     <>
       <div data-controller="skew" data-skew-options='{ "val": 1.6 }'>
 
-        <h1 className={styles.heading}>
-          Works<sup>{total}</sup>
+        <h1 className={styles.heading} data-target="skew.item">
+          <div data-smooth-item>
+            Works<sup className={styles.heading__total}>{total}</sup>
+          </div>
         </h1>
 
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">

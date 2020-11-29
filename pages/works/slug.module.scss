@@ -122,6 +122,7 @@
   line-height: 1;
   color: #fff;
   letter-spacing: 0.02em;
+  z-index: 2;
 
   @media (--pc) {
     font-size: 1.3rem;

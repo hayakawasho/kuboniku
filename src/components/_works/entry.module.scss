@@ -22,8 +22,8 @@
     z-index: 2;
 
     @media (--pc) {
-      bottom: 4.5rem;
-      left: -3.4rem;
+      bottom: 4rem;
+      left: -3.6rem;
     }
   }
 }
@@ -51,7 +51,7 @@
   font-size: 2.4rem;
   font-weight: bold;
   line-height: 1;
-  color: #fff;
+  color: #e3e3e3;
 
   @media (--pc) {
     font-size: 3rem;
@@ -69,11 +69,17 @@
 
   @media (--pc) {
     font-size: 1.9rem;
+    margin-bottom: 2rem;
   }
 
   > span {
     font-size: 1rem;
     letter-spacing: .02em;
     margin-left: .8rem;
+    letter-spacing: 0.02em;
+
+    @media (--pc) {
+      font-size: 1.3rem;
+    }
   }
 }
