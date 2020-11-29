@@ -1,7 +1,7 @@
 @use '~css/base/_import.scss';
 
 .heading {
-  margin: 0.2em 0;
+  padding-left: 1.2rem;
   font-family: var(--font-roboto);
   font-size: 3.9rem;
   font-weight: 600;
@@ -11,6 +11,23 @@
 
   @media (--pc) {
     font-size: 7rem;
+  }
+
+  + p {
+    font-family: var(--font-roboto);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--color-text-primary);
+    letter-spacing: 0.02em;
+    padding-left: 1.2rem;
+    margin-top: 1rem;
+
+    :global {
+      .icon-arrow-right {
+        font-size: .7rem;
+        margin-left: .8rem;
+      }
+    }
   }
 }
 
@@ -60,9 +77,9 @@
       height: 100%;
     }
 
-    .c-hgroup {
-      backface-visibility: hidden;
-    }
+    // .c-hgroup {
+    //   backface-visibility: hidden;
+    // }
   }
 }
 
@@ -76,15 +93,7 @@
   opacity: 0.8;
   backface-visibility: hidden;
 
-  div {
-    height: 100%;
-  }
-
   img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
     // @nest .kv--next {
     //   // filter: grayscale(100%);
     // }
@@ -99,24 +108,13 @@
   width: 100%;
   padding-left: var(--grid);
   color: #fff;
-  transform: translateY(-50%);
-
-  > h1 {
-    padding-left: 1rem;
-
-    + p {
-      position: absolute;
-      padding-left: 1rem;
-      font-family: var(--font-roboto);
-      font-size: 1.3rem;
-      line-height: 1.8;
-      color: var(--color-text-primary);
-      letter-spacing: 0.02em;
-    }
-  }
 }
 
 .kv__scroll {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
   overflow: hidden;
   font-family: var(--font-en);
   font-size: 1rem;
@@ -129,7 +127,7 @@
     font-size: 1.3rem;
   }
 
-  > span {
+  span {
     display: inline-block;
     animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 
@@ -141,6 +139,36 @@
       transform-origin: left;
       animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
     }
+  }
+
+  :global {
+    .icon-arrow-down {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+    }
+  }
+}
+
+@keyframes front {
+  0%,
+  70% {
+    transform: translateZ(0);
+  }
+
+  100% {
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+@keyframes back {
+  0%,
+  70% {
+    transform: translateZ(0) rotate(30deg) skewX(30deg);
+  }
+
+  100% {
+    transform: translate3d(0, -50px, 0) rotate(0) skewX(0);
   }
 }
 
@@ -212,12 +240,6 @@
     width: calc(5 / 8 * 100%);
   }
 
-  > p {
-    font-size: 1.3rem;
-    line-height: calc(46 / 26);
-    text-align: left;
-  }
-
   :global {
     .c-link {
       margin-top: 5rem;
@@ -228,6 +250,16 @@
         font-size: 1.4rem;
       }
     }
+  }
+}
+
+.desc {
+  text-align: left;
+
+  p {
+    font-size: 1.3rem;
+    line-height: calc(46 / 26);
+    text-align: left;
   }
 }
 

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import loadable from '@loadable/component'
 
 import store from '../state/store'
-import { SET_SCROLLING } from '../state/ui';
+import { SET_SCROLLING } from '../state/ui'
 
 import Sh from './sh'
 import Mask from './mask'
@@ -11,7 +11,7 @@ const Gl = loadable(() => import('./canvas'))
 const ViewportRef = loadable(() => import('./viewportRef'))
 const Cursor = loadable(() => import('./cursor'))
 
-import { EVENTS } from '../foundation/constants/const';
+import { EVENTS } from '../foundation/constants/const'
 
 type Props = {
   children?: ReactNode

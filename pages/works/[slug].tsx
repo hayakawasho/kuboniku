@@ -19,7 +19,7 @@ const Component = ({ data }) => {
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont} data-target="skew.item">
             <h1 className={styles.heading}>{post.title}</h1>
-            <p>{post.acf.category.name}</p>
+            <p>{post.acf.category.name}<i className="icon-arrow-right" /></p>
           </div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
@@ -31,8 +31,11 @@ const Component = ({ data }) => {
               priority
             />
           </div>
-          <div className={styles.kv__foot}>
-            <span>scroll</span>
+          <div className={styles.kv__scroll}>
+            <div className="u-in u-ovh">
+              <span>scroll</span>
+            </div>
+            <i className="icon-arrow-down" />
           </div>
         </div>
 
@@ -52,7 +55,7 @@ const Component = ({ data }) => {
             <div className={styles.intro__p}>
               {
                 post.acf.description && (
-                  <div dangerouslySetInnerHTML={{__html: sanitize(post.acf.description)}}/>
+                  <div className={styles.desc} dangerouslySetInnerHTML={{__html: sanitize(post.acf.description)}}/>
                 )
               }
               {
@@ -87,7 +90,7 @@ const Component = ({ data }) => {
                 </Link>
                 <div className={styles.kv__cont}>
                   <h2 className={styles.heading}>Next Project</h2>
-                  <p>{post.previous.title}</p>
+                  <p>{post.previous.title}<i className="icon-arrow-right" /></p>
                 </div>
                 <div className={styles.kv__img}>
                   <Img src={post.previous.acf.eyecatch.sourceUrl} />
