@@ -47,13 +47,13 @@ const App = ({ Component, pageProps }: AppProps) => {
         <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" crossOrigin="anonymous" async defer></script>
       </Head>
 
-      <ApolloProvider client={client} >
-        <Provider store={store}>
+      <Provider store={store}>
+        <ApolloProvider client={client} >
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </Provider>
-      </ApolloProvider>
+        </ApolloProvider>
+      </Provider>
     </>
   )
 }
