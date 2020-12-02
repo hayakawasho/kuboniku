@@ -15,7 +15,7 @@ import client from '~/apollo/client'
 const App = ({ Component, pageProps }: AppProps) => {
   const siteName = 'KuboNiku.com'
   const title = 'KuboNiku.com'
-  const description = 'なぁちゃんのsiteだよ'
+  const description = 'なぁちゃんのサイトだよ'
 
   return (
     <>
@@ -36,15 +36,25 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="twitter:image" content="" />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <style>{`*,:after,:before{box-sizing:border-box}body,html{width:100%;padding:0;margin:0}a{color:inherit;text-decoration:none}ol,ul{list-style:none}img{max-width:100%;height:auto;vertical-align:middle}button:focus{outline:0}.mask{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:none;transform:translate3d(0,0,0)} html{font-size:0.78125vw} @media(max-width:374px){html{font-size: calc(10 / 375 * 100vw);}} @media(max-width:1280px){html{font-size:calc(10px+2 *((100vw - 1280px)/400))}} @media(max-width:767px){html{font-size:calc(10px+8 *((100vw - 375px)/649))}}
-        @media(max-width:767px) and (orientation:landscape){html{font-size:10px}}
-        @media(min-width:1281px){ html{font-size:10px} }`}</style>
+        <style>{`*,:after,:before{box-sizing:border-box}body,html{width:100%;padding:0;margin:0}a{color:inherit;text-decoration:none}ol,ul{list-style:none}img{max-width:100%;height:auto;vertical-align:middle}button:focus{outline:0}.mask{position:fixed;top:0;right:0;bottom:0;left:0;z-index:1;pointer-events:none;transform:translate3d(0,0,0)}`}</style>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" />
+        <script>{`
+          WebFontConfig = {
+            classes: false,
+            google: {
+              families: ['Montserrat:500,700', 'Roboto+Condensed:400,700', 'Noto+Sans+JP:400,700']
+            },
+            active: function () {
+              document.documentElement.classList.add('is-webfontLoaded')
+            }
+          };
 
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" crossOrigin="anonymous" async defer></script>
+          if (typeof WebFont === 'object') WebFont.load(WebFontConfig);
+        `}</script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async></script>
+
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" crossOrigin="anonymous" defer></script>
       </Head>
 
       <Provider store={store}>

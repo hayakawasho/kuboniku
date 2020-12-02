@@ -5,21 +5,22 @@ html {
       [min size] + ([max size] - [min size]) * ((100vw - [min vw]) / ([max vw] - [min vw]))
     );
   */
+
   font-size: calc(10 / 1280 * 100vw);
 
-  @media (--xl) {
-    font-size: calc(10px + (12 - 10) * ((100vw - 1280px) / (1680 - 1280)));
+  @media (min-width:1281px) {
+    font-size: 10px
   }
 
-  @media (--xxl) {
-    font-size: 12px;
-  }
-
-  @media (--mobile) {
+  @media (max-width: 767px) {
     font-size: calc(10px + (18 - 10) * ((100vw - 375px) / (1024 - 375)));
   }
 
-  @media (--mobile-small) {
+  @media (max-width: 767px) and (orientation: landscape){
+    font-size:10px
+  }
+
+  @media(max-width: 374px) {
     font-size: calc(10 / 375 * 100vw);
   }
 }
