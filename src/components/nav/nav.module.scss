@@ -1,0 +1,70 @@
+@use '~css/base/_import.scss';
+
+.navMenu {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  &__mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: .5;
+  }
+
+  &__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: (46 / 2) + rem;
+    height: 100%;
+    background-color: #000;
+  }
+
+  &:global(.is-open) {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.menuist {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-top: 7rem;
+  padding-right: 3rem;
+  text-align: right;
+
+  @media (--pc) {
+    padding-top: 4rem;
+    padding-right: 4rem;
+  }
+
+  > li {
+    overflow: hidden;
+  }
+}
+
+.link {
+  font-family: var(--font-en);
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: (86 / 28);
+  letter-spacing: .41em;
+  color: #fff;
+  pointer-events: auto;
+
+  @media (--pc) {
+    font-size: 1.3rem;
+    line-height: (52 / 26);
+  }
+}
+

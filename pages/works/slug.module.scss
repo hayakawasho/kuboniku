@@ -42,21 +42,6 @@
     height: 100vh;
   }
 
-  :global {
-    .c-hgroup {
-      backface-visibility: hidden;
-      padding-right: 1rem;
-    }
-
-    .c-hero__foot {
-      color: #fff;
-
-      @media (--pc) {
-        bottom: 3rem;
-      }
-    }
-  }
-
   a {
     position: absolute;
     top: 0;
@@ -76,10 +61,6 @@
       width: 100%;
       height: 100%;
     }
-
-    // .c-hgroup {
-    //   backface-visibility: hidden;
-    // }
   }
 }
 

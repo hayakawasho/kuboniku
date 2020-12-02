@@ -2,16 +2,18 @@ import React, { ReactNode, useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import loadable from '@loadable/component'
 
+import { EVENTS } from '../foundation/constants/const'
+
 import store from '../state/store'
 import { SET_SCROLLING } from '../state/ui'
 
 import Sh from './sh'
+import Nav from './nav'
 import Mask from './mask'
+
 const Gl = loadable(() => import('./canvas'))
 const ViewportRef = loadable(() => import('./viewportRef'))
 const Cursor = loadable(() => import('./cursor'))
-
-import { EVENTS } from '../foundation/constants/const'
 
 type Props = {
   children?: ReactNode
@@ -21,15 +23,15 @@ type Props = {
 let E
 
 if (process.browser) {
-  const env = require('../foundation/constants/env')
-  const { mq, APP, hasTouch } = env
+  const env = require('~/foundation/constants/env')
+  const { APP, hasTouch } = env
 
   const ASScroll = require('@ashthornton/asscroll').default
 
   const app = require('stimulus').Application.start()
-  const mod = require('../controllers')
+  const mod = require('~/controllers')
 
-  E = require('../foundation/utils/E').default
+  E = require('~/foundation/utils/E').default
 
   E.once(EVENTS.DOM_READY, () => {
     app.register('skew', mod.Skew)
@@ -59,11 +61,11 @@ if (process.browser) {
 
   // const { mobile, pc } = mq;
 
-  //if (mobile.matches) {
-  //  store.dispatch(SET_SCROLLING(true))
-  //} else {
-  //  store.dispatch(SET_SCROLLING(true))
-  //}
+  // if (mobile.matches) {
+  //   store.dispatch(SET_SCROLLING(true))
+  // } else {
+  //   store.dispatch(SET_SCROLLING(true))
+  // }
 
   // function enterPcViewport(mql) {
   //   if (!mql.matches) return;
@@ -171,6 +173,7 @@ const Layout = ({ children }: Props) => {
       <Mask />
       <div id="app" ref={appRef} data-controller="mainMenu">
         <Sh />
+        <Nav />
         <main className="page" data-smooth>
           {children}
         </main>

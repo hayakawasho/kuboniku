@@ -24,8 +24,6 @@ export default class extends Module {
   }
 
   connect() {
-    console.log(this.itemTarget)
-
     const targetEls = <HTMLElement[]>qsa(this.options.selector, this.element)
 
     let i = 0

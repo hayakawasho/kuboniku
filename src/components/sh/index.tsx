@@ -5,46 +5,47 @@ import styles from './sh.module.scss'
 
 const Component: React.FC = () => {
   return (
-    <header className="sh">
-      <Link href="/">
-        <a className={styles.logo}>
-          <i className="icon-logo" />
-        </a>
-      </Link>
+    <>
+      <header className={styles.sh}>
+        <Link href="/">
+          <a className={styles.logo}>
+            <i className="icon-logo" />
+          </a>
+        </Link>
 
-      <button
-        type="button"
-        id="js-menuButton"
-        className={styles.menu}
-        aria-label="menu-toggle"
-      >
-        <div className="c-burger">
-          <div className="c-burger__line | js-burger__line"></div>
-          <div className="c-burger__line | js-burger__line"></div>
-        </div>
-      </button>
-
-      <div className={`${styles.sns} u-text-center`}>
-        <ul className="snsList">
-          <li>
-            <a href="https://www.facebook.com/k.b.nagisa" target="_blank">
-              Fb
-            </a>
-          </li>
-          <li>
-            <a href="#" target="_blank">
-              Tw
-            </a>
-          </li>
-        </ul>
-        <button type="button" className="plus-icon" id="js-plus-toggle">
-          <div className="plus-icon__x"></div>
-          <div className="plus-icon__y"></div>
+        <button
+          type="button"
+          className={`${styles.menu} u-mobile`}
+          aria-label="menu-toggle"
+        >
+          <div className="c-burger">
+            <div className="c-burger__line || js-burger__line" />
+            <div className="c-burger__line || js-burger__line" />
+          </div>
         </button>
-      </div>
 
-      <small className={styles.copy}>&copy; KuboNiku.com</small>
-    </header>
+        <div className={`${styles.sns} u-text-center`}>
+          <ul className={`${styles.snsList}`}>
+            <li>
+              <a href="https://www.facebook.com/k.b.nagisa" target="_blank">
+                Fb
+              </a>
+            </li>
+            <li>
+              <a href="#" target="_blank">
+                Tw
+              </a>
+            </li>
+          </ul>
+          <button type="button" className={styles.plus}>
+            <div className={styles.plus__x} />
+            <div className={styles.plus__y} />
+          </button>
+        </div>
+
+        <small className={styles.copy}>&copy; KuboNiku.com</small>
+      </header>
+    </>
   )
 }
 
