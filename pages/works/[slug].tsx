@@ -181,19 +181,7 @@ export const GET_POST = gql`
   }
 `
 
-export const GET_POST_SLUGS = gql`
-  query GET_POST_SLUGS {
-    posts {
-      edges {
-        node {
-          slug
-        }
-      }
-    }
-  }
-`
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { data } = await client.query({
     query: GET_POST,
     variables: {
@@ -208,28 +196,5 @@ export async function getStaticProps({ params }) {
         path: params?.slug,
       },
     },
-  }
-}
-
-export async function getStaticPaths() {
-  const { data } = await client.query({
-    query: GET_POST_SLUGS,
-  })
-
-  const pathsData = []
-
-  console.warn('pathsData', pathsData)
-
-  data.posts.edges.map(post => {
-    pathsData.push({
-      params: {
-        slug: post.node.slug,
-      },
-    })
-  })
-
-  return {
-    paths: pathsData,
-    fallback: false,
   }
 }

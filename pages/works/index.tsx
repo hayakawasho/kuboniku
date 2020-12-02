@@ -55,7 +55,7 @@ export const GET_POSTS = gql`
   }
 `
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data } = await client.query({
     query: GET_POSTS,
   })
