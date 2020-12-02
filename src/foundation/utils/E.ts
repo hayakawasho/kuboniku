@@ -1,6 +1,6 @@
-import E from '@unseenco/e';
+import E from '@unseenco/e'
 
-E.prototype.once = function(name, callback) {
+E.prototype.once = function (name, callback) {
   const once = () => {
     this.off(name, once)
     callback()
@@ -9,4 +9,4 @@ E.prototype.once = function(name, callback) {
   return this.on(name, once)
 }
 
-export default new E();
+export default new E()

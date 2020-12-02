@@ -1,23 +1,22 @@
 export default class ResizeObserverHandler {
+  private _ro: ResizeObserver = null
 
-  private _ro: ResizeObserver = null;
-
-  constructor(private options: {
-    el: Element,
-    callback(entry: ResizeObserverEntry): void
-  }) {
-
-  }
+  constructor(
+    private options: {
+      el: Element
+      callback(entry: ResizeObserverEntry): void
+    }
+  ) {}
 
   public init() {
     this._createObserver()
   }
 
   public destroy() {
-    if (this._ro === null) return;
+    if (this._ro === null) return
 
-    this._ro.unobserve(this.options.el);
-    this._ro = null;
+    this._ro.unobserve(this.options.el)
+    this._ro = null
   }
 
   private _createObserver() {
@@ -25,8 +24,8 @@ export default class ResizeObserverHandler {
       for (const entry of entries) {
         this.options.callback(entry)
       }
-    });
+    })
 
-    this._ro.observe(this.options.el);
+    this._ro.observe(this.options.el)
   }
 }

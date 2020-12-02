@@ -1,2 +1,1 @@
-export { default as Skew } from './skew';
-
+export { default as Skew } from './skew'

@@ -14,5 +14,5 @@ export const EVENTS = {
 }
 
 export const SIZES = {
-  DEFAULT: 768
+  DEFAULT: 768,
 }

@@ -1,12 +1,8 @@
 import * as THREE from 'three'
 import Sample from './visuals/sample'
 import Post from './post'
-import {
-  dpr
-} from '../../../foundation/constants/env'
-import {
-  deg2rad
-} from '../../../foundation/utils/math'
+import { dpr } from '../../../foundation/constants/env'
+import { deg2rad } from '../../../foundation/utils/math'
 import E from '../../../foundation/utils/E'
 import { EVENTS } from '../../../foundation/constants/const'
 import { gsap } from 'gsap'
@@ -24,10 +20,10 @@ export default class Gl {
   _postactive!: boolean
 
   state!: {
-    stopped: boolean,
-    resizing: boolean,
-    ww: number,
-    wh: number,
+    stopped: boolean
+    resizing: boolean
+    ww: number
+    wh: number
   }
 
   constructor() {
@@ -44,27 +40,27 @@ export default class Gl {
   public setup(canvas: HTMLCanvasElement) {
     this.renderer = new THREE.WebGLRenderer({
       canvas,
-      alpha: true
+      alpha: true,
     })
 
     this.renderer.setClearColor(0x000000, 0)
     this.renderer.setSize(this.state.ww, this.state.wh)
     this.renderer.setPixelRatio(dpr)
 
-    this.camera = new THREE.PerspectiveCamera(45, 1280 / 720, .1, 1000)
+    this.camera = new THREE.PerspectiveCamera(45, 1280 / 720, 0.1, 1000)
     this.camera.position.z = 50
 
     this.visuals = [
       new Sample({
         camera: this.camera,
         color: 0x181818,
-        dpr
+        dpr,
       }),
       new Sample({
         camera: this.camera,
         color: 0xcccccc,
-        dpr
-      })
+        dpr,
+      }),
     ]
 
     this.post = new Post()
@@ -90,19 +86,17 @@ export default class Gl {
       post: {
         noise: true,
         clouds: true,
-        amount: .09,
-        alpha: .11,
-        blur: .12,
-        rad: 1
-      }
+        amount: 0.09,
+        alpha: 0.11,
+        blur: 0.12,
+        rad: 1,
+      },
     }
 
     this._transform(ops)
   }
 
-  public destroy() {
-
-  }
+  public destroy() {}
 
   private _resume() {
     this.state.stopped = false
@@ -116,15 +110,14 @@ export default class Gl {
     this._transforms = transforms
     this._postactive = transforms.post.clouds || transforms.post.noise
 
-    if (this.post)
-      this.post.transforms = transforms
+    if (this.post) this.post.transforms = transforms
 
-    for (let visual of this.visuals) {
+    for (const visual of this.visuals) {
       visual.transforms = transforms
     }
 
     if (this.camera) {
-      let deskscreen = false;
+      const deskscreen = false
 
       this.camera.position.z = deskscreen ? transforms.camera.dist : 3000
       this.camera.far = deskscreen ? transforms.camera.far : 4500
@@ -139,20 +132,20 @@ export default class Gl {
   }
 
   private _handleResize({ width, height }) {
-    const state = this.state;
+    const state = this.state
 
-    state.resizing = true;
+    state.resizing = true
 
     this._setSize(width, height)
 
-    state.resizing = false;
+    state.resizing = false
   }
 
   private _setSize(width: number, height: number) {
     const radFov = deg2rad(this.camera.fov)
 
     this.camera.aspect = width / height
-    this.camera.position.z = width * .5 / Math.tan(radFov * 0.5)
+    this.camera.position.z = (width * 0.5) / Math.tan(radFov * 0.5)
 
     this.camera.updateProjectionMatrix()
 
@@ -162,7 +155,5 @@ export default class Gl {
     this.post.height = this.renderer.domElement.height
   }
 
-  private _initMesh() {
-
-  }
+  private _initMesh() {}
 }

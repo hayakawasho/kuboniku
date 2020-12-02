@@ -3,7 +3,6 @@ import { getData } from '../foundation/utils/html'
 import { html, body } from '../foundation/constants/env'
 
 export default class extends Controller {
-
   readonly html = html
   readonly body = body
 
@@ -18,15 +17,15 @@ export default class extends Controller {
   /**
    * @abstract
    */
-  initialize() { }
+  initialize() {}
 
   /**
    * @abstract
    */
-  connect() { }
+  connect() {}
 
   /**
    * @abstract
    */
-  disconnect() { }
+  disconnect() {}
 }

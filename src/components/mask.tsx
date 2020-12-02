@@ -7,7 +7,10 @@ const Component = React.memo(() => {
 
   return (
     <>
-      <div className={`mask || js-loader`} style={scrolling ? { pointerEvents: 'all' } : { pointerEvents: 'none' } } />
+      <div
+        className={`mask || js-loader`}
+        style={scrolling ? { pointerEvents: 'all' } : { pointerEvents: 'none' }}
+      />
     </>
   )
 })

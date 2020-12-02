@@ -121,7 +121,13 @@ const Component = ({ data }) => {
                 </p>
               </div>
               <div className={styles.kv__img}>
-                <Img src={post.previous.acf.eyecatch.sourceUrl} />
+                <Image
+                  src={post.previous.acf.eyecatch.sourceUrl}
+                  alt=""
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="50% 50%"
+                />
               </div>
             </aside>
           ) : null}

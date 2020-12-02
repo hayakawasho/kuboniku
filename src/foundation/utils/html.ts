@@ -49,10 +49,7 @@ export const getNodeData = node => {
 }
 
 export const escapeHtml = str => {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
 /**
@@ -61,8 +58,5 @@ export const escapeHtml = str => {
  * @return {string}
  */
 export const unescapeHtml = str => {
-  return str
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
+  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
 }

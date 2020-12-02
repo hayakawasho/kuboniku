@@ -20,10 +20,14 @@ export default class {
       minFilter: THREE.LinearFilter,
       magFilter: THREE.LinearFilter,
       format: THREE.RGBFormat,
-      stencilBuffer: false
+      stencilBuffer: false,
     }
 
-    this._fbo = new THREE.WebGLRenderTarget(window.innerWidth * this._dpr, window.innerHeight * this._dpr, this._renderTargetParameters)
+    this._fbo = new THREE.WebGLRenderTarget(
+      window.innerWidth * this._dpr,
+      window.innerHeight * this._dpr,
+      this._renderTargetParameters
+    )
   }
 
   render() {

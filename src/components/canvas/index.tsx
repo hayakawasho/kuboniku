@@ -9,9 +9,7 @@ const Component = React.memo(() => {
     gl.setup(canvasRef.current)
   }, [])
 
-  return (
-    <canvas className="gl" ref={canvasRef} />
-  )
+  return <canvas className="gl" ref={canvasRef} />
 })
 
 export default Component
