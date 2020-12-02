@@ -2,7 +2,7 @@
   "name": "kuboniku",
   "version": "1.0.0",
   "scripts": {
-    "deploy": "next build && next export",
+    "deploy": "next build && next export && mv out public",
     "dev": "next --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
