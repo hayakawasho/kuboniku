@@ -1,12 +1,7 @@
-// import * as styles from './sh.module.scss'
+import React from 'react'
 
 const Component: React.FC = () => {
-
-  return (
-    <div>
-
-    </div>
-  )
+  return <div></div>
 }
 
-export default Component;
+export default Component

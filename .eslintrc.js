@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
+    // 'plugin:react/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -26,6 +26,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/no-empty-function': 'warn',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-use-before-define': [
@@ -39,12 +40,6 @@ module.exports = {
       {
         allowDestructuring: true,
         allowedNames: ['self'],
-      },
-    ],
-    '@typescript-eslint/interface-name-prefix': [
-      'error',
-      {
-        prefixWithI: 'always'
       },
     ]
   }

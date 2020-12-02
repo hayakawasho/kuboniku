@@ -19,7 +19,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
-        <Head>
+      <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="format-detection" content="telephone=no" />
@@ -54,13 +54,19 @@ const App = ({ Component, pageProps }: AppProps) => {
           }
         `}</script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async></script>
-
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" crossOrigin="anonymous" defer></script>
+        <script
+          src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
+          async
+        ></script>
+        <script
+          src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
+          crossOrigin="anonymous"
+          defer
+        ></script>
       </Head>
 
       <Provider store={store}>
-        <ApolloProvider client={client} >
+        <ApolloProvider client={client}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
@@ -70,4 +76,4 @@ const App = ({ Component, pageProps }: AppProps) => {
   )
 }
 
-export default App;
+export default App

@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import styles from './slug.module.scss'
 import Image from 'next/image'
@@ -7,10 +8,8 @@ import sanitize from 'sanitize-html'
 import loadable from '@loadable/component'
 
 const DayJS = loadable(() => import('react-dayjs'))
-const Img = loadable(() => import('~/components/img'))
 
 const Component = ({ data }) => {
-
   const { post } = data
 
   return (
@@ -19,7 +18,10 @@ const Component = ({ data }) => {
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont} data-target="skew.item">
             <h1 className={styles.heading}>{post.title}</h1>
-            <p>{post.acf.category.name}<i className="icon-arrow-right" /></p>
+            <p>
+              {post.acf.category.name}
+              <i className="icon-arrow-right" />
+            </p>
           </div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
@@ -40,65 +42,89 @@ const Component = ({ data }) => {
         </div>
 
         <div className={styles.content} data-target="skew.item">
-
           <div className={styles.intro} data-smooth-item>
             <div className={styles.intro__info}>
               <dl className={styles.dl}>
                 <dt>Year</dt>
-                <DayJS element="dd" format="MMMM, DD, YYYY">{post.acf.launch}</DayJS>
+                <DayJS element="dd" format="MMMM, DD, YYYY">
+                  {post.acf.launch}
+                </DayJS>
               </dl>
               <dl className={styles.dl}>
                 <dt>Role</dt>
-                {post.acf.role.map((i, index) => <dd className="u-uppercase" key={index}>{i.name}</dd>)}
+                {post.acf.role.map((i, index) => (
+                  <dd className="u-uppercase" key={index}>
+                    {i.name}
+                  </dd>
+                ))}
               </dl>
             </div>
             <div className={styles.intro__p}>
-              {
-                post.acf.description && (
-                  <div className={styles.desc} dangerouslySetInnerHTML={{__html: sanitize(post.acf.description)}}/>
-                )
-              }
-              {
-                post.acf.url && (
-                  <a className="c-link" href={post.acf.url} target="_blank" rel="noopener">View website
-                    <div className="c-link__hr"></div>
-                  </a>
-                )
-              }
+              {post.acf.description && (
+                <div
+                  className={styles.desc}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitize(post.acf.description),
+                  }}
+                />
+              )}
+              {post.acf.url && (
+                <a
+                  className="c-link"
+                  href={post.acf.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  View website
+                  <div className="c-link__hr"></div>
+                </a>
+              )}
             </div>
           </div>
 
           <ul className={styles.captchaList} data-smooth-item>
-            {
-              post.acf.gallery.map((i, index) => {
-                const aspect = Math.round(i.mediaDetails.height / i.mediaDetails.width * 100);
-                return (
-                  <li className="u-rel" key={index}>
-                    <div className="c-aspect" style={{ paddingTop: `${aspect}%`, backgroundColor: `${post.acf.themeColor}`}} />
-                    <Img src={i.sourceUrl} />
-                  </li>
-                )
-              })
-            }
+            {post.acf.gallery.map((i, index) => {
+              const aspect = Math.round(
+                (i.mediaDetails.height / i.mediaDetails.width) * 100
+              )
+              return (
+                <li className="u-rel" key={index}>
+                  <div
+                    className="c-aspect"
+                    style={{
+                      paddingTop: `${aspect}%`,
+                      backgroundColor: `${post.acf.themeColor}`,
+                    }}
+                  />
+                  <Image
+                    src={i.sourceUrl}
+                    alt=""
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="50% 50%"
+                  />
+                </li>
+              )
+            })}
           </ul>
 
-          {
-            post.previous !== null ? (
-              <aside className={`${styles.kv} is-next`} data-smooth-item>
-                <Link href={'/works/' + post.previous.slug}>
-                  <a className="u-abs u-fit u-z-10"></a>
-                </Link>
-                <div className={styles.kv__cont}>
-                  <h2 className={styles.heading}>Next Project</h2>
-                  <p>{post.previous.title}<i className="icon-arrow-right" /></p>
-                </div>
-                <div className={styles.kv__img}>
-                  <Img src={post.previous.acf.eyecatch.sourceUrl} />
-                </div>
-              </aside>
-            ) : null
-          }
-
+          {post.previous !== null ? (
+            <aside className={`${styles.kv} is-next`} data-smooth-item>
+              <Link href={'/works/' + post.previous.slug}>
+                <a className="u-abs u-fit u-z-10"></a>
+              </Link>
+              <div className={styles.kv__cont}>
+                <h2 className={styles.heading}>Next Project</h2>
+                <p>
+                  {post.previous.title}
+                  <i className="icon-arrow-right" />
+                </p>
+              </div>
+              <div className={styles.kv__img}>
+                <Img src={post.previous.acf.eyecatch.sourceUrl} />
+              </div>
+            </aside>
+          ) : null}
         </div>
       </div>
     </>
@@ -108,7 +134,7 @@ const Component = ({ data }) => {
 export default Component
 
 export const GET_POST = gql`
-  query GET_POST( $slug: String ) {
+  query GET_POST($slug: String) {
     post: postBy(slug: $slug) {
       title
       previous {
@@ -151,31 +177,31 @@ export const GET_POST = gql`
 
 export const GET_POST_SLUGS = gql`
   query GET_POST_SLUGS {
-  posts {
-    edges {
-      node {
-        slug
+    posts {
+      edges {
+        node {
+          slug
+        }
       }
     }
   }
-}
 `
 
 export async function getStaticProps({ params }) {
-	const { data } = await client.query({
+  const { data } = await client.query({
     query: GET_POST,
     variables: {
-			slug: params?.slug ?? ''
-		}
+      slug: params?.slug ?? '',
+    },
   })
 
   return {
     props: {
       data: {
         post: data?.post ?? {},
-				path: params?.slug
-			}
-    }
+        path: params?.slug,
+      },
+    },
   }
 }
 
@@ -191,13 +217,13 @@ export async function getStaticPaths() {
   data.posts.edges.map(post => {
     pathsData.push({
       params: {
-        slug: post.node.slug
-      }
+        slug: post.node.slug,
+      },
     })
   })
 
   return {
     paths: pathsData,
-    fallback: false
-  };
+    fallback: false,
+  }
 }

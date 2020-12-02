@@ -18,21 +18,21 @@ type Props = {
   title?: string
 }
 
-let E;
+let E
 
 if (process.browser) {
   const env = require('../foundation/constants/env')
-  const { mq, APP, hasTouch, WP_API_END_POINT } = env;
+  const { mq, APP, hasTouch } = env
 
   const ASScroll = require('@ashthornton/asscroll').default
 
-  const app = require('stimulus').Application.start();
+  const app = require('stimulus').Application.start()
   const mod = require('../controllers')
 
-  E = require('../foundation/utils/E').default;
+  E = require('../foundation/utils/E').default
 
   E.once(EVENTS.DOM_READY, () => {
-    app.register('skew', mod.Skew);
+    app.register('skew', mod.Skew)
 
     if (!hasTouch) {
       APP.smooth = new ASScroll({
@@ -40,78 +40,75 @@ if (process.browser) {
         innerElement: '[data-smooth-item]',
         ease: 0.09,
         disableResize: true,
-        customScrollbar: false
-      });
+        customScrollbar: false,
+      })
 
       const { smooth } = APP
 
       smooth.on('raf', ({ scrollPos, smoothScrollPos }) => {
         E.emit(EVENTS.SCROLL, { scrollPos, smoothScrollPos })
-      });
+      })
 
       E.on(EVENTS.RESIZE, ({ width, height }) => smooth.onResize(width, height))
 
-      smooth.enable();
-    } else {
-
+      smooth.enable()
     }
 
     disableHover()
   })
 
-  const { mobile, pc } = mq;
+  // const { mobile, pc } = mq;
 
-  if (mobile.matches) {
-    // store.dispatch(SET_SCROLLING(true))
-  } else {
-    // store.dispatch(SET_SCROLLING(true))
-  }
+  //if (mobile.matches) {
+  //  store.dispatch(SET_SCROLLING(true))
+  //} else {
+  //  store.dispatch(SET_SCROLLING(true))
+  //}
 
-  pc.addListener(enterPcViewport);
-  mobile.addListener(enterMobileViewport);
+  // function enterPcViewport(mql) {
+  //   if (!mql.matches) return;
+  //   E.emit(EVENTS.ENTER_PC_VIEWPORT)
+  // }
 
-  function enterPcViewport(mql) {
-    if (!mql.matches) return;
-    E.emit(EVENTS.ENTER_PC_VIEWPORT)
-  }
+  // function enterMobileViewport(mql) {
+  //   if (!mql.matches) return;
+  //   E.emit(EVENTS.ENTER_MOBILE_VIEWPORT)
+  // }
 
-  function enterMobileViewport(mql) {
-    if (!mql.matches) return;
-    E.emit(EVENTS.ENTER_MOBILE_VIEWPORT)
-  }
+  // pc.addListener(enterPcViewport);
+  // mobile.addListener(enterMobileViewport);
 
-  function mouseMove(evt) {
-    const { clientX, clientY, target } = evt;
-
+  const mouseMove = evt => {
     E.emit(EVENTS.MOUSE_MOVE, {
-      x: clientX,
-      y: clientY,
-      target,
-      event: evt
+      x: evt.clientX,
+      y: evt.clientY,
+      target: evt.target,
+      event: evt,
     })
   }
 
   window.addEventListener('mousemove', mouseMove, {
-    passive: true
-  });
+    passive: true,
+  })
 
-  window.addEventListener('scroll', (event) => {
-    E.emit(EVENTS.NATIVE_SCROLL, { event })
-  }, {
-    passive: true
-  });
+  window.addEventListener(
+    'scroll',
+    event => {
+      E.emit(EVENTS.NATIVE_SCROLL, { event })
+    },
+    {
+      passive: true,
+    }
+  )
 
   const disableHover = () => {
-    let isRunning, val, timer;
+    let isRunning = false
+    let val = 0
+    let timer
 
-    isRunning = false
-    val = 0
-    timer = setTimeout(enable, 300)
-
-    if (!hasTouch) {
-      APP.smooth.on('scroll', disable)
-    } else {
-      E.on(EVENTS.NATIVE_SCROLL, disable)
+    function enable() {
+      isRunning = false
+      store.dispatch(SET_SCROLLING(false))
     }
 
     function disable(scrollPos) {
@@ -119,17 +116,17 @@ if (process.browser) {
         val = scrollPos
         clearTimeout(timer)
 
-        isRunning || (
-          isRunning = true,
-          store.dispatch(SET_SCROLLING(true))
-        ),
-          timer = setTimeout(enable, 300)
+        isRunning || ((isRunning = true), store.dispatch(SET_SCROLLING(true))),
+          (timer = setTimeout(enable, 300))
       }
     }
 
-    function enable() {
-      isRunning = false
-      store.dispatch(SET_SCROLLING(false))
+    timer = setTimeout(enable, 300)
+
+    if (!hasTouch) {
+      APP.smooth.on('scroll', disable)
+    } else {
+      E.on(EVENTS.NATIVE_SCROLL, disable)
     }
   }
 } // process.browser
@@ -140,19 +137,23 @@ const Layout = ({ children }: Props) => {
   const appRef = useRef(null)
 
   useEffect(() => {
-    !domReady && requestAnimationFrame(() => (
-      setDomReady(true),
-      E.emit(EVENTS.DOM_READY)
-    ))
-  }, [domReady]);
+    !domReady &&
+      requestAnimationFrame(() => (setDomReady(true), E.emit(EVENTS.DOM_READY)))
+  }, [domReady])
 
   useEffect(() => {
     const routeChangeStart = url => {
-      (window as any).KUBONIKU_APP.smooth && (window as any).KUBONIKU_APP.smooth.disable()
+      ;(window as any).KUBONIKU_APP.smooth &&
+        (window as any).KUBONIKU_APP.smooth.disable()
     }
 
     const routeChangeComplete = url => {
-      (window as any).KUBONIKU_APP.smooth && (window as any).KUBONIKU_APP.smooth.enable(false, true, appRef.current.querySelectorAll('[data-smooth-item]'))
+      ;(window as any).KUBONIKU_APP.smooth &&
+        (window as any).KUBONIKU_APP.smooth.enable(
+          false,
+          true,
+          appRef.current.querySelectorAll('[data-smooth-item]')
+        )
     }
 
     router.events.on('routeChangeStart', routeChangeStart)

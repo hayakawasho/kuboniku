@@ -1,17 +1,15 @@
-import { configureStore, combineReducers, Action } from '@reduxjs/toolkit';
-import uiReducer from './ui';
-import worksReducer from './works';
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import uiReducer from './ui'
 
 const rootReducer = combineReducers({
   ui: uiReducer,
-  works: worksReducer,
-});
+})
 
 const store = configureStore({
-  reducer: rootReducer
-});
+  reducer: rootReducer,
+})
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type Dispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof rootReducer>
+export type Dispatch = typeof store.dispatch
 
-export default store;
+export default store

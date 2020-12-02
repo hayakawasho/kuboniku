@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import styles from './sh.module.scss'
 // import { useSelector, useDispatch } from 'react-redux';
@@ -5,13 +6,14 @@ import styles from './sh.module.scss'
 const Component: React.FC = () => {
   return (
     <header className="sh">
-      <Link href="/" >
+      <Link href="/">
         <a className={styles.logo}>
           <i className="icon-logo" />
         </a>
       </Link>
 
-      <button type="button"
+      <button
+        type="button"
         id="js-menuButton"
         className={styles.menu}
         aria-label="menu-toggle"
@@ -24,8 +26,16 @@ const Component: React.FC = () => {
 
       <div className={`${styles.sns} u-text-center`}>
         <ul className="snsList">
-          <li><a href="https://www.facebook.com/k.b.nagisa" target="_blank">Fb</a></li>
-          <li><a href="#" target="_blank">Tw</a></li>
+          <li>
+            <a href="https://www.facebook.com/k.b.nagisa" target="_blank">
+              Fb
+            </a>
+          </li>
+          <li>
+            <a href="#" target="_blank">
+              Tw
+            </a>
+          </li>
         </ul>
         <button type="button" className="plus-icon" id="js-plus-toggle">
           <div className="plus-icon__x"></div>
@@ -38,4 +48,4 @@ const Component: React.FC = () => {
   )
 }
 
-export default Component;
+export default Component

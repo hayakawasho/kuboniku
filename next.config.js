@@ -2,6 +2,14 @@ const path = require('path')
 const Fiber = require('fibers')
 
 const nextConfig = {
+  experimental: {
+    documentMiddleware: true
+  },
+
+  env: {
+    BASIC_AUTH_CREDENTIALS: process.env.BASIC_AUTH_CREDENTIALS,
+  },
+
   images: {
     domains: ['res.cloudinary.com'],
   },

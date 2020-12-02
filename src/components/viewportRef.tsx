@@ -1,3 +1,4 @@
+import React from 'react'
 import ResizeObserverHandler from '../foundation/utils/resizeObserverHandler'
 import E from '../foundation/utils/E'
 import debounce from 'lodash.debounce'
@@ -9,25 +10,28 @@ const Component = () => {
       return
     }
 
-    setSize(window.innerWidth, window.innerHeight);
-
-    new ResizeObserverHandler({
-      el: div,
-      callback: debounce((entry: ResizeObserverEntry) => handleResize(entry), 200)
-    }).init();
+    function setSize(width: number, height: number) {
+      E.emit(EVENTS.RESIZE, { width, height })
+      const vh = window.innerHeight * 0.01
+      document.documentElement.style.setProperty('--vh', `${vh}px`)
+    }
 
     function handleResize(entry: ResizeObserverEntry) {
       const rect = entry.contentRect
-      const { width, height } = rect;
+      const { width, height } = rect
 
       setSize(width, height)
     }
 
-    function setSize(width: number, height: number) {
-      E.emit(EVENTS.RESIZE, { width, height })
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
+    setSize(window.innerWidth, window.innerHeight)
+
+    new ResizeObserverHandler({
+      el: div,
+      callback: debounce(
+        (entry: ResizeObserverEntry) => handleResize(entry),
+        200
+      ),
+    }).init()
   }
 
   return (
@@ -49,4 +53,4 @@ const Component = () => {
   )
 }
 
-export default Component;
+export default Component
