@@ -20,11 +20,11 @@
 
 .menu {
   position: fixed;
-  top: 25px;
-  right: 20px;
+  top: 2.5rem;
+  right: 2rem;
   z-index: 101;
-  width: 20px;
-  height: 12px;
+  width: 2rem;
+  height: 1.2rem;
 
   @media (--pc) {
     top: 3.2rem;
@@ -34,19 +34,19 @@
 
 .sns {
   position: fixed;
-  bottom: 20px;
-  left: 30px;
+  bottom: 2rem;
+  left: 3rem;
   z-index: 101;
 }
 
 .copy {
   pointer-events: none;
   position: fixed;
-  right: 30px;
-  bottom: 25px;
+  right: 3rem;
+  bottom: 2.5rem;
   display: inline-block;
   font-family: var(--font-en);
-  font-size: 8px;
+  font-size: .8rem;
   font-weight: 500;
   line-height: 1;
   color: var(--color-text-primary);
@@ -54,7 +54,7 @@
   z-index: 101;
 
   @media (--pc) {
-    font-size: 10px;
+    font-size: 1rem;
   }
 }
 

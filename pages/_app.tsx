@@ -49,7 +49,9 @@ const App = ({ Component, pageProps }: AppProps) => {
             }
           };
 
-          if (typeof WebFont === 'object') WebFont.load(WebFontConfig);
+          if (typeof WebFont === 'object') {
+            WebFont.load(WebFontConfig);
+          }
         `}</script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" async></script>

@@ -56,10 +56,7 @@ if (process.browser) {
 
     }
 
-    disableHover();
-
-    // temp
-    document.documentElement.classList.add('is-webfontLoaded')
+    disableHover()
   })
 
   const { mobile, pc } = mq;
