@@ -3,7 +3,7 @@ const Fiber = require('fibers')
 
 const nextConfig = {
   images: {
-    domains: ['dev-kuboniku.gq'],
+    domains: ['res.cloudinary.com'],
   },
 
 	sassOptions: {
