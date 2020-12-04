@@ -12,18 +12,18 @@ const Component = React.memo(() => {
           <div className={`${styles.navMenu__bg} u-mobile`} />
           <ul className={styles.menuist}>
             {
-              //<li><a href="{{ site.link }}/about">About</a></li>
+              // <li><a href="{{ site.link }}/about">About</a></li>
+              //   <li>
+              //   <Link href="/works">
+              //     <a className={styles.link}>Works</a>
+              //   </Link>
+              // </li>
+              // <li>
+              //   <a className={styles.link} href="mailto:k.bo.n10.05@gmail.com">
+              //     Contact
+              //   </a>
+              // </li>
             }
-            <li>
-              <Link href="/works">
-                <a className={styles.link}>Works</a>
-              </Link>
-            </li>
-            <li>
-              <a className={styles.link} href="mailto:k.bo.n10.05@gmail.com">
-                Contact
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
