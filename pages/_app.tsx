@@ -13,9 +13,9 @@ import { ApolloProvider } from '@apollo/client'
 import client from '~/apollo/client'
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const siteName = 'KuboNiku.com'
-  const title = 'KuboNiku.com'
-  const description = 'なぁちゃんのサイトだよ'
+  const siteName = 'KUBONIKU.COM'
+  const title = 'NAGISA KUBO | KUBONIKU.COM | WEB DESIGNER'
+  const description = 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site'
 
   return (
     <>
