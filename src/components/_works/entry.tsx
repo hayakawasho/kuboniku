@@ -6,9 +6,9 @@ import Utils from '~/foundation/utils/Utils'
 import { useSpring, animated } from 'react-spring'
 
 const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 40,
-  (x - window.innerWidth / 2) / 40,
-  1.06,
+  -(y - window.innerHeight / 2) / 50,
+  (x - window.innerWidth / 2) / 50,
+  1.05,
 ]
 
 const trans: any = (x, y, s) =>
