@@ -31,6 +31,7 @@
     "react-dayjs": "^0.2.1",
     "react-dom": "^16.12.0",
     "react-redux": "^7.2.2",
+    "react-spring": "^8.0.27",
     "ress": "^3.0.0",
     "sanitize-html": "^2.1.2",
     "scroll-lock": "^2.1.4",
