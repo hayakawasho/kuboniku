@@ -10,7 +10,8 @@ const calc = (x, y) => [
   (x - window.innerWidth / 2) / 40,
   1.06,
 ]
-const trans = (x, y, s) =>
+
+const trans: any = (x, y, s) =>
   `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
 
 const Component = React.memo(({ data, index }: { data; index }) => {
