@@ -15,14 +15,16 @@ const Gl = loadable(() => import('./canvas'))
 const ViewportRef = loadable(() => import('./viewportRef'))
 const Cursor = loadable(() => import('./cursor'))
 
-type Props = {
-  children?: ReactNode
-  title?: string
-}
+import { getGPUTier } from 'detect-gpu'
 
 let E
 
 if (process.browser) {
+  ;(async () => {
+    const gpuTier = await getGPUTier()
+    ;(window as any).KUBONIKU_APP.gpuTier = gpuTier
+  })()
+
   const env = require('~/foundation/constants/env')
   const { APP, hasTouch } = env
 
@@ -133,7 +135,7 @@ if (process.browser) {
   }
 } // process.browser
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }) => {
   const [domReady, setDomReady] = useState(false)
   const router = useRouter()
   const appRef = useRef(null)

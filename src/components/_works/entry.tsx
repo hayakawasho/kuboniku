@@ -5,6 +5,9 @@ import styles from './entry.module.scss'
 import Utils from '~/foundation/utils/Utils'
 import { useSpring, animated } from 'react-spring'
 
+import { useDispatch } from 'react-redux'
+import { SET_THEME_COLOR } from '~/state/ui'
+
 const calc = (x, y) => [
   -(y - window.innerHeight / 2) / 50,
   (x - window.innerWidth / 2) / 50,
@@ -24,12 +27,17 @@ const Component = React.memo(({ data, index }: { data; index }) => {
     },
   }))
 
+  const dispatch = useDispatch()
+
   return (
     <>
       <article className="o-grid__item" data-smooth-item>
         <Link href={'/works/' + data.node.slug}>
           <animated.a
             className={styles.entry}
+            onMouseEnter={() =>
+              dispatch(SET_THEME_COLOR(data.node.acf.themeColor))
+            }
             onMouseMove={({ clientX: x, clientY: y }) =>
               set({ xys: calc(x, y) })
             }

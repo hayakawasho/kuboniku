@@ -1,15 +1,13 @@
-import React from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import ResizeObserverHandler from '../foundation/utils/resizeObserverHandler'
 import E from '../foundation/utils/E'
 import debounce from 'lodash.debounce'
 import { EVENTS } from '../foundation/constants/const'
 
 const Component = () => {
-  const viewportRef = (div: HTMLDivElement) => {
-    if (!div) {
-      return
-    }
+  const viewportRef = useRef(null)
 
+  useLayoutEffect(() => {
     function setSize(width: number, height: number) {
       E.emit(EVENTS.RESIZE, { width, height })
       const vh = window.innerHeight * 0.01
@@ -26,13 +24,15 @@ const Component = () => {
     setSize(window.innerWidth, window.innerHeight)
 
     new ResizeObserverHandler({
-      el: div,
+      el: viewportRef.current,
       callback: debounce(
         (entry: ResizeObserverEntry) => handleResize(entry),
         200
       ),
     }).init()
-  }
+
+    setSize(window.innerWidth, window.innerHeight)
+  })
 
   return (
     <>

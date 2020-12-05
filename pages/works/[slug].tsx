@@ -5,12 +5,23 @@ import Image from 'next/image'
 import client from '~/apollo/client'
 import { gql } from '@apollo/client'
 import sanitize from 'sanitize-html'
+
 import loadable from '@loadable/component'
 
-const DayJS = loadable(() => import('react-dayjs'))
+const DayJS = loadable(
+  () => import(/* webpackChunkName: "Dayjs" */ 'react-dayjs'),
+  { modules: ['react-dayjs'] }
+)
+
+import { useDispatch } from 'react-redux'
+import { SET_THEME_COLOR } from '~/state/ui'
 
 const Component = ({ data }) => {
   const { post } = data
+
+  const dispatch = useDispatch()
+
+  dispatch(SET_THEME_COLOR(post.acf.themeColor))
 
   return (
     <>

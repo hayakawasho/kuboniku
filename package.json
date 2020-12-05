@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^1.4.0",
     "cors": "^2.8.5",
     "dayjs": "^1.9.6",
-    "detect-gpu": "^2.0.4",
+    "detect-gpu": "^3.0.0",
     "graphql": "^15.4.0",
     "gsap": "^3.5.1",
     "lodash.debounce": "^4.0.8",

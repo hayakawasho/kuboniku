@@ -2009,10 +2009,10 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-detect-gpu@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-2.0.4.tgz#7bb3ca61a259b989455abbf73142e1b377a03743"
-  integrity sha512-wWxomu+dmYm/ETaEvusEjRryiLnDNMECYlhdMwwUtNyAOrZlbYyq+9StFI/P7qJny3RDoLb2V7+idfGdTxqLhQ==
+detect-gpu@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-3.0.0.tgz#d1ced721581c27fec29e24aee8c3eadf45450b5a"
+  integrity sha512-D/uxvKWDqhy7XoHHdC7By1Bzxuv0t8OwccsiW1DbRPsqOr0rTAjxdO//bSck6QS54jc9QHbaQoRczAy5KbCOCQ==
   dependencies:
     webgl-constants "^1.1.1"
 

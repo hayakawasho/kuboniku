@@ -3,6 +3,9 @@ import * as THREE from 'three'
 const vertexShader = require('./vert.glsl').default
 const fragmentShader = require('./frag.glsl').default
 
+import store from '~/state/store'
+import { SET_THEME_COLOR } from '~/state/ui'
+
 export default class {
   private _transforms
   private _scene = new THREE.Scene()
@@ -16,7 +19,7 @@ export default class {
     },
     uCol: {
       type: 'v3',
-      value: new THREE.Color('#1793a9'),
+      value: new THREE.Color(store.getState().ui.color),
     },
     uTransition: {
       type: 'v4',
@@ -86,25 +89,6 @@ export default class {
     this._mesh = new THREE.Mesh(geometry, material)
 
     this._scene.add(this._mesh)
-
-    setTimeout(() => {
-      this._uniforms.uCol.value = new THREE.Color('#ffe400')
-      setTimeout(() => {
-        this._uniforms.uCol.value = new THREE.Color('#42d1d3')
-
-        setTimeout(() => {
-          this._uniforms.uCol.value = new THREE.Color('#fff')
-
-          setTimeout(() => {
-            this._uniforms.uCol.value = new THREE.Color('#e738ea')
-
-            setTimeout(() => {
-              this._uniforms.uCol.value = new THREE.Color('#83afc5')
-            }, 2000)
-          }, 2000)
-        }, 2000)
-      }, 2000)
-    }, 2000)
   }
 
   render() {

@@ -41,23 +41,19 @@ const App = ({ Component, pageProps }: AppProps) => {
         <script>{`
           WebFontConfig = {
             classes: false,
-            google: {
-              families: ['Montserrat:500,700', 'Roboto+Condensed:400,700', 'Noto+Sans+JP:400,700']
-            },
-            active: function () {
-              document.documentElement.classList.add('is-webfontLoaded')
-            }
+            google: { families: ['Montserrat:500,700','Roboto+Condensed:400,700','Noto+Sans+JP:400,700&display=swap'] },
+            active: function () { document.documentElement.classList.add('is-webfontLoaded') }
           };
 
-          if (typeof WebFont === 'object') {
-            WebFont.load(WebFontConfig);
-          }
+          (function() {
+            var wf = document.createElement('script');
+            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+          })();
         `}</script>
-
-        <script
-          src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
-          async
-        ></script>
         <script
           src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.includes%2CArray.prototype.flat%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
           crossOrigin="anonymous"
