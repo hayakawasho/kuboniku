@@ -4,7 +4,7 @@ import E from '../foundation/utils/E'
 import debounce from 'lodash.debounce'
 import { EVENTS } from '../foundation/constants/const'
 
-const Component = () => {
+const Component = React.memo(() => {
   const viewportRef = useRef(null)
 
   useLayoutEffect(() => {
@@ -51,6 +51,6 @@ const Component = () => {
       `}</style>
     </>
   )
-}
+})
 
 export default Component

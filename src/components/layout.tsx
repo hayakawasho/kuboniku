@@ -1,11 +1,11 @@
-import React, { ReactNode, useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import loadable from '@loadable/component'
 
-import { EVENTS } from '../foundation/constants/const'
+import { EVENTS } from '~/foundation/constants/const'
 
-import store from '../state/store'
-import { SET_SCROLLING } from '../state/ui'
+import store from '~/state/store'
+import { SET_SCROLLING, SET_GPU_TIER } from '~/state/ui'
 
 import Sh from './sh'
 import Nav from './nav'
@@ -22,7 +22,7 @@ let E
 if (process.browser) {
   ;(async () => {
     const gpuTier = await getGPUTier()
-    ;(window as any).KUBONIKU_APP.gpuTier = gpuTier
+    store.dispatch(SET_GPU_TIER(gpuTier))
   })()
 
   const env = require('~/foundation/constants/env')
@@ -56,6 +56,8 @@ if (process.browser) {
       E.on(EVENTS.RESIZE, ({ width, height }) => smooth.onResize(width, height))
 
       smooth.enable()
+    } else {
+      E.emit(EVENTS.SCROLL, { event })
     }
 
     disableHover()
