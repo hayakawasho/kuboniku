@@ -58,7 +58,7 @@ const Component = ({ data }) => {
               <dl className={styles.dl}>
                 <dt>Year</dt>
                 <DayJS element="dd" format="MMMM, DD, YYYY">
-                  {post.acf.launch}
+                  {post.date}
                 </DayJS>
               </dl>
               <dl className={styles.dl}>
@@ -154,6 +154,7 @@ export const GET_POST = gql`
   query GET_POST($slug: String) {
     post: postBy(slug: $slug) {
       title
+      date
       previous {
         title
         slug
@@ -176,7 +177,6 @@ export const GET_POST = gql`
         role {
           name
         }
-        launch
         themeColor
         description
         url

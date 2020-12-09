@@ -32,7 +32,7 @@ export default Component
 
 export const GET_POSTS = gql`
   query {
-    posts {
+    posts(where: { orderby: { field: DATE, order: DESC } }) {
       edges {
         node {
           title
