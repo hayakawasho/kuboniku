@@ -7,13 +7,13 @@ import { EVENTS } from '~/foundation/constants/const'
 import store from '~/state/store'
 import { SET_SCROLLING, SET_GPU_TIER } from '~/state/ui'
 
-import Sh from './sh'
-import Nav from './nav'
-import Mask from './mask'
+import Sh from './_parts/sh'
+import Nav from './_parts/nav'
+import Mask from './_parts/mask'
 
 const Gl = loadable(() => import('./canvas'))
-const ViewportRef = loadable(() => import('./viewportRef'))
-const Cursor = loadable(() => import('./cursor'))
+const ViewportRef = loadable(() => import('./_parts/viewportRef'))
+const Cursor = loadable(() => import('./_parts/cursor'))
 
 import { getGPUTier } from 'detect-gpu'
 
@@ -66,9 +66,7 @@ const Layout = ({ children }) => {
         <main className="page" data-smooth>
           {children}
         </main>
-        {
-          //<Cursor />
-        }
+        <Cursor />
         <Gl />
       </div>
     </>

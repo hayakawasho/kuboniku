@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import SEO from '~/components/seo'
 
-import styles from './slug.module.scss'
+import styles from './[slug].module.scss'
 
 import Link from 'next/link'
 import Image from 'next/image'

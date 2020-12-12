@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useRef } from 'react'
-import ResizeObserverHandler from '../foundation/utils/resizeObserverHandler'
-import E from '../foundation/utils/E'
+import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler'
+import E from '~/foundation/utils/E'
 import debounce from 'lodash.debounce'
-import { EVENTS } from '../foundation/constants/const'
+import { EVENTS } from '~/foundation/constants/const'
 
 const Component = React.memo(() => {
   const viewportRef = useRef(null)
