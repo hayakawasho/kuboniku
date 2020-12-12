@@ -1,5 +1,3 @@
-node_modules/
-public/
-.github/
-.next/
-out/
+node_modules
+out
+.next

@@ -19,6 +19,64 @@ import { getGPUTier } from 'detect-gpu'
 
 let E
 
+const Layout = ({ children }) => {
+  const [domReady, setDomReady] = useState(false)
+  const router = useRouter()
+  const appRef = useRef(null)
+
+  useEffect(() => {
+    !domReady &&
+      requestAnimationFrame(() => (setDomReady(true), E.emit(EVENTS.DOM_READY)))
+  }, [domReady])
+
+  useEffect(() => {
+    const routeChangeStart = url =>
+      E.emit(EVENTS.ROUTE_START, {
+        url,
+      })
+
+    const routeChangeComplete = url =>
+      E.emit(EVENTS.ROUTE_COMPLETE, {
+        url,
+        mount: appRef.current,
+      })
+
+    router.events.on('routeChangeStart', routeChangeStart)
+    router.events.on('routeChangeComplete', routeChangeComplete)
+
+    return () => {
+      router.events.off('routeChangeStart', routeChangeStart)
+      router.events.off('routeChangeComplete', routeChangeComplete)
+    }
+  }, [])
+
+  // const newPageTransition = useTransition(router, router => router.pathname, {
+  //   from: { transform: 'translate3d(0,-40px,0)' },
+  //   enter: { transform: 'translate3d(0,0px,0)' },
+  //   leave: { transform: 'translate3d(0,-40px,0)' },
+  // })
+
+  return (
+    <>
+      <ViewportRef />
+      <Mask />
+      <div id="app" ref={appRef} data-controller="mainMenu">
+        <Sh />
+        <Nav />
+        <main className="page" data-smooth>
+          {children}
+        </main>
+        {
+          //<Cursor />
+        }
+        <Gl />
+      </div>
+    </>
+  )
+}
+
+export default Layout
+
 if (process.browser) {
   ;(async () => {
     const gpuTier = await getGPUTier()
@@ -61,6 +119,19 @@ if (process.browser) {
     }
 
     disableHover()
+  })
+
+  E.on(EVENTS.ROUTE_START, () => {
+    APP.smooth && APP.smooth.disable()
+  })
+
+  E.on(EVENTS.ROUTE_COMPLETE, ({ mount }) => {
+    APP.smooth &&
+      APP.smooth.enable(
+        false,
+        true,
+        mount.querySelectorAll('[data-smooth-item]')
+      )
   })
 
   // const { mobile, pc } = mq;
@@ -135,57 +206,4 @@ if (process.browser) {
       E.on(EVENTS.NATIVE_SCROLL, disable)
     }
   }
-} // process.browser
-
-const Layout = ({ children }) => {
-  const [domReady, setDomReady] = useState(false)
-  const router = useRouter()
-  const appRef = useRef(null)
-
-  useEffect(() => {
-    !domReady &&
-      requestAnimationFrame(() => (setDomReady(true), E.emit(EVENTS.DOM_READY)))
-  }, [domReady])
-
-  useEffect(() => {
-    const routeChangeStart = url => {
-      ;(window as any).KUBONIKU_APP.smooth &&
-        (window as any).KUBONIKU_APP.smooth.disable()
-    }
-
-    const routeChangeComplete = url => {
-      ;(window as any).KUBONIKU_APP.smooth &&
-        (window as any).KUBONIKU_APP.smooth.enable(
-          false,
-          true,
-          appRef.current.querySelectorAll('[data-smooth-item]')
-        )
-    }
-
-    router.events.on('routeChangeStart', routeChangeStart)
-    router.events.on('routeChangeComplete', routeChangeComplete)
-
-    return () => {
-      router.events.off('routeChangeStart', routeChangeStart)
-      router.events.off('routeChangeComplete', routeChangeComplete)
-    }
-  })
-
-  return (
-    <>
-      <ViewportRef />
-      <Mask />
-      <div id="app" ref={appRef} data-controller="mainMenu">
-        <Sh />
-        <Nav />
-        <main className="page" data-smooth>
-          {children}
-        </main>
-        <Cursor />
-        <Gl />
-      </div>
-    </>
-  )
 }
-
-export default Layout

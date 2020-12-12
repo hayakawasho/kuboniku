@@ -3,47 +3,18 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './entry.module.scss'
 import Utils from '~/foundation/utils/Utils'
-import { useSpring, animated } from 'react-spring'
 
 import { useDispatch } from 'react-redux'
 import { SET_THEME_COLOR } from '~/state/ui'
 
-const calc = (x, y) => [
-  -(y - window.innerHeight / 2) / 50,
-  (x - window.innerWidth / 2) / 50,
-  1.05,
-]
-
-const trans: any = (x, y, s) =>
-  `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
-
 const Component = React.memo(({ data, index }: { data; index }) => {
-  const [props, set] = useSpring(() => ({
-    xys: [0, 0, 1],
-    config: {
-      mass: 5,
-      tension: 350,
-      friction: 40,
-    },
-  }))
-
   const dispatch = useDispatch()
 
   return (
     <>
       <article className="o-grid__item" data-smooth-item>
         <Link href={'/works/' + data.node.slug}>
-          <animated.a
-            className={styles.entry}
-            onMouseEnter={() =>
-              dispatch(SET_THEME_COLOR(data.node.acf.themeColor))
-            }
-            onMouseMove={({ clientX: x, clientY: y }) =>
-              set({ xys: calc(x, y) })
-            }
-            onMouseLeave={() => set({ xys: [0, 0, 1] })}
-            style={{ transform: props.xys.interpolate(trans) }}
-          >
+          <a className={styles.entry}>
             <div
               className="c-aspect"
               style={{ backgroundColor: `${data.node.acf.themeColor}` }}
@@ -66,7 +37,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
                 <h2 className={styles.heading}>{data.node.title}</h2>
               </div>
             </div>
-          </animated.a>
+          </a>
         </Link>
       </article>
     </>

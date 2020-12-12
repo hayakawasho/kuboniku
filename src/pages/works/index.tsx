@@ -1,5 +1,8 @@
 import React from 'react'
+import SEO from '~/components/seo'
+
 import styles from './index.module.scss'
+
 import client from '~/apollo/client'
 import { gql } from '@apollo/client'
 import Entry from '~/components/_works/entry'
@@ -10,6 +13,7 @@ const Component = ({ data }) => {
 
   return (
     <>
+      <SEO title="WORKS" />
       <div data-controller="skew" data-skew-options='{ "val": 1.6 }'>
         <h1 className={styles.heading} data-target="skew.item">
           <div data-smooth-item>

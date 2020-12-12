@@ -1,20 +1,16 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { useEffect, useRef } from 'react'
+import SEO from '~/components/seo'
+
 import styles from './slug.module.scss'
+
+import Link from 'next/link'
 import Image from 'next/image'
 import client from '~/apollo/client'
 import { gql } from '@apollo/client'
-import sanitize from 'sanitize-html'
-
-import loadable from '@loadable/component'
-
-const DayJS = loadable(
-  () => import(/* webpackChunkName: "Dayjs" */ 'react-dayjs'),
-  { modules: ['react-dayjs'] }
-)
-
 import { useDispatch } from 'react-redux'
 import { SET_THEME_COLOR } from '~/state/ui'
+
+// let dayjs
 
 const Component = ({ data }) => {
   const { post } = data
@@ -23,8 +19,12 @@ const Component = ({ data }) => {
 
   dispatch(SET_THEME_COLOR(post.acf.themeColor))
 
+  // const launch = dayjs(post.date).format('MMMM, D, YYYY')
+  const launch = post.date
+
   return (
     <>
+      <SEO title={post.title} />
       <div data-controller="skew">
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont} data-target="skew.item">
@@ -57,9 +57,7 @@ const Component = ({ data }) => {
             <div className={styles.intro__info}>
               <dl className={styles.dl}>
                 <dt>Year</dt>
-                <DayJS element="dd" format="MMMM, DD, YYYY">
-                  {post.date}
-                </DayJS>
+                <dd>{launch}</dd>
               </dl>
               <dl className={styles.dl}>
                 <dt>Role</dt>
@@ -75,7 +73,7 @@ const Component = ({ data }) => {
                 <div
                   className={styles.desc}
                   dangerouslySetInnerHTML={{
-                    __html: sanitize(post.acf.description),
+                    __html: post.acf.description,
                   }}
                 />
               )}
@@ -209,3 +207,7 @@ export async function getServerSideProps({ params }) {
     },
   }
 }
+
+// if (process.browser) {
+//   dayjs = require('dayjs')
+// }
