@@ -1,11 +1,12 @@
 import React from 'react'
-import SEO from '~/components/seo'
+import SEO from '~/foundation/seo'
+
+import client from '~/client/apollo'
+import { gql } from '@apollo/client'
 
 import styles from './index.module.scss'
 
-import client from '~/apollo/client'
-import { gql } from '@apollo/client'
-import Entry from '~/components/_works/entry'
+import Entry from '~/foundation/components/_works/entry'
 
 const Component = ({ data }) => {
   const { posts } = data

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react'
-import SEO from '~/components/seo'
+import SEO from '~/foundation/seo'
 
 import styles from './[slug].module.scss'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import client from '~/apollo/client'
+import client from '~/client/apollo'
 import { gql } from '@apollo/client'
 import { useDispatch } from 'react-redux'
 import { SET_THEME_COLOR } from '~/state/ui'
@@ -85,7 +85,7 @@ const Component = ({ data }) => {
                   rel="noopener"
                 >
                   View website
-                  <div className="c-link__hr"></div>
+                  <div className="c-link__hr" />
                 </a>
               )}
             </div>

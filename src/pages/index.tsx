@@ -1,8 +1,13 @@
 import React from 'react'
+import SEO from '~/foundation/seo'
 import Link from 'next/link'
-import SEO from '~/components/seo'
 
-const Component: React.FC = () => {
+import client from '~/client/apollo'
+import { gql } from '@apollo/client'
+
+const Component = ({ data }) => {
+  const { posts } = data
+
   return (
     <>
       <SEO title="NAGISA KUBO" />
@@ -12,3 +17,33 @@ const Component: React.FC = () => {
 }
 
 export default Component
+
+export const GET_POSTS = gql`
+  query {
+    posts(first: 5) {
+      edges {
+        node {
+          title
+          slug
+          acf {
+            eyecatch {
+              sourceUrl
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+export async function getServerSideProps() {
+  const { data } = await client.query({
+    query: GET_POSTS,
+  })
+
+  return {
+    props: {
+      data,
+    },
+  }
+}
