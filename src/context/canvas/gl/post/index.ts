@@ -19,7 +19,7 @@ export default class {
     },
     uCol: {
       type: 'v3',
-      value: new THREE.Color(store.getState().ui.color),
+      value: new THREE.Color(store.getState().ui.themeColor),
     },
     uTransition: {
       type: 'v4',
