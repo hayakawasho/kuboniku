@@ -5,7 +5,7 @@ import store from '~/state/store'
 import Layout from '~/foundation/layout'
 import { ApolloProvider } from '@apollo/client'
 import client from '~/client/apollo'
-import { AnimatePresence } from 'framer-motion'
+// import { AnimatePresence } from 'framer-motion'
 
 import 'ress'
 import '~/foundation/styles/index.scss'
@@ -24,9 +24,7 @@ const AppComponent = ({
       <ApolloProvider client={client}>
         <Provider store={store}>
           <Layout>
-            <AnimatePresence>
-              <Component {...pageProps} key={router.route} />
-            </AnimatePresence>
+            <Component {...pageProps} key={router.route} />
           </Layout>
         </Provider>
       </ApolloProvider>
