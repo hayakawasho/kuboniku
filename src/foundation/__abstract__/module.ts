@@ -1,6 +1,6 @@
 import { Controller } from 'stimulus'
-import { getData } from '../foundation/utils/html'
-import { html, body } from '../foundation/constants/env'
+import { getData } from '~/foundation/utils/html'
+import { html, body } from '~/foundation/constants/env'
 
 export default class extends Controller {
   readonly html = html
