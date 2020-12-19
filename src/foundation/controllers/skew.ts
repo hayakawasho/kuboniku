@@ -1,6 +1,6 @@
 import Module from '../__abstract__/module'
-import { EVENTS } from '../foundation/constants/const'
-import E from '../foundation/utils/E'
+import { EVENTS } from '~/foundation/constants/const'
+import E from '~/foundation/utils/E'
 
 const defaults = {
   val: 1,
