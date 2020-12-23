@@ -21,14 +21,6 @@ export default class {
       type: 'v3',
       value: new THREE.Color(store.getState().ui.themeColor),
     },
-    uTransition: {
-      type: 'v4',
-      value: new THREE.Vector4(),
-    },
-    uActiveTransition: {
-      type: 'f',
-      value: null,
-    },
     uActiveClouds: {
       type: 'f',
       value: null,
@@ -42,10 +34,6 @@ export default class {
       value: null,
     },
     uSamplerIn: {
-      type: 't',
-      value: null,
-    },
-    uSampler: {
       type: 't',
       value: null,
     },
@@ -117,10 +105,6 @@ export default class {
     this._uniforms.uResolution.value.y = value
   }
 
-  set sampler(value) {
-    this._uniforms.uSampler.value = value
-  }
-
   set samplerIn(value) {
     this._uniforms.uSamplerIn.value = value
   }
@@ -133,10 +117,6 @@ export default class {
     this._transforms = value
 
     this.transform()
-  }
-
-  get transition() {
-    return this._uniforms.uTransition
   }
 
   get camera() {
