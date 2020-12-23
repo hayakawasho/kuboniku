@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import loadable from '@loadable/component'
 import { useSelector, useDispatch } from 'react-redux'
-import { uiSelector, DOM_READY } from '~/state/ui'
+import { appSelector, DOM_READY } from '~/state/app'
 
 import { EVENTS } from '~/foundation/constants/const'
 
@@ -10,7 +10,7 @@ import Sh from '~/foundation/components/sh'
 import Nav from '~/foundation/components/nav'
 import Mask from '~/foundation/components/mask'
 
-const Gl = loadable(() => import('~/context/canvas/canvas'))
+const Gl = loadable(() => import('~/context/canvas'))
 const ViewportRef = loadable(
   () => import('~/foundation/components/viewportRef')
 )
@@ -23,7 +23,7 @@ if (process.browser) {
 }
 
 const Layout = ({ children }) => {
-  const { domReady } = useSelector(uiSelector)
+  const { domReady } = useSelector(appSelector)
   const dispatch = useDispatch()
   const router = useRouter()
   const appRef = useRef(null)

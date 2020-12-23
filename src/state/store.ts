@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import uiReducer from './ui'
+import appReducer from './app'
 
 const rootReducer = combineReducers({
   ui: uiReducer,
+  app: appReducer,
 })
 
 const store = configureStore({
