@@ -40,3 +40,7 @@
   height: 100%;
   pointer-events: none;
 }
+
+img[decoding=async] {
+  transition: visibility .5s ease;
+}

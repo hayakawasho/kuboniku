@@ -45,6 +45,10 @@
     opacity: .2;
     z-index: 1;
   }
+
+  img {
+    filter: grayscale(1);
+  }
 }
 
 .heading {

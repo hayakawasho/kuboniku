@@ -8,7 +8,7 @@ import client from '~/client/apollo'
 // import { AnimatePresence } from 'framer-motion'
 
 import 'ress'
-import '~/foundation/styles/index.scss'
+import '~/assets/styles/global.scss'
 
 if (process.browser) {
   require('~/client')

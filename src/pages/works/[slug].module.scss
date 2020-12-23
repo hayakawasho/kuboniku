@@ -62,12 +62,12 @@
       height: 100%;
     }
   }
-}
 
-.kv--next {
-  .kv__img {
-    img {
-      filter: grayscale(100%);
+  &:global(.is-next) {
+    .kv__img {
+      img {
+        filter: grayscale(1);
+      }
     }
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import SEO from '~/foundation/seo'
-
 import client from '~/client/apollo'
 import { gql } from '@apollo/client'
 
@@ -24,7 +23,9 @@ const Component = ({ data }) => {
 
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
           {data.posts.edges.map((item, index) => (
-            <Entry data={item} index={total - index} key={index} />
+            <article className="o-grid__item" data-smooth-item>
+              <Entry data={item} index={total - index} key={index} />
+            </article>
           ))}
         </div>
         <div className={styles.loader} />
