@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { uiSelector } from '~/state/ui'
+import { appSelector } from '~/state/app'
 
 const Component = React.memo(() => {
-  const { scrolling } = useSelector(uiSelector)
+  const { scrolling } = useSelector(appSelector)
 
   return (
     <>
