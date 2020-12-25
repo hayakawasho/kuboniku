@@ -14,10 +14,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
     <>
       <Link href={'/works/' + data.node.slug}>
         <a className={styles.entry}>
-          <div
-            className="c-aspect"
-            style={{ backgroundColor: `${data.node.acf.themeColor}` }}
-          />
+          <div className="c-aspect" />
           <div className="u-abs u-pos-tl u-fit">
             <div className={styles.eyecatch}>
               <Image

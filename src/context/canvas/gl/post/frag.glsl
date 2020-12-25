@@ -20,7 +20,6 @@ uniform vec3 uCol;
 varying vec2 vUv;
 
 void main() {
-
   vec2 uv2 = -1. + 1. * gl_FragCoord.xy / uResolution.xy;
   uv2.x *= uResolution.x / uResolution.y;
 
@@ -35,8 +34,8 @@ void main() {
     visualOut.rgb += circle(uCol, uRad * 1.25, uBlur, coord, uv2) * (uAlpha * .75);
 
     coord = vec2( -2., .1);
-    visualIn.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.25);
-    visualOut.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.25);
+    visualIn.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.);
+    visualOut.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.);
   }
 
   vec3 mask = vec3(0.);

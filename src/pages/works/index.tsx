@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useRef, useCallback, useEffect } from 'react'
 import SEO from '~/foundation/seo'
 import client from '~/client/apollo'
 import { gql } from '@apollo/client'
+import { useInView } from 'react-intersection-observer'
 
 import styles from './index.module.scss'
-
 import Entry from '~/foundation/components/_works/entry'
 
 const Component = ({ data }) => {
   const { posts } = data
   const { total } = posts.pageInfo.offsetPagination
+  const [ref, inView] = useInView({
+    rootMargin: '200px 0px',
+  })
+
+  useEffect(() => {
+    if (inView) {
+      console.log(client)
+    }
+  }, [inView])
 
   return (
     <>
@@ -23,12 +32,12 @@ const Component = ({ data }) => {
 
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
           {data.posts.edges.map((item, index) => (
-            <article className="o-grid__item" data-smooth-item>
-              <Entry data={item} index={total - index} key={index} />
+            <article className="o-grid__item" data-smooth-item key={index}>
+              <Entry data={item} index={total - index} />
             </article>
           ))}
         </div>
-        <div className={styles.loader} />
+        <div className={styles.loader} ref={ref} />
       </div>
     </>
   )
