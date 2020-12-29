@@ -10,10 +10,18 @@ import { SET_THEME_COLOR } from '~/state/ui'
 const Component = React.memo(({ data, index }: { data; index }) => {
   const dispatch = useDispatch()
 
+  const handlePointerDown = () => {
+    dispatch(SET_THEME_COLOR(data.node.acf.themeColor))
+  }
+
   return (
     <>
       <Link href={'/works/' + data.node.slug}>
-        <a className={styles.entry}>
+        <a
+          className={styles.entry}
+          onMouseEnter={handlePointerDown}
+          onTouchStart={handlePointerDown}
+        >
           <div className="c-aspect" />
           <div className="u-abs u-pos-tl u-fit">
             <div className={styles.eyecatch}>

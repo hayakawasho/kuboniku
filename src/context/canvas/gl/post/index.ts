@@ -4,7 +4,6 @@ const vertexShader = require('./vert.glsl').default
 const fragmentShader = require('./frag.glsl').default
 
 import store from '~/state/store'
-import { SET_THEME_COLOR } from '~/state/ui'
 
 export default class {
   private _transforms
@@ -19,7 +18,7 @@ export default class {
     },
     uCol: {
       type: 'v3',
-      value: new THREE.Color(store.getState().ui.themeColor),
+      value: new THREE.Color(this._getColor()),
     },
     uActiveClouds: {
       type: 'f',
@@ -59,8 +58,18 @@ export default class {
     },
   }
 
+  private _getColor() {
+    return store.getState().ui.themeColor
+  }
+
   constructor() {
     this._setup()
+
+    store.subscribe(() => {
+      // if (this._getCurrentColor() !== store.getState().ui.themeColor) {
+      this._uniforms.uCol.value = new THREE.Color(this._getColor())
+      // }
+    })
   }
 
   private _setup() {
