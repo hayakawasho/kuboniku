@@ -7,11 +7,16 @@ const httpLink = createHttpLink({
   uri: WP_API_END_POINT,
 });
 
-const cache = new InMemoryCache();
-
 const client = new ApolloClient({
+  ssrMode: true,
   link: httpLink,
-  cache,
+  cache: new InMemoryCache(),
+  ssrForceFetchDelay: 100,
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network',
+    },
+  },
 });
 
 export default client;

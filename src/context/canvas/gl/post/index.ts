@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { gsap } from 'gsap';
 
 const vertexShader = require('./vert.glsl').default;
 const fragmentShader = require('./frag.glsl').default;
@@ -66,7 +67,12 @@ export default class {
     this._setup();
 
     store.subscribe(() => {
-      this._uniforms.uCol.value = new THREE.Color(this._getColor());
+      const col = new THREE.Color(this._getColor());
+      gsap.to(this._uniforms.uCol.value, 0.8, {
+        r: col.r,
+        g: col.g,
+        b: col.b,
+      });
     });
   }
 

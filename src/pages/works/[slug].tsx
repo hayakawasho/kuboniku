@@ -32,8 +32,8 @@ const Component = ({ data }) => {
             variants={{
               animate: {
                 transition: {
-                  staggerChildren: 0.48,
-                  delayChildren: 0.3,
+                  staggerChildren: 0.24,
+                  delayChildren: 0.4,
                 },
               },
             }}

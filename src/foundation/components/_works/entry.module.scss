@@ -1,4 +1,4 @@
-@use '~css/base/_import.scss';
+@import '~css/base/_import.scss';
 
 .entry {
   position: relative;
@@ -27,6 +27,14 @@
       padding-right: 3.6rem;
     }
   }
+
+  &:hover {
+    .eyecatch {
+      img {
+        filter: grayscale(0);
+      }
+    }
+  }
 }
 
 .eyecatch {
@@ -36,9 +44,12 @@
   bottom: 0;
   left: 0;
   opacity: .8;
+  backface-visibility: hidden;
 
   img {
     filter: grayscale(1);
+    backface-visibility: hidden;
+    transition: filter 1s;
   }
 }
 
