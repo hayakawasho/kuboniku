@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './entry.module.scss';
@@ -9,18 +9,26 @@ import { SET_UI_COLOR } from '~/state/ui';
 
 const Component = React.memo(({ data, index }: { data; index }) => {
   const dispatch = useDispatch();
+  const [isHover, setHover] = useState(false);
 
   const handlePointerDown = () => {
+    setHover(true);
     dispatch(SET_UI_COLOR(data.node.acf.themeColor));
+  };
+
+  const handlePointerUp = () => {
+    setHover(false);
   };
 
   return (
     <>
       <Link href={'/works/' + data.node.slug}>
         <a
-          className={styles.entry}
+          className={`${styles.entry} ${isHover ? 'is-hover' : ''}`}
           onMouseEnter={handlePointerDown}
           onTouchStart={handlePointerDown}
+          onMouseLeave={handlePointerUp}
+          onTouchEnd={handlePointerUp}
         >
           <div className="c-aspect" />
           <div className="u-abs u-pos-tl u-fit">

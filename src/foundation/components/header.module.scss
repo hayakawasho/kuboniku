@@ -24,16 +24,11 @@
 
 .menu {
   position: fixed;
-  top: 2.5rem;
-  right: 2rem;
+  top: .8rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
   z-index: 101;
-  width: 2rem;
-  height: 1.2rem;
-
-  @media (--pc) {
-    top: 3.2rem;
-    right: 4.8rem;
-  }
 
   &:global(.is-animating) {
     pointer-events: none;

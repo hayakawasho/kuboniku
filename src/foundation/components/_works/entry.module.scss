@@ -28,10 +28,12 @@
     }
   }
 
-  &:hover {
-    .eyecatch {
-      img {
-        filter: grayscale(0);
+  &:global(.is-hover) {
+    :local {
+      .eyecatch {
+        img {
+          filter: grayscale(0);
+        }
       }
     }
   }
