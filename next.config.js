@@ -3,7 +3,8 @@ const Fiber = require('fibers')
 
 const nextConfig = {
   experimental: {
-    documentMiddleware: true
+    documentMiddleware: true,
+    optimizeFonts: true,
   },
 
   env: {

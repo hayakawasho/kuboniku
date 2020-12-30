@@ -1,10 +1,10 @@
-import Document, { Head, Html, Main, NextScript } from 'next/document'
-import { NextPageContext } from 'next'
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { NextPageContext } from 'next';
 import {
   DocumentInitialProps,
   RenderPage,
-} from 'next/dist/next-server/lib/utils'
-import basicAuthMiddleware from 'nextjs-basic-auth-middleware'
+} from 'next/dist/next-server/lib/utils';
+import basicAuthMiddleware from 'nextjs-basic-auth-middleware';
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -16,11 +16,11 @@ class MyDocument extends Document {
         users: [],
         includePaths: ['/'],
         excludePaths: [],
-      })
+      });
     }
 
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
   }
 
   render(): JSX.Element {
@@ -32,8 +32,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

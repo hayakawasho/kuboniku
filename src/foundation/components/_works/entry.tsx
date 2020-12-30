@@ -1,18 +1,18 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import styles from './entry.module.scss'
-import Utils from '~/foundation/utils/Utils'
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from './entry.module.scss';
+import Utils from '~/foundation/utils/Utils';
 
-import { useDispatch } from 'react-redux'
-import { SET_THEME_COLOR } from '~/state/ui'
+import { useDispatch } from 'react-redux';
+import { SET_UI_COLOR } from '~/state/ui';
 
 const Component = React.memo(({ data, index }: { data; index }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handlePointerDown = () => {
-    dispatch(SET_THEME_COLOR(data.node.acf.themeColor))
-  }
+    dispatch(SET_UI_COLOR(data.node.acf.themeColor));
+  };
 
   return (
     <>
@@ -44,7 +44,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
         </a>
       </Link>
     </>
-  )
-})
+  );
+});
 
-export default Component
+export default Component;

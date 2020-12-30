@@ -1,39 +1,63 @@
-import React, { useEffect, useRef } from 'react'
-import SEO from '~/foundation/seo'
+import React, { useEffect, useRef } from 'react';
+import SEO from '~/foundation/seo';
+import { motion } from 'framer-motion';
+import { fadeInUp } from '~/foundation/animations/fadeInUp';
 
-import styles from './[slug].module.scss'
+import styles from './[slug].module.scss';
 
-import Link from 'next/link'
-import Image from 'next/image'
-import client from '~/client/apollo'
-import { gql } from '@apollo/client'
-import { useDispatch } from 'react-redux'
-import { SET_THEME_COLOR } from '~/state/ui'
-
-// let dayjs
+import Link from 'next/link';
+import Image from 'next/image';
+import client from '~/client/apollo';
+import { gql } from '@apollo/client';
+import { useDispatch } from 'react-redux';
+import { SET_UI_COLOR } from '~/state/ui';
 
 const Component = ({ data }) => {
-  const { post } = data
+  const { post } = data;
+  const dispatch = useDispatch();
+  const launch = post.date;
 
-  const dispatch = useDispatch()
-
-  dispatch(SET_THEME_COLOR(post.acf.themeColor))
-
-  // const launch = dayjs(post.date).format('MMMM, D, YYYY')
-  const launch = post.date
+  dispatch(SET_UI_COLOR(post.acf.themeColor));
 
   return (
     <>
       <SEO title={post.title} />
       <div data-controller="skew">
         <div className={styles.kv} data-smooth-item>
-          <div className={styles.kv__cont} data-target="skew.item">
-            <h1 className={styles.heading}>{post.title}</h1>
-            <p>
-              {post.acf.category.name}
-              <i className="icon-arrow-right" />
+          <motion.div
+            className={styles.kv__cont}
+            data-target="skew.item"
+            initial="initial"
+            animate="animate"
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.48,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
+          >
+            <h1 className={styles.heading}>
+              <div className="u-ovh u-inline-block">
+                <motion.span
+                  variants={fadeInUp}
+                  className="u-inline-block u-origin-left"
+                >
+                  {post.title}
+                </motion.span>
+              </div>
+            </h1>
+            <p className="u-ovh">
+              <motion.span
+                variants={fadeInUp}
+                className="u-inline-block u-origin-left"
+              >
+                {post.acf.category.name}
+                <i className="icon-arrow-right" />
+              </motion.span>
             </p>
-          </div>
+          </motion.div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
               src={post.acf.eyecatch.sourceUrl}
@@ -95,9 +119,9 @@ const Component = ({ data }) => {
             {post.acf.gallery.map((i, index) => {
               const aspect = Math.round(
                 (i.mediaDetails.height / i.mediaDetails.width) * 100
-              )
+              );
               return (
-                <li className="u-rel" key={index}>
+                <motion.li className="u-rel" key={index}>
                   <div
                     className="c-aspect"
                     style={{
@@ -112,8 +136,8 @@ const Component = ({ data }) => {
                     objectFit="cover"
                     objectPosition="50% 50%"
                   />
-                </li>
-              )
+                </motion.li>
+              );
             })}
           </ul>
 
@@ -143,10 +167,10 @@ const Component = ({ data }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Component
+export default Component;
 
 export const GET_POST = gql`
   query GET_POST($slug: String) {
@@ -188,7 +212,7 @@ export const GET_POST = gql`
       }
     }
   }
-`
+`;
 
 export async function getServerSideProps({ params }) {
   const { data } = await client.query({
@@ -196,7 +220,7 @@ export async function getServerSideProps({ params }) {
     variables: {
       slug: params?.slug ?? '',
     },
-  })
+  });
 
   return {
     props: {
@@ -205,9 +229,5 @@ export async function getServerSideProps({ params }) {
         path: params?.slug,
       },
     },
-  }
+  };
 }
-
-// if (process.browser) {
-//   dayjs = require('dayjs')
-// }

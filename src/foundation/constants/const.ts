@@ -13,8 +13,8 @@ export const EVENTS = {
   CLICK: 'EVENT.CLICK',
   OPEN_MENU: 'EVENT.OPEN_MENU',
   CLOSE_MENU: 'EVENT.CLOSE_MENU',
-}
+};
 
 export const SIZES = {
   DEFAULT: 768,
-}
+};

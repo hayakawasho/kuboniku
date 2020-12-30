@@ -1,4 +1,4 @@
-const rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/
+const rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
 
 /**
  * Parse value to data type.
@@ -9,28 +9,28 @@ const rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/
  */
 export const getData = data => {
   if (data === 'true') {
-    return true
+    return true;
   }
 
   if (data === 'false') {
-    return false
+    return false;
   }
 
   if (data === 'null') {
-    return null
+    return null;
   }
 
   // Only convert to a number if it doesn't change the string
   if (data === +data + '') {
-    return +data
+    return +data;
   }
 
   if (rbrace.test(data)) {
-    return JSON.parse(data)
+    return JSON.parse(data);
   }
 
-  return data
-}
+  return data;
+};
 
 /**
  * Get element data attributes
@@ -38,19 +38,19 @@ export const getData = data => {
  * @return  {Array}       data
  */
 export const getNodeData = node => {
-  const data: { [key: string]: string } = {}
-  const attrs = node.dataset
+  const data: { [key: string]: string } = {};
+  const attrs = node.dataset;
 
   for (const i in attrs) {
-    data[i] = getData(attrs[i])
+    data[i] = getData(attrs[i]);
   }
 
-  return data
-}
+  return data;
+};
 
 export const escapeHtml = str => {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-}
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
 
 /**
  * Prepare HTML content that contains mustache characters for use with Ractive
@@ -58,5 +58,5 @@ export const escapeHtml = str => {
  * @return {string}
  */
 export const unescapeHtml = str => {
-  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-}
+  return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+};

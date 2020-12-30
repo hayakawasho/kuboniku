@@ -1,5 +1,5 @@
-import React from 'react'
-import SEO from '~/foundation/seo'
+import React from 'react';
+import SEO from '~/foundation/seo';
 
 const Component: React.FC = () => (
   <>
@@ -9,6 +9,6 @@ const Component: React.FC = () => (
       <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
     </div>
   </>
-)
+);
 
-export default Component
+export default Component;

@@ -1,9 +1,9 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { appSelector } from '~/state/app'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { appSelector } from '~/state/app';
 
 const Component = React.memo(() => {
-  const { scrolling } = useSelector(appSelector)
+  const { scrolling } = useSelector(appSelector);
 
   return (
     <>
@@ -12,7 +12,7 @@ const Component = React.memo(() => {
         style={scrolling ? { pointerEvents: 'all' } : { pointerEvents: 'none' }}
       />
     </>
-  )
-})
+  );
+});
 
-export default Component
+export default Component;

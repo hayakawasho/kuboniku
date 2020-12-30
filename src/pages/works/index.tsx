@@ -1,24 +1,24 @@
-import React, { useRef, useCallback, useEffect } from 'react'
-import SEO from '~/foundation/seo'
-import client from '~/client/apollo'
-import { gql } from '@apollo/client'
-import { useInView } from 'react-intersection-observer'
+import React, { useRef, useCallback, useEffect } from 'react';
+import SEO from '~/foundation/seo';
+import client from '~/client/apollo';
+import { gql } from '@apollo/client';
+import { useInView } from 'react-intersection-observer';
 
-import styles from './index.module.scss'
-import Entry from '~/foundation/components/_works/entry'
+import styles from './index.module.scss';
+import Entry from '~/foundation/components/_works/entry';
 
 const Component = ({ data }) => {
-  const { posts } = data
-  const { total } = posts.pageInfo.offsetPagination
+  const { posts } = data;
+  const { total } = posts.pageInfo.offsetPagination;
   const [ref, inView] = useInView({
     rootMargin: '200px 0px',
-  })
+  });
 
   useEffect(() => {
     if (inView) {
-      console.log(client)
+      console.log(client);
     }
-  }, [inView])
+  }, [inView]);
 
   return (
     <>
@@ -40,10 +40,10 @@ const Component = ({ data }) => {
         <div className={styles.loader} ref={ref} />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Component
+export default Component;
 
 export const GET_POSTS = gql`
   query {
@@ -68,16 +68,16 @@ export const GET_POSTS = gql`
       }
     }
   }
-`
+`;
 
 export async function getServerSideProps() {
   const { data } = await client.query({
     query: GET_POSTS,
-  })
+  });
 
   return {
     props: {
       data,
     },
-  }
+  };
 }
