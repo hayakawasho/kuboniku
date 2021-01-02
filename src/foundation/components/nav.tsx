@@ -85,8 +85,8 @@ const Component = React.memo(() => {
     tl.fromTo(
       navLinksDOM,
       {
-        skewY: -20,
-        y: 60,
+        skewY: -15,
+        y: 40,
         scale: 0.9,
         opacity: 1,
       },
@@ -95,7 +95,7 @@ const Component = React.memo(() => {
         skewY: 0,
         y: 0,
         scale: 1,
-        stagger: 0.09,
+        stagger: 0.06,
         ease: 'power3.inOut',
       },
       '-=0.9'
@@ -152,8 +152,8 @@ const Component = React.memo(() => {
       navLinksDOM.reverse(),
       {
         duration: 0.8,
-        skewY: 20,
-        y: -60,
+        skewY: 15,
+        y: -40,
         scale: 0.9,
         opacity: 0,
         stagger: 0.06,

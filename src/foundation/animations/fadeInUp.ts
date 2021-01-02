@@ -1,4 +1,4 @@
-const expoOut = [0.19, 1, 0.22, 1];
+const ease = [0.76, 0, 0.24, 1];
 
 export const fadeInUp = {
   initial: {
@@ -14,7 +14,7 @@ export const fadeInUp = {
     skewY: 0,
     transition: {
       duration: 1.2,
-      ease: expoOut,
+      ease,
     },
   },
 };
