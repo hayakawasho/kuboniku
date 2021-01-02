@@ -86,7 +86,7 @@ const Component = React.memo(() => {
       navLinksDOM,
       {
         rotation: -14,
-        yPercent: 105,
+        yPercent: 110,
         opacity: 1,
       },
       {
@@ -94,9 +94,9 @@ const Component = React.memo(() => {
         rotation: 0,
         yPercent: 0,
         stagger: 0.1,
-        ease: 'expo.out',
+        ease: 'power3.inOut',
       },
-      '-=0.8'
+      '-=0.9'
     );
 
     await Utils.nextTick();
@@ -147,13 +147,13 @@ const Component = React.memo(() => {
     );
 
     tl.to(
-      navLinksDOM,
+      navLinksDOM.reverse(),
       {
-        duration: 0.6,
+        duration: 0.55,
         rotation: 14,
-        yPercent: -100,
+        yPercent: -110,
         opacity: 0,
-        stagger: 0.12,
+        stagger: 0.07,
         ease: 'power3.inOut',
       },
       '-=0.9'
@@ -201,7 +201,10 @@ const Component = React.memo(() => {
         }`}
       >
         <div className="u-in">
-          <div className={`${styles.navMenu__mask} u-mobile`} />
+          <div
+            className={`${styles.navMenu__mask} u-mobile`}
+            onClick={closeMenu}
+          />
           <div className={`${styles.navMenu__bg} u-mobile`} ref={navRef} />
           <ul className={styles.menuList}>
             <li>
