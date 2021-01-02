@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import styles from './nav.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { uiSelector, SET_MENU_ANIMATING } from '~/state/ui';
+import { uiSelector, SET_MENU_ANIMATING, CLOSE_MENU } from '~/state/ui';
 import { gsap } from 'gsap';
 import Utils from '~/foundation/utils/Utils';
 
@@ -155,6 +155,10 @@ const Component = React.memo(() => {
     )`;
   };
 
+  const closeMenu = () => {
+    dispatch(CLOSE_MENU());
+  };
+
   useEffect(() => {
     !initialState && setInitialState(true);
     initialState && toggleMenu();
@@ -173,7 +177,9 @@ const Component = React.memo(() => {
           <ul className={styles.menuList}>
             <li>
               <Link href="/works">
-                <a className={styles.link}>Works</a>
+                <a className={styles.link} onClick={closeMenu}>
+                  Works
+                </a>
               </Link>
             </li>
             <li>

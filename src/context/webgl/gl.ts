@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import Sample from './visuals/sample';
 import Post from './post';
-import { dpr } from '../../../foundation/constants/env';
-import { deg2rad } from '../../../foundation/utils/math';
-import E from '../../../foundation/utils/E';
-import { EVENTS } from '../../../foundation/constants/const';
+import { dpr } from '~/foundation/constants/env';
+import { deg2rad } from '~/foundation/utils/math';
+import E from '~/foundation/utils/E';
+import { EVENTS } from '~/foundation/constants/const';
 import { gsap } from 'gsap';
 
 export default class Gl {
@@ -68,7 +68,7 @@ export default class Gl {
     this._setSize(this.state.ww, this.state.wh);
 
     gsap.ticker.add(this._raf);
-    gsap.ticker.fps(60);
+    gsap.ticker.fps(15);
     E.on(EVENTS.RESIZE, this._handleResize);
 
     const ops = {

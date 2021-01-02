@@ -9,8 +9,7 @@ import { EVENTS } from '~/foundation/constants/const';
 import Header from '~/foundation/components/header';
 import Nav from '~/foundation/components/nav';
 import Mask from '~/foundation/components/mask';
-
-const Gl = loadable(() => import('~/context/canvas'));
+const Webgl = loadable(() => import('~/context/webgl'));
 const ViewportRef = loadable(
   () => import('~/foundation/components/viewportRef')
 );
@@ -60,7 +59,7 @@ const Layout = ({ children }) => {
           {children}
         </main>
         <Cursor />
-        <Gl />
+        <Webgl />
       </div>
     </>
   );
