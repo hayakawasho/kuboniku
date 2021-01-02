@@ -153,7 +153,7 @@ const Component = React.memo(() => {
         rotation: 14,
         yPercent: -110,
         opacity: 0,
-        stagger: 0.07,
+        stagger: 0.1,
         ease: 'power3.inOut',
       },
       '-=0.9'
