@@ -159,7 +159,7 @@ const Component = React.memo(() => {
         stagger: 0.085,
         ease: 'power3.inOut',
       },
-      '-=1.0'
+      '-=.9'
     );
 
     dispatch(SET_MENU_ANIMATING(true));
