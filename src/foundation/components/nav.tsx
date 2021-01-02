@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { uiSelector, SET_MENU_ANIMATING, CLOSE_MENU } from '~/state/ui';
 import { gsap } from 'gsap';
 import Utils from '~/foundation/utils/Utils';
+import { qsa } from '~/foundation/utils/dom';
 
 const clip = {
   x1: 100,
@@ -43,6 +44,8 @@ const Component = React.memo(() => {
 
   const show = async () => {
     const mount = navRef.current;
+    const navLinksDOM = qsa('.js-navLink');
+
     const tl = gsap.timeline({
       paused: true,
       onUpdate: () => {
@@ -64,20 +67,35 @@ const Component = React.memo(() => {
         x1: 0,
         ease: 'power3.inOut',
       }
-    );
-
-    tl.fromTo(
-      clip,
-      0.9,
-      {
-        x2: 100,
-      },
-      {
-        x2: 0,
-        ease: 'power3.inOut',
-      },
-      '-=0.8'
-    );
+    )
+      .fromTo(
+        clip,
+        0.9,
+        {
+          x2: 100,
+        },
+        {
+          x2: 0,
+          ease: 'power3.inOut',
+        },
+        '-=0.8'
+      )
+      .fromTo(
+        navLinksDOM,
+        {
+          rotation: -14,
+          yPercent: 105,
+          opacity: 1,
+        },
+        {
+          duration: 0.8,
+          rotation: 0,
+          yPercent: 0,
+          stagger: 0.1,
+          ease: 'expo.out',
+        },
+        '-=0.8'
+      );
 
     dispatch(SET_MENU_ANIMATING(true));
 
@@ -90,6 +108,8 @@ const Component = React.memo(() => {
 
   const hide = async () => {
     const mount = navRef.current;
+    const navLinksDOM = qsa('.js-navLink');
+
     const tl = gsap.timeline({
       paused: true,
       onUpdate: () => {
@@ -126,6 +146,19 @@ const Component = React.memo(() => {
         ease: 'power3.inOut',
       },
       '-=0.8'
+    );
+
+    tl.to(
+      navLinksDOM,
+      {
+        duration: 0.6,
+        rotation: 14,
+        yPercent: -100,
+        opacity: 0,
+        stagger: 0.12,
+        ease: 'power3.inOut',
+      },
+      '-=0.9'
     );
 
     dispatch(SET_MENU_ANIMATING(true));
@@ -177,13 +210,16 @@ const Component = React.memo(() => {
           <ul className={styles.menuList}>
             <li>
               <Link href="/works">
-                <a className={styles.link} onClick={closeMenu}>
+                <a className={`${styles.link} js-navLink`} onClick={closeMenu}>
                   Works
                 </a>
               </Link>
             </li>
             <li>
-              <a className={styles.link} href="mailto:k.bo.n10.05@gmail.com">
+              <a
+                className={`${styles.link} js-navLink`}
+                href="mailto:k.bo.n10.05@gmail.com"
+              >
                 Contact
               </a>
             </li>

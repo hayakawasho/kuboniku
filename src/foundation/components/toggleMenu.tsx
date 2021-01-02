@@ -13,25 +13,37 @@ const Component = React.memo(() => {
   const topRef = useRef(null);
   const bottomRef = useRef(null);
 
+  const handleClick = evt =>
+    menuOpen ? dispatch(CLOSE_MENU()) : dispatch(OPEN_MENU());
+
   const toggleMenu = () => {
     if (menuOpen) {
       disablePageScroll();
+      show();
     } else {
       enablePageScroll();
+      hide();
     }
   };
 
-  const handleClick = evt => {
-    if (menuOpen) {
-      dispatch(CLOSE_MENU());
-      close();
-    } else {
-      dispatch(OPEN_MENU());
-      open();
-    }
+  const show = () => {
+    gsap.to(ref.current, 0.8, {
+      rotation: 180,
+      ease: 'power3.inOut',
+    });
+
+    gsap.to(topRef.current, 0.8, {
+      y: 2.5,
+      ease: 'power3.inOut',
+    });
+
+    gsap.to(bottomRef.current, 0.8, {
+      scaleX: 0,
+      ease: 'power3.inOut',
+    });
   };
 
-  const close = () => {
+  const hide = () => {
     gsap.fromTo(
       ref.current,
       {
@@ -52,23 +64,6 @@ const Component = React.memo(() => {
 
     gsap.to(bottomRef.current, 0.8, {
       scaleX: 32 / 40,
-      ease: 'power3.inOut',
-    });
-  };
-
-  const open = () => {
-    gsap.to(ref.current, 0.8, {
-      rotation: 180,
-      ease: 'power3.inOut',
-    });
-
-    gsap.to(topRef.current, 0.8, {
-      y: 2.5,
-      ease: 'power3.inOut',
-    });
-
-    gsap.to(bottomRef.current, 0.8, {
-      scaleX: 0,
       ease: 'power3.inOut',
     });
   };
