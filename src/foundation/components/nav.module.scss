@@ -48,6 +48,7 @@
 
   &:global(.is-animating) {
     pointer-events: none;
+    will-change: clip-path;
   }
 }
 

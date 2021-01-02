@@ -67,39 +67,37 @@ const Component = React.memo(() => {
         x1: 0,
         ease: 'power3.inOut',
       }
-    )
-      .fromTo(
-        clip,
-        0.9,
-        {
-          x2: 100,
-        },
-        {
-          x2: 0,
-          ease: 'power3.inOut',
-        },
-        '-=0.8'
-      )
-      .fromTo(
-        navLinksDOM,
-        {
-          rotation: -14,
-          yPercent: 105,
-          opacity: 1,
-        },
-        {
-          duration: 0.8,
-          rotation: 0,
-          yPercent: 0,
-          stagger: 0.1,
-          ease: 'expo.out',
-        },
-        '-=0.8'
-      );
+    );
 
-    dispatch(SET_MENU_ANIMATING(true));
+    tl.fromTo(
+      clip,
+      0.9,
+      {
+        x2: 100,
+      },
+      {
+        x2: 0,
+        ease: 'power3.inOut',
+      },
+      '-=0.8'
+    );
 
-    mount.style.willChange = 'clip-path';
+    tl.fromTo(
+      navLinksDOM,
+      {
+        rotation: -14,
+        yPercent: 105,
+        opacity: 1,
+      },
+      {
+        duration: 0.8,
+        rotation: 0,
+        yPercent: 0,
+        stagger: 0.1,
+        ease: 'expo.out',
+      },
+      '-=0.8'
+    );
 
     await Utils.nextTick();
 
@@ -162,8 +160,6 @@ const Component = React.memo(() => {
     );
 
     dispatch(SET_MENU_ANIMATING(true));
-
-    mount.style.willChange = 'clip-path';
 
     await Utils.nextTick();
 
