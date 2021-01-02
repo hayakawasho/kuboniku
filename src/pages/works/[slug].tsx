@@ -42,7 +42,7 @@ const Component = ({ data }) => {
               <div className="u-ovh u-inline-block">
                 <motion.span
                   variants={fadeInUp}
-                  className="u-inline-block u-origin-left"
+                  className="u-inline-block u-origin-right"
                 >
                   {post.title}
                 </motion.span>
@@ -51,7 +51,7 @@ const Component = ({ data }) => {
             <p className="u-ovh">
               <motion.span
                 variants={fadeInUp}
-                className="u-inline-block u-origin-left"
+                className="u-inline-block u-origin-right"
               >
                 {post.acf.category.name}
                 <i className="icon-arrow-right" />

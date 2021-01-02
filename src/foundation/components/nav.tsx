@@ -95,7 +95,7 @@ const Component = React.memo(() => {
         skewY: 0,
         y: 0,
         scale: 1,
-        stagger: 0.07,
+        stagger: 0.09,
         ease: 'power3.inOut',
       },
       '-=0.9'
@@ -151,12 +151,12 @@ const Component = React.memo(() => {
     tl.to(
       navLinksDOM.reverse(),
       {
-        duration: 0.75,
+        duration: 0.8,
         skewY: 20,
         y: -60,
         scale: 0.9,
         opacity: 0,
-        stagger: 0.055,
+        stagger: 0.06,
         ease: 'power3.inOut',
       },
       '-=.9'
