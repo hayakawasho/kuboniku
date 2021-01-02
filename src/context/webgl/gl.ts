@@ -7,6 +7,12 @@ import E from '~/foundation/utils/E';
 import { EVENTS } from '~/foundation/constants/const';
 import { gsap } from 'gsap';
 
+let now = 0;
+let then = 0;
+const fps = 60;
+const interval = 1000 / fps;
+let rafID: number | boolean = -1;
+
 export default class Gl {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -67,22 +73,9 @@ export default class Gl {
 
     this._setSize(this.state.ww, this.state.wh);
 
-    gsap.ticker.add(this._raf);
-    gsap.ticker.fps(15);
     E.on(EVENTS.RESIZE, this._handleResize);
 
     const ops = {
-      // scene: {
-      //   radius: 2.5,
-      //   burst: 1.75,
-      //   amplitude: 12,
-      //   period: 5,
-      //   displ: 10
-      // },
-      // camera: {
-      //   dist: 350,
-      //   far: 600
-      // },
       post: {
         noise: true,
         clouds: true,
@@ -94,9 +87,16 @@ export default class Gl {
     };
 
     this._transform(ops);
+
+    this._start();
   }
 
   public destroy() {}
+
+  private _start() {
+    then = window.performance.now();
+    this._raf();
+  }
 
   private _resume() {
     this.state.stopped = false;
@@ -127,8 +127,19 @@ export default class Gl {
 
   private _raf() {
     if (!this.renderer) return;
-    this.renderer.render(this.post.scene, this.post.camera);
-    this.post.render();
+
+    rafID = window.requestAnimationFrame(this._raf);
+    now = window.performance.now();
+
+    const delta = now - then;
+
+    if (delta > interval) {
+      then = now - (delta % interval);
+      const time = now / 1000;
+
+      this.renderer.render(this.post.scene, this.post.camera);
+      this.post.render();
+    }
   }
 
   private _handleResize({ width, height }) {
