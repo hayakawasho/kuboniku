@@ -49,6 +49,12 @@
   &:global(.is-animating) {
     pointer-events: none;
     will-change: clip-path;
+
+    :local {
+      .link {
+        will-change: transform, opacity;
+      }
+    }
   }
 }
 
@@ -79,16 +85,12 @@
   color: #fff;
   pointer-events: auto;
   opacity: 0;
-  transform-origin: left bottom;
+  // transform-origin: left bottom;
   display: inline-block;
 
   @media (--pc) {
     font-size: 1.3rem;
     line-height: (52 / 26);
-  }
-
-  .is-animating & {
-    will-change: transform, opacity;
   }
 }
 
