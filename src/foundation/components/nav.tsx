@@ -85,14 +85,16 @@ const Component = React.memo(() => {
     tl.fromTo(
       navLinksDOM,
       {
-        rotation: -14,
-        yPercent: 110,
+        skewY: -20,
+        y: 60,
+        scale: 0.9,
         opacity: 1,
       },
       {
         duration: 0.8,
-        rotation: 0,
-        yPercent: 0,
+        skewY: 0,
+        y: 0,
+        scale: 1,
         stagger: 0.1,
         ease: 'power3.inOut',
       },
@@ -149,14 +151,15 @@ const Component = React.memo(() => {
     tl.to(
       navLinksDOM.reverse(),
       {
-        duration: 0.55,
-        rotation: 14,
-        yPercent: -110,
+        duration: 0.6,
+        skewY: 20,
+        y: -60,
+        scale: 0.9,
         opacity: 0,
-        stagger: 0.1,
+        stagger: 0.09,
         ease: 'power3.inOut',
       },
-      '-=0.9'
+      '-=1.0'
     );
 
     dispatch(SET_MENU_ANIMATING(true));

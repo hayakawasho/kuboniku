@@ -32,7 +32,7 @@ const Component = ({ data }) => {
             variants={{
               animate: {
                 transition: {
-                  staggerChildren: 0.24,
+                  staggerChildren: 0.12,
                   delayChildren: 0.4,
                 },
               },

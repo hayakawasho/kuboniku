@@ -5,7 +5,7 @@ export const fadeInUp = {
     opacity: 0,
     y: 60,
     scale: 0.9,
-    skewY: 20,
+    skewY: -20,
   },
   animate: {
     opacity: 1,
