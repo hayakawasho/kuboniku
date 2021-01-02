@@ -156,7 +156,7 @@ const Component = React.memo(() => {
         y: -60,
         scale: 0.9,
         opacity: 0,
-        stagger: 0.07,
+        stagger: 0.055,
         ease: 'power3.inOut',
       },
       '-=.9'
