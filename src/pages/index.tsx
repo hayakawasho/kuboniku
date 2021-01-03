@@ -19,7 +19,6 @@ const Component = ({ data }) => {
   const [slickAnimating, setSlickAnimating] = useState(false);
 
   const slickSetting = {
-    fade: true,
     dots: false,
     arrows: false,
     infinite: false,
@@ -30,7 +29,7 @@ const Component = ({ data }) => {
       {
         breakpoint: 640,
         settings: {
-          speed: 1000,
+          speed: 900,
           vertical: true,
           infinite: true,
           verticalSwiping: true,
@@ -69,7 +68,7 @@ const Component = ({ data }) => {
               y: `0%`,
               zIndex: 0,
             });
-            */
+          */
           },
           afterChange: index => {
             setSlickAnimating(false);
@@ -77,6 +76,11 @@ const Component = ({ data }) => {
         },
       },
     ],
+  };
+
+  const handleNextSlide = evt => {
+    evt.preventDefault();
+    slickRef.current.slickNext();
   };
 
   useEffect(() => {
@@ -102,12 +106,16 @@ const Component = ({ data }) => {
           {posts.edges.map((i, index) => (
             <Entry
               data={i}
-              index={Utils.zeroPadding(total - (index + 1), 2)}
+              index={Utils.zeroPadding(total - index, 2)}
               key={index}
             />
           ))}
         </Slider>
-        <button className={styles.scroll} ref={nextRef}>
+        <button
+          className={styles.scroll}
+          ref={nextRef}
+          onClick={handleNextSlide}
+        >
           <div className="u-in u-ovh">
             <div className={styles.scrollLabel}>
               {total}

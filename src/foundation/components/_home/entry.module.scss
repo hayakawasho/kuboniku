@@ -31,6 +31,27 @@
   }
 }
 
+.num {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  font-size: 1.2rem;
+  color: #fff;
+  line-height: 1;
+  position: absolute;
+  top: calc(-1em - 2rem);
+
+  @media (--pc) {
+    // font-size: 1.3rem;
+  }
+
+  > span {
+    font-size: .8rem;
+    letter-spacing: 0.02em;
+    margin-left: 0.5rem;
+  }
+}
+
 .kv {
   position: relative;
   width: 100%;
@@ -73,7 +94,7 @@
   height: 100%;
   opacity: 0.8;
   backface-visibility: hidden;
-  transition: 1s transform $power3easeInOut;
+  transition: .8s transform $power3easeInOut;
 
   img {
     filter: grayscale(1);
@@ -90,17 +111,17 @@
   width: 100%;
   padding-left: var(--grid);
   color: #fff;
-  transition: 1s transform $power3easeInOut;
+  transition: .8s transform $power3easeInOut;
 }
 
 :global(.is-animating) {
   :local {
     .kv__img {
-      transform: scale(1.25) skewX(2deg) skewY(5deg);
+      transform: scale(1.25) skewX(2deg) skewY(5deg) perspective(1000px) rotateX(-2deg);
     }
 
     .kv__cont {
-      transform: skewX(2deg) skewY(5deg);
+      transform: skewX(-1deg) skewY(2deg);
     }
   }
 }

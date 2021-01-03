@@ -16,14 +16,15 @@
 
     .slick-track {
       height: 100% !important;
+      transition: .9s transform $power3easeInOut !important;
     }
 
     .slick-slide {
       height: 100% !important;
       position: relative;
       overflow: hidden;
-      transition: 1s transform $power3easeInOut !important;
-      // opacity: 1 !important;
+      transition: .8s transform $power3easeInOut !important;
+      transform-origin: 50% 50%;
 
       > div {
         height: 100%;
@@ -39,8 +40,12 @@
 .slides:global(.is-animating) {
   :global {
     .slick-slide {
-      transform: scale(0.75) skewX(-2deg) skewY(-5deg);
+      transform: scale(0.75) skewX(-2deg) skewY(-5deg) perspective(1000px) rotateX(2deg);
     }
+  }
+
+  + .scroll {
+    pointer-events: none;
   }
 }
 

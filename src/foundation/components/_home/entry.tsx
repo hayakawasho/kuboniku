@@ -11,6 +11,10 @@ const Component = React.memo(({ data, index }: { data; index }) => {
           <Link href={'/works/' + data.node.slug}>
             <a className="u-abs u-fit u-z-10"></a>
           </Link>
+          <p className={styles.num}>
+            {index}
+            <span>Project</span>
+          </p>
           <h2 className={styles.heading}>{data.node.title}</h2>
           <p>
             {data.node.acf.category.name}
