@@ -9,6 +9,7 @@ import client from '~/client/apollo';
 // import { AnimatePresence } from 'framer-motion'
 
 import 'ress';
+import 'slick-carousel/slick/slick.css';
 import '~/assets/styles/global.scss';
 
 if (process.browser) {

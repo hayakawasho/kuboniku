@@ -177,15 +177,6 @@ export const GET_POST = gql`
     post: postBy(slug: $slug) {
       title
       date
-      previous {
-        title
-        slug
-        acf {
-          eyecatch {
-            sourceUrl
-          }
-        }
-      }
       acf {
         eyecatch {
           sourceUrl
@@ -207,6 +198,15 @@ export const GET_POST = gql`
           mediaDetails {
             width
             height
+          }
+        }
+      }
+      previous {
+        title
+        slug
+        acf {
+          eyecatch {
+            sourceUrl
           }
         }
       }

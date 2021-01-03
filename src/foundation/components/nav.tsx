@@ -44,7 +44,7 @@ const Component = React.memo(() => {
 
   const show = async () => {
     const mount = navRef.current;
-    const navLinksDOM = qsa('.js-navLink');
+    const navLabelDoms = qsa('.js-navLabel');
 
     const tl = gsap.timeline({
       paused: true,
@@ -83,7 +83,7 @@ const Component = React.memo(() => {
     );
 
     tl.fromTo(
-      navLinksDOM,
+      navLabelDoms,
       {
         skewY: -15,
         y: 40,
@@ -108,7 +108,7 @@ const Component = React.memo(() => {
 
   const hide = async () => {
     const mount = navRef.current;
-    const navLinksDOM = qsa('.js-navLink');
+    const navLabelDoms = qsa('.js-navLabel');
 
     const tl = gsap.timeline({
       paused: true,
@@ -149,7 +149,7 @@ const Component = React.memo(() => {
     );
 
     tl.to(
-      navLinksDOM.reverse(),
+      navLabelDoms.reverse(),
       {
         duration: 0.8,
         skewY: 15,
@@ -213,7 +213,7 @@ const Component = React.memo(() => {
             {
               // <li>
               //   <Link href="/about">
-              //     <a className={`${styles.link} js-navLink`} onClick={closeMenu}>
+              //     <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
               //       About
               //     </a>
               //   </Link>
@@ -221,14 +221,14 @@ const Component = React.memo(() => {
             }
             <li>
               <Link href="/works">
-                <a className={`${styles.link} js-navLink`} onClick={closeMenu}>
+                <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
                   Works
                 </a>
               </Link>
             </li>
             <li>
               <a
-                className={`${styles.link} js-navLink`}
+                className={`${styles.link} js-navLabel`}
                 href="mailto:k.bo.n10.05@gmail.com"
               >
                 Contact

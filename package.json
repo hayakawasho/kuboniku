@@ -36,6 +36,7 @@
     "reselect": "^4.0.0",
     "ress": "^3.0.0",
     "scroll-lock": "^2.1.4",
+    "slick-carousel": "^1.8.1",
     "stats.js": "^0.17.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-prettier": "^1.1.2",

@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import SEO from '~/foundation/seo';
-import Link from 'next/link';
+import Slider from 'react-slick';
+import Entry from '~/foundation/components/_home/entry';
+import styles from './index.module.scss';
 
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
 
 const Component = ({ data }) => {
   const { posts } = data;
+  const slickRef = useRef(null);
+  const slickProgressRef = useRef(null);
+  const [slickAnimating, setSlickAnimating] = useState(false);
+
+  const slickSetting = {
+    dots: false,
+    infinite: false,
+    speed: 350,
+    draggable: false,
+    cssEase: 'cubic-bezier(0.445, 0.05, 0.55, 0.95)',
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          speed: 300,
+          vertical: true,
+          adaptiveHeight: true,
+        },
+      },
+    ],
+  };
 
   return (
     <>
       <SEO title="NAGISA KUBO" />
       <div data-smooth-item />
+      <Slider className={`${styles.kv} u-cf`} ref={slickRef} {...slickSetting}>
+        {posts.edges.map((i, index) => (
+          <Entry data={i} index={index} key={index} />
+        ))}
+      </Slider>
     </>
   );
 };
@@ -29,6 +57,10 @@ export const GET_POSTS = gql`
             eyecatch {
               sourceUrl
             }
+            category {
+              name
+            }
+            themeColor
           }
         }
       }

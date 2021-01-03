@@ -84,8 +84,9 @@
   letter-spacing: .41em;
   color: #fff;
   pointer-events: auto;
-  opacity: 0;
   display: inline-block;
+  vertical-align: top;
+  opacity: 0;
 
   @media (--pc) {
     font-size: 1.3rem;

@@ -1,0 +1,111 @@
+@use '~css/base/_import.scss';
+
+.kv {
+  position: relative;
+  width: 100%;
+  height: calc(var(--vh) * 100);
+  perspective: 1000px;
+  overflow: hidden;
+
+  @media (--pc) {
+    height: 100vh;
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global {
+    .c-aspect {
+      padding: 0;
+      height: 100vh;
+    }
+
+    .slick-list {
+      height: 100% !important;
+    }
+
+    .slick-track {
+      height: 100% !important;
+    }
+
+    .slick-slide {
+      height: 100% !important;
+      position: relative;
+
+      > div {
+        height: 100%;
+      }
+    }
+
+    .slick-arrow {
+      position: absolute;
+    }
+  }
+}
+
+.kv__img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  backface-visibility: hidden;
+}
+
+.kv__cont {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  padding-left: var(--grid);
+  color: #fff;
+}
+
+.kv__scroll {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  overflow: hidden;
+  font-family: var(--font-en);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: 0.02em;
+  z-index: 2;
+
+  @media (--pc) {
+    font-size: 1.3rem;
+  }
+
+  span {
+    display: inline-block;
+    animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+    &::before {
+      position: absolute;
+      bottom: -30px;
+      display: block;
+      content: 'scroll';
+      transform-origin: left;
+      animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    }
+  }
+
+  :global {
+    .icon-arrow-down {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+    }
+  }
+}
