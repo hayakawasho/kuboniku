@@ -6,11 +6,11 @@ import styles from './entry.module.scss';
 const Component = React.memo(({ data, index }: { data; index }) => {
   return (
     <>
-      <div className={`${styles.kv}`}>
-        <Link href={'/works/' + data.node.slug}>
-          <a className="u-abs u-fit u-z-10"></a>
-        </Link>
+      <div className={`${styles.kv} js-slide`}>
         <div className={styles.kv__cont}>
+          <Link href={'/works/' + data.node.slug}>
+            <a className="u-abs u-fit u-z-10"></a>
+          </Link>
           <h2 className={styles.heading}>{data.node.title}</h2>
           <p>
             {data.node.acf.category.name}
@@ -26,15 +26,6 @@ const Component = React.memo(({ data, index }: { data; index }) => {
             objectPosition="50% 50%"
             priority
           />
-        </div>
-        <div className={styles.kv__scroll}>
-          <div className="u-in u-ovh">
-            <div className={styles.kv__scrollLabel}>
-              {index}
-              <span>Project</span>
-            </div>
-          </div>
-          <i className="icon-arrow-down" />
         </div>
       </div>
     </>

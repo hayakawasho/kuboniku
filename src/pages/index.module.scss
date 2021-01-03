@@ -1,32 +1,17 @@
 @use '~css/base/_import.scss';
 
-.kv {
+.slides {
   position: relative;
   width: 100%;
   height: calc(var(--vh) * 100);
-  perspective: 1000px;
-  overflow: hidden;
 
   @media (--pc) {
     height: 100vh;
   }
 
-  a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
   :global {
-    .c-aspect {
-      padding: 0;
-      height: 100vh;
-    }
-
     .slick-list {
-      height: 100% !important;
+      height: 100%;
     }
 
     .slick-track {
@@ -36,6 +21,9 @@
     .slick-slide {
       height: 100% !important;
       position: relative;
+      overflow: hidden;
+      transition: .7s transform !important;
+      opacity: 1 !important;
 
       > div {
         height: 100%;
@@ -48,58 +36,21 @@
   }
 }
 
-.kv__img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-  backface-visibility: hidden;
+.slides:global(.is-animating) {
+  :global {
+    .slick-slide {
+      transform: scale(0.75) skewX(-2deg) skewY(-5deg);
+    }
+  }
 }
 
-.kv__cont {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  padding-left: var(--grid);
-  color: #fff;
-}
-
-.kv__scroll {
+.scroll {
   position: absolute;
   bottom: 5rem;
   left: 50%;
   transform: translate(-50%, 0);
   overflow: hidden;
-  font-family: var(--font-en);
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #fff;
-  letter-spacing: 0.02em;
   z-index: 2;
-
-  @media (--pc) {
-    font-size: 1.3rem;
-  }
-
-  span {
-    display: inline-block;
-    animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-
-    &::before {
-      position: absolute;
-      bottom: -30px;
-      display: block;
-      content: 'scroll';
-      transform-origin: left;
-      animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-    }
-  }
 
   :global {
     .icon-arrow-down {
@@ -108,4 +59,35 @@
       margin-top: 1.2rem;
     }
   }
+}
+
+.scrollLabel {
+  font-family: var(--font-en);
+  font-weight: 700;
+  display: inline-block;
+  letter-spacing: -.02em;
+  font-size: 1.4rem;
+  color: #fff;
+  line-height: 1;
+
+  @media (--pc) {
+    font-size: 1.3rem;
+  }
+
+  > span {
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    margin-left: 0.4rem;
+  }
+
+  // animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+    // &::before {
+    //   position: absolute;
+    //   bottom: -30px;
+    //   display: block;
+    //   content: 'scroll';
+    //   transform-origin: left;
+    //   animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    // }
 }

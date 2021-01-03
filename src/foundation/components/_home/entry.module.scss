@@ -73,6 +73,7 @@
   height: 100%;
   opacity: 0.8;
   backface-visibility: hidden;
+  transition: .7s transform;
 
   img {
     filter: grayscale(1);
@@ -89,52 +90,18 @@
   width: 100%;
   padding-left: var(--grid);
   color: #fff;
+  transition: .7s transform;
 }
 
-.kv__scroll {
-  position: absolute;
-  bottom: 5rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  overflow: hidden;
-  z-index: 2;
+:global(.is-animating) {
+  :local {
+    .kv__img {
+      transform: scale(1.25) skewX(2deg) skewY(5deg);
+    }
 
-  :global {
-    .icon-arrow-down {
-      display: block;
-      text-align: center;
-      margin-top: 1.2rem;
+    .kv__cont {
+      transform: skewX(2deg) skewY(5deg);
     }
   }
 }
 
-.kv__scrollLabel {
-  font-family: var(--font-en);
-  font-weight: 700;
-  display: inline-block;
-  letter-spacing: -.02em;
-  font-size: 1.4rem;
-  color: #fff;
-  line-height: 1;
-
-  @media (--pc) {
-    font-size: 1.3rem;
-  }
-
-  > span {
-    font-size: 1rem;
-    letter-spacing: 0.02em;
-    margin-left: 0.4rem;
-  }
-
-  // animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-
-    // &::before {
-    //   position: absolute;
-    //   bottom: -30px;
-    //   display: block;
-    //   content: 'scroll';
-    //   transform-origin: left;
-    //   animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-    // }
-}

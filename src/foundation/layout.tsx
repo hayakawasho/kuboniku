@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import loadable from '@loadable/component';
 import { useSelector, useDispatch } from 'react-redux';
 import { appSelector, DOM_READY } from '~/state/app';
+import { uiSelector } from '~/state/ui';
 
 import { EVENTS } from '~/foundation/constants/const';
 
 import Header from '~/foundation/components/header';
 import Nav from '~/foundation/components/nav';
-import Mask from '~/foundation/components/mask';
+import Loader from '~/foundation/components/loader';
 const Webgl = loadable(() => import('~/context/webgl'));
 const ViewportRef = loadable(
   () => import('~/foundation/components/viewportRef')
@@ -23,6 +24,7 @@ if (process.browser) {
 
 const Layout = ({ children }) => {
   const { domReady } = useSelector(appSelector);
+  const { location } = useSelector(uiSelector);
   const dispatch = useDispatch();
   const router = useRouter();
   const appRef = useRef(null);
@@ -51,8 +53,8 @@ const Layout = ({ children }) => {
   return (
     <>
       <ViewportRef />
-      <Mask />
       <div id="app" ref={appRef}>
+        <Loader />
         <Header />
         <Nav />
         <main className="page" data-smooth>
