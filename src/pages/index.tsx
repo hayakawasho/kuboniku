@@ -3,18 +3,21 @@ import SEO from '~/foundation/seo';
 import Slider from 'react-slick';
 import Entry from '~/foundation/components/_home/entry';
 import styles from './index.module.scss';
+import Utils from '~/foundation/utils/Utils';
 
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
 
 const Component = ({ data }) => {
   const { posts } = data;
+  const { total } = posts.pageInfo.offsetPagination;
   const slickRef = useRef(null);
   const slickProgressRef = useRef(null);
   const [slickAnimating, setSlickAnimating] = useState(false);
 
   const slickSetting = {
     dots: false,
+    arrows: false,
     infinite: false,
     speed: 350,
     draggable: false,
@@ -25,7 +28,7 @@ const Component = ({ data }) => {
         settings: {
           speed: 300,
           vertical: true,
-          adaptiveHeight: true,
+          infinite: true,
         },
       },
     ],
@@ -34,12 +37,21 @@ const Component = ({ data }) => {
   return (
     <>
       <SEO title="NAGISA KUBO" />
-      <div data-smooth-item />
-      <Slider className={`${styles.kv} u-cf`} ref={slickRef} {...slickSetting}>
-        {posts.edges.map((i, index) => (
-          <Entry data={i} index={index} key={index} />
-        ))}
-      </Slider>
+      <div data-smooth-item>
+        <Slider
+          className={`${styles.kv} u-cf`}
+          ref={slickRef}
+          {...slickSetting}
+        >
+          {posts.edges.map((i, index) => (
+            <Entry
+              data={i}
+              index={Utils.zeroPadding(total - (index + 1), 2)}
+              key={index}
+            />
+          ))}
+        </Slider>
+      </div>
     </>
   );
 };
@@ -62,6 +74,11 @@ export const GET_POSTS = gql`
             }
             themeColor
           }
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
         }
       }
     }

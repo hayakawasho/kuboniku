@@ -3,6 +3,7 @@ import SEO from '~/foundation/seo';
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
 import { useInView } from 'react-intersection-observer';
+import Utils from '~/foundation/utils/Utils';
 
 import styles from './index.module.scss';
 import Entry from '~/foundation/components/_works/entry';
@@ -33,7 +34,7 @@ const Component = ({ data }) => {
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
           {posts.edges.map((item, index) => (
             <article className="o-grid__item" data-smooth-item key={index}>
-              <Entry data={item} index={total - index} />
+              <Entry data={item} index={Utils.zeroPadding(total - index, 2)} />
             </article>
           ))}
         </div>

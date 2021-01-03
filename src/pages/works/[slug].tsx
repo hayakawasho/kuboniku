@@ -70,7 +70,7 @@ const Component = ({ data }) => {
           </div>
           <div className={styles.kv__scroll}>
             <div className="u-in u-ovh">
-              <span>scroll</span>
+              <div className={styles.kv__scrollLabel}>scroll</div>
             </div>
             <i className="icon-arrow-down" />
           </div>

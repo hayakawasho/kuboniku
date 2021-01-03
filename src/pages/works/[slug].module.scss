@@ -111,26 +111,26 @@
     font-size: 1.3rem;
   }
 
-  span {
-    display: inline-block;
-    animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-
-    &::before {
-      position: absolute;
-      bottom: -30px;
-      display: block;
-      content: 'scroll';
-      transform-origin: left;
-      animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-    }
-  }
-
   :global {
     .icon-arrow-down {
       display: block;
       text-align: center;
       margin-top: 1.2rem;
     }
+  }
+}
+
+.kv__scrollLabel {
+  display: inline-block;
+  animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+  &::before {
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    content: 'scroll';
+    transform-origin: left;
+    animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 }
 
