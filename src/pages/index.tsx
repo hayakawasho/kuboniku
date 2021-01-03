@@ -29,6 +29,7 @@ const Component = ({ data }) => {
           speed: 300,
           vertical: true,
           infinite: true,
+          verticalSwiping: true,
         },
       },
     ],
