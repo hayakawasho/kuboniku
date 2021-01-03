@@ -30,21 +30,22 @@ const Component = ({ data }) => {
       {
         breakpoint: 640,
         settings: {
-          speed: 700,
+          speed: 1000,
           vertical: true,
           infinite: true,
           verticalSwiping: true,
           beforeChange: (oldIndex, newIndex) => {
-            const mount = qs('.js-slides');
-            const slides = qsa('.slick-slide', mount);
-            const direction = 1;
+            // const mount = qs('.js-slides');
+            // const slides = qsa('.slick-slide', mount);
+            // const direction = 1;
 
             setSlickAnimating(true);
 
-            gsap.set([slides[oldIndex], slides[newIndex]], {
-              autoAlpha: 1,
-            });
+            //gsap.set([slides[oldIndex], slides[newIndex]], {
+            //  autoAlpha: 1,
+            //});
 
+            /*
             gsap.fromTo(
               slides[oldIndex],
               0.7,
@@ -68,12 +69,10 @@ const Component = ({ data }) => {
               y: `0%`,
               zIndex: 0,
             });
+            */
           },
           afterChange: index => {
             setSlickAnimating(false);
-          },
-          onSwipe: direction => {
-            console.log(direction);
           },
         },
       },

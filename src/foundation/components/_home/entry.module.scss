@@ -73,7 +73,7 @@
   height: 100%;
   opacity: 0.8;
   backface-visibility: hidden;
-  transition: .7s transform;
+  transition: 1s transform $power3easeInOut;
 
   img {
     filter: grayscale(1);
@@ -90,7 +90,7 @@
   width: 100%;
   padding-left: var(--grid);
   color: #fff;
-  transition: .7s transform;
+  transition: 1s transform $power3easeInOut;
 }
 
 :global(.is-animating) {

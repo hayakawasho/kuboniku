@@ -1,4 +1,4 @@
-@use '~css/base/_import.scss';
+@import '~css/base/_import.scss';
 
 .slides {
   position: relative;
@@ -22,8 +22,8 @@
       height: 100% !important;
       position: relative;
       overflow: hidden;
-      transition: .7s transform !important;
-      opacity: 1 !important;
+      transition: 1s transform $power3easeInOut !important;
+      // opacity: 1 !important;
 
       > div {
         height: 100%;
