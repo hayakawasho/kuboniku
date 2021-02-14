@@ -1,20 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import loadable from '@loadable/component';
 import { useSelector, useDispatch } from 'react-redux';
 import { appSelector, DOM_READY } from '~/state/app';
-import { uiSelector } from '~/state/ui';
-
 import { EVENTS } from '~/foundation/constants/const';
 
-import Header from '~/foundation/components/header';
-import Nav from '~/foundation/components/nav';
-import Loader from '~/foundation/components/loader';
-const Webgl = loadable(() => import('~/context/webgl'));
-const ViewportRef = loadable(
-  () => import('~/foundation/components/viewportRef')
-);
-const Cursor = loadable(() => import('~/foundation/components/cursor'));
+import Header from '~/components/header/header';
+import Nav from '~/components/nav/nav';
+import Loader from '~/components/loader';
+import Webgl from '~/context/webgl';
+import ViewportRef from '~/components/viewportRef';
 
 let E;
 
@@ -24,7 +18,6 @@ if (process.browser) {
 
 const Layout = ({ children }) => {
   const { domReady } = useSelector(appSelector);
-  const { location } = useSelector(uiSelector);
   const dispatch = useDispatch();
   const router = useRouter();
   const appRef = useRef(null);
@@ -60,9 +53,9 @@ const Layout = ({ children }) => {
         <main className="page" data-smooth>
           {children}
         </main>
-        <Cursor />
         <Webgl />
       </div>
+      <div id="mobile-turn">Please turn your device.</div>
     </>
   );
 };

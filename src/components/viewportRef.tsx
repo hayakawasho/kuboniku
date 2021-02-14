@@ -1,13 +1,18 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
-import E from '~/foundation/utils/E';
 import debounce from 'lodash.debounce';
 import { EVENTS } from '~/foundation/constants/const';
 
-const Component = React.memo(() => {
-  const viewportRef = useRef(null);
+let E;
 
-  useLayoutEffect(() => {
+if (process.browser) {
+  E = require('~/foundation/utils/E').default;
+}
+
+const Component = React.memo(() => {
+  const ref = useRef(null);
+
+  useEffect(() => {
     function setSize(width: number, height: number) {
       E.emit(EVENTS.RESIZE, { width, height });
       const vh = window.innerHeight * 0.01;
@@ -17,17 +22,16 @@ const Component = React.memo(() => {
     function handleResize(entry: ResizeObserverEntry) {
       const rect = entry.contentRect;
       const { width, height } = rect;
-
       setSize(width, height);
     }
 
     setSize(window.innerWidth, window.innerHeight);
 
     new ResizeObserverHandler({
-      el: viewportRef.current,
+      el: ref.current,
       callback: debounce(
         (entry: ResizeObserverEntry) => handleResize(entry),
-        200
+        30
       ),
     }).init();
 
@@ -36,19 +40,7 @@ const Component = React.memo(() => {
 
   return (
     <>
-      <div ref={viewportRef} />
-      <style jsx>{`
-        div {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          pointer-events: none;
-          visibility: hidden;
-          z-index: -1;
-        }
-      `}</style>
+      <div ref={ref} className="viewport" />
     </>
   );
 });

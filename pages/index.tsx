@@ -1,0 +1,134 @@
+import React, { useRef, useState, useEffect, Fragment } from 'react';
+import SEO from '~/foundation/seo';
+import Link from 'next/link';
+import styles from './index.module.scss';
+import Utils from '~/foundation/utils/Utils';
+import { qsa, qs } from '~/foundation/utils/dom';
+import { gsap } from 'gsap';
+
+import client from '~/client/apollo';
+import { gql } from '@apollo/client';
+
+const Component = ({ data }) => {
+  const { posts } = data;
+  const { total } = posts.pageInfo.offsetPagination;
+  const now = 1;
+  const max = posts.edges.length;
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
+  const progressRef = useRef(null);
+
+  useEffect(() => {
+    const body = document.body;
+    body.classList.add('is-home');
+
+    return () => {
+      body.classList.remove('is-home');
+    };
+  }, []);
+
+  return (
+    <>
+      <SEO title="NAGISA KUBO" />
+      <div className={styles.screen}>
+        <ul className={styles.worksList}>
+          {posts.edges.map((item, i) => (
+            <li className="u-in" key={i}>
+              <div className={styles.entry}>
+                <Link href={`/works/${item.node.slug}`}>
+                  <a
+                    className="u-abs u-fit u-z-10"
+                    data-gl-texture={item.node.acf.eyecatch.sourceUrl}
+                    data-gl-id={item.node.slug}
+                  ></a>
+                </Link>
+                <div className={styles.g}>
+                  <p className={styles.num}>
+                    {Utils.zeroPadding(total - i, 2)}
+                    <span>Project</span>
+                  </p>
+                  <h2 className={styles.heading}>{item.node.title}</h2>
+                  <p>
+                    {item.node.acf.category.name}
+                    <i className="icon-arrow-right" />
+                  </p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <button type="button" className={styles.btm}>
+          <div className="u-in u-ovh">
+            <div className={styles.btm__label}>
+              {currentProjectIndex}
+              <span>Project</span>
+            </div>
+          </div>
+          <i className="icon-arrow-down" />
+        </button>
+
+        <div className="l-progress">
+          <div className="u-in">
+            <div className="c-progressCtrl">
+              <ol>
+                {posts.edges.map((item, i) => (
+                  <li>
+                    <span>{Utils.zeroPadding(i + 1, 2)}</span>
+                  </li>
+                ))}
+              </ol>
+              <div className="c-progressBar">
+                <span ref={progressRef} />
+              </div>
+              <div className="u-abs">
+                <span>{Utils.zeroPadding(max, 2)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Component;
+
+// Latest works
+export const GET_POSTS = gql`
+  query {
+    posts(first: 5) {
+      edges {
+        node {
+          title
+          slug
+          acf {
+            eyecatch {
+              sourceUrl
+            }
+            category {
+              name
+            }
+            themeColor
+          }
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
+    }
+  }
+`;
+
+export async function getServerSideProps() {
+  const { data } = await client.query({
+    query: GET_POSTS,
+  });
+
+  return {
+    props: {
+      data,
+    },
+  };
+}

@@ -1,32 +1,74 @@
-.progress {
+.l-progress {
+  position: fixed;
+  top: 50%;
+  right: 1rem;
+  z-index: 2;
+  pointer-events: none;
+  transform: translate(0,-50%);
+}
+
+.c-progressBar {
   position: relative;
   display: inline-block;
   width: 1px;
   height: 3.5rem;
   vertical-align: middle;
   background: currentColor;
+  margin: 1.5em auto;
 
   @media (--pc) {
     width: 2px;
     height: 4rem;
   }
 
-  & > span {
+  > span {
     position: absolute;
     top: 0;
     display: block;
     height: 100%;
     transform-origin: top center;
 
-    &::before {
+    &:before {
       display: block;
       width: 1px;
-      height: 100%;
-      content: '';
+      height: 50%;
+      content: "";
       background-color: #17899d;
 
       @media (--pc) {
         width: 2px;
+      }
+    }
+  }
+}
+
+.c-progressCtrl {
+  font-family: var(--font-en);
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: .2em;
+
+  > ol {
+    position: relative;
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+
+    > li {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      overflow: hidden;
+      line-height: 2;
+      white-space: nowrap;
+      opacity: 0;
+
+      &:first-child {
+        opacity: 1;
       }
     }
   }

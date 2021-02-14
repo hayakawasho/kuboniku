@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Fragment } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
@@ -6,7 +6,7 @@ import store from '~/state/store';
 import Layout from '~/foundation/layout';
 import { ApolloProvider } from '@apollo/client';
 import client from '~/client/apollo';
-// import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion';
 
 import 'ress';
 import 'slick-carousel/slick/slick.css';
@@ -43,7 +43,11 @@ const AppComponent = ({
       <ApolloProvider client={client}>
         <Provider store={store}>
           <Layout>
-            <Component {...pageProps} key={router.route} />
+            <AnimatePresence exitBeforeEnter initial={false}>
+              <Fragment key={router.route}>
+                <Component {...pageProps} />
+              </Fragment>
+            </AnimatePresence>
           </Layout>
         </Provider>
       </ApolloProvider>

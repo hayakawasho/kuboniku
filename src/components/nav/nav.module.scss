@@ -34,6 +34,7 @@
       100% calc(var(--vh) * 100),
       100% calc(var(--vh) * 100)
     );
+    backface-visibility: hidden;
   }
 
   &:global(.is-open) {
@@ -48,9 +49,16 @@
 
   &:global(.is-animating) {
     pointer-events: none;
-    will-change: clip-path;
 
     :local {
+      .navMenu__bg {
+        will-change: clip-path;
+      }
+
+      .navMenu__mask {
+        will-change: opacity;
+      }
+
       .link {
         will-change: transform, opacity;
       }

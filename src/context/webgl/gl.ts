@@ -1,17 +1,21 @@
 import * as THREE from 'three';
-import Sample from './visuals/sample';
-import Post from './post';
-import { dpr } from '~/foundation/constants/env';
+import Sample from './scene/noise/visuals/sample';
+import Post from './scene/noise/post';
 import { deg2rad } from '~/foundation/utils/math';
-import E from '~/foundation/utils/E';
 import { EVENTS } from '~/foundation/constants/const';
-import { gsap } from 'gsap';
 
 let now = 0;
 let then = 0;
 const fps = 60;
 const interval = 1000 / fps;
 let rafID: number | boolean = -1;
+const dpr = 1;
+
+let E;
+
+if (process.browser) {
+  E = require('~/foundation/utils/E').default;
+}
 
 export default class Gl {
   scene!: THREE.Scene;
@@ -33,8 +37,6 @@ export default class Gl {
   };
 
   constructor() {
-    E.bindAll(this, ['_raf', '_handleResize']);
-
     this.state = {
       stopped: false,
       resizing: false,
@@ -125,7 +127,7 @@ export default class Gl {
     }
   }
 
-  private _raf() {
+  private _raf = () => {
     if (!this.renderer) return;
 
     rafID = window.requestAnimationFrame(this._raf);
@@ -140,9 +142,9 @@ export default class Gl {
       this.renderer.render(this.post.scene, this.post.camera);
       this.post.render();
     }
-  }
+  };
 
-  private _handleResize({ width, height }) {
+  private _handleResize = ({ width, height }) => {
     const state = this.state;
 
     state.resizing = true;
@@ -150,7 +152,7 @@ export default class Gl {
     this._setSize(width, height);
 
     state.resizing = false;
-  }
+  };
 
   private _setSize(width: number, height: number) {
     const radFov = deg2rad(this.camera.fov);
@@ -165,6 +167,4 @@ export default class Gl {
     this.post.width = this.renderer.domElement.width;
     this.post.height = this.renderer.domElement.height;
   }
-
-  private _initMesh() {}
 }

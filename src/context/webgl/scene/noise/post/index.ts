@@ -60,7 +60,7 @@ export default class {
   };
 
   private _getColor() {
-    return store.getState().ui.UIColor;
+    return store.getState().ui.uiColor;
   }
 
   constructor() {

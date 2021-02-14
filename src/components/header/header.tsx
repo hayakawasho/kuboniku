@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './header.module.scss';
-import ToggleMenu from '~/foundation/components/toggleMenu';
-import ToggleSNS from '~/foundation/components/toggleSNS';
+import ToggleMenu from './toggleMenu';
+import ToggleSNS from './toggleSNS';
 
 const Component: React.FC = () => {
   return (

@@ -12,22 +12,6 @@ const clip = {
   x2: 100,
 };
 
-/**
-                      +1
-                      |
-                      |
-                      |
-                      |
-                      |
-  -1 ------------------------------------ +1
-                      |
-                      |
-                      |
-                      |
-                      |
-                      -1
-  */
-
 const Component = React.memo(() => {
   const [initialState, setInitialState] = useState(false);
   const { menuOpen, menuAnimating } = useSelector(uiSelector);
@@ -101,12 +85,14 @@ const Component = React.memo(() => {
       '-=0.9'
     );
 
+    dispatch(SET_MENU_ANIMATING(true));
+
     await Utils.nextTick();
 
     tl.play(0);
   };
 
-  const hide = async () => {
+  const hide = () => {
     const mount = navRef.current;
     const navLabelDoms = qsa('.js-navLabel');
 
@@ -163,8 +149,6 @@ const Component = React.memo(() => {
     );
 
     dispatch(SET_MENU_ANIMATING(true));
-
-    await Utils.nextTick();
 
     tl.play(0);
   };

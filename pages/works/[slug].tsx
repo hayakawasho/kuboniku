@@ -1,10 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import SEO from '~/foundation/seo';
 import { motion } from 'framer-motion';
-import { fadeInUp } from '~/foundation/animations/fadeInUp';
-
-import styles from './[slug].module.scss';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import client from '~/client/apollo';
@@ -12,10 +8,13 @@ import { gql } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 
+import styles from './[slug].module.scss';
+
 const Component = ({ data }) => {
   const { post } = data;
   const dispatch = useDispatch();
   const launch = post.date;
+  const progressRef = useRef(null);
 
   dispatch(SET_UI_COLOR(post.acf.themeColor));
 
@@ -24,40 +23,21 @@ const Component = ({ data }) => {
       <SEO title={post.title} />
       <div data-controller="skew">
         <div className={styles.kv} data-smooth-item>
-          <motion.div
-            className={styles.kv__cont}
-            data-target="skew.item"
-            initial="initial"
-            animate="animate"
-            variants={{
-              animate: {
-                transition: {
-                  staggerChildren: 0.12,
-                  delayChildren: 0.4,
-                },
-              },
-            }}
-          >
+          <div className={styles.kv__cont} data-target="skew.item">
             <h1 className={styles.heading}>
               <div className="u-ovh u-inline-block">
-                <motion.span
-                  variants={fadeInUp}
-                  className="u-inline-block u-origin-right"
-                >
+                <span className="u-inline-block u-origin-right">
                   {post.title}
-                </motion.span>
+                </span>
               </div>
             </h1>
             <p className="u-ovh">
-              <motion.span
-                variants={fadeInUp}
-                className="u-inline-block u-origin-right"
-              >
+              <span className="u-inline-block u-origin-right">
                 {post.acf.category.name}
                 <i className="icon-arrow-right" />
-              </motion.span>
+              </span>
             </p>
-          </motion.div>
+          </div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
               src={post.acf.eyecatch.sourceUrl}
@@ -164,6 +144,16 @@ const Component = ({ data }) => {
               </div>
             </aside>
           ) : null}
+        </div>
+      </div>
+
+      <div className="l-progress">
+        <div className="u-in">
+          <div className="c-progressCtrl">
+            <div className="c-progressBar">
+              <span ref={progressRef} />
+            </div>
+          </div>
         </div>
       </div>
     </>

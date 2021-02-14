@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import Utils from '~/foundation/utils/Utils';
 
 import styles from './index.module.scss';
-import Entry from '~/foundation/components/_works/entry';
+import Entry from '~/components/_works/entry';
 
 const Component = ({ data }) => {
   const { posts } = data;
@@ -17,9 +17,40 @@ const Component = ({ data }) => {
 
   useEffect(() => {
     if (inView) {
-      console.log(client);
+      loadMore();
     }
   }, [inView]);
+
+  const loadMore = async () => {
+    const { data } = await client.query({
+      query: gql`
+        query {
+          posts(where: { orderby: { field: DATE, order: DESC } }) {
+            edges {
+              node {
+                title
+                slug
+                acf {
+                  url
+                  themeColor
+                  eyecatch {
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            pageInfo {
+              offsetPagination {
+                hasMore
+              }
+            }
+          }
+        }
+      `,
+    });
+
+    console.log(data);
+  };
 
   return (
     <>
@@ -30,11 +61,10 @@ const Component = ({ data }) => {
             Works<sup className={styles.heading__total}>{total}</sup>
           </div>
         </h1>
-
         <div className={`${styles.entryList} o-grid`} data-target="skew.item">
-          {posts.edges.map((item, index) => (
-            <article className="o-grid__item" data-smooth-item key={index}>
-              <Entry data={item} index={Utils.zeroPadding(total - index, 2)} />
+          {posts.edges.map((item, i) => (
+            <article className="o-grid__item" data-smooth-item key={i}>
+              <Entry data={item} index={Utils.zeroPadding(total - i, 2)} />
             </article>
           ))}
         </div>
@@ -46,7 +76,7 @@ const Component = ({ data }) => {
 
 export default Component;
 
-export const GET_POSTS = gql`
+export const GET_INITIAL_POSTS = gql`
   query {
     posts(where: { orderby: { field: DATE, order: DESC } }) {
       edges {
@@ -73,7 +103,7 @@ export const GET_POSTS = gql`
 
 export async function getServerSideProps() {
   const { data } = await client.query({
-    query: GET_POSTS,
+    query: GET_INITIAL_POSTS,
   });
 
   return {
