@@ -78,7 +78,7 @@ const Component = ({ data }) => {
                 ))}
               </ol>
               <div className="c-progressBar">
-                <span ref={progressRef} />
+                <span className="c-progressBar__l" ref={progressRef} />
               </div>
               <div className="u-abs">
                 <span>{Utils.zeroPadding(max, 2)}</span>

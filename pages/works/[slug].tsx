@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import SEO from '~/foundation/seo';
-import { motion } from 'framer-motion';
+import { motion, useViewportScroll } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import client from '~/client/apollo';
@@ -14,7 +14,7 @@ const Component = ({ data }) => {
   const { post } = data;
   const dispatch = useDispatch();
   const launch = post.date;
-  const progressRef = useRef(null);
+  const { scrollYProgress } = useViewportScroll();
 
   dispatch(SET_UI_COLOR(post.acf.themeColor));
 
@@ -151,7 +151,10 @@ const Component = ({ data }) => {
         <div className="u-in">
           <div className="c-progressCtrl">
             <div className="c-progressBar">
-              <span ref={progressRef} />
+              <motion.span
+                className="c-progressBar__l"
+                style={{ scaleY: scrollYProgress }}
+              />
             </div>
           </div>
         </div>

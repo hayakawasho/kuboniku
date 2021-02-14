@@ -21,7 +21,7 @@
     height: 4rem;
   }
 
-  > span {
+  &__l {
     position: absolute;
     top: 0;
     display: block;
@@ -31,7 +31,7 @@
     &:before {
       display: block;
       width: 1px;
-      height: 50%;
+      height: 100%;
       content: "";
       background-color: #17899d;
 
