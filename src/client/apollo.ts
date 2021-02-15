@@ -15,6 +15,7 @@ const link = createHttpLink({
 const client = new ApolloClient({
   link,
   cache,
+  ssrForceFetchDelay: 100,
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache',
@@ -25,7 +26,6 @@ const client = new ApolloClient({
       errorPolicy: 'all',
     },
   },
-  connectToDevTools: true,
 });
 
 export default client;
