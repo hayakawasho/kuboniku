@@ -1,10 +1,10 @@
 .l-progress {
   position: fixed;
-  top: 50%;
+  top: calc(var(--vh) * 50);
   right: 1rem;
   z-index: 2;
   pointer-events: none;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
 }
 
 .c-progressBar {
@@ -33,7 +33,7 @@
       width: 1px;
       height: 100%;
       content: "";
-      background-color: #17899d;
+      background-color: var(--color-theme);
 
       @media (--pc) {
         width: 2px;
@@ -48,10 +48,10 @@
   line-height: 1;
   text-align: center;
   letter-spacing: .2em;
+  width: 1.5em;
 
   > ol {
     position: relative;
-    width: 1.5em;
     height: 1.5em;
     overflow: hidden;
 

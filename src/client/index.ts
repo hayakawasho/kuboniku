@@ -27,6 +27,7 @@ E.once(EVENTS.DOM_READY, () => {
       innerElement: '[data-smooth-item]',
       ease: 0.09,
       disableResize: true,
+      disableOnTouch: true,
       customScrollbar: false,
     });
 

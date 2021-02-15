@@ -6,10 +6,9 @@ import store from '~/state/store';
 import Layout from '~/foundation/layout';
 import { ApolloProvider } from '@apollo/client';
 import client from '~/client/apollo';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import 'ress';
-import 'slick-carousel/slick/slick.css';
 import '~/assets/styles/global.scss';
 
 if (process.browser) {
@@ -44,9 +43,17 @@ const AppComponent = ({
         <Provider store={store}>
           <Layout>
             <AnimatePresence exitBeforeEnter initial={false}>
-              <Fragment key={router.route}>
+              <motion.div
+                key={router.route}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.18, 0.06, 0.23, 1],
+                }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
                 <Component {...pageProps} />
-              </Fragment>
+              </motion.div>
             </AnimatePresence>
           </Layout>
         </Provider>

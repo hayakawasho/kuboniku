@@ -1,46 +1,60 @@
 import React, { useEffect, useRef } from 'react';
 import SEO from '~/foundation/seo';
-import { motion, useViewportScroll } from 'framer-motion';
+import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
+import { scrollBufferSelector } from '~/state/app';
 
 import styles from './[slug].module.scss';
 
 const Component = ({ data }) => {
   const { post } = data;
+  const { title, acf, date, previous } = post;
+  const {
+    themeColor,
+    category,
+    eyecatch,
+    role,
+    description,
+    url,
+    gallery,
+  } = acf;
   const dispatch = useDispatch();
-  const launch = post.date;
+  const scrollBuffer = useSelector(scrollBufferSelector);
   const { scrollYProgress } = useViewportScroll();
+  const inputRange = [0, 1];
+  const outputRange = [scrollBuffer, 1];
+  const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
 
-  dispatch(SET_UI_COLOR(post.acf.themeColor));
+  useEffect(() => {
+    dispatch(SET_UI_COLOR(themeColor));
+  }, []);
 
   return (
     <>
-      <SEO title={post.title} />
+      <SEO title={title} />
       <div data-controller="skew">
         <div className={styles.kv} data-smooth-item>
           <div className={styles.kv__cont} data-target="skew.item">
             <h1 className={styles.heading}>
               <div className="u-ovh u-inline-block">
-                <span className="u-inline-block u-origin-right">
-                  {post.title}
-                </span>
+                <span className="u-inline-block u-origin-right">{title}</span>
               </div>
             </h1>
             <p className="u-ovh">
               <span className="u-inline-block u-origin-right">
-                {post.acf.category.name}
+                {category.name}
                 <i className="icon-arrow-right" />
               </span>
             </p>
           </div>
           <div className={styles.kv__img} data-target="skew.item">
             <Image
-              src={post.acf.eyecatch.sourceUrl}
+              src={eyecatch.sourceUrl}
               alt=""
               layout="fill"
               objectFit="cover"
@@ -61,33 +75,28 @@ const Component = ({ data }) => {
             <div className={styles.intro__info}>
               <dl className={styles.dl}>
                 <dt>Year</dt>
-                <dd>{launch}</dd>
+                <dd>{date}</dd>
               </dl>
               <dl className={styles.dl}>
                 <dt>Role</dt>
-                {post.acf.role.map((i, index) => (
-                  <dd className="u-uppercase" key={index}>
-                    {i.name}
+                {role.map((item, i) => (
+                  <dd className="u-uppercase" key={i}>
+                    {item.name}
                   </dd>
                 ))}
               </dl>
             </div>
             <div className={styles.intro__p}>
-              {post.acf.description && (
+              {description && (
                 <div
                   className={styles.desc}
                   dangerouslySetInnerHTML={{
-                    __html: post.acf.description,
+                    __html: description,
                   }}
                 />
               )}
-              {post.acf.url && (
-                <a
-                  className="c-link"
-                  href={post.acf.url}
-                  target="_blank"
-                  rel="noopener"
-                >
+              {url && (
+                <a className="c-link" href={url} target="_blank" rel="noopener">
                   View website
                   <div className="c-link__hr" />
                 </a>
@@ -96,46 +105,46 @@ const Component = ({ data }) => {
           </div>
 
           <ul className={styles.captchaList} data-smooth-item>
-            {post.acf.gallery.map((i, index) => {
+            {gallery.map((item, i) => {
               const aspect = Math.round(
-                (i.mediaDetails.height / i.mediaDetails.width) * 100
+                (item.mediaDetails.height / item.mediaDetails.width) * 100
               );
               return (
-                <motion.li className="u-rel" key={index}>
+                <li className="u-rel" key={i}>
                   <div
                     className="c-aspect"
                     style={{
                       paddingTop: `${aspect}%`,
-                      backgroundColor: `${post.acf.themeColor}`,
+                      backgroundColor: `${themeColor}`,
                     }}
                   />
                   <Image
-                    src={i.sourceUrl}
+                    src={item.sourceUrl}
                     alt=""
                     layout="fill"
                     objectFit="cover"
                     objectPosition="50% 50%"
                   />
-                </motion.li>
+                </li>
               );
             })}
           </ul>
 
-          {post.previous !== null ? (
+          {previous !== null ? (
             <aside className={`${styles.kv} is-next`} data-smooth-item>
-              <Link href={'/works/' + post.previous.slug}>
+              <Link href={'/works/' + previous.slug}>
                 <a className="u-abs u-fit u-z-10"></a>
               </Link>
               <div className={styles.kv__cont}>
                 <h2 className={styles.heading}>Next Project</h2>
                 <p>
-                  {post.previous.title}
+                  {previous.title}
                   <i className="icon-arrow-right" />
                 </p>
               </div>
               <div className={styles.kv__img}>
                 <Image
-                  src={post.previous.acf.eyecatch.sourceUrl}
+                  src={previous.acf.eyecatch.sourceUrl}
                   alt=""
                   layout="fill"
                   objectFit="cover"
@@ -153,7 +162,7 @@ const Component = ({ data }) => {
             <div className="c-progressBar">
               <motion.span
                 className="c-progressBar__l"
-                style={{ scaleY: scrollYProgress }}
+                style={{ scaleY: progressVal }}
               />
             </div>
           </div>

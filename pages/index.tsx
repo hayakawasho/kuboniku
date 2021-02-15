@@ -72,7 +72,7 @@ const Component = ({ data }) => {
             <div className="c-progressCtrl">
               <ol>
                 {posts.edges.map((item, i) => (
-                  <li>
+                  <li key={i}>
                     <span>{Utils.zeroPadding(i + 1, 2)}</span>
                   </li>
                 ))}
