@@ -159,15 +159,15 @@ const Component = React.memo(() => {
     mount.style.clipPath = `polygon(
       ${clip.x1}% 0px,
       100% 0px,
-      100% calc(var(--vh) * 100),
-      ${clip.x2}% calc(var(--vh) * 100)
+      100% 100vh,
+      ${clip.x2}% 100vh
     )`;
 
     mount.style.webkitClipPath = `polygon(
       ${clip.x1}% 0px,
       100% 0px,
-      100% calc(var(--vh) * 100),
-      ${clip.x2}% calc(var(--vh) * 100)
+      100% 100vh,
+      ${clip.x2}% 100vh
     )`;
   };
 

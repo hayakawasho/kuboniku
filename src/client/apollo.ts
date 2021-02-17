@@ -26,6 +26,7 @@ const client = new ApolloClient({
       errorPolicy: 'all',
     },
   },
+  // connectToDevTools: true,
 });
 
 export default client;

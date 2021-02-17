@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import SEO from '~/foundation/seo';
+import React, { useEffect, useState } from 'react';
+import Layout from '~/components/layout';
+import Seo from '~/components/seo';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,6 +9,10 @@ import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 
 import styles from './[slug].module.scss';
+import Kv from '~/components/single-works/kv';
+import Intro from '~/components/single-works/intro';
+import CaptchaList from '~/components/single-works/captchaList';
+import NextProject from '~/components/single-works/nextProject';
 
 const Component = ({ data }) => {
   const { post } = data;
@@ -35,140 +38,50 @@ const Component = ({ data }) => {
   }, []);
 
   return (
-    <>
-      <SEO title={title} />
-      <div data-controller="skew">
-        <div className={styles.kv} data-smooth-item>
-          <div className={styles.kv__cont} data-target="skew.item">
-            <h1 className={styles.heading}>
-              <div className="u-ovh u-inline-block">
-                <span className="u-inline-block u-origin-right">{title}</span>
-              </div>
-            </h1>
-            <p className="u-ovh">
-              <span className="u-inline-block u-origin-right">
-                {category.name}
-                <i className="icon-arrow-right" />
-              </span>
-            </p>
-          </div>
-          <div className={styles.kv__img} data-target="skew.item">
-            <Image
-              src={eyecatch.sourceUrl}
-              alt=""
-              layout="fill"
-              objectFit="cover"
-              objectPosition="50% 50%"
-              priority
+    <Layout>
+      <Seo title={title} />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.35,
+          ease: [0.18, 0.06, 0.23, 1],
+        }}
+      >
+        <div data-controller="skew">
+          <Kv title={title} img={eyecatch.sourceUrl} category={category.name} />
+          <div className={styles.content} data-target="skew.item">
+            <Intro
+              date={date}
+              role={role}
+              description={description}
+              url={url}
             />
-          </div>
-          <div className={styles.kv__scroll}>
-            <div className="u-in u-ovh">
-              <div className={styles.kv__scrollLabel}>scroll</div>
-            </div>
-            <i className="icon-arrow-down" />
-          </div>
-        </div>
-
-        <div className={styles.content} data-target="skew.item">
-          <div className={styles.intro} data-smooth-item>
-            <div className={styles.intro__info}>
-              <dl className={styles.dl}>
-                <dt>Year</dt>
-                <dd>{date}</dd>
-              </dl>
-              <dl className={styles.dl}>
-                <dt>Role</dt>
-                {role.map((item, i) => (
-                  <dd className="u-uppercase" key={i}>
-                    {item.name}
-                  </dd>
-                ))}
-              </dl>
-            </div>
-            <div className={styles.intro__p}>
-              {description && (
-                <div
-                  className={styles.desc}
-                  dangerouslySetInnerHTML={{
-                    __html: description,
-                  }}
-                />
-              )}
-              {url && (
-                <a className="c-link" href={url} target="_blank" rel="noopener">
-                  View website
-                  <div className="c-link__hr" />
-                </a>
-              )}
-            </div>
-          </div>
-
-          <ul className={styles.captchaList} data-smooth-item>
-            {gallery.map((item, i) => {
-              const aspect = Math.round(
-                (item.mediaDetails.height / item.mediaDetails.width) * 100
-              );
-              return (
-                <li className="u-rel" key={i}>
-                  <div
-                    className="c-aspect"
-                    style={{
-                      paddingTop: `${aspect}%`,
-                      backgroundColor: `${themeColor}`,
-                    }}
-                  />
-                  <Image
-                    src={item.sourceUrl}
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="50% 50%"
-                  />
-                </li>
-              );
-            })}
-          </ul>
-
-          {previous !== null ? (
-            <aside className={`${styles.kv} is-next`} data-smooth-item>
-              <Link href={'/works/' + previous.slug}>
-                <a className="u-abs u-fit u-z-10"></a>
-              </Link>
-              <div className={styles.kv__cont}>
-                <h2 className={styles.heading}>Next Project</h2>
-                <p>
-                  {previous.title}
-                  <i className="icon-arrow-right" />
-                </p>
-              </div>
-              <div className={styles.kv__img}>
-                <Image
-                  src={previous.acf.eyecatch.sourceUrl}
-                  alt=""
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="50% 50%"
-                />
-              </div>
-            </aside>
-          ) : null}
-        </div>
-      </div>
-
-      <div className="l-progress">
-        <div className="u-in">
-          <div className="c-progressCtrl">
-            <div className="c-progressBar">
-              <motion.span
-                className="c-progressBar__l"
-                style={{ scaleY: progressVal }}
+            <CaptchaList gallery={gallery} color={themeColor} />
+            {previous !== null && (
+              <NextProject
+                title={previous.title}
+                img={previous.acf.eyecatch.sourceUrl}
+                slug={previous.slug}
               />
+            )}
+          </div>
+        </div>
+        <div className="l-progress">
+          <div className="u-in">
+            <div className="c-progressCtrl">
+              <div className="c-progressBar">
+                <motion.span
+                  className="c-progressBar__l"
+                  style={{ scaleY: progressVal }}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </motion.div>
+    </Layout>
   );
 };
 

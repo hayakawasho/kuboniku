@@ -1,4 +1,4 @@
-@import '~css/base/_import.scss';
+@use '~css/base/_import.scss';
 
 .heading {
   padding-left: 1.2rem;
@@ -28,29 +28,6 @@
         margin-left: .8rem;
       }
     }
-  }
-}
-
-.num {
-  font-family: var(--font-en);
-  font-weight: 700;
-  letter-spacing: -.02em;
-  font-size: 1.2rem;
-  color: #fff;
-  line-height: 1;
-  position: absolute;
-  top: calc(-1em - 2rem);
-  backface-visibility: hidden;
-  z-index: 2;
-
-  @media (--pc) {
-    // font-size: 1.3rem;
-  }
-
-  > span {
-    font-size: .8rem;
-    letter-spacing: 0.02em;
-    margin-left: 0.5rem;
   }
 }
 
@@ -85,6 +62,14 @@
       height: 100%;
     }
   }
+
+  &:global(.is-next) {
+    .kv__img {
+      img {
+        filter: grayscale(1);
+      }
+    }
+  }
 }
 
 .kv__img {
@@ -96,13 +81,6 @@
   height: 100%;
   opacity: 0.8;
   backface-visibility: hidden;
-  transition: .9s transform $power3easeInOut;
-
-  img {
-    filter: grayscale(1);
-    backface-visibility: hidden;
-    transition: filter 1s;
-  }
 }
 
 .kv__cont {
@@ -113,18 +91,46 @@
   width: 100%;
   padding-left: var(--grid);
   color: #fff;
-  transition: .9s transform $power3easeInOut;
 }
 
-:global(.is-animating) {
-  :local {
-    .kv__img {
-      transform: scale(1.25) skewX(2deg) skewY(5deg) perspective(1000px) rotateX(-2deg);
-    }
+.kv__scroll {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  overflow: hidden;
+  font-family: var(--font-en);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: 0.02em;
+  z-index: 2;
 
-    .kv__cont {
-      transform: skewY(3deg) perspective(1000px) rotateX(2deg);
+  @media (--pc) {
+    font-size: 1.3rem;
+  }
+
+  :global {
+    .icon-arrow-down {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
     }
+  }
+}
+
+.kv__scrollLabel {
+  display: inline-block;
+  animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+  &::before {
+    position: absolute;
+    bottom: -30px;
+    display: block;
+    content: 'scroll';
+    transform-origin: left;
+    animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 }
 

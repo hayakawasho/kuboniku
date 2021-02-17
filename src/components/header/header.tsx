@@ -4,7 +4,7 @@ import styles from './header.module.scss';
 import ToggleMenu from './toggleMenu';
 import ToggleSNS from './toggleSNS';
 
-const Component: React.FC = () => {
+const Component: React.FC = React.memo(() => {
   return (
     <>
       <header className={styles.sh}>
@@ -19,6 +19,6 @@ const Component: React.FC = () => {
       </header>
     </>
   );
-};
+});
 
 export default Component;

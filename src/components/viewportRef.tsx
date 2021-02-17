@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
 import debounce from 'lodash.debounce';
 import { EVENTS } from '~/foundation/constants/const';
@@ -12,20 +12,21 @@ if (process.browser) {
 }
 
 const Component = React.memo(() => {
-  const ref = useRef(null);
   const docRef = useRef(null);
   const dispatch = useDispatch();
 
+  const updateVh = useCallback(height => {
+    const vh = height * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, []);
+
+  const setSize = (width: number, height: number) => {
+    E.emit(EVENTS.RESIZE, { width, height });
+    dispatch(SET_WINDOW_HEIGHT(height));
+    updateVh(height);
+  };
+
   useEffect(() => {
-    function setSize(width: number, height: number) {
-      E.emit(EVENTS.RESIZE, { width, height });
-
-      dispatch(SET_WINDOW_HEIGHT(height));
-
-      const vh = height * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-
     setSize(window.innerWidth, window.innerHeight);
 
     new ResizeObserverHandler({
@@ -37,11 +38,11 @@ const Component = React.memo(() => {
         setSize(width, window.innerHeight);
       }, 30),
     }).init();
-  }, []);
+  }, [updateVh]);
 
   return (
     <>
-      <div ref={ref} className="viewport" />
+      <div className="viewport" />
       <div ref={docRef} className="docSize" />
     </>
   );

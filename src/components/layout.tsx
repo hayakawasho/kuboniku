@@ -3,12 +3,8 @@ import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { appSelector, DOM_READY } from '~/state/app';
 import { EVENTS } from '~/foundation/constants/const';
-
+import { isMobile } from 'react-device-detect';
 import Header from '~/components/header/header';
-import Nav from '~/components/nav/nav';
-import Loader from '~/components/loader';
-import Webgl from '~/context/webgl';
-import ViewportRef from '~/components/viewportRef';
 
 let E;
 
@@ -17,6 +13,7 @@ if (process.browser) {
 }
 
 const Layout = ({ children }) => {
+  const [isTouch, setIsTouch] = useState(undefined);
   const { domReady } = useSelector(appSelector);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -45,17 +42,10 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <ViewportRef />
-      <div id="app" ref={appRef}>
-        <Loader />
+      <div id="app">
         <Header />
-        <Nav />
-        <main className="page" data-smooth>
-          {children}
-        </main>
-        <Webgl />
+        <main className="page">{children}</main>
       </div>
-      <div id="mobile-turn">Please turn your device.</div>
     </>
   );
 };

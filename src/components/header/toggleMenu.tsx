@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 import { gsap } from 'gsap';
 
-const Component = React.memo(() => {
+const Component: React.FC = React.memo(() => {
   const [initialState, setInitialState] = useState(false);
   const { menuOpen, menuAnimating } = useSelector(uiSelector);
   const dispatch = useDispatch();

@@ -1,76 +1,34 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import SEO from '~/foundation/seo';
+import React, { useState } from 'react';
+import Seo from '~/components/seo';
 import client from '~/client/apollo';
 import { gql } from '@apollo/client';
-import { useInView } from 'react-intersection-observer';
-import Utils from '~/foundation/utils/Utils';
-
-import styles from './index.module.scss';
-import Entry from '~/components/_works/entry';
+import { motion } from 'framer-motion';
+import Layout from '~/components/layout';
+import Heading from '~/components/works/heading';
+import EntryList from '~/components/works/entryList';
 
 const Component = ({ data }) => {
   const { posts } = data;
   const { total } = posts.pageInfo.offsetPagination;
-  const [ref, inView] = useInView({
-    rootMargin: '200px 0px',
-  });
-
-  useEffect(() => {
-    if (inView) {
-      loadMore();
-    }
-  }, [inView]);
-
-  const loadMore = async () => {
-    const { data } = await client.query({
-      query: gql`
-        query {
-          posts(where: { orderby: { field: DATE, order: DESC } }) {
-            edges {
-              node {
-                title
-                slug
-                acf {
-                  url
-                  themeColor
-                  eyecatch {
-                    sourceUrl
-                  }
-                }
-              }
-            }
-            pageInfo {
-              offsetPagination {
-                hasMore
-              }
-            }
-          }
-        }
-      `,
-    });
-
-    console.log(data);
-  };
 
   return (
-    <>
-      <SEO title="WORKS" />
-      <div data-controller="skew" data-skew-options='{ "val": 1.6 }'>
-        <h1 className={styles.heading} data-target="skew.item">
-          <div data-smooth-item>
-            Works<sup className={styles.heading__total}>{total}</sup>
-          </div>
-        </h1>
-        <div className={`${styles.entryList} o-grid`} data-target="skew.item">
-          {posts.edges.map((item, i) => (
-            <article className="o-grid__item" data-smooth-item key={i}>
-              <Entry data={item} index={Utils.zeroPadding(total - i, 2)} />
-            </article>
-          ))}
-        </div>
-        <div className={styles.loader} ref={ref} />
-      </div>
-    </>
+    <Layout>
+      <Seo title="WORKS" />
+      <motion.div
+        data-controller="skew"
+        data-skew-options='{ "val": 1.6 }'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{
+          duration: 0.35,
+          ease: [0.18, 0.06, 0.23, 1],
+        }}
+      >
+        <Heading total={total} />
+        <EntryList posts={posts.edges} total={total} />
+      </motion.div>
+    </Layout>
   );
 };
 
