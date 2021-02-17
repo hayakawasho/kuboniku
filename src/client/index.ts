@@ -22,7 +22,7 @@ import ASScroll from '@ashthornton/asscroll';
 
 E.once(EVENTS.DOM_READY, () => {
   if (!hasTouch) {
-    APP.smooth = new ASScroll({
+    const smooth = new ASScroll({
       element: '[data-smooth]',
       innerElement: '[data-smooth-item]',
       ease: 0.09,
@@ -31,8 +31,6 @@ E.once(EVENTS.DOM_READY, () => {
       customScrollbar: false,
     });
 
-    const { smooth } = APP;
-
     smooth.on('raf', ({ scrollPos, smoothScrollPos }) => {
       E.emit(EVENTS.SCROLL, { scrollPos, smoothScrollPos });
     });
@@ -40,18 +38,20 @@ E.once(EVENTS.DOM_READY, () => {
     E.on(EVENTS.RESIZE, ({ width, height }) => smooth.onResize(width, height));
 
     smooth.enable();
-  } else {
-    E.emit(EVENTS.SCROLL, { event });
+
+    APP.smooth = smooth;
   }
 
   disableHover();
 });
 
 E.on(EVENTS.ROUTE_START, () => {
+  routeChange();
   APP.smooth && APP.smooth.disable();
 });
 
 E.on(EVENTS.ROUTE_UPDATE, ({ mount }) => {
+  routeChange();
   APP.smooth &&
     APP.smooth.enable(
       false,
@@ -59,6 +59,13 @@ E.on(EVENTS.ROUTE_UPDATE, ({ mount }) => {
       mount.querySelectorAll('[data-smooth-item]')
     );
 });
+
+const routeChange = () => {
+  const allStyleElements = document.querySelectorAll('link');
+  allStyleElements.forEach(elem => {
+    if (elem.as === 'style') elem.rel = 'stylesheet';
+  });
+};
 
 const disableHover = () => {
   let isRunning = false;

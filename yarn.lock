@@ -72,10 +72,10 @@
     tslib "^1.10.0"
     zen-observable "^0.8.14"
 
-"@ashthornton/asscroll@^1.7.1":
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/@ashthornton/asscroll/-/asscroll-1.7.3.tgz#7bab4444390a94f1a716e1db6e12062062e4280d"
-  integrity sha512-fl+f9FnmLXtQE3ztwUQKDYoFtK1aj5rGSaJKnKThfdRK3sxwP/IpPqB7Kux4OEedyWxvva1LKbjdcJHvYVuwZA==
+"@ashthornton/asscroll@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@ashthornton/asscroll/-/asscroll-1.7.4.tgz#4da37cd5ae69604b2153b888b42ea10f2433bfcf"
+  integrity sha512-mJqx4tS4+RYqagKhwwzdh7Ofs8WO+8pR4GV3Ffo1dt0iifF9LDVfE3GUqvtQwHMuSYUt9t3Vu7yEI95s6wZLHA==
   dependencies:
     "@unseenco/e" "^1.7.0"
 
