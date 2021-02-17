@@ -7,14 +7,22 @@ import Utils from '~/foundation/utils/Utils';
 import { qsa, qs } from '~/foundation/utils/dom';
 import { gsap } from 'gsap';
 import { motion } from 'framer-motion';
-import client from '~/client/apollo';
-import { gql } from '@apollo/client';
+import useSWR from 'swr';
+import { request, gql } from 'graphql-request';
+import { WP_API_END_POINT } from '~/foundation/constants/const';
 
-const Component = ({ data }) => {
-  const { posts } = data;
-  const { total } = posts.pageInfo.offsetPagination;
+interface IProps {
+  data;
+}
+
+const Component: React.FC<IProps> = props => {
+  const { data } = useSWR(WP_API_END_POINT, fetcher, {
+    initialData: props.data,
+  });
+  const { edges, pageInfo } = data;
+  const { total } = pageInfo.offsetPagination;
   const now = 1;
-  const max = posts.edges.length;
+  const max = edges.length;
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
   const canvasRef = useRef(null);
@@ -43,7 +51,7 @@ const Component = ({ data }) => {
         <canvas className="gl" ref={canvasRef}></canvas>
         <div className={styles.screen}>
           <ul className={styles.worksList}>
-            {posts.edges.map((item, i) => (
+            {edges.map((item, i) => (
               <li className="u-in" key={i}>
                 <div className={styles.entry}>
                   <Link href={`/works/${item.node.slug}`}>
@@ -81,7 +89,7 @@ const Component = ({ data }) => {
             <div className="u-in">
               <div className="c-progressCtrl">
                 <ol>
-                  {posts.edges.map((item, i) => (
+                  {edges.map((item, i) => (
                     <li key={i}>
                       <span>{Utils.zeroPadding(i + 1, 2)}</span>
                     </li>
@@ -132,14 +140,13 @@ export const GET_POSTS = gql`
   }
 `;
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: GET_POSTS,
-  });
+const fetcher = query => request(WP_API_END_POINT, query);
 
+export async function getServerSideProps() {
+  const { posts } = await fetcher(GET_POSTS);
   return {
     props: {
-      data,
+      data: posts,
     },
   };
 }

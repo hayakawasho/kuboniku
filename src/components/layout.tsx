@@ -26,10 +26,23 @@ const Layout = ({ children }) => {
       );
   }, [domReady]);
 
+  const routeChange = () => {
+    const allStyleElements = document.querySelectorAll('link');
+    allStyleElements.forEach(elem => {
+      if (elem.as === 'style') elem.rel = 'stylesheet';
+    });
+  };
+
   useEffect(() => {
-    const routeChangeStart = url => E.emit(EVENTS.ROUTE_START, { url });
-    const routeChangeComplete = url =>
+    const routeChangeStart = url => {
+      routeChange();
+      E.emit(EVENTS.ROUTE_START, { url });
+    };
+
+    const routeChangeComplete = url => {
+      routeChange();
       E.emit(EVENTS.ROUTE_UPDATE, { url, mount: appRef.current });
+    };
 
     router.events.on('routeChangeStart', routeChangeStart);
     router.events.on('routeChangeComplete', routeChangeComplete);
@@ -42,7 +55,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div id="app">
+      <div id="app" ref={appRef}>
         <Header />
         <main className="page" data-smooth>
           {children}

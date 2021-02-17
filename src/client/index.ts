@@ -46,12 +46,10 @@ E.once(EVENTS.DOM_READY, () => {
 });
 
 E.on(EVENTS.ROUTE_START, () => {
-  routeChange();
   APP.smooth && APP.smooth.disable();
 });
 
 E.on(EVENTS.ROUTE_UPDATE, ({ mount }) => {
-  routeChange();
   APP.smooth &&
     APP.smooth.enable(
       false,
@@ -59,13 +57,6 @@ E.on(EVENTS.ROUTE_UPDATE, ({ mount }) => {
       mount.querySelectorAll('[data-smooth-item]')
     );
 });
-
-const routeChange = () => {
-  const allStyleElements = document.querySelectorAll('link');
-  allStyleElements.forEach(elem => {
-    if (elem.as === 'style') elem.rel = 'stylesheet';
-  });
-};
 
 const disableHover = () => {
   let isRunning = false;

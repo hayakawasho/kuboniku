@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Layout from '~/components/layout';
 import Seo from '~/components/seo';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import client from '~/client/apollo';
-import { gql } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
+import useSWR from 'swr';
+import { request, gql } from 'graphql-request';
+import { WP_API_END_POINT } from '~/foundation/constants/const';
 
 import styles from './[slug].module.scss';
 import Kv from '~/components/single-works/kv';
@@ -14,9 +15,20 @@ import Intro from '~/components/single-works/intro';
 import CaptchaList from '~/components/single-works/captchaList';
 import NextProject from '~/components/single-works/nextProject';
 
-const Component = ({ data }) => {
-  const { post } = data;
-  const { title, acf, date, previous } = post;
+interface IProps {
+  data: {
+    post;
+    path;
+  };
+}
+
+const Component: React.FC<IProps> = prpps => {
+  const { data } = useSWR(
+    WP_API_END_POINT,
+    url => fetcher(url, prpps.data.path),
+    { initialData: prpps.data.post }
+  );
+  const { title, acf, date, previous } = data;
   const {
     themeColor,
     category,
@@ -129,18 +141,19 @@ export const GET_POST = gql`
   }
 `;
 
+const fetcher = (query, variables) => {
+  return request(WP_API_END_POINT, query, variables);
+};
+
 export async function getServerSideProps({ params }) {
-  const { data } = await client.query({
-    query: GET_POST,
-    variables: {
-      slug: params?.slug ?? '',
-    },
+  const { post } = await fetcher(GET_POST, {
+    slug: params?.slug ?? '',
   });
 
   return {
     props: {
       data: {
-        post: data?.post ?? {},
+        post: post ?? {},
         path: params?.slug,
       },
     },

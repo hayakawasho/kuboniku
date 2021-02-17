@@ -1,10 +1,8 @@
-import React, { ReactElement, Fragment } from 'react';
+import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import store from '~/state/store';
-import { ApolloProvider } from '@apollo/client';
-import client from '~/client/apollo';
 import { AnimatePresence } from 'framer-motion';
 
 import 'ress';
@@ -43,17 +41,15 @@ const AppComponent = ({
           defer
         ></script>
       </Head>
-      <ApolloProvider client={client}>
-        <Provider store={store}>
-          <ViewportRef />
-          <Loader />
-          <Nav />
-          <AnimatePresence exitBeforeEnter initial={false}>
-            <Component {...pageProps} key={router.route} />
-          </AnimatePresence>
-          <Webgl />
-        </Provider>
-      </ApolloProvider>
+      <Provider store={store}>
+        <ViewportRef />
+        <Loader />
+        <Nav />
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Component {...pageProps} key={router.route} />
+        </AnimatePresence>
+        <Webgl />
+      </Provider>
     </>
   );
 };

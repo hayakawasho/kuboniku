@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Seo from '~/components/seo';
-import client from '~/client/apollo';
-import { gql } from '@apollo/client';
 import { motion } from 'framer-motion';
 import Layout from '~/components/layout';
 import Heading from '~/components/works/heading';
 import EntryList from '~/components/works/entryList';
+import useSWR from 'swr';
+import { request, gql } from 'graphql-request';
+import { WP_API_END_POINT } from '~/foundation/constants/const';
 
-const Component = ({ data }) => {
-  const { posts } = data;
-  const { total } = posts.pageInfo.offsetPagination;
+interface IProps {
+  data;
+}
+
+const Component: React.FC<IProps> = props => {
+  const { data } = useSWR(WP_API_END_POINT, fetcher, {
+    initialData: props.data,
+  });
+  const { edges, pageInfo } = data;
+  const { total } = pageInfo.offsetPagination;
 
   return (
     <Layout>
@@ -26,7 +34,7 @@ const Component = ({ data }) => {
         }}
       >
         <Heading total={total} />
-        <EntryList posts={posts.edges} total={total} />
+        <EntryList posts={edges} total={total} />
       </motion.div>
     </Layout>
   );
@@ -59,14 +67,13 @@ export const GET_INITIAL_POSTS = gql`
   }
 `;
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: GET_INITIAL_POSTS,
-  });
+const fetcher = query => request(WP_API_END_POINT, query);
 
+export async function getServerSideProps() {
+  const { posts } = await fetcher(GET_INITIAL_POSTS);
   return {
     props: {
-      data,
+      data: posts,
     },
   };
 }
