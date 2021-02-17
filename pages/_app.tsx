@@ -20,9 +20,9 @@ if (process.browser) {
 
 const routeChange = () => {
   const tempFix = () => {
-    const allStyleElements = document.querySelectorAll('link');
+    const allStyleElements = document.querySelectorAll('style[media="x]');
     allStyleElements.forEach(elem => {
-      if (elem.as === 'style') elem.rel = 'stylesheet';
+      elem.removeAttribute('media');
     });
   };
   tempFix();
