@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
+import Router from 'next/router';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import store from '~/state/store';
@@ -16,6 +17,19 @@ import Webgl from '~/context/webgl';
 if (process.browser) {
   require('~/client');
 }
+
+const routeChange = () => {
+  const tempFix = () => {
+    const allStyleElements = document.querySelectorAll('link');
+    allStyleElements.forEach(elem => {
+      if (elem.as === 'style') elem.rel = 'stylesheet';
+    });
+  };
+  tempFix();
+};
+
+Router.events.on('routeChangeStart', routeChange);
+Router.events.on('routeChangeComplete', routeChange);
 
 const AppComponent = ({
   Component,

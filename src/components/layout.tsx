@@ -26,21 +26,12 @@ const Layout = ({ children }) => {
       );
   }, [domReady]);
 
-  const routeChange = () => {
-    const allStyleElements = document.querySelectorAll('link');
-    allStyleElements.forEach(elem => {
-      if (elem.as === 'style') elem.rel = 'stylesheet';
-    });
-  };
-
   useEffect(() => {
     const routeChangeStart = url => {
-      routeChange();
       E.emit(EVENTS.ROUTE_START, { url });
     };
 
     const routeChangeComplete = url => {
-      routeChange();
       E.emit(EVENTS.ROUTE_UPDATE, { url, mount: appRef.current });
     };
 
