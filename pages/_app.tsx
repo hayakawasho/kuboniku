@@ -20,16 +20,18 @@ if (process.browser) {
 
 const routeChange = () => {
   const tempFix = () => {
-    const allStyleElements = document.querySelectorAll('style[media="x]');
+    const allStyleElements = document.querySelectorAll('link');
     allStyleElements.forEach(elem => {
-      elem.removeAttribute('media');
+      if (elem.as === 'style') {
+        elem.rel = 'stylesheet';
+      }
     });
   };
   tempFix();
 };
 
-Router.events.on('routeChangeStart', routeChange);
 Router.events.on('routeChangeComplete', routeChange);
+Router.events.on('routeChangeStart', routeChange);
 
 const AppComponent = ({
   Component,
