@@ -41,6 +41,12 @@ const AppComponent = ({
   return (
     <>
       <Head>
+        <link
+          rel="preload"
+          href="https://dev-kuboniku.gq/wp/graphql "
+          as="fetch"
+          crossOrigin="anonymous"
+        />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
