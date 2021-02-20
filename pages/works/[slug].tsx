@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import useSWR from 'swr';
-import { request, gql } from 'graphql-request';
-import { WP_API_END_POINT } from '~/foundation/constants/const';
+import { gql } from 'graphql-request';
 import { transition } from '~/animations/index';
+import { fetcher } from '~/lib/fetcher';
 
 import styles from './[slug].module.scss';
 import Kv from '~/components/single-works/kv';
@@ -24,13 +24,10 @@ interface IProps {
 }
 
 const Component: React.FC<IProps> = props => {
-  const { data } = useSWR(
-    WP_API_END_POINT,
-    url => {
-      return fetcher(url, props.data.path);
-    },
-    { initialData: props.data.post }
-  );
+  const variables = { slug: props.data.path };
+  const { data } = useSWR([GET_POST, variables], fetcher, {
+    initialData: props.data.post,
+  });
   const { title, acf, date, previous } = data;
   const {
     themeColor,
@@ -137,14 +134,9 @@ export const GET_POST = gql`
   }
 `;
 
-const fetcher = (query, variables) => {
-  return request(WP_API_END_POINT, query, variables);
-};
-
 export async function getServerSideProps({ params }) {
-  const { post } = await fetcher(GET_POST, {
-    slug: params?.slug ?? '',
-  });
+  const variables = { slug: params?.slug ?? '' };
+  const { post } = await fetcher(GET_POST, variables);
 
   return {
     props: {

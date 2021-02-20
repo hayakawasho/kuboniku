@@ -44,11 +44,12 @@
 }
 
 .snsList {
+  margin-bottom: 2.5rem;
+
   > li {
     margin-bottom: 2rem;
     text-align: center;
-    visibility: hidden;
-    opacity: 0;
+    overflow: hidden;
 
     &:last-child {
       margin-bottom: 0;
@@ -59,7 +60,11 @@
       font-size: 1.2rem;
       font-weight: 500;
       letter-spacing: 0.08em;
+      display: inline-block;
       pointer-events: auto;
+      visibility: hidden;
+      opacity: 0;
+      backface-visibility: hidden;
 
       @media (--pc) {
         font-size: 1.3rem;
@@ -78,6 +83,7 @@
   cursor: pointer;
   padding: 1rem;
   box-sizing: content-box;
+  backface-visibility: hidden;
 
   @media (--pc) {
     width: 2.5rem;
@@ -96,6 +102,7 @@
   height: 1px;
   content: '';
   background-color: var(--color-text-primary);
+  backface-visibility: hidden;
 }
 
 .plus__x {

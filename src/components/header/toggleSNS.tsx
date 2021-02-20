@@ -10,16 +10,25 @@ const Component: React.FC = () => {
 
   useEffect(() => {
     tl.add(
-      gsap.to(btnRef.current, 0.5, {
+      gsap.to(btnRef.current, 0.6, {
         rotation: 90,
         ease: 'expo.inOut',
       })
     ).add(
-      gsap.to([ref[0].current, ref[1].current], 0.2, {
-        autoAlpha: 1,
-        y: -20,
-        stagger: 0.07,
-      }),
+      gsap.fromTo(
+        [ref[0].current, ref[1].current],
+        {
+          y: 20,
+        },
+        {
+          duration: 0.5,
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.07,
+          force3D: true,
+          ease: 'expo.out',
+        }
+      ),
       '-=.4'
     );
   }, []);
@@ -32,13 +41,17 @@ const Component: React.FC = () => {
     <>
       <div className={`${headerCSS.sns} u-text-center`}>
         <ul className={`${headerCSS.snsList}`}>
-          <li ref={ref[0]}>
-            <a href="https://www.facebook.com/k.b.nagisa" target="_blank">
+          <li>
+            <a
+              href="https://www.facebook.com/k.b.nagisa"
+              target="_blank"
+              ref={ref[0]}
+            >
               Fb
             </a>
           </li>
-          <li ref={ref[1]}>
-            <a href="#" target="_blank">
+          <li>
+            <a href="#" target="_blank" ref={ref[1]}>
               Tw
             </a>
           </li>

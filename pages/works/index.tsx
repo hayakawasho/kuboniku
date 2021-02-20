@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const Component: React.FC<IProps> = props => {
-  const { data } = useSWR(WP_API_END_POINT, fetcher, {
+  const { data, error } = useSWR(WP_API_END_POINT, fetcher, {
     initialData: props.data,
   });
   const { edges, pageInfo } = data;
@@ -47,7 +47,7 @@ const Component: React.FC<IProps> = props => {
       >
         <Heading total={total} />
         <EntryList posts={edges} total={total} />
-        <div ref={loaderRef} />
+        {error ? <div>Load error</div> : <div ref={loaderRef} />}
       </motion.div>
     </Layout>
   );
