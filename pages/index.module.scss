@@ -32,7 +32,8 @@
   top: 50%;
   left: 0;
   z-index: 2;
-  width: 100%;
+  width: auto;
+  display: inline-block;
   padding-left: var(--grid);
   color: #fff;
 }

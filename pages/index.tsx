@@ -56,22 +56,21 @@ const Component: React.FC<IProps> = props => {
                 <div className={styles.entry}>
                   <Link href={`/works/${item.node.slug}`}>
                     <a
-                      className="u-abs u-fit u-z-10"
+                      className={`${styles.g} u-z-10`}
                       data-gl-texture={item.node.acf.eyecatch.sourceUrl}
                       data-gl-id={item.node.slug}
-                    ></a>
+                    >
+                      <p className={styles.num}>
+                        {Utils.zeroPadding(total - i, 2)}
+                        <span>Project</span>
+                      </p>
+                      <h2 className={styles.heading}>{item.node.title}</h2>
+                      <p>
+                        {item.node.acf.category.name}
+                        <i className="icon-arrow-right" />
+                      </p>
+                    </a>
                   </Link>
-                  <div className={styles.g}>
-                    <p className={styles.num}>
-                      {Utils.zeroPadding(total - i, 2)}
-                      <span>Project</span>
-                    </p>
-                    <h2 className={styles.heading}>{item.node.title}</h2>
-                    <p>
-                      {item.node.acf.category.name}
-                      <i className="icon-arrow-right" />
-                    </p>
-                  </div>
                 </div>
               </li>
             ))}
