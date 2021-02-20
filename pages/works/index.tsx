@@ -69,7 +69,7 @@ export const GET_INITIAL_POSTS = gql`
 
 const fetcher = query => request(WP_API_END_POINT, query);
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { posts } = await fetcher(GET_INITIAL_POSTS);
   return {
     props: {
