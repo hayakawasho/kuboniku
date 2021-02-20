@@ -48,7 +48,7 @@ const Layout = ({ children }) => {
     <>
       <div id="app" ref={appRef}>
         <Header />
-        <main className="page" data-smooth>
+        <main id="xhr" data-smooth>
           {children}
         </main>
       </div>

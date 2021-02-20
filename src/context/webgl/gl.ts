@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import Sample from './scene/noise/visuals/sample';
 import Post from './scene/noise/post';
 import { deg2rad } from '~/foundation/utils/math';
-import { EVENTS } from '~/foundation/constants/const';
+import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
+import debounce from 'lodash.debounce';
 
 let now = 0;
 let then = 0;
@@ -75,7 +76,16 @@ export default class Gl {
 
     this._setSize(this.state.ww, this.state.wh);
 
-    E.on(EVENTS.RESIZE, this._handleResize);
+    const canvasObserve = new ResizeObserverHandler({
+      el: canvas,
+      callback: debounce((entry: ResizeObserverEntry) => {
+        const rect = entry.contentRect;
+        const { width, height } = rect;
+        this._handleResize({ width, height });
+      }, 200),
+    });
+
+    canvasObserve.init();
 
     const ops = {
       post: {

@@ -10,8 +10,9 @@ const Component: React.FC = () => {
 
   useEffect(() => {
     tl.add(
-      gsap.to(btnRef.current, 0.2, {
+      gsap.to(btnRef.current, 0.6, {
         rotation: -90,
+        ease: 'expo.out',
       })
     ).add(
       gsap.to([ref[0].current, ref[1].current], 0.2, {
@@ -19,7 +20,7 @@ const Component: React.FC = () => {
         y: -20,
         stagger: 0.07,
       }),
-      '-=.1'
+      '-=.5'
     );
   }, []);
 

@@ -12,6 +12,7 @@ if (process.browser) {
 }
 
 const Component = React.memo(() => {
+  const viewportRef = useRef(null);
   const docRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -22,27 +23,43 @@ const Component = React.memo(() => {
 
   const setSize = (width: number, height: number) => {
     E.emit(EVENTS.RESIZE, { width, height });
-    dispatch(SET_WINDOW_HEIGHT(height));
-    updateVh(height);
   };
 
   useEffect(() => {
     setSize(window.innerWidth, window.innerHeight);
 
-    new ResizeObserverHandler({
+    const docObserve = new ResizeObserverHandler({
       el: docRef.current,
+      callback: (entry: ResizeObserverEntry) => {
+        const rect = entry.contentRect;
+        const { height } = rect;
+        dispatch(SET_DOC_HEIGHT(height));
+      },
+    });
+
+    const viewportObserve = new ResizeObserverHandler({
+      el: viewportRef.current,
       callback: debounce((entry: ResizeObserverEntry) => {
         const rect = entry.contentRect;
         const { width, height } = rect;
-        dispatch(SET_DOC_HEIGHT(height));
-        setSize(width, window.innerHeight);
+        dispatch(SET_WINDOW_HEIGHT(height));
+        setSize(width, height);
+        updateVh(height);
       }, 30),
-    }).init();
+    });
+
+    docObserve.init();
+    viewportObserve.init();
+
+    return () => {
+      docObserve.destroy();
+      viewportObserve.destroy();
+    };
   }, [updateVh]);
 
   return (
     <>
-      <div className="viewport" />
+      <div ref={viewportRef} className="viewport" />
       <div ref={docRef} className="docSize" />
     </>
   );
