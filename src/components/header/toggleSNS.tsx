@@ -10,9 +10,9 @@ const Component: React.FC = () => {
 
   useEffect(() => {
     tl.add(
-      gsap.to(btnRef.current, 0.6, {
-        rotation: -90,
-        ease: 'expo.out',
+      gsap.to(btnRef.current, 0.5, {
+        rotation: 90,
+        ease: 'expo.inOut',
       })
     ).add(
       gsap.to([ref[0].current, ref[1].current], 0.2, {
@@ -20,16 +20,12 @@ const Component: React.FC = () => {
         y: -20,
         stagger: 0.07,
       }),
-      '-=.5'
+      '-=.4'
     );
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      tl.play();
-    } else {
-      tl.reverse();
-    }
+    isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
   return (
