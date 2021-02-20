@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './entryList.module.scss';
-import { useInView } from 'react-intersection-observer';
 import Entry from '~/components/works/entry';
 import Utils from '~/foundation/utils/Utils';
 
@@ -10,18 +9,6 @@ interface IProps {
 }
 
 const Component: React.FC<IProps> = ({ posts, total }) => {
-  const [loaderRef, inView] = useInView({
-    rootMargin: '200px 0px',
-  });
-
-  useEffect(() => {
-    if (inView) {
-      loadMore();
-    }
-  }, [inView]);
-
-  const loadMore = async () => {};
-
   return (
     <>
       <div className={`${styles.entryList} o-grid`} data-target="skew.item">
@@ -31,7 +18,6 @@ const Component: React.FC<IProps> = ({ posts, total }) => {
           </article>
         ))}
       </div>
-      <div className={styles.loader} ref={loaderRef} />
     </>
   );
 };

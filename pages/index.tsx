@@ -8,8 +8,10 @@ import { qsa, qs } from '~/foundation/utils/dom';
 import { gsap } from 'gsap';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import { WP_API_END_POINT } from '~/foundation/constants/const';
+import { fetcher } from '~/lib/fetcher';
+import { transition } from '~/animations/index';
 
 interface IProps {
   data;
@@ -40,13 +42,10 @@ const Component: React.FC<IProps> = props => {
     <Layout>
       <Seo title="NAGISA KUBO" />
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.35,
-          ease: [0.18, 0.06, 0.23, 1],
-        }}
+        initial="pageInitial"
+        animate="pageAnimate"
+        exit="pageExit"
+        variants={transition}
       >
         <canvas className="gl" ref={canvasRef}></canvas>
         <div className={styles.screen}>
@@ -138,8 +137,6 @@ export const GET_POSTS = gql`
     }
   }
 `;
-
-const fetcher = query => request(WP_API_END_POINT, query);
 
 export async function getServerSideProps() {
   const { posts } = await fetcher(GET_POSTS);

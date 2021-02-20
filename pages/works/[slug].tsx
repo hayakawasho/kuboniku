@@ -8,6 +8,7 @@ import { scrollBufferSelector } from '~/state/app';
 import useSWR from 'swr';
 import { request, gql } from 'graphql-request';
 import { WP_API_END_POINT } from '~/foundation/constants/const';
+import { transition } from '~/animations/index';
 
 import styles from './[slug].module.scss';
 import Kv from '~/components/single-works/kv';
@@ -22,11 +23,13 @@ interface IProps {
   };
 }
 
-const Component: React.FC<IProps> = prpps => {
+const Component: React.FC<IProps> = props => {
   const { data } = useSWR(
     WP_API_END_POINT,
-    url => fetcher(url, prpps.data.path),
-    { initialData: prpps.data.post }
+    url => {
+      return fetcher(url, props.data.path);
+    },
+    { initialData: props.data.post }
   );
   const { title, acf, date, previous } = data;
   const {
@@ -45,21 +48,14 @@ const Component: React.FC<IProps> = prpps => {
   const outputRange = [scrollBuffer, 1];
   const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
 
-  useEffect(() => {
-    dispatch(SET_UI_COLOR(themeColor));
-  }, []);
-
   return (
     <Layout>
       <Seo title={title} />
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          duration: 0.35,
-          ease: [0.18, 0.06, 0.23, 1],
-        }}
+        initial="pageInitial"
+        animate="pageAnimate"
+        exit="pageExit"
+        variants={transition}
       >
         <div data-controller="skew">
           <Kv title={title} img={eyecatch.sourceUrl} category={category.name} />
