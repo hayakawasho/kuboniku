@@ -32,6 +32,24 @@
   display: inline-block;
 }
 
+.u-flex {
+  display: flex;
+}
+
+.u-flex--v-c {
+  align-items: center;
+}
+
+.u-flex--c {
+  justify-content: center;
+  align-items: center;
+  align-content: center
+}
+
+.u-flex--col {
+  flex-direction: column;
+}
+
 .u-mx-auto {
   margin-left: auto;
   margin-right: auto;

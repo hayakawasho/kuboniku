@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './intro.module.scss';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 
 interface IProps {
   date: string;
@@ -16,7 +18,7 @@ const Component: React.FC<IProps> = ({ date, role, description, url }) => {
       <div className={styles.intro__info}>
         <dl className={styles.dl}>
           <dt>Year</dt>
-          <dd>{date}</dd>
+          <dd>{format(parseISO(date), 'MMMM d, yyyy')}</dd>
         </dl>
         <dl className={styles.dl}>
           <dt>Role</dt>
