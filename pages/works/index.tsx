@@ -133,7 +133,7 @@ export const GET_INITIAL_POSTS = gql`
     posts(
       where: {
         orderby: { field: DATE, order: DESC }
-        offsetPagination: { size: 5 }
+        offsetPagination: { size: ${PER_PAGE} }
       }
     ) {
       nodes {
