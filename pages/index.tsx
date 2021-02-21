@@ -9,22 +9,35 @@ import { gsap } from 'gsap';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
-import { WP_API_END_POINT } from '~/foundation/constants/const';
 import { fetcher } from '~/lib/fetcher';
 import { transition } from '~/animations/index';
 
+type Data = {
+  posts: {
+    nodes: {
+      slug: string;
+      title: string;
+      acf: any;
+    }[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+      };
+    };
+  };
+};
+
 interface IProps {
-  data;
+  data: Data;
 }
 
 const Component: React.FC<IProps> = props => {
-  const { data } = useSWR(WP_API_END_POINT, fetcher, {
-    initialData: props.data,
-  });
-  const { edges, pageInfo } = data;
-  const { total } = pageInfo.offsetPagination;
+  const initialData = props.data;
+  const { data } = useSWR<Data>(GET_POSTS, fetcher, { initialData });
+  const posts = data.posts.nodes;
+  const total = data.posts.pageInfo.offsetPagination.total;
   const now = 1;
-  const max = edges.length;
+  const max = posts.length;
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
   const canvasRef = useRef(null);
@@ -50,22 +63,22 @@ const Component: React.FC<IProps> = props => {
         <canvas className="gl" ref={canvasRef}></canvas>
         <div className={styles.screen}>
           <ul className={styles.worksList}>
-            {edges.map((item, i) => (
+            {posts.map((item, i) => (
               <li className="u-in" key={i}>
                 <div className={styles.entry}>
-                  <Link href={`/works/${item.node.slug}`}>
+                  <Link href={`/works/${item.slug}`}>
                     <a
                       className={`${styles.g} u-z-10`}
-                      data-gl-texture={item.node.acf.eyecatch.sourceUrl}
-                      data-gl-id={item.node.slug}
+                      data-gl-texture={item.acf.eyecatch.sourceUrl}
+                      data-gl-id={item.slug}
                     >
                       <p className={styles.num}>
                         {Utils.zeroPadding(total - i, 2)}
                         <span>Project</span>
                       </p>
-                      <h2 className={styles.heading}>{item.node.title}</h2>
+                      <h2 className={styles.heading}>{item.title}</h2>
                       <p>
-                        {item.node.acf.category.name}
+                        {item.acf.category.name}
                         <i className="icon-arrow-right" />
                       </p>
                     </a>
@@ -87,7 +100,7 @@ const Component: React.FC<IProps> = props => {
             <div className="u-in">
               <div className="c-progressCtrl">
                 <ol>
-                  {edges.map((item, i) => (
+                  {posts.map((item, i) => (
                     <li key={i}>
                       <span>{Utils.zeroPadding(i + 1, 2)}</span>
                     </li>
@@ -114,19 +127,17 @@ export default Component;
 export const GET_POSTS = gql`
   query {
     posts(first: 5) {
-      edges {
-        node {
-          title
-          slug
-          acf {
-            eyecatch {
-              sourceUrl
-            }
-            category {
-              name
-            }
-            themeColor
+      nodes {
+        title
+        slug
+        acf {
+          eyecatch {
+            sourceUrl
           }
+          category {
+            name
+          }
+          themeColor
         }
       }
       pageInfo {
@@ -139,10 +150,10 @@ export const GET_POSTS = gql`
 `;
 
 export async function getServerSideProps() {
-  const { posts } = await fetcher(GET_POSTS);
+  const data = await fetcher(GET_POSTS);
   return {
     props: {
-      data: posts,
+      data,
     },
   };
 }

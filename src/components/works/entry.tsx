@@ -6,13 +6,22 @@ import styles from './entry.module.scss';
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 
-const Component = React.memo(({ data, index }: { data; index }) => {
+interface Props {
+  data: {
+    title: string;
+    slug: string;
+    acf: any;
+  };
+  index: number | string;
+}
+
+const Component: React.FC<Props> = React.memo(({ data, index }) => {
   const dispatch = useDispatch();
   const [isHover, setHover] = useState(false);
 
   const handlePointerDown = () => {
     setHover(true);
-    dispatch(SET_UI_COLOR(data.node.acf.themeColor));
+    dispatch(SET_UI_COLOR(data.acf.themeColor));
   };
 
   const handlePointerUp = () => {
@@ -21,7 +30,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
 
   return (
     <>
-      <Link href={'/works/' + data.node.slug}>
+      <Link href={'/works/' + data.slug}>
         <a
           className={`${styles.entry} ${isHover ? 'is-hover' : ''}`}
           onMouseEnter={handlePointerDown}
@@ -33,7 +42,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
           <div className="u-abs u-pos-tl u-fit">
             <div className={styles.eyecatch}>
               <Image
-                src={data.node.acf.eyecatch.sourceUrl}
+                src={data.acf.eyecatch.sourceUrl}
                 alt=""
                 layout="fill"
                 objectFit="cover"
@@ -45,7 +54,7 @@ const Component = React.memo(({ data, index }: { data; index }) => {
                 {index}
                 <span>Project</span>
               </p>
-              <h2 className={styles.heading}>{data.node.title}</h2>
+              <h2 className={styles.heading}>{data.title}</h2>
             </div>
           </div>
         </a>

@@ -1,38 +1,65 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Seo from '~/components/seo';
 import { motion } from 'framer-motion';
 import Layout from '~/components/layout';
 import Heading from '~/components/works/heading';
-import EntryList from '~/components/works/entryList';
-import useSWR from 'swr';
+import Entry from '~/components/works/entry';
+
+import { useSWRInfinite } from 'swr';
 import { gql } from 'graphql-request';
-import { WP_API_END_POINT } from '~/foundation/constants/const';
 import { fetcher } from '~/lib/fetcher';
 import { useInView } from 'react-intersection-observer';
 import { transition } from '~/animations/index';
+import Utils from '~/foundation/utils/Utils';
+
+import styles from './index.module.scss';
+
+type EntryData = React.ComponentProps<typeof Entry>['data'];
+type Data = {
+  posts: {
+    nodes: EntryData[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+      };
+    };
+  };
+};
 
 interface IProps {
-  data;
+  data: Data;
+  total: number;
 }
 
+const PER_PAGE = 10;
+let loadCount = 1;
+
 const Component: React.FC<IProps> = props => {
-  const { data, error } = useSWR(WP_API_END_POINT, fetcher, {
-    initialData: props.data,
-  });
-  const { edges, pageInfo } = data;
-  const { total } = pageInfo.offsetPagination;
+  const initialData = props.data;
+  const totalPost = props.total;
+  const totalPage = totalPost / PER_PAGE;
+  const { data, error, size, setSize, isValidating } = useSWRInfinite(
+    index => {
+      return getQuery(index * PER_PAGE);
+    },
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      initialData: [initialData],
+    }
+  );
+  const chunkedPostData = data ? [].concat(...data) : [];
 
   const [loaderRef, inView] = useInView({
-    rootMargin: '200px 0px',
+    rootMargin: '100px 0px',
   });
 
   useEffect(() => {
-    if (inView) {
-      loadMore();
+    if (inView && loadCount < totalPage) {
+      loadCount++;
+      setSize(size + 1);
     }
   }, [inView]);
-
-  const loadMore = async () => {};
 
   return (
     <Layout>
@@ -45,9 +72,31 @@ const Component: React.FC<IProps> = props => {
         exit="pageExit"
         variants={transition}
       >
-        <Heading total={total} />
-        <EntryList posts={edges} total={total} />
-        {error ? <div>Load error</div> : <div ref={loaderRef} />}
+        <Heading total={totalPost} />
+        <div className={styles.entryListGroup}>
+          {chunkedPostData.map((postData, i) => (
+            <div
+              className={`${styles.entryList} o-grid`}
+              data-target="skew.item"
+              key={i}
+            >
+              {postData.posts.nodes.map((item, j) => (
+                <article className="o-grid__item" data-smooth-item key={j}>
+                  <Entry
+                    data={item}
+                    index={Utils.zeroPadding(
+                      totalPost - (j + (i + i * (PER_PAGE - 1))),
+                      2
+                    )}
+                  />
+                </article>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div ref={loaderRef} />
+        {isValidating ? <div>Loading...</div> : null}
+        {error ? <div>Try to reload.</div> : null}
       </motion.div>
     </Layout>
   );
@@ -60,24 +109,17 @@ const getQuery = (offset: number) => {
     query {
       posts(where: {
         orderby: {field: DATE, order: DESC},
-        offsetPagination: {offset: ${offset}, size: 10}}
+        offsetPagination: {offset: ${offset}, size: ${PER_PAGE}}}
       ) {
-        edges {
-          node {
-            title
-            slug
-            acf {
-              url
-              themeColor
-              eyecatch {
-                sourceUrl
-              }
+        nodes {
+          title
+          slug
+          acf {
+            url
+            themeColor
+            eyecatch {
+              sourceUrl
             }
-          }
-        }
-        pageInfo {
-          offsetPagination {
-            total
           }
         }
       }
@@ -86,12 +128,42 @@ const getQuery = (offset: number) => {
   return graphql;
 };
 
+export const GET_INITIAL_POSTS = gql`
+  query {
+    posts(
+      where: {
+        orderby: { field: DATE, order: DESC }
+        offsetPagination: { size: 5 }
+      }
+    ) {
+      nodes {
+        title
+        slug
+        acf {
+          eyecatch {
+            sourceUrl
+          }
+          category {
+            name
+          }
+          themeColor
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
+    }
+  }
+`;
+
 export async function getServerSideProps() {
-  const query = getQuery(0);
-  const { posts } = await fetcher(query);
+  const data = await fetcher(GET_INITIAL_POSTS);
   return {
     props: {
-      data: posts,
+      data,
+      total: data.posts.pageInfo.offsetPagination.total,
     },
   };
 }

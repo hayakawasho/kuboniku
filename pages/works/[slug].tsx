@@ -16,28 +16,31 @@ import Intro from '~/components/single-works/intro';
 import CaptchaList from '~/components/single-works/captchaList';
 import NextProject from '~/components/single-works/nextProject';
 
-interface IProps {
-  data: {
-    post;
-    path;
+type Data = {
+  post: {
+    date: string;
+    title: string;
+    acf: any;
+    previous: {
+      title: string;
+      slug: string;
+      acf: any;
+    };
   };
+};
+
+interface IProps {
+  data: Data;
+  path: string;
 }
 
 const Component: React.FC<IProps> = props => {
-  const variables = { slug: props.data.path };
-  const { data } = useSWR([GET_POST, variables], fetcher, {
-    initialData: props.data.post,
+  const initialData = props.data;
+  const variables = { slug: props.path };
+  const { data } = useSWR<Data>([GET_POST, variables], fetcher, {
+    initialData,
   });
-  const { title, acf, date, previous } = data;
-  const {
-    themeColor,
-    category,
-    eyecatch,
-    role,
-    description,
-    url,
-    gallery,
-  } = acf;
+  const { title, acf, date, previous } = data.post;
   const dispatch = useDispatch();
   const scrollBuffer = useSelector(scrollBufferSelector);
   const { scrollYProgress } = useViewportScroll();
@@ -55,15 +58,19 @@ const Component: React.FC<IProps> = props => {
         variants={transition}
       >
         <div data-controller="skew">
-          <Kv title={title} img={eyecatch.sourceUrl} category={category.name} />
+          <Kv
+            title={title}
+            img={acf.eyecatch.sourceUrl}
+            category={acf.category.name}
+          />
           <div className={styles.content} data-target="skew.item">
             <Intro
               date={date}
-              role={role}
-              description={description}
-              url={url}
+              role={acf.role}
+              description={acf.description}
+              url={acf.url}
             />
-            <CaptchaList gallery={gallery} color={themeColor} />
+            <CaptchaList gallery={acf.gallery} color={acf.themeColor} />
             {previous !== null && (
               <NextProject
                 title={previous.title}
@@ -136,14 +143,12 @@ export const GET_POST = gql`
 
 export async function getServerSideProps({ params }) {
   const variables = { slug: params?.slug ?? '' };
-  const { post } = await fetcher(GET_POST, variables);
+  const data = await fetcher(GET_POST, variables);
 
   return {
     props: {
-      data: {
-        post: post ?? {},
-        path: params?.slug,
-      },
+      data,
+      path: params?.slug,
     },
   };
 }

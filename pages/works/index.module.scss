@@ -1,14 +1,26 @@
-@import '~css/base/_import.scss';
+@use '~css/base/_import.scss';
+
+.entryListGroup {
+  > .entryList {
+    &:last-child {
+      padding-bottom: 6.4rem;
+
+      @media (--pc) {
+        padding-bottom: 24.4rem;
+      }
+    }
+  }
+}
 
 .entryList {
-  padding: 0 calc(var(--gap) * 2) 6.4rem;
+  padding: 0 calc(var(--gap) * 2);
 
   @media (--pc) {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     width: calc(var(--grid) * 10);
-    padding: 0 0 24.4rem;
+    padding: 0;
     margin: 0 auto;
   }
 
