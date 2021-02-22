@@ -3,13 +3,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './kv.module.scss';
 
-interface IProps {
+type Props = {
   img: string;
   title: string;
   slug: string;
-}
+};
 
-const Component: React.FC<IProps> = ({ img, title, slug }) => {
+const Component: React.FC<Props> = ({ img, title, slug }) => {
   return (
     <aside className={`${styles.kv} is-next`} data-smooth-item>
       <Link href={'/works/' + slug}>

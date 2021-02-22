@@ -10,9 +10,9 @@ const Component: React.FC = () => {
 
   useEffect(() => {
     tl.add(
-      gsap.to(btnRef.current, 0.6, {
+      gsap.to(btnRef.current, 0.55, {
         rotation: 90,
-        ease: 'expo.inOut',
+        ease: 'power3.inOut',
       })
     ).add(
       gsap.fromTo(
@@ -26,7 +26,7 @@ const Component: React.FC = () => {
           y: 0,
           stagger: 0.07,
           force3D: true,
-          ease: 'expo.out',
+          ease: 'power3.out',
         }
       ),
       '-=.4'

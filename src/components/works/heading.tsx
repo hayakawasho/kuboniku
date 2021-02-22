@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './heading.module.scss';
 
-interface IProps {
+type Props = {
   total: number;
-}
+};
 
-const Component: React.FC<IProps> = ({ total }) => {
+const Component: React.FC<Props> = ({ total }) => {
   return (
     <h1 className={styles.heading}>
       <div data-smooth-item>

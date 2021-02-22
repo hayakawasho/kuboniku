@@ -2,13 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './kv.module.scss';
 
-interface IProps {
+type Props = {
   img: string;
   title: string;
   category: string;
-}
+};
 
-const Component: React.FC<IProps> = ({ img, title, category }) => {
+const Component: React.FC<Props> = ({ img, title, category }) => {
   return (
     <div className={styles.kv} data-smooth-item>
       <div className={styles.kv__cont} data-target="skew.item">

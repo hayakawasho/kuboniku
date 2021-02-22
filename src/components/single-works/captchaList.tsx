@@ -2,12 +2,12 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './captchaList.module.scss';
 
-interface IProps {
+type Props = {
   gallery: [];
   color: string;
-}
+};
 
-const Component: React.FC<IProps> = ({ gallery, color }) => {
+const Component: React.FC<Props> = ({ gallery, color }) => {
   return (
     <ul className={styles.captchaList} data-smooth-item>
       {gallery.map((item: any, i) => {

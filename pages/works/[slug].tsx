@@ -29,12 +29,12 @@ type Data = {
   };
 };
 
-interface IProps {
+type Props = {
   data: Data;
   path: string;
-}
+};
 
-const Component: React.FC<IProps> = props => {
+const Component: React.FC<Props> = props => {
   const initialData = props.data;
   const variables = { slug: props.path };
   const { data } = useSWR<Data>([GET_POST, variables], fetcher, {

@@ -27,11 +27,11 @@ type Data = {
   };
 };
 
-interface IProps {
+type Props = {
   data: Data;
-}
+};
 
-const Component: React.FC<IProps> = props => {
+const Component: React.FC<Props> = props => {
   const initialData = props.data;
   const { data } = useSWR<Data>(GET_POSTS, fetcher, { initialData });
   const posts = data.posts.nodes;

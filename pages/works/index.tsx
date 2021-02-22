@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect } from 'react';
 import Seo from '~/components/seo';
 import { motion } from 'framer-motion';
 import Layout from '~/components/layout';
@@ -15,6 +15,7 @@ import Utils from '~/foundation/utils/Utils';
 import styles from './index.module.scss';
 
 type EntryData = React.ComponentProps<typeof Entry>['data'];
+
 type Data = {
   posts: {
     nodes: EntryData[];
@@ -26,38 +27,36 @@ type Data = {
   };
 };
 
-interface IProps {
+type Props = {
   data: Data;
   total: number;
-}
+};
 
 const PER_PAGE = 10;
 let loadCount = 1;
 
-const Component: React.FC<IProps> = props => {
+const Component: React.FC<Props> = props => {
   const initialData = props.data;
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;
   const { data, error, size, setSize, isValidating } = useSWRInfinite(
-    index => {
-      return getQuery(index * PER_PAGE);
-    },
+    index => getQuery(index * PER_PAGE),
     fetcher,
     {
       revalidateOnFocus: false,
       initialData: [initialData],
     }
   );
+
   const chunkedPostData = data ? [].concat(...data) : [];
 
-  const [loaderRef, inView] = useInView({
-    rootMargin: '100px 0px',
+  const [entryLoaderRef, inView] = useInView({
+    rootMargin: '200px 0px',
   });
 
   useEffect(() => {
-    if (inView && loadCount < totalPage) {
-      loadCount++;
-      setSize(size + 1);
+    if (inView && !isValidating && loadCount < totalPage) {
+      setSize(size + 1).then(() => loadCount++);
     }
   }, [inView]);
 
@@ -80,22 +79,24 @@ const Component: React.FC<IProps> = props => {
               data-target="skew.item"
               key={i}
             >
-              {postData.posts.nodes.map((item, j) => (
-                <article className="o-grid__item" data-smooth-item key={j}>
-                  <Entry
-                    data={item}
-                    index={Utils.zeroPadding(
-                      totalPost - (j + (i + i * (PER_PAGE - 1))),
-                      2
-                    )}
-                  />
-                </article>
-              ))}
+              {postData.posts.nodes.map((item, j) => {
+                const projectIndex = Utils.zeroPadding(
+                  totalPost - (j + (i + i * (PER_PAGE - 1))),
+                  2
+                );
+                return (
+                  <article className="o-grid__item" data-smooth-item key={j}>
+                    <Entry data={item} index={projectIndex} />
+                  </article>
+                );
+              })}
             </div>
           ))}
+
+          <div ref={entryLoaderRef} className={styles.entryLoader}>
+            {isValidating && <div className={styles.loadingSpin} />}
+          </div>
         </div>
-        <div ref={loaderRef} />
-        {isValidating ? <div>Loading...</div> : null}
         {error ? <div>Try to reload.</div> : null}
       </motion.div>
     </Layout>

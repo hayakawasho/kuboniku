@@ -3,16 +3,16 @@ import styles from './intro.module.scss';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-interface IProps {
+type Props = {
   date: string;
   role: {
     name: string;
   }[];
   description?: string;
   url?: string;
-}
+};
 
-const Component: React.FC<IProps> = ({ date, role, description, url }) => {
+const Component: React.FC<Props> = ({ date, role, description, url }) => {
   return (
     <div className={styles.intro} data-smooth-item>
       <div className={styles.intro__info}>
