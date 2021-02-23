@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { NextPage } from 'next';
 import Layout from '~/components/layout';
 import Seo from '~/components/seo';
 import Link from 'next/link';
@@ -31,7 +32,7 @@ type Props = {
   data: Data;
 };
 
-const Component: React.FC<Props> = props => {
+const Component: NextPage<Props> = props => {
   const initialData = props.data;
   const { data } = useSWR<Data>(GET_POSTS, fetcher, { initialData });
   const posts = data.posts.nodes;
@@ -123,7 +124,13 @@ const Component: React.FC<Props> = props => {
 
 export default Component;
 
-// Latest works
+Component.getInitialProps = async () => {
+  const data = await fetcher(GET_POSTS);
+  return {
+    data,
+  };
+};
+
 export const GET_POSTS = gql`
   query {
     posts(first: 5) {
@@ -148,12 +155,3 @@ export const GET_POSTS = gql`
     }
   }
 `;
-
-export async function getServerSideProps() {
-  const data = await fetcher(GET_POSTS);
-  return {
-    props: {
-      data,
-    },
-  };
-}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NextPage } from 'next';
 import Layout from '~/components/layout';
 import Seo from '~/components/seo';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
@@ -34,7 +35,7 @@ type Props = {
   path: string;
 };
 
-const Component: React.FC<Props> = props => {
+const Component = props => {
   const initialData = props.data;
   const variables = { slug: props.path };
   const { data } = useSWR<Data>([GET_POST, variables], fetcher, {
@@ -99,6 +100,28 @@ const Component: React.FC<Props> = props => {
 
 export default Component;
 
+Component.getInitialProps = async ({ query }) => {
+  const variables = { slug: query?.slug ?? '' };
+  const data = await fetcher(GET_POST, variables);
+
+  return {
+    data,
+    path: query?.slug,
+  };
+};
+
+// export async function getServerSideProps({ params }) {
+//   const variables = { slug: params?.slug ?? '' };
+//   const data = await fetcher(GET_POST, variables);
+//
+//   return {
+//     props: {
+//       data,
+//       path: params?.slug,
+//     },
+//   };
+// }
+
 export const GET_POST = gql`
   query GET_POST($slug: String) {
     post: postBy(slug: $slug) {
@@ -140,15 +163,3 @@ export const GET_POST = gql`
     }
   }
 `;
-
-export async function getServerSideProps({ params }) {
-  const variables = { slug: params?.slug ?? '' };
-  const data = await fetcher(GET_POST, variables);
-
-  return {
-    props: {
-      data,
-      path: params?.slug,
-    },
-  };
-}
