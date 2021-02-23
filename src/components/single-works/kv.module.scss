@@ -37,6 +37,7 @@
   height: calc(var(--vh) * 100);
   perspective: 1000px;
   overflow: hidden;
+  display: block;
 
   @media (--pc) {
     height: 100vh;

@@ -1,39 +1,51 @@
 import React from 'react';
-import Image from 'next/image';
 import styles from './kv.module.scss';
 
 type Props = {
-  img: string;
+  src: string;
+  srcSet: {
+    pc: {
+      srcSet: string;
+    };
+    mobile: {
+      srcSet: string;
+    };
+  };
   title: string;
   category: string;
 };
 
-const Component: React.FC<Props> = ({ img, title, category }) => {
+const Component: React.FC<Props> = props => {
   return (
     <div className={styles.kv} data-smooth-item>
       <div className={styles.kv__cont} data-target="skew.item">
         <h1 className={styles.heading}>
           <div className="u-ovh u-inline-block">
-            <span className="u-inline-block u-origin-right">{title}</span>
+            <span className="u-inline-block u-origin-right">{props.title}</span>
           </div>
         </h1>
         <p className="u-ovh">
           <span className="u-inline-block u-origin-right">
-            {category}
+            {props.category}
             <i className="icon-arrow-right" />
           </span>
         </p>
       </div>
-      <div className={styles.kv__img} data-target="skew.item">
-        <Image
-          src={img}
+      <picture className={styles.kv__img} data-target="skew.item">
+        {props.srcSet.mobile && (
+          <source
+            media="(max-width: 639px)"
+            srcSet={props.srcSet.mobile.srcSet}
+          />
+        )}
+        <img
+          src={props.src}
+          srcSet={props.srcSet.pc.srcSet}
           alt=""
-          layout="fill"
-          objectFit="cover"
-          objectPosition="50% 50%"
-          priority
+          decoding="async"
+          className="u-abs u-fit u-pos-tl u-object-cover u-object-center"
         />
-      </div>
+      </picture>
       <div className={styles.kv__scroll}>
         <div className="u-in u-ovh">
           <div className={styles.kv__scrollLabel}>scroll</div>

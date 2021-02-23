@@ -61,7 +61,11 @@ const Component = props => {
         <div data-controller="skew">
           <Kv
             title={title}
-            img={acf.eyecatch.sourceUrl}
+            src={acf.eyecatch.sourceUrl}
+            srcSet={{
+              pc: acf.eyecatch,
+              mobile: acf.eyecatchMobile,
+            }}
             category={acf.category.name}
           />
           <div className={styles.content} data-target="skew.item">
@@ -77,7 +81,11 @@ const Component = props => {
             {previous && (
               <NextProject
                 title={previous.title}
-                img={previous.acf.eyecatch.sourceUrl}
+                src={previous.acf.eyecatch.sourceUrl}
+                srcSet={{
+                  pc: previous.acf.eyecatch,
+                  mobile: previous.acf.eyecatchMobile,
+                }}
                 slug={previous.slug}
               />
             )}
@@ -135,18 +143,20 @@ export const GET_POST = gql`
         acf {
           eyecatch {
             sourceUrl
+            srcSet
           }
           eyecatchMobile {
-            sourceUrl
+            srcSet
           }
         }
       }
       acf {
         eyecatch {
           sourceUrl
+          srcSet
         }
         eyecatchMobile {
-          sourceUrl
+          srcSet
         }
         category {
           name
