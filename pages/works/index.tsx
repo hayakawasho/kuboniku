@@ -159,7 +159,7 @@ export const GET_INITIAL_POSTS = gql`
   }
 `;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const data = await fetcher(GET_INITIAL_POSTS);
   return {
     props: {
