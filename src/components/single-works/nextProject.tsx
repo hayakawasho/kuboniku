@@ -40,7 +40,7 @@ const Component: React.FC<Props> = props => {
           src={props.src}
           srcSet={props.srcSet.pc.srcSet}
           alt=""
-          decoding="async"
+          loading="lazy"
           className="u-abs u-fit u-pos-tl u-object-cover u-object-center"
         />
       </picture>
