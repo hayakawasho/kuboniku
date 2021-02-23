@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { NextPage } from 'next';
 import Seo from '~/components/seo';
 import { motion } from 'framer-motion';
 import Layout from '~/components/layout';
@@ -35,7 +36,7 @@ type Props = {
 const PER_PAGE = 10;
 let loadCount = 1;
 
-const Component: React.FC<Props> = props => {
+const Component: NextPage<Props> = props => {
   const initialData = props.data;
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;
@@ -105,6 +106,14 @@ const Component: React.FC<Props> = props => {
 
 export default Component;
 
+Component.getInitialProps = async () => {
+  const data = await fetcher(GET_INITIAL_POSTS);
+  return {
+    data,
+    total: data.posts.pageInfo.offsetPagination.total,
+  };
+};
+
 const getQuery = (offset: number) => {
   const graphql = gql`
     query {
@@ -129,7 +138,7 @@ const getQuery = (offset: number) => {
   return graphql;
 };
 
-export const GET_INITIAL_POSTS = gql`
+const GET_INITIAL_POSTS = gql`
   query {
     posts(
       where: {
@@ -158,13 +167,3 @@ export const GET_INITIAL_POSTS = gql`
     }
   }
 `;
-
-export async function getStaticProps() {
-  const data = await fetcher(GET_INITIAL_POSTS);
-  return {
-    props: {
-      data,
-      total: data.posts.pageInfo.offsetPagination.total,
-    },
-  };
-}
