@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './entry.module.scss';
 
 import { useDispatch } from 'react-redux';
@@ -41,12 +40,12 @@ const Component: React.FC<Props> = React.memo(({ data, index }) => {
           <div className="c-aspect" />
           <div className="u-abs u-pos-tl u-fit">
             <div className={styles.eyecatch}>
-              <Image
+              <img
                 src={data.acf.eyecatch.sourceUrl}
+                srcSet={data.acf.eyecatch.srcSet}
                 alt=""
-                layout="fill"
-                objectFit="cover"
-                objectPosition="50% 50%"
+                loading="lazy"
+                className="u-abs u-fit u-pos-tl u-object-cover u-object-center"
               />
             </div>
             <div className={styles.entry__hgroup}>

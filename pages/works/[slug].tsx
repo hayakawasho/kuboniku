@@ -71,8 +71,10 @@ const Component = props => {
               description={acf.description}
               url={acf.url}
             />
-            <CaptchaList gallery={acf.gallery} color={acf.themeColor} />
-            {previous !== null && (
+            {acf.gallery && (
+              <CaptchaList gallery={acf.gallery} color={acf.themeColor} />
+            )}
+            {previous && (
               <NextProject
                 title={previous.title}
                 img={previous.acf.eyecatch.sourceUrl}
@@ -134,6 +136,9 @@ export const GET_POST = gql`
           eyecatch {
             sourceUrl
           }
+          eyecatchMobile {
+            sourceUrl
+          }
         }
       }
       acf {
@@ -154,6 +159,7 @@ export const GET_POST = gql`
         url
         gallery {
           sourceUrl
+          srcSet
           mediaDetails {
             width
             height

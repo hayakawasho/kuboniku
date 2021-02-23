@@ -71,6 +71,14 @@
   height: 100%;
 }
 
+.u-object-cover {
+  object-fit: cover;
+}
+
+.u-object-center {
+  object-position: center;
+}
+
 /* position */
 .u-pos-tl {
   top: 0;

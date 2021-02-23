@@ -117,10 +117,7 @@ Component.getInitialProps = async () => {
 const getQuery = (offset: number) => {
   const graphql = gql`
     query {
-      posts(where: {
-        orderby: {field: DATE, order: DESC},
-        offsetPagination: {offset: ${offset}, size: ${PER_PAGE}}}
-      ) {
+      posts(where: { offsetPagination: {offset: ${offset}, size: ${PER_PAGE}} }) {
         nodes {
           title
           slug
@@ -129,6 +126,7 @@ const getQuery = (offset: number) => {
             themeColor
             eyecatch {
               sourceUrl
+              srcSet
             }
           }
         }
@@ -141,17 +139,14 @@ const getQuery = (offset: number) => {
 const GET_INITIAL_POSTS = gql`
   query {
     posts(
-      where: {
-        orderby: { field: DATE, order: DESC }
-        offsetPagination: { size: ${PER_PAGE} }
-      }
-    ) {
+      where: { offsetPagination: { size: ${PER_PAGE} } }) {
       nodes {
         title
         slug
         acf {
           eyecatch {
             sourceUrl
+            srcSet
           }
           category {
             name
