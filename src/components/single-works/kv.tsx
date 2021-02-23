@@ -3,13 +3,9 @@ import styles from './kv.module.scss';
 
 type Props = {
   src: string;
-  srcSet: {
-    pc: {
-      srcSet: string;
-    };
-    mobile: {
-      srcSet: string;
-    };
+  srcSet: string;
+  mobile: {
+    srcSet: string;
   };
   title: string;
   category: string;
@@ -32,15 +28,12 @@ const Component: React.FC<Props> = props => {
         </p>
       </div>
       <picture className={styles.kv__img} data-target="skew.item">
-        {props.srcSet.mobile && (
-          <source
-            media="(max-width: 639px)"
-            srcSet={props.srcSet.mobile.srcSet}
-          />
+        {props.mobile && (
+          <source media="(max-width: 639px)" srcSet={props.mobile.srcSet} />
         )}
         <img
           src={props.src}
-          srcSet={props.srcSet.pc.srcSet}
+          srcSet={props.srcSet}
           alt=""
           decoding="async"
           className="u-abs u-fit u-pos-tl u-object-cover u-object-center"

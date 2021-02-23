@@ -62,10 +62,8 @@ const Component = props => {
           <Kv
             title={title}
             src={acf.eyecatch.sourceUrl}
-            srcSet={{
-              pc: acf.eyecatch,
-              mobile: acf.eyecatchMobile,
-            }}
+            srcSet={acf.eyecatch.srcSet}
+            mobile={acf.eyecatchMobile}
             category={acf.category.name}
           />
           <div className={styles.content} data-target="skew.item">
@@ -82,10 +80,8 @@ const Component = props => {
               <NextProject
                 title={previous.title}
                 src={previous.acf.eyecatch.sourceUrl}
-                srcSet={{
-                  pc: previous.acf.eyecatch,
-                  mobile: previous.acf.eyecatchMobile,
-                }}
+                srcSet={previous.acf.eyecatch.srcSet}
+                mobile={previous.acf.eyecatchMobile}
                 slug={previous.slug}
               />
             )}
