@@ -8,8 +8,8 @@ import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
-import { transition } from '~/animations/index';
-import { fetcher } from '~/lib/fetcher';
+import { transition } from '~/foundation/animations';
+import { fetcher } from '~/foundation/fetcher';
 
 import styles from './[slug].module.scss';
 import Kv from '~/components/single-works/kv';

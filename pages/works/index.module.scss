@@ -1,5 +1,13 @@
 @use '~css/base/_import.scss';
 
+.worksBody {
+  padding-top: 10rem;
+
+  @media (--pc) {
+    padding-top: 15rem;
+  }
+}
+
 .entryListGroup {
   > .entryList {
     &:last-child {

@@ -10,8 +10,8 @@ import { gsap } from 'gsap';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
-import { fetcher } from '~/lib/fetcher';
-import { transition } from '~/animations/index';
+import { fetcher } from '~/foundation/fetcher';
+import { transition } from '~/foundation/animations';
 
 type Data = {
   posts: {

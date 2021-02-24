@@ -12,7 +12,6 @@ if (process.browser) {
 }
 
 const Component = React.memo(() => {
-  const viewportRef = useRef(null);
   const docRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -26,34 +25,19 @@ const Component = React.memo(() => {
   };
 
   useEffect(() => {
-    const viewportObserve = new ResizeObserverHandler({
-      el: viewportRef.current,
-      callback: debounce((entry: ResizeObserverEntry) => {
-        const rect = entry.contentRect;
-        const { width, height } = rect;
-        dispatch(SET_WINDOW_HEIGHT(height));
-        setSize(width, height);
-        updateVh(window.innerHeight);
-      }, 30),
-    });
-
-    viewportObserve.init();
-
-    return () => {
-      viewportObserve.destroy();
-    };
-  }, [updateVh]);
-
-  useEffect(() => {
     setSize(window.innerWidth, window.innerHeight);
 
     const docObserve = new ResizeObserverHandler({
       el: docRef.current,
-      callback: (entry: ResizeObserverEntry) => {
+      callback: debounce((entry: ResizeObserverEntry) => {
         const rect = entry.contentRect;
-        const { height } = rect;
+        const { width, height } = rect;
+        const wh = window.innerHeight;
+        setSize(width, wh);
         dispatch(SET_DOC_HEIGHT(height));
-      },
+        dispatch(SET_WINDOW_HEIGHT(wh));
+        updateVh(wh);
+      }, 30),
     });
 
     docObserve.init();
@@ -61,11 +45,10 @@ const Component = React.memo(() => {
     return () => {
       docObserve.destroy();
     };
-  }, []);
+  }, [updateVh]);
 
   return (
     <>
-      <div ref={viewportRef} className="viewport" />
       <div ref={docRef} className="docSize" />
     </>
   );

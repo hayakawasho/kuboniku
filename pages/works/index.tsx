@@ -8,9 +8,9 @@ import Entry from '~/components/works/entry';
 
 import { useSWRInfinite } from 'swr';
 import { gql } from 'graphql-request';
-import { fetcher } from '~/lib/fetcher';
+import { fetcher } from '~/foundation/fetcher';
 import { useInView } from 'react-intersection-observer';
-import { transition } from '~/animations/index';
+import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
 
 import styles from './index.module.scss';
@@ -71,6 +71,7 @@ const Component: NextPage<Props> = props => {
         animate="pageAnimate"
         exit="pageExit"
         variants={transition}
+        className={styles.worksBody}
       >
         <Heading total={totalPost} />
         <div className={styles.entryListGroup}>
