@@ -6,14 +6,14 @@ export const transition = {
     opacity: 1,
     transition: {
       duration: 0.35,
-      ease: [0.23, 0.06, 0.1, 1],
+      ease: [0.18, 0.06, 0.23, 1],
     },
   },
   pageExit: {
     opacity: 0,
     transition: {
       duration: 0.35,
-      ease: [0.23, 0.06, 0.1, 1],
+      ease: [0.18, 0.06, 0.23, 1],
     },
   },
 };
