@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './captchaList.module.scss';
 
 type Props = {
   gallery: {
@@ -15,7 +14,7 @@ type Props = {
 
 const Component: React.FC<Props> = ({ gallery, color }) => {
   return (
-    <ul className={styles.captchaList} data-smooth-item>
+    <ul className="worksDetailCaptchaList" data-smooth-item>
       {gallery.map((item, i) => {
         const aspect = Math.round(
           (item.mediaDetails.height / item.mediaDetails.width) * 100

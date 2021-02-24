@@ -1,6 +1,6 @@
 @use '~css/base/_import.scss';
 
-.intro {
+.worksDetailIntro {
   position: relative;
   width: 100%;
   padding: 6rem calc(var(--gap) * 2) 7rem;
@@ -15,7 +15,7 @@
   }
 }
 
-.intro__info {
+.worksDetailIntro__info {
   margin-bottom: 5rem;
 
   @media (--pc) {
@@ -24,7 +24,7 @@
   }
 }
 
-.dl {
+.worksDetailIntroDl {
   > dt {
     margin-bottom: 1em;
     font-family: var(--font-roboto);
@@ -48,7 +48,7 @@
     }
   }
 
-  + .dl {
+  + .worksDetailIntroDl {
     margin-top: 3.2rem;
 
     @media (--pc) {
@@ -57,27 +57,25 @@
   }
 }
 
-.intro__p {
+.worksDetailIntro__p {
   text-align: right;
 
   @media (--pc) {
     width: calc(5 / 8 * 100%);
   }
 
-  :global {
-    .c-link {
-      margin-top: 5rem;
-      letter-spacing: 0.08em;
+  .c-link {
+    margin-top: 5rem;
+    letter-spacing: 0.08em;
 
-      @media (--pc) {
-        margin-top: 3.5rem;
-        font-size: 1.4rem;
-      }
+    @media (--pc) {
+      margin-top: 3.5rem;
+      font-size: 1.4rem;
     }
   }
 }
 
-.desc {
+.worksDetailIntroDesc {
   text-align: left;
 
   p {

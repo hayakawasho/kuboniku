@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import styles from './entry.module.scss';
 
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
@@ -31,7 +30,7 @@ const Component: React.FC<Props> = React.memo(({ data, index }) => {
     <>
       <Link href={'/works/' + data.slug}>
         <a
-          className={`${styles.entry} ${isHover ? 'is-hover' : ''}`}
+          className={`worksIndexEntry ${isHover ? 'is-hover' : ''}`}
           onMouseEnter={handlePointerDown}
           onTouchStart={handlePointerDown}
           onMouseLeave={handlePointerUp}
@@ -39,7 +38,7 @@ const Component: React.FC<Props> = React.memo(({ data, index }) => {
         >
           <div className="c-aspect" />
           <div className="u-abs u-pos-tl u-fit">
-            <div className={styles.eyecatch}>
+            <div className="worksIndexEyecatch">
               <img
                 src={data.acf.eyecatch.sourceUrl}
                 srcSet={data.acf.eyecatch.srcSet}
@@ -48,12 +47,12 @@ const Component: React.FC<Props> = React.memo(({ data, index }) => {
                 className="u-abs u-fit u-pos-tl u-object-cover u-object-center"
               />
             </div>
-            <div className={styles.entry__hgroup}>
-              <p className={styles.num}>
+            <div className="worksIndexEntry__hgroup">
+              <p className="worksIndexEntryNum">
                 {index}
                 <span>Project</span>
               </p>
-              <h2 className={styles.heading}>{data.title}</h2>
+              <h2 className="worksIndexEntryHeading">{data.title}</h2>
             </div>
           </div>
         </a>

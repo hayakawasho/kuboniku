@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './kv.module.scss';
 
 type Props = {
   src: string;
@@ -13,9 +12,9 @@ type Props = {
 
 const Component: React.FC<Props> = props => {
   return (
-    <div className={styles.kv} data-smooth-item>
-      <div className={styles.kv__cont} data-target="skew.item">
-        <h1 className={styles.heading}>
+    <div className="worksDetailKv" data-smooth-item>
+      <div className="worksDetailKv__cont" data-target="skew.item">
+        <h1 className="worksDetailKvHeading">
           <div className="u-ovh u-inline-block">
             <span className="u-inline-block u-origin-right">{props.title}</span>
           </div>
@@ -27,7 +26,7 @@ const Component: React.FC<Props> = props => {
           </span>
         </p>
       </div>
-      <picture className={styles.kv__img} data-target="skew.item">
+      <picture className="worksDetailKv__img" data-target="skew.item">
         {props.mobile && (
           <source media="(max-width: 639px)" srcSet={props.mobile.srcSet} />
         )}
@@ -39,9 +38,9 @@ const Component: React.FC<Props> = props => {
           className="u-abs u-fit u-pos-tl u-object-cover u-object-center"
         />
       </picture>
-      <div className={styles.kv__scroll}>
+      <div className="worksDetailKv__scroll">
         <div className="u-in u-ovh">
-          <div className={styles.kv__scrollLabel}>scroll</div>
+          <div className="worksDetailKv__scrollLabel">scroll</div>
         </div>
         <i className="icon-arrow-down" />
       </div>

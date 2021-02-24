@@ -1,3 +1,135 @@
+@import '~css/base/_import.scss';
+
+.homeScreen {
+  position: relative;
+  height: calc(var(--vh) * 100);
+}
+
+.homeWorksList {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  > li {
+    &:first-child {
+      .homeHeading {
+        opacity: 1;
+
+        + p {
+          opacity: 1;
+        }
+      }
+
+      .homeNum {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.homeGroup {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  width: auto;
+  display: inline-block;
+  padding-left: var(--grid);
+  color: #fff;
+}
+
+.homeHeading {
+  padding-left: 1.2rem;
+  font-family: var(--font-roboto);
+  font-size: 3.9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  line-height: 1;
+  color: #fff;
+  opacity: 0;
+
+  @media (--pc) {
+    font-size: 7rem;
+  }
+
+  + p {
+    font-family: var(--font-roboto);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--color-text-primary);
+    letter-spacing: 0.02em;
+    padding-left: 1.2rem;
+    margin-top: 1rem;
+    opacity: 0;
+
+    .icon-arrow-right {
+      font-size: .7rem;
+      margin-left: .8rem;
+    }
+  }
+}
+
+.homeNum {
+  font-family: var(--font-en);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  font-size: 1.2rem;
+  color: #fff;
+  line-height: 1;
+  position: absolute;
+  top: calc(-1em - 2rem);
+  backface-visibility: hidden;
+  z-index: 2;
+  opacity: 0;
+
+  @media (--pc) {
+    // font-size: 1.3rem;
+  }
+
+  > span {
+    font-size: .8rem;
+    letter-spacing: 0.02em;
+    margin-left: 0.5rem;
+  }
+}
+
+.homeBtm {
+  position: absolute;
+  bottom: 5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  overflow: hidden;
+  z-index: 2;
+
+  .icon-arrow-down {
+    display: block;
+    text-align: center;
+    margin-top: 1.2rem;
+  }
+}
+
+.homeBtm__label {
+  font-family: var(--font-en);
+  font-weight: 700;
+  display: inline-block;
+  letter-spacing: -.02em;
+  font-size: 1.4rem;
+  color: #fff;
+  line-height: 1;
+
+  @media (--pc) {
+    font-size: 1.3rem;
+  }
+
+  > span {
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    margin-left: 0.4rem;
+  }
+}
+
+
+/*
 .home {
   overflow: hidden;
 }
@@ -42,15 +174,15 @@
   padding-top: calc(950 / 1696 * 100%);
 
   & img {
-    /* display: none; */
+    // display: none;
     height: 100%;
     position: absolute;
     top: 0;
     width: 100%;
-    /*
+    //
     width: 140%;
     left: -20%;
-    */
+    '/
     object-fit: cover;
     will-change: transform;
   }
@@ -226,7 +358,7 @@ body{
 
   }
 }
-*/
+
 
 .titles{
   position: fixed;
@@ -282,3 +414,4 @@ body{
     }
   }
 }
+*/

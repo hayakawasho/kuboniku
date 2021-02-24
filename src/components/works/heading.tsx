@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './heading.module.scss';
 
 type Props = {
   total: number;
@@ -7,9 +6,9 @@ type Props = {
 
 const Component: React.FC<Props> = ({ total }) => {
   return (
-    <h1 className={styles.heading}>
+    <h1 className="worksIndexHeading">
       <div data-smooth-item>
-        Works<sup className={styles.heading__total}>{total}</sup>
+        Works<sup className="worksIndexHeading__total">{total}</sup>
       </div>
     </h1>
   );

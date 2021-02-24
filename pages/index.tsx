@@ -3,7 +3,6 @@ import { NextPage } from 'next';
 import Layout from '~/components/layout';
 import Seo from '~/components/seo';
 import Link from 'next/link';
-import styles from './index.module.scss';
 import Utils from '~/foundation/utils/Utils';
 import { qsa, qs } from '~/foundation/utils/dom';
 import { gsap } from 'gsap';
@@ -62,22 +61,22 @@ const Component: NextPage<Props> = props => {
         variants={transition}
       >
         <canvas className="gl" ref={canvasRef}></canvas>
-        <div className={styles.screen}>
-          <ul className={styles.worksList}>
+        <div className="homeScreen">
+          <ul className="homeWorksList">
             {posts.map((item, i) => (
               <li className="u-in" key={i}>
-                <div className={styles.entry}>
+                <div className="homeEntry">
                   <Link href={`/works/${item.slug}`}>
                     <a
-                      className={`${styles.g} u-z-10`}
+                      className="homeGroup  u-z-10"
                       data-gl-texture={item.acf.eyecatch.sourceUrl}
                       data-gl-id={item.slug}
                     >
-                      <p className={styles.num}>
+                      <p className="homeNum">
                         {Utils.zeroPadding(total - i, 2)}
                         <span>Project</span>
                       </p>
-                      <h2 className={styles.heading}>{item.title}</h2>
+                      <h2 className="homeHeading">{item.title}</h2>
                       <p>
                         {item.acf.category.name}
                         <i className="icon-arrow-right" />
@@ -88,9 +87,9 @@ const Component: NextPage<Props> = props => {
               </li>
             ))}
           </ul>
-          <button type="button" className={styles.btm}>
+          <button type="button" className="homeBtm">
             <div className="u-in u-ovh">
-              <div className={styles.btm__label}>
+              <div className="homeBtm__label">
                 {currentProjectIndex}
                 <span>Project</span>
               </div>

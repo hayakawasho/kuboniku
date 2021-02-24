@@ -13,8 +13,6 @@ import { useInView } from 'react-intersection-observer';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
 
-import styles from './index.module.scss';
-
 type EntryData = React.ComponentProps<typeof Entry>['data'];
 
 type Data = {
@@ -71,13 +69,13 @@ const Component: NextPage<Props> = props => {
         animate="pageAnimate"
         exit="pageExit"
         variants={transition}
-        className={styles.worksBody}
+        className="worksIndexBody"
       >
         <Heading total={totalPost} />
-        <div className={styles.entryListGroup}>
+        <div className="worksIndexEntryListGroup">
           {chunkedPostData.map((postData, i) => (
             <div
-              className={`${styles.entryList} o-grid`}
+              className={`worksIndexEntryList o-grid`}
               data-target="skew.item"
               key={i}
             >
@@ -95,8 +93,8 @@ const Component: NextPage<Props> = props => {
             </div>
           ))}
 
-          <div ref={entryLoaderRef} className={styles.entryLoader}>
-            {isValidating && <div className={styles.loadingSpin} />}
+          <div ref={entryLoaderRef} className="worksIndexEntryLoader">
+            {isValidating && <div className="worksIndexLoadingSpin" />}
           </div>
         </div>
         {error ? <div>Try to reload.</div> : null}

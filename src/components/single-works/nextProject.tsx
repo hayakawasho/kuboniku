@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './kv.module.scss';
 
 type Props = {
   src: string;
@@ -14,18 +13,18 @@ type Props = {
 
 const Component: React.FC<Props> = props => {
   return (
-    <aside className={`${styles.kv} is-next`} data-smooth-item>
+    <aside className="worksDetailKv is-next" data-smooth-item>
       <Link href={'/works/' + props.slug}>
         <a className="u-abs u-fit u-z-10" />
       </Link>
-      <div className={styles.kv__cont}>
-        <h2 className={styles.heading}>Next Project</h2>
+      <div className="worksDetailKv__cont">
+        <h2 className="worksDetailKvHeading">Next Project</h2>
         <p>
           {props.title}
           <i className="icon-arrow-right" />
         </p>
       </div>
-      <picture className={styles.kv__img}>
+      <picture className="worksDetailKv__img">
         {props.mobile && (
           <source media="(max-width: 639px)" srcSet={props.mobile.srcSet} />
         )}

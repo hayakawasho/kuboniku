@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './intro.module.scss';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
@@ -14,13 +13,13 @@ type Props = {
 
 const Component: React.FC<Props> = ({ date, role, description, url }) => {
   return (
-    <div className={styles.intro} data-smooth-item>
-      <div className={styles.intro__info}>
-        <dl className={styles.dl}>
+    <div className="worksDetailIntro" data-smooth-item>
+      <div className="worksDetailIntro__info">
+        <dl className="worksDetailIntroDl">
           <dt>Year</dt>
           <dd>{format(parseISO(date), 'MMMM d, yyyy')}</dd>
         </dl>
-        <dl className={styles.dl}>
+        <dl className="worksDetailIntroDl">
           <dt>Role</dt>
           {role.map((item, i) => (
             <dd className="u-uppercase" key={i}>
@@ -29,10 +28,10 @@ const Component: React.FC<Props> = ({ date, role, description, url }) => {
           ))}
         </dl>
       </div>
-      <div className={styles.intro__p}>
+      <div className="worksDetailIntro__p">
         {description && (
           <div
-            className={styles.desc}
+            className="worksDetailIntroDesc"
             dangerouslySetInnerHTML={{
               __html: description,
             }}

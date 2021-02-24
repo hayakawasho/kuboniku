@@ -1,16 +1,26 @@
-/* base */
+// base
 @use './base/import';
 @use './base/custom-properties';
 @use './base/base';
 @use './base/fonts';
 
-/* parts */
+// parts
 @use './parts/burger';
 @use './parts/link';
 @use './parts/ctrl';
 @use './parts/grid';
 @use './parts/aspect';
 @use './parts/progress';
+
+// namespace
+@use './namespace/home/index.scss';
+@use './namespace/worksIndex/heading.scss';
+@use './namespace/worksIndex/entry.scss';
+@use './namespace/worksIndex/index.scss';
+@use './namespace/worksDetail/kv.scss';
+@use './namespace/worksDetail/intro.scss';
+@use './namespace/worksDetail/captchaList.scss';
+@use './namespace/worksDetail/index.scss';
 
 @use './utils';
 @use './shame';

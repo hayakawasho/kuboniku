@@ -1,6 +1,6 @@
 @use '~css/base/_import.scss';
 
-.captchaList {
+.worksDetailCaptchaList {
   padding: 0 var(--gap);
   margin-bottom: 10.5rem;
 
@@ -17,10 +17,8 @@
       margin-bottom: 6rem;
     }
 
-    :global {
-      .c-aspect {
-        opacity: .2;
-      }
+    .c-aspect {
+      opacity: .2;
     }
   }
 }
