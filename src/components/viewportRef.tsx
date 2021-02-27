@@ -47,11 +47,7 @@ const Component = React.memo(() => {
     };
   }, [updateVh]);
 
-  return (
-    <>
-      <div ref={docRef} className="docSize" />
-    </>
-  );
+  return <div ref={docRef} className="docSizeRef" />;
 });
 
 export default Component;
