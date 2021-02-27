@@ -23,10 +23,6 @@ const AppComponent = ({
   pageProps,
   router,
 }: AppProps): ReactElement => {
-  useEffect(() => {
-    console.log(router.pathname);
-  }, []);
-
   return (
     <>
       <Head>
