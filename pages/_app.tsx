@@ -2,7 +2,6 @@ import 'ress';
 import '~/assets/styles/global.scss';
 import React, { ReactElement, useEffect } from 'react';
 import { AppProps } from 'next/app';
-import Router from 'next/router';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import store from '~/state/store';
