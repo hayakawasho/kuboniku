@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { appSelector, DOM_READY } from '~/state/app';
 import { EVENTS } from '~/foundation/constants/const';
 import { isMobile } from 'react-device-detect';
-import Header from '~/components/header/header';
 
 let E;
 
@@ -46,12 +45,9 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div id="app" ref={appRef}>
-        <Header />
-        <main id="xhr" data-smooth>
-          {children}
-        </main>
-      </div>
+      <main id="xhr" data-smooth>
+        {children}
+      </main>
     </>
   );
 };

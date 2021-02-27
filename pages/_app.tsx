@@ -1,3 +1,5 @@
+import 'ress';
+import '~/assets/styles/global.scss';
 import React, { ReactElement, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
@@ -6,11 +8,9 @@ import { Provider } from 'react-redux';
 import store from '~/state/store';
 import { AnimatePresence } from 'framer-motion';
 
-import 'ress';
-import '~/assets/styles/global.scss';
-
 import ViewportRef from '~/components/viewportRef';
 import Loader from '~/components/loader';
+import Header from '~/components/header/header';
 import Nav from '~/components/nav/nav';
 import Webgl from '~/context/webgl';
 
@@ -45,11 +45,14 @@ const AppComponent = ({
       <Provider store={store}>
         <ViewportRef />
         <Loader />
-        <Nav />
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Component {...pageProps} key={router.pathname} />
-        </AnimatePresence>
-        <Webgl />
+        <div id="app">
+          <Header />
+          <Nav />
+          <AnimatePresence exitBeforeEnter initial={false}>
+            <Component {...pageProps} key={router.asPath} />
+          </AnimatePresence>
+          <Webgl />
+        </div>
       </Provider>
     </>
   );

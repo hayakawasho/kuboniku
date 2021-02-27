@@ -26,7 +26,7 @@
     }
   }
 
-  &:global(.is-hover) {
+  &.is-hover {
     .worksIndexEyecatch {
       img {
         filter: grayscale(0);
