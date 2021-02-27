@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
 import Head from 'next/head';
@@ -18,35 +18,18 @@ if (process.browser) {
   require('~/client');
 }
 
-const routeChange = () => {
-  const tempFix = () => {
-    const allStyleElements = document.querySelectorAll('link');
-    allStyleElements.forEach(elem => {
-      if (elem.as === 'style') {
-        elem.rel = 'stylesheet';
-      }
-    });
-  };
-  tempFix();
-};
-
-Router.events.on('routeChangeComplete', routeChange);
-Router.events.on('routeChangeStart', routeChange);
-
 const AppComponent = ({
   Component,
   pageProps,
   router,
 }: AppProps): ReactElement => {
+  useEffect(() => {
+    console.log(router.pathname);
+  }, []);
+
   return (
     <>
       <Head>
-        <link
-          rel="preload"
-          href="https://dev-kuboniku.gq/wp/graphql "
-          as="fetch"
-          crossOrigin="anonymous"
-        />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
@@ -68,7 +51,7 @@ const AppComponent = ({
         <Loader />
         <Nav />
         <AnimatePresence exitBeforeEnter initial={false}>
-          <Component {...pageProps} key={router.route} />
+          <Component {...pageProps} key={router.pathname} />
         </AnimatePresence>
         <Webgl />
       </Provider>
