@@ -9,7 +9,7 @@ const Component: React.FC = () => (
     <div data-smooth-item className="u-fit u-flex u-flex--c">
       <div>
         <h1>NOT FOUND</h1>
-        <Link href="/">
+        <Link scroll={false} href="/">
           <a>BACK TO TOP</a>
         </Link>
       </div>

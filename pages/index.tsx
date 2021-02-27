@@ -66,7 +66,7 @@ const Component: NextPage<Props> = props => {
             {posts.map((item, i) => (
               <li className="u-in" key={i}>
                 <div className="homeEntry">
-                  <Link href={`/works/${item.slug}`}>
+                  <Link scroll={false} href={`/works/${item.slug}`}>
                     <a
                       className="homeGroup  u-z-10"
                       data-gl-texture={item.acf.eyecatch.sourceUrl}

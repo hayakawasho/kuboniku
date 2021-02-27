@@ -18,6 +18,12 @@ if (process.browser) {
   require('~/client');
 }
 
+const onExitComplete = () => {
+  if (typeof window !== 'undefined') {
+    window.scrollTo({ top: 0 });
+  }
+};
+
 const AppComponent = ({
   Component,
   pageProps,
@@ -48,7 +54,11 @@ const AppComponent = ({
         <div id="app">
           <Header />
           <Nav />
-          <AnimatePresence exitBeforeEnter initial={false}>
+          <AnimatePresence
+            exitBeforeEnter
+            initial={false}
+            onExitComplete={onExitComplete}
+          >
             <Component {...pageProps} key={router.asPath} />
           </AnimatePresence>
           <Webgl />

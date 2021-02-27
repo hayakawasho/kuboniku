@@ -8,7 +8,7 @@ const Component: React.FC = React.memo(() => {
   return (
     <>
       <header className={styles.sh}>
-        <Link href="/">
+        <Link scroll={false} href="/">
           <a className={styles.logo}>
             <i className="icon-logo" />
           </a>

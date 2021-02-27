@@ -28,7 +28,7 @@ const Component: React.FC<Props> = React.memo(({ data, index }) => {
 
   return (
     <>
-      <Link href={'/works/' + data.slug}>
+      <Link scroll={false} href={'/works/' + data.slug}>
         <a
           className={`worksIndexEntry ${isHover ? 'is-hover' : ''}`}
           onMouseEnter={handlePointerDown}

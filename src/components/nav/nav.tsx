@@ -196,7 +196,7 @@ const Component = React.memo(() => {
           <ul className={styles.menuList}>
             {
               // <li>
-              //   <Link href="/about">
+              //   <Link scroll={false} href="/about">
               //     <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
               //       About
               //     </a>
@@ -204,7 +204,7 @@ const Component = React.memo(() => {
               // </li>
             }
             <li>
-              <Link href="/works">
+              <Link scroll={false} href="/works">
                 <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
                   Works
                 </a>

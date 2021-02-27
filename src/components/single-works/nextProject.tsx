@@ -14,7 +14,7 @@ type Props = {
 const Component: React.FC<Props> = props => {
   return (
     <aside className="worksDetailKv is-next" data-smooth-item>
-      <Link href={'/works/' + props.slug}>
+      <Link scroll={false} href={'/works/' + props.slug}>
         <a className="u-abs u-fit u-z-10" />
       </Link>
       <div className="worksDetailKv__cont">
