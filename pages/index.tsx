@@ -41,16 +41,6 @@ const Component: NextPage<Props> = props => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
   const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const body = document.body;
-    body.classList.add('is-home');
-
-    return () => {
-      body.classList.remove('is-home');
-    };
-  }, []);
-
   return (
     <Layout>
       <Seo title="NAGISA KUBO" />
@@ -64,11 +54,11 @@ const Component: NextPage<Props> = props => {
         <div className="homeScreen">
           <ul className="homeWorksList">
             {posts.map((item, i) => (
-              <li className="u-in" key={i}>
+              <li key={i}>
                 <div className="homeEntry">
                   <Link scroll={false} href={`/works/${item.slug}`}>
                     <a
-                      className="homeGroup  u-z-10"
+                      className="homeGroup u-z-10"
                       data-gl-texture={item.acf.eyecatch.sourceUrl}
                       data-gl-id={item.slug}
                     >
