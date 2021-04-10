@@ -1,5 +1,5 @@
 import 'ress';
-import '~/styles/global.scss';
+import '~css/global.scss';
 
 import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
@@ -67,7 +67,7 @@ const AppComponent = ({
             <Webgl />
           </div>
         </Provider>
-        <ReactQueryDevtools initialIsOpen />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
