@@ -23,7 +23,7 @@ const nextConfig = {
     config.resolve.alias['~'] = path.join(__dirname, 'src')
     config.resolve.alias['~css'] = path.join(__dirname, 'styles')
 
-    config.externals.three = 'THREE'
+    // config.externals.three = 'THREE'
 
     config.module.rules.push({
       test: /\.(glsl|frag|vert)$/,

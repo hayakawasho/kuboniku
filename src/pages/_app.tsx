@@ -42,11 +42,13 @@ const AppComponent = ({
           crossOrigin="anonymous"
           defer
         ></script>
-        <script
-          src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"
-          crossOrigin="anonymous"
-          defer
-        ></script>
+        {/*
+          <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"
+            crossOrigin="anonymous"
+            defer
+          ></script>
+          */}
       </Head>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
