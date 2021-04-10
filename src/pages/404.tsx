@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import Layout from '~/components/layout';
-import Seo from '~/components/seo';
+import Layout from '~/layouts/Layout';
+import Seo from '~/components/Seo';
 
 const Component: React.FC = () => (
   <Layout>

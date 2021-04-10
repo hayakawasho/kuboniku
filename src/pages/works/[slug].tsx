@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import Layout from '~/components/layout';
-import Seo from '~/components/seo';
+import Layout from '~/layouts/Layout';
+import Seo from '~/components/Seo';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
@@ -12,10 +12,10 @@ import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
 
 import styles from './[slug].module.scss';
-import Kv from '~/components/single-works/kv';
-import Intro from '~/components/single-works/intro';
-import CaptchaList from '~/components/single-works/captchaList';
-import NextProject from '~/components/single-works/nextProject';
+import Kv from '~/components/pages/single-works/kv';
+import Intro from '~/components/pages/single-works/intro';
+import CaptchaList from '~/components/pages/single-works/captchaList';
+import NextProject from '~/components/pages/single-works/nextProject';
 
 type Data = {
   post: {

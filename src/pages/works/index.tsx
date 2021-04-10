@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { NextPage } from 'next';
-import Seo from '~/components/seo';
+import Seo from '~/components/Seo';
 import { motion } from 'framer-motion';
-import Layout from '~/components/layout';
-import Heading from '~/components/works/heading';
-import Entry from '~/components/works/entry';
-
+import Layout from '~/layouts/Layout';
+import Heading from '~/components/pages/works/heading';
+import Entry from '~/components/pages/works/entry';
 import { useSWRInfinite } from 'swr';
 import { gql } from 'graphql-request';
 import { fetcher } from '~/foundation/fetcher';
 import { useInView } from 'react-intersection-observer';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
+import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 type EntryData = React.ComponentProps<typeof Entry>['data'];
 
@@ -53,6 +53,8 @@ const Component: NextPage<Props> = props => {
     rootMargin: '200px 0px',
   });
 
+  const { onScroll } = useSkewScroll();
+
   useEffect(() => {
     if (inView && !isValidating && loadCount < totalPage) {
       setSize(size + 1).then(() => loadCount++);
@@ -63,8 +65,6 @@ const Component: NextPage<Props> = props => {
     <Layout>
       <Seo title="WORKS" />
       <motion.div
-        data-controller="skew"
-        data-skew-options='{ "val": 1.6 }'
         initial="pageInitial"
         animate="pageAnimate"
         exit="pageExit"
@@ -74,11 +74,7 @@ const Component: NextPage<Props> = props => {
         <Heading total={totalPost} />
         <div className="worksIndexEntryListGroup">
           {chunkedPostData.map((postData, i) => (
-            <div
-              className={`worksIndexEntryList o-grid`}
-              data-target="skew.item"
-              key={i}
-            >
+            <div className={`worksIndexEntryList o-grid`} key={i}>
               {postData.posts.nodes.map((item, j) => {
                 const projectIndex = Utils.zeroPadding(
                   totalPost - (j + (i + i * (PER_PAGE - 1))),

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import Layout from '~/components/layout';
-import Seo from '~/components/seo';
+import Layout from '~/layouts/Layout';
+import Seo from '~/components/Seo';
 import Link from 'next/link';
 import Utils from '~/foundation/utils/Utils';
 import { qsa, qs } from '~/foundation/utils/dom';
