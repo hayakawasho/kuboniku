@@ -12,7 +12,7 @@ import Layout from '~/layouts/Layout';
 import Seo from '~/components/Seo';
 import Heading from '~/components/pages/works/Heading';
 import Entry from '~/components/pages/works/Entry';
-
+// hooks
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 type EntryData = React.ComponentProps<typeof Entry>['data'];

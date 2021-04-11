@@ -4,12 +4,11 @@ import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
+import styles from './[slug].module.scss';
 import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
-import styles from './[slug].module.scss';
-import { useSkewScroll } from '~/hooks/useSkewScroll';
 // components
 import Layout from '~/layouts/Layout';
 import ProgressBar from '~/layouts/ProgressBar';
@@ -18,6 +17,8 @@ import Kv from '~/components/pages/single-works/Kv';
 import Intro from '~/components/pages/single-works/Intro';
 import CaptchaList from '~/components/pages/single-works/CaptchaList';
 import NextProject from '~/components/pages/single-works/NextProject';
+// hooks
+import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 type Data = {
   post: {
