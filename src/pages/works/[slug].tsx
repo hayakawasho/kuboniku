@@ -12,10 +12,10 @@ import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
 
 import styles from './[slug].module.scss';
-import Kv from '~/components/pages/single-works/kv';
-import Intro from '~/components/pages/single-works/intro';
-import CaptchaList from '~/components/pages/single-works/captchaList';
-import NextProject from '~/components/pages/single-works/nextProject';
+import Kv from '~/components/pages/single-works/Kv';
+import Intro from '~/components/pages/single-works/Intro';
+import CaptchaList from '~/components/pages/single-works/CaptchaList';
+import NextProject from '~/components/pages/single-works/NextProject';
 
 type Data = {
   post: {
