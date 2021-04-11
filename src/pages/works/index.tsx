@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NextPage } from 'next';
-import Seo from '~/components/Seo';
 import { motion } from 'framer-motion';
-import Layout from '~/layouts/Layout';
-import Heading from '~/components/pages/works/Heading';
-import Entry from '~/components/pages/works/Entry';
 import { useSWRInfinite } from 'swr';
 import { gql } from 'graphql-request';
-import { fetcher } from '~/foundation/fetcher';
 import { useInView } from 'react-intersection-observer';
+import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
+// components
+import Layout from '~/layouts/Layout';
+import Seo from '~/components/Seo';
+import Heading from '~/components/pages/works/Heading';
+import Entry from '~/components/pages/works/Entry';
+
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 type EntryData = React.ComponentProps<typeof Entry>['data'];
@@ -32,12 +34,13 @@ type Props = {
 };
 
 const PER_PAGE = 10;
-let loadCount = 1;
 
 const Component: NextPage<Props> = props => {
   const initialData = props.data;
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;
+  const loadCount = useRef(1);
+
   const { data, error, size, setSize, isValidating } = useSWRInfinite(
     index => getQuery(index * PER_PAGE),
     fetcher,
@@ -53,13 +56,13 @@ const Component: NextPage<Props> = props => {
     rootMargin: '200px 0px',
   });
 
-  const { onScroll } = useSkewScroll();
-
   useEffect(() => {
-    if (inView && !isValidating && loadCount < totalPage) {
-      setSize(size + 1).then(() => loadCount++);
+    if (inView && !isValidating && loadCount.current < totalPage) {
+      setSize(size + 1).then(() => loadCount.current++);
     }
   }, [inView]);
+
+  const { onScroll } = useSkewScroll();
 
   return (
     <Layout>

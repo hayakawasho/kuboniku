@@ -1,16 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { NextPage } from 'next';
-import Layout from '~/layouts/Layout';
-import Seo from '~/components/Seo';
 import Link from 'next/link';
-import Utils from '~/foundation/utils/Utils';
-import { qsa, qs } from '~/foundation/utils/dom';
-import { gsap } from 'gsap';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
+import Utils from '~/foundation/utils/Utils';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
+// components
+import Layout from '~/layouts/Layout';
+import ProgressBar from '~/layouts/ProgressBar';
+import Seo from '~/components/Seo';
 
 type Data = {
   posts: {
@@ -41,6 +41,7 @@ const Component: NextPage<Props> = props => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
   const canvasRef = useRef(null);
+
   return (
     <Layout>
       <Seo title="NAGISA KUBO" />
@@ -86,25 +87,21 @@ const Component: NextPage<Props> = props => {
             </div>
             <i className="icon-arrow-down" />
           </button>
-          <div className="l-progress">
-            <div className="u-in">
-              <div className="c-progressCtrl">
-                <ol>
-                  {posts.map((item, i) => (
-                    <li key={i}>
-                      <span>{Utils.zeroPadding(i + 1, 2)}</span>
-                    </li>
-                  ))}
-                </ol>
-                <div className="c-progressBar">
-                  <span className="c-progressBar__l" ref={progressRef} />
-                </div>
-                <div className="u-abs">
-                  <span>{Utils.zeroPadding(max, 2)}</span>
-                </div>
-              </div>
+          <ProgressBar>
+            <ol>
+              {posts.map((item, i) => (
+                <li key={i}>
+                  <span>{Utils.zeroPadding(i + 1, 2)}</span>
+                </li>
+              ))}
+            </ol>
+            <div className="c-progressBar">
+              <span className="c-progressBar__l" ref={progressRef} />
             </div>
-          </div>
+            <div className="u-abs">
+              <span>{Utils.zeroPadding(max, 2)}</span>
+            </div>
+          </ProgressBar>
         </div>
       </motion.div>
     </Layout>

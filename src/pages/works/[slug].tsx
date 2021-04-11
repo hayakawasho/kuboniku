@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import Layout from '~/layouts/Layout';
-import Seo from '~/components/Seo';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_UI_COLOR } from '~/state/ui';
-import { scrollBufferSelector } from '~/state/app';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
+import { SET_UI_COLOR } from '~/state/ui';
+import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
-
 import styles from './[slug].module.scss';
+import { useSkewScroll } from '~/hooks/useSkewScroll';
+// components
+import Layout from '~/layouts/Layout';
+import ProgressBar from '~/layouts/ProgressBar';
+import Seo from '~/components/Seo';
 import Kv from '~/components/pages/single-works/Kv';
 import Intro from '~/components/pages/single-works/Intro';
 import CaptchaList from '~/components/pages/single-works/CaptchaList';
@@ -44,10 +46,13 @@ const Component = props => {
   const { title, acf, date, previous } = data.post;
   const dispatch = useDispatch();
   const scrollBuffer = useSelector(scrollBufferSelector);
+
   const { scrollYProgress } = useViewportScroll();
   const inputRange = [0, 1];
   const outputRange = [scrollBuffer, 1];
   const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
+
+  const { onScroll } = useSkewScroll();
 
   return (
     <Layout>
@@ -87,18 +92,14 @@ const Component = props => {
             )}
           </div>
         </div>
-        <div className="l-progress">
-          <div className="u-in">
-            <div className="c-progressCtrl">
-              <div className="c-progressBar">
-                <motion.span
-                  className="c-progressBar__l"
-                  style={{ scaleY: progressVal }}
-                />
-              </div>
-            </div>
+        <ProgressBar>
+          <div className="c-progressBar">
+            <motion.span
+              className="c-progressBar__l"
+              style={{ scaleY: progressVal }}
+            />
           </div>
-        </div>
+        </ProgressBar>
       </motion.div>
     </Layout>
   );
