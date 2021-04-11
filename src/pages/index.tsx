@@ -12,7 +12,7 @@ import Layout from '~/layouts/Layout';
 import ProgressBar from '~/layouts/ProgressBar';
 import Seo from '~/components/Seo';
 
-type Data = {
+interface IData {
   posts: {
     nodes: {
       slug: string;
@@ -25,15 +25,15 @@ type Data = {
       };
     };
   };
-};
+}
 
-type Props = {
-  data: Data;
-};
+interface IProps {
+  data: IData;
+}
 
-const Component: NextPage<Props> = props => {
+const Component: NextPage<IProps> = props => {
   const initialData = props.data;
-  const { data } = useSWR<Data>(GET_POSTS, fetcher, { initialData });
+  const { data } = useSWR<IData>(GET_POSTS, fetcher, { initialData });
   const posts = data.posts.nodes;
   const total = data.posts.pageInfo.offsetPagination.total;
   const now = 1;

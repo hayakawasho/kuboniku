@@ -5,7 +5,6 @@ import {
   RenderPage,
 } from 'next/dist/next-server/lib/utils';
 import basicAuthMiddleware from 'nextjs-basic-auth-middleware';
-
 class MyDocument extends Document {
   static async getInitialProps(
     ctx: NextPageContext & { renderPage: RenderPage }

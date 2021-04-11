@@ -18,7 +18,15 @@ import Nav from '~/layouts/Nav/nav';
 import store from '~/state/store';
 import Webgl from '~/context/webgl';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      staleTime: 300000,
+    },
+  },
+});
 
 if (process.browser) {
   require('~/client');
@@ -42,13 +50,6 @@ const AppComponent = ({
           crossOrigin="anonymous"
           defer
         ></script>
-        {/*
-          <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"
-            crossOrigin="anonymous"
-            defer
-          ></script>
-          */}
       </Head>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>

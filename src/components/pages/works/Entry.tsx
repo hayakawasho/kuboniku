@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 
-type Props = {
+interface IProps {
   data: {
     title: string;
     slug: string;
     acf: any;
   };
   index: number | string;
-};
+}
 
-const Component: React.FC<Props> = React.memo(({ data, index }) => {
+const Component: React.FC<IProps> = React.memo(({ data, index }) => {
   const dispatch = useDispatch();
   const [isHover, setHover] = useState(false);
 

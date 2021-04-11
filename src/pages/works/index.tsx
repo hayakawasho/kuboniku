@@ -15,27 +15,27 @@ import Entry from '~/components/pages/works/Entry';
 // hooks
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
-type EntryData = React.ComponentProps<typeof Entry>['data'];
+type TEntryData = React.ComponentProps<typeof Entry>['data'];
 
-type Data = {
+interface IData {
   posts: {
-    nodes: EntryData[];
+    nodes: TEntryData[];
     pageInfo: {
       offsetPagination: {
         total: number;
       };
     };
   };
-};
+}
 
-type Props = {
-  data: Data;
+interface IProps {
+  data: IData;
   total: number;
-};
+}
 
 const PER_PAGE = 10;
 
-const Component: NextPage<Props> = props => {
+const Component: NextPage<IProps> = props => {
   const initialData = props.data;
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;

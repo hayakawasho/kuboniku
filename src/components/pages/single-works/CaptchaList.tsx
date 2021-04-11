@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+interface IProps {
   gallery: {
     sourceUrl: string;
     srcSet: string;
@@ -10,9 +10,9 @@ type Props = {
     };
   }[];
   color: string;
-};
+}
 
-const Component: React.FC<Props> = ({ gallery, color }) => {
+const Component: React.FC<IProps> = ({ gallery, color }) => {
   return (
     <ul className="worksDetailCaptchaList" data-smooth-item>
       {gallery.map((item, i) => {

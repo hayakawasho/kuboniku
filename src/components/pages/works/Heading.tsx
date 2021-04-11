@@ -1,10 +1,10 @@
 import React from 'react';
 
-type Props = {
+interface IProps {
   total: number;
-};
+}
 
-const Component: React.FC<Props> = ({ total }) => {
+const Component: React.FC<IProps> = ({ total }) => {
   return (
     <h1 className="worksIndexHeading">
       <div data-smooth-item>

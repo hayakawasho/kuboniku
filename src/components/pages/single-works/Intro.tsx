@@ -2,16 +2,16 @@ import React from 'react';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 
-type Props = {
+interface IProps {
   date: string;
   role: {
     name: string;
   }[];
   description?: string;
   url?: string;
-};
+}
 
-const Component: React.FC<Props> = ({ date, role, description, url }) => {
+const Component: React.FC<IProps> = ({ date, role, description, url }) => {
   return (
     <div className="worksDetailIntro" data-smooth-item>
       <div className="worksDetailIntro__info">

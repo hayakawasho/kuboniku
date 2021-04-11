@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+interface IProps {
   src: string;
   srcSet: string;
   mobile: {
@@ -8,9 +8,9 @@ type Props = {
   };
   title: string;
   category: string;
-};
+}
 
-const Component: React.FC<Props> = props => {
+const Component: React.FC<IProps> = props => {
   return (
     <div className="worksDetailKv" data-smooth-item>
       <div className="worksDetailKv__cont" data-target="skew.item">

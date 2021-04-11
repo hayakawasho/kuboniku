@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-type Props = {
+interface IProps {
   src: string;
   srcSet: string;
   mobile: {
@@ -9,9 +9,9 @@ type Props = {
   };
   title: string;
   slug: string;
-};
+}
 
-const Component: React.FC<Props> = props => {
+const Component: React.FC<IProps> = props => {
   return (
     <aside className="worksDetailKv is-next" data-smooth-item>
       <Link scroll={false} href={'/works/' + props.slug}>

@@ -20,7 +20,7 @@ import NextProject from '~/components/pages/single-works/NextProject';
 // hooks
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
-type Data = {
+interface IData {
   post: {
     date: string;
     title: string;
@@ -31,17 +31,17 @@ type Data = {
       acf: any;
     };
   };
-};
+}
 
-type Props = {
-  data: Data;
+interface IProps {
+  data: IData;
   path: string;
-};
+}
 
 const Component = props => {
   const initialData = props.data;
   const variables = { slug: props.path };
-  const { data } = useSWR<Data>([GET_POST, variables], fetcher, {
+  const { data } = useSWR<IData>([GET_POST, variables], fetcher, {
     initialData,
   });
   const { title, acf, date, previous } = data.post;
