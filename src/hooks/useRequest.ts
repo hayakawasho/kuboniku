@@ -8,7 +8,7 @@ interface IProps {
   gql: string;
 }
 
-const useFetch = <T>({ queryKey, gql }: IProps) => {
+const useRequest = <T>({ queryKey, gql }: IProps) => {
   return useQuery(queryKey, async () => {
     try {
       const res = await request<T>(WP_API_END_POINT, gql);
@@ -19,6 +19,6 @@ const useFetch = <T>({ queryKey, gql }: IProps) => {
   });
 };
 
-const useInfiniteFetch = <T>() => {};
+const useRequestInfinite = <T>() => {};
 
-export { useFetch, useInfiniteFetch };
+export { useRequest, useRequestInfinite };
