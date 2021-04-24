@@ -194,15 +194,13 @@ const Component = React.memo(() => {
           />
           <div className={`${styles.navMenu__bg} u-mobile`} ref={navRef} />
           <ul className={styles.menuList}>
-            {
-              // <li>
-              //   <Link scroll={false} href="/about">
-              //     <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
-              //       About
-              //     </a>
-              //   </Link>
-              // </li>
-            }
+            <li>
+              <Link scroll={false} href="/profile">
+                <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
+                  Profile
+                </a>
+              </Link>
+            </li>
             <li>
               <Link scroll={false} href="/works">
                 <a className={`${styles.link} js-navLabel`} onClick={closeMenu}>
