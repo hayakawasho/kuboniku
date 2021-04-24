@@ -4,7 +4,6 @@ import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
-import styles from './[slug].module.scss';
 import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
@@ -16,8 +15,9 @@ import Kv from '~/components/pages/single-works/Kv';
 import Intro from '~/components/pages/single-works/Intro';
 import CaptchaList from '~/components/pages/single-works/CaptchaList';
 import NextProject from '~/components/pages/single-works/NextProject';
-
+import { useRequest } from '~/hooks/useRequest';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
+import { css } from 'twin.macro';
 
 interface IData {
   post: {
@@ -46,12 +46,10 @@ const Component = props => {
   const { title, acf, date, previous } = data.post;
   const dispatch = useDispatch();
   const scrollBuffer = useSelector(scrollBufferSelector);
-
   const { scrollYProgress } = useViewportScroll();
   const inputRange = [0, 1];
   const outputRange = [scrollBuffer, 1];
   const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
-
   const { onScroll } = useSkewScroll();
 
   return (
@@ -71,7 +69,7 @@ const Component = props => {
             mobile={acf.eyecatchMobile}
             category={acf.category.name}
           />
-          <div className={styles.content} data-target="skew.item">
+          <div css={content} data-target="skew.item">
             <Intro
               date={date}
               role={acf.role}
@@ -175,4 +173,8 @@ export const GET_POST = gql`
       }
     }
   }
+`;
+
+const content = css`
+  backface-visibility: hidden;
 `;

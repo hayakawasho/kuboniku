@@ -9,9 +9,10 @@ import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
 import Layout from '~/components/layouts/Layout';
 import Seo from '~/components/Seo';
-import Heading from '~/components/pages/works/Heading';
 import Entry from '~/components/pages/works/Entry';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
+import { useRequest } from '~/hooks/useRequest';
+import tw, { css } from 'twin.macro';
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];
 
@@ -38,7 +39,6 @@ const Component: NextPage<IProps> = props => {
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;
   const loadCount = useRef(1);
-
   const { data, error, size, setSize, isValidating } = useSWRInfinite(
     index => getQuery(index * PER_PAGE),
     fetcher,
@@ -47,9 +47,7 @@ const Component: NextPage<IProps> = props => {
       initialData: [initialData],
     }
   );
-
   const chunkedPostData = data ? [].concat(...data) : [];
-
   const [entryLoaderRef, inView] = useInView({
     rootMargin: '200px 0px',
   });
@@ -61,6 +59,14 @@ const Component: NextPage<IProps> = props => {
   }, [inView]);
 
   const { onScroll } = useSkewScroll();
+  const [result, status] = useRequest({
+    queryKey: 'works',
+    gql: GET_INITIAL_POSTS,
+  });
+
+  useEffect(() => {
+    console.log(result, status);
+  }, [status]);
 
   return (
     <Layout>
@@ -70,29 +76,30 @@ const Component: NextPage<IProps> = props => {
         animate="pageAnimate"
         exit="pageExit"
         variants={transition}
-        className="worksIndexBody"
+        css={container}
       >
-        <Heading total={totalPost} />
-        <div className="worksIndexEntryListGroup">
-          {chunkedPostData.map((postData, i) => (
-            <div className={`worksIndexEntryList o-grid`} key={i}>
-              {postData.posts.nodes.map((item, j) => {
-                const projectIndex = Utils.zeroPadding(
-                  totalPost - (j + (i + i * (PER_PAGE - 1))),
-                  2
-                );
-                return (
-                  <article className="o-grid__item" data-smooth-item key={j}>
-                    <Entry data={item} index={projectIndex} />
-                  </article>
-                );
-              })}
-            </div>
-          ))}
-
-          <div ref={entryLoaderRef} className="worksIndexEntryLoader">
-            {isValidating && <div className="worksIndexLoadingSpin" />}
+        <h1 css={heading}>
+          <div data-smooth-item>
+            Works<sup css={heading__total}>{totalPost}</sup>
           </div>
+        </h1>
+        {chunkedPostData.map((postData, i) => (
+          <div className="o-grid" css={entryList} key={i}>
+            {postData.posts.nodes.map((item, j) => {
+              const projectIndex = Utils.zeroPadding(
+                totalPost - (j + (i + i * (PER_PAGE - 1))),
+                2
+              );
+              return (
+                <article className="o-grid__item" data-smooth-item key={j}>
+                  <Entry data={item} index={projectIndex} />
+                </article>
+              );
+            })}
+          </div>
+        ))}
+        <div ref={entryLoaderRef} css={entryLoader}>
+          {isValidating && <div className="worksIndexLoadingSpin" />}
         </div>
         {error ? <div>Try to reload.</div> : null}
       </motion.div>
@@ -157,4 +164,78 @@ const GET_INITIAL_POSTS = gql`
       }
     }
   }
+`;
+
+const container = css`
+  padding-top: 10rem;
+
+    @media (--pc) {
+      padding-top: 15rem;
+    }
+  }
+`;
+
+const heading = css`
+  ${tw`relative font-bold`}
+  padding: 0 calc(var(--gap) * 2);
+  margin: 0 0 6rem;
+  font-family: var(--font-roboto);
+  font-size: 5.3rem;
+  line-height: 1;
+
+  @media (--pc) {
+    ${tw`mt-0 mx-auto`}
+    left: 2rem;
+    width: calc(var(--grid) * 10);
+    padding: 0 0 0 calc(var(--grid) * 0.5 + var(--gutter));
+    margin-bottom: 3.6rem;
+    font-size: 7.6rem;
+  }
+`;
+
+const heading__total = css`
+  ${tw`absolute`}
+  top: 0.5em;
+  margin-left: 0.5em;
+  font-family: var(--font-en);
+  font-size: calc(26.6 / 106.4 * 100%);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: 0.41em;
+`;
+
+const entryList = css`
+  padding: 0 calc(var(--gap) * 2);
+
+  @media (--pc) {
+    ${tw`flex flex-wrap justify-between my-0 mx-auto p-0`}
+    width: calc(var(--grid) * 10);
+  }
+
+  .o-grid__item {
+    margin-bottom: 4rem;
+
+    @media (--pc) {
+      width: calc(var(--grid) * 4);
+      margin-bottom: 6.4rem;
+
+      &:nth-child(2n - 1) {
+        margin-top: 9.6rem;
+        margin-left: 3.4rem;
+      }
+    }
+  }
+
+  &:last-child {
+    padding-bottom: 6.4rem;
+
+    @media (--pc) {
+      padding-bottom: 24.4rem;
+    }
+  }
+`;
+
+const entryLoader = css`
+  padding: 3.2rem 0;
+  ${tw`text-center`}
 `;

@@ -38,35 +38,53 @@ const Component: React.FC = () => {
 export default Component;
 
 const container = css`
+  ${tw`relative`}
   margin: 0 3rem;
   height: calc(var(--vh) * 100);
-  ${tw`relative`}
+
+  @media (--pc) {
+    ${tw`text-left`}
+  }
 `;
 
 const container__in = css`
+  ${tw`absolute right-0 text-right`}
   bottom: 10rem;
-  ${tw`absolute right-0`}
+
+  @media (--pc) {
+    ${tw`left-1/2 text-left`}
+  }
 `;
 
 const hgroup = css`
   margin-bottom: 2.8rem;
   font-family: var(--font-roboto);
-  ${tw`text-right`}
 
   > h1 {
+    ${tw`font-bold`}
     font-size: 2.4rem;
     line-height: calc(60 / 24);
-    ${tw`font-bold`}
+
+    @media (--pc) {
+      font-size: 3rem;
+    }
   }
 
   > p {
     font-size: 1.2rem;
     color: #858585;
+
+    @media (--pc) {
+      font-size: 1.4rem;
+    }
   }
 `;
 
 const text = css`
   font-size: 1.1rem;
   line-height: calc(40 / 22);
-  text-align: right;
+
+  @media (--pc) {
+    font-size: 1.3rem;
+  }
 `;

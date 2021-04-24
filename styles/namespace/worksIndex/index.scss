@@ -1,57 +1,5 @@
 @use '~css/base/_import.scss';
 
-.worksIndexBody {
-  padding-top: 10rem;
-
-  @media (--pc) {
-    padding-top: 15rem;
-  }
-}
-
-.worksIndexEntryListGroup {
-  > .worksIndexEntryList {
-    &:last-child {
-      padding-bottom: 6.4rem;
-
-      @media (--pc) {
-        padding-bottom: 24.4rem;
-      }
-    }
-  }
-}
-
-.worksIndexEntryList {
-  padding: 0 calc(var(--gap) * 2);
-
-  @media (--pc) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: calc(var(--grid) * 10);
-    padding: 0;
-    margin: 0 auto;
-  }
-
-  .o-grid__item {
-    margin-bottom: 4rem;
-
-    @media (--pc) {
-      width: calc(var(--grid) * 4);
-      margin-bottom: 6.4rem;
-
-      &:nth-child(2n - 1) {
-        margin-top: 9.6rem;
-        margin-left: 3.4rem;
-      }
-    }
-  }
-}
-
-.worksIndexEntryLoader {
-  padding: 3.2rem 0;
-  text-align: center;
-}
-
 .worksIndexLoadingSpin {
   width: 30px;
   height: 30px;
