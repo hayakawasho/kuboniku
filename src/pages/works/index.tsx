@@ -7,12 +7,10 @@ import { useInView } from 'react-intersection-observer';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
-// components
-import Layout from '~/layouts/Layout';
+import Layout from '~/components/layouts/Layout';
 import Seo from '~/components/Seo';
 import Heading from '~/components/pages/works/Heading';
 import Entry from '~/components/pages/works/Entry';
-// hooks
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];

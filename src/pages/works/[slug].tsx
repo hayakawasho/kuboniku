@@ -9,15 +9,14 @@ import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
-// components
-import Layout from '~/layouts/Layout';
-import ProgressBar from '~/layouts/ProgressBar';
+import Layout from '~/components/layouts/Layout';
+import ProgressBar from '~/components/layouts/ProgressBar';
 import Seo from '~/components/Seo';
 import Kv from '~/components/pages/single-works/Kv';
 import Intro from '~/components/pages/single-works/Intro';
 import CaptchaList from '~/components/pages/single-works/CaptchaList';
 import NextProject from '~/components/pages/single-works/NextProject';
-// hooks
+
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 
 interface IData {

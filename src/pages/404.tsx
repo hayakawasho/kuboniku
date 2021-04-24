@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Layout from '~/layouts/Layout';
+import Layout from '~/components/layouts/Layout';
 import Seo from '~/components/Seo';
 
 const Component: React.FC = () => (

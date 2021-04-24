@@ -1,6 +1,5 @@
 import 'ress';
 import '~css/global.scss';
-
 import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -8,13 +7,10 @@ import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-
-// componments
-import ViewportRef from '~/components/ViewportRef';
-import Loader from '~/components/Loader';
-import Header from '~/layouts/Header/header';
-import Nav from '~/layouts/Nav/nav';
-
+import ViewportRef from '~/components/parts/ViewportRef';
+import Loader from '~/components/parts/Loader';
+import Header from '~/components/layouts/Header/header';
+import Nav from '~/components/layouts/Nav/nav';
 import store from '~/state/store';
 import Webgl from '~/context/webgl';
 

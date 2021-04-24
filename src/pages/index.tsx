@@ -8,8 +8,8 @@ import Utils from '~/foundation/utils/Utils';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 // components
-import Layout from '~/layouts/Layout';
-import ProgressBar from '~/layouts/ProgressBar';
+import Layout from '~/components/layouts/Layout';
+import ProgressBar from '~/components/layouts/ProgressBar';
 import Seo from '~/components/Seo';
 
 interface IData {
