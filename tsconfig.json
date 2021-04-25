@@ -30,5 +30,5 @@
     "pages/**/*.tsx",
     "@types"
   ],
-  "files": ["src/types/twin.d.ts"]
+  "files": ["@types/twin.d.ts"]
 }

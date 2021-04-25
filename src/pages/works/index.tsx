@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { NextPage } from 'next';
-import { motion } from 'framer-motion';
+import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { useSWRInfinite } from 'swr';
 import { gql } from 'graphql-request';
 import { useInView } from 'react-intersection-observer';
@@ -57,16 +57,6 @@ const Component: NextPage<IProps> = props => {
       setSize(size + 1).then(() => loadCount.current++);
     }
   }, [inView]);
-
-  const { onScroll } = useSkewScroll();
-  const [result, status] = useRequest({
-    queryKey: 'works',
-    gql: GET_INITIAL_POSTS,
-  });
-
-  useEffect(() => {
-    console.log(result, status);
-  }, [status]);
 
   return (
     <Layout>

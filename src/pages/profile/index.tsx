@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '~/foundation/animations';
-import Utils from '~/foundation/utils/Utils';
 import Layout from '~/components/layouts/Layout';
 import Seo from '~/components/Seo';
 import tw, { css } from 'twin.macro';

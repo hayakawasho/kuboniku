@@ -71,10 +71,8 @@ const AppComponent = ({
               <Webgl />
             </div>
           </Provider>
-          {process.env.NODE_ENV === 'production' ? null : (
-            <ReactQueryDevtools initialIsOpen={false} />
-          )}
         </Hydrate>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>
   );
