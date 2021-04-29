@@ -1,0 +1,29 @@
+import React from 'react';
+import tw, { css } from 'twin.macro';
+
+interface IPicture {
+  src: string;
+  srcSet: string;
+  mobile?: string;
+}
+
+const Component: React.FC<IPicture> = ({ src, srcSet, mobile }) => {
+  return (
+    <picture css={picture}>
+      {mobile && <source media="(max-width: 639px)" srcSet={mobile} />}
+      <img src={src} srcSet={srcSet} alt="" loading="lazy" css={picture__img} />
+    </picture>
+  );
+};
+
+export default Component;
+
+const picture = css`
+  ${tw`absolute w-full h-full top-0 left-0 opacity-80`}
+  z-index: 1;
+  backface-visibility: hidden;
+`;
+
+const picture__img = css`
+  ${tw`absolute w-full h-full top-0 left-0 object-cover object-center`}
+`;

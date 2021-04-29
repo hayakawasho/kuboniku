@@ -1,112 +1,6 @@
 @use '~css/base/_import.scss';
 
-.logo {
-  position: fixed;
-  top: 1.5rem;
-  left: 2rem;
-  z-index: 99;
-  display: block;
-  font-size: 2.6rem;
-  line-height: 1;
-  color: var(--color-text-primary);
-  pointer-events: auto;
-
-  @media (--pc) {
-    font-size: 3.6rem;
-    top: 2.4rem;
-    left: 2.4rem;
-  }
-}
-
-.menu {
-  position: fixed;
-  top: .8rem;
-  right: 1rem;
-  width: 4rem;
-  height: 4rem;
-  z-index: 101;
-
-  &:global(.is-animating) {
-    pointer-events: none;
-  }
-}
-
-.sns {
-  position: fixed;
-  bottom: 1rem;
-  left: 2rem;
-  z-index: 99;
-
-  @media (--pc) {
-    bottom: 4rem;
-    left: 4rem;
-  }
-}
-
-.snsList {
-  margin-bottom: 2.5rem;
-
-  > li {
-    margin-bottom: 2rem;
-    text-align: center;
-    overflow: hidden;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    a {
-      font-family: var(--font-en);
-      font-size: 1.2rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      display: inline-block;
-      pointer-events: auto;
-      visibility: hidden;
-      opacity: 0;
-      backface-visibility: hidden;
-
-      @media (--pc) {
-        font-size: 1.3rem;
-      }
-    }
-  }
-}
-
-.plus {
-  position: relative;
-  z-index: 2;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  pointer-events: auto;
-  cursor: pointer;
-  padding: 1rem;
-  box-sizing: content-box;
-  backface-visibility: hidden;
-
-  @media (--pc) {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    box-sizing: border-box;
-  }
-}
-
-.plus__x,
-.plus__y {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 16px;
-  height: 1px;
-  content: '';
-  background-color: var(--color-text-primary);
-  backface-visibility: hidden;
-}
-
 .plus__x {
-  transform-origin: left;
 
   @nest .is-hover & {
     animation: drawAnim 0.6s;
@@ -114,8 +8,6 @@
 }
 
 .plus__y {
-  transform: rotate(90deg);
-  transform-origin: center;
 
   @nest .is-hover & {
     animation: drawAnim 0.6s 0.3s;
@@ -135,25 +27,3 @@
     transform: scaleX(1);
   }
 }
-
-.copy {
-  pointer-events: none;
-  position: fixed;
-  right: 3rem;
-  bottom: 2.5rem;
-  display: inline-block;
-  font-family: var(--font-en);
-  font-size: .8rem;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--color-text-primary);
-  letter-spacing: 0.2em;
-  z-index: 99;
-
-  @media (--pc) {
-    font-size: 1rem;
-    right: 4rem;
-    bottom: 4rem;
-  }
-}
-

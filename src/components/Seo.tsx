@@ -1,19 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
 
-type Meta =
-  | {
-      name: string;
-      content: any;
-    }
-  | {
-      property: string;
-      content: any;
-    };
-
 interface IProps {
   description?: string | null;
-  meta?: Meta[];
   title?: string | null;
 }
 

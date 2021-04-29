@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import headerCSS from './header.module.scss';
 import { uiSelector, OPEN_MENU, CLOSE_MENU } from '~/state/ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 import { gsap } from 'gsap';
+import tw, { css } from 'twin.macro';
 
 const Component: React.FC = React.memo(() => {
   const [initialState, setInitialState] = useState(false);
@@ -13,8 +13,7 @@ const Component: React.FC = React.memo(() => {
   const topRef = useRef(null);
   const bottomRef = useRef(null);
 
-  const handleClick = evt =>
-    menuOpen ? dispatch(CLOSE_MENU()) : dispatch(OPEN_MENU());
+  const handleClick = evt => menuOpen ? dispatch(CLOSE_MENU()) : dispatch(OPEN_MENU());
 
   const toggleMenu = () => {
     if (menuOpen) {
@@ -77,16 +76,15 @@ const Component: React.FC = React.memo(() => {
     <>
       <button
         type="button"
-        className={`${headerCSS.menu} u-mobile ${menuOpen ? 'is-open' : ''} ${
-          menuAnimating ? 'is-animating' : ''
-        }`}
+        css={menu}
+        className={`u-mobile ${menuOpen ? 'is-open' : ''} ${menuAnimating ? 'is-animating' : ''}`}
         aria-label="menu-toggle"
         onClick={handleClick}
         ref={ref}
       >
-        <div className="c-burger">
-          <div className="c-burger__line" ref={topRef} />
-          <div className="c-burger__line" ref={bottomRef} />
+        <div css={burger}>
+          <div css={burger__line} ref={topRef} />
+          <div css={burger__line} ref={bottomRef} />
         </div>
       </button>
     </>
@@ -94,3 +92,35 @@ const Component: React.FC = React.memo(() => {
 });
 
 export default Component;
+
+const menu = css`
+  ${tw`fixed`}
+  top: .8rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
+  z-index: 101;
+
+  &.is-animating {
+    pointer-events: none;
+  }
+`
+
+const burger = css`
+  ${tw`relative w-full h-full my-0 mx-auto transform-gpu flex items-center justify-center flex-col`}
+  z-index: 2;
+  transform: translateZ(0);
+`
+
+const burger__line = css`
+  width: 20px;
+  height: 1px;
+  background-color: #fff;
+  transform-origin: left;
+
+  &:nth-child(2) {
+    margin: 5px 0 0;
+    transform: scaleX(calc(32 / 40));
+  }
+`
+
