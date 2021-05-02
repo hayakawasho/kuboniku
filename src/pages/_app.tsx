@@ -3,20 +3,27 @@ import '~css/global.scss';
 import { ReactElement, useRef } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import dynamic from "next/dynamic"
 import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate } from 'react-query/hydration';
-import ViewportRef from '~/components/parts/ViewportRef';
-import Loader from '~/components/parts/Loader';
-import Header from '~/components/layouts/Header/header';
-import Nav from '~/components/layouts/Nav/nav';
+import ViewportRef from '~/foundation/components/ViewportRef';
+import Loader from '~/foundation/components/Loader';
+import Header from '~/layouts/Header/header';
+import Nav from '~/layouts/Nav/nav';
 import store from '~/state/store';
-import Webgl from '~/context/webgl';
+
+const Webgl = dynamic(
+  () => import('~/foundation/components/Webgl')
+  .then(modules => modules.Webgl), {
+    ssr: false
+  }
+)
 
 if (process.browser) {
-  require('~/client');
+  require('~/client-only');
 }
 
 const AppComponent = ({
@@ -41,7 +48,6 @@ const AppComponent = ({
   return (
     <>
       <Head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
           rel="stylesheet"
@@ -52,7 +58,6 @@ const AppComponent = ({
           defer
         ></script>
       </Head>
-
       <QueryClientProvider client={queryClientRef.current}>
         <Hydrate state={pageProps.dehydratedState}>
           <Provider store={store}>
@@ -72,7 +77,8 @@ const AppComponent = ({
             </div>
           </Provider>
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {//<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        }
       </QueryClientProvider>
     </>
   );

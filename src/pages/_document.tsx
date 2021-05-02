@@ -5,6 +5,8 @@ import {
   RenderPage,
 } from 'next/dist/next-server/lib/utils';
 import basicAuthMiddleware from 'nextjs-basic-auth-middleware';
+import { extractCritical } from '@emotion/server'
+
 class MyDocument extends Document {
   static async getInitialProps(
     ctx: NextPageContext & { renderPage: RenderPage }
@@ -18,8 +20,23 @@ class MyDocument extends Document {
       });
     }
 
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    const initialProps = await Document.getInitialProps(ctx)
+    const page = await ctx.renderPage()
+    const styles = extractCritical(page.html)
+
+    return {
+      ...initialProps,
+      ...page,
+      styles: (
+        <>
+          {initialProps.styles}
+          <style
+            data-emotion-css={styles.ids.join(' ')}
+            dangerouslySetInnerHTML={{ __html: styles.css }}
+          />
+        </>
+      ),
+    }
   }
 
   render(): JSX.Element {

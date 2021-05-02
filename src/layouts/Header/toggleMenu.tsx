@@ -13,7 +13,8 @@ const Component: React.FC = React.memo(() => {
   const topRef = useRef(null);
   const bottomRef = useRef(null);
 
-  const handleClick = evt => menuOpen ? dispatch(CLOSE_MENU()) : dispatch(OPEN_MENU());
+  const handleClick = evt =>
+    menuOpen ? dispatch(CLOSE_MENU()) : dispatch(OPEN_MENU());
 
   const toggleMenu = () => {
     if (menuOpen) {
@@ -77,7 +78,9 @@ const Component: React.FC = React.memo(() => {
       <button
         type="button"
         css={menu}
-        className={`u-mobile ${menuOpen ? 'is-open' : ''} ${menuAnimating ? 'is-animating' : ''}`}
+        className={`u-mobile ${menuOpen ? 'is-open' : ''} ${
+          menuAnimating ? 'is-animating' : ''
+        }`}
         aria-label="menu-toggle"
         onClick={handleClick}
         ref={ref}
@@ -104,13 +107,13 @@ const menu = css`
   &.is-animating {
     pointer-events: none;
   }
-`
+`;
 
 const burger = css`
   ${tw`relative w-full h-full my-0 mx-auto transform-gpu flex items-center justify-center flex-col`}
   z-index: 2;
   transform: translateZ(0);
-`
+`;
 
 const burger__line = css`
   width: 20px;
@@ -122,5 +125,4 @@ const burger__line = css`
     margin: 5px 0 0;
     transform: scaleX(calc(32 / 40));
   }
-`
-
+`;

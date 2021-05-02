@@ -7,12 +7,14 @@ import { useInView } from 'react-intersection-observer';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
-import Layout from '~/components/layouts/Layout';
-import Seo from '~/components/Seo';
-import Entry from '~/components/pages/works/Entry';
+import Layout from '~/layouts/Layout';
+import Seo from '~/foundation/components/Seo';
+import Entry from '~/foundation/containers/works/Entry';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
-import { useRequest } from '~/hooks/useRequest';
 import tw, { css } from 'twin.macro';
+// import { useRequestWorks } from '~/hooks/pages/works';
+import { QueryClient, useQuery } from 'react-query'
+import { dehydrate } from 'react-query/hydration'
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];
 
@@ -39,6 +41,7 @@ const Component: NextPage<IProps> = props => {
   const totalPost = props.total;
   const totalPage = totalPost / PER_PAGE;
   const loadCount = useRef(1);
+  // const [result, status, {  }] = useRequestWorks()
   const { data, error, size, setSize, isValidating } = useSWRInfinite(
     index => getQuery(index * PER_PAGE),
     fetcher,
@@ -56,7 +59,11 @@ const Component: NextPage<IProps> = props => {
     if (inView && !isValidating && loadCount.current < totalPage) {
       setSize(size + 1).then(() => loadCount.current++);
     }
-  }, [inView]);
+  }, [inView])
+
+  useEffect(()=>{
+    console.log(result, status)
+  }, [result, status])
 
   return (
     <Layout>
@@ -100,12 +107,25 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async () => {
+  const queryClient = new QueryClient()
+
   const data = await fetcher(GET_INITIAL_POSTS);
   return {
     data,
     total: data.posts.pageInfo.offsetPagination.total,
   };
 };
+
+/*
+Component.getInitialProps = async () => {
+  const queryClient = new QueryClient()
+  await queryClient.prefetchQuery('works', fetcher)
+
+  return {
+    dehydratedState: dehydrate(queryClient),
+  };
+};
+*/
 
 const getQuery = (offset: number) => {
   const graphql = gql`
@@ -159,7 +179,7 @@ const GET_INITIAL_POSTS = gql`
 const container = css`
   padding-top: 10rem;
 
-    @media (--pc) {
+    @media (min-width: 640px) {
       padding-top: 15rem;
     }
   }
@@ -173,7 +193,7 @@ const heading = css`
   font-size: 5.3rem;
   line-height: 1;
 
-  @media (--pc) {
+  @media (min-width: 640px) {
     ${tw`mt-0 mx-auto`}
     left: 2rem;
     width: calc(var(--grid) * 10);
@@ -197,7 +217,7 @@ const heading__total = css`
 const entryList = css`
   padding: 0 calc(var(--gap) * 2);
 
-  @media (--pc) {
+  @media (min-width: 640px) {
     ${tw`flex flex-wrap justify-between my-0 mx-auto p-0`}
     width: calc(var(--grid) * 10);
   }
@@ -205,7 +225,7 @@ const entryList = css`
   .o-grid__item {
     margin-bottom: 4rem;
 
-    @media (--pc) {
+    @media (min-width: 640px) {
       width: calc(var(--grid) * 4);
       margin-bottom: 6.4rem;
 
@@ -219,13 +239,13 @@ const entryList = css`
   &:last-child {
     padding-bottom: 6.4rem;
 
-    @media (--pc) {
+    @media (min-width: 640px) {
       padding-bottom: 24.4rem;
     }
   }
 `;
 
 const entryLoader = css`
-  padding: 3.2rem 0;
   ${tw`text-center`}
+  padding: 3.2rem 0;
 `;
