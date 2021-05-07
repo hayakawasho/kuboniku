@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
+import { keyframes } from '@emotion/css';
 
 const Component: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
@@ -75,6 +76,20 @@ const Component: React.FC = () => {
 
 export default Component;
 
+const drawPlus = keyframes`
+  0% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(0);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+`;
+
 const sns = css`
   ${tw`fixed text-center`}
   bottom: 1rem;
@@ -140,6 +155,10 @@ const plus__x = css`
   background-color: var(--color-text-primary);
   backface-visibility: hidden;
   transform-origin: left;
+
+  .is-hover & {
+    animation: ${drawPlus} 0.6s;
+  }
 `;
 
 const plus__y = css`
@@ -151,4 +170,8 @@ const plus__y = css`
   backface-visibility: hidden;
   transform: rotate(90deg);
   transform-origin: center;
+
+  .is-hover & {
+    animation: ${drawPlus} 0.6s 0.3s;
+  }
 `;

@@ -13,8 +13,8 @@ import Entry from '~/foundation/containers/works/Entry';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 import tw, { css } from 'twin.macro';
 // import { useRequestWorks } from '~/hooks/pages/works';
-import { QueryClient, useQuery } from 'react-query'
-import { dehydrate } from 'react-query/hydration'
+import { QueryClient, useQuery } from 'react-query';
+import { dehydrate } from 'react-query/hydration';
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];
 
@@ -59,11 +59,7 @@ const Component: NextPage<IProps> = props => {
     if (inView && !isValidating && loadCount.current < totalPage) {
       setSize(size + 1).then(() => loadCount.current++);
     }
-  }, [inView])
-
-  useEffect(()=>{
-    console.log(result, status)
-  }, [result, status])
+  }, [inView]);
 
   return (
     <Layout>
@@ -107,7 +103,7 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async () => {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
 
   const data = await fetcher(GET_INITIAL_POSTS);
   return {
@@ -229,18 +225,10 @@ const entryList = css`
       width: calc(var(--grid) * 4);
       margin-bottom: 6.4rem;
 
-      &:nth-child(2n - 1) {
+      &:nth-of-type(2n - 1) {
         margin-top: 9.6rem;
         margin-left: 3.4rem;
       }
-    }
-  }
-
-  &:last-child {
-    padding-bottom: 6.4rem;
-
-    @media (min-width: 640px) {
-      padding-bottom: 24.4rem;
     }
   }
 `;

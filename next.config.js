@@ -11,10 +11,6 @@ const nextConfig = {
     BASIC_AUTH_CREDENTIALS: process.env.BASIC_AUTH_CREDENTIALS,
   },
 
-  images: {
-    domains: ['dev-kuboniku.gq'],
-  },
-
 	sassOptions: {
 		fiber: Fiber
   },

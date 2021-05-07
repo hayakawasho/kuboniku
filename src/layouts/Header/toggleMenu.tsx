@@ -121,7 +121,7 @@ const burger__line = css`
   background-color: #fff;
   transform-origin: left;
 
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     margin: 5px 0 0;
     transform: scaleX(calc(32 / 40));
   }

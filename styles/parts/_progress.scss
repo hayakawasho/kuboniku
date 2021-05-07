@@ -16,7 +16,7 @@
   background: currentColor;
   margin: 1.5em auto;
 
-  @media (--pc) {
+  @media (min-width: 640px) {
     width: 2px;
     height: 4rem;
   }
@@ -35,42 +35,8 @@
       content: "";
       background-color: var(--color-theme);
 
-      @media (--pc) {
+      @media (min-width: 640px) {
         width: 2px;
-      }
-    }
-  }
-}
-
-.c-progressCtrl {
-  font-family: var(--font-en);
-  font-size: 1rem;
-  line-height: 1;
-  text-align: center;
-  letter-spacing: .2em;
-  width: 1.5em;
-
-  > ol {
-    position: absolute;
-    width: 100%;
-    height: 1.5em;
-    overflow: hidden;
-    top: -1.5em;
-
-    > li {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      overflow: hidden;
-      line-height: 2;
-      white-space: nowrap;
-      opacity: 0;
-
-      &:first-child {
-        opacity: 1;
       }
     }
   }

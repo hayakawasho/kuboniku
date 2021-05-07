@@ -18,7 +18,7 @@ const progressCtrl = css`
   font-family: var(--font-en);
   font-size: 1rem;
   line-height: 1;
-  letter-spacing: .2em;
+  letter-spacing: 0.2em;
   width: 1.5em;
 
   > ol {
@@ -30,7 +30,7 @@ const progressCtrl = css`
       ${tw`absolute inset-0 m-auto whitespace-nowrap opacity-0`}
       line-height: 2;
 
-      &:first-child {
+      &:first-of-type {
         opacity: 1;
       }
     }

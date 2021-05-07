@@ -24,6 +24,7 @@ interface ICustomField {
     srcSet: string;
   };
   eyecatchMobile: {
+    sourceUrl: string;
     srcSet: string;
   };
 }
@@ -38,12 +39,12 @@ interface IWorks {
       slug: string;
       acf: ICustomField;
     };
-  }
+  };
   pageInfo: {
     offsetPagination: {
       total: number;
     };
-  }
+  };
 }
 
 export type { IWorks, ICustomField };

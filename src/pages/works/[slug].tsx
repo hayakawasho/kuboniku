@@ -41,7 +41,7 @@ const Component = props => {
   const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
   const { val, onScroll } = useSkewScroll(scrollYProgress.get());
 
-  const [, ] = useWorksValue(variables);
+  const [,] = useWorksValue(variables);
 
   return (
     <Layout>
@@ -84,23 +84,36 @@ const Component = props => {
               <div css={intro__info}>
                 <dl css={dl}>
                   <dt css={dt}>Year :</dt>
-                  <dd css={dd}>{format(parseISO(data.post.date), 'MMMM d, yyyy')}</dd>
+                  <dd css={dd}>
+                    {format(parseISO(data.post.date), 'MMMM d, yyyy')}
+                  </dd>
                 </dl>
                 <dl css={dl}>
                   <dt css={dt}>Role :</dt>
-                  {data.post.acf.role.map((item, i) => <dd css={dd} key={i}>{item.name}</dd>)}
+                  <dd css={dd}>
+                    <ul>
+                      {data.post.acf.role.map((item, i) => (
+                        <li key={i}>{item.name}</li>
+                      ))}
+                    </ul>
+                  </dd>
                 </dl>
               </div>
-              {
-                data.post.acf.url && (
-                  <a css={viewLink} href={data.post.acf.url} target="_blank" rel="noopener">
-                    View website
-                    <div css={viewLink__hr} />
-                  </a>
-                )
-              }
+              {data.post.acf.url && (
+                <a
+                  css={intro__viewLink}
+                  href={data.post.acf.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  View website
+                  <div css={intro__viewLink__hr} />
+                </a>
+              )}
             </div>
-            {acf.gallery && <CaptchaList gallery={acf.gallery} color={acf.themeColor} />}
+            {acf.gallery && (
+              <CaptchaList gallery={acf.gallery} color={acf.themeColor} />
+            )}
             {previous && (
               <aside css={[kv, kvNext]} className="is-next" data-smooth-item>
                 <Link scroll={false} href={'/works/' + previous.slug}>
@@ -108,7 +121,10 @@ const Component = props => {
                 </Link>
                 <div css={kv__cont}>
                   <h2 css={heading}>Next Project</h2>
-                  <p css={sub}>{previous.title}<i className="icon-arrow-right" /></p>
+                  <p css={sub}>
+                    {previous.title}
+                    <i className="icon-arrow-right" />
+                  </p>
                 </div>
                 <Picture
                   src={previous.acf.eyecatch.sourceUrl}
@@ -189,7 +205,6 @@ export const GET_POST = gql`
           name
         }
         themeColor
-        description
         url
         gallery {
           sourceUrl
@@ -212,7 +227,7 @@ const kv = css`
   @media (min-width: 640px) {
     ${tw`h-screen`}
   }
-`
+`;
 
 const kvNext = css`
   ${tw`h-screen`}
@@ -225,14 +240,14 @@ const kvNext = css`
   img {
     filter: grayscale(1);
   }
-`
+`;
 
 const kv__cont = css`
   ${tw`absolute top-1/2 left-0 w-full`}
   z-index: 2;
   padding-left: var(--grid);
   color: #fff;
-`
+`;
 
 const heading = css`
   ${tw`font-semibold`}
@@ -245,7 +260,7 @@ const heading = css`
   @media (min-width: 640px) {
     font-size: 7rem;
   }
-`
+`;
 
 const sub = css`
   font-family: var(--font-roboto);
@@ -257,10 +272,10 @@ const sub = css`
   margin-top: 1rem;
 
   .icon-arrow-right {
-    font-size: .7rem;
-    margin-left: .8rem;
+    font-size: 0.7rem;
+    margin-left: 0.8rem;
   }
-`
+`;
 
 const kv__scrollDown = css`
   ${tw`absolute left-1/2 overflow-hidden transform -translate-x-1/2 font-bold`}
@@ -280,7 +295,7 @@ const kv__scrollDown = css`
     ${tw`block text-center`}
     margin-top: 1.2rem;
   }
-`
+`;
 
 const kv__scrollLabel = css`
   ${tw`inline-block`}
@@ -292,7 +307,7 @@ const kv__scrollLabel = css`
     content: 'scroll';
     animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
-`
+`;
 
 const worksContent = css`
   backface-visibility: hidden;
@@ -307,42 +322,33 @@ const intro = css`
     width: calc(var(--grid) * 10);
     padding: 10rem var(--grid) 9rem;
   }
-`
+`;
 
 const intro__info = css`
-  margin-bottom: 4.8rem;
-
   @media (min-width: 640px) {
     width: calc(3 / 8 * 100%);
     margin-bottom: 0;
   }
-`
+`;
 
 const dl = css`
-  &:after {
-    content: "";
-    clear: both;
-    display: block;
-  }
-`
+  display: grid;
+  grid-template-columns: 3.25em 1fr;
+  font-size: 1.2rem;
+  font-family: var(--font-en);
+`;
 
 const dt = css`
-  ${tw`float-left`}
-  margin-right: .5em;
-  font-family: var(--font-en);
-  font-size: 1.2rem;
   color: var(--color-text-primary);
   line-height: calc(52 / 24);
 
   @media (min-width: 640px) {
     font-size: 1.1rem;
   }
-`
+`;
 
 const dd = css`
-  ${tw`font-light float-left`}
-  font-family: var(--font-en);
-  font-size: 1.2rem;
+  ${tw`font-light`}
   line-height: calc(52 / 24);
   letter-spacing: 0.08em;
   color: #cbcbcb;
@@ -351,17 +357,29 @@ const dd = css`
     font-size: 1.3rem;
   }
 
-  + dd {
-    &:before {
-      content: "/";
-      margin: 0 .5em;
+  > ul {
+    &:after {
+      content: "";
+      display: block
+      clear: both;
+    }
 
+    > li {
+      float: left;
+
+      + li {
+        &:before {
+          content: "/";
+          margin: 0 .5em;
+        }
+      }
     }
   }
-`
+`;
 
-const viewLink = css`
+const intro__viewLink = css`
   ${tw`relative inline-block font-bold`}
+  margin-top: 4rem;
   padding-left: 2.6em;
   font-family: var(--font-en);
   font-size: 1.2rem;
@@ -371,9 +389,9 @@ const viewLink = css`
   @media (min-width: 640px) {
     font-size: 1.4rem;
   }
-`
+`;
 
-const viewLink__hr = css`
+const intro__viewLink__hr = css`
   ${tw`absolute left-0 block h-0`}
   top: 0.7em;
   width: 1.75em;
@@ -384,4 +402,4 @@ const viewLink__hr = css`
   @media (min-width: 640px) {
     border-top-width: 2px;
   }
-`
+`;

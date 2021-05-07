@@ -18,7 +18,7 @@
 }
 
 [data-smooth-item] {
-	@media (--pc) {
+	@media (min-width: 640px) {
 		will-change: transform;
 	}
 }
@@ -26,37 +26,6 @@
 #xhr {
   position: relative;
   z-index: 1;
-}
-
-.gl {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-}
-
-.docSizeRef {
-  position: absolute;
-  width: 100vw;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  visibility: hidden;
-  z-index: -1;
-}
-
-.mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2147483647;
-  pointer-events: none;
-  transform: translate3d(0, 0, 0)
 }
 
 .cursor2d {

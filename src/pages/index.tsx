@@ -1,23 +1,31 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import useSWR from 'swr';
 import { gql } from 'graphql-request';
 import Utils from '~/foundation/utils/Utils';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
-// components
-import Layout from '~/components/layouts/Layout';
-import ProgressBar from '~/components/layouts/ProgressBar';
-import Seo from '~/components/Seo';
+import Layout from '~/layouts/Layout';
+import ProgressBar from '~/components/ProgressBar';
+import Seo from '~/foundation/components/Seo';
+import { IWorks, ICustomField } from '~/domain/works';
+const Canvas = dynamic(
+  () => import('~/foundation/containers/home').then(modules => modules.Canvas),
+  {
+    ssr: false,
+  }
+);
+import tw, { css } from 'twin.macro';
 
 interface IData {
   posts: {
     nodes: {
       slug: string;
       title: string;
-      acf: any;
+      acf: ICustomField;
     }[];
     pageInfo: {
       offsetPagination: {
@@ -40,7 +48,10 @@ const Component: NextPage<IProps> = props => {
   const max = posts.length;
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
-  const canvasRef = useRef(null);
+
+  const images = useMemo(() => {
+    return data.posts.nodes.map((item, i) => item.acf.eyecatchMobile.sourceUrl);
+  }, [data]);
 
   return (
     <Layout>
@@ -51,7 +62,7 @@ const Component: NextPage<IProps> = props => {
         exit="pageExit"
         variants={transition}
       >
-        <canvas className="gl" ref={canvasRef}></canvas>
+        <Canvas images={images} />
         <div className="homeScreen">
           <ul className="homeWorksList">
             {posts.map((item, i) => (
@@ -119,12 +130,15 @@ Component.getInitialProps = async () => {
 
 export const GET_POSTS = gql`
   query {
-    posts(first: 5) {
+    posts(first: 4) {
       nodes {
         title
         slug
         acf {
           eyecatch {
+            sourceUrl
+          }
+          eyecatchMobile {
             sourceUrl
           }
           category {
@@ -139,5 +153,95 @@ export const GET_POSTS = gql`
         }
       }
     }
+  }
+`;
+
+const kv = css`
+  ${tw`relative w-full overflow-hidden block`}
+  height: calc(var(--vh) * 100);
+  perspective: 1000px;
+
+  @media (min-width: 640px) {
+    ${tw`h-screen`}
+  }
+`;
+
+const kvNext = css`
+  ${tw`h-screen`}
+
+  a {
+    ${tw`absolute top-0 left-0 w-full h-full`}
+    z-index: 3;
+  }
+
+  img {
+    filter: grayscale(1);
+  }
+`;
+
+const kv__cont = css`
+  ${tw`absolute top-1/2 left-0 w-full`}
+  z-index: 2;
+  padding-left: var(--grid);
+  color: #fff;
+`;
+
+const heading = css`
+  ${tw`font-semibold`}
+  padding-left: 1.2rem;
+  font-family: var(--font-roboto);
+  font-size: 3.9rem;
+  line-height: 1;
+  color: #fff;
+
+  @media (min-width: 640px) {
+    font-size: 7rem;
+  }
+`;
+
+const sub = css`
+  font-family: var(--font-roboto);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+
+  .icon-arrow-right {
+    font-size: 0.7rem;
+    margin-left: 0.8rem;
+  }
+`;
+
+const kv__scrollDown = css`
+  ${tw`absolute left-1/2 overflow-hidden transform -translate-x-1/2 font-bold`}
+  bottom: 5rem;
+  font-family: var(--font-en);
+  font-size: 1rem;
+  line-height: 1;
+  color: #fff;
+  letter-spacing: 0.02em;
+  z-index: 2;
+
+  @media (min-width: 640px) {
+    font-size: 1.3rem;
+  }
+
+  .icon-arrow-down {
+    ${tw`block text-center`}
+    margin-top: 1.2rem;
+  }
+`;
+
+const kv__scrollLabel = css`
+  ${tw`inline-block`}
+  animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+
+  &::before {
+    ${tw`absolute block origin-left`}
+    bottom: -30px;
+    content: 'scroll';
+    animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 `;

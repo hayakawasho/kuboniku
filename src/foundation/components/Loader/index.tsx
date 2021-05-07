@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { appSelector } from '~/state/app';
+import tw, { css } from 'twin.macro';
 
 const Component = React.memo(() => {
   const { scrolling } = useSelector(appSelector);
@@ -8,7 +9,8 @@ const Component = React.memo(() => {
   return (
     <>
       <div
-        className={`mask || js-loader`}
+        id="js-loader"
+        css={mask}
         style={scrolling ? { pointerEvents: 'all' } : { pointerEvents: 'none' }}
       />
     </>
@@ -16,3 +18,8 @@ const Component = React.memo(() => {
 });
 
 export default Component;
+
+const mask = css`
+  ${tw`fixed inset-0 pointer-events-none transform-gpu`}
+  z-index: 2147483647;
+`;

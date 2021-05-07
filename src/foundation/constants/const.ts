@@ -16,8 +16,8 @@ export const EVENTS = {
 };
 
 export const SIZES = {
-  DEFAULT: 768,
+  DEFAULT: 640,
 };
 
 export const WP_API_END_POINT =
-  process.env.WP_API_END_POINT || 'https://dev-kuboniku.gq/wp/graphql';
+  process.env.WP_API_END_POINT || 'http://152.70.83.60/graphql';

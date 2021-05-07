@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 import tw, { css } from 'twin.macro';
-import { IWorks } from '~/models/works';
+import { IWorks } from '~/domain/works';
 interface IProps {
   data: {
     title: string;
@@ -140,5 +140,11 @@ const entry = css`
   .c-aspect {
     ${tw`opacity-20`}
     --aspect: calc(960 / 1536 * 100%);
+  }
+
+  &.is-hover {
+    img {
+      filter: grayscale(0);
+    }
   }
 `;

@@ -13,7 +13,7 @@ uniform float uAlpha;
 uniform float uBlur;
 uniform float uTime;
 uniform float uRad;
-uniform vec3 uCol;
+uniform vec3 uColor;
 
 varying vec2 vUv;
 
@@ -28,12 +28,12 @@ void main() {
 
   // cloud
   coord = vec2(.2, -.5);
-  visualIn.rgb += circle(uCol, uRad * 1.25, uBlur, coord, uv2) * (uAlpha * .75);
-  visualOut.rgb += circle(uCol, uRad * 1.25, uBlur, coord, uv2) * (uAlpha * .75);
+  visualIn.rgb += circle(uColor, uRad * 1.25, uBlur, coord, uv2) * (uAlpha * .75);
+  visualOut.rgb += circle(uColor, uRad * 1.25, uBlur, coord, uv2) * (uAlpha * .75);
 
-  coord = vec2( -2., .1);
-  visualIn.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.);
-  visualOut.rgb += circle( uCol, uRad * 2., uBlur, coord, uv2 ) * ( uAlpha * 1.);
+  coord = vec2(-2., .1);
+  visualIn.rgb += circle(uColor, uRad * 2., uBlur, coord, uv2) * (uAlpha * 1.);
+  visualOut.rgb += circle(uColor, uRad * 2., uBlur, coord, uv2) * (uAlpha * 1.);
 
 
   vec3 mask = vec3(0.);

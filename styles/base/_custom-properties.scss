@@ -24,7 +24,7 @@
   --z-mask: 90;
   --z-menu: 100;
 
-  @media (--pc) {
+  @media (min-width: 640px) {
     --gap: calc(40 / 1280 * 100vw);
     --gutter: calc(16 / 1280 * 100vw);
   }

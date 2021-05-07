@@ -1,5 +1,5 @@
 .u-mobile {
-  @media (--pc) {
+  @media (min-width: 640px) {
     display: none !important;
   }
 }

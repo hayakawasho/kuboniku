@@ -1,37 +1,37 @@
 import React from 'react';
 import tw, { css } from 'twin.macro';
-import { IWorks } from '~/models/works';
+import { IWorks } from '~/domain/works';
 
 interface IProps {
-  gallery: IWorks['post']['acf']['gallery']
+  gallery: IWorks['post']['acf']['gallery'];
   color: string;
 }
 
 const Component: React.FC<IProps> = ({ gallery, color }) => {
   return (
     <ul css={captchaList}>
-      {
-        gallery.map((item, i) => {
-          const aspect = Math.round((item.mediaDetails.height / item.mediaDetails.width) * 100);
-          const css = {
-            '--aspect': `${aspect}%`,
-            backgroundColor: `${color}`,
-          };
+      {gallery.map((item, i) => {
+        const aspect = Math.round(
+          (item.mediaDetails.height / item.mediaDetails.width) * 100
+        );
+        const css = {
+          '--aspect': `${aspect}%`,
+          backgroundColor: `${color}`,
+        };
 
-          return (
-            <li tw="relative" key={i}>
-              <div className="c-aspect" style={css} />
-              <img
-                src={item.sourceUrl}
-                srcSet={item.srcSet}
-                alt=""
-                loading="lazy"
-                tw="absolute w-full h-full top-0 left-0"
-              />
-            </li>
-          );
-        })
-      }
+        return (
+          <li tw="relative" key={i}>
+            <div className="c-aspect" style={css} />
+            <img
+              src={item.sourceUrl}
+              srcSet={item.srcSet}
+              alt=""
+              loading="lazy"
+              tw="absolute w-full h-full top-0 left-0"
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 };
@@ -56,7 +56,7 @@ const captchaList = css`
     }
 
     .c-aspect {
-      opacity: .2;
+      opacity: 0.2;
     }
   }
-`
+`;
