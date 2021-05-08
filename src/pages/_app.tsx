@@ -3,7 +3,7 @@ import '~css/global.scss';
 import { ReactElement, useRef } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -16,11 +16,11 @@ import Nav from '~/layouts/Nav/nav';
 import store from '~/state/store';
 
 const Webgl = dynamic(
-  () => import('~/foundation/components/Webgl')
-  .then(modules => modules.Webgl), {
-    ssr: false
+  () => import('~/foundation/components/Webgl').then(modules => modules.Webgl),
+  {
+    ssr: false,
   }
-)
+);
 
 if (process.browser) {
   require('~/client-only');
@@ -77,7 +77,8 @@ const AppComponent = ({
             </div>
           </Provider>
         </Hydrate>
-        {//<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        {
+          //<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         }
       </QueryClientProvider>
     </>

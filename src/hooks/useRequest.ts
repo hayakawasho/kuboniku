@@ -1,22 +1,27 @@
 import { useQuery, useInfiniteQuery } from 'react-query';
-import { request } from 'graphql-request';
-import { left, right, Either, isLeft, isRight } from 'fp-ts/es6/Either';
-import { WP_API_END_POINT } from '~/foundation/constants/const';
 
-interface IProps {
-  queryKey: string;
-  gql: string;
-}
+const QUERY_KEYS = ['works'] as const;
 
-const useRequest = <T>({ queryKey, gql }: IProps) => {
-  return useQuery(queryKey, async () => {
+type Unpacked<T> = T extends { [K in keyof T]: infer U } ? U : never;
+type TQueryKeys = Unpacked<typeof QUERY_KEYS>;
+type TFetchHandler<T, E> = {
+  ok: Promise<T>;
+  error: E;
+};
+
+const useRequest = <T, E extends Error = Error>(
+  queryKey: TQueryKeys,
+  { ok, error }: TFetchHandler<T, E>
+) => {
+  const { data, status } = useQuery<T, E>(queryKey, async () => {
     try {
-      const res = await request<T>(WP_API_END_POINT, gql);
-      return res;
+      return await ok;
     } catch (e) {
-      throw e.error;
+      throw new Error('useRequest: error catch');
     }
   });
+
+  return [data, status];
 };
 
 const useRequestInfinite = <T>() => {};

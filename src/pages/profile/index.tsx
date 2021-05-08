@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { transition } from '~/foundation/animations';
 import Layout from '~/layouts/Layout';
@@ -7,11 +7,12 @@ import Seo from '~/foundation/components/Seo';
 import tw, { css } from 'twin.macro';
 
 const Canvas = dynamic(
-  () => import('~/foundation/containers/profile')
-  .then(modules => modules.Canvas), {
-    ssr: false
+  () =>
+    import('~/foundation/containers/profile').then(modules => modules.Canvas),
+  {
+    ssr: false,
   }
-)
+);
 
 const Component: React.FC = () => {
   return (
@@ -24,10 +25,8 @@ const Component: React.FC = () => {
         variants={transition}
         tw="overflow-hidden"
       >
-        {//<Canvas />
-        }
+        {<Canvas />}
         <div css={container}>
-
           <div css={name}>
             <picture>
               <source media="(max-width: 639px)" srcSet="/name_sp.png 2x" />
@@ -75,7 +74,7 @@ const name = css`
 const container__in = css`
   ${tw`absolute right-0 text-right`}
   bottom: 10rem;
-  z-index:2;
+  z-index: 2;
 
   @media (min-width: 640px) {
     ${tw`left-1/2 text-left`}

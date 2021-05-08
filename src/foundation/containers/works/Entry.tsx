@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 import tw, { css } from 'twin.macro';
 import { IWorks } from '~/domain/works';
+
 interface IProps {
   data: {
     title: string;
@@ -40,12 +41,7 @@ const Component: React.FC<IProps> = React.memo(({ data, index }) => {
           <div className="c-aspect" />
           <div css={entry__g}>
             <div css={eyecatch}>
-              <img
-                src={data.acf.eyecatch.sourceUrl}
-                srcSet={data.acf.eyecatch.srcSet}
-                alt=""
-                loading="lazy"
-              />
+              <img src={data.acf.eyecatch.sourceUrl} alt="" loading="lazy" />
             </div>
             <div css={entry__hgroup}>
               <p css={num}>

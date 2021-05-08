@@ -5,7 +5,7 @@ import {
   RenderPage,
 } from 'next/dist/next-server/lib/utils';
 import basicAuthMiddleware from 'nextjs-basic-auth-middleware';
-import { extractCritical } from '@emotion/server'
+import { extractCritical } from '@emotion/server';
 
 class MyDocument extends Document {
   static async getInitialProps(
@@ -20,9 +20,9 @@ class MyDocument extends Document {
       });
     }
 
-    const initialProps = await Document.getInitialProps(ctx)
-    const page = await ctx.renderPage()
-    const styles = extractCritical(page.html)
+    const initialProps = await Document.getInitialProps(ctx);
+    const page = await ctx.renderPage();
+    const styles = extractCritical(page.html);
 
     return {
       ...initialProps,
@@ -36,7 +36,7 @@ class MyDocument extends Document {
           />
         </>
       ),
-    }
+    };
   }
 
   render(): JSX.Element {

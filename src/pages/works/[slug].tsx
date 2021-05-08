@@ -70,7 +70,7 @@ const Component = props => {
             <Picture
               src={data.post.acf.eyecatch.sourceUrl}
               srcSet={data.post.acf.eyecatch.srcSet}
-              mobile={data.post.acf.eyecatchMobile.srcSet ?? null}
+              mobile={data.post.acf.eyecatchMobile.sourceUrl ?? null}
             />
             <div css={kv__scrollDown}>
               <div tw="relative w-full h-full overflow-hidden">
@@ -129,7 +129,7 @@ const Component = props => {
                 <Picture
                   src={previous.acf.eyecatch.sourceUrl}
                   srcSet={previous.acf.eyecatch.srcSet}
-                  mobile={previous.acf.eyecatchMobile.srcSet ?? null}
+                  mobile={previous.acf.eyecatchMobile.sourceUrl ?? null}
                 />
               </aside>
             )}
@@ -186,6 +186,7 @@ export const GET_POST = gql`
             srcSet
           }
           eyecatchMobile {
+            sourceUrl
             srcSet
           }
         }
@@ -196,6 +197,7 @@ export const GET_POST = gql`
           srcSet
         }
         eyecatchMobile {
+          sourceUrl
           srcSet
         }
         category {

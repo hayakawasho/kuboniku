@@ -18,36 +18,11 @@ interface IProps {
 const dpr = window.devicePixelRatio >= 2 ? 1.5 : window.devicePixelRatio;
 
 const Component: React.FC<IProps> = ({ images }) => {
+  const projectIndex = 0;
   const posZ = useMemo(() => {
     const fovInRadians = (45 * Math.PI) / 180;
     return (window.innerHeight * 0.5) / Math.tan(fovInRadians * 0.5);
   }, []);
-
-  useEffect(() => {
-    window.addEventListener('touchstart', onDown);
-    window.addEventListener('touchmove', onMove, {
-      passive: true,
-    });
-    window.addEventListener('touchend', onUp);
-  }, []);
-
-  const pointerDown = (scrollY: number) => {};
-
-  const pointerMove = (scrollY: number) => {};
-
-  const pointerUp = () => {};
-
-  const onDown = e => {
-    // console.log(e.changedTouches[0].clientY)
-  };
-
-  const onMove = e => {
-    // console.log(e.changedTouches[0].clientY)
-  };
-
-  const onUp = e => {
-    //console.log(e.changedTouches[0].clientY)
-  };
 
   return (
     <div css={canvas}>
@@ -61,7 +36,7 @@ const Component: React.FC<IProps> = ({ images }) => {
         }}
       >
         <Suspense fallback={null}>
-          <Scene posZ={posZ} images={images} />
+          <Scene posZ={posZ} images={images} index={projectIndex} />
         </Suspense>
       </Canvas>
     </div>
@@ -70,17 +45,16 @@ const Component: React.FC<IProps> = ({ images }) => {
 
 export default Component;
 
-const Scene: React.FC<any> = ({ posZ, images }) => {
-  const texture = useLoader(THREE.TextureLoader, images[0]);
-
-  const mesh = useRef();
+const Scene: React.FC<any> = ({ posZ, images, index }) => {
   const { size } = useThree();
-
+  const mesh = useRef();
+  const meshes = [];
+  const textures = useLoader(THREE.TextureLoader, images);
   const uniforms = useMemo(() => {
     return {
       u_texture: {
         type: 't',
-        value: texture,
+        value: textures[index],
       },
       u_textureFactor: {
         type: 'v2',
@@ -111,7 +85,41 @@ const Scene: React.FC<any> = ({ posZ, images }) => {
         value: 1.0,
       },
     };
+  }, [index]);
+
+  const isPointerDown = useRef(false);
+
+  useEffect(() => {
+    window.addEventListener('touchstart', onDown);
+    window.addEventListener('touchmove', onMove, {
+      passive: true,
+    });
+    window.addEventListener('touchend', pointerUp);
   }, []);
+
+  const pointerDown = (scrollY: number) => {
+    isPointerDown.current = true;
+  };
+
+  const pointerMove = (scrollY: number) => {
+    if (!isPointerDown.current) return;
+
+    console.log('pointerMove:', scrollY);
+  };
+
+  const pointerUp = () => {
+    isPointerDown.current = false;
+  };
+
+  const onDown = e => {
+    pointerDown(e.changedTouches[0].clientY);
+  };
+
+  const onMove = e => {
+    pointerMove(e.changedTouches[0].clientY);
+  };
+
+  useFrame(() => {});
 
   return (
     <>
@@ -125,7 +133,7 @@ const Scene: React.FC<any> = ({ posZ, images }) => {
           uniforms={uniforms}
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
-          side={THREE.DoubleSide}
+          onUpdate={() => {}}
         />
       </mesh>
     </>
@@ -143,7 +151,7 @@ const mainPlane = {
   },
   // margin between row/columns
   margin: {
-    y: 80,
+    y: 160,
   },
 };
 

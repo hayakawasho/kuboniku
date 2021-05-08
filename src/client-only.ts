@@ -20,10 +20,11 @@ import ASScroll from '@ashthornton/asscroll';
   store.dispatch(SET_GPU_TIER(gpuTier));
 })();
 
-E.once(EVENTS.DOM_READY, () => {
+E.on(EVENTS.DOM_READY, () => {
   if (!hasTouch) {
+    /*
     const smooth = new ASScroll({
-      element: '[data-smooth]',
+      // element: '[data-smooth]',
       innerElement: '[data-smooth-item]',
       ease: 0.09,
       disableResize: true,
@@ -40,6 +41,7 @@ E.once(EVENTS.DOM_READY, () => {
     smooth.enable();
 
     APP.smooth = smooth;
+    */
   }
 
   disableHover();
