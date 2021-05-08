@@ -1,5 +1,5 @@
 import { useRequest } from '~/hooks/useRequest';
-import { IWorks } from '~/models/works';
+import { IWorks } from '~/domain/works';
 import { request, gql } from 'graphql-request';
 import { WP_API_END_POINT } from '~/foundation/constants/const';
 
