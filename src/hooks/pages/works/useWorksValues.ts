@@ -1,15 +1,15 @@
 import { useCallback } from 'react';
 import { useRequest } from '~/hooks/useRequest';
-import { IWorks } from '~/models/works';
+import { IWorks } from '~/domain/works';
 import { request, gql } from 'graphql-request';
 import { WP_API_END_POINT } from '~/foundation/constants/const';
 
 const useWorksValues = variables => {
-  const [data, status] = useRequest<IWorks>('works', ({ ok, error }) => {});
+  // const [data, status] = useRequest<IWorks>('works', ({ ok, error }) => {});
 
   const onLoadMore = useCallback(() => {}, []);
 
-  return [data, status, { onLoadMore }] as const;
+  return [status, { onLoadMore }] as const;
 };
 
 export { useWorksValues };
