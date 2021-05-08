@@ -19,7 +19,7 @@ import tw, { css } from 'twin.macro';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 import { IWorks } from '~/domain/works';
-import { useWorksValue } from '~/hooks/pages/works';
+// import { useWorksValue } from '~/hooks/pages/works';
 
 interface IProps {
   data: IWorks;
@@ -41,7 +41,7 @@ const Component = props => {
   const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
   const { val, onScroll } = useSkewScroll(scrollYProgress.get());
 
-  const [,] = useWorksValue(variables);
+  // const [,] = useWorksValue(variables);
 
   return (
     <Layout>
