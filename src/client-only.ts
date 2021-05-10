@@ -48,7 +48,7 @@ E.on(EVENTS.DOM_READY, () => {
 });
 
 E.on(EVENTS.ROUTE_START, () => {
-  APP.smooth && APP.smooth.disable();
+  // APP.smooth && APP.smooth.disable();
 });
 
 E.on(EVENTS.ROUTE_UPDATE, ({ mount }) => {
@@ -83,7 +83,7 @@ const disableHover = () => {
   timer = setTimeout(enable, 300);
 
   if (!hasTouch) {
-    APP.smooth.on('scroll', disable);
+    // APP.smooth.on('scroll', disable);
   }
 };
 

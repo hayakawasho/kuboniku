@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -11,7 +11,7 @@ import { transition } from '~/foundation/animations';
 import Layout from '~/layouts/Layout';
 import ProgressBar from '~/components/ProgressBar';
 import Seo from '~/foundation/components/Seo';
-import { IWorks, ICustomField } from '~/domain/works';
+import { ICustomField } from '~/domain/works';
 const Canvas = dynamic(
   () => import('~/foundation/containers/home').then(modules => modules.Canvas),
   {
@@ -48,10 +48,7 @@ const Component: NextPage<IProps> = props => {
   const max = posts.length;
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
-
-  const images = useMemo(() => {
-    return data.posts.nodes.map((item, i) => item.acf.eyecatchMobile.sourceUrl);
-  }, [data]);
+  const slidesRef = useRef(null);
 
   return (
     <Layout>
@@ -61,25 +58,33 @@ const Component: NextPage<IProps> = props => {
         animate="pageAnimate"
         exit="pageExit"
         variants={transition}
+        tw="overflow-hidden"
       >
-        <Canvas images={images} />
-        <div className="homeScreen">
+        {data && <Canvas domRef={slidesRef} />}
+
+        <div css={slides} ref={slidesRef}>
+          {posts.map((item, i) => (
+            <div
+              key={i}
+              css={slide}
+              data-gl-texture={item.acf.eyecatchMobile.sourceUrl}
+            ></div>
+          ))}
+        </div>
+
+        <div className="homeScreen" tw="opacity-0">
           <ul className="homeWorksList">
             {posts.map((item, i) => (
               <li key={i}>
                 <div className="homeEntry">
                   <Link scroll={false} href={`/works/${item.slug}`}>
-                    <a
-                      className="homeGroup u-z-10"
-                      data-gl-texture={item.acf.eyecatch.sourceUrl}
-                      data-gl-id={item.slug}
-                    >
-                      <p className="homeNum">
+                    <a className="homeGroup u-z-10">
+                      <p>
                         {Utils.zeroPadding(total - i, 2)}
                         <span>Project</span>
                       </p>
-                      <h2 className="homeHeading">{item.title}</h2>
-                      <p>
+                      <h2 css={heading}>{item.title}</h2>
+                      <p css={sub}>
                         {item.acf.category.name}
                         <i className="icon-arrow-right" />
                       </p>
@@ -89,9 +94,9 @@ const Component: NextPage<IProps> = props => {
               </li>
             ))}
           </ul>
-          <button type="button" className="homeBtm">
+          <button type="button" css={case__scrollDown}>
             <div className="u-in u-ovh">
-              <div className="homeBtm__label">
+              <div css={case__scrollLabel}>
                 {currentProjectIndex}
                 <span>Project</span>
               </div>
@@ -156,6 +161,17 @@ export const GET_POSTS = gql`
   }
 `;
 
+const slides = css`
+  ${tw`fixed top-0 left-0 w-screen h-screen overflow-hidden`}
+  user-select: none;
+  cursor: grab;
+  z-index: 2;
+`;
+
+const slide = css`
+  ${tw`w-full h-full invisible`}// margin: 100px 0;
+`;
+
 const kv = css`
   ${tw`relative w-full overflow-hidden block`}
   height: calc(var(--vh) * 100);
@@ -166,20 +182,7 @@ const kv = css`
   }
 `;
 
-const kvNext = css`
-  ${tw`h-screen`}
-
-  a {
-    ${tw`absolute top-0 left-0 w-full h-full`}
-    z-index: 3;
-  }
-
-  img {
-    filter: grayscale(1);
-  }
-`;
-
-const kv__cont = css`
+const case__cont = css`
   ${tw`absolute top-1/2 left-0 w-full`}
   z-index: 2;
   padding-left: var(--grid);
@@ -214,7 +217,7 @@ const sub = css`
   }
 `;
 
-const kv__scrollDown = css`
+const case__scrollDown = css`
   ${tw`absolute left-1/2 overflow-hidden transform -translate-x-1/2 font-bold`}
   bottom: 5rem;
   font-family: var(--font-en);
@@ -234,14 +237,6 @@ const kv__scrollDown = css`
   }
 `;
 
-const kv__scrollLabel = css`
+const case__scrollLabel = css`
   ${tw`inline-block`}
-  animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-
-  &::before {
-    ${tw`absolute block origin-left`}
-    bottom: -30px;
-    content: 'scroll';
-    animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-  }
 `;

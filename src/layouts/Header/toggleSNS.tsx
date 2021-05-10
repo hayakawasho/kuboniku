@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
-import { keyframes } from '@emotion/css';
+import { keyframes } from '@emotion/react';
 
 const Component: React.FC = () => {
   const [isOpen, setOpen] = useState(false);

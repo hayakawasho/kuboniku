@@ -12,6 +12,7 @@ import Seo from '~/foundation/components/Seo';
 import Entry from '~/foundation/containers/works/Entry';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 import tw, { css } from 'twin.macro';
+import { keyframes } from '@emotion/react';
 // import { useRequestWorks } from '~/hooks/pages/works';
 import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -92,9 +93,15 @@ const Component: NextPage<IProps> = props => {
           </div>
         ))}
         <div ref={entryLoaderRef} css={entryLoader}>
-          {isValidating && <div className="worksIndexLoadingSpin" />}
+          {isValidating && (
+            <div css={entryLoader__bounce}>
+              <div />
+              <div />
+              <div />
+            </div>
+          )}
+          {error && <div css={entryLoader__error}>Try to reload.</div>}
         </div>
-        {error ? <div>Try to reload.</div> : null}
       </motion.div>
     </Layout>
   );
@@ -234,6 +241,47 @@ const entryList = css`
 `;
 
 const entryLoader = css`
-  ${tw`text-center`}
-  padding: 3.2rem 0;
+  ${tw`flex justify-center`}
+  padding-bottom: 6.4rem;
+`;
+
+const bounce = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+`;
+
+const entryLoader__bounce = css`
+  display: flex;
+
+  > div {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-theme);
+    border-radius: 50%;
+    animation: ${bounce} 0.4s cubic-bezier(0.19, 0.57, 0.3, 0.98) infinite
+      alternate;
+
+    &:nth-of-type(2) {
+      animation-delay: 0.1s;
+      opacity: 0.8;
+      margin: 0 3px;
+    }
+
+    &:nth-of-type(3) {
+      animation-delay: 0.2s;
+      opacity: 0.6;
+    }
+  }
+`;
+
+const entryLoader__error = css`
+  ${tw`text-center font-bold`}
+  font-family: var(--font-en);
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: var(--color-text-primary);
 `;
