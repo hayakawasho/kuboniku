@@ -20,4 +20,4 @@ export const SIZES = {
 };
 
 export const WP_API_END_POINT =
-  process.env.WP_API_END_POINT || 'https://api.kuboniku.com/graphql';
+  process.env.WP_API_END_POINT || 'https://wp.kuboniku.com/graphql';
