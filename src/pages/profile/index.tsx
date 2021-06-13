@@ -69,6 +69,20 @@ const name = css`
   width: calc(69rem / 2);
   width: calc(100% + 3rem);
   margin-top: 8rem;
+  animation: gradient 3.5s linear infinite;
+  background: linear-gradient(
+    90deg,
+    #ab6bff,
+    #9ad5f9 15%,
+    #575df0 35%,
+    #ab6bff 50%,
+    #9ad5f9 65%,
+    #575df0 85%,
+    #ab6bff
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  backface-visibility: hidden;
 `;
 
 const container__in = css`

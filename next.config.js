@@ -2,6 +2,10 @@ const path = require('path')
 const Fiber = require('fibers')
 
 const nextConfig = {
+  future: {
+    webpack5: true,
+  },
+
   experimental: {
     documentMiddleware: true,
     optimizeFonts: true,

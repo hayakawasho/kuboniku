@@ -247,10 +247,10 @@ const entryLoader = css`
 
 const bounce = keyframes`
   from {
-    transform: translateY(100%);
+    transform: translateY(75%);
   }
   to {
-    transform: translateY(-100%);
+    transform: translateY(-75%);
   }
 `;
 

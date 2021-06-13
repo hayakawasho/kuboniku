@@ -1,0 +1,48 @@
+{
+    "editor.tabSize": 2,
+    "extensions.autoUpdate": true,
+    "editor.minimap.enabled": true,
+    "editor.scrollBeyondLastLine": false,
+    "workbench.colorTheme": "GitHub Dark",
+    "workbench.sideBar.location": "left",
+    "workbench.statusBar.visible": true,
+    "editor.renderIndentGuides": true,
+    "terminal.integrated.fontSize": 11,
+    "editor.wordWrap": "on",
+    "files.autoSave": "afterDelay",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": true
+    },
+    "editor.formatOnType": true,
+    "workbench.welcome.enabled": false,
+    "workbench.panel.location": "right",
+    "editor.insertSpaces": false,
+    "terminal.integrated.rendererType": "dom",
+    "git.confirmSync": false,
+    "editor.fontSize": 11,
+    "terminal.integrated.fontWeightBold": "normal",
+    "files.trimTrailingWhitespace": true,
+    "eslint.validate": [
+        { "language": "html", "autoFix": true },
+        { "language": "vue", "autoFix": true },
+        { "language": "javascript", "autoFix": true },
+        { "language": "javascriptreact", "autoFix": true }
+    ],
+    "editor.formatOnSave": false,
+    "eslint.autoFixOnSave": true,
+    "vetur.validation.template": false,
+    "breadcrumbs.enabled": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.renderWhitespace": "all",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "emmet.includeLanguages": {
+        "twig": "html",
+        "liquid": "html"
+    },
+    "php-cs-fixer.executablePath": "${extensionPath}/php-cs-fixer.phar",
+    "php-cs-fixer.lastDownload": 1619613568726,
+    "tabnine.experimentalAutoImports": true
+}

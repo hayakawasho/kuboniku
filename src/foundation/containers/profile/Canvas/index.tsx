@@ -3,6 +3,7 @@ import React, { useEffect, Suspense, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import tw, { css } from 'twin.macro';
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 const dpr = 2;
 
@@ -35,22 +36,15 @@ export default Component;
 
 const Scene: React.FC = () => {
   const mesh = useRef();
-  const texture = useLoader(THREE.TextureLoader, '/name_sp.png');
+  const { scene } = useLoader(GLTFLoader, '/test.gltf');
+  const { size } = useThree();
 
-  const [width, height] = useMemo(() => {
-    const w = texture.image.naturalWidth;
-    const h = texture.image.naturalHeight;
-
-    return [w / dpr, h / dpr];
-  }, []);
+  console.log(scene);
 
   return (
-    <>
-      <mesh ref={mesh} position={[0, 0, 0]}>
-        <planeBufferGeometry attach="geometry" args={[width, height]} />
-        <meshBasicMaterial attach="material" map={texture} alphaTest={0.5} />
-      </mesh>
-    </>
+    <mesh ref={mesh} position={[0, 0, 0]}>
+      <primitive object={scene} dispose={null} />
+    </mesh>
   );
 };
 

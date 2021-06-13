@@ -12,6 +12,20 @@ import * as THREE from 'three';
 import { gsap } from 'gsap';
 const vert = require('./shaders/vert.glsl').default;
 const frag = require('./shaders/frag.glsl').default;
+import { useDrag, useGesture } from 'react-use-gesture';
+
+const state = {
+  target: 0,
+  current: 0,
+  currentRounded: 0,
+  x: 0,
+  y: 0,
+  off: 0,
+  progress: 0,
+  diff: 0,
+  max: 0,
+  min: 0,
+};
 
 interface IProps {
   domRef: React.MutableRefObject<HTMLElement>;
@@ -60,47 +74,31 @@ const progress = {
 
 const PlaneGroup: React.FC<{ plane: HTMLElement[] }> = ({ plane }) => {
   const isPointerDown = useRef(false);
-  const val = useRef(0);
+  const scrollVal = useRef(0);
   const [moveY, setMoveY] = useState(0);
-  const [progressY, setProgressY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useDrag(
+    state => {
+      setIsDragging(state.dragging);
+    },
+    {
+      domTarget: window,
+    }
+  );
 
   useEffect(() => {
-    window.addEventListener('touchstart', onDown);
-    window.addEventListener('touchmove', onMove, {
-      passive: true,
-    });
-    window.addEventListener('touchend', pointerUp);
-  }, []);
-
-  const pointerDown = (scrollY: number) => {
-    isPointerDown.current = true;
-  };
-
-  const pointerMove = (scrollY: number) => {
-    if (!isPointerDown.current) return;
-
-    val.current = scrollY;
-  };
-
-  const pointerUp = () => {
-    isPointerDown.current = false;
-  };
-
-  const onDown = e => {
-    pointerDown(e.changedTouches[0].clientY);
-  };
-
-  const onMove = e => {
-    pointerMove(e.changedTouches[0].clientY);
-  };
+    console.log(isDragging);
+  }, [isDragging]);
 
   useFrame(() => {
-    setMoveY(val.current);
+    // calc
+    setMoveY(moveY + (state.target - state.current) * 10);
   });
 
   return (
     <>
-      <group>
+      <group position={[0, moveY, 0]}>
         {plane.map((item, i) => {
           const { top, height } = item.getBoundingClientRect();
           return (
@@ -110,7 +108,7 @@ const PlaneGroup: React.FC<{ plane: HTMLElement[] }> = ({ plane }) => {
               index={i}
               height={height}
               posY={top}
-              progress={progress.current}
+              progress={isDragging}
             />
           );
         })}
@@ -124,10 +122,11 @@ interface IPlane {
   index: number;
   posY: number;
   height: number;
-  progress: number;
+  progress: any;
 }
 
 const Plane: React.FC<IPlane> = ({ src, index, height, posY, progress }) => {
+  const mesh = useRef();
   const { size } = useThree();
   const texture = useLoader(THREE.TextureLoader, src);
 
@@ -151,10 +150,10 @@ const Plane: React.FC<IPlane> = ({ src, index, height, posY, progress }) => {
         value: new THREE.Vector2(naturalWidth, naturalHeight),
       },
       uMaxDistance: {
-        value: 0,
+        value: -40,
       },
       uMagnitude: {
-        value: 1,
+        value: 1.5,
       },
       uProgress: {
         value: 0,
@@ -162,9 +161,15 @@ const Plane: React.FC<IPlane> = ({ src, index, height, posY, progress }) => {
     };
   }, [texture]);
 
+  useEffect(() => {
+    if (!progress) return;
+
+    console.log(mesh.current);
+  }, [progress]);
+
   return (
     <>
-      <mesh position={[0, -posY + progress, 0]}>
+      <mesh ref={mesh} position={[0, -posY, 0]}>
         <planeBufferGeometry
           attach="geometry"
           args={[size.width, height, 32, 32]}
