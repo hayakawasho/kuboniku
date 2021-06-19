@@ -1,1 +1,1 @@
-export { useWorksValues } from './useWorksValues';
+export { useWorksValues } from './hooks/useWorksValues';

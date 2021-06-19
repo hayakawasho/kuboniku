@@ -1,23 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '~/foundation/animations';
 import Layout from '~/layouts/Layout';
-import Seo from '~/foundation/components/Seo';
 import tw, { css } from 'twin.macro';
 
-const Canvas = dynamic(
-  () =>
-    import('~/foundation/containers/profile').then(modules => modules.Canvas),
-  {
-    ssr: false,
-  }
-);
-
-const Component: React.FC = () => {
+const Component = () => {
   return (
-    <Layout>
-      <Seo title="PROFILE" />
+    <Layout title="PROFILE">
       <motion.div
         initial="pageInitial"
         animate="pageAnimate"
@@ -25,7 +14,6 @@ const Component: React.FC = () => {
         variants={transition}
         tw="overflow-hidden"
       >
-        {<Canvas />}
         <div css={container}>
           <div css={name}>
             <picture>

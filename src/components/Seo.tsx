@@ -6,7 +6,7 @@ interface IProps {
   title?: string | null;
 }
 
-const Seo: React.FC<IProps> = ({ description, title }) => {
+const Seo = ({ description, title }: IProps) => {
   const siteName = 'KUBONIKU.COM | WEB DESIGNER';
   const metaTitle = `${title ? `${title} | ` : ''}` + siteName;
   const metaDescription =

@@ -3,34 +3,42 @@ import '~css/global.scss';
 import { ReactElement, useRef } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate } from 'react-query/hydration';
-import ViewportRef from '~/foundation/components/ViewportRef';
-import Loader from '~/foundation/components/Loader';
+import ViewportRef from '~/components/ViewportRef';
+import Loader from '~/components/Loader';
 import Header from '~/layouts/Header/header';
-import Nav from '~/layouts/Nav/nav';
+import Nav from '~/layouts/navigation/nav';
 import store from '~/state/store';
 
-const Webgl = dynamic(
-  () => import('~/foundation/components/Webgl').then(modules => modules.Webgl),
+const World3d = dynamic(
+  () => import('~/components/ui/world-3d').then(modules => modules.Webgl),
   {
     ssr: false,
   }
 );
 
 if (process.browser) {
-  require('~/client-only');
+  require('~/foundation/client-only');
+}
+
+interface IProps extends AppProps {
+  title: string;
+  description?: string;
 }
 
 const AppComponent = ({
   Component,
   pageProps,
   router,
-}: AppProps): ReactElement => {
+  title,
+  description,
+}: IProps): ReactElement => {
   const queryClientRef = useRef(null);
 
   if (!queryClientRef.current) {
@@ -52,11 +60,10 @@ const AppComponent = ({
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
           rel="stylesheet"
         />
-        <script
+        <Script
           src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
-          crossOrigin="anonymous"
-          defer
-        ></script>
+          strategy="beforeInteractive"
+        />
       </Head>
       <QueryClientProvider client={queryClientRef.current}>
         <Hydrate state={pageProps.dehydratedState}>
@@ -73,7 +80,7 @@ const AppComponent = ({
               >
                 <Component {...pageProps} key={router.asPath} />
               </AnimatePresence>
-              <Webgl />
+              <World3d />
             </div>
           </Provider>
         </Hydrate>

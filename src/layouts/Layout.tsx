@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { appSelector, DOM_READY } from '~/state/app';
 import { EVENTS } from '~/foundation/constants/const';
 import { isMobile } from 'react-device-detect';
+import Seo from '~/components/Seo';
 
 let E;
 
@@ -11,7 +12,13 @@ if (process.browser) {
   E = require('~/foundation/utils/E').default;
 }
 
-const Layout = ({ children }) => {
+interface IProps {
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+}
+
+const Layout = ({ children, title, description }: IProps) => {
   const [isTouch, setIsTouch] = useState(undefined);
   const { domReady } = useSelector(appSelector);
   const dispatch = useDispatch();
@@ -45,6 +52,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
+      <Seo title={title} description={description} />
       <main id="xhr" data-smooth>
         {children}
       </main>

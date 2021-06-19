@@ -9,31 +9,9 @@ import Utils from '~/foundation/utils/Utils';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Layout from '~/layouts/Layout';
-import ProgressBar from '~/components/ProgressBar';
-import Seo from '~/foundation/components/Seo';
-import { ICustomField } from '~/domain/works';
-const Canvas = dynamic(
-  () => import('~/foundation/containers/home').then(modules => modules.Canvas),
-  {
-    ssr: false,
-  }
-);
+import ProgressBar from '~/components/ui/progress-bar';
+import { IData } from '~/domain/home.model';
 import tw, { css } from 'twin.macro';
-
-interface IData {
-  posts: {
-    nodes: {
-      slug: string;
-      title: string;
-      acf: ICustomField;
-    }[];
-    pageInfo: {
-      offsetPagination: {
-        total: number;
-      };
-    };
-  };
-}
 
 interface IProps {
   data: IData;
@@ -51,8 +29,7 @@ const Component: NextPage<IProps> = props => {
   const slidesRef = useRef(null);
 
   return (
-    <Layout>
-      <Seo title="NAGISA KUBO" />
+    <Layout title="NAGISA KUBO">
       <motion.div
         initial="pageInitial"
         animate="pageAnimate"
@@ -60,7 +37,9 @@ const Component: NextPage<IProps> = props => {
         variants={transition}
         tw="overflow-hidden"
       >
-        {data && <Canvas domRef={slidesRef} />}
+        {
+          //data && <Canvas domRef={slidesRef} />
+        }
 
         <div css={slides} ref={slidesRef}>
           {posts.map((item, i) => (

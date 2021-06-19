@@ -8,9 +8,8 @@ import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
 import Layout from '~/layouts/Layout';
-import Seo from '~/foundation/components/Seo';
-import Entry from '~/foundation/containers/works/Entry';
-import { useSkewScroll } from '~/hooks/useSkewScroll';
+import { Entry } from '~/components/pages/works';
+// import { useSkewScroll } from '~/hooks/useSkewScroll';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 // import { useRequestWorks } from '~/hooks/pages/works';
@@ -63,8 +62,7 @@ const Component: NextPage<IProps> = props => {
   }, [inView]);
 
   return (
-    <Layout>
-      <Seo title="WORKS" />
+    <Layout title="WORKS">
       <motion.div
         initial="pageInitial"
         animate="pageAnimate"

@@ -10,10 +10,8 @@ import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
 import Layout from '~/layouts/Layout';
-import ProgressBar from '~/components/ProgressBar';
-import Seo from '~/foundation/components/Seo';
-import CaptchaList from '~/foundation/containers/works/CaptchaList';
-import Picture from '~/foundation/containers/works/Picture';
+import { ProgressBar } from '~/components/ui';
+import { CaptchaList, Picture } from '~/components/pages/works';
 import { useSkewScroll } from '~/hooks/useSkewScroll';
 import tw, { css } from 'twin.macro';
 import format from 'date-fns/format';
@@ -44,8 +42,7 @@ const Component = props => {
   // const [,] = useWorksValue(variables);
 
   return (
-    <Layout>
-      <Seo title={title} />
+    <Layout title={title}>
       <motion.div
         initial="pageInitial"
         animate="pageAnimate"
