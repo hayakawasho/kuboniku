@@ -10,14 +10,14 @@ import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate } from 'react-query/hydration';
-import ViewportRef from '~/components/ViewportRef';
-import Loader from '~/components/Loader';
-import Header from '~/layouts/Header/header';
-import Nav from '~/layouts/navigation/nav';
+// import ViewportRef from '~/components/ViewportRef';
+// import Loader from '~/components/Loader';
+import Header from '~/layouts/header';
+import Navigation from '~/layouts/navigation';
 import store from '~/state/store';
 
 const World3d = dynamic(
-  () => import('~/components/ui/world-3d').then(modules => modules.Webgl),
+  () => import('~/context/world-3d').then(modules => modules.Webgl),
   {
     ssr: false,
   }
@@ -27,18 +27,19 @@ if (process.browser) {
   require('~/foundation/client-only');
 }
 
-interface IProps extends AppProps {
-  title: string;
-  description?: string;
-}
+const onExitComplete = () => {
+  if (typeof window !== 'undefined') {
+    window.scrollTo({
+      top: 0,
+    });
+  }
+};
 
 const AppComponent = ({
   Component,
   pageProps,
   router,
-  title,
-  description,
-}: IProps): ReactElement => {
+}: AppProps): ReactElement => {
   const queryClientRef = useRef(null);
 
   if (!queryClientRef.current) {
@@ -68,11 +69,15 @@ const AppComponent = ({
       <QueryClientProvider client={queryClientRef.current}>
         <Hydrate state={pageProps.dehydratedState}>
           <Provider store={store}>
-            <ViewportRef />
-            <Loader />
+            {
+              //<ViewportRef />
+            }
+            {
+              //<Loader />
+            }
             <div id="app">
               <Header />
-              <Nav />
+              <Navigation />
               <AnimatePresence
                 exitBeforeEnter
                 initial={false}
@@ -93,11 +98,3 @@ const AppComponent = ({
 };
 
 export default AppComponent;
-
-const onExitComplete = () => {
-  if (typeof window !== 'undefined') {
-    window.scrollTo({
-      top: 0,
-    });
-  }
-};

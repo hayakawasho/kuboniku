@@ -1,16 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-
 interface IProps {
-  scroll: boolean;
+  scroll?: boolean;
   href: string;
   children: React.ReactNode;
 }
 
-const Component = ({ children, href, scroll = false }: IProps) => {
+const Component = ({ children, href, scroll = false, ...props }: IProps) => {
   return (
     <Link scroll={scroll} href={href}>
-      {children}
+      <a {...props}>{children}</a>
     </Link>
   );
 };

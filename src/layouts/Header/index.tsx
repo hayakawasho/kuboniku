@@ -1,17 +1,15 @@
 import React from 'react';
-import Link from 'next/link';
-import ToggleMenu from './toggleMenu';
-import ToggleSNS from './toggleSNS';
+import { Link } from '~/components/ui';
+import ToggleMenu from './ToggleMenu';
+import ToggleSNS from './ToggleSNS';
 import tw, { css } from 'twin.macro';
 
 const Component: React.FC = React.memo(() => {
   return (
     <>
       <header>
-        <Link scroll={false} href="/">
-          <a css={logo}>
-            <i className="icon-logo" />
-          </a>
+        <Link href="/" css={logo}>
+          <i className="icon-logo" />
         </Link>
         <ToggleMenu />
         <ToggleSNS />

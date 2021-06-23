@@ -5,7 +5,9 @@ const Component: React.FC = ({ children }) => {
   return (
     <div className="l-progress">
       <div tw="relative w-full h-full">
-        <div css={progressCtrl}>{children}</div>
+        <div tw="text-center" css={progressCtrl}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -14,7 +16,6 @@ const Component: React.FC = ({ children }) => {
 export default Component;
 
 const progressCtrl = css`
-  ${tw`text-center`}
   font-family: var(--font-en);
   font-size: 1rem;
   line-height: 1;
