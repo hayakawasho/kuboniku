@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '~/foundation/animations';
-import Layout from '~/layouts/Layout';
+import { Layout } from '~/components/layouts';
 import tw, { css } from 'twin.macro';
 
 const Component = () => {

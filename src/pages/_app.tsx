@@ -8,12 +8,11 @@ import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 import { Hydrate } from 'react-query/hydration';
 // import ViewportRef from '~/components/ViewportRef';
 // import Loader from '~/components/Loader';
-import Header from '~/layouts/header';
-import Navigation from '~/layouts/navigation';
+import { Header, Navigation } from '~/components/layouts';
 import store from '~/state/store';
 
 const World3d = dynamic(

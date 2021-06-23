@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
 import Utils from '~/foundation/utils/Utils';
-import Layout from '~/layouts/Layout';
+import { Layout } from '~/components/layouts';
 import { Entry } from '~/components/pages/works';
 // import { useSkewScroll } from '~/hooks/useSkewScroll';
 import tw, { css } from 'twin.macro';

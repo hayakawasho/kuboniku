@@ -9,7 +9,7 @@ import { SET_UI_COLOR } from '~/state/ui';
 import { scrollBufferSelector } from '~/state/app';
 import { transition } from '~/foundation/animations';
 import { fetcher } from '~/foundation/fetcher';
-import Layout from '~/layouts/Layout';
+import { Layout } from '~/components/layouts';
 import { ProgressBar } from '~/components/ui';
 import { CaptchaList, Picture } from '~/components/pages/works';
 import { useSkewScroll } from '~/hooks/useSkewScroll';

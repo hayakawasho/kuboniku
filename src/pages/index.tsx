@@ -8,7 +8,7 @@ import { gql } from 'graphql-request';
 import Utils from '~/foundation/utils/Utils';
 import { fetcher } from '~/foundation/fetcher';
 import { transition } from '~/foundation/animations';
-import Layout from '~/layouts/Layout';
+import { Layout } from '~/components/layouts';
 import ProgressBar from '~/components/ui/progress-bar';
 import { IData } from '~/domain/home.model';
 import tw, { css } from 'twin.macro';
