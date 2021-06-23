@@ -7,7 +7,7 @@ interface IPicture {
   mobile?: string;
 }
 
-const Component: React.FC<IPicture> = ({ src, srcSet, mobile }) => {
+const Picture: React.FC<IPicture> = ({ src, srcSet, mobile }) => {
   return (
     <picture css={picture}>
       {mobile && <source media="(max-width: 639px)" srcSet={mobile} />}
@@ -16,7 +16,7 @@ const Component: React.FC<IPicture> = ({ src, srcSet, mobile }) => {
   );
 };
 
-export default Component;
+export { Picture };
 
 const picture = css`
   ${tw`absolute w-full h-full top-0 left-0 opacity-80`}

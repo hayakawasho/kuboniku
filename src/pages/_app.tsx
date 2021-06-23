@@ -22,9 +22,9 @@ const World3d = dynamic(
   }
 );
 
-if (process.browser) {
-  require('~/foundation/client-only');
-}
+// if (process.browser) {
+//   require('~/foundation/client-only');
+// }
 
 const onExitComplete = () => {
   if (typeof window !== 'undefined') {

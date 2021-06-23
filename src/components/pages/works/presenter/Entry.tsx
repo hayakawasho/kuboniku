@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { SET_UI_COLOR } from '~/state/ui';
 import tw, { css } from 'twin.macro';
-import { IWorks } from '~/domain/works';
+import { IWorks } from '~/domain/works.model';
 
 interface IProps {
   data: {
@@ -14,7 +14,7 @@ interface IProps {
   index: number | string;
 }
 
-const Component: React.FC<IProps> = React.memo(({ data, index }) => {
+const Entry: React.FC<IProps> = React.memo(({ data, index }) => {
   const dispatch = useDispatch();
   const [isHover, setHover] = useState(false);
 
@@ -57,7 +57,7 @@ const Component: React.FC<IProps> = React.memo(({ data, index }) => {
   );
 });
 
-export default Component;
+export { Entry };
 
 const heading = css`
   font-family: var(--font-roboto);

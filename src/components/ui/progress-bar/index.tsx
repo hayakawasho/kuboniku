@@ -1,12 +1,32 @@
 import React from 'react';
 import tw, { css } from 'twin.macro';
 
-const Component: React.FC = ({ children }) => {
+interface IProps {
+  bar: React.ReactNode;
+  index?: number[];
+  max?: number;
+}
+
+const Component = ({ bar, index, max }: IProps) => {
   return (
     <div className="l-progress">
       <div tw="relative w-full h-full">
-        <div tw="text-center" css={progressCtrl}>
-          {children}
+        <div tw="text-center" css={ctrl}>
+          {index && (
+            <ol>
+              {index.map((num, i) => (
+                <li key={i}>
+                  <span>{num}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+          {bar}
+          {max && (
+            <div className="u-abs">
+              <span>{max}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -15,7 +35,7 @@ const Component: React.FC = ({ children }) => {
 
 export default Component;
 
-const progressCtrl = css`
+const ctrl = css`
   font-family: var(--font-en);
   font-size: 1rem;
   line-height: 1;

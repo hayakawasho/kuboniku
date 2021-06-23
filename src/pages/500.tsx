@@ -1,17 +1,10 @@
 import React from 'react';
-import Link from 'next/link';
 import { Layout } from '~/components/layouts';
+import { ErrorScreen } from '~/components/ui';
 
-const Component: React.FC = () => (
+const Component = () => (
   <Layout title="500 - Server-side error occurred">
-    <div className="u-fit u-flex u-flex--c">
-      <div>
-        <h1>500 - Server-side error occurred</h1>
-        <Link scroll={false} href="/">
-          <a>BACK TO TOP</a>
-        </Link>
-      </div>
-    </div>
+    <ErrorScreen title="500 - Server-side error occurred" />
   </Layout>
 );
 

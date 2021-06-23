@@ -1,13 +1,13 @@
 import React from 'react';
 import tw, { css } from 'twin.macro';
-import { IWorks } from '~/domain/works';
+import { IWorks } from '~/domain/works.model';
 
 interface IProps {
   gallery: IWorks['post']['acf']['gallery'];
   color: string;
 }
 
-const Component: React.FC<IProps> = ({ gallery, color }) => {
+const CaptchaList: React.FC<IProps> = ({ gallery, color }) => {
   return (
     <ul css={captchaList}>
       {gallery.map((item, i) => {
@@ -18,7 +18,6 @@ const Component: React.FC<IProps> = ({ gallery, color }) => {
           '--aspect': `${aspect}%`,
           backgroundColor: `${color}`,
         };
-
         return (
           <li tw="relative" key={i}>
             <div className="c-aspect" style={css} />
@@ -36,7 +35,7 @@ const Component: React.FC<IProps> = ({ gallery, color }) => {
   );
 };
 
-export default Component;
+export { CaptchaList };
 
 const captchaList = css`
   padding: 0 var(--gap);

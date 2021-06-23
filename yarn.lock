@@ -816,6 +816,13 @@
   dependencies:
     selector-set "^1.1.5"
 
+"@unseenco/e@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@unseenco/e/-/e-1.9.1.tgz#08e7c1638fddcf0863e3d6b87975e481a27be5b5"
+  integrity sha512-4hyYWLAijhS76tsEFYJDKWLmHYPl7w9h6NDPdUq/m0jBzd4Wj2YT2CwgKiQRSLNrPwPrSn5tiji5yjpHjFRa2Q==
+  dependencies:
+    selector-set "^1.1.5"
+
 "@vercel/build-utils@2.10.2":
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/@vercel/build-utils/-/build-utils-2.10.2.tgz#b70c5f169d1d2aa695bb41ddfe7377c025e35ee5"

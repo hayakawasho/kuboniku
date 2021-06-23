@@ -1,17 +1,10 @@
 import React from 'react';
-import Link from 'next/link';
 import { Layout } from '~/components/layouts';
+import { ErrorScreen } from '~/components/ui';
 
-const Component: React.FC = () => (
-  <Layout title="404 NOT FOUND">
-    <div data-smooth-item className="u-fit u-flex u-flex--c">
-      <div>
-        <h1>NOT FOUND</h1>
-        <Link scroll={false} href="/">
-          <a>BACK TO TOP</a>
-        </Link>
-      </div>
-    </div>
+const Component = () => (
+  <Layout title="404 Not found">
+    <ErrorScreen title="NOT FOUND" />
   </Layout>
 );
 

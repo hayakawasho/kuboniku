@@ -1,2 +1,2 @@
-export { default as ProgresBar } from './progress-bar';
-export { default as Link } from './typography/link';
+export { default as ProgressBar } from './progress-bar';
+export { default as ErrorScreen } from './error-screen';

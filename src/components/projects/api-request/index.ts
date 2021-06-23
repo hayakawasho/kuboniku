@@ -1,29 +1,15 @@
-import { useQuery, useInfiniteQuery } from 'react-query';
-
-const QUERY_KEYS = ['works'] as const;
-
-type Unpacked<T> = T extends { [K in keyof T]: infer U } ? U : never;
-type TQueryKeys = Unpacked<typeof QUERY_KEYS>;
-type TFetchHandler<T, E> = {
-  ok: Promise<T>;
-  error: E;
-};
+import useSWR, { useSWRInfinite } from 'swr';
+import { fetcher } from '~/foundation/fetcher';
 
 const useRequest = <T, E extends Error = Error>(
-  queryKey: TQueryKeys,
-  { ok, error }: TFetchHandler<T, E>
+  queryKey: any,
+  options: any
 ) => {
-  const { data, status } = useQuery<T, E>(queryKey, async () => {
-    try {
-      return await ok;
-    } catch (e) {
-      throw new Error('useRequest: error catch');
-    }
-  });
+  const { data } = useSWR(queryKey, fetcher, options);
 
-  return [data, status];
+  return [data, status] as const;
 };
 
-const useRequestInfinite = <T>() => {};
+const useInfiniteRequest = <T>() => {};
 
-export { useRequest, useRequestInfinite };
+export { useRequest, useInfiniteRequest };
