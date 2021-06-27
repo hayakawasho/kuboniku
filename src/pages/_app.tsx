@@ -1,25 +1,24 @@
 import 'ress';
 import '~css/global.scss';
-import { ReactElement, useRef } from 'react';
+import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
-import { Provider } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
-import { QueryClient, QueryClientProvider } from 'react-query';
-// import { ReactQueryDevtools } from 'react-query/devtools';
-import { Hydrate } from 'react-query/hydration';
 // import ViewportRef from '~/components/ViewportRef';
 // import Loader from '~/components/Loader';
 import { Header, Navigation } from '~/components/layouts';
-import store from '~/state/store';
+import {
+  AppConfigProvider,
+  AppStateProvider,
+  UiColorProvider,
+  MenuProvider,
+} from '~/context';
 
 const World3d = dynamic(
   () => import('~/context/world-3d').then(modules => modules.Webgl),
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
 
 // if (process.browser) {
@@ -39,20 +38,6 @@ const AppComponent = ({
   pageProps,
   router,
 }: AppProps): ReactElement => {
-  const queryClientRef = useRef(null);
-
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: false,
-          refetchOnWindowFocus: false,
-          staleTime: 300000,
-        },
-      },
-    });
-  }
-
   return (
     <>
       <Head>
@@ -65,33 +50,26 @@ const AppComponent = ({
           strategy="beforeInteractive"
         />
       </Head>
-      <QueryClientProvider client={queryClientRef.current}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <Provider store={store}>
-            {
-              //<ViewportRef />
-            }
-            {
-              //<Loader />
-            }
-            <div id="app">
-              <Header />
-              <Navigation />
-              <AnimatePresence
-                exitBeforeEnter
-                initial={false}
-                onExitComplete={onExitComplete}
-              >
-                <Component {...pageProps} key={router.asPath} />
-              </AnimatePresence>
-              <World3d />
-            </div>
-          </Provider>
-        </Hydrate>
-        {
-          //<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        }
-      </QueryClientProvider>
+      <AppConfigProvider>
+        <AppStateProvider>
+          <UiColorProvider>
+            <MenuProvider>
+              <div id="app">
+                <Header />
+                <Navigation />
+                <AnimatePresence
+                  exitBeforeEnter
+                  initial={false}
+                  onExitComplete={onExitComplete}
+                >
+                  <Component {...pageProps} key={router.asPath} />
+                </AnimatePresence>
+                <World3d />
+              </div>
+            </MenuProvider>
+          </UiColorProvider>
+        </AppStateProvider>
+      </AppConfigProvider>
     </>
   );
 };

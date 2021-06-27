@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const Component = ({ title }) => {
+const ErrorScreen = ({ title }) => {
   return (
     <div tw="w-full h-full flex justify-center items-center">
       <div>
@@ -14,4 +14,4 @@ const Component = ({ title }) => {
   );
 };
 
-export default Component;
+export { ErrorScreen };
