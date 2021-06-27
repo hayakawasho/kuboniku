@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { SET_UI_COLOR } from '~/state/ui';
 import tw, { css } from 'twin.macro';
-import { IWorks } from '~/domain/works.model';
 
 interface IProps {
   data: {
     title: string;
     slug: string;
-    acf: IWorks['post']['acf'];
+    acf: any;
   };
   index: number | string;
 }
 
 const Entry: React.FC<IProps> = React.memo(({ data, index }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [isHover, setHover] = useState(false);
 
   const handlePointerDown = () => {
     setHover(true);
-    dispatch(SET_UI_COLOR(data.acf.themeColor));
+    // dispatch(SET_UI_COLOR(data.acf.themeColor));
   };
 
   const handlePointerUp = () => {

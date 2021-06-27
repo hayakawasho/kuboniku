@@ -4,13 +4,16 @@ import { motion } from 'framer-motion';
 import { transition } from '~/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { formatDate } from '~/foundation/utils/formatDate';
-import { Picture } from './presenter/Picture';
-import { CaptchaList } from './presenter/CaptchaList';
+import { Picture } from './presentations/Picture';
+import { CaptchaList } from './presentations/CaptchaList';
 import { ProgressBar } from '~/components/ui';
 
-const PageContainer = ({ data }) => {
-  const { title, acf, date, previous } = data.post;
+interface IProps {
+  data: any;
+  // path: string;
+}
 
+const PageContainer = props => {
   return (
     <motion.div
       initial="pageInitial"
@@ -23,20 +26,20 @@ const PageContainer = ({ data }) => {
           <div css={kv__cont} data-target="skew.item">
             <h1 css={heading}>
               <div tw="inline-block overflow-hidden">
-                <span tw="inline-block origin-right">{data.post.title}</span>
+                <span tw="inline-block origin-right">{props.title}</span>
               </div>
             </h1>
             <p css={sub} tw="overflow-hidden">
               <span tw="inline-block origin-right">
-                {data.post.acf.category.name}
+                {props.category}
                 <i className="icon-arrow-right" />
               </span>
             </p>
           </div>
           <Picture
-            src={data.post.acf.eyecatch.sourceUrl}
-            srcSet={data.post.acf.eyecatch.srcSet}
-            mobile={data.post.acf.eyecatchMobile.sourceUrl ?? null}
+            src={props.eyecatch.src}
+            srcSet={props.eyecatch.srcSet}
+            mobile={props.eyecatchMobile.src}
           />
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
@@ -50,23 +53,23 @@ const PageContainer = ({ data }) => {
             <div css={intro__info}>
               <dl css={dl}>
                 <dt css={dt}>Year :</dt>
-                <dd css={dd}>{formatDate(new Date(data.post.date))}</dd>
+                <dd css={dd}>{formatDate(new Date(props.date))}</dd>
               </dl>
               <dl css={dl}>
                 <dt css={dt}>Role :</dt>
                 <dd css={dd}>
                   <ul>
-                    {data.post.acf.role.map((item, i) => (
+                    {props.role.map((item, i) => (
                       <li key={i}>{item.name}</li>
                     ))}
                   </ul>
                 </dd>
               </dl>
             </div>
-            {data.post.acf.url && (
+            {props.url && (
               <a
                 css={intro__viewLink}
-                href={data.post.acf.url}
+                href={props.url}
                 target="_blank"
                 rel="noopener"
               >
@@ -75,25 +78,25 @@ const PageContainer = ({ data }) => {
               </a>
             )}
           </div>
-          {acf.gallery && (
-            <CaptchaList gallery={acf.gallery} color={acf.themeColor} />
+          {props.gallery && (
+            <CaptchaList gallery={props.gallery} color={props.themeColor} />
           )}
-          {previous && (
+          {props.previous && (
             <aside css={[kv, kvNext]} className="is-next" data-smooth-item>
-              <Link scroll={false} href={'/works/' + previous.slug}>
+              <Link scroll={false} href={'/works/' + props.previous.slug}>
                 <a tw="absolute w-full h-full z-10" />
               </Link>
               <div css={kv__cont}>
                 <h2 css={heading}>Next Project</h2>
                 <p css={sub}>
-                  {previous.title}
+                  {props.previous.title}
                   <i className="icon-arrow-right" />
                 </p>
               </div>
               <Picture
-                src={previous.acf.eyecatch.sourceUrl}
-                srcSet={previous.acf.eyecatch.srcSet}
-                mobile={previous.acf.eyecatchMobile.sourceUrl ?? null}
+                src={props.previous.eyecatch.src}
+                srcSet={props.previous.eyecatch.srcSet}
+                mobile={props.previous.eyecatchMobile.src}
               />
             </aside>
           )}

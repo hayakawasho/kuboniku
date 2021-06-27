@@ -4,22 +4,24 @@ import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 // import ViewportRef from '~/components/ViewportRef';
 // import Loader from '~/components/Loader';
-import { Header, Navigation } from '~/components/layouts';
+// import { Header, Navigation } from '~/components/layouts';
 import {
   AppConfigProvider,
   AppStateProvider,
   UiColorProvider,
   MenuProvider,
 } from '~/context';
+import { SWRConfig } from 'swr';
+import { fetcher } from '~/components/projects';
 
-const World3d = dynamic(
-  () => import('~/context/world-3d').then(modules => modules.Webgl),
-  { ssr: false }
-);
+// const World3d = dynamic(
+//   () => import('~/context/world-3d').then(modules => modules.Webgl),
+//   { ssr: false }
+// );
 
 // if (process.browser) {
 //   require('~/foundation/client-only');
@@ -51,24 +53,35 @@ const AppComponent = ({
         />
       </Head>
       <AppConfigProvider>
-        <AppStateProvider>
-          <UiColorProvider>
-            <MenuProvider>
-              <div id="app">
-                <Header />
-                <Navigation />
-                <AnimatePresence
-                  exitBeforeEnter
-                  initial={false}
-                  onExitComplete={onExitComplete}
-                >
-                  <Component {...pageProps} key={router.asPath} />
-                </AnimatePresence>
-                <World3d />
-              </div>
-            </MenuProvider>
-          </UiColorProvider>
-        </AppStateProvider>
+        <SWRConfig
+          value={{
+            refreshInterval: 3000,
+            fetcher,
+          }}
+        >
+          <AppStateProvider>
+            <UiColorProvider>
+              <MenuProvider>
+                <div id="app">
+                  {
+                    // <Header />
+                    // <Navigation />
+                  }
+                  <AnimatePresence
+                    exitBeforeEnter
+                    initial={false}
+                    onExitComplete={onExitComplete}
+                  >
+                    <Component {...pageProps} key={router.asPath} />
+                  </AnimatePresence>
+                  {
+                    //<World3d />
+                  }
+                </div>
+              </MenuProvider>
+            </UiColorProvider>
+          </AppStateProvider>
+        </SWRConfig>
       </AppConfigProvider>
     </>
   );

@@ -4,11 +4,15 @@ import { transition } from '~/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import Utils from '~/foundation/utils/Utils';
-import { Entry } from './presenter/Entry';
+import { Entry } from './presentations/Entry';
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];
 
 const PER_PAGE = 10;
+
+interface IProps {
+  data: any;
+}
 
 const PageContainer = ({
   totalPost,

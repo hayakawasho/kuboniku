@@ -7,7 +7,12 @@ import { ProgressBar } from '~/components/ui';
 import Utils from '~/foundation/utils/Utils';
 import { useRequest } from '~/components/projects';
 
-const PageContainer = props => {
+interface IProps {
+  data: any;
+  // path: string;
+}
+
+const PageContainer = (props: IProps) => {
   const [result] = useRequest<IData>(GET_POSTS, {
     initialData: props.initialData,
   });

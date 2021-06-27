@@ -1,10 +1,9 @@
-import React from 'react';
 import { Layout } from '~/components/layouts';
-import { ErrorScreen } from '~/components/ui';
+import { ErrorScreen } from '~/components/pages/error';
 
 const Component = () => (
-  <Layout title="500 - Server-side error occurred">
-    <ErrorScreen title="500 - Server-side error occurred" />
+  <Layout title="500 Internal Server Error">
+    <ErrorScreen title="SEEVER SIDE ERROR" />
   </Layout>
 );
 

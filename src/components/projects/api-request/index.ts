@@ -1,5 +1,10 @@
 import useSWR, { useSWRInfinite } from 'swr';
-import { fetcher } from '~/foundation/fetcher';
+import { request } from 'graphql-request';
+import { WP_API_END_POINT } from '~/foundation/constants/const';
+
+const fetcher = (query, variables?) => {
+  return request(WP_API_END_POINT, query, variables);
+};
 
 const useRequest = <T, E extends Error = Error>(
   queryKey: any,
@@ -12,4 +17,4 @@ const useRequest = <T, E extends Error = Error>(
 
 const useInfiniteRequest = <T>() => {};
 
-export { useRequest, useInfiniteRequest };
+export { useRequest, useInfiniteRequest, fetcher };

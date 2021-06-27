@@ -1,51 +1,38 @@
-import React, { useEffect, useRef } from 'react';
 import { NextPage } from 'next';
-import { useSWRInfinite } from 'swr';
-import { gql } from 'graphql-request';
-import { fetcher } from '~/foundation/fetcher';
 import { Layout } from '~/components/layouts';
-import { WorksContainer } from '~/components/pages/works';
+import { WorksIndexContainer } from '~/components/pages/works';
+import { fetcher } from '~/components/projects';
+import { GET_POSTS } from '~/domain/queries/works';
 
-const PER_PAGE = 10;
+interface IProps {
+  data: any;
+}
 
-const GET_INITIAL_POSTS = gql`
-  query {
-    posts(
-      where: { offsetPagination: { size: ${PER_PAGE} } }) {
-      nodes {
-        title
-        slug
-        acf {
-          eyecatch {
-            sourceUrl
-            srcSet
-          }
-          category {
-            name
-          }
-          themeColor
-        }
-      }
-      pageInfo {
-        offsetPagination {
-          total
-        }
-      }
-    }
-  }
-`;
+const Component: NextPage<IProps> = props => {
+  const initialData = props.data;
 
-const Component: NextPage = props => {
+  const data = {
+    slug: '',
+    title: '',
+    eyecatch: {},
+  };
+
   return (
     <Layout title="WORKS">
-      <WorksContainer data={{}} />
+      <WorksIndexContainer {...data} />
     </Layout>
   );
 };
 
 export default Component;
 
-Component.getInitialProps = async () => {};
+Component.getInitialProps = async () => {
+  const data = await fetcher(GET_POSTS);
+  return {
+    data,
+  };
+};
+
 /*
 interface IData {
   posts: {
@@ -103,53 +90,4 @@ Component.getInitialProps = async () => {
 
 };
 
-
-const getQuery = (offset: number) => {
-  const graphql = gql`
-    query {
-      posts(where: { offsetPagination: {offset: ${offset}, size: ${PER_PAGE}} }) {
-        nodes {
-          title
-          slug
-          acf {
-            url
-            themeColor
-            eyecatch {
-              sourceUrl
-              srcSet
-            }
-          }
-        }
-      }
-    }
-  `;
-  return graphql;
-};
-
-const GET_INITIAL_POSTS = gql`
-  query {
-    posts(
-      where: { offsetPagination: { size: ${PER_PAGE} } }) {
-      nodes {
-        title
-        slug
-        acf {
-          eyecatch {
-            sourceUrl
-            srcSet
-          }
-          category {
-            name
-          }
-          themeColor
-        }
-      }
-      pageInfo {
-        offsetPagination {
-          total
-        }
-      }
-    }
-  }
-`;
 */

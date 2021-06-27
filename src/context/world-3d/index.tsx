@@ -4,15 +4,16 @@ import tw, { css } from 'twin.macro';
 import * as THREE from 'three';
 const vertexShader = require('./shaders/vert.glsl').default;
 const fragmentShader = require('./shaders/frag.glsl').default;
-import { useSelector } from 'react-redux';
-import { uiSelector } from '~/state/ui';
+// import { useSelector } from 'react-redux';
+// import { uiSelector } from '~/state/ui';
 import { gsap } from 'gsap';
 
 const dpr = window.devicePixelRatio >= 2 ? 1.5 : window.devicePixelRatio;
 
 const Webgl: React.FC = () => {
-  const { uiColor } = useSelector(uiSelector);
+  // const { uiColor } = useSelector(uiSelector);
 
+  /*
   useEffect(() => {
     const { r, g, b } = new THREE.Color(uiColor);
     gsap.to(uniforms.uColor.value, 0.8, {
@@ -21,6 +22,7 @@ const Webgl: React.FC = () => {
       b,
     });
   }, [uiColor]);
+  */
 
   return (
     <div css={canvas}>

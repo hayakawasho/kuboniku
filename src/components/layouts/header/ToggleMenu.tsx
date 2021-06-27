@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { uiSelector, OPEN_MENU, CLOSE_MENU } from '~/state/ui';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
 
 const Component: React.FC = React.memo(() => {
+  /*
   const [initialState, setInitialState] = useState(false);
-  const { menuOpen, menuAnimating } = useSelector(uiSelector);
-  const dispatch = useDispatch();
+  // const { menuOpen, menuAnimating } = useSelector(uiSelector);
+  // const dispatch = useDispatch();
   const ref = useRef(null);
   const topRef = useRef(null);
   const bottomRef = useRef(null);
@@ -72,23 +73,24 @@ const Component: React.FC = React.memo(() => {
     !initialState && setInitialState(true);
     initialState && toggleMenu();
   }, [menuOpen]);
+  */
 
   return (
     <>
       <button
         type="button"
         css={menu}
-        className={`u-mobile ${menuOpen ? 'is-open' : ''} ${
-          menuAnimating ? 'is-animating' : ''
-        }`}
+        //className={`u-mobile ${menuOpen ? 'is-open' : ''} ${menuAnimating ? 'is-animating' : ''}`}
         aria-label="menu-toggle"
-        onClick={handleClick}
-        ref={ref}
+        //onClick={handleClick}
+        //ref={ref}
       >
+        {/*
         <div css={burger}>
           <div css={burger__line} ref={topRef} />
           <div css={burger__line} ref={bottomRef} />
         </div>
+        */}
       </button>
     </>
   );

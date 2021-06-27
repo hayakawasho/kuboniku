@@ -1,4 +1,3 @@
-import React from 'react';
 import { Layout } from '~/components/layouts';
 import { ProfileContainer } from '~/components/pages/profile';
 

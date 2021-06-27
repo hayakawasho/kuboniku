@@ -1,50 +1,25 @@
-import React, { useRef, useState } from 'react';
 import { NextPage } from 'next';
-import dynamic from 'next/dynamic';
-import useSWR from 'swr';
-import { gql } from 'graphql-request';
-import { fetcher } from '~/foundation/fetcher';
 import { Layout } from '~/components/layouts';
-import { IData } from '~/domain/home.model';
 import { HomeContainer } from '~/components/pages/home';
-interface IProps {
-  data: IData;
-}
+import { fetcher } from '~/components/projects';
+import { GET_POSTS } from '~/domain/queries/home';
 
-export const GET_POSTS = gql`
-  query {
-    posts(first: 4) {
-      nodes {
-        title
-        slug
-        acf {
-          eyecatch {
-            sourceUrl
-          }
-          eyecatchMobile {
-            sourceUrl
-          }
-          category {
-            name
-          }
-          themeColor
-        }
-      }
-      pageInfo {
-        offsetPagination {
-          total
-        }
-      }
-    }
-  }
-`;
+interface IProps {
+  data: any;
+}
 
 const Component: NextPage<IProps> = props => {
   const initialData = props.data;
 
+  const data = {
+    slug: '',
+    title: '',
+    eyecatch: {},
+  };
+
   return (
     <Layout title="NAGISA KUBO">
-      <HomeContainer initialData={initialData} />
+      <HomeContainer data={initialData} />
     </Layout>
   );
 };

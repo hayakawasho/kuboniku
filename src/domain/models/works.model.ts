@@ -1,7 +1,6 @@
 interface ISrcUrl {
   src: string;
 }
-
 interface ICustomField {
   category: {
     name: string;

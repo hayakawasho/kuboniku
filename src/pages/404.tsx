@@ -1,6 +1,5 @@
-import React from 'react';
 import { Layout } from '~/components/layouts';
-import { ErrorScreen } from '~/components/ui';
+import { ErrorScreen } from '~/components/pages/error';
 
 const Component = () => (
   <Layout title="404 Not found">

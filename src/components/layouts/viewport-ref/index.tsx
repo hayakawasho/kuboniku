@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
-import debounce from 'lodash.debounce';
+// import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
+// import debounce from 'lodash.debounce';
 import { EVENTS } from '~/foundation/constants/const';
-import { useDispatch } from 'react-redux';
-import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '~/state/app';
+// import { useDispatch } from 'react-redux';
+// import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '~/state/app';
 import tw, { css } from 'twin.macro';
 
 let E;
@@ -14,7 +14,7 @@ if (process.browser) {
 
 const Component = React.memo(() => {
   const docRef = useRef(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const updateVh = useCallback(height => {
     const vh = height * 0.01;
@@ -28,6 +28,7 @@ const Component = React.memo(() => {
   useEffect(() => {
     setSize(window.innerWidth, window.innerHeight);
 
+    /*
     const docObserve = new ResizeObserverHandler({
       el: docRef.current,
       callback: debounce((entry: ResizeObserverEntry) => {
@@ -40,11 +41,12 @@ const Component = React.memo(() => {
         updateVh(wh);
       }, 30),
     });
+    */
 
-    docObserve.init();
+    //docObserve.init();
 
     return () => {
-      docObserve.destroy();
+      //docObserve.destroy();
     };
   }, [updateVh]);
 
