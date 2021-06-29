@@ -4,28 +4,26 @@ import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
-// import ViewportRef from '~/components/ViewportRef';
-// import Loader from '~/components/Loader';
-// import { Header, Navigation } from '~/components/layouts';
+import { SWRConfig } from 'swr';
 import {
   AppConfigProvider,
   AppStateProvider,
   UiColorProvider,
   MenuProvider,
 } from '~/context';
-import { SWRConfig } from 'swr';
+// import ViewportRef from '~/components/ViewportRef';
+// import Loader from '~/components/Loader';
+import { Header, Navigation } from '~/components/layouts';
 import { fetcher } from '~/components/projects';
 
-// const World3d = dynamic(
-//   () => import('~/context/world-3d').then(modules => modules.Webgl),
-//   { ssr: false }
-// );
-
-// if (process.browser) {
-//   require('~/foundation/client-only');
-// }
+const World3d = dynamic(
+  () => import('~/context/world-3d').then(modules => modules.Webgl),
+  {
+    ssr: false,
+  }
+);
 
 const onExitComplete = () => {
   if (typeof window !== 'undefined') {
@@ -55,7 +53,7 @@ const AppComponent = ({
       <AppConfigProvider>
         <SWRConfig
           value={{
-            refreshInterval: 3000,
+            revalidateOnFocus: false,
             fetcher,
           }}
         >
@@ -63,10 +61,8 @@ const AppComponent = ({
             <UiColorProvider>
               <MenuProvider>
                 <div id="app">
-                  {
-                    // <Header />
-                    // <Navigation />
-                  }
+                  <Header />
+                  <Navigation />
                   <AnimatePresence
                     exitBeforeEnter
                     initial={false}
@@ -74,9 +70,7 @@ const AppComponent = ({
                   >
                     <Component {...pageProps} key={router.asPath} />
                   </AnimatePresence>
-                  {
-                    //<World3d />
-                  }
+                  <World3d />
                 </div>
               </MenuProvider>
             </UiColorProvider>

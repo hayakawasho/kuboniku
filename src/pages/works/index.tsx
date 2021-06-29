@@ -1,21 +1,43 @@
+import { useRef, useState } from 'react';
 import { NextPage } from 'next';
 import { Layout } from '~/components/layouts';
 import { WorksIndexContainer } from '~/components/pages/works';
-import { fetcher } from '~/components/projects';
+import { fetcher, useIntersectionObserver } from '~/components/projects';
 import { GET_POSTS } from '~/domain/queries/works';
 
+/*
 interface IProps {
   data: any;
+  total: number;
 }
+
+const PER_PAGE = 10;
 
 const Component: NextPage<IProps> = props => {
   const initialData = props.data;
+  const totalPost = props.total;
+  const totalPage = totalPost / PER_PAGE;
+  const loadCount = useRef(1);
+  // const [result, status, {  }] = useRequestWorks()
+  const chunkedPostData = data ? [].concat(...data) : [];
+
+  useEffect(() => {
+    if (inView && !isValidating && loadCount.current < totalPage) {
+      setSize(size + 1).then(() => loadCount.current++);
+    }
+  }, [inView]);
+
 
   const data = {
     slug: '',
     title: '',
     eyecatch: {},
   };
+
+  const [entryLoaderRef, setEntryLoaderRef] = useState()
+  const { isIntersecting } = useIntersectionObserver(entryLoaderRef, {
+    rootMargin: '200px 0px',
+  })
 
   return (
     <Layout title="WORKS">

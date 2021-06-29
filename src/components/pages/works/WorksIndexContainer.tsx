@@ -14,13 +14,17 @@ interface IProps {
   data: any;
 }
 
-const PageContainer = ({
+/*
+{
   totalPost,
   chunkedPostData,
   entryLoaderRef,
   isValidating,
   error,
-}) => {
+}
+*/
+
+const PageContainer = props => {
   return (
     <motion.div
       initial="pageInitial"
@@ -31,14 +35,14 @@ const PageContainer = ({
     >
       <h1 css={heading}>
         <div data-smooth-item>
-          Works<sup css={heading__total}>{totalPost}</sup>
+          Works<sup css={heading__total}>{props.totalPost}</sup>
         </div>
       </h1>
-      {chunkedPostData.map((postData, i) => (
+      {props.result.map((data, i) => (
         <div className="o-grid" css={entryList} key={i}>
           {postData.posts.nodes.map((item, j) => {
             const projectIndex = Utils.zeroPadding(
-              totalPost - (j + (i + i * (PER_PAGE - 1))),
+              props.totalPost - (j + (i + i * (PER_PAGE - 1))),
               2
             );
             return (
@@ -49,7 +53,7 @@ const PageContainer = ({
           })}
         </div>
       ))}
-      <div ref={entryLoaderRef} css={entryLoader}>
+      <div ref={props.entryLoaderRef} css={entryLoader}>
         {isValidating && (
           <div css={entryLoader__bounce}>
             <div />
@@ -57,7 +61,7 @@ const PageContainer = ({
             <div />
           </div>
         )}
-        {error && <div css={entryLoader__error}>Try to reload.</div>}
+        {props.error && <div css={entryLoader__error}>Try to reload.</div>}
       </div>
     </motion.div>
   );
