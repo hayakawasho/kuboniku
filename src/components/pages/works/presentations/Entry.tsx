@@ -1,58 +1,47 @@
-import React, { useState } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import tw, { css } from 'twin.macro';
+import { useEvent, useToggle } from '@/components/projects';
 
 interface IProps {
-  data: {
-    title: string;
-    slug: string;
-    acf: any;
-  };
-  index: number | string;
+  href: string;
+  eyecatch: {
+    src: string;
+    srcSet?: string;
+  }
+  index: string;
+  title: string;
 }
 
-const Entry: React.FC<IProps> = React.memo(({ data, index }) => {
-  // const dispatch = useDispatch();
-  const [isHover, setHover] = useState(false);
+const Entry = (props: IProps) => {
+  const ref = useRef(null);
+  const [isHovering, toggle] = useToggle(false, true);
 
-  const handlePointerDown = () => {
-    setHover(true);
-    // dispatch(SET_UI_COLOR(data.acf.themeColor));
-  };
-
-  const handlePointerUp = () => {
-    setHover(false);
-  };
+  useEvent(ref, 'mousemove', toggle)
+  useEvent(ref, 'mouseleave', toggle)
+  useEvent(ref, 'touchstart', toggle)
+  useEvent(ref, 'touchend', toggle)
 
   return (
-    <>
-      <Link scroll={false} href={'/works/' + data.slug}>
-        <a
-          css={entry}
-          className={`${isHover ? 'is-hover' : ''}`}
-          onMouseEnter={handlePointerDown}
-          onTouchStart={handlePointerDown}
-          onMouseLeave={handlePointerUp}
-          onTouchEnd={handlePointerUp}
-        >
-          <div className="c-aspect" />
-          <div css={entry__g}>
-            <div css={eyecatch}>
-              <img src={data.acf.eyecatch.sourceUrl} alt="" loading="lazy" />
-            </div>
-            <div css={entry__hgroup}>
-              <p css={num}>
-                {index}
-                <span>Project</span>
-              </p>
-              <h2 css={heading}>{data.title}</h2>
-            </div>
+    <Link scroll={false} href={props.href}>
+      <a ref={ref} css={entry} className={`${isHovering ? 'is-hovering' : ''}`}>
+        <div className="c-aspect" />
+        <div css={entry__g}>
+          <div css={eyecatch}>
+            <img src={props.eyecatch.src} srcSet={props.eyecatch.srcSet} alt="" decoding="async" loading="lazy" />
           </div>
-        </a>
-      </Link>
-    </>
+          <div css={entry__hgroup}>
+            <p css={num}>
+              {props.index}
+              <span>Project</span>
+            </p>
+            <h2 css={heading}>{props.title}</h2>
+          </div>
+        </div>
+      </a>
+    </Link>
   );
-});
+};
 
 export { Entry };
 
@@ -135,7 +124,7 @@ const entry = css`
     --aspect: calc(960 / 1536 * 100%);
   }
 
-  &.is-hover {
+  &.is-hovering {
     img {
       filter: grayscale(0);
     }

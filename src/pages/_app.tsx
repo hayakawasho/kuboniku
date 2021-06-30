@@ -7,17 +7,17 @@ import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
-import { AppConfigProvider } from '~/context/app-config';
-import { AppStateProvider } from '~/context/app-state';
-import { UiColorProvider } from '~/context/ui-color';
-import { MenuProvider } from '~/context/menu';
-// import ViewportRef from '~/components/ViewportRef';
-// import Loader from '~/components/Loader';
-// import { Header, Navigation } from '~/components/layouts';
-import { fetcher } from '~/components/projects';
+import { AppConfigProvider } from '@/context/app-config';
+import { AppStateProvider } from '@/context/app-state';
+import { UiColorProvider } from '@/context/ui-color';
+import { MenuProvider } from '@/context/menu';
+// import ViewportRef from '@/components/ViewportRef';
+// import Loader from '@/components/Loader';
+import { Header, Navigation } from '@/components/layouts';
+import { fetcher } from '@/components/projects';
 
 const World3d = dynamic(
-  () => import('~/context/world-3d').then(modules => modules.Webgl),
+  () => import('@/context/world-3d').then(modules => modules.Webgl),
   {
     ssr: false,
   }
@@ -60,7 +60,7 @@ const AppComponent = ({
               <MenuProvider>
                 <div id="app">
                   {
-                  // <Header />
+                    <Header />
                   // <Navigation />
                   }
                   <AnimatePresence

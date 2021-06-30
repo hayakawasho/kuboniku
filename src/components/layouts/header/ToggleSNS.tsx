@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
+import { useToggle } from '@/components/projects'
 
-const Component: React.FC = () => {
-  const [isOpen, setOpen] = useState(false);
+const ToggleSNS = () => {
+  const [isOpen, toggle] = useToggle(false, true);
   const ref = [useRef(null), useRef(null)];
   const btnRef = useRef(null);
   const tl = useMemo(() => gsap.timeline({ paused: true }), []);
@@ -39,42 +40,32 @@ const Component: React.FC = () => {
   }, [isOpen]);
 
   return (
-    <>
-      <div css={sns}>
-        <ul css={snsList}>
-          <li>
-            <a
-              href="https://www.facebook.com/k.b.nagisa"
-              target="_blank"
-              ref={ref[0]}
-            >
-              Fb
-            </a>
-          </li>
-          <li>
-            <a href="#" target="_blank" ref={ref[1]}>
-              Tw
-            </a>
-          </li>
-        </ul>
-        <button
-          type="button"
-          css={plus}
-          className={`${isOpen ? 'is-open' : ''}`}
-          onClick={() => setOpen(!isOpen)}
-          ref={btnRef}
-        >
-          <div className="u-in">
-            <div css={plus__x} />
-            <div css={plus__y} />
-          </div>
-        </button>
-      </div>
-    </>
+    <div css={sns}>
+      <ul css={snsList}>
+        <li>
+          <a href="https://www.facebook.com/k.b.nagisa" target="_blank" ref={ref[0]}>Fb</a>
+        </li>
+        <li>
+          <a href="#" target="_blank" ref={ref[1]}>Tw</a>
+        </li>
+      </ul>
+      <button
+        type="button"
+        css={plus}
+        className={`${isOpen ? 'is-open' : ''}`}
+        onClick={toggle}
+        ref={btnRef}
+      >
+        <div className="u-in">
+          <div css={plus__x} />
+          <div css={plus__y} />
+        </div>
+      </button>
+    </div>
   );
 };
 
-export default Component;
+export { ToggleSNS };
 
 const drawPlus = keyframes`
   0% {

@@ -1,9 +1,33 @@
 import { useRef, useState } from 'react';
 import { NextPage } from 'next';
-import { Layout } from '~/components/layouts';
-import { WorksIndexContainer } from '~/components/pages/works';
-import { fetcher, useIntersectionObserver } from '~/components/projects';
-import { GET_POSTS } from '~/domain/queries/works';
+import { Layout } from '@/components/layouts';
+import { fetcher, useIntersectionObserver } from '@/components/projects';
+import { GET_POSTS } from '@/domain/works/worksIndex.gql';
+import { WorksIndexContainer } from '@/components/pages/works';
+
+interface IProps {
+  data: any;
+  total: number;
+}
+
+const Component: NextPage<IProps> = props => {
+  return (
+    <Layout title="WORKS">
+      {//<WorksIndexContainer {...data} />
+      }
+    </Layout>
+  );
+};
+
+export default Component;
+
+Component.getInitialProps = async () => {
+  const data = await fetcher(GET_POSTS);
+  return {
+    data,
+    total: 0
+  };
+};
 
 /*
 interface IProps {

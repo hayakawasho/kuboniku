@@ -1,19 +1,47 @@
-import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { transition } from '~/foundation/animations';
+import { motion, useViewportScroll, useTransform } from 'framer-motion';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { formatDate } from '~/foundation/utils/formatDate';
+import { formatDate } from '@/foundation/utils';
 import { Picture } from './presentations/Picture';
-import { CaptchaList } from './presentations/CaptchaList';
-import { ProgressBar } from '~/components/ui';
+import { ProgressBar } from '@/components/ui';
 
 interface IProps {
-  data: any;
-  // path: string;
+  title: string;
+  category: string;
+  eyecatch: {
+    src: string;
+    srcSet: string;
+    mobile?: string;
+  }
+  date: Date;
+  role: string[];
+  viewWebsite?: string;
+  gallery?: {
+    width: number;
+    height: number;
+    src: string;
+    srcSet: string;
+  }[];
+  prev: {
+    slug: string;
+    title: string;
+    eyecatch: {
+      src: string;
+      srcSet: string;
+      mobile?: string;
+    }
+  };
 }
 
-const PageContainer = props => {
+const PageContainer = (props: IProps) => {
+  const { scrollYProgress } = useViewportScroll();
+  // const scrollBuffer = useSelector(scrollBufferSelector);
+  const scrollBuffer = 0;
+  const inputRange = [0, 1];
+  const outputRange = [scrollBuffer, 1];
+  const progressValue = useTransform(scrollYProgress, inputRange, outputRange);
+
   return (
     <motion.div
       initial="pageInitial"
@@ -21,8 +49,8 @@ const PageContainer = props => {
       exit="pageExit"
       variants={transition}
     >
-      <div data-controller="skew">
-        <div css={kv} data-smooth-item>
+      <div>
+        <div css={kv}>
           <div css={kv__cont} data-target="skew.item">
             <h1 css={heading}>
               <div tw="inline-block overflow-hidden">
@@ -39,7 +67,7 @@ const PageContainer = props => {
           <Picture
             src={props.eyecatch.src}
             srcSet={props.eyecatch.srcSet}
-            mobile={props.eyecatchMobile.src}
+            mobile={props.eyecatch.mobile}
           />
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
@@ -49,27 +77,27 @@ const PageContainer = props => {
           </div>
         </div>
         <div css={worksContent} data-target="skew.item">
-          <div css={intro} data-smooth-item>
+          <div css={intro}>
             <div css={intro__info}>
               <dl css={dl}>
                 <dt css={dt}>Year :</dt>
-                <dd css={dd}>{formatDate(new Date(props.date))}</dd>
+                <dd css={dd}>{formatDate(props.date)}</dd>
               </dl>
               <dl css={dl}>
                 <dt css={dt}>Role :</dt>
                 <dd css={dd}>
                   <ul>
                     {props.role.map((item, i) => (
-                      <li key={i}>{item.name}</li>
+                      <li key={i}>{item}</li>
                     ))}
                   </ul>
                 </dd>
               </dl>
             </div>
-            {props.url && (
+            {props.viewWebsite && (
               <a
                 css={intro__viewLink}
-                href={props.url}
+                href={props.viewWebsite}
                 target="_blank"
                 rel="noopener"
               >
@@ -79,24 +107,44 @@ const PageContainer = props => {
             )}
           </div>
           {props.gallery && (
-            <CaptchaList gallery={props.gallery} color={props.themeColor} />
+            <ul css={captchaList}>
+              {props.gallery.map((item, i) => {
+                const aspect = Math.round((item.height / item.width) * 100);
+                const css = {
+                  '--aspect': `${aspect}%`,
+                  backgroundColor: `transparent`,
+                };
+                return (
+                  <li tw="relative" key={i}>
+                    <div className="c-aspect" style={css} />
+                    <img
+                      src={item.src}
+                      srcSet={item.srcSet}
+                      alt=""
+                      loading="lazy"
+                      tw="absolute w-full h-full top-0 left-0"
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           )}
-          {props.previous && (
-            <aside css={[kv, kvNext]} className="is-next" data-smooth-item>
-              <Link scroll={false} href={'/works/' + props.previous.slug}>
+          {props.prev && (
+            <aside css={[kv, kvNext]} className="is-next">
+              <Link scroll={false} href={'/works/' + props.prev.slug}>
                 <a tw="absolute w-full h-full z-10" />
               </Link>
               <div css={kv__cont}>
                 <h2 css={heading}>Next Project</h2>
                 <p css={sub}>
-                  {props.previous.title}
+                  {props.prev.title}
                   <i className="icon-arrow-right" />
                 </p>
               </div>
               <Picture
-                src={props.previous.eyecatch.src}
-                srcSet={props.previous.eyecatch.srcSet}
-                mobile={props.previous.eyecatchMobile.src}
+                src={props.prev.eyecatch.src}
+                srcSet={props.prev.eyecatch.srcSet}
+                mobile={props.prev.eyecatch.mobile}
               />
             </aside>
           )}
@@ -107,7 +155,7 @@ const PageContainer = props => {
           <div className="c-progressBar">
             <motion.span
               className="c-progressBar__l"
-              style={{ scaleY: progressVal }}
+              style={{ scaleY: progressValue }}
             />
           </div>
         }
@@ -300,5 +348,28 @@ const intro__viewLink__hr = css`
 
   @media (min-width: 640px) {
     border-top-width: 2px;
+  }
+`;
+
+const captchaList = css`
+  padding: 0 var(--gap);
+  margin-bottom: 10.5rem;
+
+  @media (min-width: 640px) {
+    width: calc(var(--grid) * 10);
+    padding: 0;
+    margin: 0 auto 12rem;
+  }
+
+  > li {
+    margin-bottom: 2rem;
+
+    @media (min-width: 640px) {
+      margin-bottom: 6rem;
+    }
+
+    .c-aspect {
+      opacity: 0.2;
+    }
   }
 `;

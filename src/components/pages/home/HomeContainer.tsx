@@ -1,18 +1,27 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { transition } from '~/foundation/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { ProgressBar } from '~/components/ui';
-import Utils from '~/foundation/utils/Utils';
-import { useRequest } from '~/components/projects';
+import { ProgressBar } from '@/components/ui';
+import Utils from '@/foundation/utils/Utils';
 
 interface IProps {
-  data: any;
-  // path: string;
+  posts: {
+    title: string;
+    slug: string;
+    category: string;
+    eyecatch: {
+      src: string;
+      srcSet: string;
+      mobile: string;
+    }
+  }[];
+  totalPosts: number;
 }
 
 const PageContainer = (props: IProps) => {
+  /*
   const [result] = useRequest<IData>(GET_POSTS, {
     initialData: props.initialData,
   });
@@ -24,6 +33,7 @@ const PageContainer = (props: IProps) => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(total - now);
   const progressRef = useRef(null);
   const slidesRef = useRef(null);
+  */
 
   return (
     <motion.div
@@ -34,8 +44,8 @@ const PageContainer = (props: IProps) => {
       tw="overflow-hidden"
     >
       {
+        /*
         //data && <Canvas domRef={slidesRef} />
-      }
 
       <div css={slides} ref={slidesRef}>
         {posts.map((item, i) => (
@@ -90,6 +100,7 @@ const PageContainer = (props: IProps) => {
           max={Number(Utils.zeroPadding(max, 2))}
         />
       </div>
+        */  }
     </motion.div>
   );
 };

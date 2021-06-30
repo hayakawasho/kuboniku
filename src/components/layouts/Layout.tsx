@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useRouter } from 'next/router';
-import { isMobile } from 'react-device-detect';
-import Seo from '~/components/Seo';
+import { Seo } from '@/components/Seo';
+// import { useRouter } from 'next/router';
 
 interface IProps {
   title: string;

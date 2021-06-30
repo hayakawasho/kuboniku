@@ -1,39 +1,59 @@
-import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { Layout } from '~/components/layouts';
-import { WorksDetailContainer } from '~/components/pages/works';
-import { fetcher } from '~/components/projects';
-import { GET_POST } from '~/domain/queries/worksDetail';
+import { Layout } from '@/components/layouts';
+import { fetcher } from '@/components/projects';
+import { IRawWorksId } from '@/domain/works/worksEntity';
+import { GET_POST } from '@/domain/works/worksDetail.gql';
+import { WorksDetailContainer } from '@/components/pages/works';
+import { useRequest } from '@/components/projects';
 
-interface IProps {
-  data: any;
-  // path: string;
-}
+// interface IProps {
+//   data: IRawWorksId;
+//   url: string;
+// }
 
-const Component: NextPage<IProps> = props => {
+const Component: NextPage = (props: any) => {
   const initialData = props.data;
+  const variables = {
+    slug: props.path
+  };
+  const [result] = useRequest<IRawWorksId>(GET_POST, {
+    deps: [variables],
+    initialData
+  });
 
-  const data = {
-    title: '',
-    category: '',
-    eyecatch: {},
-    role: [],
-    url: '',
-    gallery: [],
+  const newProps = {
+    title: result.post.title,
+    category: result.post.acf.category.name,
+    eyecatch: {
+      src: result.post.acf.eyecatch.sourceUrl,
+      srcSet: result.post.acf.eyecatch.srcSet,
+      mobile: result.post.acf.eyecatchMobile?.sourceUrl
+    },
+    date: new Date(result.post.date),
+    role: result.post.acf.role.map(i => i.name),
+    viewWebsite: result.post.acf.url,
+    gallery: result.post.acf.gallery?.map(i => {
+      return {
+        width: i.mediaDetails.width,
+        height: i.mediaDetails.height,
+        src: i.sourceUrl,
+        srcSet: i.srcSet
+      }
+    }),
     prev: {
-      slug: '',
-      title: '',
+      slug: result.post.previous.slug,
+      title: result.post.previous.title,
       eyecatch: {
-        src: '',
-        srcSet: '',
-        mobile: '',
+        src: result.post.previous.acf.eyecatch.sourceUrl,
+        srcSet: result.post.previous.acf.eyecatch.srcSet,
+        mobile: result.post.previous.acf.eyecatchMobile?.sourceUrl,
       },
     },
   };
 
   return (
     <Layout title="WORKS">
-      <WorksDetailContainer {...data} />
+      <WorksDetailContainer {...newProps} />
     </Layout>
   );
 };
@@ -41,51 +61,13 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async ({ query }) => {
-  const variables = { slug: query?.slug ?? '' };
-  const data = await fetcher(GET_POST, variables);
+  const variables = {
+    slug: query?.slug ?? ''
+  };
+  const data = await fetcher<IRawWorksId>(GET_POST, variables);
 
   return {
     data,
     path: query?.slug,
   };
 };
-
-// export async function getServerSideProps({ params }) {
-//   const variables = { slug: params?.slug ?? '' };
-//   const data = await fetcher(GET_POST, variables);
-//
-//   return {
-//     props: {
-//       data,
-//       path: params?.slug,
-//     },
-//   };
-// }
-
-/*
-interface IProps {
-  data: IWorks;
-  path: string;
-}
-
-const Component = props => {
-  const initialData = props.data;
-  const variables = { slug: props.path };
-  const { data } = useSWR<IWorks>([GET_POST, variables], fetcher, {
-    initialData,
-  });
-  const { title, acf, date, previous } = data.post;
-  const dispatch = useDispatch();
-  const scrollBuffer = useSelector(scrollBufferSelector);
-  const { scrollYProgress } = useViewportScroll();
-  const inputRange = [0, 1];
-  const outputRange = [scrollBuffer, 1];
-  const progressVal = useTransform(scrollYProgress, inputRange, outputRange);
-  const { val, onScroll } = useSkewScroll(scrollYProgress.get());
-
-  // const [,] = useWorksValue(variables);
-};
-
-export default Component;
-
-*/

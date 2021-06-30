@@ -1,7 +1,4 @@
-interface ISrcUrl {
-  src: string;
-}
-interface ICustomField {
+interface IRawWorksAcf {
   category: {
     name: string;
   };
@@ -10,7 +7,7 @@ interface ICustomField {
   }[];
   themeColor: string;
   url: string;
-  gallery: {
+  gallery?: {
     sourceUrl: string;
     srcSet: string;
     mediaDetails: {
@@ -22,28 +19,39 @@ interface ICustomField {
     sourceUrl: string;
     srcSet: string;
   };
-  eyecatchMobile: {
+  eyecatchMobile?: {
     sourceUrl: string;
     srcSet: string;
   };
 }
 
-interface IWorks {
+interface IRawWorksId {
   post: {
     date: string;
     title: string;
-    acf: ICustomField;
-    previous: {
+    slug: string;
+    acf: IRawWorksAcf;
+    previous?: {
       title: string;
       slug: string;
-      acf: ICustomField;
-    };
-  };
-  pageInfo: {
-    offsetPagination: {
-      total: number;
+      acf: IRawWorksAcf;
     };
   };
 }
 
-export type { IWorks, ICustomField };
+interface IRawWorksList {
+  posts: {
+    nodes: {
+      slug: string;
+      title: string;
+      acf: IRawWorksAcf;
+    }[];
+    pageInfo: {
+      offsetPagination: {
+        total: number;
+      };
+    };
+  };
+};
+
+export type { IRawWorksList, IRawWorksId };

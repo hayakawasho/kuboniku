@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { transition } from '~/foundation/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import Utils from '~/foundation/utils/Utils';
+import Utils from '@/foundation/utils/Utils';
 import { Entry } from './presentations/Entry';
 
 type TEntryData = React.ComponentProps<typeof Entry>['data'];

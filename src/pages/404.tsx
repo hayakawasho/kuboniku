@@ -1,5 +1,5 @@
-import { Layout } from '~/components/layouts';
-import { ErrorScreen } from '~/components/pages/error';
+import { Layout } from '@/components/layouts';
+import { ErrorScreen } from '@/components/pages/error';
 
 const Component = () => (
   <Layout title="404 Not found">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { transition } from '~/foundation/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 
 const PageContainer = () => {

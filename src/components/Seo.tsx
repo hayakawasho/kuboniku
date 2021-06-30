@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Head from 'next/head';
 
 interface IProps {
@@ -31,4 +31,4 @@ const Seo = ({ description, title }: IProps) => {
   );
 };
 
-export default Seo;
+export { Seo };

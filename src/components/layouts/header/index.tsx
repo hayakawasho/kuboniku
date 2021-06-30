@@ -1,23 +1,24 @@
-import React from 'react';
-import { Link } from '~/components/ui';
-import ToggleMenu from './ToggleMenu';
-import ToggleSNS from './ToggleSNS';
+import Link from 'next/link';
+import { ToggleMenu } from './ToggleMenu';
+import { ToggleSNS } from './ToggleSNS';
 import tw, { css } from 'twin.macro';
 
-const Component: React.FC = React.memo(() => {
+const Component = () => {
   return (
     <>
       <header>
-        <Link href="/" css={logo}>
-          <i className="icon-logo" />
+        <Link href="/">
+          <a css={logo}>
+            <i className="icon-logo" />
+          </a>
         </Link>
         <ToggleMenu />
         <ToggleSNS />
-        <small css={copy}>&copy; KuboNiku.com</small>
+        <small css={copyright}>&copy; KuboNiku.com</small>
       </header>
     </>
   );
-});
+};
 
 export default Component;
 
@@ -37,7 +38,7 @@ const logo = css`
   }
 `;
 
-const copy = css`
+const copyright = css`
   ${tw`fixed inline-block pointer-events-none`}
   right: 3rem;
   bottom: 2.5rem;

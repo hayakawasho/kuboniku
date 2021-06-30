@@ -32,34 +32,6 @@ const GET_INITIAL_POSTS = gql`
   }
 `;
 
-const getQuery = (offset: number) => {
-  const graphql = gql`
-    query {
-      posts(
-        where: {
-          offsetPagination: {offset: ${offset},
-          size: ${PER_PAGE}}
-        }
-      ) {
-        nodes {
-          title
-          slug
-          acf {
-            url
-            themeColor
-            eyecatch {
-              sourceUrl
-              srcSet
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  return graphql;
-};
-
 const GET_POSTS = gql`
   query {
     posts(first: 4) {
@@ -88,4 +60,32 @@ const GET_POSTS = gql`
   }
 `;
 
-export { GET_INITIAL_POSTS, GET_POSTS, getQuery };
+const GET_OFFSET_POSTS = (offset: number) => {
+  const graphql = gql`
+    query {
+      posts(
+        where: {
+          offsetPagination: {offset: ${offset},
+          size: ${PER_PAGE}}
+        }
+      ) {
+        nodes {
+          title
+          slug
+          acf {
+            url
+            themeColor
+            eyecatch {
+              sourceUrl
+              srcSet
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  return graphql;
+};
+
+export { GET_INITIAL_POSTS, GET_POSTS, GET_OFFSET_POSTS };
