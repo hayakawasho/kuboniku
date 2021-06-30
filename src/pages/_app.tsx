@@ -7,15 +7,13 @@ import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
-import {
-  AppConfigProvider,
-  AppStateProvider,
-  UiColorProvider,
-  MenuProvider,
-} from '~/context';
+import { AppConfigProvider } from '~/context/app-config';
+import { AppStateProvider } from '~/context/app-state';
+import { UiColorProvider } from '~/context/ui-color';
+import { MenuProvider } from '~/context/menu';
 // import ViewportRef from '~/components/ViewportRef';
 // import Loader from '~/components/Loader';
-import { Header, Navigation } from '~/components/layouts';
+// import { Header, Navigation } from '~/components/layouts';
 import { fetcher } from '~/components/projects';
 
 const World3d = dynamic(
@@ -40,14 +38,14 @@ const AppComponent = ({
 }: AppProps): ReactElement => {
   return (
     <>
+      <Script
+        src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
+        strategy="beforeInteractive"
+      />
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap"
           rel="stylesheet"
-        />
-        <Script
-          src="https://polyfill.io/v3/polyfill.min.js?features=String.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
-          strategy="beforeInteractive"
         />
       </Head>
       <AppConfigProvider>
@@ -61,8 +59,10 @@ const AppComponent = ({
             <UiColorProvider>
               <MenuProvider>
                 <div id="app">
-                  <Header />
-                  <Navigation />
+                  {
+                  // <Header />
+                  // <Navigation />
+                  }
                   <AnimatePresence
                     exitBeforeEnter
                     initial={false}

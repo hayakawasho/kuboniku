@@ -1,5 +1,22 @@
-import { DependencyList, EffectCallback, useRef } from 'react';
-import { useEffectIf } from './useEffectIf';
+import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
+
+const useEffectIf = (
+  effect: EffectCallback,
+  deps: DependencyList,
+  condition: boolean | (() => boolean)
+) => {
+  if (typeof condition === 'function') {
+    condition = condition();
+  }
+
+  useEffect(() => {
+    if (!condition) {
+      return;
+    }
+
+    return effect();
+  }, [...deps, condition]);
+};
 
 const useEffectIfOnce = (
   effect: EffectCallback,
@@ -22,4 +39,5 @@ const useEffectIfOnce = (
   ); //一度実行されるとこの条件式は二度とtrueになることはない
 };
 
-export { useEffectIfOnce };
+
+export { useEffectIf, useEffectIfOnce };

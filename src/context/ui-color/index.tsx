@@ -3,9 +3,8 @@ import constate from 'constate';
 
 const useUiColor = () => {
   const [uiColor, setUiColor] = useState('#1793a9');
-  const onChangeColor = useCallback(color => setUiColor(color), []);
 
-  return { uiColor, onChangeColor };
+  return { uiColor };
 };
 
 export const [UiColorProvider, useUiColorContext] = constate(useUiColor);

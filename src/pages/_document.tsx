@@ -6,6 +6,7 @@ import {
 } from 'next/dist/next-server/lib/utils';
 import basicAuthMiddleware from 'nextjs-basic-auth-middleware';
 import { extractCritical } from '@emotion/server';
+
 class MyDocument extends Document {
   static async getInitialProps(
     ctx: NextPageContext & { renderPage: RenderPage }

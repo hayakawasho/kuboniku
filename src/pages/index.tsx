@@ -10,6 +10,7 @@ interface IProps {
 
 const Component: NextPage<IProps> = props => {
   const initialData = props.data;
+  console.log(initialData)
 
   const data = {
     slug: '',
@@ -19,7 +20,8 @@ const Component: NextPage<IProps> = props => {
 
   return (
     <Layout title="NAGISA KUBO">
-      <HomeContainer data={initialData} />
+      { // <HomeContainer data={initialData} />
+      }
     </Layout>
   );
 };
@@ -28,6 +30,7 @@ export default Component;
 
 Component.getInitialProps = async () => {
   const data = await fetcher(GET_POSTS);
+
   return {
     data,
   };

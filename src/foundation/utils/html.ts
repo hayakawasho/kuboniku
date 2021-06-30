@@ -7,7 +7,7 @@ const rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
  * @param  {string} data - A value to convert.
  * @return {mixed}  Returns the value in its natural data type.
  */
-export const getData = data => {
+const getData = data => {
   if (data === 'true') {
     return true;
   }
@@ -37,7 +37,7 @@ export const getData = data => {
  * @param   {DOMElement}  node
  * @return  {Array}       data
  */
-export const getNodeData = node => {
+const getNodeData = node => {
   const data: { [key: string]: string } = {};
   const attrs = node.dataset;
 
@@ -48,7 +48,7 @@ export const getNodeData = node => {
   return data;
 };
 
-export const escapeHtml = str => {
+const escapeHtml = str => {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 
@@ -57,6 +57,8 @@ export const escapeHtml = str => {
  * @param  {string} str
  * @return {string}
  */
-export const unescapeHtml = str => {
+const unescapeHtml = str => {
   return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
+
+export { getData, getNodeData, escapeHtml, unescapeHtml }
