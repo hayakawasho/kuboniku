@@ -4,4 +4,5 @@ export { default as useToggle } from '@react-hook/toggle';
 export { default as useSize } from '@react-hook/size';
 export { useWindowSize } from '@react-hook/window-size';
 export { default as useEvent } from '@react-hook/event';
-export { useRequest, useInfiniteRequest, fetcher } from './api-request';
+export { fetcher } from './api-fetch';
+export { useFetch } from './api-fetch/useFetch';

@@ -51,8 +51,7 @@ const AppComponent = ({
       <AppConfigProvider>
         <SWRConfig
           value={{
-            revalidateOnFocus: false,
-            fetcher,
+            revalidateOnFocus: false
           }}
         >
           <AppStateProvider>
