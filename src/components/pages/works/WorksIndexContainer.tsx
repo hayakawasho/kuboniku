@@ -1,30 +1,26 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import Utils from '@/foundation/utils/Utils';
 import { Entry } from './presentations/Entry';
 
-type TEntryData = React.ComponentProps<typeof Entry>['data'];
-
-const PER_PAGE = 10;
-
 interface IProps {
-  data: any;
+  posts: {
+    slug: string;
+    title: string;
+    eyecatch: {
+      src: string;
+      srcSet: string;
+    }
+    projectIndex: number;
+  }[]
+  totalPosts: number;
+  loading: boolean;
+  errorMessage: string;
+  onLoadMore: () => void;
 }
 
-/*
-{
-  totalPost,
-  chunkedPostData,
-  entryLoaderRef,
-  isValidating,
-  error,
-}
-*/
-
-const PageContainer = props => {
+const PageContainer = (props: IProps) => {
   return (
     <motion.div
       initial="pageInitial"
@@ -34,34 +30,30 @@ const PageContainer = props => {
       css={container}
     >
       <h1 css={heading}>
-        <div data-smooth-item>
-          Works<sup css={heading__total}>{props.totalPost}</sup>
+        <div>
+          Works<sup css={heading__total}>{props.totalPosts}</sup>
         </div>
       </h1>
-      {props.result.map((data, i) => (
-        <div className="o-grid" css={entryList} key={i}>
-          {postData.posts.nodes.map((item, j) => {
-            const projectIndex = Utils.zeroPadding(
-              props.totalPost - (j + (i + i * (PER_PAGE - 1))),
-              2
-            );
-            return (
-              <article className="o-grid__item" data-smooth-item key={j}>
-                <Entry data={item} index={projectIndex} />
-              </article>
-            );
-          })}
-        </div>
+      <div className="o-grid" css={entryList}>
+      {props.posts.map((post, i) => (
+        <article className="o-grid__item" key={i}>
+          <Entry
+            href={"/works/" + post.slug}
+            title={post.title}
+            src={post.eyecatch.src}
+            srcSet={post.eyecatch.srcSet}
+            index={post.projectIndex}
+          />
+        </article>
       ))}
-      <div ref={props.entryLoaderRef} css={entryLoader}>
-        {isValidating && (
+      </div>
+      <div css={entryLoader}>
+        {props.loading && (
           <div css={entryLoader__bounce}>
-            <div />
-            <div />
             <div />
           </div>
         )}
-        {props.error && <div css={entryLoader__error}>Try to reload.</div>}
+        {props.errorMessage && <div css={entryLoader__error}>{props.errorMessage}</div>}
       </div>
     </motion.div>
   );

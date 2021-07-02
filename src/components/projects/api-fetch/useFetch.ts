@@ -8,16 +8,16 @@ const useFetch = <T extends {}>(key: string | null, fetcher: () => Promise<T>, o
   const [status, setStatus] = useState<TStatus<Error>>(['idle']);
   const { handleHttpError } = useHandleHttpError();
 
-  const { data, error } = useSWR<T, Error>(key, async () => {
+  const result = useSWR<T, Error>(key, async () => {
     return await fetcher();
   }, options);
 
   useEffect(() => {
-    const err = handleHttpError(error);
-    setStatus(['error', err]);
-  }, [error, handleHttpError]);
+    const error = handleHttpError(result.error);
+    setStatus(['error', error]);
+  }, [result.error, handleHttpError]);
 
-  return [data, status] as const;
+  return [result.data, status] as const;
 }
 
 export { useFetch }

@@ -6,3 +6,4 @@ export { useWindowSize } from '@react-hook/window-size';
 export { default as useEvent } from '@react-hook/event';
 export { fetcher } from './api-fetch';
 export { useFetch } from './api-fetch/useFetch';
+export { useHandleHttpError } from './api-fetch/useHandleHttpError';

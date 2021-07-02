@@ -1,15 +1,13 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import tw, { css } from 'twin.macro';
-import { useEvent, useToggle } from '@/components/projects';
+import { useToggle } from '@/components/projects';
 
 interface IProps {
   href: string;
-  eyecatch: {
-    src: string;
-    srcSet?: string;
-  }
-  index: string;
+  src: string;
+  srcSet?: string;
+  index: string | number;
   title: string;
 }
 
@@ -17,18 +15,13 @@ const Entry = (props: IProps) => {
   const ref = useRef(null);
   const [isHovering, toggle] = useToggle(false, true);
 
-  useEvent(ref, 'mousemove', toggle)
-  useEvent(ref, 'mouseleave', toggle)
-  useEvent(ref, 'touchstart', toggle)
-  useEvent(ref, 'touchend', toggle)
-
   return (
     <Link scroll={false} href={props.href}>
       <a ref={ref} css={entry} className={`${isHovering ? 'is-hovering' : ''}`}>
         <div className="c-aspect" />
         <div css={entry__g}>
           <div css={eyecatch}>
-            <img src={props.eyecatch.src} srcSet={props.eyecatch.srcSet} alt="" decoding="async" loading="lazy" />
+            <img src={props.src} srcSet={props.srcSet} alt="" decoding="async" loading="lazy" />
           </div>
           <div css={entry__hgroup}>
             <p css={num}>

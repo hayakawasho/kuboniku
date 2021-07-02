@@ -1,7 +1,6 @@
-import React from 'react';
 import Link from 'next/link';
 
-const ErrorScreen = ({ title }) => {
+const ErrorScreen = ({ title }: { title: string }) => {
   return (
     <div tw="w-full h-full flex justify-center items-center">
       <div>

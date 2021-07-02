@@ -5,24 +5,24 @@ import { request } from 'graphql-request';
 import { WP_API_END_POINT } from '@/foundation/constants/const';
 
 const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
-  const [result, status] = useFetch<IRawWorksId>(GET_POST, () => {
+  const [data, status] = useFetch<IRawWorksId>(GET_POST, () => {
     return request(WP_API_END_POINT, GET_POST, { slug })
   }, {
     initialData
   });
 
   const newData = {
-    title: result.post.title,
-    category: result.post.acf.category.name,
+    title: data.post.title,
+    category: data.post.acf.category.name,
     eyecatch: {
-      src: result.post.acf.eyecatch.sourceUrl,
-      srcSet: result.post.acf.eyecatch.srcSet,
-      mobile: result.post.acf.eyecatchMobile?.sourceUrl
+      src: data.post.acf.eyecatch.sourceUrl,
+      srcSet: data.post.acf.eyecatch.srcSet,
+      mobile: data.post.acf.eyecatchMobile?.sourceUrl
     },
-    date: new Date(result.post.date),
-    role: result.post.acf.role.map(i => i.name),
-    viewWebsite: result.post.acf.url,
-    gallery: result.post.acf.gallery?.map(i => {
+    date: new Date(data.post.date),
+    role: data.post.acf.role.map(i => i.name),
+    viewWebsite: data.post.acf.url,
+    gallery: data.post.acf.gallery?.map(i => {
       return {
         width: i.mediaDetails.width,
         height: i.mediaDetails.height,
@@ -31,12 +31,12 @@ const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
       }
     }),
     prev: {
-      slug: result.post.previous.slug,
-      title: result.post.previous.title,
+      slug: data.post.previous.slug,
+      title: data.post.previous.title,
       eyecatch: {
-        src: result.post.previous.acf.eyecatch.sourceUrl,
-        srcSet: result.post.previous.acf.eyecatch.srcSet,
-        mobile: result.post.previous.acf.eyecatchMobile?.sourceUrl,
+        src: data.post.previous.acf.eyecatch.sourceUrl,
+        srcSet: data.post.previous.acf.eyecatch.srcSet,
+        mobile: data.post.previous.acf.eyecatchMobile?.sourceUrl,
       },
     },
   };
