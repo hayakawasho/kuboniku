@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
-import { useHandleHttpError } from './useHandleHttpError';
+import { useHandleHttpError } from '@/components/projects';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E]
 

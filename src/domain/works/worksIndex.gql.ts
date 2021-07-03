@@ -43,12 +43,14 @@ const GET_OFFSET_POSTS = (offset: number, size: number) => {
           title
           slug
           acf {
-            url
-            themeColor
             eyecatch {
               sourceUrl
               srcSet
             }
+            category {
+              name
+            }
+            themeColor
           }
         }
       }
