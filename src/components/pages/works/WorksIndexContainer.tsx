@@ -1,8 +1,13 @@
+import {
+  useRef,
+  useEffect
+ } from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import { Entry } from './presentations/Entry';
+import { useIntersectionObserver } from '@/components/projects';
 
 interface IProps {
   posts: {
@@ -21,6 +26,17 @@ interface IProps {
 }
 
 const PageContainer = (props: IProps) => {
+  const entryLoaderRef = useRef(null);
+  const { isIntersecting } = useIntersectionObserver(entryLoaderRef, {
+    rootMargin: '200px 0px',
+  });
+
+  useEffect(() => {
+    if (isIntersecting) {
+      props.onLoadMore();
+    }
+  }, [isIntersecting]);
+
   return (
     <motion.div
       initial="pageInitial"
@@ -47,7 +63,7 @@ const PageContainer = (props: IProps) => {
         </article>
       ))}
       </div>
-      <div css={entryLoader}>
+      <div css={entryLoader} ref={entryLoaderRef}>
         {props.loading && (
           <div css={entryLoader__bounce}>
             <div />

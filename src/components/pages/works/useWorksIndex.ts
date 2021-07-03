@@ -7,7 +7,7 @@ import { request } from 'graphql-request';
 import { useHandleHttpError } from '@/components/projects';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
-type TWorksList = IRawWorksList['posts']['nodes'];
+type TWorksList = IRawWorksList;
 
 const PER_PAGE = 10;
 
@@ -27,19 +27,21 @@ const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
     }
   );
 
-  const data: TWorksList = result.data ? [].concat(...result.data) : [];
+  const data: TWorksList[] = result.data ? [].concat(...result.data) : [];
 
-  const newData = data.map(node => {
-    return {
-      title: node.title,
-      slug: node.slug,
-      eyecatch: {
-        src: node.acf.eyecatch.sourceUrl,
-        srcSet: node.acf.eyecatch.srcSet,
-      },
-      projectIndex: totalPosts,
-    }
-  });
+  const newData = data.map(item => {
+    return item.posts.nodes.map(node => {
+      return {
+        title: node.title,
+        slug: node.slug,
+        eyecatch: {
+          src: node.acf.eyecatch.sourceUrl,
+          srcSet: node.acf.eyecatch.srcSet,
+        },
+        projectIndex: totalPosts,
+      }
+    })
+  }).flat();
 
   const onLoadMore = useCallback(() => {
     result.setSize(result.size + 1)

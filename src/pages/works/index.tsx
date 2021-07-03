@@ -6,17 +6,17 @@ import { GET_INITIAL_POSTS } from '@/domain/works/worksIndex.gql';
 import { useWorksIndex, WorksIndexContainer } from '@/components/pages/works';
 
 interface IProps {
-  data: IRawWorksList;
+  posts: IRawWorksList;
   totalPosts: number;
 }
 
 const Component: NextPage<IProps> = props => {
-  const [newProps, status, { onLoadMore }] = useWorksIndex(props.data);
+  const [data, status, { onLoadMore }] = useWorksIndex(props.posts, props.totalPosts);
 
   return (
     <Layout title="WORKS">
       <WorksIndexContainer
-        posts={newProps}
+        posts={data}
         totalPosts={props.totalPosts}
         loading={status[0] === "loading"}
         errorMessage={status[0] === "error" && "" + status[1]}
@@ -32,7 +32,7 @@ Component.getInitialProps = async () => {
   const data = await fetcher<IRawWorksList>(GET_INITIAL_POSTS);
 
   return {
-    data,
+    posts: data,
     totalPosts: data.posts.pageInfo.offsetPagination.total
   };
 };

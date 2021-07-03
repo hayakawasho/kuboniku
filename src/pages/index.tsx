@@ -6,12 +6,11 @@ import { GET_POSTS } from '@/domain/home/home.gql';
 import { HomeContainer, useHome } from '@/components/pages/home';
 
 interface IProps {
-  data: IRawWorksList;
+  posts: IRawWorksList;
 }
 
 const Component: NextPage<IProps> = props => {
-  const initialData = props.data;
-  const [newProps] = useHome(initialData);
+  const [newProps] = useHome(props.posts);
 
   return (
     <Layout title="NAGISA KUBO">
@@ -26,6 +25,6 @@ Component.getInitialProps = async () => {
   const data = await fetcher<IRawWorksList>(GET_POSTS);
 
   return {
-    data,
+    posts: data,
   };
 };
