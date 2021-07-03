@@ -2,10 +2,9 @@ import { useCallback, useState, useEffect, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
 import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_OFFSET_POSTS } from '@/domain/works/worksIndex.gql';
-import { WP_API_END_POINT } from '@/foundation/constants/const';
 import Utils from '@/foundation/utils/Utils';
-import { request } from 'graphql-request';
 import { useHandleHttpError } from '@/components/projects';
+import { fetcher } from '@/foundation/lib/fetcher';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
 type TWorksList = IRawWorksList;
@@ -17,12 +16,8 @@ const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
   const { handleHttpError } = useHandleHttpError();
 
   const result = useSWRInfinite<TWorksList, Error>(
-    (pageIndex) => {
-      return GET_OFFSET_POSTS(pageIndex * PER_PAGE, PER_PAGE)
-    },
-    (key: string) => {
-      return request(WP_API_END_POINT, key)
-    },
+    (pageIndex) => GET_OFFSET_POSTS(pageIndex * PER_PAGE, PER_PAGE),
+    (key: string) => fetcher(key),
     {
       initialData: [initialData],
     }

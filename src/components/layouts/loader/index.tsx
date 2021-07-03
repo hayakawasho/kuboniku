@@ -1,6 +1,6 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
-// import { appSelector } from '~/state/app';
+// import { appSelector } from '@/state/app';
 import tw, { css } from 'twin.macro';
 
 const Component = React.memo(() => {

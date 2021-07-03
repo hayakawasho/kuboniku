@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Scene } from './Scene';
-import { useUiColorContext } from '~/context';
+import { useUiColorContext } from '@/context';
 import tw from 'twin.macro';
 import * as THREE from 'three';
 import { gsap } from 'gsap';

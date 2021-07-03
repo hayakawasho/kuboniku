@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-// import ResizeObserverHandler from '~/foundation/utils/resizeObserverHandler';
+// import ResizeObserverHandler from '@/foundation/utils/resizeObserverHandler';
 // import debounce from 'lodash.debounce';
-import { EVENTS } from '~/foundation/constants/const';
+import { EVENTS } from '@/foundation/constants/const';
 // import { useDispatch } from 'react-redux';
-// import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '~/state/app';
+// import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '@/state/app';
 import tw, { css } from 'twin.macro';
 
 let E;
 
 if (process.browser) {
-  E = require('~/foundation/utils/E').default;
+  E = require('@/foundation/utils/E').default;
 }
 
 const Component = React.memo(() => {

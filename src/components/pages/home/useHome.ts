@@ -1,12 +1,11 @@
 import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_POSTS } from '@/domain/home/home.gql';
 import { useFetch } from '@/components/projects';
-import { WP_API_END_POINT } from '@/foundation/constants/const';
-import { request } from 'graphql-request';
+import { fetcher } from '@/foundation/lib/fetcher';
 
 const useHome = (initialData: IRawWorksList) => {
   const [data, status] = useFetch<IRawWorksList>(GET_POSTS, () => {
-    return request(WP_API_END_POINT, GET_POSTS)
+    return fetcher(GET_POSTS)
   }, {
     initialData
   });

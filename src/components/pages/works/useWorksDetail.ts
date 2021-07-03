@@ -1,12 +1,11 @@
 import { IRawWorksId } from '@/domain/works/worksEntity';
 import { GET_POST } from '@/domain/works/worksDetail.gql';
 import { useFetch } from '@/components/projects';
-import { request } from 'graphql-request';
-import { WP_API_END_POINT } from '@/foundation/constants/const';
+import { fetcher } from '@/foundation/lib/fetcher';
 
 const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
   const [data, status] = useFetch<IRawWorksId>(GET_POST, () => {
-    return request(WP_API_END_POINT, GET_POST, { slug })
+    return fetcher(GET_POST, { slug })
   }, {
     initialData
   });

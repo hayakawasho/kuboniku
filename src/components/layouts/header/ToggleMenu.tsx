@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { uiSelector, OPEN_MENU, CLOSE_MENU } from '~/state/ui';
-// import { useSelector, useDispatch } from 'react-redux';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
+import { useMenuContext } from '@/context'
 
-const Component: React.FC = React.memo(() => {
+const ToggleMenu = () => {
+  const { isMenuOpen, isMenuAnimating } = useMenuContext();
+  const ref = useRef(null);
+  const topRef = useRef(null);
+  const bottomRef = useRef(null);
   /*
   const [initialState, setInitialState] = useState(false);
   // const { menuOpen, menuAnimating } = useSelector(uiSelector);
@@ -83,20 +86,18 @@ const Component: React.FC = React.memo(() => {
         //className={`u-mobile ${menuOpen ? 'is-open' : ''} ${menuAnimating ? 'is-animating' : ''}`}
         aria-label="menu-toggle"
         //onClick={handleClick}
-        //ref={ref}
+        ref={ref}
       >
-        {/*
         <div css={burger}>
           <div css={burger__line} ref={topRef} />
           <div css={burger__line} ref={bottomRef} />
         </div>
-        */}
       </button>
     </>
   );
-});
+};
 
-export default Component;
+export { ToggleMenu };
 
 const menu = css`
   ${tw`fixed`}

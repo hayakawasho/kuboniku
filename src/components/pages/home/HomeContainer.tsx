@@ -22,7 +22,7 @@ interface IProps {
 
 const PageContainer = (props: IProps) => {
   /*
-  const [result] = useRequest<IData>(GET_POSTS, {
+  const [result] = useFetch<IData>(GET_POSTS, {
     initialData: props.initialData,
   });
 
