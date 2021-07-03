@@ -13,10 +13,10 @@ const useFetch = <T extends {}>(key: string | null, fetcher: () => Promise<T>, o
   }, options);
 
   useEffect(() => {
-    const error = handleHttpError(result.error);
+    const err = handleHttpError(result.error);
 
-    if (error) {
-      setStatus(['error', '' + error]);
+    if (err) {
+      setStatus(['error', err.message]);
     }
   }, [result.error, handleHttpError]);
 

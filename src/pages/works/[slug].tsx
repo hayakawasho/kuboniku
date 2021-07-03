@@ -2,21 +2,24 @@ import { NextPage } from 'next';
 import { Layout } from '@/components/layouts';
 import { IRawWorksId } from '@/domain/works/worksEntity';
 import { GET_POST } from '@/domain/works/worksDetail.gql';
-import { WorksDetailContainer, useWorksDetail } from '@/components/pages/works';
-import { request } from 'graphql-request';
-import { WP_API_END_POINT } from '@/foundation/constants/const';
+import { WorksDetailContainer, useWorksDetail } from '@/components/pages/single-works';
+import { fetcher } from '@/foundation/lib/fetcher';
 
 interface IProps {
   post: IRawWorksId;
-  path: any;
+  path: string | string[];
 }
 
 const Component: NextPage<IProps> = (props) => {
-  const [newProps] = useWorksDetail(props.post, props.path);
+  const [newProps, status] = useWorksDetail(props.post, (props.path as string));
 
   return (
     <Layout title="WORKS">
-      <WorksDetailContainer {...newProps} />
+      <WorksDetailContainer
+        {...newProps}
+        loading={status[0] === "loading"}
+        errorMessage={status[0] === "error" && "" + status[1]}
+      />
     </Layout>
   );
 };
@@ -24,7 +27,7 @@ const Component: NextPage<IProps> = (props) => {
 export default Component;
 
 Component.getInitialProps = async ({ query }) => {
-  const data = await request<IRawWorksId>(WP_API_END_POINT, GET_POST, {
+  const data = await fetcher<IRawWorksId>(GET_POST, {
     slug: query?.slug ?? ''
   });
 

@@ -16,8 +16,8 @@ const Component: NextPage<IProps> = props => {
     <Layout title="NAGISA KUBO">
       <HomeContainer
         {...newProps}
-        loading={status[0]==='loading'}
-        errorMessage={status[0]==='error' && status[1]}
+        loading={status[0] === 'loading'}
+        errorMessage={status[0] === 'error' && status[1]}
       />
     </Layout>
   );

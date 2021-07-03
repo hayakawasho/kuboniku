@@ -13,7 +13,7 @@ import { UiColorProvider } from '@/context/ui-color';
 import { MenuProvider } from '@/context/menu';
 // import ViewportRef from '@/components/ViewportRef';
 // import Loader from '@/components/Loader';
-import { Header } from '@/components/layouts';
+import { Header, Navigation } from '@/components/layouts';
 
 const World3d = dynamic(
   () => import('@/context/world-3d').then(modules => modules.Webgl),
@@ -57,10 +57,8 @@ const AppComponent = ({
             <UiColorProvider>
               <MenuProvider>
                 <div id="app">
-                  {
-                    <Header />
-                  // <Navigation />
-                  }
+                  <Header />
+                  <Navigation />
                   <AnimatePresence
                     exitBeforeEnter
                     initial={false}

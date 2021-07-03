@@ -1,12 +1,13 @@
 import { useState, useCallback } from 'react';
 import constate from 'constate';
+import Presenter from './Presenter';
+import { useMenuContext } from '@/context';
 
-const useMenu = ({ initialValue = false }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(initialValue);
-  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
-  const onMenuClose = useCallback(() => setIsMenuOpen(false), []);
+const Component = ({ initialValue = false }) => {
+  const { isMenuOpen, isMenuAnimating } = useMenuContext();
 
-  return { isMenuOpen, onMenuOpen, onMenuClose };
+
+  return <Presenter />;
 };
 
-export const [MenuProvider, useMenuContext] = constate(useMenu);
+export default Component;

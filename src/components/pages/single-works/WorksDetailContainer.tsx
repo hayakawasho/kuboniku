@@ -32,6 +32,8 @@ interface IProps {
       mobile?: string;
     }
   };
+  loading: boolean;
+  errorMessage: string;
 }
 
 const PageContainer = (props: IProps) => {
