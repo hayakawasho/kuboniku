@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
 import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_OFFSET_POSTS } from '@/domain/works/worksIndex.gql';
@@ -30,19 +30,21 @@ const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
 
   const data: TWorksList[] = result.data ? [].concat(...result.data) : [];
 
-  const newData = data.map((item, i) => {
-    return item.posts.nodes.map((node, j) => {
-      return {
-        title: node.title,
-        slug: node.slug,
-        eyecatch: {
-          src: node.acf.eyecatch.sourceUrl,
-          srcSet: node.acf.eyecatch.srcSet,
-        },
-        projectIndex: Utils.zeroPadding(totalPosts - (j + (i + i * (PER_PAGE - 1))), 2),
-      }
-    })
-  }).flat();
+  const newData = useMemo(() => (
+    data.map((item, i) => (
+      item.posts.nodes.map((node, j) => {
+        return {
+          title: node.title,
+          slug: node.slug,
+          eyecatch: {
+            src: node.acf.eyecatch.sourceUrl,
+            srcSet: node.acf.eyecatch.srcSet,
+          },
+          projectIndex: Utils.zeroPadding(totalPosts - (j + (i + i * (PER_PAGE - 1))), 2),
+        }
+      })
+    )).flat()
+  ), [data]);
 
   const onLoadMore = useCallback(() => {
     result.setSize(result.size + 1)
