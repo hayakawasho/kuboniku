@@ -1,7 +1,4 @@
-import {
-  useRef,
-  useEffect
- } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
@@ -13,11 +10,11 @@ interface IProps {
   posts: {
     slug: string;
     title: string;
+    index: number | string;
     eyecatch: {
       src: string;
       srcSet: string;
     }
-    projectIndex: number;
   }[]
   totalPosts: number;
   loading: boolean;
@@ -58,7 +55,7 @@ const PageContainer = (props: IProps) => {
             title={post.title}
             src={post.eyecatch.src}
             srcSet={post.eyecatch.srcSet}
-            index={post.projectIndex}
+            index={post.index}
           />
         </article>
       ))}
@@ -80,9 +77,8 @@ export default PageContainer;
 const container = css`
   padding-top: 10rem;
 
-    @media (min-width: 640px) {
-      padding-top: 15rem;
-    }
+  @media (min-width: 640px) {
+    padding-top: 15rem;
   }
 `;
 

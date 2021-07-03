@@ -31,11 +31,11 @@ const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
         return {
           title: node.title,
           slug: node.slug,
+          index: Utils.zeroPadding(totalPosts - (j + (i + i * (PER_PAGE - 1))), 2),
           eyecatch: {
             src: node.acf.eyecatch.sourceUrl,
             srcSet: node.acf.eyecatch.srcSet,
-          },
-          projectIndex: Utils.zeroPadding(totalPosts - (j + (i + i * (PER_PAGE - 1))), 2),
+          }
         }
       })
     )).flat()

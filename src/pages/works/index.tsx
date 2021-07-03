@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { Layout } from '@/components/layouts';
-import { fetcher } from '@/components/projects';
+import { fetcher } from '@/foundation/lib/fetcher';
 import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_INITIAL_POSTS } from '@/domain/works/worksIndex.gql';
 import { useWorksIndex, WorksIndexContainer } from '@/components/pages/works';
