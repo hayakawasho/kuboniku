@@ -1,5 +1,5 @@
 import { IRawWorksId } from '@/domain/works/worksEntity';
-import { GET_POST } from '@/domain/works/worksDetail.gql';
+import { GET_POST } from '@/domain/single-works/worksDetail.gql';
 import { useFetch } from '@/components/projects';
 import { fetcher } from '@/foundation/lib/fetcher';
 
