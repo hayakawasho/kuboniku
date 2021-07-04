@@ -1,15 +1,14 @@
 import { useCallback } from 'react';
 import constate from 'constate';
 
-interface IError {
+interface IError extends Error {
   code: number;
-  message: string;
 }
 
 const useHandleHttpError = () => {
 
   const handleHttpError = useCallback((error) => {
-    let errors: IError | null;
+    let errors: IError | null = null;
 
     if (error) {
       console.log({ error })

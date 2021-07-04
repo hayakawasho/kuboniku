@@ -18,6 +18,8 @@ interface IProps {
     }
   }[];
   totalPosts: number;
+  loading: boolean;
+  errorMessage: string;
 }
 
 const PageContainer = (props: IProps) => {

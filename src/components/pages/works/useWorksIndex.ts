@@ -46,10 +46,10 @@ const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
   }, [result.size]);
 
   useEffect(() => {
-    const error = handleHttpError(result.error);
+    const err = handleHttpError(result.error);
 
-    if (error) {
-      setStatus(['error', '' + error]);
+    if (err) {
+      setStatus(['error', err.message]);
     }
   }, [result.error, handleHttpError]);
 
