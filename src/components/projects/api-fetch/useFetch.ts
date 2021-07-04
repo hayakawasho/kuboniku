@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import useSWR, { SWRConfiguration } from 'swr';
-import { useHandleHttpError } from '@/components/projects';
+import { useHandleHttpErrorContext } from '@/context';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E]
 
 const useFetch = <T extends {}>(key: string | null, fetcher: () => Promise<T>, options?: SWRConfiguration<T>) => {
   const [status, setStatus] = useState<TStatus<string>>(['idle']);
-  const { handleHttpError } = useHandleHttpError();
+  const { handleHttpError } = useHandleHttpErrorContext();
 
-  const result = useSWR<T, Error>(key, async () => {
+  const result = useSWR<T, Error>(key, async (...arg) => {
+    console.log({ arg }, 'fetcher')
     return await fetcher();
   }, options);
 

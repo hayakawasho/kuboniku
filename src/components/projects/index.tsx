@@ -5,4 +5,3 @@ export { default as useSize } from '@react-hook/size';
 export { useWindowSize } from '@react-hook/window-size';
 export { default as useEvent } from '@react-hook/event';
 export { useFetch } from './api-fetch/useFetch';
-export { useHandleHttpError } from './handle-error/useHandleHttpError';

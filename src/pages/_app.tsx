@@ -9,11 +9,12 @@ import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
 import { AppConfigProvider } from '@/context/app-config';
 import { AppStateProvider } from '@/context/app-state';
+import { HandleHttpErrorProvider } from '@/context/handle-error';
 import { UiColorProvider } from '@/context/ui-color';
 import { MenuProvider } from '@/context/menu';
 // import ViewportRef from '@/components/ViewportRef';
 // import Loader from '@/components/Loader';
-import { Header, Navigation } from '@/components/layouts';
+import { Header } from '@/components/layouts';
 
 const World3d = dynamic(
   () => import('@/context/world-3d').then(modules => modules.Webgl),
@@ -48,30 +49,33 @@ const AppComponent = ({
         />
       </Head>
       <AppConfigProvider>
-        <SWRConfig
-          value={{
-            revalidateOnFocus: false
-          }}
-        >
-          <AppStateProvider>
-            <UiColorProvider>
-              <MenuProvider>
-                <div id="app">
-                  <Header />
-                  <Navigation />
-                  <AnimatePresence
-                    exitBeforeEnter
-                    initial={false}
-                    onExitComplete={onExitComplete}
-                  >
-                    <Component {...pageProps} key={router.asPath} />
-                  </AnimatePresence>
-                  <World3d />
-                </div>
-              </MenuProvider>
-            </UiColorProvider>
-          </AppStateProvider>
-        </SWRConfig>
+        <HandleHttpErrorProvider>
+          <SWRConfig
+            value={{
+              revalidateOnFocus: false
+            }}
+          >
+            <AppStateProvider>
+              <UiColorProvider>
+                <MenuProvider>
+                  <div id="app">
+                    <Header />
+                    {//<Navigation />
+                    }
+                    <AnimatePresence
+                      exitBeforeEnter
+                      initial={false}
+                      onExitComplete={onExitComplete}
+                    >
+                      <Component {...pageProps} key={router.asPath} />
+                    </AnimatePresence>
+                    <World3d />
+                  </div>
+                </MenuProvider>
+              </UiColorProvider>
+            </AppStateProvider>
+          </SWRConfig>
+        </HandleHttpErrorProvider>
       </AppConfigProvider>
     </>
   );

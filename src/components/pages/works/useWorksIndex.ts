@@ -3,7 +3,7 @@ import { useSWRInfinite } from 'swr';
 import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_OFFSET_POSTS } from '@/domain/works/worksIndex.gql';
 import Utils from '@/foundation/utils/Utils';
-import { useHandleHttpError } from '@/components/projects';
+import { useHandleHttpErrorContext } from '@/context';
 import { fetcher } from '@/foundation/lib/fetcher';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
@@ -13,7 +13,7 @@ const PER_PAGE = 10;
 
 const useWorksIndex = (initialData: TWorksList, totalPosts: number) => {
   const [status, setStatus] = useState<TStatus<string>>(['idle']);
-  const { handleHttpError } = useHandleHttpError();
+  const { handleHttpError } = useHandleHttpErrorContext();
 
   const result = useSWRInfinite<TWorksList, Error>(
     (pageIndex) => GET_OFFSET_POSTS(pageIndex * PER_PAGE, PER_PAGE),

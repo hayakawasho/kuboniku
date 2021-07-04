@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { Layout } from '@/components/layouts';
 import { IRawWorksId } from '@/domain/works/worksEntity';
-import { GET_POST } from '@/domain/works/worksDetail.gql';
+import { GET_POST } from '@/domain/single-works/worksDetail.gql';
 import { WorksDetailContainer, useWorksDetail } from '@/components/pages/single-works';
 import { fetcher } from '@/foundation/lib/fetcher';
 
