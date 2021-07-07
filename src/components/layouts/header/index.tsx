@@ -1,26 +1,24 @@
 import Link from 'next/link';
-import { ToggleMenu } from './ToggleMenu';
-import { ToggleSNS } from './ToggleSNS';
+import { ToggleMenu } from '../toggle-menu';
+import { ToggleSns } from '../toggle-sns';
 import tw, { css } from 'twin.macro';
 
-const Component = () => {
+const Header = () => {
   return (
-    <>
-      <header>
-        <Link href="/">
-          <a css={logo}>
-            <i className="icon-logo" />
-          </a>
-        </Link>
-        <ToggleMenu />
-        <ToggleSNS />
-        <small css={copyright}>&copy; KuboNiku.com</small>
-      </header>
-    </>
+    <header>
+      <Link href="/">
+        <a css={logo}>
+          <i className="icon-logo" />
+        </a>
+      </Link>
+      <ToggleMenu />
+      <ToggleSns />
+      <small css={copyright}>&copy; KuboNiku.com</small>
+    </header>
   );
 };
 
-export default Component;
+export { Header };
 
 const logo = css`
   ${tw`fixed block pointer-events-auto`}

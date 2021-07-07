@@ -70,6 +70,7 @@ const PageContainer = (props: IProps) => {
             src={props.eyecatch.src}
             srcSet={props.eyecatch.srcSet}
             mobile={props.eyecatch.mobile}
+            importance="high"
           />
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">

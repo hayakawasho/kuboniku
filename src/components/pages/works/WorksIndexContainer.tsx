@@ -66,7 +66,7 @@ const PageContainer = (props: IProps) => {
             <div />
           </div>
         )}
-        {props.errorMessage && <div css={entryLoader__error}>{props.errorMessage}</div>}
+        {!!props.errorMessage && <div css={entryLoader__error}>{props.errorMessage}</div>}
       </div>
     </motion.div>
   );

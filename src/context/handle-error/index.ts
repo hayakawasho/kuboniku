@@ -3,7 +3,7 @@ import constate from 'constate';
 // import { useSentry } from './useSentry';
 
 interface IError extends Error {
-  code: number;
+  code?: number;
 }
 
 const useHandleHttpError = () => {

@@ -7,6 +7,7 @@ const rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
  * @param  {string} data - A value to convert.
  * @return {mixed}  Returns the value in its natural data type.
  */
+
 const getData = data => {
   if (data === 'true') {
     return true;
@@ -37,6 +38,7 @@ const getData = data => {
  * @param   {DOMElement}  node
  * @return  {Array}       data
  */
+
 const getNodeData = node => {
   const data: { [key: string]: string } = {};
   const attrs = node.dataset;
@@ -57,8 +59,30 @@ const escapeHtml = str => {
  * @param  {string} str
  * @return {string}
  */
+
 const unescapeHtml = str => {
   return str.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
 
-export { getData, getNodeData, escapeHtml, unescapeHtml }
+/**
+ * DOM
+ */
+
+const byId = (id: string) => {
+  return document.getElementById(id);
+};
+
+const qs = (selector: string, el: Document | Element = document) => {
+  return el.querySelector(selector);
+};
+
+const qsa = (selector: string, el: Document | Element = document) => {
+  return Array.from(el.querySelectorAll(selector));
+};
+
+const prependChild = (parent: Element, el: Element) => {
+  parent.insertBefore(el, parent.firstChild);
+};
+
+
+export { getData, getNodeData, escapeHtml, unescapeHtml, byId, qs, qsa, prependChild }

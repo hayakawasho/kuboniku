@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import * as THREE from 'three';
 
 const vertexShader = require('./shaders/vert.glsl').default;
 const fragmentShader = require('./shaders/frag.glsl').default;
@@ -32,20 +31,18 @@ const Scene = ({ uniforms }) => {
   });
 
   return (
-    <>
-      <mesh ref={mesh} position={[0, 0, 0]}>
-        <planeBufferGeometry
-          attach="geometry"
-          args={[size.width, size.height]}
-        />
-        <shaderMaterial
-          attach="material"
-          uniforms={uniforms}
-          fragmentShader={fragmentShader}
-          vertexShader={vertexShader}
-        />
-      </mesh>
-    </>
+    <mesh ref={mesh} position={[0, 0, 0]}>
+      <planeBufferGeometry
+        attach="geometry"
+        args={[size.width, size.height]}
+      />
+      <shaderMaterial
+        attach="material"
+        uniforms={uniforms}
+        fragmentShader={fragmentShader}
+        vertexShader={vertexShader}
+      />
+    </mesh>
   );
 };
 

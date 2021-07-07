@@ -2,23 +2,24 @@ import { useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import { useToggle } from '@/components/projects'
+import { useToggle } from '@/components/projects';
+import { useUpdateEffect } from '@/components/projects';
 
-const ToggleSNS = () => {
+const ToggleSns = () => {
   const [isOpen, toggle] = useToggle(false, true);
-  const ref = [useRef(null), useRef(null)];
-  const btnRef = useRef(null);
+  const snsRef = [useRef(null), useRef(null)];
+  const triggerRef = useRef(null);
   const tl = useMemo(() => gsap.timeline({ paused: true }), []);
 
   useEffect(() => {
     tl.add(
-      gsap.to(btnRef.current, 0.55, {
+      gsap.to(triggerRef.current, 0.55, {
         rotation: 90,
         ease: 'power3.inOut',
       })
     ).add(
       gsap.fromTo(
-        [ref[0].current, ref[1].current],
+        [snsRef[0].current, snsRef[1].current],
         {
           y: 20,
         },
@@ -35,7 +36,7 @@ const ToggleSNS = () => {
     );
   }, []);
 
-  useEffect(() => {
+  useUpdateEffect(() => {
     isOpen ? tl.play() : tl.reverse();
   }, [isOpen]);
 
@@ -43,10 +44,10 @@ const ToggleSNS = () => {
     <div css={sns}>
       <ul css={snsList}>
         <li>
-          <a href="https://www.facebook.com/k.b.nagisa" target="_blank" ref={ref[0]}>Fb</a>
+          <a href="https://www.facebook.com/k.b.nagisa" target="_blank" ref={snsRef[0]}>Fb</a>
         </li>
         <li>
-          <a href="#" target="_blank" ref={ref[1]}>Tw</a>
+          <a href="#" target="_blank" ref={snsRef[1]}>Tw</a>
         </li>
       </ul>
       <button
@@ -54,7 +55,7 @@ const ToggleSNS = () => {
         css={plus}
         className={`${isOpen ? 'is-open' : ''}`}
         onClick={toggle}
-        ref={btnRef}
+        ref={triggerRef}
       >
         <div className="u-in">
           <div css={plus__x} />
@@ -65,7 +66,7 @@ const ToggleSNS = () => {
   );
 };
 
-export { ToggleSNS };
+export { ToggleSns };
 
 const drawPlus = keyframes`
   0% {

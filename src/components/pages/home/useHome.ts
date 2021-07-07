@@ -2,7 +2,7 @@ import { IRawWorksList } from '@/domain/works/worksEntity';
 import { GET_POSTS } from '@/domain/home/home.gql';
 import { useFetch } from '@/components/projects';
 import { fetcher } from '@/foundation/lib/fetcher';
-import Utils from '@/foundation/utils/Utils';
+import { Utils } from '@/foundation/utils';;
 
 const useHome = (initialData: IRawWorksList) => {
   const [data, status] = useFetch<IRawWorksList>(GET_POSTS, () => fetcher(GET_POSTS), {

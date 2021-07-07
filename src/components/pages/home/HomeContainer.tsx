@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { ProgressBar } from '@/components/ui';
-import Utils from '@/foundation/utils/Utils';
+import { Utils } from '@/foundation/utils';;
 
 interface IProps {
   posts: {

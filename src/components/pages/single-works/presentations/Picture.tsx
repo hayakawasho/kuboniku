@@ -1,17 +1,17 @@
-import React from 'react';
 import tw, { css } from 'twin.macro';
 
 interface IPicture {
   src: string;
   srcSet: string;
   mobile?: string;
+  importance?: 'low' | 'high';
 }
 
-const Picture: React.FC<IPicture> = ({ src, srcSet, mobile }) => {
+const Picture = ({ src, srcSet, mobile }: IPicture) => {
   return (
     <picture css={picture}>
       {mobile && <source media="(max-width: 639px)" srcSet={mobile} />}
-      <img src={src} srcSet={srcSet} alt="" loading="lazy" css={picture__img} />
+      <img src={src} srcSet={srcSet} alt="" decoding="async" css={picture__img} />
     </picture>
   );
 };
