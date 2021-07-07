@@ -6,10 +6,10 @@ import { EVENTS } from '@/foundation/constants/const';
 // import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '@/state/app';
 import tw, { css } from 'twin.macro';
 
-let E;
+// let E;
 
 if (process.browser) {
-  E = require('@/foundation/utils/E').default;
+  // E = require('@/foundation/utils/E').default;
 }
 
 const Component = React.memo(() => {
@@ -22,7 +22,7 @@ const Component = React.memo(() => {
   }, []);
 
   const setSize = (width: number, height: number) => {
-    E.emit(EVENTS.RESIZE, { width, height });
+    // E.emit(EVENTS.RESIZE, { width, height });
   };
 
   useEffect(() => {

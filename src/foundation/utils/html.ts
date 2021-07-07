@@ -84,5 +84,13 @@ const prependChild = (parent: Element, el: Element) => {
   parent.insertBefore(el, parent.firstChild);
 };
 
-
-export { getData, getNodeData, escapeHtml, unescapeHtml, byId, qs, qsa, prependChild }
+export {
+  getData,
+  getNodeData,
+  escapeHtml,
+  unescapeHtml,
+  byId,
+  qs,
+  qsa,
+  prependChild,
+};

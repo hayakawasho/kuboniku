@@ -8,16 +8,22 @@ const useMenu = () => {
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
   const onMenuClose = useCallback(() => setIsMenuOpen(false), []);
   const isMenuAnimating = useRef(false);
-  const setMenuAnimationStart = useCallback(() => isMenuAnimating.current = true, []);
-  const setMenuAnimationEnd = useCallback(() => isMenuAnimating.current = false, []);
+  const setMenuAnimationStart = useCallback(
+    () => (isMenuAnimating.current = true),
+    []
+  );
+  const setMenuAnimationEnd = useCallback(
+    () => (isMenuAnimating.current = false),
+    []
+  );
 
   const onMenuToggle = useCallback(() => {
-    isMenuOpen ? onMenuClose() : onMenuOpen()
-  }, [isMenuOpen])
+    isMenuOpen ? onMenuClose() : onMenuOpen();
+  }, [isMenuOpen]);
 
   useUpdateEffect(() => {
-    isMenuOpen ? disablePageScroll() : enablePageScroll()
-  }, [isMenuOpen])
+    isMenuOpen ? disablePageScroll() : enablePageScroll();
+  }, [isMenuOpen]);
 
   return {
     isMenuOpen,
@@ -26,7 +32,7 @@ const useMenu = () => {
     onMenuClose,
     onMenuToggle,
     setMenuAnimationStart,
-    setMenuAnimationEnd
+    setMenuAnimationEnd,
   };
 };
 

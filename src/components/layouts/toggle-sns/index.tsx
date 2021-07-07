@@ -44,10 +44,18 @@ const ToggleSns = () => {
     <div css={sns}>
       <ul css={snsList}>
         <li>
-          <a href="https://www.facebook.com/k.b.nagisa" target="_blank" ref={snsRef[0]}>Fb</a>
+          <a
+            href="https://www.facebook.com/k.b.nagisa"
+            target="_blank"
+            ref={snsRef[0]}
+          >
+            Fb
+          </a>
         </li>
         <li>
-          <a href="#" target="_blank" ref={snsRef[1]}>Tw</a>
+          <a href="#" target="_blank" ref={snsRef[1]}>
+            Tw
+          </a>
         </li>
       </ul>
       <button

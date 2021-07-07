@@ -1,3 +1,5 @@
+export const temp = 'hello';
+/*
 import store from '@/state/store';
 import E from '@/foundation/utils/E';
 import { EVENTS } from '@/foundation/constants/const';
@@ -41,7 +43,7 @@ E.on(EVENTS.DOM_READY, () => {
     smooth.enable();
 
     APP.smooth = smooth;
-    */
+
   }
 
   disableHover();
@@ -109,3 +111,4 @@ window.addEventListener(
     passive: true,
   }
 );
+*/

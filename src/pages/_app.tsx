@@ -52,7 +52,7 @@ const AppComponent = ({
         <HandleHttpErrorProvider>
           <SWRConfig
             value={{
-              revalidateOnFocus: false
+              revalidateOnFocus: false,
             }}
           >
             <AppStateProvider>

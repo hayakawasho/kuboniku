@@ -14,8 +14,8 @@ interface IProps {
     eyecatch: {
       src: string;
       srcSet: string;
-    }
-  }[]
+    };
+  }[];
   totalPosts: number;
   loading: boolean;
   errorMessage: string;
@@ -48,17 +48,17 @@ const PageContainer = (props: IProps) => {
         </div>
       </h1>
       <div className="o-grid" css={entryList}>
-      {props.posts.map((post, i) => (
-        <article className="o-grid__item" key={i}>
-          <Entry
-            href={"/works/" + post.slug}
-            title={post.title}
-            src={post.eyecatch.src}
-            srcSet={post.eyecatch.srcSet}
-            index={post.index}
-          />
-        </article>
-      ))}
+        {props.posts.map((post, i) => (
+          <article className="o-grid__item" key={i}>
+            <Entry
+              href={'/works/' + post.slug}
+              title={post.title}
+              src={post.eyecatch.src}
+              srcSet={post.eyecatch.srcSet}
+              index={post.index}
+            />
+          </article>
+        ))}
       </div>
       <div css={entryLoader} ref={entryLoaderRef}>
         {props.loading && (
@@ -66,7 +66,9 @@ const PageContainer = (props: IProps) => {
             <div />
           </div>
         )}
-        {!!props.errorMessage && <div css={entryLoader__error}>{props.errorMessage}</div>}
+        {!!props.errorMessage && (
+          <div css={entryLoader__error}>{props.errorMessage}</div>
+        )}
       </div>
     </motion.div>
   );

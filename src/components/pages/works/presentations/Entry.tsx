@@ -21,7 +21,13 @@ const Entry = (props: IProps) => {
         <div className="c-aspect" />
         <div css={entry__g}>
           <div css={eyecatch}>
-            <img src={props.src} srcSet={props.srcSet} alt="" decoding="async" loading="lazy" />
+            <img
+              src={props.src}
+              srcSet={props.srcSet}
+              alt=""
+              decoding="async"
+              loading="lazy"
+            />
           </div>
           <div css={entry__hgroup}>
             <p css={num}>

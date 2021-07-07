@@ -21,10 +21,10 @@ const Component: React.FC = () => {
       y.set(e.clientY - 16);
     };
 
-    E.on(EVENTS.MOUSE_MOVE, moveCursor);
+    // E.on(EVENTS.MOUSE_MOVE, moveCursor);
 
     return () => {
-      E.off(EVENTS.MOUSE_MOVE, moveCursor);
+      // E.off(EVENTS.MOUSE_MOVE, moveCursor);
     };
   }, []);
 

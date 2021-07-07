@@ -39,5 +39,4 @@ const useEffectIfOnce = (
   ); //一度実行されるとこの条件式は二度とtrueになることはない
 };
 
-
 export { useEffectIf, useEffectIfOnce };

@@ -1,14 +1,18 @@
-import { IRawWorksId } from '@/domain/works/worksEntity';
+import { TRawWorksId } from '@/domain/works/worksEntity';
 import { GET_POST } from '@/domain/single-works/worksDetail.gql';
 import { useFetch } from '@/components/projects';
 import { fetcher } from '@/foundation/lib/fetcher';
 
-const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
-  const [data, status] = useFetch<IRawWorksId>(GET_POST, () => {
-    return fetcher(GET_POST, { slug })
-  }, {
-    initialData
-  });
+const useWorksDetail = (initialData: TRawWorksId, slug: string) => {
+  const [data, status] = useFetch<TRawWorksId>(
+    GET_POST,
+    () => {
+      return fetcher(GET_POST, { slug });
+    },
+    {
+      initialData,
+    }
+  );
 
   const newData = {
     title: data.post.title,
@@ -16,7 +20,7 @@ const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
     eyecatch: {
       src: data.post.acf.eyecatch.sourceUrl,
       srcSet: data.post.acf.eyecatch.srcSet,
-      mobile: data.post.acf.eyecatchMobile?.sourceUrl
+      mobile: data.post.acf.eyecatchMobile?.sourceUrl,
     },
     date: new Date(data.post.date),
     role: data.post.acf.role.map(i => i.name),
@@ -26,8 +30,8 @@ const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
         width: i.mediaDetails.width,
         height: i.mediaDetails.height,
         src: i.sourceUrl,
-        srcSet: i.srcSet
-      }
+        srcSet: i.srcSet,
+      };
     }),
     prev: {
       slug: data.post.previous.slug,
@@ -41,6 +45,6 @@ const useWorksDetail = (initialData: IRawWorksId, slug: string) => {
   };
 
   return [newData, status] as const;
-}
+};
 
-export { useWorksDetail }
+export { useWorksDetail };

@@ -10,8 +10,8 @@ const ToggleMenu = () => {
   const borderRef = [useRef(null), useRef(null)];
 
   useUpdateEffect(() => {
-    isMenuOpen ? open() : close()
-  }, [isMenuOpen])
+    isMenuOpen ? open() : close();
+  }, [isMenuOpen]);
 
   const open = () => {
     gsap.to(triggerRef.current, 0.8, {
@@ -59,7 +59,9 @@ const ToggleMenu = () => {
     <button
       type="button"
       css={menuTrigger}
-      className={`u-mobile ${isMenuOpen ? 'is-open' : ''} ${isMenuAnimating ? 'is-animating' : ''}`}
+      className={`u-mobile ${isMenuOpen ? 'is-open' : ''} ${
+        isMenuAnimating ? 'is-animating' : ''
+      }`}
       aria-label="menu-toggle"
       onClick={onMenuToggle}
       ref={triggerRef}

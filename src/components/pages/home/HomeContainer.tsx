@@ -4,20 +4,20 @@ import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { ProgressBar } from '@/components/ui';
-import { Utils } from '@/foundation/utils';;
+import { Utils } from '@/foundation/utils';
 
 interface IProps {
   posts: {
     title: string;
     slug: string;
     category: string;
+    index: number | string;
     eyecatch: {
       src: string;
       srcSet: string;
       mobile: string;
-    }
+    };
   }[];
-  totalPosts: number;
   loading: boolean;
   errorMessage: string;
 }
@@ -45,8 +45,7 @@ const PageContainer = (props: IProps) => {
       variants={transition}
       tw="overflow-hidden"
     >
-      {
-        /*
+      {/*
         //data && <Canvas domRef={slidesRef} />
 
       <div css={slides} ref={slidesRef}>
@@ -102,7 +101,7 @@ const PageContainer = (props: IProps) => {
           max={Number(Utils.zeroPadding(max, 2))}
         />
       </div>
-        */  }
+        */}
     </motion.div>
   );
 };

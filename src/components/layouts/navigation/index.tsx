@@ -12,7 +12,13 @@ const CLIP_PATH = {
 };
 
 const Component = () => {
-  const { isMenuOpen, isMenuAnimating, onMenuClose, setMenuAnimationStart, setMenuAnimationEnd } = useMenuContext();
+  const {
+    isMenuOpen,
+    isMenuAnimating,
+    onMenuClose,
+    setMenuAnimationStart,
+    setMenuAnimationEnd,
+  } = useMenuContext();
   const navMenuRef = useRef(null);
 
   const updateClipPath = useCallback(() => {
@@ -25,7 +31,7 @@ const Component = () => {
   }, [CLIP_PATH.x1, CLIP_PATH.x2]);
 
   useUpdateEffect(() => {
-    isMenuOpen ? showMenu() : hideMenu()
+    isMenuOpen ? showMenu() : hideMenu();
   }, [isMenuOpen]);
 
   const showMenu = useCallback(async () => {
@@ -150,7 +156,6 @@ const Component = () => {
     setMenuAnimationStart();
 
     tl.play(0);
-
   }, []);
 
   return (

@@ -11,7 +11,13 @@ const Picture = ({ src, srcSet, mobile }: IPicture) => {
   return (
     <picture css={picture}>
       {mobile && <source media="(max-width: 639px)" srcSet={mobile} />}
-      <img src={src} srcSet={srcSet} alt="" decoding="async" css={picture__img} />
+      <img
+        src={src}
+        srcSet={srcSet}
+        alt=""
+        decoding="async"
+        css={picture__img}
+      />
     </picture>
   );
 };

@@ -33,5 +33,4 @@ const rad2deg = (n: number) => {
   return (180 * n) / Math.PI;
 };
 
-
-export { lerp, map, norm, hypot, deg2rad, rad2deg }
+export { lerp, map, norm, hypot, deg2rad, rad2deg };

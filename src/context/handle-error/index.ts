@@ -9,23 +9,23 @@ interface IError extends Error {
 const useHandleHttpError = () => {
   // const { captureException } = useSentry();
 
-  const handleHttpError = useCallback((error) => {
-    let errors: IError | null = null;
+  const handleHttpError = useCallback(error => {
+    const errors: IError | null = null;
 
     if (error) {
       // captureException(error.error, error.data)
 
-      console.log({ error })
+      console.log({ error });
     }
 
-    return errors
+    return errors;
   }, []);
 
-  const raiseError = useCallback(() => {
-
-  }, []);
+  const raiseError = useCallback(() => {}, []);
 
   return { handleHttpError, raiseError };
-}
+};
 
-export const [HandleHttpErrorProvider, useHandleHttpErrorContext] = constate(useHandleHttpError);
+export const [HandleHttpErrorProvider, useHandleHttpErrorContext] = constate(
+  useHandleHttpError
+);

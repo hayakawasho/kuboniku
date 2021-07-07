@@ -2,11 +2,7 @@ import { gql } from 'graphql-request';
 
 const GET_INITIAL_POSTS = gql`
   query {
-    posts(
-      where: {
-        offsetPagination: { size: 10 }
-      }
-    ) {
+    posts(where: { offsetPagination: { size: 10 } }) {
       nodes {
         title
         slug

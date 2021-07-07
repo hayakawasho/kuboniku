@@ -25,7 +25,7 @@ interface IRawWorksAcf {
   };
 }
 
-interface IRawWorksId {
+type TRawWorksId = {
   post: {
     date: string;
     title: string;
@@ -39,7 +39,7 @@ interface IRawWorksId {
   };
 }
 
-interface IRawWorksList {
+type TRawWorksList = {
   posts: {
     nodes: {
       slug: string;
@@ -52,6 +52,6 @@ interface IRawWorksList {
       };
     };
   };
-};
+}
 
-export type { IRawWorksList, IRawWorksId };
+export type { TRawWorksList, TRawWorksId };

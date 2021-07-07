@@ -13,7 +13,7 @@ interface IProps {
     src: string;
     srcSet: string;
     mobile?: string;
-  }
+  };
   date: Date;
   role: string[];
   viewWebsite?: string;
@@ -30,7 +30,7 @@ interface IProps {
       src: string;
       srcSet: string;
       mobile?: string;
-    }
+    };
   };
   loading: boolean;
   errorMessage: string;

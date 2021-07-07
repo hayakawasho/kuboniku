@@ -32,10 +32,7 @@ const Scene = ({ uniforms }) => {
 
   return (
     <mesh ref={mesh} position={[0, 0, 0]}>
-      <planeBufferGeometry
-        attach="geometry"
-        args={[size.width, size.height]}
-      />
+      <planeBufferGeometry attach="geometry" args={[size.width, size.height]} />
       <shaderMaterial
         attach="material"
         uniforms={uniforms}
@@ -46,4 +43,4 @@ const Scene = ({ uniforms }) => {
   );
 };
 
-export { Scene }
+export { Scene };

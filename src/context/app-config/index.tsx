@@ -4,8 +4,7 @@ import { isMobileOnly } from 'react-device-detect';
 import { getGPUTier } from 'detect-gpu';
 
 const useAppConfig = () => {
-
-  return { isMobile: isMobileOnly }
+  return { isMobile: isMobileOnly };
 };
 
 export const [AppConfigProvider, useAppConfigContext] = constate(useAppConfig);
