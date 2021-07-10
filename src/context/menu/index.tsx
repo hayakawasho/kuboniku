@@ -10,11 +10,11 @@ const useMenu = () => {
   const isMenuAnimating = useRef(false);
   const setMenuAnimationStart = useCallback(
     () => (isMenuAnimating.current = true),
-    []
+    [isMenuAnimating.current]
   );
   const setMenuAnimationEnd = useCallback(
     () => (isMenuAnimating.current = false),
-    []
+    [isMenuAnimating.current]
   );
 
   const onMenuToggle = useCallback(() => {
