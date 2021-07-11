@@ -1,4 +1,4 @@
-interface IRawWorksAcf {
+type TRawWorksAcf = {
   category: {
     name: string;
   };
@@ -30,11 +30,11 @@ type TRawWorksId = {
     date: string;
     title: string;
     slug: string;
-    acf: IRawWorksAcf;
+    acf: TRawWorksAcf;
     previous?: {
       title: string;
       slug: string;
-      acf: IRawWorksAcf;
+      acf: TRawWorksAcf;
     };
   };
 }
@@ -44,7 +44,7 @@ type TRawWorksList = {
     nodes: {
       slug: string;
       title: string;
-      acf: IRawWorksAcf;
+      acf: TRawWorksAcf;
     }[];
     pageInfo: {
       offsetPagination: {

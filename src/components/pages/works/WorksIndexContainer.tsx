@@ -4,7 +4,7 @@ import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import { Entry } from './presentations/Entry';
-import { useIntersectionObserver } from '@/components/projects';
+import { useIntersectionObserver } from '@/foundation/hooks';
 
 interface IProps {
   posts: {

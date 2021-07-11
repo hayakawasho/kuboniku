@@ -3310,6 +3310,11 @@ graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
+graphql-normalizr@^2.10.3:
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/graphql-normalizr/-/graphql-normalizr-2.10.3.tgz#4ca781ff8fd0117d5fe42c138206dbcb9eecd3d4"
+  integrity sha512-Zf5Fj6+4eoiu6D0dmemzOUereEzLCR+bKI9inQkrfXl+vvAEQvm4/G0VKkVUtFCvYS/zbczXCQ6lUFL9SZS3bA==
+
 graphql-request@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-3.4.0.tgz#3a400cd5511eb3c064b1873afb059196bbea9c2b"
@@ -4727,6 +4732,11 @@ normalize-url@^4.1.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
+
+normalizr@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/normalizr/-/normalizr-3.6.1.tgz#d367ab840e031ff382141b8d81ce279292ff69fe"
+  integrity sha512-8iEmqXmPtll8PwbEFrbPoDxVw7MKnNvt3PZzR2Xvq9nggEEOgBlNICPXYzyZ4w4AkHUzCU998mdatER3n2VaMA==
 
 npm-run-path@^4.0.1:
   version "4.0.1"
@@ -7354,11 +7364,6 @@ vary@^1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
-
-vendor-prefix@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vendor-prefix/-/vendor-prefix-0.1.0.tgz#d7be53ab6e4879fb11f9ea33696e59c7dc29497c"
-  integrity sha1-175Tq25IefsR+eozaW5Zx9wpSXw=
 
 vercel@^22.0.1:
   version "22.0.1"

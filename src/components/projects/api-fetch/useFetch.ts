@@ -5,7 +5,7 @@ import { useHandleHttpErrorContext } from '@/context';
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
 
 const useFetch = <T extends Record<string, unknown>>(
-  key: string | null,
+  key: string | string[] | null,
   fetcher: () => Promise<T>,
   options?: SWRConfiguration<T>
 ) => {
@@ -19,10 +19,10 @@ const useFetch = <T extends Record<string, unknown>>(
 
     if (error) {
       setStatus(['error', error.message]);
-    } else if (result.isValidating) {
-      setStatus(['loading']);
     } else if (result.data) {
       setStatus(['success']);
+    } else if (result.isValidating) {
+      setStatus(['loading']);
     }
   }, [result.error, handleHttpError, result.isValidating, result.data]);
 

@@ -1,17 +1,19 @@
 import { useState, useCallback, useRef } from 'react';
 import constate from 'constate';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
-import { useUpdateEffect } from '@/components/projects';
+import { useUpdateEffect } from '@/foundation/hooks';
 
 const useMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
   const onMenuClose = useCallback(() => setIsMenuOpen(false), []);
   const isMenuAnimating = useRef(false);
+
   const setMenuAnimationStart = useCallback(
     () => (isMenuAnimating.current = true),
     [isMenuAnimating.current]
   );
+
   const setMenuAnimationEnd = useCallback(
     () => (isMenuAnimating.current = false),
     [isMenuAnimating.current]

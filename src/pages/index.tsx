@@ -4,6 +4,7 @@ import { fetcher } from '@/foundation/lib/fetcher';
 import { TRawWorksList } from '@/domain/works/worksEntity';
 import { GET_POSTS } from '@/domain/home/home.gql';
 import { HomeContainer, useHome } from '@/components/pages/home';
+import { useMount, useUnmount } from '@/components/projects';
 
 interface IProps {
   posts: TRawWorksList;
@@ -11,6 +12,14 @@ interface IProps {
 
 const Component: NextPage<IProps> = props => {
   const [newProps, status] = useHome(props.posts);
+
+  useMount(() => {
+    document.body.classList.add('is-home')
+  })
+
+  useUnmount(() => {
+    document.body.classList.remove('is-home')
+  })
 
   return (
     <Layout title="NAGISA KUBO">

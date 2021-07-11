@@ -2,8 +2,7 @@ import { useRef, useEffect, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import { useToggle } from '@/components/projects';
-import { useUpdateEffect } from '@/components/projects';
+import { useUpdateEffect, useToggle } from '@/foundation/hooks';
 
 const ToggleSns = () => {
   const [isOpen, toggle] = useToggle(false, true);

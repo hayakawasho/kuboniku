@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { Layout } from '@/components/layouts';
 import { fetcher } from '@/foundation/lib/fetcher';
 import { TRawWorksList } from '@/domain/works/worksEntity';
-import { GET_INITIAL_POSTS } from '@/domain/works/worksIndex.gql';
+import { GET_INITIAL_POSTS } from '@/domain/query/worksIndex';
 import { useWorksIndex, WorksIndexContainer } from '@/components/pages/works';
 
 interface IProps {
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Component: NextPage<IProps> = props => {
-  const [data, status, { onLoadMore }] = useWorksIndex(
+  const [data, status, { onLoadMoreWorksInfo }] = useWorksIndex(
     props.posts,
     props.totalPosts
   );
@@ -22,8 +22,8 @@ const Component: NextPage<IProps> = props => {
         posts={data}
         totalPosts={props.totalPosts}
         loading={status[0] === 'loading'}
-        errorMessage={status[0] === 'error' && '' + status[1]}
-        onLoadMore={onLoadMore}
+        errorMessage={status[0] === 'error' && status[1]}
+        onLoadMore={onLoadMoreWorksInfo}
       />
     </Layout>
   );
