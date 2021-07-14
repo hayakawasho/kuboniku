@@ -4,7 +4,7 @@ import { TRawWorksList } from '@/domain/model/entity/works';
 import {
   useWorksUsecase,
   WorksIndexContainer,
-  worksResository,
+  worksRepository,
 } from '@/domain/works';
 
 interface IProps {
@@ -34,7 +34,7 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async () => {
-  const data = await worksResository().findInitial();
+  const data = await worksRepository().findInitial();
 
   return {
     posts: data,

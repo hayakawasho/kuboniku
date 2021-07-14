@@ -57,16 +57,16 @@ const GET_OFFSET_POSTS = (offset: number) => {
   return graphql;
 };
 
-const worksResository = () => {
+const worksRepository = () => {
   const findInitial = async () => {
     return fetcher<TRawWorksList>(GET_INITIAL_POSTS);
   };
 
-  const findAll = async (offset: number) => {
+  const findOffset = async (offset: number) => {
     return fetcher<TRawWorksList>(GET_OFFSET_POSTS(offset));
   };
 
-  return { findAll, findInitial };
+  return { findOffset, findInitial };
 };
 
-export { worksResository };
+export { worksRepository };

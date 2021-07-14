@@ -3,7 +3,7 @@ import { useSWRInfinite } from 'swr';
 import { TRawWorksList } from '@/domain/model/entity/works';
 import { Utils } from '@/foundation/utils';
 import { useHandleHttpErrorContext } from '@/context';
-import { worksResository } from './works-repository';
+import { worksRepository } from './works-repository';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
 type TWorksList = TRawWorksList;
@@ -19,7 +19,7 @@ const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
       return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
     (_, offset: number) => {
-      return worksResository().findAll(offset);
+      return worksRepository().findOffset(offset);
     },
     {
       initialData: [initialData],

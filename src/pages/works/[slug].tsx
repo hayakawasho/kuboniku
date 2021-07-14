@@ -4,7 +4,7 @@ import { TRawWorksId } from '@/domain/model/entity/works';
 import {
   useWorkUsecase,
   WorksDetailContainer,
-  workResository,
+  workRepository,
 } from '@/domain/works-slug';
 
 interface IProps {
@@ -30,7 +30,7 @@ export default Component;
 
 Component.getInitialProps = async ({ query }) => {
   const slug = query?.slug ?? '';
-  const data = await workResository().find(slug as string);
+  const data = await workRepository().find(slug as string);
 
   return {
     post: data,

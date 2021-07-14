@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { TRawWorksId } from '@/domain/model/entity/works';
 import { useFetch } from '@/foundation/hooks';
-import { workResository } from './work-repository';
+import { workRepository } from './work-repository';
 
 const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useFetch<TRawWorksId>(
     `/api/works/${slug}`,
     () => {
-      return workResository().find(slug);
+      return workRepository().find(slug);
     },
     {
       initialData,

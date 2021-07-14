@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { TRawWorksList } from '@/domain/model/entity/works';
-import { homeResository } from './home-repository';
+import { homeRepository } from './home-repository';
 import { useFetch } from '@/foundation/hooks';
 import { Utils } from '@/foundation/utils';
 
 const useHomeUsecase = (initialData: TRawWorksList) => {
   const [data, status] = useFetch<TRawWorksList>(
     `/api/home`,
-    () => homeResository().findAll(),
+    () => homeRepository().findAll(),
     {
       initialData,
     }

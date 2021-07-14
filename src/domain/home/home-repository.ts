@@ -30,7 +30,7 @@ const GET_POSTS = gql`
   }
 `;
 
-const homeResository = () => {
+const homeRepository = () => {
   const findAll = async () => {
     return fetcher<TRawWorksList>(GET_POSTS);
   };
@@ -38,4 +38,4 @@ const homeResository = () => {
   return { findAll };
 };
 
-export { homeResository };
+export { homeRepository };

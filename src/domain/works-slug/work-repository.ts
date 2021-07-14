@@ -51,7 +51,7 @@ const GET_POST = gql`
   }
 `;
 
-const workResository = () => {
+const workRepository = () => {
   const find = async (slug: string) => {
     return fetcher<TRawWorksId>(GET_POST, { slug });
   };
@@ -59,4 +59,4 @@ const workResository = () => {
   return { find };
 };
 
-export { workResository };
+export { workRepository };

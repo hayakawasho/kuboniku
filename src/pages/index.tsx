@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { Layout } from '@/components/site-parts/layout';
 import { TRawWorksList } from '@/domain/model/entity/works';
-import { useHomeUsecase, HomeContainer, homeResository } from '@/domain/home';
+import { useHomeUsecase, HomeContainer, homeRepository } from '@/domain/home';
 import { useMount, useUnmount } from '@/foundation/hooks';
 interface IProps {
   posts: TRawWorksList;
@@ -32,7 +32,7 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async () => {
-  const data = await homeResository().findAll();
+  const data = await homeRepository().findAll();
 
   return {
     posts: data,
