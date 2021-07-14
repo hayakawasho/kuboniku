@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import constate from 'constate';
-// import { useSentry } from './useSentry';
+import { useSentry } from './use-sentry';
 
 interface IError extends Error {
   code?: number;

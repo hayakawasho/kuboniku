@@ -1,9 +1,12 @@
 import { NextPage } from 'next';
-import { Layout } from '@/components/layouts';
+import { Layout } from '@/components/site-parts/layout';
+import { TRawWorksList } from '@/domain/model/entity/works';
+import {
+  GET_INITIAL_POSTS,
+  useWorksIndexUsecase,
+  WorksIndexContainer,
+} from '@/domain/works';
 import { fetcher } from '@/foundation/lib/fetcher';
-import { TRawWorksList } from '@/domain/works/worksEntity';
-import { GET_INITIAL_POSTS } from '@/domain/query/worksIndex';
-import { useWorksIndex, WorksIndexContainer } from '@/components/pages/works';
 
 interface IProps {
   posts: TRawWorksList;
@@ -11,7 +14,7 @@ interface IProps {
 }
 
 const Component: NextPage<IProps> = props => {
-  const [data, status, { onLoadMoreWorksInfo }] = useWorksIndex(
+  const [data, status, { onLoadMoreWorksInfo }] = useWorksIndexUsecase(
     props.posts,
     props.totalPosts
   );

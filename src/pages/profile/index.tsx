@@ -1,5 +1,5 @@
-import { Layout } from '@/components/layouts';
-import { ProfileContainer } from '@/components/pages/profile';
+import { Layout } from '@/components/site-parts/layout';
+import { ProfileContainer } from '@/domain/profile';
 
 const Component = () => {
   return (

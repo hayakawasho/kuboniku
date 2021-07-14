@@ -7,14 +7,18 @@ import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
-import { AppConfigProvider } from '@/context/app-config';
-import { AppStateProvider } from '@/context/app-state';
-import { HandleHttpErrorProvider } from '@/context/handle-error';
-import { UiColorProvider } from '@/context/ui-color';
-import { MenuProvider } from '@/context/menu';
-// import ViewportRef from '@/components/ViewportRef';
-// import Loader from '@/components/Loader';
-import { Header, Navigation } from '@/components/layouts';
+import {
+  AppConfigProvider,
+  AppStateProvider,
+  HandleHttpErrorProvider,
+  UiColorProvider,
+  MenuProvider,
+  WindowScrollProvider,
+  WindowSizeProvider,
+  MousePositionProvider,
+} from '@/context';
+import { Header } from '@/components/site-parts/header';
+import { Navigation } from '@/components/site-parts/navigation';
 
 const World3d = dynamic(
   () => import('@/context/world-3d').then(modules => modules.Webgl),
@@ -57,20 +61,26 @@ const AppComponent = ({
           >
             <AppStateProvider>
               <UiColorProvider>
-                <MenuProvider>
-                  <div id="app">
-                    <Header />
-                    <Navigation />
-                    <AnimatePresence
-                      exitBeforeEnter
-                      initial={false}
-                      onExitComplete={onExitComplete}
-                    >
-                      <Component {...pageProps} key={router.asPath} />
-                    </AnimatePresence>
-                    <World3d />
-                  </div>
-                </MenuProvider>
+                <WindowScrollProvider>
+                  <WindowSizeProvider>
+                    <MousePositionProvider>
+                      <MenuProvider>
+                        <div id="app">
+                          <Header />
+                          <Navigation />
+                          <AnimatePresence
+                            exitBeforeEnter
+                            initial={false}
+                            onExitComplete={onExitComplete}
+                          >
+                            <Component {...pageProps} key={router.asPath} />
+                          </AnimatePresence>
+                          <World3d />
+                        </div>
+                      </MenuProvider>
+                    </MousePositionProvider>
+                  </WindowSizeProvider>
+                </WindowScrollProvider>
               </UiColorProvider>
             </AppStateProvider>
           </SWRConfig>

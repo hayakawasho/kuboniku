@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import { Layout } from '@/components/layouts';
-import { TRawWorksId } from '@/domain/works/worksEntity';
-import { GET_POST } from '@/domain/single-works/worksDetail.gql';
+import { Layout } from '@/components/site-parts/layout';
+import { TRawWorksId } from '@/domain/model/entity/works';
 import {
+  useWorksDetailUsecase,
+  GET_POST,
   WorksDetailContainer,
-  useWorksDetail,
-} from '@/components/pages/single-works';
+} from '@/domain/works-slug';
 import { fetcher } from '@/foundation/lib/fetcher';
 
 interface IProps {
@@ -14,7 +14,10 @@ interface IProps {
 }
 
 const Component: NextPage<IProps> = props => {
-  const [newProps, status] = useWorksDetail(props.post, props.path as string);
+  const [newProps, status] = useWorksDetailUsecase(
+    props.post,
+    props.path as string
+  );
 
   return (
     <Layout title="WORKS">
