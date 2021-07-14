@@ -1,3 +1,3 @@
-export { useWorksIndexUsecase } from './use-works-usecase';
-export { GET_INITIAL_POSTS } from './gql';
-export { default as WorksIndexContainer } from './works-container';
+export { useWorksUsecase } from './use-works-usecase';
+export { worksResository } from './works-repository';
+export { default as WorksIndexContainer } from './presenter';

@@ -1,26 +1,25 @@
 import { useCallback, useState, useEffect, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
-import { TRawWorksList } from '@/domain/entity/works';
-import { GET_OFFSET_POSTS } from './gql';
+import { TRawWorksList } from '@/domain/model/entity/works';
 import { Utils } from '@/foundation/utils';
 import { useHandleHttpErrorContext } from '@/context';
-import { fetcher } from '@/foundation/lib/fetcher';
+import { worksResository } from './works-repository';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
 type TWorksList = TRawWorksList;
 
 const PER_PAGE = 10;
 
-const useWorksIndexUsecase = (initialData: TWorksList, totalPosts: number) => {
+const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
   const [status, setStatus] = useState<TStatus<string>>(['idle']);
   const { handleHttpError } = useHandleHttpErrorContext();
 
   const result = useSWRInfinite<TWorksList, Error>(
     pageIndex => {
-      return GET_OFFSET_POSTS(pageIndex * PER_PAGE, PER_PAGE);
+      return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
-    (key: string) => {
-      return fetcher(key);
+    (_, offset: number) => {
+      return worksResository().findAll(offset);
     },
     {
       initialData: [initialData],
@@ -69,4 +68,4 @@ const useWorksIndexUsecase = (initialData: TWorksList, totalPosts: number) => {
   return [getWorksInfo, status, { onLoadMoreWorksInfo }] as const;
 };
 
-export { useWorksIndexUsecase };
+export { useWorksUsecase };

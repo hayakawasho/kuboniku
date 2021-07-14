@@ -2,11 +2,10 @@ import { NextPage } from 'next';
 import { Layout } from '@/components/site-parts/layout';
 import { TRawWorksId } from '@/domain/model/entity/works';
 import {
-  useWorksDetailUsecase,
-  GET_POST,
+  useWorkUsecase,
   WorksDetailContainer,
+  workResository,
 } from '@/domain/works-slug';
-import { fetcher } from '@/foundation/lib/fetcher';
 
 interface IProps {
   post: TRawWorksId;
@@ -14,10 +13,7 @@ interface IProps {
 }
 
 const Component: NextPage<IProps> = props => {
-  const [newProps, status] = useWorksDetailUsecase(
-    props.post,
-    props.path as string
-  );
+  const [newProps, status] = useWorkUsecase(props.post, props.path as string);
 
   return (
     <Layout title="WORKS">
@@ -33,9 +29,8 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async ({ query }) => {
-  const data = await fetcher<TRawWorksId>(GET_POST, {
-    slug: query?.slug ?? '',
-  });
+  const slug = query?.slug ?? '';
+  const data = await workResository().find(slug as string);
 
   return {
     post: data,

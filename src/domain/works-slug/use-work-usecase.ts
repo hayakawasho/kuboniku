@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import { TRawWorksId } from '@/domain/model/entity/works';
-import { GET_POST } from '@/domain/query/worksDetail';
 import { useFetch } from '@/foundation/hooks';
-import { fetcher } from '@/foundation/lib/fetcher';
+import { workResository } from './work-repository';
 
-const useWorksDetailUsecase = (initialData: TRawWorksId, slug: string) => {
+const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useFetch<TRawWorksId>(
     `/api/works/${slug}`,
     () => {
-      return fetcher(GET_POST, { slug });
+      return workResository().find(slug);
     },
     {
       initialData,
@@ -52,4 +51,4 @@ const useWorksDetailUsecase = (initialData: TRawWorksId, slug: string) => {
   return [getWorksInfo, status] as const;
 };
 
-export { useWorksDetailUsecase };
+export { useWorkUsecase };

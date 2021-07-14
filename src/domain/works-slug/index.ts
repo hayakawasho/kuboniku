@@ -1,3 +1,3 @@
-export { useWorksDetailUsecase } from './use-works-detail-usecase';
-export { GET_POST } from './gql';
-export { default as WorksDetailContainer } from './works-detail-container';
+export { useWorkUsecase } from './use-work-usecase';
+export { workResository } from './work-repository';
+export { default as WorksDetailContainer } from './presenter';
