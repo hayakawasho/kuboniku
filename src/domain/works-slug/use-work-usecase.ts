@@ -14,8 +14,8 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
     }
   );
 
-  const getWorksInfo = useMemo(() => {
-    const viewWorks = {
+  const getWorkInfo = useMemo(() => {
+    const viewWork = {
       title: data.post.title,
       category: data.post.acf.category.name,
       eyecatch: {
@@ -45,10 +45,10 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
       },
     };
 
-    return viewWorks;
+    return viewWork;
   }, [data]);
 
-  return [getWorksInfo, status] as const;
+  return [getWorkInfo, status] as const;
 };
 
 export { useWorkUsecase };
