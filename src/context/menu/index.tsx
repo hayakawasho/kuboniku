@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import constate from 'constate';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
-import { useUpdateEffect } from '@/foundation/hooks';
+import { useUpdateEffect } from '@/app/hooks';
 
 const useMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

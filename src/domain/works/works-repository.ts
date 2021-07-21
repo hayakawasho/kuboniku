@@ -1,39 +1,13 @@
-import { fetcher } from '@/foundation/lib/fetcher';
+import { fetcher } from '@/app/lib/fetcher';
 import { gql } from 'graphql-request';
-import { TRawWorksList } from '@/domain/model/entity/works';
+import { TRawWorksList, TRawWorksId } from './works-entity';
 
-const GET_INITIAL_POSTS = gql`
-  query {
-    posts(where: { offsetPagination: { size: 10 } }) {
-      nodes {
-        title
-        slug
-        acf {
-          eyecatch {
-            sourceUrl
-            srcSet
-          }
-          category {
-            name
-          }
-          themeColor
-        }
-      }
-      pageInfo {
-        offsetPagination {
-          total
-        }
-      }
-    }
-  }
-`;
-
-const GET_OFFSET_POSTS = (offset: number) => {
+const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
     query {
       posts(
         where: {
-          offsetPagination: {offset: ${offset}, size: 10}
+          offsetPagination: {offset: ${offset}, size: ${size}}
         }
       ) {
         nodes {
@@ -50,6 +24,11 @@ const GET_OFFSET_POSTS = (offset: number) => {
             themeColor
           }
         }
+        pageInfo {
+          offsetPagination {
+            total
+          }
+        }
       }
     }
   `;
@@ -57,16 +36,65 @@ const GET_OFFSET_POSTS = (offset: number) => {
   return graphql;
 };
 
+const GET_POST = gql`
+  query GET_POST($slug: String) {
+    post: postBy(slug: $slug) {
+      title
+      date
+      previous {
+        title
+        slug
+        acf {
+          eyecatch {
+            sourceUrl
+            srcSet
+          }
+          eyecatchMobile {
+            sourceUrl
+            srcSet
+          }
+        }
+      }
+      acf {
+        eyecatch {
+          sourceUrl
+          srcSet
+        }
+        eyecatchMobile {
+          sourceUrl
+          srcSet
+        }
+        category {
+          name
+        }
+        role {
+          name
+        }
+        themeColor
+        url
+        gallery {
+          sourceUrl
+          srcSet
+          mediaDetails {
+            width
+            height
+          }
+        }
+      }
+    }
+  }
+`;
+
 const worksRepository = () => {
-  const findInitial = async () => {
-    return fetcher<TRawWorksList>(GET_INITIAL_POSTS);
+  const findById = async (slug: string) => {
+    return fetcher<TRawWorksId>(GET_POST, { slug });
   };
 
-  const findOffset = async (offset: number) => {
-    return fetcher<TRawWorksList>(GET_OFFSET_POSTS(offset));
+  const findArray = async (size: number, offset = 0) => {
+    return fetcher<TRawWorksList>(GET_POSTS(offset, size));
   };
 
-  return { findOffset, findInitial };
+  return { findById, findArray };
 };
 
 export { worksRepository };

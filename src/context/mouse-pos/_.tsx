@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-// import E from '@/foundation/utils';
-import { EVENTS } from '@/foundation/constants/const';
+// import E from '@/app/utils';
+import { EVENTS } from '@/app/constants/const';
 
 const Component: React.FC = () => {
   const x = useMotionValue(-100);

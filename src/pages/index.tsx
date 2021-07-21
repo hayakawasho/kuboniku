@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import { Layout } from '@/components/site-parts/layout';
+import { Layout } from '@/app/components/layout';
 import { TRawWorksList } from '@/domain/model/entity/works';
-import { useHomeUsecase, HomeContainer, homeRepository } from '@/domain/home';
-import { useMount, useUnmount } from '@/foundation/hooks';
+import { useHomeUsecase, HomePresenter, homeRepository } from '@/domain/home';
+import { useMount, useUnmount } from '@/app/hooks';
 
 interface IProps {
   posts: TRawWorksList;
@@ -21,7 +21,7 @@ const Component: NextPage<IProps> = props => {
 
   return (
     <Layout title="NAGISA KUBO">
-      <HomeContainer
+      <HomePresenter
         {...newProps}
         loading={status[0] === 'loading'}
         errorMessage={status[0] === 'error' && status[1]}

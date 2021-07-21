@@ -1,5 +1,5 @@
-import { Layout } from '@/components/site-parts/layout';
-import { ErrorScreen } from '@/components/ui';
+import { Layout } from '@/app/components/layout';
+import { ErrorScreen } from '@/app/components/ui';
 
 const Component = () => (
   <Layout title="404 Not found">

@@ -1,5 +1,4 @@
 const path = require('path')
-const Fiber = require('fibers')
 
 const nextConfig = {
   experimental: {
@@ -9,10 +8,6 @@ const nextConfig = {
 
   env: {
     BASIC_AUTH_CREDENTIALS: process.env.BASIC_AUTH_CREDENTIALS,
-  },
-
-	sassOptions: {
-		fiber: Fiber
   },
 
   webpack: (config, options) => {

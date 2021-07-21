@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
-import { Layout } from '@/components/site-parts/layout';
-import { TRawWorksList } from '@/domain/model/entity/works';
+import { Layout } from '@/app/components/layout';
 import {
+  TRawWorksList,
   useWorksUsecase,
-  WorksIndexContainer,
+  WorksIndexPresenter,
   worksRepository,
 } from '@/domain/works';
 
@@ -13,19 +13,19 @@ interface IProps {
 }
 
 const Component: NextPage<IProps> = props => {
-  const [data, status, { onLoadMoreWorksInfo }] = useWorksUsecase(
+  const [data, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
     props.posts,
     props.totalPosts
   );
 
   return (
     <Layout title="WORKS">
-      <WorksIndexContainer
+      <WorksIndexPresenter
         posts={data}
         totalPosts={props.totalPosts}
         loading={status[0] === 'loading'}
         errorMessage={status[0] === 'error' && status[1]}
-        onLoadMore={onLoadMoreWorksInfo}
+        onLoadMore={handleLoadMoreWorksInfo}
       />
     </Layout>
   );
@@ -34,7 +34,7 @@ const Component: NextPage<IProps> = props => {
 export default Component;
 
 Component.getInitialProps = async () => {
-  const data = await worksRepository().findInitial();
+  const data = await worksRepository().findArray(10);
 
   return {
     posts: data,

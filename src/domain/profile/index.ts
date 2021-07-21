@@ -1,1 +1,1 @@
-export { default as ProfileContainer } from './presenter';
+export { default as ProfilePresenter } from './_index/presenter';

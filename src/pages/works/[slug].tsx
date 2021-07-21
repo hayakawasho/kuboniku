@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import { Layout } from '@/components/site-parts/layout';
-import { TRawWorksId } from '@/domain/model/entity/works';
+import { Layout } from '@/app/components/layout';
 import {
+  TRawWorksId,
   useWorkUsecase,
-  WorksDetailContainer,
-  workRepository,
-} from '@/domain/works-slug';
+  worksRepository,
+  WorksDetailPresenter,
+} from '@/domain/works';
 
 interface IProps {
   post: TRawWorksId;
@@ -17,7 +17,7 @@ const Component: NextPage<IProps> = props => {
 
   return (
     <Layout title="WORKS">
-      <WorksDetailContainer
+      <WorksDetailPresenter
         {...newProps}
         loading={status[0] === 'loading'}
         errorMessage={status[0] === 'error' && '' + status[1]}
@@ -30,7 +30,7 @@ export default Component;
 
 Component.getInitialProps = async ({ query }) => {
   const slug = query?.slug ?? '';
-  const data = await workRepository().find(slug as string);
+  const data = await worksRepository().findById(slug as string);
 
   return {
     post: data,

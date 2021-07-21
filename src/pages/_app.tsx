@@ -1,5 +1,5 @@
 import 'ress';
-import '~css/global.scss';
+// import '~css/global.css';
 import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -17,8 +17,8 @@ import {
   WindowSizeProvider,
   MousePositionProvider,
 } from '@/context';
-import { Header } from '@/components/site-parts/header';
-import { Navigation } from '@/components/site-parts/navigation';
+import { Header } from '@/app/components/header';
+import { Navigation } from '@/app/components/navigation';
 
 const World3d = dynamic(
   () => import('@/context/world-3d').then(modules => modules.Webgl),
