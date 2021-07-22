@@ -1,5 +1,5 @@
 import 'ress';
-// import '~css/global.css';
+import '~css/global.css';
 import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';

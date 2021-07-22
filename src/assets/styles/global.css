@@ -1,14 +1,14 @@
-@import './base/import';
-@import './base/custom-properties';
-@import './base/base';
-@import './base/fonts';
+@import './base/_import.css';
+@import './base/_custom-properties.css';
+@import './base/_base.css';
+@import './base/_fonts.css';
 
-@import './parts/ctrl';
-@import './parts/grid';
-@import './parts/aspect';
-@import './parts/progress';
+@import './parts/_ctrl.css';
+@import './parts/_grid.css';
+@import './parts/_aspect.css';
+@import './parts/_progress.css';
 
-@import './utils';
-@import './shame';
+@import './_utils.css';
+@import './_shame.css';
 
 

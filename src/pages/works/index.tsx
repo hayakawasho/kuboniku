@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { Layout } from '@/app/components/layout';
 import {
   TRawWorksList,
@@ -12,7 +12,7 @@ interface IProps {
   totalPosts: number;
 }
 
-const Component: NextPage<IProps> = props => {
+const Component = (props: IProps) => {
   const [data, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
     props.posts,
     props.totalPosts
@@ -33,11 +33,13 @@ const Component: NextPage<IProps> = props => {
 
 export default Component;
 
-Component.getInitialProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const data = await worksRepository().findArray(10);
 
   return {
-    posts: data,
-    totalPosts: data.posts.pageInfo.offsetPagination.total,
+    props: {
+      posts: data,
+      totalPosts: data.posts.pageInfo.offsetPagination.total,
+    },
   };
-};
+}

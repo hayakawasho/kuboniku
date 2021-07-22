@@ -1,14 +1,14 @@
-import { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { Layout } from '@/app/components/layout';
-import { TRawWorksList } from '@/domain/model/entity/works';
-import { useHomeUsecase, HomePresenter, homeRepository } from '@/domain/home';
+import { TRawWorksList, worksRepository } from '@/domain/works';
+import { useHomeUsecase, HomePresenter } from '@/domain/home';
 import { useMount, useUnmount } from '@/app/hooks';
 
 interface IProps {
   posts: TRawWorksList;
 }
 
-const Component: NextPage<IProps> = props => {
+const Component = (props: IProps) => {
   const [newProps, status] = useHomeUsecase(props.posts);
 
   useMount(() => {
@@ -32,10 +32,13 @@ const Component: NextPage<IProps> = props => {
 
 export default Component;
 
-Component.getInitialProps = async () => {
-  const data = await homeRepository().findAll();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const data = await worksRepository().findArray(4);
 
   return {
-    posts: data,
+    props: {
+      posts: data,
+      totalPosts: data.posts.pageInfo.offsetPagination.total,
+    },
   };
-};
+}

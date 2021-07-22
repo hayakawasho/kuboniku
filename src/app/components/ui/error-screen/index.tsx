@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import tw, { css } from 'twin.macro';
 
 const ErrorScreen = ({ title }: { title: string }) => {
   return (

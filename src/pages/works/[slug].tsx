@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { Layout } from '@/app/components/layout';
 import {
   TRawWorksId,
@@ -12,7 +12,7 @@ interface IProps {
   path: string | string[];
 }
 
-const Component: NextPage<IProps> = props => {
+const Component = (props: IProps) => {
   const [newProps, status] = useWorkUsecase(props.post, props.path as string);
 
   return (
@@ -28,12 +28,14 @@ const Component: NextPage<IProps> = props => {
 
 export default Component;
 
-Component.getInitialProps = async ({ query }) => {
-  const slug = query?.slug ?? '';
-  const data = await worksRepository().findById(slug as string);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const slug = (ctx.params?.slug as string) ?? '';
+  const data = await worksRepository().findById(slug);
 
   return {
-    post: data,
-    path: query?.slug,
+    props: {
+      post: data,
+      path: ctx.params?.slug,
+    },
   };
-};
+}
