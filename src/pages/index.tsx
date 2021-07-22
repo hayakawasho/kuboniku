@@ -41,4 +41,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
       totalPosts: data.posts.pageInfo.offsetPagination.total,
     },
   };
-}
+};

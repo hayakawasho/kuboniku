@@ -28,7 +28,7 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
   const data = await worksRepository().findById(slug);
 
@@ -38,4 +38,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       path: ctx.params?.slug,
     },
   };
-}
+};
