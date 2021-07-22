@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { transition } from '@/app/animations';
 import tw, { css } from 'twin.macro';
@@ -120,13 +121,15 @@ const Presenter = (props: IProps) => {
                 return (
                   <li tw="relative" key={i}>
                     <div className="c-aspect" style={css} />
-                    <img
-                      src={item.src}
-                      srcSet={item.srcSet}
-                      alt=""
-                      loading="lazy"
-                      tw="absolute w-full h-full top-0 left-0"
-                    />
+                    <div tw="absolute w-full h-full top-0 left-0">
+                      <Image
+                        src={item.src}
+                        // srcSet={item.srcSet}
+                        alt=""
+                        layout="fill"
+                        // priority={true}
+                      />
+                    </div>
                   </li>
                 );
               })}

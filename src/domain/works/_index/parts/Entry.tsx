@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import tw, { css } from 'twin.macro';
 import { useToggle } from '@/app/hooks';
 
@@ -21,12 +22,12 @@ const Entry = (props: IProps) => {
         <div className="c-aspect" />
         <div css={entry__g}>
           <div css={eyecatch}>
-            <img
+            <Image
               src={props.src}
-              srcSet={props.srcSet}
+              // srcSet={props.srcSet}
               alt=""
-              decoding="async"
-              loading="lazy"
+              layout="fill"
+              priority={true}
             />
           </div>
           <div css={entry__hgroup}>
