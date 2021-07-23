@@ -22,12 +22,12 @@ const Entry = (props: IProps) => {
         <div className="c-aspect" />
         <div css={entry__g}>
           <div css={eyecatch}>
-            <Image
+            <img
               src={props.src}
-              // srcSet={props.srcSet}
+              srcSet={props.srcSet}
               alt=""
-              layout="fill"
-              priority={true}
+              // layout="fill"
+              // priority={true}
             />
           </div>
           <div css={entry__hgroup}>
