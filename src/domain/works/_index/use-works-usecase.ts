@@ -1,8 +1,8 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
 import { TRawWorksList, worksRepository } from '@/domain/works';
-import { Utils } from '@/app/utils';
-import { useUpdateEffect } from '@/app/hooks';
+import { Utils } from '@/foundation/utils';
+import { useUpdateEffect } from '@/foundation/hooks';
 import { useHandleHttpErrorContext } from '@/context';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
@@ -40,7 +40,8 @@ const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
           ),
           eyecatch: {
             src: node.acf.eyecatch.sourceUrl,
-            srcSet: node.acf.eyecatch.srcSet,
+            width: node.acf.eyecatch.mediaDetails.width,
+            height: node.acf.eyecatch.mediaDetails.height,
           },
         };
       })

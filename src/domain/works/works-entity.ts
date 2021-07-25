@@ -17,11 +17,17 @@ type TRawWorksAcf = {
   }[];
   eyecatch: {
     sourceUrl: string;
-    srcSet: string;
+    mediaDetails: {
+      width: number;
+      height: number;
+    };
   };
   eyecatchMobile?: {
     sourceUrl: string;
-    srcSet: string;
+    mediaDetails: {
+      width: number;
+      height: number;
+    };
   };
 };
 

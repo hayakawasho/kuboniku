@@ -2,8 +2,8 @@ import { useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useMenuContext } from '@/context';
 import tw, { css } from 'twin.macro';
-import { Utils, qsa } from '@/app/utils';
-import { useUpdateEffect } from '@/app/hooks';
+import { Utils, qsa } from '@/foundation/utils';
+import { useUpdateEffect } from '@/foundation/hooks';
 import { gsap } from 'gsap';
 
 const CLIP_PATH = {
@@ -261,7 +261,7 @@ const menuList = css`
 `;
 
 const link = css`
-  ${tw`inline-block align-top pointer-events-auto opacity-0`}
+  ${tw`inline-block align-top opacity-0`}
   font-family: var(--font-en);
   font-weight: 500;
   font-size: 1.4rem;
@@ -276,5 +276,9 @@ const link = css`
 
   is-menuAnimating & {
     will-change: transform, opacity;
+  }
+
+  is-menuOpen & {
+    pointer-events: auto;
   }
 `;

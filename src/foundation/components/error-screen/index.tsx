@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import tw, { css } from 'twin.macro';
+import tw from 'twin.macro';
 
 const ErrorScreen = ({ title }: { title: string }) => {
   return (
-    <div tw="w-full h-full flex justify-center items-center">
+    <div tw="w-full h-screen flex justify-center items-center text-center">
       <div>
         <h1>{title}</h1>
         <Link scroll={false} href="/">

@@ -1,11 +1,11 @@
 export const temp = 'hello';
 /*
 import store from '@/state/store';
-import E from '@/app/utils/E';
-import { EVENTS } from '@/app/constants/const';
+import E from '~utils/E';
+import { EVENTS } from '@/foundation/constants/const';
 import { SET_GPU_TIER, SET_SCROLLING } from '@/state/app';
 import { getGPUTier } from 'detect-gpu';
-import { hasTouch, APP } from '@/app/constants/env';
+import { hasTouch, APP } from '@/foundation/constants/env';
 import ASScroll from '@ashthornton/asscroll';
 
 (async () => {

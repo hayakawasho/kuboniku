@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next';
-import { Layout } from '@/app/components/layout';
+import { Layout } from '@/foundation/components';
 import { TRawWorksList, worksRepository } from '@/domain/works';
 import { useHomeUsecase, HomePresenter } from '@/domain/home';
-import { useMount, useUnmount } from '@/app/hooks';
+import { useMount, useUnmount } from '@/foundation/hooks';
 
 interface IProps {
   posts: TRawWorksList;

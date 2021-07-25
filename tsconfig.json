@@ -28,8 +28,6 @@
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "pages/**/*.ts",
-    "pages/**/*.tsx",
     "@types"
   ],
   "files": ["@types/twin.d.ts"]

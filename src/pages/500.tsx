@@ -1,9 +1,8 @@
-import { Layout } from '@/app/components/layout';
-import { ErrorScreen } from '@/app/components/ui';
+import { Layout, ErrorScreen } from '@/foundation/components';
 
 const Component = () => (
   <Layout title="500 Internal Server Error">
-    <ErrorScreen title="SEEVER SIDE ERROR" />
+    <ErrorScreen title="500 INTERNAL SERVER ERROR" />
   </Layout>
 );
 

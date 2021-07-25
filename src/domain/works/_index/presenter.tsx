@@ -1,10 +1,10 @@
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { transition } from '@/app/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import { Entry } from './parts/Entry';
-import { useIntersectionObserver } from '@/app/hooks';
+import { useIntersectionObserver } from '@/foundation/hooks';
 
 interface IProps {
   posts: {
@@ -13,7 +13,8 @@ interface IProps {
     index: number | string;
     eyecatch: {
       src: string;
-      srcSet: string;
+      width: number;
+      height: number;
     };
   }[];
   totalPosts: number;
@@ -54,7 +55,8 @@ const Presenter = (props: IProps) => {
               href={'/works/' + post.slug}
               title={post.title}
               src={post.eyecatch.src}
-              srcSet={post.eyecatch.srcSet}
+              width={post.eyecatch.width}
+              height={post.eyecatch.height}
               index={post.index}
             />
           </article>

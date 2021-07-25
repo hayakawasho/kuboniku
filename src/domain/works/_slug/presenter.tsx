@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import { transition } from '@/app/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { formatDate } from '@/app/utils';
-import { Picture } from './parts/Picture';
-import { ProgressBar } from '@/app/components/ui';
+import { formatDate } from '@/foundation/utils';
+import { ProgressBar, Picture } from '@/foundation/components';
 
 interface IProps {
   title: string;
   category: string;
   eyecatch: {
     src: string;
-    srcSet: string;
+    // srcSet: string;
     mobile?: string;
   };
   date: Date;
@@ -29,7 +28,7 @@ interface IProps {
     title: string;
     eyecatch: {
       src: string;
-      srcSet: string;
+      // srcSet: string;
       mobile?: string;
     };
   };
@@ -69,9 +68,8 @@ const Presenter = (props: IProps) => {
           </div>
           <Picture
             src={props.eyecatch.src}
-            srcSet={props.eyecatch.srcSet}
             mobile={props.eyecatch.mobile}
-            importance="high"
+            priority={true}
           />
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
@@ -122,13 +120,7 @@ const Presenter = (props: IProps) => {
                   <li tw="relative" key={i}>
                     <div className="c-aspect" style={css} />
                     <div tw="absolute w-full h-full top-0 left-0">
-                      <Image
-                        src={item.src}
-                        // srcSet={item.srcSet}
-                        alt=""
-                        layout="fill"
-                        // priority={true}
-                      />
+                      <Image src={item.src} alt="" layout="fill" />
                     </div>
                   </li>
                 );
@@ -149,7 +141,6 @@ const Presenter = (props: IProps) => {
               </div>
               <Picture
                 src={props.prev.eyecatch.src}
-                srcSet={props.prev.eyecatch.srcSet}
                 mobile={props.prev.eyecatch.mobile}
               />
             </aside>

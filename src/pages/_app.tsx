@@ -4,7 +4,6 @@ import { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
-import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
 import {
@@ -17,15 +16,7 @@ import {
   WindowSizeProvider,
   MousePositionProvider,
 } from '@/context';
-import { Header } from '@/app/components/header';
-import { Navigation } from '@/app/components/navigation';
-
-const World3d = dynamic(
-  () => import('@/context/world-3d').then(modules => modules.Webgl),
-  {
-    ssr: false,
-  }
-);
+import { AppMain } from '@/foundation/components';
 
 const onExitComplete = () => {
   if (typeof window !== 'undefined') {
@@ -65,9 +56,7 @@ const AppComponent = ({
                   <WindowSizeProvider>
                     <MousePositionProvider>
                       <MenuProvider>
-                        <div id="app">
-                          <Header />
-                          <Navigation />
+                        <AppMain>
                           <AnimatePresence
                             exitBeforeEnter
                             initial={false}
@@ -75,8 +64,7 @@ const AppComponent = ({
                           >
                             <Component {...pageProps} key={router.asPath} />
                           </AnimatePresence>
-                          <World3d />
-                        </div>
+                        </AppMain>
                       </MenuProvider>
                     </MousePositionProvider>
                   </WindowSizeProvider>

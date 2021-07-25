@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { transition } from '@/app/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 
 const Presenter = () => {

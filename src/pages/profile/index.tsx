@@ -1,4 +1,4 @@
-import { Layout } from '@/app/components/layout';
+import { Layout } from '@/foundation/components';
 import { ProfilePresenter } from '@/domain/profile';
 
 const Component = () => {

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "preinstall": "npx only-allow yarn",
+    "prepare": "husky install",
     "deploy": "next build && next export",
     "dev": "next --hostname 0.0.0.0",
     "build": "next build",
@@ -10,7 +11,7 @@
     "type-check": "tsc",
     "prettier:write": "yarn prettier --write ./src/**/*.{ts,tsx}",
     "eslint": "eslint './src/**/*.{ts,tsx}' -c .eslintrc.js --fix",
-    "commit:eslint": "yarn prettier:write && yarn eslint"
+    "format": "yarn prettier:write && yarn eslint"
   },
   "dependencies": {
     "@ashthornton/asscroll": "^2.0.1",
@@ -30,6 +31,7 @@
     "@types/three": "^0.127.1",
     "@unseenco/e": "^1.9.1",
     "@use-gesture/react": "^10.0.0-beta.14",
+    "apollo-server-micro": "^3.0.2",
     "constate": "^3.2.0",
     "cors": "^2.8.5",
     "date-fns": "^2.17.0",
@@ -37,10 +39,9 @@
     "framer-motion": "^4.1.17",
     "graphql": "^15.5.0",
     "graphql-anywhere": "^4.2.7",
-    "graphql-normalizr": "^2.10.3",
     "graphql-request": "^3.4.0",
     "gsap": "^3.7.0",
-    "next": "^11.0.0",
+    "next": "^11.0.2-canary.20",
     "nextjs-basic-auth-middleware": "^0.2.0",
     "normalizr": "^3.6.1",
     "postcss": "^8.2.12",
@@ -52,6 +53,7 @@
     "react-use": "^17.2.4",
     "ress": "^4.0.0",
     "scroll-lock": "^2.1.4",
+    "sharp": "^0.28.3",
     "stats.js": "^0.17.0",
     "stylelint-prettier": "^1.1.2",
     "swr": "^0.5.6",
@@ -74,8 +76,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "glslify-loader": "^2.0.0",
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "prettier": "^2.1.2",
     "raw-loader": "^4.0.2",
     "stylelint": "^13.7.2",
@@ -93,5 +95,14 @@
     "twin": {
       "preset": "emotion"
     }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css}": [
+      "stylelint --fix"
+    ]
   }
 }

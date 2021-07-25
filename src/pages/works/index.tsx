@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { Layout } from '@/app/components/layout';
+import { Layout } from '@/foundation/components';
 import {
   TRawWorksList,
   useWorksUsecase,

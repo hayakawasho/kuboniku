@@ -1,9 +1,8 @@
-import { Layout } from '@/app/components/layout';
-import { ErrorScreen } from '@/app/components/ui';
+import { Layout, ErrorScreen } from '@/foundation/components';
 
 const Component = () => (
   <Layout title="404 Not found">
-    <ErrorScreen title="NOT FOUND" />
+    <ErrorScreen title="404 NOT FOUND" />
   </Layout>
 );
 

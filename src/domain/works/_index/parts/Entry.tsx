@@ -1,15 +1,16 @@
 import { useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import tw, { css } from 'twin.macro';
-import { useToggle } from '@/app/hooks';
+import { useToggle } from '@/foundation/hooks';
+import { Img } from '@/foundation/components';
 
 interface IProps {
   href: string;
   src: string;
-  srcSet?: string;
   index: string | number;
   title: string;
+  width: number;
+  height: number;
 }
 
 const Entry = (props: IProps) => {
@@ -22,12 +23,11 @@ const Entry = (props: IProps) => {
         <div className="c-aspect" />
         <div css={entry__g}>
           <div css={eyecatch}>
-            <img
+            <Img
               src={props.src}
-              srcSet={props.srcSet}
               alt=""
-              // layout="fill"
-              // priority={true}
+              width={props.width}
+              height={props.height}
             />
           </div>
           <div css={entry__hgroup}>

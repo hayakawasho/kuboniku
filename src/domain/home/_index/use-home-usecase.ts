@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { TRawWorksList, worksRepository } from '@/domain/works';
-import { useRequest } from '@/app/hooks';
-import { Utils } from '@/app/utils';
+import { useRequest } from '@/foundation/hooks';
+import { Utils } from '~utils';
 
 const useHomeUsecase = (initialData: TRawWorksList) => {
   const [data, status] = useRequest<TRawWorksList>(

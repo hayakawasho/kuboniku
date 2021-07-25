@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useRequest } from '@/app/hooks';
+import { useRequest } from '@/foundation/hooks';
 import { TRawWorksId } from '@/domain/works';
 import { worksRepository } from '../works-repository';
 
@@ -20,7 +20,7 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
       category: data.post.acf.category.name,
       eyecatch: {
         src: data.post.acf.eyecatch.sourceUrl,
-        srcSet: data.post.acf.eyecatch.srcSet,
+        // srcSet: data.post.acf.eyecatch.srcSet,
         mobile: data.post.acf.eyecatchMobile?.sourceUrl,
       },
       date: new Date(data.post.date),
@@ -39,7 +39,7 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
         title: data.post.previous.title,
         eyecatch: {
           src: data.post.previous.acf.eyecatch.sourceUrl,
-          srcSet: data.post.previous.acf.eyecatch.srcSet,
+          // srcSet: data.post.previous.acf.eyecatch.srcSet,
           mobile: data.post.previous.acf.eyecatchMobile?.sourceUrl,
         },
       },

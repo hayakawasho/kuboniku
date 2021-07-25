@@ -1,4 +1,4 @@
-import { fetcher } from '@/app/lib/fetcher';
+import { fetcher } from '@/foundation/lib/fetcher';
 import { gql } from 'graphql-request';
 import { TRawWorksList, TRawWorksId } from './works-entity';
 
@@ -16,7 +16,10 @@ const GET_POSTS = (offset: number, size: number) => {
           acf {
             eyecatch {
               sourceUrl
-              srcSet
+              mediaDetails {
+                height
+                width
+              }
             }
             category {
               name

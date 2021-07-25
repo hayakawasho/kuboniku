@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { transition } from '@/app/animations';
+import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { ProgressBar } from '@/app/components/ui';
-import { Utils } from '@/app/utils';
+import { ProgressBar } from '~ui';
+import { Utils } from '~utils';
 
 interface IProps {
   posts: {
