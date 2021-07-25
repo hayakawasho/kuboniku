@@ -40,7 +40,7 @@
     "graphql": "^15.5.0",
     "graphql-anywhere": "^4.2.7",
     "graphql-request": "^3.4.0",
-    "gsap": "file:./vendors/gsap",
+    "gsap": "./vendors/gsap-bonus.tgz",
     "next": "^11.0.2-canary.20",
     "nextjs-basic-auth-middleware": "^0.2.0",
     "normalizr": "^3.6.1",

@@ -4377,8 +4377,14 @@ graphql@^15.5.0:
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.5.0.tgz#39d19494dbe69d1ea719915b578bf920344a69d5"
   integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
 
-"gsap@file:./vendors/gsap":
-  version "3.7.0"
+gsap@./vendors/gsap-bonus.tgz:
+  version "3.7.1"
+  uid a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60
+  resolved "./vendors/gsap-bonus.tgz#a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60"
+
+"gsap@file:./vendors/gsap-bonus.tgz":
+  version "3.7.1"
+  resolved "file:./vendors/gsap-bonus.tgz#a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60"
 
 hard-rejection@^2.1.0:
   version "2.1.0"
