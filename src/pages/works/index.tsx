@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { Layout } from '@/foundation/components';
 import {
   TRawWorksList,
@@ -8,13 +8,13 @@ import {
 } from '@/domain/works';
 
 interface IProps {
-  posts: TRawWorksList;
+  data: TRawWorksList;
   totalPosts: number;
 }
 
 const Component = (props: IProps) => {
   const [data, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
-    props.posts,
+    props.data,
     props.totalPosts
   );
 
@@ -33,12 +33,12 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const data = await worksRepository().findArray(10);
 
   return {
     props: {
-      posts: data,
+      data,
       totalPosts: data.posts.pageInfo.offsetPagination.total,
     },
   };

@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { Layout } from '@/foundation/components';
 import {
   TRawWorksId,
@@ -8,12 +8,12 @@ import {
 } from '@/domain/works';
 
 interface IProps {
-  post: TRawWorksId;
+  data: TRawWorksId;
   path: string | string[];
 }
 
 const Component = (props: IProps) => {
-  const [newProps, status] = useWorkUsecase(props.post, props.path as string);
+  const [newProps, status] = useWorkUsecase(props.data, props.path as string);
 
   return (
     <Layout title="WORKS">
@@ -28,14 +28,30 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
+export const getStaticProps: GetStaticProps = async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
   const data = await worksRepository().findById(slug);
 
   return {
     props: {
-      post: data,
+      data,
       path: ctx.params?.slug,
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await worksRepository().findAll();
+  const paths = data.posts.nodes.map(post => {
+    return {
+      params: {
+        slug: post.slug,
+      },
+    };
+  });
+
+  return {
+    fallback: true,
+    paths,
   };
 };

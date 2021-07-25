@@ -88,6 +88,20 @@ const GET_POST = gql`
   }
 `;
 
+const GET_POST_SLUGS = gql`
+  query GET_POST_SLUGS {
+    posts(
+      where: {
+        offsetPagination: {size: 36}
+      }
+    ) {
+      nodes {
+        slug
+      }
+    }
+  }
+`
+
 const worksRepository = () => {
   const findById = async (slug: string) => {
     return fetcher<TRawWorksId>(GET_POST, { slug });
@@ -97,7 +111,11 @@ const worksRepository = () => {
     return fetcher<TRawWorksList>(GET_POSTS(offset, size));
   };
 
-  return { findById, findArray };
+  const findAll = async () => {
+    return fetcher<TRawWorksList>(GET_POST_SLUGS);
+  };
+
+  return { findById, findArray, findAll };
 };
 
 export { worksRepository };
