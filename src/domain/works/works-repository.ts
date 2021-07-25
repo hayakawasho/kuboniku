@@ -90,17 +90,13 @@ const GET_POST = gql`
 
 const GET_POST_SLUGS = gql`
   query GET_POST_SLUGS {
-    posts(
-      where: {
-        offsetPagination: {size: 36}
-      }
-    ) {
+    posts(where: { offsetPagination: { size: 36 } }) {
       nodes {
         slug
       }
     }
   }
-`
+`;
 
 const worksRepository = () => {
   const findById = async (slug: string) => {
