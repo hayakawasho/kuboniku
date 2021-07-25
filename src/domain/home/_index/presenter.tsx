@@ -14,7 +14,7 @@ interface IProps {
     index: number | string;
     eyecatch: {
       src: string;
-      srcSet: string;
+      // srcSet: string;
       mobile: string;
     };
   }[];

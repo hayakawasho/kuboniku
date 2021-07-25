@@ -1,11 +1,12 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { Layout } from '@/foundation/components';
 import {
   TRawWorksId,
   useWorkUsecase,
-  worksRepository,
+  worksGateway,
   WorksDetailPresenter,
 } from '@/domain/works';
+import { basicAuthGateway } from '@/context/user-auth';
 
 interface IProps {
   data: TRawWorksId;
@@ -28,9 +29,24 @@ const Component = (props: IProps) => {
 
 export default Component;
 
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+
+  const slug = (ctx.params?.slug as string) ?? '';
+  const data = await worksGateway().findById(slug);
+
+  return {
+    props: {
+      data,
+      path: ctx.params?.slug,
+    },
+  };
+};
+
+/*
 export const getStaticProps: GetStaticProps = async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
-  const data = await worksRepository().findById(slug);
+  const data = await worksGateway().findById(slug);
 
   return {
     props: {
@@ -41,7 +57,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await worksRepository().findAll();
+  const data = await worksGateway().findAll();
   const paths = data.posts.nodes.map(post => {
     return {
       params: {
@@ -55,3 +71,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths,
   };
 };
+*/

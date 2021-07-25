@@ -1,15 +1,16 @@
 import { GetServerSideProps } from 'next';
 import { Layout } from '@/foundation/components';
-import { TRawWorksList, worksRepository } from '@/domain/works';
+import { TRawWorksList, worksGateway } from '@/domain/works';
 import { useHomeUsecase, HomePresenter } from '@/domain/home';
 import { useMount, useUnmount } from '@/foundation/hooks';
+import { basicAuthGateway } from '@/context/user-auth';
 
 interface IProps {
-  posts: TRawWorksList;
+  data: TRawWorksList;
 }
 
 const Component = (props: IProps) => {
-  const [newProps, status] = useHomeUsecase(props.posts);
+  const [newProps, status] = useHomeUsecase(props.data);
 
   useMount(() => {
     document.body.classList.add('is-home');
@@ -32,13 +33,14 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const data = await worksRepository().findArray(4);
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+
+  const data = await worksGateway().findArray(4);
 
   return {
     props: {
-      posts: data,
-      totalPosts: data.posts.pageInfo.offsetPagination.total,
+      data,
     },
   };
 };

@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import { TRawWorksList, worksRepository } from '@/domain/works';
+import { TRawWorksList, worksGateway } from '@/domain/works';
 import { useRequest } from '@/foundation/hooks';
 import { Utils } from '@/foundation/utils';
 
 const useHomeUsecase = (initialData: TRawWorksList) => {
   const [data, status] = useRequest<TRawWorksList>(
     `/api/home`,
-    () => worksRepository().findArray(4),
+    () => worksGateway().findArray(4),
     {
       initialData,
     }

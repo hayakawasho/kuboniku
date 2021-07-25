@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { useRequest } from '@/foundation/hooks';
 import { TRawWorksId } from '@/domain/works';
-import { worksRepository } from '../works-repository';
+import { worksGateway } from '../works-gateway';
 
 const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useRequest<TRawWorksId>(
     `/api/works/${slug}`,
     () => {
-      return worksRepository().findById(slug);
+      return worksGateway().findById(slug);
     },
     {
       initialData,

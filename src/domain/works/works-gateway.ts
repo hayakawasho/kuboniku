@@ -98,7 +98,7 @@ const GET_POST_SLUGS = gql`
   }
 `;
 
-const worksRepository = () => {
+const worksGateway = () => {
   const findById = async (slug: string) => {
     return fetcher<TRawWorksId>(GET_POST, { slug });
   };
@@ -114,4 +114,4 @@ const worksRepository = () => {
   return { findById, findArray, findAll };
 };
 
-export { worksRepository };
+export { worksGateway };

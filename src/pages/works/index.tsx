@@ -1,11 +1,12 @@
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { Layout } from '@/foundation/components';
 import {
   TRawWorksList,
   useWorksUsecase,
   WorksIndexPresenter,
-  worksRepository,
+  worksGateway,
 } from '@/domain/works';
+import { basicAuthGateway } from '@/context/user-auth';
 
 interface IProps {
   data: TRawWorksList;
@@ -33,8 +34,10 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getStaticProps: GetStaticProps = async () => {
-  const data = await worksRepository().findArray(10);
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+
+  const data = await worksGateway().findArray(10);
 
   return {
     props: {
@@ -43,3 +46,16 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   };
 };
+
+/*
+export const getStaticProps: GetStaticProps = async () => {
+  const data = await worksGateway().findArray(10);
+
+  return {
+    props: {
+      data,
+      totalPosts: data.posts.pageInfo.offsetPagination.total,
+    },
+  };
+};
+*/
