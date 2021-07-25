@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-// import E from '~utils';
+// import E from '@/foundation/utils';
 import { EVENTS } from '@/foundation/constants/const';
 
 const Component: React.FC = () => {

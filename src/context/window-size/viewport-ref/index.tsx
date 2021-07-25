@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
-// import ResizeObserverHandler from '~utils/resizeObserverHandler';
+// import ResizeObserverHandler from '@/foundation/utils/resizeObserverHandler';
 // import debounce from 'lodash.debounce';
 import { EVENTS } from '@/foundation/constants/const';
 // import { useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import tw, { css } from 'twin.macro';
 // let E;
 
 if (process.browser) {
-  // E = require('~utils/E').default;
+  // E = require('@/foundation/utils/E').default;
 }
 
 const Component = React.memo(() => {

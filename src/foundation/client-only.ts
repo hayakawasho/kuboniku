@@ -1,7 +1,7 @@
 export const temp = 'hello';
 /*
 import store from '@/state/store';
-import E from '~utils/E';
+import E from '@/foundation/utils/E';
 import { EVENTS } from '@/foundation/constants/const';
 import { SET_GPU_TIER, SET_SCROLLING } from '@/state/app';
 import { getGPUTier } from 'detect-gpu';

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { ProgressBar } from '~ui';
-import { Utils } from '~utils';
+import { ProgressBar } from '@/foundation/components';
+import { Utils } from '@/foundation/utils';
 
 interface IProps {
   posts: {

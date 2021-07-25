@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { TRawWorksList, worksRepository } from '@/domain/works';
 import { useRequest } from '@/foundation/hooks';
-import { Utils } from '~utils';
+import { Utils } from '@/foundation/utils';
 
 const useHomeUsecase = (initialData: TRawWorksList) => {
   const [data, status] = useRequest<TRawWorksList>(
@@ -25,7 +25,6 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
           ),
           eyecatch: {
             src: node.acf.eyecatch.sourceUrl,
-            srcSet: node.acf.eyecatch.srcSet,
             mobile: node.acf.eyecatchMobile.sourceUrl,
           },
         };

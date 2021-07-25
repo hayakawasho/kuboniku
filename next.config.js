@@ -19,8 +19,6 @@ const nextConfig = {
     config.resolve.alias['~'] = path.join(__dirname, 'src');
     config.resolve.alias['@'] = path.join(__dirname, 'src');
     config.resolve.alias['~css'] = path.join(__dirname, 'src/assets/styles');
-    config.resolve.alias['~ui'] = path.join(__dirname, 'src/foundation/components/ui');
-    config.resolve.alias['~utils'] = path.join(__dirname, 'src/foundation/utils');
 
     // config.externals.three = 'THREE'
 
