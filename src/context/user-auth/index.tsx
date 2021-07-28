@@ -1,1 +1,1 @@
-export * from './basic-auth-gateway';
+export * from './with-auth';

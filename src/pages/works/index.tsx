@@ -6,7 +6,7 @@ import {
   WorksIndexPresenter,
   worksGateway,
 } from '@/domain/works';
-import { basicAuthGateway } from '@/context/user-auth';
+import { withAuth } from '@/context/user-auth';
 
 interface IProps {
   data: TRawWorksList;
@@ -34,9 +34,7 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  await basicAuthGateway().doAuth(ctx.req, ctx.res);
-
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
   const res = await worksGateway().findSome(10);
 
   if (res.isLeft()) {
@@ -49,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       totalPosts: res.value.posts.pageInfo.offsetPagination.total,
     },
   };
-};
+});
 
 /*
 export const getStaticProps: GetStaticProps = async () => {

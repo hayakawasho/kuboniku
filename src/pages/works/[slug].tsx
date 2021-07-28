@@ -6,7 +6,7 @@ import {
   worksGateway,
   WorksDetailPresenter,
 } from '@/domain/works';
-import { basicAuthGateway } from '@/context/user-auth';
+import { withAuth } from '@/context/user-auth';
 
 interface IProps {
   data: TRawWorksId;
@@ -29,9 +29,7 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  await basicAuthGateway().doAuth(ctx.req, ctx.res);
-
+export const getServerSideProps: GetServerSideProps = withAuth(async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
   const res = await worksGateway().findOne(slug);
 
@@ -45,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
       path: ctx.params?.slug,
     },
   };
-};
+});
 
 /*
 export const getStaticProps: GetStaticProps = async ctx => {
