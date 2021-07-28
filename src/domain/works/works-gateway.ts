@@ -112,7 +112,10 @@ const worksGateway = () => {
     return result;
   };
 
-  const findSome = async (size: number, offset = 0) => {
+  const findSome = async (
+    size: number,
+    offset = 0
+  ): Promise<Either<Error, TRawWorksList>> => {
     const result = await fetcher<TRawWorksList>(GET_POSTS(offset, size))
       .then(res => {
         return right(res);
@@ -124,7 +127,7 @@ const worksGateway = () => {
     return result;
   };
 
-  const findAllSlug = async () => {
+  const findAllSlug = async (): Promise<Either<Error, TRawWorksList>> => {
     const result = await fetcher<TRawWorksList>(GET_POST_SLUGS)
       .then(res => {
         return right(res);
