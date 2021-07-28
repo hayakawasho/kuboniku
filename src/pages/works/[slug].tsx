@@ -30,14 +30,18 @@ const Component = (props: IProps) => {
 export default Component;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+  await basicAuthGateway().doAuth(ctx.req, ctx.res);
 
   const slug = (ctx.params?.slug as string) ?? '';
-  const data = await worksGateway().findById(slug);
+  const res = await worksGateway().findOne(slug);
+
+  if (res.isLeft()) {
+    throw new Error(res.value.message);
+  }
 
   return {
     props: {
-      data,
+      data: res.value,
       path: ctx.params?.slug,
     },
   };

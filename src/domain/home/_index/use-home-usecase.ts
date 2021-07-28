@@ -4,9 +4,17 @@ import { useRequest } from '@/foundation/hooks';
 import { Utils } from '@/foundation/utils';
 
 const useHomeUsecase = (initialData: TRawWorksList) => {
-  const [data, status] = useRequest<TRawWorksList>(
+  const [rawData, status] = useRequest<TRawWorksList>(
     `/api/home`,
-    () => worksGateway().findArray(4),
+    async () => {
+      const res = await worksGateway().findSome(4);
+
+      if (res.isLeft()) {
+        return Promise.reject(res.value);
+      }
+
+      return res.value;
+    },
     {
       initialData,
     }
@@ -14,13 +22,13 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
 
   const getWorksInfo = useMemo(() => {
     const viewWorks = {
-      posts: data.posts.nodes.map((node, i) => {
+      posts: rawData.posts.nodes.map((node, i) => {
         return {
           title: node.title,
           slug: node.slug,
           category: node.acf.category.name,
           index: Utils.zeroPadding(
-            data.posts.pageInfo.offsetPagination.total - i,
+            rawData.posts.pageInfo.offsetPagination.total - i,
             2
           ),
           eyecatch: {
@@ -32,7 +40,7 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
     };
 
     return viewWorks;
-  }, [data]);
+  }, [rawData]);
 
   return [getWorksInfo, status] as const;
 };

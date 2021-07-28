@@ -112,7 +112,7 @@ const worksGateway = () => {
     return result;
   };
 
-  const findArray = async (size: number, offset = 0) => {
+  const findSome = async (size: number, offset = 0) => {
     const result = await fetcher<TRawWorksList>(GET_POSTS(offset, size))
       .then(res => {
         return right(res);
@@ -136,7 +136,7 @@ const worksGateway = () => {
     return result;
   };
 
-  return { findOne, findArray, findAllSlug };
+  return { findOne, findSome, findAllSlug };
 };
 
 export { worksGateway };

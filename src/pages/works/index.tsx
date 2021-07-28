@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const Component = (props: IProps) => {
-  const [data, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
+  const [viewData, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
     props.data,
     props.totalPosts
   );
@@ -22,7 +22,7 @@ const Component = (props: IProps) => {
   return (
     <Layout title="WORKS">
       <WorksIndexPresenter
-        posts={data}
+        posts={viewData}
         totalPosts={props.totalPosts}
         loading={status[0] === 'loading'}
         errorMessage={status[0] === 'error' && status[1]}
@@ -35,21 +35,25 @@ const Component = (props: IProps) => {
 export default Component;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+  await basicAuthGateway().doAuth(ctx.req, ctx.res);
 
-  const data = await worksGateway().findArray(10);
+  const res = await worksGateway().findSome(10);
+
+  if (res.isLeft()) {
+    throw new Error(res.value.message);
+  }
 
   return {
     props: {
-      data,
-      totalPosts: data.posts.pageInfo.offsetPagination.total,
+      data: res.value,
+      totalPosts: res.value.posts.pageInfo.offsetPagination.total,
     },
   };
 };
 
 /*
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await worksGateway().findArray(10);
+  const data = await worksGateway().findSome(10);
 
   return {
     props: {

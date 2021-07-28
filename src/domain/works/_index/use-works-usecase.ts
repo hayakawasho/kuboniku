@@ -18,18 +18,24 @@ const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
     pageIndex => {
       return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
-    (_, offset: number) => {
-      return worksGateway().findArray(PER_PAGE, offset);
+    async (_, offset: number) => {
+      const res = await worksGateway().findSome(PER_PAGE, offset);
+
+      if (res.isLeft()) {
+        return Promise.reject(res.value);
+      }
+
+      return res.value;
     },
     {
       initialData: [initialData],
     }
   );
 
-  const data: TWorksList[] = result.data ? [].concat(...result.data) : [];
+  const rawData: TWorksList[] = result.data ? [].concat(...result.data) : [];
 
   const getWorksInfo = useMemo(() => {
-    const viewWorks = data.flatMap((item, i) =>
+    const viewWorks = rawData.flatMap((item, i) =>
       item.posts.nodes.map((node, j) => {
         return {
           title: node.title,
@@ -48,7 +54,7 @@ const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
     );
 
     return viewWorks;
-  }, [data]);
+  }, [rawData]);
 
   const handleLoadMoreWorksInfo = useCallback(() => {
     result.setSize(result.size + 1);

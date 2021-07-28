@@ -34,13 +34,17 @@ const Component = (props: IProps) => {
 export default Component;
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
-  await basicAuthGateway().authenticate(ctx.req, ctx.res);
+  await basicAuthGateway().doAuth(ctx.req, ctx.res);
 
-  const data = await worksGateway().findArray(4);
+  const res = await worksGateway().findSome(4);
+
+  if (res.isLeft()) {
+    throw new Error(res.value.message);
+  }
 
   return {
     props: {
-      data,
+      data: res.value,
     },
   };
 };
