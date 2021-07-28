@@ -1,6 +1,7 @@
 import { fetcher } from '@/foundation/lib/fetcher';
 import { gql } from 'graphql-request';
 import { TRawWorksList, TRawWorksId } from './works-entity';
+import { Either, left, right } from '@/foundation/utils';
 
 const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
@@ -90,7 +91,7 @@ const GET_POST = gql`
 
 const GET_POST_SLUGS = gql`
   query GET_POST_SLUGS {
-    posts(where: { offsetPagination: { size: 36 } }) {
+    posts(where: { offsetPagination: { size: 99 } }) {
       nodes {
         slug
       }
@@ -99,19 +100,43 @@ const GET_POST_SLUGS = gql`
 `;
 
 const worksGateway = () => {
-  const findById = async (slug: string) => {
-    return fetcher<TRawWorksId>(GET_POST, { slug });
+  const findOne = async (slug: string): Promise<Either<Error, TRawWorksId>> => {
+    const result = await fetcher<TRawWorksId>(GET_POST, { slug })
+      .then(res => {
+        return right(res);
+      })
+      .catch(error => {
+        return left(error as Error);
+      });
+
+    return result;
   };
 
   const findArray = async (size: number, offset = 0) => {
-    return fetcher<TRawWorksList>(GET_POSTS(offset, size));
+    const result = await fetcher<TRawWorksList>(GET_POSTS(offset, size))
+      .then(res => {
+        return right(res);
+      })
+      .catch(error => {
+        return left(error as Error);
+      });
+
+    return result;
   };
 
-  const findAll = async () => {
-    return fetcher<TRawWorksList>(GET_POST_SLUGS);
+  const findAllSlug = async () => {
+    const result = await fetcher<TRawWorksList>(GET_POST_SLUGS)
+      .then(res => {
+        return right(res);
+      })
+      .catch(error => {
+        return left(error as Error);
+      });
+
+    return result;
   };
 
-  return { findById, findArray, findAll };
+  return { findOne, findArray, findAllSlug };
 };
 
 export { worksGateway };

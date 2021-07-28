@@ -4379,12 +4379,7 @@ graphql@^15.5.0:
 
 gsap@./vendors/gsap-bonus.tgz:
   version "3.7.1"
-  uid a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60
   resolved "./vendors/gsap-bonus.tgz#a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60"
-
-"gsap@file:./vendors/gsap-bonus.tgz":
-  version "3.7.1"
-  resolved "file:./vendors/gsap-bonus.tgz#a6f9089e7bff3714cfd789bc5d8cb7a20e1f1d60"
 
 hard-rejection@^2.1.0:
   version "2.1.0"
@@ -5954,11 +5949,6 @@ normalize-url@^4.1.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
-
-normalizr@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/normalizr/-/normalizr-3.6.1.tgz#d367ab840e031ff382141b8d81ce279292ff69fe"
-  integrity sha512-8iEmqXmPtll8PwbEFrbPoDxVw7MKnNvt3PZzR2Xvq9nggEEOgBlNICPXYzyZ4w4AkHUzCU998mdatER3n2VaMA==
 
 npm-run-path@^4.0.1:
   version "4.0.1"

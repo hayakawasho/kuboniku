@@ -43,7 +43,6 @@
     "gsap": "./vendors/gsap-bonus.tgz",
     "next": "^11.0.2-canary.20",
     "nextjs-basic-auth-middleware": "^0.2.0",
-    "normalizr": "^3.6.1",
     "postcss": "^8.2.12",
     "postcss-easings": "^3.0.1",
     "postcss-preset-env": "^6.7.0",

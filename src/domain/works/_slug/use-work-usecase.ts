@@ -6,8 +6,14 @@ import { worksGateway } from '../works-gateway';
 const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useRequest<TRawWorksId>(
     `/api/works/${slug}`,
-    () => {
-      return worksGateway().findById(slug);
+    async () => {
+      const result = await worksGateway().findOne(slug);
+
+      if (result.isLeft()) {
+        return Promise.reject(result.value);
+      }
+
+      return result.value;
     },
     {
       initialData,
