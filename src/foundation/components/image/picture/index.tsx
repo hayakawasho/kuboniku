@@ -6,8 +6,8 @@ interface IProps {
   mobile: string;
   priority?: ImageProps['priority'];
   alt?: string;
-  isLandscape: boolean;
-  isPortrait: boolean;
+  isLandscape?: boolean;
+  isPortrait?: boolean;
 }
 
 const Component = (props: IProps) => {
@@ -20,8 +20,12 @@ const Component = (props: IProps) => {
 
   return (
     <>
-      {props.isPortrait && <Image {...newProps} src={props.mobile} />}
-      {props.isLandscape && <Image {...newProps} src={props.src} />}
+      {
+        // props.isPortrait && <Image {...newProps} src={props.mobile} />}
+      }
+      {
+        // props.isLandscape && <Image {...newProps} src={props.src} />}
+      }
     </>
   );
 };
