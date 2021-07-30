@@ -66,11 +66,7 @@ const Presenter = (props: IProps) => {
               </span>
             </p>
           </div>
-          <Picture
-            src={props.eyecatch.src}
-            mobile={props.eyecatch.mobile}
-            priority={true}
-          />
+         
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
               <div css={kv__scrollLabel}>scroll</div>
@@ -139,10 +135,7 @@ const Presenter = (props: IProps) => {
                   <i className="icon-arrow-right" />
                 </p>
               </div>
-              <Picture
-                src={props.prev.eyecatch.src}
-                mobile={props.prev.eyecatch.mobile}
-              />
+              
             </aside>
           )}
         </div>
