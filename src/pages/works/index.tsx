@@ -35,15 +35,15 @@ const Component = (props: IProps) => {
 export default Component;
 
 export const getServerSideProps: GetServerSideProps = withAuth(async () => {
-  const res = await worksGateway().findSome(10);
+  const result = await worksGateway().findSome(10);
 
-  if (res.isLeft()) {
-    throw new Error(res.value.message);
+  if (result.isLeft()) {
+    Promise.reject(result.value);
   }
 
   return {
     props: {
-      data: res.value,
+      data: result.value,
       totalPosts: res.value.posts.pageInfo.offsetPagination.total,
     },
   };
