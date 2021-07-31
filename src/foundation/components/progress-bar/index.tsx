@@ -23,7 +23,7 @@ const Component = ({ bar, index, max }: IProps) => {
           )}
           {bar}
           {max && (
-            <div className="u-abs">
+            <div tw="absolute">
               <span>{max}</span>
             </div>
           )}

@@ -87,7 +87,12 @@ const eyecatch = css`
   ${tw`absolute inset-0 opacity-80`}
   backface-visibility: hidden;
 
-  > img {
+  div {
+    width: 100%;
+    height: 100%;
+  }
+
+  img {
     ${tw`absolute top-0 left-0 w-full h-full object-cover object-center`}
     filter: grayscale(1);
     backface-visibility: hidden;

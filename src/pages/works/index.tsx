@@ -38,13 +38,13 @@ export const getServerSideProps: GetServerSideProps = withAuth(async () => {
   const result = await worksGateway().findSome(10);
 
   if (result.isLeft()) {
-    Promise.reject(result.value);
+    return Promise.reject(result.value);
   }
 
   return {
     props: {
       data: result.value,
-      totalPosts: res.value.posts.pageInfo.offsetPagination.total,
+      totalPosts: result.value.posts.pageInfo.offsetPagination.total,
     },
   };
 });

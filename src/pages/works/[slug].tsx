@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = withAuth(async ctx => {
   const result = await worksGateway().findOne(slug);
 
   if (result.isLeft()) {
-    Promise.reject(res.value);
+    return Promise.reject(result.value);
   }
 
   return {

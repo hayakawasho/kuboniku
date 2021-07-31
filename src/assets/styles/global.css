@@ -1,3 +1,5 @@
+@import './base/_import.css';
+
 :root {
   --font: 'Noto Sans JP', sans-serif;
   --font-en: 'Montserrat', sans-serif;
@@ -12,12 +14,10 @@
   --gap: calc(30 / 750 * 100vw);
   --aspect: 100%;
 
-  /* color */
   --color-text: #e3e3e3;
   --color-text-primary: #858585;
   --color-theme: #1793a9;
 
-  /* noise */
   --z-noise: 1;
   --z-section: 5;
   --z-header: 10;
@@ -30,8 +30,6 @@
   }
 }
 
-@import './base/_import.css';
-@import './base/_custom-properties.css';
 @import './base/_base.css';
 @import './base/_fonts.css';
 
