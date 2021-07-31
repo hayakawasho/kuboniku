@@ -31,15 +31,15 @@ export default Component;
 
 export const getServerSideProps: GetServerSideProps = withAuth(async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
-  const res = await worksGateway().findOne(slug);
+  const result = await worksGateway().findOne(slug);
 
-  if (res.isLeft()) {
-    throw new Error(res.value.message);
+  if (result.isLeft()) {
+    Promise.reject(res.value);
   }
 
   return {
     props: {
-      data: res.value,
+      data: result.value,
       path: ctx.params?.slug,
     },
   };
