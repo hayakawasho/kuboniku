@@ -7,13 +7,13 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
   const [rawData, status] = useRequest<TRawWorksList>(
     `/api/home`,
     async () => {
-      const res = await worksGateway().findSome(4);
+      const result = await worksGateway().findSome(4);
 
-      if (res.isLeft()) {
-        return Promise.reject(res.value);
+      if (result.isLeft()) {
+        return Promise.reject(result.value);
       }
 
-      return res.value;
+      return result.value;
     },
     {
       initialData,
@@ -21,7 +21,7 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
   );
 
   const getWorksInfo = useMemo(() => {
-    const viewWorks = {
+    return {
       posts: rawData.posts.nodes.map((node, i) => {
         return {
           title: node.title,
@@ -38,8 +38,6 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
         };
       }),
     };
-
-    return viewWorks;
   }, [rawData]);
 
   return [getWorksInfo, status] as const;
