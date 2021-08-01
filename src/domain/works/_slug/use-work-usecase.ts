@@ -7,13 +7,13 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useRequest<TRawWorksId>(
     `/api/works/${slug}`,
     async () => {
-      const res = await worksGateway().findOne(slug);
+      const result = await worksGateway().findOne(slug);
 
-      if (res.isLeft()) {
-        return Promise.reject(res.value);
+      if (result.isLeft()) {
+        return Promise.reject(result.value);
       }
 
-      return res.value;
+      return result.value;
     },
     {
       initialData,
