@@ -1,19 +1,15 @@
-import { GetServerSideProps } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/foundation/components';
 import {
-  TRawWorksList,
   useWorksUsecase,
   WorksIndexPresenter,
   worksGateway,
 } from '@/domain/works';
 import { withAuth } from '@/context/user-auth';
 
-interface IProps {
-  data: TRawWorksList;
-  totalPosts: number;
-}
-
-const Component = (props: IProps) => {
+const Component = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const [viewData, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
     props.data,
     props.totalPosts
@@ -34,11 +30,11 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+export const getServerSideProps = withAuth(async () => {
   const result = await worksGateway().findSome(10);
 
-  if (result.isLeft()) {
-    return Promise.reject(result.value);
+  if (result.isErr()) {
+    return Promise.reject(result.error);
   }
 
   return {

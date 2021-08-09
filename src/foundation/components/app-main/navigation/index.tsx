@@ -19,6 +19,7 @@ const Navigation = () => {
     setMenuAnimationStart,
     setMenuAnimationEnd,
   } = useMenuContext();
+
   const navMenuRef = useRef(null);
 
   const updateClipPath = useCallback(() => {
@@ -272,6 +273,8 @@ const link = css`
   @media (min-width: 640px) {
     font-size: 1.3rem;
     line-height: calc(52 / 26);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   is-menuAnimating & {

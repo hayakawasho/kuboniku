@@ -1,19 +1,15 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/foundation/components';
 import {
-  TRawWorksId,
   useWorkUsecase,
   worksGateway,
   WorksDetailPresenter,
 } from '@/domain/works';
 import { withAuth } from '@/context/user-auth';
 
-interface IProps {
-  data: TRawWorksId;
-  path: string | string[];
-}
-
-const Component = (props: IProps) => {
+const Component = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const [newProps, status] = useWorkUsecase(props.data, props.path as string);
 
   return (
@@ -29,21 +25,23 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = withAuth(async ctx => {
-  const slug = (ctx.params?.slug as string) ?? '';
-  const result = await worksGateway().findOne(slug);
+export const getServerSideProps = withAuth(
+  async (ctx: GetServerSidePropsContext) => {
+    const slug = (ctx.params?.slug as string) ?? '';
+    const result = await worksGateway().findOne(slug);
 
-  if (result.isLeft()) {
-    return Promise.reject(result.value);
+    if (result.isErr()) {
+      return Promise.reject(result.error);
+    }
+
+    return {
+      props: {
+        data: result.value,
+        path: ctx.params?.slug,
+      },
+    };
   }
-
-  return {
-    props: {
-      data: result.value,
-      path: ctx.params?.slug,
-    },
-  };
-});
+);
 
 /*
 export const getStaticProps: GetStaticProps = async ctx => {

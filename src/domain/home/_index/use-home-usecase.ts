@@ -9,8 +9,8 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
     async () => {
       const result = await worksGateway().findSome(4);
 
-      if (result.isLeft()) {
-        return Promise.reject(result.value);
+      if (result.isErr()) {
+        return Promise.reject(result.error);
       }
 
       return result.value;

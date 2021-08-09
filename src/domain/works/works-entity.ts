@@ -60,4 +60,22 @@ type TRawWorksList = {
   };
 };
 
-export type { TRawWorksList, TRawWorksId };
+type TViewWorksInfo = {
+  title: string;
+  category: string;
+  eyecatch: {
+    src: string;
+    mobile?: string;
+  };
+  date: Date;
+  role: string[];
+  viewWebsite?: string;
+  gallery?: {
+    width: number;
+    height: number;
+    src: string;
+    srcSet: string;
+  }[];
+};
+
+export type { TRawWorksList, TRawWorksId, TViewWorksInfo };

@@ -66,7 +66,7 @@ const Presenter = (props: IProps) => {
               </span>
             </p>
           </div>
-         
+
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
               <div css={kv__scrollLabel}>scroll</div>
@@ -135,7 +135,6 @@ const Presenter = (props: IProps) => {
                   <i className="icon-arrow-right" />
                 </p>
               </div>
-              
             </aside>
           )}
         </div>

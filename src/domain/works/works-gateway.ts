@@ -1,7 +1,7 @@
 import { fetcher } from '@/foundation/lib/fetcher';
 import { gql } from 'graphql-request';
 import { TRawWorksList, TRawWorksId } from './works-entity';
-import { Either, left, right } from '@/foundation/utils';
+import { Result, ok, err } from 'neverthrow';
 
 const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
@@ -100,43 +100,34 @@ const GET_POST_SLUGS = gql`
 `;
 
 const worksGateway = () => {
-  const findOne = async (slug: string): Promise<Either<Error, TRawWorksId>> => {
-    const result = await fetcher<TRawWorksId>(GET_POST, { slug })
-      .then(res => {
-        return right(res);
-      })
-      .catch(error => {
-        return left(error as Error);
-      });
-
-    return result;
+  const findOne = async (slug: string): Promise<Result<TRawWorksId, Error>> => {
+    try {
+      const res = await fetcher<TRawWorksId>(GET_POST, { slug });
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
   };
 
   const findSome = async (
     size: number,
     offset = 0
-  ): Promise<Either<Error, TRawWorksList>> => {
-    const result = await fetcher<TRawWorksList>(GET_POSTS(offset, size))
-      .then(res => {
-        return right(res);
-      })
-      .catch(error => {
-        return left(error as Error);
-      });
-
-    return result;
+  ): Promise<Result<TRawWorksList, Error>> => {
+    try {
+      const res = await fetcher<TRawWorksList>(GET_POSTS(offset, size));
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
   };
 
-  const findAllSlug = async (): Promise<Either<Error, TRawWorksList>> => {
-    const result = await fetcher<TRawWorksList>(GET_POST_SLUGS)
-      .then(res => {
-        return right(res);
-      })
-      .catch(error => {
-        return left(error as Error);
-      });
-
-    return result;
+  const findAllSlug = async (): Promise<Result<TRawWorksList, Error>> => {
+    try {
+      const res = await fetcher<TRawWorksList>(GET_POST_SLUGS);
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
   };
 
   return { findOne, findSome, findAllSlug };

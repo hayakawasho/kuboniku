@@ -41,6 +41,7 @@
     "graphql-anywhere": "^4.2.7",
     "graphql-request": "^3.4.0",
     "gsap": "./vendors/gsap-bonus.tgz",
+    "neverthrow": "^4.2.2",
     "next": "^11.0.2-canary.24",
     "nextjs-basic-auth-middleware": "^0.2.0",
     "postcss": "^8.2.12",

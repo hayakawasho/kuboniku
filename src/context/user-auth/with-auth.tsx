@@ -6,12 +6,12 @@ type InnerGetServerSideProps<P extends { [key: string]: unknown }> = (
 ) => Promise<{ props: P }>;
 
 const withAuth = <P extends { [key: string]: unknown }>(
-  inner?: InnerGetServerSideProps<P>
-): GetServerSideProps => {
+  inner: InnerGetServerSideProps<P>
+): GetServerSideProps<P> => {
   return async ctx => {
     await basicAuthGateway().doAuth(ctx.req, ctx.res);
 
-    return inner ? inner(ctx) : { props: {} };
+    return inner(ctx);
   };
 };
 

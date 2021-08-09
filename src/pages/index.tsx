@@ -1,15 +1,13 @@
-import { GetServerSideProps } from 'next';
+import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/foundation/components';
-import { TRawWorksList, worksGateway } from '@/domain/works';
+import { worksGateway } from '@/domain/works';
 import { useHomeUsecase, HomePresenter } from '@/domain/home';
 import { useMount, useUnmount } from '@/foundation/hooks';
 import { withAuth } from '@/context/user-auth';
 
-interface IProps {
-  data: TRawWorksList;
-}
-
-const Component = (props: IProps) => {
+const Component = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const [newProps, status] = useHomeUsecase(props.data);
 
   useMount(() => {
@@ -33,11 +31,11 @@ const Component = (props: IProps) => {
 
 export default Component;
 
-export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+export const getServerSideProps = withAuth(async () => {
   const result = await worksGateway().findSome(4);
 
-  if (result.isLeft()) {
-    return Promise.reject(result.value);
+  if (result.isErr()) {
+    return Promise.reject(result.error);
   }
 
   return {

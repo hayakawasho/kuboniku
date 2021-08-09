@@ -1,16 +1,19 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import { useUpdateEffect, useToggle } from '@/foundation/hooks';
+import { useUpdateEffect, useToggle, useMount } from '@/foundation/hooks';
 
 const ToggleSns = () => {
   const [isOpen, toggle] = useToggle(false, true);
+
   const snsRef = [useRef(null), useRef(null)];
+
   const triggerRef = useRef(null);
+
   const tl = useMemo(() => gsap.timeline({ paused: true }), []);
 
-  useEffect(() => {
+  useMount(() => {
     tl.add(
       gsap.to(triggerRef.current, 0.55, {
         rotation: 90,
@@ -33,7 +36,7 @@ const ToggleSns = () => {
       ),
       '-=.4'
     );
-  }, []);
+  });
 
   useUpdateEffect(() => {
     isOpen ? tl.play() : tl.reverse();

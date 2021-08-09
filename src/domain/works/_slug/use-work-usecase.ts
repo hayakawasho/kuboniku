@@ -9,8 +9,8 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
     async () => {
       const result = await worksGateway().findOne(slug);
 
-      if (result.isLeft()) {
-        return Promise.reject(result.value);
+      if (result.isErr()) {
+        return Promise.reject(result.error);
       }
 
       return result.value;
