@@ -2,6 +2,7 @@ const path = require('path')
 
 const nextConfig = {
   experimental: {
+    esmExternals: true,
     documentMiddleware: true,
     optimizeFonts: true,
   },
