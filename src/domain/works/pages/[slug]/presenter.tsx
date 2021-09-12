@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, useViewportScroll, useTransform } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
-import { formatDate } from '@/foundation/utils';
-import { ProgressBar, Picture } from '@/foundation/components';
+import { format } from 'date-fns';
+import { ProgressBar, Picture, Img } from '@/foundation/components';
 
 interface IProps {
   title: string;
@@ -79,7 +78,7 @@ const Component = (props: IProps) => {
             <div css={intro__info}>
               <dl css={dl}>
                 <dt css={dt}>Year :</dt>
-                <dd css={dd}>{formatDate(props.date)}</dd>
+                <dd css={dd}>{format(props.date, 'MMMM d, yyyy')}</dd>
               </dl>
               <dl css={dl}>
                 <dt css={dt}>Role :</dt>
@@ -116,7 +115,12 @@ const Component = (props: IProps) => {
                   <li tw="relative" key={i}>
                     <div className="c-aspect" style={css} />
                     <div tw="absolute w-full h-full top-0 left-0">
-                      <Image src={item.src} alt="" layout="fill" />
+                      <Img
+                        src={item.src}
+                        alt=""
+                        width={item.width}
+                        height={item.height}
+                      />
                     </div>
                   </li>
                 );
