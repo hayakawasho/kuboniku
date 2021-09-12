@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/foundation/components';
 import {
   useWorkUsecase,
-  worksGateway,
+  worksRepository,
   WorksDetailPresenter,
 } from '@/domain/works';
 import { withAuth } from '@/context/user-auth';
@@ -28,7 +28,7 @@ export default Component;
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
     const slug = (ctx.params?.slug as string) ?? '';
-    const result = await worksGateway().findOne(slug);
+    const result = await worksRepository().findOne(slug);
 
     if (result.isErr()) {
       return Promise.reject(result.error);
@@ -46,7 +46,7 @@ export const getServerSideProps = withAuth(
 /*
 export const getStaticProps: GetStaticProps = async ctx => {
   const slug = (ctx.params?.slug as string) ?? '';
-  const data = await worksGateway().findById(slug);
+  const data = await worksRepository().findById(slug);
 
   return {
     props: {
@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await worksGateway().findAll();
+  const data = await worksRepository().findAll();
   const paths = data.posts.nodes.map(post => {
     return {
       params: {

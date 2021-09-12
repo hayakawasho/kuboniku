@@ -1,6 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
-import { TRawWorksList, worksGateway } from '@/domain/works';
+import { TRawWorksList, worksRepository } from '@/domain/works';
 import { Utils } from '@/foundation/utils';
 import { useUpdateEffect } from '@/foundation/hooks';
 import { useHandleHttpErrorContext } from '@/context';
@@ -19,7 +19,7 @@ const useWorksUsecase = (initialData: TWorksList, totalPosts: number) => {
       return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
     async (_, offset: number) => {
-      const result = await worksGateway().findSome(PER_PAGE, offset);
+      const result = await worksRepository().findSome(PER_PAGE, offset);
 
       if (result.isErr()) {
         return Promise.reject(result.error);

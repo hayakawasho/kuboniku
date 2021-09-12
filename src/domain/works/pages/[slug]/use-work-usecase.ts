@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { useRequest } from '@/foundation/hooks';
-import { TRawWorksId } from '@/domain/works';
-import { worksGateway } from '../works-gateway';
+import { TRawWorksId, worksRepository } from '@/domain/works';
+import { parseISO } from 'date-fns';
 
 const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
   const [data, status] = useRequest<TRawWorksId>(
     `/api/works/${slug}`,
     async () => {
-      const result = await worksGateway().findOne(slug);
+      const result = await worksRepository().findOne(slug);
 
       if (result.isErr()) {
         return Promise.reject(result.error);
@@ -29,7 +29,7 @@ const useWorkUsecase = (initialData: TRawWorksId, slug: string) => {
         // srcSet: data.post.acf.eyecatch.srcSet,
         mobile: data.post.acf.eyecatchMobile?.sourceUrl,
       },
-      date: new Date(data.post.date),
+      date: parseISO(data.post.date),
       role: data.post.acf.role.map(i => i.name),
       viewWebsite: data.post.acf.url,
       gallery: data.post.acf.gallery?.map(i => {

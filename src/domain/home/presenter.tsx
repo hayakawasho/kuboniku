@@ -22,7 +22,7 @@ interface IProps {
   errorMessage: string;
 }
 
-const Presenter = (props: IProps) => {
+const Component = (props: IProps) => {
   /*
   const [result] = useRequest<IData>(GET_POSTS, {
     initialData: props.initialData,
@@ -106,7 +106,7 @@ const Presenter = (props: IProps) => {
   );
 };
 
-export default Presenter;
+export default Component;
 
 const slides = css`
   ${tw`fixed top-0 left-0 w-screen h-screen overflow-hidden`}

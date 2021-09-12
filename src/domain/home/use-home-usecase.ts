@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { TRawWorksList, worksGateway } from '@/domain/works';
+import { TRawWorksList, worksRepository } from '@/domain/works';
 import { useRequest } from '@/foundation/hooks';
 import { Utils } from '@/foundation/utils';
 
@@ -7,7 +7,7 @@ const useHomeUsecase = (initialData: TRawWorksList) => {
   const [rawData, status] = useRequest<TRawWorksList>(
     `/api/home`,
     async () => {
-      const result = await worksGateway().findSome(4);
+      const result = await worksRepository().findSome(4);
 
       if (result.isErr()) {
         return Promise.reject(result.error);

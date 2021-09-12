@@ -1,7 +1,15 @@
-import Image, { ImageProps } from 'next/image';
+// import Image, { ImageProps } from 'next/image';
 
-const Component = (props: ImageProps) => {
-  return <Image {...props} />;
+const Component = props => {
+  return (
+    <img
+      src={props.src}
+      loading="lazy"
+      decoding="async"
+      width={props.width}
+      height={props.height}
+    />
+  );
 };
 
 export default Component;

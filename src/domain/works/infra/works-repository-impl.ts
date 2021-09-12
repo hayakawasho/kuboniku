@@ -1,7 +1,9 @@
 import { fetcher } from '@/foundation/lib/fetcher';
 import { gql } from 'graphql-request';
-import { TRawWorksList, TRawWorksId } from './works-entity';
+import { TRawWorksList, TRawWorksId } from '@/domain/works/types';
 import { Result, ok, err } from 'neverthrow';
+import { IWorksRepository } from '../domain/works-repository';
+import { OneFactor } from 'three';
 
 const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
@@ -99,7 +101,7 @@ const GET_POST_SLUGS = gql`
   }
 `;
 
-const worksGateway = () => {
+const worksRepository = () => {
   const findOne = async (slug: string): Promise<Result<TRawWorksId, Error>> => {
     try {
       const res = await fetcher<TRawWorksId>(GET_POST, { slug });
@@ -133,4 +135,39 @@ const worksGateway = () => {
   return { findOne, findSome, findAllSlug };
 };
 
-export { worksGateway };
+export { worksRepository };
+
+/*
+class WorksRepository implements IWorksRepository {
+  constructor() {
+
+  }
+
+  async findOne(slug: string): Promise<Result<TRawWorksId, Error>> {
+    try {
+      const res = await fetcher<TRawWorksId>(GET_POST, { slug });
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
+  }
+
+  async findSome({ size, offset }: { size: number, offset: number }): Promise<Result<TRawWorksList, Error>> {
+    try {
+      const res = await fetcher<TRawWorksList>(GET_POSTS(offset, size));
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
+  }
+
+  async findAllSlug(): Promise<Result<TRawWorksList, Error>>{
+    try {
+      const res = await fetcher<TRawWorksList>(GET_POST_SLUGS);
+      return ok(res);
+    } catch (error) {
+      return err(error);
+    }
+  }
+}
+*/

@@ -3,7 +3,7 @@ import { Layout } from '@/foundation/components';
 import {
   useWorksUsecase,
   WorksIndexPresenter,
-  worksGateway,
+  worksRepository,
 } from '@/domain/works';
 import { withAuth } from '@/context/user-auth';
 
@@ -31,7 +31,7 @@ const Component = (
 export default Component;
 
 export const getServerSideProps = withAuth(async () => {
-  const result = await worksGateway().findSome(10);
+  const result = await worksRepository().findSome(10);
 
   if (result.isErr()) {
     return Promise.reject(result.error);
@@ -47,7 +47,7 @@ export const getServerSideProps = withAuth(async () => {
 
 /*
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await worksGateway().findSome(10);
+  const data = await worksRepository().findSome(10);
 
   return {
     props: {

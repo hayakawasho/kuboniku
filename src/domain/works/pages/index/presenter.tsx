@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { transition } from '@/foundation/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import { Entry } from './parts/Entry';
+import { Entry } from './parts/work-entry';
 import { useIntersectionObserver } from '@/foundation/hooks';
+import { useSkewEffectOnScroll } from '@/context/skew-scroll/use-skew-scroll';
+import { useMount, useUnmount } from '@/foundation/hooks';
 
 interface IProps {
   posts: {
@@ -23,10 +25,22 @@ interface IProps {
   onLoadMore: () => void;
 }
 
-const Presenter = (props: IProps) => {
+const Component = (props: IProps) => {
   const entryLoaderRef = useRef(null);
   const { isIntersecting } = useIntersectionObserver(entryLoaderRef, {
     rootMargin: '200px 0px',
+  });
+
+  const handleScroll = () => {
+    console.log(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   });
 
   useEffect(() => {
@@ -76,7 +90,7 @@ const Presenter = (props: IProps) => {
   );
 };
 
-export default Presenter;
+export default Component;
 
 const container = css`
   padding-top: 10rem;

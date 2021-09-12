@@ -1,6 +1,6 @@
-export * from './works-entity';
-export { worksGateway } from './works-gateway';
-export { default as WorksIndexPresenter } from './_index/presenter';
-export { useWorksUsecase } from './_index/use-works-usecase';
-export { default as WorksDetailPresenter } from './_slug/presenter';
-export { useWorkUsecase } from './_slug/use-work-usecase';
+export * from './types';
+export { worksRepository } from './infra/works-repository-impl';
+export { default as WorksIndexPresenter } from './pages/index/presenter';
+export { useWorksUsecase } from './pages/index/use-works-usecase';
+export { default as WorksDetailPresenter } from './pages/[slug]/presenter';
+export { useWorkUsecase } from './pages/[slug]/use-work-usecase';

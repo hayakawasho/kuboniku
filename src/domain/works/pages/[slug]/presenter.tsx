@@ -36,7 +36,7 @@ interface IProps {
   errorMessage: string;
 }
 
-const Presenter = (props: IProps) => {
+const Component = (props: IProps) => {
   const { scrollYProgress } = useViewportScroll();
   // const scrollBuffer = useSelector(scrollBufferSelector);
   const scrollBuffer = 0;
@@ -66,7 +66,7 @@ const Presenter = (props: IProps) => {
               </span>
             </p>
           </div>
-
+          <Picture src={props.eyecatch.src} mobile={props.eyecatch.mobile} />
           <div css={kv__scrollDown}>
             <div tw="relative w-full h-full overflow-hidden">
               <div css={kv__scrollLabel}>scroll</div>
@@ -135,6 +135,10 @@ const Presenter = (props: IProps) => {
                   <i className="icon-arrow-right" />
                 </p>
               </div>
+              <Picture
+                src={props.prev.eyecatch.src}
+                mobile={props.prev.eyecatch.mobile}
+              />
             </aside>
           )}
         </div>
@@ -153,7 +157,7 @@ const Presenter = (props: IProps) => {
   );
 };
 
-export default Presenter;
+export default Component;
 
 const kv = css`
   ${tw`relative w-full overflow-hidden block`}
