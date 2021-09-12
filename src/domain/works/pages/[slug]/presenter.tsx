@@ -167,6 +167,13 @@ const kv = css`
   @media (min-width: 640px) {
     ${tw`h-screen`}
   }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const kvNext = css`
