@@ -1,9 +1,7 @@
 import { fetcher } from '@/foundation/lib/fetcher';
 import { gql } from 'graphql-request';
-import { TRawWorksList, TRawWorksId } from '@/domain/works/types';
+import { TRawWorksList, TRawWorksId, IWorksRepository } from '@/domain/works';
 import { Result, ok, err } from 'neverthrow';
-import { IWorksRepository } from '../domain/works-repository';
-import { OneFactor } from 'three';
 
 const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
@@ -101,47 +99,8 @@ const GET_POST_SLUGS = gql`
   }
 `;
 
-const worksRepository = () => {
-  const findOne = async (slug: string): Promise<Result<TRawWorksId, Error>> => {
-    try {
-      const res = await fetcher<TRawWorksId>(GET_POST, { slug });
-      return ok(res);
-    } catch (error) {
-      return err(error);
-    }
-  };
-
-  const findSome = async (
-    size: number,
-    offset = 0
-  ): Promise<Result<TRawWorksList, Error>> => {
-    try {
-      const res = await fetcher<TRawWorksList>(GET_POSTS(offset, size));
-      return ok(res);
-    } catch (error) {
-      return err(error);
-    }
-  };
-
-  const findAllSlug = async (): Promise<Result<TRawWorksList, Error>> => {
-    try {
-      const res = await fetcher<TRawWorksList>(GET_POST_SLUGS);
-      return ok(res);
-    } catch (error) {
-      return err(error);
-    }
-  };
-
-  return { findOne, findSome, findAllSlug };
-};
-
-export { worksRepository };
-
-/*
 class WorksRepository implements IWorksRepository {
-  constructor() {
-
-  }
+  constructor() {}
 
   async findOne(slug: string): Promise<Result<TRawWorksId, Error>> {
     try {
@@ -152,7 +111,13 @@ class WorksRepository implements IWorksRepository {
     }
   }
 
-  async findSome({ size, offset }: { size: number, offset: number }): Promise<Result<TRawWorksList, Error>> {
+  async findSome({
+    size,
+    offset,
+  }: {
+    size: number;
+    offset: number;
+  }): Promise<Result<TRawWorksList, Error>> {
     try {
       const res = await fetcher<TRawWorksList>(GET_POSTS(offset, size));
       return ok(res);
@@ -161,7 +126,7 @@ class WorksRepository implements IWorksRepository {
     }
   }
 
-  async findAllSlug(): Promise<Result<TRawWorksList, Error>>{
+  async findAllSlug(): Promise<Result<TRawWorksList, Error>> {
     try {
       const res = await fetcher<TRawWorksList>(GET_POST_SLUGS);
       return ok(res);
@@ -170,4 +135,4 @@ class WorksRepository implements IWorksRepository {
     }
   }
 }
-*/
+export { WorksRepository };
