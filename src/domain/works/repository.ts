@@ -1,4 +1,4 @@
-import { TRawWorksList, TRawWorksId } from '@/domain/works/types';
+import { TRawWorksList, TRawWorksId } from '@/domain/works';
 import { Result } from 'neverthrow';
 
 interface IWorksRepository {
@@ -10,7 +10,6 @@ interface IWorksRepository {
     size: number;
     offset: number;
   }): Promise<Result<TRawWorksList, Error>>;
-
   findAllSlug(): Promise<Result<TRawWorksList, Error>>;
 }
 
