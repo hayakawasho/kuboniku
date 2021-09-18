@@ -1,20 +1,24 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { Layout } from '@/foundation/components';
+import { Layout } from '@/common/components';
 import {
   useWorkUsecase,
-  worksRepository,
-  WorksDetailPresenter,
-} from '@/domain/works';
-import { withAuth } from '@/context/user-auth';
+  WorksDetailContainer,
+} from '@/features/pages/works_slug';
+import { withAuth } from '@/features/user-auth';
+import { repositoryFactory } from '@/infra/repository-factory';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const [newProps, status] = useWorkUsecase(props.data, props.path as string);
+  const [newProps, status] = useWorkUsecase(
+    props.data,
+    props.path as string,
+    repositoryFactory.get('works')
+  );
 
   return (
     <Layout title="WORKS">
-      <WorksDetailPresenter
+      <WorksDetailContainer
         {...newProps}
         loading={status[0] === 'loading'}
         errorMessage={status[0] === 'error' && '' + status[1]}
@@ -28,7 +32,7 @@ export default Component;
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
     const slug = (ctx.params?.slug as string) ?? '';
-    const result = await worksRepository().findOne(slug);
+    const result = await repositoryFactory.get('works').findOne(slug);
 
     if (result.isErr()) {
       return Promise.reject(result.error);
@@ -43,32 +47,30 @@ export const getServerSideProps = withAuth(
   }
 );
 
-/*
-export const getStaticProps: GetStaticProps = async ctx => {
-  const slug = (ctx.params?.slug as string) ?? '';
-  const data = await worksRepository().findById(slug);
-
-  return {
-    props: {
-      data,
-      path: ctx.params?.slug,
-    },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await worksRepository().findAll();
-  const paths = data.posts.nodes.map(post => {
-    return {
-      params: {
-        slug: post.slug,
-      },
-    };
-  });
-
-  return {
-    fallback: true,
-    paths,
-  };
-};
-*/
+// export const getStaticProps: GetStaticProps = async ctx => {
+//   const slug = (ctx.params?.slug as string) ?? '';
+//   const data = await worksRepository().findById(slug);
+//
+//   return {
+//     props: {
+//       data,
+//       path: ctx.params?.slug,
+//     },
+//   };
+// };
+//
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const data = await worksRepository().findAll();
+//   const paths = data.posts.nodes.map(post => {
+//     return {
+//       params: {
+//         slug: post.slug,
+//       },
+//     };
+//   });
+//
+//   return {
+//     fallback: true,
+//     paths,
+//   };
+// };

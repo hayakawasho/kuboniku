@@ -10,6 +10,7 @@ interface IWorksRepository {
     size: number;
     offset: number;
   }): Promise<Result<TRawWorksList, Error>>;
+
   findAllSlug(): Promise<Result<TRawWorksList, Error>>;
 }
 

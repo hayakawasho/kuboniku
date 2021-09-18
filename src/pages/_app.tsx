@@ -16,7 +16,7 @@ import {
   WindowSizeProvider,
   MousePositionProvider,
 } from '@/context';
-import { AppMain } from '@/foundation/components';
+import { AppMain } from '@/app/main';
 
 const onExitComplete = () => {
   if (typeof window !== 'undefined') {

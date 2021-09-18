@@ -1,22 +1,22 @@
 import { InferGetServerSidePropsType } from 'next';
-import { Layout } from '@/foundation/components';
-import { worksRepository } from '@/domain/works';
-import { useHomeUsecase, HomePresenter } from '@/domain/home';
-import { useMount, useUnmount } from '@/foundation/hooks';
-import { withAuth } from '@/context/user-auth';
+import { Layout } from '@/common/components';
+// import { repositoryFactory } from '@/infra/repository-factory';
+// import { useMount, useUnmount } from 'react-use';
+// import { useHomeUsecase, HomePresenter } from '@/features/pages/home';
+// import { withAuth } from '@/features/user-auth';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  // const [newProps, status] = useHomeUsecase(props.data);
+  // const [newProps, status] = useHomeUsecase(props.data, repositoryFactory.get('works'));
 
-  useMount(() => {
-    document.body.classList.add('is-home');
-  });
-
-  useUnmount(() => {
-    document.body.classList.remove('is-home');
-  });
+  // useMount(() => {
+  //   document.body.classList.add('is-home');
+  // });
+  //
+  // useUnmount(() => {
+  //   document.body.classList.remove('is-home');
+  // });
 
   return (
     <Layout title="NAGISA KUBO">
@@ -33,19 +33,24 @@ const Component = (
 export default Component;
 
 export const getServerSideProps = () => {
-  // const result = await worksRepository().findSome(4);
-
-  // if (result.isErr()) {
-  //   return Promise.reject(result.error);
-  // }
-
   return {
     redirect: {
       permanent: false,
       destination: '/works', // リダイレクト先
     },
-    // props: {
-    //   data: result.value,
-    // },
   };
 };
+
+// export const getServerSideProps = () => {
+//   const result = await repositoryFactory.get('works').findSome({ size: 4 });
+//
+//   if (result.isErr()) {
+//     return Promise.reject(result.error);
+//   }
+//
+//   return {
+//     props: {
+//       data: result.value,
+//     },
+//   };
+// };

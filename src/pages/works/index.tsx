@@ -1,23 +1,21 @@
 import { InferGetServerSidePropsType } from 'next';
-import { Layout } from '@/foundation/components';
-import {
-  useWorksUsecase,
-  WorksIndexPresenter,
-  worksRepository,
-} from '@/domain/works';
-import { withAuth } from '@/context/user-auth';
+import { Layout } from '@/common/components';
+import { useWorksUsecase, WorksIndexContainer } from '@/features/pages/works';
+import { withAuth } from '@/features/user-auth';
+import { repositoryFactory } from '@/infra/repository-factory';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const [viewData, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
     props.data,
-    props.totalPosts
+    props.totalPosts,
+    repositoryFactory.get('works')
   );
 
   return (
     <Layout title="WORKS">
-      <WorksIndexPresenter
+      <WorksIndexContainer
         posts={viewData}
         totalPosts={props.totalPosts}
         loading={status[0] === 'loading'}
@@ -31,7 +29,7 @@ const Component = (
 export default Component;
 
 export const getServerSideProps = withAuth(async () => {
-  const result = await worksRepository().findSome(10);
+  const result = await repositoryFactory.get('works').findSome({ size: 10 });
 
   if (result.isErr()) {
     return Promise.reject(result.error);
@@ -44,16 +42,3 @@ export const getServerSideProps = withAuth(async () => {
     },
   };
 });
-
-/*
-export const getStaticProps: GetStaticProps = async () => {
-  const data = await worksRepository().findSome(10);
-
-  return {
-    props: {
-      data,
-      totalPosts: data.posts.pageInfo.offsetPagination.total,
-    },
-  };
-};
-*/

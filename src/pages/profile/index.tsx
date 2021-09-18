@@ -1,13 +1,13 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { Layout } from '@/foundation/components';
-import { ProfilePresenter } from '@/domain/profile';
+import { InferGetStaticPropsType } from 'next';
+import { Layout } from '@/common/components';
+import { ProfileContainer } from '@/features/pages/profile';
 import { gql } from 'graphql-request';
-import { fetcher } from '@/foundation/lib/fetcher';
+import { fetcher } from '@/common/lib/fetcher';
 
 const Component = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Layout title="PROFILE">
-      <ProfilePresenter data={props.data} />
+      <ProfileContainer data={props.data} />
     </Layout>
   );
 };
@@ -18,8 +18,6 @@ export const getStaticProps = async () => {
   const res = await fetcher<any>(GET_PAGE);
   const raw = res.pageBy;
   const paragraph = raw.blocks.map(item => item.originalContent as string);
-
-  console.log(paragraph[0]);
 
   return {
     props: {

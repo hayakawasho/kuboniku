@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { Layout, ErrorScreen } from '@/foundation/components';
+import { Layout, ErrorScreen } from '@/common/components';
 
 const Component = () => (
   <Layout title="500 Internal Server Error">
