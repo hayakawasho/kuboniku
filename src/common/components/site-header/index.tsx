@@ -1,13 +1,13 @@
 import Link from 'next/link';
-import { ToggleMenu } from '../toggle-menu';
-import { ToggleSns } from '../toggle-sns';
+import { ToggleMenu } from './parts/toggle-menu';
+import { ToggleSns } from './parts/toggle-sns';
 import tw, { css } from 'twin.macro';
 
 const Header = () => {
   return (
     <header>
       <Link href="/">
-        <a css={logo}>
+        <a css={brandLogo}>
           <i className="icon-logo" />
         </a>
       </Link>
@@ -20,7 +20,7 @@ const Header = () => {
 
 export { Header };
 
-const logo = css`
+const brandLogo = css`
   ${tw`fixed block pointer-events-auto`}
   top: 1.5rem;
   left: 2rem;

@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import Head from 'next/head';
-// import { useRouter } from 'next/router';
 
 interface IProps {
   title: string;

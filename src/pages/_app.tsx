@@ -6,17 +6,14 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { AnimatePresence } from 'framer-motion';
 import { SWRConfig } from 'swr';
-import {
-  AppConfigProvider,
-  AppStateProvider,
-  HandleHttpErrorProvider,
-  UiColorProvider,
-  MenuProvider,
-  WindowScrollProvider,
-  WindowSizeProvider,
-  MousePositionProvider,
-} from '@/context';
-import { AppMain } from '@/app/main';
+import { UiColorProvider, MenuProvider } from '@/common/context';
+import { Navigation, Header } from '@/common/components';
+import dynamic from 'next/dynamic';
+
+const World3d = dynamic(
+  () => import('../features/world-3d').then(modules => modules.Webgl),
+  { ssr: false }
+);
 
 const onExitComplete = () => {
   if (typeof window !== 'undefined') {
@@ -43,37 +40,50 @@ const AppComponent = ({
           rel="stylesheet"
         />
       </Head>
-      <AppConfigProvider>
-        <HandleHttpErrorProvider>
-          <SWRConfig
-            value={{
-              revalidateOnFocus: false,
-            }}
-          >
-            <AppStateProvider>
-              <UiColorProvider>
-                <WindowScrollProvider>
-                  <WindowSizeProvider>
-                    <MousePositionProvider>
-                      <MenuProvider>
-                        <AppMain>
-                          <AnimatePresence
-                            exitBeforeEnter
-                            initial={false}
-                            onExitComplete={onExitComplete}
-                          >
-                            <Component {...pageProps} key={router.asPath} />
-                          </AnimatePresence>
-                        </AppMain>
-                      </MenuProvider>
-                    </MousePositionProvider>
-                  </WindowSizeProvider>
-                </WindowScrollProvider>
-              </UiColorProvider>
-            </AppStateProvider>
-          </SWRConfig>
-        </HandleHttpErrorProvider>
-      </AppConfigProvider>
+      {
+        //<AppConfigProvider>
+      }
+      <SWRConfig
+        value={{
+          revalidateOnFocus: false,
+        }}
+      >
+        {
+          // <AppStateProvider>
+        }
+        <UiColorProvider>
+          {
+            //<WindowScrollProvider>
+            //<WindowSizeProvider>
+            //<MousePositionProvider>
+          }
+          <MenuProvider>
+            <div id="app">
+              <Header />
+              <Navigation />
+              <AnimatePresence
+                exitBeforeEnter
+                initial={false}
+                onExitComplete={onExitComplete}
+              >
+                <Component {...pageProps} key={router.asPath} />
+              </AnimatePresence>
+              <World3d />
+            </div>
+          </MenuProvider>
+          {
+            //</UiColorProvider>
+            // </WindowSizeProvider>
+            // </WindowScrollProvider>
+          }
+        </UiColorProvider>
+        {
+          // </AppStateProvider>
+        }
+      </SWRConfig>
+      {
+        // </AppConfigProvider>
+      }
     </>
   );
 };
