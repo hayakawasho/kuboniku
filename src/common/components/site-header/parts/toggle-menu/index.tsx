@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { gsap } from 'gsap';
 import tw, { css } from 'twin.macro';
-import { useMenuContext } from '@/context';
+import { useMenuContext } from '@/common/context';
 import { useUpdateEffect } from 'react-use';
 
 const ToggleMenu = () => {

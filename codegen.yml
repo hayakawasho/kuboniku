@@ -1,0 +1,8 @@
+overwrite: true
+schema: "https://wp.kuboniku.com/graphql"
+# documents: "src/**/*.graphql"
+generates:
+  src/domain/generated/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations

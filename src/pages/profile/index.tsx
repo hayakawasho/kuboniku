@@ -2,7 +2,7 @@ import { InferGetStaticPropsType } from 'next';
 import { Layout } from '@/common/components';
 import { ProfileContainer } from '@/features/pages/profile';
 import { gql } from 'graphql-request';
-import { fetcher } from '@/common/lib/fetcher';
+import { fetcher } from '@/lib/fetcher';
 
 const Component = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (

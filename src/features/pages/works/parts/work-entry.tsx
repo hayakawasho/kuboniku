@@ -13,7 +13,7 @@ interface IProps {
   height: number;
 }
 
-const Entry = (props: IProps) => {
+const WorkEntry = (props: IProps) => {
   const ref = useRef(null);
   const [isHovering, toggle] = useToggle(false, true);
 
@@ -43,7 +43,7 @@ const Entry = (props: IProps) => {
   );
 };
 
-export { Entry };
+export { WorkEntry };
 
 const heading = css`
   font-family: var(--font-roboto);

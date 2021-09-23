@@ -5,6 +5,7 @@ import { transition } from '@/common/animations';
 import tw, { css } from 'twin.macro';
 import { ProgressBar } from '@/common/components';
 import { Utils } from '@/common/utils';
+import { withPageMotion } from '~/features/with-page-motion';
 
 interface IProps {
   posts: {
@@ -38,13 +39,7 @@ const Component = (props: IProps) => {
   */
 
   return (
-    <motion.div
-      initial="pageInitial"
-      animate="pageAnimate"
-      exit="pageExit"
-      variants={transition}
-      tw="overflow-hidden"
-    >
+    <>
       {/*
         //data && <Canvas domRef={slidesRef} />
 
@@ -102,11 +97,11 @@ const Component = (props: IProps) => {
         />
       </div>
         */}
-    </motion.div>
+    </>
   );
 };
 
-export default Component;
+export default withPageMotion(Component);
 
 const slides = css`
   ${tw`fixed top-0 left-0 w-screen h-screen overflow-hidden`}

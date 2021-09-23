@@ -1,16 +1,16 @@
-import { WorksRepository } from './works/works-repository-impl';
+import { WorksRepo } from './works/works-repo-impl';
 
 const REPOSITORIES = ['works'] as const;
 
 type Unpacked<T> = T extends { [K in keyof T]: infer U } ? U : never;
-type TRespositoryKeys = Unpacked<typeof REPOSITORIES>;
+type TRepoName = Unpacked<typeof REPOSITORIES>;
 
 const repositories = {
-  works: new WorksRepository(),
+  works: new WorksRepo(),
 };
 
 const repositoryFactory = {
-  get: (name: TRespositoryKeys) => repositories[name],
+  get: (name: TRepoName) => repositories[name],
 };
 
 export { repositoryFactory };

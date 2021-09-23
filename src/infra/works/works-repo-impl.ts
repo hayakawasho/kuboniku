@@ -1,14 +1,15 @@
 import { fetcher } from '@/common/lib/fetcher';
 import { gql } from 'graphql-request';
-import { TRawWorksList, TRawWorksId, IWorksRepository } from '@/domain/works';
+import { IMetaWork, IRawWork, IWorksRepo } from '@/domain/works';
+import { Post } from '@/domain/generated/graphql';
 import { Result, ok, err } from 'neverthrow';
 
-class WorksRepository implements IWorksRepository {
+class WorksRepo implements IWorksRepo {
   constructor() {}
 
-  async findOne(slug: string): Promise<Result<TRawWorksId, Error>> {
+  async findOne(slug: string): Promise<Result<IRawWork, Error>> {
     try {
-      const res = await fetcher<TRawWorksId>(GET_POST, { slug });
+      const res = await fetcher<IRawWork>(GET_POST, { slug });
       return ok(res);
     } catch (error) {
       return err(error);
@@ -37,7 +38,7 @@ class WorksRepository implements IWorksRepository {
   }
 }
 
-export { WorksRepository };
+export { WorksRepo };
 
 const GET_POSTS = (offset: number, size: number) => {
   const graphql = gql`
@@ -48,6 +49,7 @@ const GET_POSTS = (offset: number, size: number) => {
         }
       ) {
         nodes {
+          id
           title
           slug
           acf {
@@ -79,6 +81,7 @@ const GET_POSTS = (offset: number, size: number) => {
 const GET_POST = gql`
   query GET_POST($slug: String) {
     post: postBy(slug: $slug) {
+      id
       title
       date
       previous {
@@ -129,6 +132,7 @@ const GET_POST_SLUGS = gql`
   query GET_POST_SLUGS {
     posts(where: { offsetPagination: { size: 99 } }) {
       nodes {
+        id
         slug
       }
     }

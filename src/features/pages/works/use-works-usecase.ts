@@ -1,35 +1,34 @@
 import { useCallback, useState, useMemo } from 'react';
 import useSWRInfinite from 'swr/infinite';
-import { TRawWorksList, IWorksRepository } from '@/domain/works';
+import { IMetaWork, IWorksRepo } from '@/domain/works';
 import { Utils } from '@/common/utils';
 import { useUpdateEffect } from 'react-use';
-import { useHandleHttpError } from '@/common/hooks/';
+import { useHandleHttpError } from '@/common/hooks';
 
 type TStatus<E> = ['idle' | 'loading' | 'success'] | ['error', E];
-type TWorksList = TRawWorksList;
 
 const PER_PAGE = 10;
 
 const useWorksUsecase = (
-  initialData: TWorksList,
+  initialData: IMetaWork[],
   totalPosts: number,
-  repository: IWorksRepository
+  repo: IWorksRepo
 ) => {
   const [status, setStatus] = useState<TStatus<string>>(['idle']);
   const { handleHttpError } = useHandleHttpError();
 
-  const result = useSWRInfinite<TWorksList, Error>(
+  const result = useSWRInfinite<IMetaWork[], Error>(
     pageIndex => {
       return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
     async (_, offset: number) => {
-      const result = await repository.findSome({ size: PER_PAGE, offset });
+      const res = await repo.findSome({ size: PER_PAGE, offset });
 
-      if (result.isErr()) {
-        return Promise.reject(result.error);
+      if (res.isErr()) {
+        return Promise.reject(res.error);
       }
 
-      return result.value;
+      return res.value;
     },
     {
       fallback: [initialData],

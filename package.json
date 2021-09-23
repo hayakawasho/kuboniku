@@ -11,7 +11,8 @@
     "type-check": "tsc",
     "prettier:write": "yarn prettier --write ./src/**/*.{ts,tsx}",
     "eslint": "eslint './src/**/*.{ts,tsx}' -c .eslintrc.js --fix",
-    "format": "yarn prettier:write && yarn eslint"
+    "format": "yarn prettier:write && yarn eslint",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@ashthornton/asscroll": "^2.0.1",
@@ -37,7 +38,7 @@
     "date-fns": "^2.17.0",
     "detect-gpu": "^3.1.6",
     "framer-motion": "^4.1.17",
-    "graphql": "^15.5.0",
+    "graphql": "^15.5.3",
     "graphql-anywhere": "^4.2.7",
     "graphql-request": "^3.4.0",
     "gsap": "./vendors/gsap-bonus.tgz",
@@ -53,7 +54,6 @@
     "react-use": "^17.2.4",
     "ress": "^4.0.0",
     "scroll-lock": "^2.1.4",
-    "sharp": "^0.28.3",
     "stats.js": "^0.17.0",
     "stylelint-prettier": "^1.1.2",
     "swr": "^1.0.1",
@@ -62,7 +62,10 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
-    "@graphql-codegen/typescript-graphql-request": "^3.2.5",
+    "@graphql-codegen/cli": "^2.2.0",
+    "@graphql-codegen/typescript": "^2.2.2",
+    "@graphql-codegen/typescript-graphql-request": "^4.1.4",
+    "@graphql-codegen/typescript-operations": "^2.1.4",
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",

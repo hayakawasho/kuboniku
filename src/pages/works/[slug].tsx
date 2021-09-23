@@ -5,7 +5,7 @@ import {
   WorksDetailContainer,
 } from '@/features/pages/works_slug';
 import { withAuth } from '@/features/user-auth';
-import { repositoryFactory } from '@/infra/repository-factory';
+import { repositoryFactory } from '~/infra/repository-factory';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -20,8 +20,8 @@ const Component = (
     <Layout title="WORKS">
       <WorksDetailContainer
         {...newProps}
-        loading={status[0] === 'loading'}
-        errorMessage={status[0] === 'error' && '' + status[1]}
+        // loading={status[0] === 'loading'}
+        // errorMessage={status[0] === 'error' && '' + status[1]}
       />
     </Layout>
   );
@@ -32,15 +32,15 @@ export default Component;
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
     const slug = (ctx.params?.slug as string) ?? '';
-    const result = await repositoryFactory.get('works').findOne(slug);
+    const res = await repositoryFactory.get('works').findOne(slug);
 
-    if (result.isErr()) {
-      return Promise.reject(result.error);
+    if (res.isErr()) {
+      return Promise.reject(res.error);
     }
 
     return {
       props: {
-        data: result.value,
+        data: res.value,
         path: ctx.params?.slug,
       },
     };

@@ -1,11 +1,10 @@
 import { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { transition } from '@/common/animations';
 import tw, { css } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import { Entry } from './parts/work-entry';
 import useIntersectionObserver from '@react-hook/intersection-observer';
-// import { useSkewEffectOnScroll } from '@/features/skew-scroll/use-skew-scroll';
+// import { useSkewScroll } from '@/features/skew-scroll';
+import { withPageMotion } from '~/features/with-page-motion';
 
 interface IProps {
   posts: {
@@ -19,9 +18,7 @@ interface IProps {
     };
   }[];
   totalPosts: number;
-  loading: boolean;
-  errorMessage: string;
-  onLoadMore: () => void;
+  handleLoadMore: () => void;
 }
 
 const Component = (props: IProps) => {
@@ -30,32 +27,14 @@ const Component = (props: IProps) => {
     rootMargin: '200px 0px',
   });
 
-  const handleScroll = () => {
-    console.log(window.scrollY);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  });
-
   useEffect(() => {
     if (isIntersecting) {
-      props.onLoadMore();
+      props.handleLoadMore();
     }
   }, [isIntersecting]);
 
   return (
-    <motion.div
-      initial="pageInitial"
-      animate="pageAnimate"
-      exit="pageExit"
-      variants={transition}
-      css={container}
-    >
+    <div css={container}>
       <h1 css={heading}>
         <div>
           Works<sup css={heading__total}>{props.totalPosts}</sup>
@@ -76,20 +55,20 @@ const Component = (props: IProps) => {
         ))}
       </div>
       <div css={entryLoader} ref={entryLoaderRef}>
-        {props.loading && (
+        {
           <div css={entryLoader__bounce}>
             <div />
           </div>
-        )}
-        {!!props.errorMessage && (
-          <div css={entryLoader__error}>{props.errorMessage}</div>
-        )}
+        }
+        {
+          // <div css={entryLoader__error}>{props.errorMessage}</div>
+        }
       </div>
-    </motion.div>
+    </div>
   );
 };
 
-export default Component;
+export default withPageMotion(Component);
 
 const container = css`
   padding-top: 10rem;

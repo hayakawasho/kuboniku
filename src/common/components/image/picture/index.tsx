@@ -3,11 +3,8 @@
 
 interface IProps {
   src: string;
-  mobile: string;
-  // priority?: ImageProps['priority'];
+  mobile?: string;
   alt?: string;
-  // isLandscape?: boolean;
-  // isPortrait?: boolean;
 }
 
 const Component = (props: IProps) => {

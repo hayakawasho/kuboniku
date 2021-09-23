@@ -1,16 +1,16 @@
-import { TRawWorksList, TRawWorksId } from '@/domain/works';
+import type { IMetaWork, IRawWork } from '../works/work';
 import { Result } from 'neverthrow';
 
-interface IWorksRepository {
-  findOne(slug: string): Promise<Result<TRawWorksId, Error>>;
+interface IWorksRepo {
+  findOne(slug: string): Promise<Result<IRawWork, Error>>;
   findSome({
     size,
     offset,
   }: {
     size: number;
     offset: number;
-  }): Promise<Result<TRawWorksList, Error>>;
-  findAllSlug(): Promise<Result<TRawWorksList, Error>>;
+  }): Promise<Result<IRawWork[], Error>>;
+  findAllSlug(): Promise<Result<string[], Error>>;
 }
 
-export type { IWorksRepository };
+export type { IWorksRepo };

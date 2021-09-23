@@ -1,9 +1,10 @@
-import { Fragment } from 'react';
-import { motion } from 'framer-motion';
-import { transition } from '@/common/animations';
 import tw, { css } from 'twin.macro';
+import {
+  withPageMotion,
+  TWithPageMotionProps,
+} from '~/features/with-page-motion';
 
-interface IProps {
+interface IProps extends TWithPageMotionProps {
   data: {
     paragraph: string;
   };
@@ -11,13 +12,7 @@ interface IProps {
 
 const Component = (props: IProps) => {
   return (
-    <motion.div
-      initial="pageInitial"
-      animate="pageAnimate"
-      exit="pageExit"
-      variants={transition}
-      tw="overflow-hidden"
-    >
+    <>
       <h1 tw="sr-only">PROFILE</h1>
       <div css={container}>
         <div css={container__in}>
@@ -28,14 +23,14 @@ const Component = (props: IProps) => {
           <div
             css={about}
             dangerouslySetInnerHTML={{ __html: props.data.paragraph }}
-          ></div>
+          />
         </div>
       </div>
-    </motion.div>
+    </>
   );
 };
 
-export default Component;
+export default withPageMotion(Component);
 
 const container = css`
   ${tw`relative`}

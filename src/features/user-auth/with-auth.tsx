@@ -10,7 +10,6 @@ const withAuth = <P extends { [key: string]: unknown }>(
 ): GetServerSideProps<P> => {
   return async ctx => {
     await basicAuthGateway().doAuth(ctx.req, ctx.res);
-
     return inner(ctx);
   };
 };

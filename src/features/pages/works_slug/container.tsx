@@ -4,36 +4,20 @@ import { transition } from '@/common/animations';
 import tw, { css } from 'twin.macro';
 import { format } from 'date-fns';
 import { ProgressBar, Picture, Img } from '@/common/components';
+import {
+  withPageMotion,
+  TWithPageMotionProps,
+} from '~/features/with-page-motion';
+import { IMetaWork } from '~/domain/works';
 
-interface IProps {
-  title: string;
-  category: string;
-  eyecatch: {
-    src: string;
-    // srcSet: string;
-    mobile?: string;
+type IProps = {
+  prev?: {
+    slug: IMetaWork['slug'];
+    title: IMetaWork['title'];
+    eyecatch: IMetaWork['eyecatch'];
   };
-  date: Date;
-  role: string[];
-  viewWebsite?: string;
-  gallery?: {
-    width: number;
-    height: number;
-    src: string;
-    srcSet: string;
-  }[];
-  prev: {
-    slug: string;
-    title: string;
-    eyecatch: {
-      src: string;
-      // srcSet: string;
-      mobile?: string;
-    };
-  };
-  loading: boolean;
-  errorMessage: string;
-}
+} & IMetaWork &
+  TWithPageMotionProps;
 
 const Component = (props: IProps) => {
   const { scrollYProgress } = useViewportScroll();
@@ -78,15 +62,14 @@ const Component = (props: IProps) => {
             <div css={intro__info}>
               <dl css={dl}>
                 <dt css={dt}>Year :</dt>
-                <dd css={dd}>{format(props.date, 'MMMM d, yyyy')}</dd>
+                <dd css={dd}>{format(props.createAt, 'MMMM d, yyyy')}</dd>
               </dl>
               <dl css={dl}>
                 <dt css={dt}>Role :</dt>
                 <dd css={dd}>
                   <ul>
-                    {props.role.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
+                    {props.role &&
+                      props.role.map((item, i) => <li key={i}>{item}</li>)}
                   </ul>
                 </dd>
               </dl>
@@ -161,7 +144,7 @@ const Component = (props: IProps) => {
   );
 };
 
-export default Component;
+export default withPageMotion(Component);
 
 const kv = css`
   ${tw`relative w-full overflow-hidden block`}
