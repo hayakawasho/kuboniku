@@ -1,6 +1,8 @@
 import { Post, Post_Acf, Category } from '../generated/graphql';
+
 interface IRawWork {
   post: {
+    id: string;
     date: string;
     title: string;
     slug: string;
@@ -40,6 +42,7 @@ interface IRawWork {
 }
 
 interface IMetaWork {
+  id: string;
   slug: string;
   title: string;
   category: string;
@@ -58,6 +61,17 @@ interface IMetaWork {
   }[];
 }
 
+interface IMetaWorkSummary {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  eyecatch: {
+    src: string;
+  };
+  role?: string[];
+}
+
 class Work implements IMetaWork {
   readonly id;
   readonly slug;
@@ -69,19 +83,41 @@ class Work implements IMetaWork {
   readonly viewWebsite;
   readonly gallery;
 
-  constructor(raw: IRawWork) {
-    this.id = '';
-    this.slug = raw.post.slug;
-    this.title = raw.post.title;
-    this.category = raw.post.acf.category.name;
-    this.eyecatch = {
+  constructor({
+    id,
+    slug,
+    title,
+    category,
+    eyecatch,
+    createAt,
+    role,
+    viewWebsite,
+    gallery,
+  }: IMetaWork) {
+    this.id = id;
+    this.slug = slug;
+    this.title = title;
+    this.category = category;
+    this.eyecatch = eyecatch;
+    this.createAt = createAt;
+    this.role = role;
+    this.viewWebsite = viewWebsite;
+    this.gallery = gallery;
+  }
+
+  static fromJson = (raw: IRawWork) => {
+    const id = raw.post.id;
+    const slug = raw.post.slug;
+    const title = raw.post.title;
+    const category = raw.post.acf.category.name;
+    const eyecatch = {
       src: raw.post.acf.eyecatch.sourceUrl,
       mobile: raw.post.acf.eyecatchMobile?.sourceUrl,
     };
-    this.createAt = new Date(raw.post.date);
-    this.role = raw.post.acf.role.map(item => item.name);
-    this.viewWebsite = raw.post.acf.url;
-    this.gallery = raw.post.acf.gallery?.map(item => {
+    const createAt = new Date(raw.post.date);
+    const role = raw.post.acf.role.map(item => item.name);
+    const viewWebsite = raw.post.acf.url;
+    const gallery = raw.post.acf.gallery?.map(item => {
       return {
         width: item.mediaDetails.width,
         height: item.mediaDetails.height,
@@ -89,7 +125,19 @@ class Work implements IMetaWork {
         srcSet: item.srcSet,
       };
     });
-  }
+
+    return new Work({
+      id,
+      slug,
+      title,
+      category,
+      eyecatch,
+      createAt,
+      role,
+      viewWebsite,
+      gallery,
+    });
+  };
 }
 
 export type { IMetaWork, IRawWork };

@@ -12,7 +12,7 @@ const PER_PAGE = 10;
 const useWorksUsecase = (
   initialData: IMetaWork[],
   totalPosts: number,
-  repo: IWorksRepo
+  repository: IWorksRepo
 ) => {
   const [status, setStatus] = useState<TStatus<string>>(['idle']);
   const { handleHttpError } = useHandleHttpError();
@@ -22,7 +22,7 @@ const useWorksUsecase = (
       return ['/api/works/?page=' + pageIndex, pageIndex * PER_PAGE];
     },
     async (_, offset: number) => {
-      const res = await repo.findSome({ size: PER_PAGE, offset });
+      const res = await repository.findSome({ size: PER_PAGE, offset });
 
       if (res.isErr()) {
         return Promise.reject(res.error);

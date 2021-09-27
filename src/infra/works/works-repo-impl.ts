@@ -4,13 +4,20 @@ import { IMetaWork, IRawWork, IWorksRepo } from '@/domain/works';
 import { Post } from '@/domain/generated/graphql';
 import { Result, ok, err } from 'neverthrow';
 
-class WorksRepo implements IWorksRepo {
-  constructor() {}
+class WorksRepo extends IWorksRepo {
+  constructor() {
+    super();
+  }
 
-  async findOne(slug: string): Promise<Result<IRawWork, Error>> {
+  async findOne(slug: string): Promise<Result<IMetaWork, Error>> {
     try {
       const res = await fetcher<IRawWork>(GET_POST, { slug });
-      return ok(res);
+      return ok({
+        ...new Work(res.post),
+        prev: {
+          ...new Work(res.post),
+        },
+      });
     } catch (error) {
       return err(error);
     }

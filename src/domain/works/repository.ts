@@ -1,16 +1,16 @@
 import type { IMetaWork, IRawWork } from '../works/work';
 import { Result } from 'neverthrow';
 
-interface IWorksRepo {
-  findOne(slug: string): Promise<Result<IRawWork, Error>>;
-  findSome({
+abstract class IWorksRepo {
+  abstract findOne(slug: string): Promise<Result<IRawWork, Error>>;
+  abstract findSome({
     size,
     offset,
   }: {
     size: number;
     offset: number;
   }): Promise<Result<IRawWork[], Error>>;
-  findAllSlug(): Promise<Result<string[], Error>>;
+  abstract findAllSlug(): Promise<Result<string[], Error>>;
 }
 
-export type { IWorksRepo };
+export { IWorksRepo };

@@ -4,11 +4,11 @@ import { Post } from '@/domain/generated/graphql';
 import { useRequest } from '@/common/hooks';
 import { Utils } from '@/common/utils';
 
-const useHomeUsecase = (initialData: Post[], repo: IWorksRepo) => {
+const useHomeUsecase = (initialData: Post[], repository: IWorksRepo) => {
   const [rawData, status] = useRequest<>(
     `/api/home`,
     async () => {
-      const result = await repo.findSome({ size: 4 });
+      const result = await repository.findSome({ size: 4 });
 
       if (result.isErr()) {
         return Promise.reject(result.error);
