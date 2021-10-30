@@ -1,5 +1,5 @@
-import type { IMetaWork, IRawWork } from '../works/work';
 import { Result } from 'neverthrow';
+import type { IMetaWork, IRawWork } from '../works/work';
 
 abstract class IWorksRepo {
   abstract findOne(slug: string): Promise<Result<IRawWork, Error>>;

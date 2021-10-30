@@ -1,21 +1,23 @@
 import { InferGetServerSidePropsType } from 'next';
+import * as React from 'react';
 import { Layout } from '@/common/components';
-import { useWorksUsecase, WorksIndexContainer } from '@/features/pages/works';
+import { IWorksRepo } from '@/domain/works';
+import { useWorksUsecase, PageContainer } from '@/features/_pages/works';
 import { withAuth } from '@/features/user-auth';
-import { repositoryFactory } from '~/infra/repository-factory';
+import { repositoryFactory } from '@/infra/repository-factory';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const [viewData, status, { handleLoadMoreWorksInfo }] = useWorksUsecase(
-    props.data,
-    props.totalPosts,
-    repositoryFactory.get('works')
-  );
+  const [viewData, status, { handleLoadMoreWorksInfo }] = useWorksUsecase({
+    initial: props.data,
+    totalPosts: props.totalPosts,
+    repository: repositoryFactory.get('works'),
+  });
 
   return (
     <Layout title="WORKS">
-      <WorksIndexContainer
+      <PageContainer
         posts={viewData}
         totalPosts={props.totalPosts}
         onLoadMore={handleLoadMoreWorksInfo}

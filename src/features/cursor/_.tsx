@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useEffect } from 'react';
 // import E from '@/common/utils';
 import { EVENTS } from '@/common/constants/const';
 

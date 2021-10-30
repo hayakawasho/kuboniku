@@ -1,13 +1,19 @@
-import React from 'react';
 import Head from 'next/head';
+import React from 'react';
 
 interface IProps {
   title: string;
   description?: string;
   children: React.ReactNode;
+  shouldScrollItem?: boolean;
 }
 
-const Layout = ({ children, title, description }: IProps) => {
+const Layout = ({
+  children,
+  title,
+  description,
+  shouldScrollItem = true,
+}: IProps) => {
   const siteName = 'KUBONIKU.COM | WEB DESIGNER';
   const metaTitle = `${title ? `${title} | ` : ''}` + siteName;
   const metaDescription =
@@ -30,7 +36,7 @@ const Layout = ({ children, title, description }: IProps) => {
         <meta name="twitter:description" content={metaDescription} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <main id="xhr" data-smooth>
+      <main id="xhr" data-scroll-item={shouldScrollItem}>
         {children}
       </main>
     </>

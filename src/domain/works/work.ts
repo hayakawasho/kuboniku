@@ -1,4 +1,4 @@
-import { Post, Post_Acf, Category } from '../generated/graphql';
+import { Post, Post_Acf, Category } from '@/__generated__/graphql';
 
 interface IRawWork {
   post: {
@@ -105,7 +105,7 @@ class Work implements IMetaWork {
     this.gallery = gallery;
   }
 
-  static fromJson = (raw: IRawWork) => {
+  static fromRaw = (raw: IRawWork) => {
     const id = raw.post.id;
     const slug = raw.post.slug;
     const title = raw.post.title;

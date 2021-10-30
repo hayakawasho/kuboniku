@@ -12,17 +12,9 @@
   --gap: calc(30 / 750 * 100vw);
   --aspect: 100%;
 
-  /* color */
   --color-text: #e3e3e3;
   --color-text-primary: #858585;
   --color-theme: #1793a9;
-
-  /* noise */
-  --z-noise: 1;
-  --z-section: 5;
-  --z-header: 10;
-  --z-mask: 90;
-  --z-menu: 100;
 
   @media (min-width: 640px) {
     --gap: calc(40 / 1280 * 100vw);

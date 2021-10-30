@@ -1,16 +1,16 @@
-import { WorksRepo } from './works/works-repo-impl';
+import { WorksRepo } from './works/works-repo';
 
 const REPOSITORIES = ['works'] as const;
 
-type Unpacked<T> = T extends { [K in keyof T]: infer U } ? U : never;
-type TRepoName = Unpacked<typeof REPOSITORIES>;
+type IUnpacked<T> = T extends { [K in keyof T]: infer U } ? U : never;
+type IRepoName = IUnpacked<typeof REPOSITORIES>;
 
 const repositories = {
   works: new WorksRepo(),
 };
 
 const repositoryFactory = {
-  get: (name: TRepoName) => repositories[name],
+  get: (name: IRepoName) => repositories[name],
 };
 
 export { repositoryFactory };

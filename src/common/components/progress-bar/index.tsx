@@ -1,5 +1,5 @@
 import React from 'react';
-import tw, { css } from 'twin.macro';
+// import tw, { css } from 'twin.macro';
 
 interface IProps {
   bar: React.ReactNode;
@@ -11,7 +11,7 @@ const Component = ({ bar, index, max }: IProps) => {
   return (
     <div className="l-progress">
       <div tw="relative w-full h-full">
-        <div tw="text-center" css={ctrl}>
+        <div tw="text-center" className={ctrl}>
           {index && (
             <ol>
               {index.map((num, i) => (
@@ -35,6 +35,7 @@ const Component = ({ bar, index, max }: IProps) => {
 
 export default Component;
 
+/*
 const ctrl = css`
   font-family: var(--font-en);
   font-size: 1rem;
@@ -57,3 +58,4 @@ const ctrl = css`
     }
   }
 `;
+*/

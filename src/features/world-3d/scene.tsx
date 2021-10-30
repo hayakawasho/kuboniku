@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
+import { useEffect, useRef } from 'react';
 
-const vertexShader = require('./shaders/vert.glsl').default;
-const fragmentShader = require('./shaders/frag.glsl').default;
+const fragmentShader = require('./shaders/frag.glsl').default; // eslint-disable-line @typescript-eslint/no-var-requires
+const vertexShader = require('./shaders/vert.glsl').default; // eslint-disable-line @typescript-eslint/no-var-requires
 
 const Scene = ({ uniforms }) => {
   const mesh = useRef<any>();

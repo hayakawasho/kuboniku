@@ -1,8 +1,9 @@
 import { InferGetServerSidePropsType } from 'next';
+import * as React from 'react';
 import { Layout } from '@/common/components';
 // import { repositoryFactory } from '@/infra/repository-factory';
 // import { useMount, useUnmount } from 'react-use';
-// import { useHomeUsecase, HomePresenter } from '@/features/pages/home';
+// import { useHomeUsecase, HomePresenter } from '@/features/_pages/home';
 // import { withAuth } from '@/features/user-auth';
 
 const Component = (

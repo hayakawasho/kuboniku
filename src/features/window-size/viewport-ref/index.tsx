@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 // import ResizeObserverHandler from '@/common/utils/resizeObserverHandler';
 // import debounce from 'lodash.debounce';
+// import tw, { css } from 'twin.macro';
 import { EVENTS } from '@/common/constants/const';
 // import { useDispatch } from 'react-redux';
 // import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '@/state/app';
-import tw, { css } from 'twin.macro';
 
 // let E;
 
@@ -50,12 +50,12 @@ const Component = React.memo(() => {
     };
   }, [updateVh]);
 
-  return <div ref={docRef} css={docSize} />;
+  return (
+    <div
+      ref={docRef}
+      className="absolute w-screen h-full top-0 left-0 pointer-events-none invisible"
+    ></div>
+  );
 });
 
 export default Component;
-
-const docSize = css`
-  ${tw`absolute w-screen h-full top-0 left-0 pointer-events-none invisible`}
-  z-index: -1;
-`;

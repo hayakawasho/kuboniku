@@ -1,0 +1,20 @@
+.burger {
+  position: fixed;
+  top: .8rem;
+  right: 1rem;
+  width: 4rem;
+  height: 4rem;
+  z-index: 101;
+}
+
+.burger__line {
+  width: 20px;
+  height: 1px;
+  background-color: #fff;
+  transform-origin: left;
+
+  &:nth-of-type(2) {
+    margin: 5px 0 0;
+    transform: scaleX(calc(32 / 40));
+  }
+}

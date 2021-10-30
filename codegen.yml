@@ -1,8 +1,13 @@
 overwrite: true
-schema: "https://wp.kuboniku.com/graphql"
-# documents: "src/**/*.graphql"
+schema: "http://localhost:8000/___graphql"
+documents:
+  - "./node_modules/gatsby-*/**/*.js"
+  - "./src/**/*.{ts,tsx}"
 generates:
-  src/domain/generated/graphql.ts:
+  src/__generated__/graphql.ts:
     plugins:
-      - typescript
-      - typescript-operations
+      - "typescript"
+      - "typescript-operations"
+config:
+  namingConvention:
+    enumValues: keep

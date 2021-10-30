@@ -1,24 +1,22 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import * as React from 'react';
 import { Layout } from '@/common/components';
-import {
-  useWorkUsecase,
-  WorksDetailContainer,
-} from '@/features/pages/works_slug';
+import { useWorkUsecase, PageContainer } from '@/features/_pages/works_slug';
 import { withAuth } from '@/features/user-auth';
-import { repositoryFactory } from '~/infra/repository-factory';
+import { repositoryFactory } from '@/infra/repository-factory';
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const [newProps, status] = useWorkUsecase(
-    props.data,
-    props.path as string,
-    repositoryFactory.get('works')
-  );
+  const [newProps, status] = useWorkUsecase({
+    initial: props.data as any,
+    slug: props.path as string,
+    repository: repositoryFactory.get('works') as any,
+  });
 
   return (
     <Layout title="WORKS">
-      <WorksDetailContainer
+      <PageContainer
         {...newProps}
         // loading={status[0] === 'loading'}
         // errorMessage={status[0] === 'error' && '' + status[1]}

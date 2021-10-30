@@ -1,10 +1,10 @@
-import { useCallback, useRef } from 'react';
-import Link from 'next/link';
-import { useMenuContext } from '@/common/context';
-import tw, { css } from 'twin.macro';
-import { Utils, qsa } from '@/common/utils';
-import { useUpdateEffect } from 'react-use';
+import cn from 'classnames';
 import { gsap } from 'gsap';
+import Link from 'next/link';
+import * as React from 'react';
+import { useMenuContext } from '@/common/context';
+import { useUpdateEffect, useSelector } from '@/common/hooks';
+import { Utils } from '@/common/utils';
 
 const CLIP_PATH = {
   x1: 100,
@@ -12,31 +12,27 @@ const CLIP_PATH = {
 };
 
 const Navigation = () => {
-  const {
-    isMenuOpen,
-    isMenuAnimating,
-    onMenuClose,
-    setMenuAnimationStart,
-    setMenuAnimationEnd,
-  } = useMenuContext();
+  const [q, ref] = useSelector();
+  // const domBg = q('.js-navMenu__bg')[0];
 
-  const navMenuRef = useRef(null);
+  const { isMenuOpen, onMenuClose } = useMenuContext();
 
-  const updateClipPath = useCallback(() => {
-    navMenuRef.current.style.clipPath = `polygon(
-      ${CLIP_PATH.x1}% 0px,
-      100% 0px,
-      100% 100vh,
-      ${CLIP_PATH.x2}% 100vh
-    )`;
+  const updateClipPath = React.useCallback(() => {
+    // domBg.style.clipPath = `polygon(
+    //   ${CLIP_PATH.x1}% 0px,
+    //   100% 0px,
+    //   100% 100vh,
+    //   ${CLIP_PATH.x2}% 100vh
+    // )`;
   }, [CLIP_PATH.x1, CLIP_PATH.x2]);
 
   useUpdateEffect(() => {
     isMenuOpen ? showMenu() : hideMenu();
   }, [isMenuOpen]);
 
-  const showMenu = useCallback(async () => {
-    const navLabelDoms = qsa('.js-navLabel');
+  const showMenu = React.useCallback(async () => {
+    /*
+    const domNavLabels = q('.js-navLabel');
 
     const tl = gsap.timeline({
       paused: true,
@@ -44,18 +40,17 @@ const Navigation = () => {
         updateClipPath();
       },
       onComplete: () => {
-        navMenuRef.current.style.willChange = '';
-        setMenuAnimationEnd();
+        domBg.style.willChange = '';
       },
     });
 
     tl.fromTo(
       CLIP_PATH,
-      0.8,
       {
         x1: 100,
       },
       {
+        duration: 0.8,
         x1: 0,
         ease: 'power3.inOut',
       }
@@ -63,11 +58,11 @@ const Navigation = () => {
 
     tl.fromTo(
       CLIP_PATH,
-      0.9,
       {
         x2: 100,
       },
       {
+        duration: 0.9,
         x2: 0,
         ease: 'power3.inOut',
       },
@@ -75,7 +70,7 @@ const Navigation = () => {
     );
 
     tl.fromTo(
-      navLabelDoms,
+      domNavLabels,
       {
         skewY: -15,
         y: 40,
@@ -93,15 +88,15 @@ const Navigation = () => {
       '-=0.9'
     );
 
-    setMenuAnimationStart();
-
     await Utils.nextTick();
 
     tl.play(0);
-  }, []);
+    */
+  }, [ref]);
 
-  const hideMenu = useCallback(() => {
-    const navLabelDoms = qsa('.js-navLabel');
+  const hideMenu = React.useCallback(() => {
+    /*
+    const domNavLabels = q('.js-navLabel');
 
     const tl = gsap.timeline({
       paused: true,
@@ -109,19 +104,18 @@ const Navigation = () => {
         updateClipPath();
       },
       onComplete: () => {
-        navMenuRef.current.style.willChange = '';
-        navMenuRef.current.style.clipPath = '';
-        setMenuAnimationEnd();
+        domBg.style.willChange = '';
+        domBg.style.clipPath = '';
       },
     });
 
     tl.fromTo(
       CLIP_PATH,
-      0.8,
       {
         x1: 0,
       },
       {
+        duration: 0.8,
         x1: 100,
         ease: 'power3.inOut',
       }
@@ -129,11 +123,9 @@ const Navigation = () => {
 
     tl.fromTo(
       CLIP_PATH,
-      0.9,
+      { x2: 0 },
       {
-        x2: 0,
-      },
-      {
+        duration: 0.9,
         x2: 100,
         ease: 'power3.inOut',
       },
@@ -141,7 +133,7 @@ const Navigation = () => {
     );
 
     tl.to(
-      navLabelDoms.reverse(),
+      domNavLabels.reverse(),
       {
         duration: 0.8,
         skewY: 15,
@@ -154,42 +146,32 @@ const Navigation = () => {
       '-=.9'
     );
 
-    setMenuAnimationStart();
-
     tl.play(0);
-  }, []);
+    */
+  }, [ref]);
 
   return (
-    <nav
-      css={navMenu}
-      className={`${isMenuOpen ? 'is-menuOpen' : ''} ${
-        isMenuAnimating ? 'is-menuAnimating' : ''
-      }`}
-    >
-      <div tw="w-full h-full relative">
-        <div css={navMenu__mask} className="u-mobile" onClick={onMenuClose} />
-        <div css={navMenu__bg} className="u-mobile" ref={navMenuRef} />
-        <ul css={menuList}>
+    <nav className={'navMenu' + cn({ 'is-menuOpen': isMenuOpen })} ref={ref}>
+      <div className="w-full h-full relative">
+        <div className="navMenu__mask u-mobile" onClick={onMenuClose}></div>
+        <div className="navMenu__bg u-mobile js-navMenu__bg"></div>
+        <ul className="menuList">
           <li>
             <Link scroll={false} href="/profile">
-              <a css={link} className="js-navLabel" onClick={onMenuClose}>
+              <a className="link js-navLabel" onClick={onMenuClose}>
                 Profile
               </a>
             </Link>
           </li>
           <li>
             <Link scroll={false} href="/works">
-              <a css={link} className="js-navLabel" onClick={onMenuClose}>
+              <a className="link js-navLabel" onClick={onMenuClose}>
                 Works
               </a>
             </Link>
           </li>
           <li>
-            <a
-              css={link}
-              className="js-navLabel"
-              href="mailto:k.bo.n10.05@gmail.com"
-            >
+            <a className="link js-navLabel" href="mailto:k.bo.n10.05@gmail.com">
               Contact
             </a>
           </li>
@@ -201,6 +183,7 @@ const Navigation = () => {
 
 export { Navigation };
 
+/*
 const navMenu = css`
   ${tw`fixed w-full h-screen overflow-hidden pointer-events-none top-0 left-0`}
   z-index: 100;
@@ -285,3 +268,4 @@ const link = css`
     pointer-events: auto;
   }
 `;
+*/

@@ -1,9 +1,9 @@
-import { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { gsap } from 'gsap';
+import { Suspense, useEffect } from 'react';
+import * as THREE from 'three';
 import { Scene } from './scene';
 import { useUiColorContext } from '@/common/context';
-import * as THREE from 'three';
-import { gsap } from 'gsap';
 
 const dpr = window.devicePixelRatio >= 2 ? 1.5 : window.devicePixelRatio;
 
@@ -43,7 +43,9 @@ const Webgl = () => {
 
   useEffect(() => {
     const { r, g, b } = new THREE.Color(uiColor);
-    gsap.to(uniforms.uColor.value, 0.8, {
+
+    gsap.to(uniforms.uColor.value, {
+      duration: 0.8,
       g,
       r,
       b,
@@ -51,7 +53,7 @@ const Webgl = () => {
   }, [uiColor]);
 
   return (
-    <div tw="fixed top-0 left-0 w-full h-full pointer-events-none">
+    <div className="fixed top-0 left-0 w-full h-full pointer-events-none">
       <Canvas dpr={dpr} orthographic={true}>
         <Suspense fallback={null}>
           <Scene uniforms={uniforms} />

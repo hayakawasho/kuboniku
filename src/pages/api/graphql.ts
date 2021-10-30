@@ -1,5 +1,5 @@
-import { NextApiResponse, NextApiRequest } from 'next';
 import { ApolloServer } from 'apollo-server-micro';
+import { NextApiResponse, NextApiRequest } from 'next';
 
 const server = new ApolloServer({});
 

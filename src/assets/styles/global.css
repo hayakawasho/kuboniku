@@ -1,35 +1,5 @@
 @import './base/_import.css';
 
-:root {
-  --font: 'Noto Sans JP', sans-serif;
-  --font-en: 'Montserrat', sans-serif;
-  --font-roboto: 'Roboto Condensed', sans-serif;
-
-  --grid: calc(1 / 12 * 100vw);
-  --gutter: 0;
-  --grid-gutter: 1.6rem;
-
-  --vh: 1vh;
-
-  --gap: calc(30 / 750 * 100vw);
-  --aspect: 100%;
-
-  --color-text: #e3e3e3;
-  --color-text-primary: #858585;
-  --color-theme: #1793a9;
-
-  --z-noise: 1;
-  --z-section: 5;
-  --z-header: 10;
-  --z-mask: 90;
-  --z-menu: 100;
-
-  @media (min-width: 640px) {
-    --gap: calc(40 / 1280 * 100vw);
-    --gutter: calc(16 / 1280 * 100vw);
-  }
-}
-
 @import './base/_base.css';
 @import './base/_fonts.css';
 
@@ -37,6 +7,7 @@
 @import './parts/_grid.css';
 @import './parts/_aspect.css';
 @import './parts/_progress.css';
+@import './parts/_burger.css';
 
 @import './_utils.css';
 @import './_shame.css';

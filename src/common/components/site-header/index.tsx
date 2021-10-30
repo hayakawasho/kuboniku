@@ -1,27 +1,29 @@
 import Link from 'next/link';
-import { ToggleMenu } from './parts/toggle-menu';
-import { ToggleSns } from './parts/toggle-sns';
-import tw, { css } from 'twin.macro';
+import * as React from 'react';
+import { ToggleMenu } from './toggle-menu';
+import { ToggleSns } from './toggle-sns';
 
 const Header = () => {
   return (
-    <header>
+    <header className="fixed">
       <Link href="/">
-        <a css={brandLogo}>
+        <a className="fixed block pointer-events-auto brandLogo">
           <i className="icon-logo" />
         </a>
       </Link>
       <ToggleMenu />
       <ToggleSns />
-      <small css={copyright}>&copy; KuboNiku.com</small>
+      <small className="fixed inline-block pointer-events-none copyright">
+        &copy; KuboNiku.com
+      </small>
     </header>
   );
 };
 
 export { Header };
 
+/*
 const brandLogo = css`
-  ${tw`fixed block pointer-events-auto`}
   top: 1.5rem;
   left: 2rem;
   z-index: 99;
@@ -37,7 +39,6 @@ const brandLogo = css`
 `;
 
 const copyright = css`
-  ${tw`fixed inline-block pointer-events-none`}
   right: 3rem;
   bottom: 2.5rem;
   font-family: var(--font-en);
@@ -54,3 +55,4 @@ const copyright = css`
     bottom: 4rem;
   }
 `;
+*/
