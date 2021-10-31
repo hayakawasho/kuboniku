@@ -1,10 +1,10 @@
-import constate from 'constate';
-import { useState, useCallback } from 'react';
+import constate from "constate"
+import { useState, useCallback } from "react"
 
 const useUiColor = () => {
-  const [uiColor, setUiColor] = useState('#1793a9');
+  const [uiColor, setUiColor] = useState("#1793a9")
 
-  return { uiColor };
-};
+  return { uiColor }
+}
 
-export const [UiColorProvider, useUiColorContext] = constate(useUiColor);
+export const [UiColorProvider, useUiColorContext] = constate(useUiColor)

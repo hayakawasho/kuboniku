@@ -1,36 +1,36 @@
-import { keyframes } from '@emotion/react';
-import useIntersectionObserver from '@react-hook/intersection-observer';
-import { useRef, useEffect } from 'react';
+import { keyframes } from "@emotion/react"
+import useIntersectionObserver from "@react-hook/intersection-observer"
+import { useRef, useEffect } from "react"
 // import tw, { css } from 'twin.macro';
-import { WorkEntry } from './work-entry';
+import { WorkEntry } from "./work-entry"
 // import { useSkewScroll } from '@/features/skew-scroll';
 
 interface IProps {
   posts: {
-    slug: string;
-    title: string;
-    index: number | string;
+    slug: string
+    title: string
+    index: number | string
     eyecatch: {
-      src: string;
-      width: number;
-      height: number;
-    };
-  }[];
-  totalPosts: number;
-  handleLoadMore: () => void;
+      src: string
+      width: number
+      height: number
+    }
+  }[]
+  totalPosts: number
+  handleLoadMore: () => void
 }
 
 const Component = (props: IProps) => {
-  const entryLoaderRef = useRef(null);
+  const entryLoaderRef = useRef(null)
   const { isIntersecting } = useIntersectionObserver(entryLoaderRef, {
-    rootMargin: '200px 0px',
-  });
+    rootMargin: "200px 0px",
+  })
 
   useEffect(() => {
     if (isIntersecting) {
-      props.handleLoadMore();
+      props.handleLoadMore()
     }
-  }, [isIntersecting]);
+  }, [isIntersecting])
 
   return (
     <div className="wrk-container">
@@ -43,7 +43,7 @@ const Component = (props: IProps) => {
         {props.posts.map((post, i) => (
           <article className="o-grid__item" key={i}>
             <WorkEntry
-              href={'/works/' + post.slug}
+              href={"/works/" + post.slug}
               title={post.title}
               index={post.index}
               img={{
@@ -66,10 +66,10 @@ const Component = (props: IProps) => {
         }
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 /*
 const container = css`

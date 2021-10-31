@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from "react"
 // import ResizeObserverHandler from '@/common/utils/resizeObserverHandler';
 // import debounce from 'lodash.debounce';
 // import tw, { css } from 'twin.macro';
-import { EVENTS } from '@/common/constants/const';
+import { EVENTS } from "@/common/constants/const"
 // import { useDispatch } from 'react-redux';
 // import { SET_DOC_HEIGHT, SET_WINDOW_HEIGHT } from '@/state/app';
 
@@ -13,20 +13,20 @@ if (process.browser) {
 }
 
 const Component = React.memo(() => {
-  const docRef = useRef(null);
+  const docRef = useRef(null)
   // const dispatch = useDispatch();
 
   const updateVh = useCallback(height => {
-    const vh = height * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }, []);
+    const vh = height * 0.01
+    document.documentElement.style.setProperty("--vh", `${vh}px`)
+  }, [])
 
   const setSize = (width: number, height: number) => {
     // E.emit(EVENTS.RESIZE, { width, height });
-  };
+  }
 
   useEffect(() => {
-    setSize(window.innerWidth, window.innerHeight);
+    setSize(window.innerWidth, window.innerHeight)
 
     /*
     const docObserve = new ResizeObserverHandler({
@@ -47,15 +47,15 @@ const Component = React.memo(() => {
 
     return () => {
       //docObserve.destroy();
-    };
-  }, [updateVh]);
+    }
+  }, [updateVh])
 
   return (
     <div
       ref={docRef}
       className="absolute w-screen h-full top-0 left-0 pointer-events-none invisible"
     ></div>
-  );
-});
+  )
+})
 
-export default Component;
+export default Component

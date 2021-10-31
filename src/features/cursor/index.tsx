@@ -1,10 +1,10 @@
-import constate from 'constate';
-import { useState, useCallback } from 'react';
+import constate from "constate"
+import { useState, useCallback } from "react"
 
 const useMousePos = () => {
-  return {};
-};
+  return {}
+}
 
 export const [MousePositionProvider, useMousePositionContext] = constate(
   useMousePos
-);
+)

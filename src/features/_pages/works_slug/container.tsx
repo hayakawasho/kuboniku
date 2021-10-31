@@ -1,33 +1,33 @@
-import { format } from 'date-fns';
-import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import Link from 'next/link';
-import React from 'react';
-import { ProgressBar, Picture, Img } from '@/common/components';
-import { useArrayRef } from '@/common/hooks';
-import { IMetaWork } from '@/domain/works';
-import { useSkewOnScroll } from '@/features/scroll';
+import { format } from "date-fns"
+import { motion, useViewportScroll, useTransform } from "framer-motion"
+import Link from "next/link"
+import React from "react"
+import { ProgressBar, Picture, Img } from "@/common/components"
+import { useArrayRef } from "@/common/hooks"
+import { IMetaWork } from "@/domain/works"
+import { useSkewOnScroll } from "@/features/scroll"
 
 type IProps = {
   prev?: {
-    slug: IMetaWork['slug'];
-    title: IMetaWork['title'];
-    eyecatch: IMetaWork['eyecatch'];
-  };
-} & IMetaWork;
+    slug: IMetaWork["slug"]
+    title: IMetaWork["title"]
+    eyecatch: IMetaWork["eyecatch"]
+  }
+} & IMetaWork
 
 const Component = (props: IProps) => {
-  const [skewRefs, setSkewRef] = useArrayRef();
+  const [skewRefs, setSkewRef] = useArrayRef()
 
   useSkewOnScroll({
     refs: skewRefs,
-  });
+  })
 
-  const { scrollYProgress } = useViewportScroll();
+  const { scrollYProgress } = useViewportScroll()
   // const scrollBuffer = useSelector(scrollBufferSelector);
-  const scrollBuffer = 0;
-  const inputRange = [0, 1];
-  const outputRange = [scrollBuffer, 1];
-  const progressValue = useTransform(scrollYProgress, inputRange, outputRange);
+  const scrollBuffer = 0
+  const inputRange = [0, 1]
+  const outputRange = [scrollBuffer, 1]
+  const progressValue = useTransform(scrollYProgress, inputRange, outputRange)
 
   return (
     <>
@@ -62,7 +62,7 @@ const Component = (props: IProps) => {
             <dl className="wkslug-dl">
               <dt className="wkslug-dt">Year :</dt>
               <dd className="wkslug-dd">
-                {format(props.createAt, 'MMMM d, yyyy')}
+                {format(props.createAt, "MMMM d, yyyy")}
               </dd>
             </dl>
             <dl className="wkslug-dl">
@@ -90,11 +90,11 @@ const Component = (props: IProps) => {
         {props.gallery && (
           <ul className="wkslug-intro__captchaList">
             {props.gallery.map((item, i) => {
-              const aspect = Math.round((item.height / item.width) * 100);
+              const aspect = Math.round((item.height / item.width) * 100)
               const css = {
-                '--aspect': `${aspect}%`,
+                "--aspect": `${aspect}%`,
                 backgroundColor: `transparent`,
-              };
+              }
               return (
                 <li className="relative" key={i}>
                   <div className="c-aspect" style={css} />
@@ -107,13 +107,13 @@ const Component = (props: IProps) => {
                     />
                   </div>
                 </li>
-              );
+              )
             })}
           </ul>
         )}
         {props.prev && (
           <aside className="wkslug-kv wkslug-kv--next">
-            <Link scroll={false} href={'/works/' + props.prev.slug}>
+            <Link scroll={false} href={"/works/" + props.prev.slug}>
               <a className="absolute w-full h-full top-0 left-0 z-10" />
             </Link>
             <div className="wkslug-kv__cont">
@@ -142,7 +142,7 @@ const Component = (props: IProps) => {
         }
       /> */}
     </>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component

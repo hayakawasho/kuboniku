@@ -1,18 +1,18 @@
-import { ApolloServer } from 'apollo-server-micro';
-import { NextApiResponse, NextApiRequest } from 'next';
+import { ApolloServer } from "apollo-server-micro"
+import { NextApiResponse, NextApiRequest } from "next"
 
-const server = new ApolloServer({});
+const server = new ApolloServer({})
 
 export const config = {
   api: {
     bodyParser: false,
   },
-};
+}
 
 const handler = server.createHandler({
-  path: '/api/graphql',
-});
+  path: "/api/graphql",
+})
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  return handler(req, res);
-};
+  return handler(req, res)
+}

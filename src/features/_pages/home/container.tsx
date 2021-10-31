@@ -1,28 +1,28 @@
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import * as React from 'react';
-import { ProgressBar } from '@/common/components';
-import { Utils } from '@/common/utils';
+import { motion } from "framer-motion"
+import Link from "next/link"
+import * as React from "react"
+import { ProgressBar } from "@/common/components"
+import { Utils } from "@/common/utils"
 
 interface IProps {
   posts: {
-    title: string;
-    slug: string;
-    category: string;
-    index: number | string;
+    title: string
+    slug: string
+    category: string
+    index: number | string
     eyecatch: {
-      src: string;
+      src: string
       // srcSet: string;
-      mobile: string;
-    };
-  }[];
-  loading: boolean;
-  errorMessage: string;
+      mobile: string
+    }
+  }[]
+  loading: boolean
+  errorMessage: string
 }
 
 const Component = (props: IProps) => {
   /*
-  const [result] = useRequest<IData>(GET_POSTS, {
+  const [result] = useHttp<IData>(GET_POSTS, {
     initialData: props.initialData,
   });
 
@@ -95,10 +95,10 @@ const Component = (props: IProps) => {
       </div>
         */}
     </>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 /*
 const slides = css`

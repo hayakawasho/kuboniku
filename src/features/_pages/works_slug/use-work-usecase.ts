@@ -1,29 +1,29 @@
-import { useMemo } from 'react';
-import { useRequest } from '@/common/hooks';
-import { IRawWork, IWorksRepo, Work } from '@/domain/works';
+import { useMemo } from "react"
+import { useHttp } from "@/common/hooks"
+import { IRawWork, IWorksRepo, Work } from "@/domain/works"
 
 type IProps = {
-  initial: IRawWork;
-  slug: string;
-  repository: IWorksRepo;
-};
+  initial: IRawWork
+  slug: string
+  repository: IWorksRepo
+}
 
 const useWorkUsecase = ({ initial, slug, repository }: IProps) => {
-  const [data, status] = useRequest<IRawWork>(
+  const [data, status] = useHttp<IRawWork>(
     `/api/works/${slug}`,
     async () => {
-      const result = await repository.findOne(slug);
+      const result = await repository.findOne(slug)
 
       if (result.isErr()) {
-        return Promise.reject(result.error);
+        return Promise.reject(result.error)
       }
 
-      return result.value;
+      return result.value
     },
     {
       fallback: initialData,
     }
-  );
+  )
 
   const getWorkInfo = useMemo(() => {
     const viewWork = {
@@ -31,12 +31,12 @@ const useWorkUsecase = ({ initial, slug, repository }: IProps) => {
       prev: {
         ...new Work(data.post.previous),
       },
-    };
+    }
 
-    return viewWork;
-  }, [data]);
+    return viewWork
+  }, [data])
 
-  return [getWorkInfo, status] as const;
-};
+  return [getWorkInfo, status] as const
+}
 
-export { useWorkUsecase };
+export { useWorkUsecase }

@@ -1,11 +1,11 @@
-import Head from 'next/head';
-import React from 'react';
+import Head from "next/head"
+import React from "react"
 
 interface IProps {
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-  shouldScrollItem?: boolean;
+  title: string
+  description?: string
+  children: React.ReactNode
+  shouldScrollItem?: boolean
 }
 
 const Layout = ({
@@ -14,10 +14,10 @@ const Layout = ({
   description,
   shouldScrollItem = true,
 }: IProps) => {
-  const siteName = 'KUBONIKU.COM | WEB DESIGNER';
-  const metaTitle = `${title ? `${title} | ` : ''}` + siteName;
+  const siteName = "KUBONIKU.COM | WEB DESIGNER"
+  const metaTitle = `${title ? `${title} | ` : ""}` + siteName
   const metaDescription =
-    description ?? 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site';
+    description ?? "WEB DESIGNER NAGISA KUBO 久保渚 portfolio site"
 
   return (
     <>
@@ -40,7 +40,7 @@ const Layout = ({
         {children}
       </main>
     </>
-  );
-};
+  )
+}
 
-export { Layout };
+export { Layout }

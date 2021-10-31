@@ -1,10 +1,10 @@
-import constate from 'constate';
-import { useState, useCallback } from 'react';
+import constate from "constate"
+import { useState, useCallback } from "react"
 
 const useWindowSize = () => {
-  return {};
-};
+  return {}
+}
 
 export const [WindowSizeProvider, useWindowSizeContext] = constate(
   useWindowSize
-);
+)

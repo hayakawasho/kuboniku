@@ -9,7 +9,7 @@ const Component = props => {
       width={props.width}
       height={props.height}
     />
-  );
-};
+  )
+}
 
-export default Component;
+export default Component

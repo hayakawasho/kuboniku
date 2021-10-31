@@ -2,7 +2,7 @@
   height: calc(var(--vh) * 100);
   perspective: 1000px;
 
-  img {
+  & img {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -13,7 +13,7 @@
 .wkslug-kv--next {
   height: 100vh;
 
-  img {
+  & img {
     filter: grayscale(1);
   }
 }
@@ -74,13 +74,16 @@
   animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 
   &::before {
-    ${tw`absolute block origin-left`}
+    position: absolute;
+    display: block;
+    transform-origin: left;
     bottom: -30px;
     content: 'scroll';
     animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 }
 
+/*
 const worksContent = css`
   backface-visibility: hidden;
 `;
@@ -198,3 +201,4 @@ const captchaList = css`
     }
   }
 `;
+*/

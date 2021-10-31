@@ -1,25 +1,25 @@
-import cn from 'classnames';
-import Link from 'next/link';
-import { useRef } from 'react';
+import cn from "classnames"
+import Link from "next/link"
+import { useRef } from "react"
 
 interface IProps {
-  href: string;
-  index: string | number;
-  title: string;
+  href: string
+  index: string | number
+  title: string
   img: {
-    src: string;
-    width: number;
-    height: number;
-  };
+    src: string
+    width: number
+    height: number
+  }
 }
 
 const WorkEntry = (props: IProps) => {
-  const ref = useRef(null);
+  const ref = useRef(null)
   // const [isHovering, toggle] = useToggle(false, true);
 
   return (
     <Link scroll={false} href={props.href}>
-      <a ref={ref} className={'wrk-entry' + cn({ 'is-hovering': false })}>
+      <a ref={ref} className={"wrk-entry" + cn({ "is-hovering": false })}>
         <div className="c-aspect" />
         <div className="wrk-entry__g">
           <div className="wrk-entry__eyecatch">
@@ -41,10 +41,10 @@ const WorkEntry = (props: IProps) => {
         </div>
       </a>
     </Link>
-  );
-};
+  )
+}
 
-export { WorkEntry };
+export { WorkEntry }
 
 /*
 const heading = css`

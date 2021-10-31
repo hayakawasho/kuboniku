@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react"
 // import tw, { css } from 'twin.macro';
 
 interface IProps {
-  bar: React.ReactNode;
-  index?: number[];
-  max?: number;
+  bar: React.ReactNode
+  index?: number[]
+  max?: number
 }
 
 const Component = ({ bar, index, max }: IProps) => {
@@ -30,10 +30,10 @@ const Component = ({ bar, index, max }: IProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 /*
 const ctrl = css`

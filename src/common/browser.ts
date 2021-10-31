@@ -1,21 +1,21 @@
-import { gsap } from 'gsap';
-import { CustomEase } from 'gsap/CustomEase';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from "gsap"
+import { CustomEase } from "gsap/CustomEase"
+import { ScrollToPlugin } from "gsap/ScrollToPlugin"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const onInitialClientRender = () => {
-  gsap.registerPlugin(ScrollToPlugin);
-  gsap.registerPlugin(CustomEase);
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollToPlugin)
+  gsap.registerPlugin(CustomEase)
+  gsap.registerPlugin(ScrollTrigger)
 
-  CustomEase.create('opa', '.26,.06 ,0 ,1');
-  CustomEase.create('fade', '.18, .06, .23, 1');
-  CustomEase.create('trans', '.43, .05, .17 ,1');
-  CustomEase.create('smooth', '0.555, 0.205, 0.295, 0.975');
-  CustomEase.create('snappy', '.580, .300, .005, 1.000');
-};
+  CustomEase.create("opa", ".26,.06 ,0 ,1")
+  CustomEase.create("fade", ".18, .06, .23, 1")
+  CustomEase.create("trans", ".43, .05, .17 ,1")
+  CustomEase.create("smooth", "0.555, 0.205, 0.295, 0.975")
+  CustomEase.create("snappy", ".580, .300, .005, 1.000")
+}
 
-export { onInitialClientRender };
+export { onInitialClientRender }
 
 /*
 import store from '@/state/store';

@@ -1,32 +1,32 @@
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import React, { useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from "framer-motion"
+import React, { useEffect } from "react"
 // import E from '@/common/utils';
-import { EVENTS } from '@/common/constants/const';
+import { EVENTS } from "@/common/constants/const"
 
 const Component: React.FC = () => {
-  const x = useMotionValue(-100);
-  const y = useMotionValue(-100);
+  const x = useMotionValue(-100)
+  const y = useMotionValue(-100)
 
   const springConfig = {
     damping: 25,
     stiffness: 700,
-  };
+  }
 
-  const cursorX = useSpring(x, springConfig);
-  const cursorY = useSpring(y, springConfig);
+  const cursorX = useSpring(x, springConfig)
+  const cursorY = useSpring(y, springConfig)
 
   useEffect(() => {
     const moveCursor = e => {
-      x.set(e.clientX - 16);
-      y.set(e.clientY - 16);
-    };
+      x.set(e.clientX - 16)
+      y.set(e.clientY - 16)
+    }
 
     // E.on(EVENTS.MOUSE_MOVE, moveCursor);
 
     return () => {
       // E.off(EVENTS.MOUSE_MOVE, moveCursor);
-    };
-  }, []);
+    }
+  }, [])
 
   return (
     <div className="cursor">
@@ -38,7 +38,7 @@ const Component: React.FC = () => {
         }}
       ></motion.div>
     </div>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component

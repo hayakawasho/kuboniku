@@ -1,39 +1,35 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import * as React from 'react';
-import { Layout } from '@/common/components';
-import { useWorkUsecase, PageContainer } from '@/features/_pages/works_slug';
-import { withAuth } from '@/features/user-auth';
-import { repositoryFactory } from '@/infra/repository-factory';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next"
+import * as React from "react"
+import { Layout } from "@/common/components"
+import { useWorkUsecase, PageContainer } from "@/features/_pages/works_slug"
+import { withAuth } from "@/features/user-auth"
+import { repositoryFactory } from "@/infra/repository-factory"
 
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const [newProps, status] = useWorkUsecase({
-    initial: props.data as any,
+  const [newProps] = useWorkUsecase({
+    initial: props.data,
     slug: props.path as string,
-    repository: repositoryFactory.get('works') as any,
-  });
+    repository: repositoryFactory.get("works"),
+  })
 
   return (
     <Layout title="WORKS">
-      <PageContainer
-        {...newProps}
-        // loading={status[0] === 'loading'}
-        // errorMessage={status[0] === 'error' && '' + status[1]}
-      />
+      <PageContainer {...newProps} />
     </Layout>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 export const getServerSideProps = withAuth(
   async (ctx: GetServerSidePropsContext) => {
-    const slug = (ctx.params?.slug as string) ?? '';
-    const res = await repositoryFactory.get('works').findOne(slug);
+    const slug = (ctx.params?.slug as string) ?? ""
+    const res = await repositoryFactory.get("works").findOne(slug)
 
     if (res.isErr()) {
-      return Promise.reject(res.error);
+      return Promise.reject(res.error)
     }
 
     return {
@@ -41,9 +37,9 @@ export const getServerSideProps = withAuth(
         data: res.value,
         path: ctx.params?.slug,
       },
-    };
+    }
   }
-);
+)
 
 // export const getStaticProps: GetStaticProps = async ctx => {
 //   const slug = (ctx.params?.slug as string) ?? '';

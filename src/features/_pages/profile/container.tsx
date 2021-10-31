@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react"
 
 type IProps = {
-  html: string;
-};
+  html: string
+}
 
 const Component = (props: IProps) => {
   return (
@@ -21,7 +21,7 @@ const Component = (props: IProps) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component

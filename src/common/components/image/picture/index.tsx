@@ -2,9 +2,9 @@
 // import { withOrientationChange } from 'react-device-detect';
 
 interface IProps {
-  src: string;
-  mobile?: string;
-  alt?: string;
+  src: string
+  mobile?: string
+  alt?: string
 }
 
 const Component = (props: IProps) => {
@@ -28,7 +28,7 @@ const Component = (props: IProps) => {
         // props.isLandscape && <Image {...newProps} src={props.src} />}
       }
     </>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component

@@ -1,6 +1,6 @@
-import { InferGetServerSidePropsType } from 'next';
-import * as React from 'react';
-import { Layout } from '@/common/components';
+import { InferGetServerSidePropsType } from "next"
+import * as React from "react"
+import { Layout } from "@/common/components"
 // import { repositoryFactory } from '@/infra/repository-factory';
 // import { useMount, useUnmount } from 'react-use';
 // import { useHomeUsecase, HomePresenter } from '@/features/_pages/home';
@@ -28,19 +28,19 @@ const Component = (
           errorMessage={status[0] === 'error' && status[1]}
         /> */}
     </Layout>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 export const getServerSideProps = () => {
   return {
     redirect: {
       permanent: false,
-      destination: '/works', // リダイレクト先
+      destination: "/works", // リダイレクト先
     },
-  };
-};
+  }
+}
 
 // export const getServerSideProps = () => {
 //   const result = await repositoryFactory.get('works').findSome({ size: 4 });

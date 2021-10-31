@@ -1,44 +1,44 @@
-import { MutableRefObject, useEffect } from 'react';
+import { MutableRefObject, useEffect } from "react"
 
-import { useScrollContext } from '@/common/context';
+import { useScrollContext } from "@/common/context"
 
 const useSkewOnScroll = ({
   refs,
 }: {
-  refs: MutableRefObject<HTMLElement | null>[];
+  refs: MutableRefObject<HTMLElement | null>[]
 }) => {
-  const { ctx } = useScrollContext();
+  const { ctx } = useScrollContext()
 
   useEffect(() => {
-    ctx?.on('update', onScroll);
+    ctx?.on("update", onScroll)
 
     return () => {
-      ctx?.off('update', onScroll);
-    };
-  }, [scroll]);
+      ctx?.off("update", onScroll)
+    }
+  }, [scroll])
 
   const onScroll = ({ targetPos, currentPos }: any) => {
-    const diff = 0;
-    const skewVal = calc(window.innerWidth, diff);
-    refs.forEach(ref => ref.current && transSkew(ref.current, skewVal));
-  };
+    const diff = 0
+    const skewVal = calc(window.innerWidth, diff)
+    refs.forEach(ref => ref.current && transSkew(ref.current, skewVal))
+  }
 
   //
-  return {};
-};
+  return {}
+}
 
-export { useSkewOnScroll };
+export { useSkewOnScroll }
 
 const calc = (windowW: number, scrollDiff: number): number => {
-  const acc = scrollDiff / windowW;
-  const velo = +acc;
+  const acc = scrollDiff / windowW
+  const velo = +acc
 
-  return velo * -7.5 * 1;
-};
+  return velo * -7.5 * 1
+}
 
 const transSkew = (target: HTMLElement, value: number) => {
-  target.style.transform = `translate3d(0, 0, 0) skewY(${value}deg)`;
-};
+  target.style.transform = `translate3d(0, 0, 0) skewY(${value}deg)`
+}
 
 /*
 import Module from '../__abstract__/module'

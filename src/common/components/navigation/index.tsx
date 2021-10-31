@@ -1,21 +1,21 @@
-import cn from 'classnames';
-import { gsap } from 'gsap';
-import Link from 'next/link';
-import * as React from 'react';
-import { useMenuContext } from '@/common/context';
-import { useUpdateEffect, useSelector } from '@/common/hooks';
-import { Utils } from '@/common/utils';
+import cn from "classnames"
+import { gsap } from "gsap"
+import Link from "next/link"
+import * as React from "react"
+import { useMenuContext } from "@/common/context"
+import { useUpdateEffect, useSelector } from "@/common/hooks"
+import { Utils } from "@/common/utils"
 
 const CLIP_PATH = {
   x1: 100,
   x2: 100,
-};
+}
 
 const Navigation = () => {
-  const [q, ref] = useSelector();
+  const [q, ref] = useSelector()
   // const domBg = q('.js-navMenu__bg')[0];
 
-  const { isMenuOpen, onMenuClose } = useMenuContext();
+  const { isMenuOpen, onMenuClose } = useMenuContext()
 
   const updateClipPath = React.useCallback(() => {
     // domBg.style.clipPath = `polygon(
@@ -24,11 +24,11 @@ const Navigation = () => {
     //   100% 100vh,
     //   ${CLIP_PATH.x2}% 100vh
     // )`;
-  }, [CLIP_PATH.x1, CLIP_PATH.x2]);
+  }, [CLIP_PATH.x1, CLIP_PATH.x2])
 
   useUpdateEffect(() => {
-    isMenuOpen ? showMenu() : hideMenu();
-  }, [isMenuOpen]);
+    isMenuOpen ? showMenu() : hideMenu()
+  }, [isMenuOpen])
 
   const showMenu = React.useCallback(async () => {
     /*
@@ -92,7 +92,7 @@ const Navigation = () => {
 
     tl.play(0);
     */
-  }, [ref]);
+  }, [ref])
 
   const hideMenu = React.useCallback(() => {
     /*
@@ -148,10 +148,10 @@ const Navigation = () => {
 
     tl.play(0);
     */
-  }, [ref]);
+  }, [ref])
 
   return (
-    <nav className={'navMenu' + cn({ 'is-menuOpen': isMenuOpen })} ref={ref}>
+    <nav className={"navMenu" + cn({ "is-menuOpen": isMenuOpen })} ref={ref}>
       <div className="w-full h-full relative">
         <div className="navMenu__mask u-mobile" onClick={onMenuClose}></div>
         <div className="navMenu__bg u-mobile js-navMenu__bg"></div>
@@ -178,10 +178,10 @@ const Navigation = () => {
         </ul>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export { Navigation };
+export { Navigation }
 
 /*
 const navMenu = css`

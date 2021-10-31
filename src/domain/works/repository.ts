@@ -1,16 +1,20 @@
-import { Result } from 'neverthrow';
-import type { IMetaWork, IRawWork } from '../works/work';
+import { Result } from "neverthrow"
+import { HttpException } from "@/common/errors"
+import { Work } from "@/domain/works"
 
 abstract class IWorksRepo {
-  abstract findOne(slug: string): Promise<Result<IRawWork, Error>>;
+  abstract findOne(slug: string): Promise<Result<Work, HttpException>>
+
   abstract findSome({
-    size,
-    offset,
+    where: { size, offset },
   }: {
-    size: number;
-    offset: number;
-  }): Promise<Result<IRawWork[], Error>>;
-  abstract findAllSlug(): Promise<Result<string[], Error>>;
+    where: {
+      size: number
+      offset: number
+    }
+  }): Promise<Result<Work[], HttpException>>
+
+  abstract findAllSlug(): Promise<Result<string[], Error>>
 }
 
-export { IWorksRepo };
+export { IWorksRepo }

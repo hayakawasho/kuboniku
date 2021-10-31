@@ -1,10 +1,10 @@
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import React, { useEffect, Suspense, useMemo, useRef } from 'react';
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber"
+import React, { useEffect, Suspense, useMemo, useRef } from "react"
 
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import * as THREE from "three"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
-const dpr = 2;
+const dpr = 2
 
 const Component: React.FC = () => {
   return (
@@ -28,19 +28,19 @@ const Component: React.FC = () => {
         </Suspense>
       </Canvas>
     </div>
-  );
-};
+  )
+}
 
-export default Component;
+export default Component
 
 const Scene: React.FC = () => {
-  const mesh = useRef();
-  const { scene } = useLoader(GLTFLoader, '/test.gltf');
-  const { size } = useThree();
+  const mesh = useRef()
+  const { scene } = useLoader(GLTFLoader, "/test.gltf")
+  const { size } = useThree()
 
   return (
     <mesh ref={mesh} position={[0, 0, 0]}>
       <primitive object={scene} dispose={null} />
     </mesh>
-  );
-};
+  )
+}

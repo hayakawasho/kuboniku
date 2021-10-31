@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react"
 
-import { Layout } from '@/common/components';
+import { Layout } from "@/common/components"
 
 const Component = () => (
   <Layout title="500 Internal Server Error">
@@ -8,6 +8,6 @@ const Component = () => (
       //<ErrorScreen headingNode={<Fragment>500 Internal Server Error</Fragment>} />
     }
   </Layout>
-);
+)
 
-export default Component;
+export default Component

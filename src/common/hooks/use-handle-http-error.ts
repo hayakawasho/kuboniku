@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
+import { useCallback } from "react"
 
 interface IError extends Error {
-  code?: number;
+  code?: number
 }
 
 const useHandleHttpError = () => {
   const handleHttpError = useCallback(error => {
-    const errors: IError | null = null;
+    const errors: IError | null = null
 
     if (error) {
-      console.log({ error });
+      console.log({ error })
     }
 
-    return errors;
-  }, []);
+    return errors
+  }, [])
 
-  return { handleHttpError };
-};
+  return { handleHttpError }
+}
 
-export { useHandleHttpError };
+export { useHandleHttpError }

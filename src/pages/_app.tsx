@@ -1,17 +1,13 @@
-import 'ress';
-import '~css/global.css';
+import "ress"
+import "~css/global.css"
 
-import { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
-import Script from 'next/script';
-import * as React from 'react';
-import { Navigation, Header } from '@/common/components';
-import {
-  UiColorProvider,
-  MenuProvider,
-  ScrollProvider,
-} from '@/common/context';
+import { AppProps } from "next/app"
+import dynamic from "next/dynamic"
+import Head from "next/head"
+import Script from "next/script"
+import * as React from "react"
+import { Navigation, Header } from "@/common/components"
+import { UiColorProvider, MenuProvider, ScrollProvider } from "@/common/context"
 
 // const World3d = dynamic(
 //   () => import('../features/world-3d').then(modules => modules.Webgl),
@@ -23,7 +19,7 @@ const AppComponent = ({
   pageProps,
   router,
 }: AppProps): React.ReactElement => {
-  const containerRef = React.useRef(null);
+  const containerRef = React.useRef(null)
 
   return (
     <>
@@ -74,7 +70,7 @@ const AppComponent = ({
         </MenuProvider>
       </UiColorProvider>
     </>
-  );
-};
+  )
+}
 
-export default AppComponent;
+export default AppComponent

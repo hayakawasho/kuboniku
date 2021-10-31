@@ -1,5 +1,5 @@
-import useSWR, { SWRResponse, SWRConfiguration } from 'swr';
-import { HttpException } from '@/common/errors';
+import useSWR, { SWRResponse, SWRConfiguration } from "swr"
+import { HttpException } from "@/common/errors"
 
 const useHttp = <T>(
   key: string | string[] | null,
@@ -9,9 +9,9 @@ const useHttp = <T>(
   const result = useSWR(key, fetcher, {
     revalidateOnFocus: false,
     ...options,
-  });
+  })
 
-  return result;
-};
+  return result
+}
 
-export { useHttp };
+export { useHttp }

@@ -9,6 +9,10 @@
 @import './parts/_progress.css';
 @import './parts/_burger.css';
 
+@import './namespace/profile/index.css';
+@import './namespace/works/index.css';
+@import './namespace/works_slug/index.css';
+
 @import './_utils.css';
 @import './_shame.css';
 
