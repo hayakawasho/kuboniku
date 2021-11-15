@@ -3,7 +3,9 @@ import { HttpException } from "@/common/errors"
 import { Work } from "@/domain/works"
 
 abstract class IWorksRepo {
-  abstract findOne(slug: string): Promise<Result<Work, HttpException>>
+  abstract findOne(
+    slug: string
+  ): Promise<Result<Work & { prev: Work }, HttpException>>
 
   abstract findSome({
     where: { size, offset },

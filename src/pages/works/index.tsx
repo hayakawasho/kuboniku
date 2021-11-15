@@ -29,7 +29,11 @@ const Component = (
 export default Component
 
 export const getServerSideProps = withAuth(async () => {
-  const res = await repositoryFactory.get("works").findSome({ size: 10 })
+  const res = await repositoryFactory.get("works").findSome({
+    where: {
+      size: 10,
+    },
+  })
 
   if (res.isErr()) {
     return Promise.reject(res.error)

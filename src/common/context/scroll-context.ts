@@ -1,24 +1,17 @@
 import type ASScroll from "@ashthornton/asscroll"
 import constate from "constate"
 import { gsap } from "gsap"
-import {
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-  MutableRefObject,
-} from "react"
-import { useRoutingContext } from "@/common/context"
+import { useRef, useState, useEffect, MutableRefObject } from "react"
 import { useUpdateEffect } from "@/common/hooks"
 
 type IProps = {
   containerRef: MutableRefObject<HTMLDivElement | null>
+  pathname: string
 }
 
-const createUseScroll = ({ containerRef }: IProps) => {
+const useScroll = ({ containerRef, pathname }: IProps) => {
   const scrollRef = useRef<ASScroll | null>(null)
   const [isReady, setIsReady] = useState(false)
-  const { location } = useRoutingContext()
 
   useEffect(() => {
     ;(async () => {
@@ -28,7 +21,7 @@ const createUseScroll = ({ containerRef }: IProps) => {
         scrollRef.current = new ASScroll({
           containerElement: "[data-scroll]",
           scrollElements: "[data-scroll-item]",
-          ease: 0.2,
+          ease: 0.22,
           disableRaf: true,
         })
 
@@ -46,40 +39,20 @@ const createUseScroll = ({ containerRef }: IProps) => {
     }
   }, [])
 
-  const restart = (newScrollElements: Element[]) => {
-    if (!scrollRef.current) {
-      return
-    }
-    scrollRef.current.enable({ newScrollElements, reset: true })
-  }
-
-  const resume = useCallback(() => {
-    if (!scrollRef.current) {
-      return
-    }
-    scrollRef.current.enable({ restore: true })
-  }, [scrollRef.current])
-
-  const disable = useCallback(() => {
-    if (!scrollRef.current) {
-      return
-    }
-    scrollRef.current.disable()
-  }, [scrollRef.current])
-
   useUpdateEffect(() => {
-    disable()
+    scrollRef.current?.disable()
 
     const q = gsap.utils.selector(containerRef.current)
-    restart(q("[data-scroll-item]"))
-  }, [location])
+    scrollRef.current?.enable({
+      newScrollElements: q("[data-scroll-item]"),
+      reset: true,
+    })
+  }, [pathname])
 
   return {
-    ctx: scrollRef.current,
+    scroll: scrollRef.current,
     isReady,
-    resume,
-    disable,
   }
 }
 
-export const [ScrollProvider, useScrollContext] = constate(createUseScroll)
+export const [ScrollProvider, useScrollContext] = constate(useScroll)

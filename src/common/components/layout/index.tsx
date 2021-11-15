@@ -22,13 +22,8 @@ const Layout = ({
   return (
     <>
       <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="format-detection" content="telephone=no" />
         <title>{metaTitle}</title>
         <meta name="description" content={metaDescription} />
-        <meta httpEquiv="Content-Type" content="text/html" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />

@@ -1,45 +1,31 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
-    "types": [
-      "node"
-    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["dom", "es2019"],
     "jsx": "preserve",
-    "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "noEmit": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "noErrorTruncation": true
   },
+  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "@types"
-  ],
-  "files": [
-    "@types/twin.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

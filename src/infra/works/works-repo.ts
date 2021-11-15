@@ -2,7 +2,7 @@ import { gql, request } from "graphql-request"
 import { ok, err } from "neverthrow"
 import { WP_API_END_POINT } from "@/common/constants/const"
 import { handleHttpError } from "@/common/errors"
-import { IWorksRepo } from "@/domain/works"
+import { IWorksRepo, Work } from "@/domain/works"
 
 class WorksRepo extends IWorksRepo {
   constructor() {
@@ -12,7 +12,13 @@ class WorksRepo extends IWorksRepo {
   async findOne(slug: string): ReturnType<IWorksRepo["findOne"]> {
     try {
       const res = await request<any>(WP_API_END_POINT, GET_POST, { slug })
-      return ok(res)
+      const entity = {
+        ...Work.fromRaw(res.post),
+        prev: {
+          ...Work.fromRaw(res.post.previous),
+        },
+      }
+      return ok(entity)
     } catch (e) {
       return err(handleHttpError(e))
     }
@@ -82,9 +88,12 @@ const GET_POST = gql`
       id
       title
       date
+      slug
       previous {
+        id
         title
         slug
+        date
         acf {
           eyecatch {
             sourceUrl

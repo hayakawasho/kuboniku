@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 const fragmentShader = require("./shaders/frag.glsl").default // eslint-disable-line @typescript-eslint/no-var-requires
 const vertexShader = require("./shaders/vert.glsl").default // eslint-disable-line @typescript-eslint/no-var-requires
 
-const Scene = ({ uniforms }) => {
+const Scene = ({ uniforms }: any) => {
   const mesh = useRef<any>()
   const { size } = useThree()
 

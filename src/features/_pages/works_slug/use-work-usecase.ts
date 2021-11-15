@@ -1,15 +1,15 @@
 import { useMemo } from "react"
 import { useHttp } from "@/common/hooks"
-import { IRawWork, IWorksRepo, Work } from "@/domain/works"
+import { IWorksRepo, Work } from "@/domain/works"
 
 type IProps = {
-  initial: IRawWork
+  initial: any
   slug: string
   repository: IWorksRepo
 }
 
 const useWorkUsecase = ({ initial, slug, repository }: IProps) => {
-  const [data, status] = useHttp<IRawWork>(
+  const result = useHttp(
     `/api/works/${slug}`,
     async () => {
       const result = await repository.findOne(slug)
@@ -21,22 +21,27 @@ const useWorkUsecase = ({ initial, slug, repository }: IProps) => {
       return result.value
     },
     {
-      fallback: initialData,
+      fallback: initial,
     }
   )
 
   const getWorkInfo = useMemo(() => {
-    const viewWork = {
-      ...new Work(data.post),
-      prev: {
-        ...new Work(data.post.previous),
-      },
+    if (!result.data) {
+      return
     }
 
-    return viewWork
-  }, [data])
+    console.log(result.data)
 
-  return [getWorkInfo, status] as const
+    // const viewWork = {
+    //   ...Work.fromRaw(result.data.post),
+    //   prev: {
+    //     ...Work.fromRaw(result.data.post.previous),
+    //   },
+    // }
+    // return viewWork
+  }, [result.data])
+
+  return getWorkInfo
 }
 
 export { useWorkUsecase }

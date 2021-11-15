@@ -1,3 +1,4 @@
+import "windi.css"
 import "ress"
 import "~css/global.css"
 
@@ -9,17 +10,17 @@ import * as React from "react"
 import { Navigation, Header } from "@/common/components"
 import { UiColorProvider, MenuProvider, ScrollProvider } from "@/common/context"
 
-// const World3d = dynamic(
-//   () => import('../features/world-3d').then(modules => modules.Webgl),
-//   { ssr: false }
-// );
+const World3d = dynamic(
+  () => import("../features/world-3d").then((modules: any) => modules.Webgl),
+  { ssr: false }
+)
 
 const AppComponent = ({
   Component,
   pageProps,
   router,
 }: AppProps): React.ReactElement => {
-  const containerRef = React.useRef(null)
+  const scrollContainerRef = React.useRef(null)
 
   return (
     <>
@@ -28,6 +29,11 @@ const AppComponent = ({
         strategy="beforeInteractive"
       />
       <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta httpEquiv="Content-Type" content="text/html" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <link
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
           rel="stylesheet"
@@ -55,16 +61,21 @@ const AppComponent = ({
       </Head>
       <UiColorProvider>
         <MenuProvider>
-          <ScrollProvider containerRef={containerRef}>
-            <div id="app">
+          <ScrollProvider
+            containerRef={scrollContainerRef}
+            pathname={router.asPath}
+          >
+            <div className="app">
               <Header />
               <Navigation />
-              <div data-scroll ref={containerRef}>
+              <div
+                data-scroll
+                className="site-window js-page"
+                ref={scrollContainerRef}
+              >
                 <Component {...pageProps} key={router.asPath} />
               </div>
-              {
-                //<World3d />
-              }
+              <World3d />
             </div>
           </ScrollProvider>
         </MenuProvider>

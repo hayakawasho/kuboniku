@@ -8,17 +8,7 @@ import { repositoryFactory } from "@/infra/repository-factory"
 const Component = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const [newProps] = useWorkUsecase({
-    initial: props.data,
-    slug: props.path as string,
-    repository: repositoryFactory.get("works"),
-  })
-
-  return (
-    <Layout title="WORKS">
-      <PageContainer {...newProps} />
-    </Layout>
-  )
+  return <Layout title="WORKS"></Layout>
 }
 
 export default Component
@@ -34,7 +24,7 @@ export const getServerSideProps = withAuth(
 
     return {
       props: {
-        data: res.value,
+        data: {},
         path: ctx.params?.slug,
       },
     }

@@ -1,4 +1,5 @@
 const path = require('path')
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
 
 const nextConfig = {
   experimental: {
@@ -17,10 +18,10 @@ const nextConfig = {
   },
 
   webpack: (config, options) => {
+    // config.externals.three = 'THREE'
+
     config.resolve.alias['@'] = path.join(__dirname, 'src');
     config.resolve.alias['~css'] = path.join(__dirname, 'src/assets/styles');
-
-    // config.externals.three = 'THREE'
 
     config.module.rules.push({
       test: /\.(glsl|frag|vert)$/,
@@ -35,6 +36,8 @@ const nextConfig = {
       ],
       exclude: /node_modules/,
     })
+
+    config.plugins.push(new WindiCSSWebpackPlugin())
 
     return config
   },

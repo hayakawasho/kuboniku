@@ -39,19 +39,19 @@ class Work {
     this.gallery = gallery
   }
 
-  static fromRaw = (raw: IRawWork) => {
-    const id = raw.post.id
-    const slug = raw.post.slug
-    const title = raw.post.title
-    const category = raw.post.acf.category?.name
+  static fromRaw = (raw: IRawWork["post"]) => {
+    const id = raw.id
+    const slug = raw.slug
+    const title = raw.title
+    const category = raw.acf?.category?.name
     const eyecatch = {
-      src: raw.post.acf.eyecatch?.sourceUrl,
-      mobile: raw.post.acf.eyecatchMobile?.sourceUrl,
+      src: raw.acf?.eyecatch?.sourceUrl,
+      mobile: raw.acf?.eyecatchMobile?.sourceUrl,
     }
-    const createAt = raw.post.date && new Date(raw.post.date)
-    const role = raw.post.acf.role?.map(item => item?.name)
-    const viewWebsite = raw.post.acf.url
-    const gallery = raw.post.acf.gallery?.map(item => {
+    const createAt = raw.date && new Date(raw.date)
+    const role = raw.acf.role?.map(item => item?.name)
+    const viewWebsite = raw.acf?.url
+    const gallery = raw.acf.gallery?.map(item => {
       return {
         width: item?.mediaDetails?.width,
         height: item?.mediaDetails?.height,

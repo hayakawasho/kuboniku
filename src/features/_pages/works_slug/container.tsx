@@ -4,16 +4,16 @@ import Link from "next/link"
 import React from "react"
 import { ProgressBar, Picture, Img } from "@/common/components"
 import { useArrayRef } from "@/common/hooks"
-import { IMetaWork } from "@/domain/works"
+import { Work } from "@/domain/works"
 import { useSkewOnScroll } from "@/features/scroll"
 
-type IProps = {
+type IProps = Work & {
   prev?: {
-    slug: IMetaWork["slug"]
-    title: IMetaWork["title"]
-    eyecatch: IMetaWork["eyecatch"]
+    slug: string
+    title: string
+    eyecatch: any
   }
-} & IMetaWork
+}
 
 const Component = (props: IProps) => {
   const [skewRefs, setSkewRef] = useArrayRef()
