@@ -1,60 +1,10 @@
-declare module '*.scss' {
-  interface IClassNames {
-    [className: string]: string
-  }
-  const classNames: IClassNames;
-  export = classNames;
+// First, let TypeScript allow all module names starting with "https://". This will suppress TS errors.
+declare module 'https://*'
+
+// Second, list out all your dependencies. For every URL, you must map it to its local module.
+declare module 'https://cdn.skypack.dev/pin/gsap@v3.9.0-V6xusepdSv0ZKWTqA3ie/mode=imports,min/optimized/gsap.js' {
+  export * from 'gsap'
 }
 
-declare module '*.png' {
-  const value: any;
-  export = value;
-}
-
-declare module '*.jpg' {
-  const value: any;
-  export = value;
-}
-
-declare module '*.gif' {
-  const value: any;
-  export = value;
-}
-
-declare namespace NodeJS {
-  interface Process {
-    server: boolean;
-    browser: boolean;
-  }
-}
-
-interface DOMRectReadOnly {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
-  readonly top: number;
-  readonly right: number;
-  readonly bottom: number;
-  readonly left: number;
-}
-
-interface ResizeObserverCallback {
-  (entries: ResizeObserverEntry[], observer: ResizeObserver): void;
-}
-
-interface ResizeObserverEntry {
-  readonly target: Element;
-  readonly contentRect: DOMRectReadOnly;
-}
-
-interface ResizeObserver {
-  observe(target: Element): void;
-  unobserve(target: Element): void;
-  disconnect(): void;
-}
-
-declare var ResizeObserver: {
-  prototype: ResizeObserver;
-  new(callback: ResizeObserverCallback): ResizeObserver;
-}
+declare module '@dogstudio/highway'
+declare module 'modujs'

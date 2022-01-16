@@ -1,0 +1,17 @@
+<nav class={"navMenu" + cn({ "is-menuOpen": isMenuOpen })} data-menu-wrap>
+  <div class="relative w-full h-full">
+    <div class="navMenu__mask | u-mobile" data-menu-mask></div>
+    <div class="navMenu__bg | u-mobile js-navMenu__bg" data-menu-bg></div>
+    <ul class="menuList">
+      <li>
+        <a href="/profile" class="link js-navLabel">Profile</a>
+      </li>
+      <li>
+        <a href="/works" class="link js-navLabel">Works</a>
+      </li>
+      <li>
+        <a href="{{ conf.mailto }}" class="link js-navLabel">Contact</a>
+      </li>
+    </ul>
+  </div>
+</nav>

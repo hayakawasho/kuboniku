@@ -1,0 +1,28 @@
+<header class="fixed">
+  <a href="/" class="brandLogo | fixed block pointer-events-auto">
+    <i class="icon-logo"></i>
+  </a>
+  <button class={cn({ "is-open": isMenuOpen }) + " burger u-mobile"}>
+    <div class="relative w-full h-full my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
+      <div class="burger__line js-burgerLine--1"></div>
+      <div class="burger__line js-burgerLine--2"></div>
+    </div>
+  </button>
+  <div class="sns" data-module-sns>
+    <ul class="snsList">
+      <li class="snsList__item">
+        <a href="{{ conf.fb }}" target="_blank" class="snsList__a" data-sns-ico>Fb</a>
+      </li>
+      <li class="snsList__item">
+        <a href="{{ conf.tw }}" target="_blank" class="snsList__a" data-sns-ico>Tw</a>
+      </li>
+    </ul>
+    <button class={"plus js-snsTrigger " + cn({ "is-open": isOpen })} data-sns-trigger>
+      <div class="u-in">
+        <div class="plus__x | absolute top-1/2 left-0"></div>
+        <div class="plus__y | absolute top-1/2 left-0"></div>
+      </div>
+    </button>
+  </div>
+  <small class="copyright | fixed inline-block pointer-events-none">&copy; KuboNiku.com</small>
+</header>

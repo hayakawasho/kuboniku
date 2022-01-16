@@ -1,0 +1,34 @@
+.u-mobile {
+  @media (min-width: 640px) {
+    display: none !important;
+  }
+}
+
+.u-pc {
+  @media (max-width: 639px) {
+    display: none !important;
+  }
+}
+
+.u-in {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.u-fitToParent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.u-posC {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}

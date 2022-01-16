@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}" />
+    <meta property="og:type" content="{{ 'website' if namespace == 'home' else 'article' }}" />
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta property="og:image" content="{{ conf.baseUrl }}/ogp.jpg" />
+    <meta name="twitter:title" content="{{ title }}" />
+    <meta name="twitter:description" content="{{ description }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400,700&family=Roboto+Condensed:wght@400,700&family=Montserrat:wght@500,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400,700&family=Roboto+Condensed:wght@400,700&family=Montserrat:wght@500,700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link rel="preload" as="script" href="https://code.createjs.com/1.0.0/preloadjs.min.js">
+    {% if build.env == "production" %}
+      {% viteLinkStylesheetTags "src/entry.ts" %}
+      {% viteLinkModulePreloadTags "src/entry.ts" %}
+    {% endif %}
+  </head>
+  <body
+    class="is-domLoading"
+    data-page="{{ namespace }}"
+    data-module-menu
+  >
+    <div id="js-viewportRef" class="mask"></div>
+    <div id="xhr" class="site-window" data-router-wrapper>
+      <div class="site-content" data-router-view="{{ namespace }}">
+        <div class="site-content__refHeight"></div>
+        {% include "_header.njk" %}
+        <main class="page-content | js-page">{{ content | safe }}</main>
+      </div>
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
+    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
+    {% if build.env == "production" %}
+    {% viteScriptTag "src/entry.ts" %}
+    {% else %}
+    <script type="module" src="http://localhost:3000/@vite/client"></script>
+    <script type="module" src="http://localhost:3000/src/entry.ts"></script>
+    {% endif %}
+  </body>
+</html>
