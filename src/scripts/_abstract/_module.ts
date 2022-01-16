@@ -1,11 +1,13 @@
 import { module } from 'modujs'
 
 export default abstract class extends module {
-  constructor(m) {
-    super(m)
-  }
+  /**
+   * @abstract
+   */
+  init() {} // eslint-disable-line @typescript-eslint/no-empty-function
 
-  init() {
-
-  }
+  /**
+   * @abstract
+   */
+  destroy() {} // eslint-disable-line @typescript-eslint/no-empty-function
 }
