@@ -1,15 +1,22 @@
 <header class="fixed">
-  <a href="/" class="brandLogo | fixed block pointer-events-auto">
+  <a href="/"
+    class="brandLogo
+    | fixed top-[1.5rem] left-[2rem] block pointer-events-auto z-[99]
+    | sm:top-[2.4rem] sm:left-[2.4rem]"
+  >
     <i class="icon-logo"></i>
   </a>
   <button class={cn({ "is-open": isMenuOpen }) + " burger u-mobile"}>
-    <div class="relative w-full h-full my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
+    <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
       <div class="burger__line js-burgerLine--1"></div>
       <div class="burger__line js-burgerLine--2"></div>
     </div>
   </button>
-  <div class="sns" data-module-sns>
-    <ul class="snsList">
+  <div class="fixed text-center bottom-[1rem] left-[2rem] z-[99]
+    | sm:bottom-[4rem] sm:left-[4rem]"
+    data-module-sns
+  >
+    <ul class="mb-[2.5rem]">
       <li class="snsList__item">
         <a href="{{ conf.fb }}" target="_blank" class="snsList__a" data-sns-ico>Fb</a>
       </li>
@@ -24,5 +31,8 @@
       </div>
     </button>
   </div>
-  <small class="copyright | fixed inline-block pointer-events-none">&copy; KuboNiku.com</small>
+  <small class="copyright
+    | fixed right-[3rem] bottom-[2.5rem] inline-block pointer-events-none z-[99]
+    | sm:bottom-[4rem] sm:right-[4rem]"
+  >&copy; KuboNiku.com</small>
 </header>

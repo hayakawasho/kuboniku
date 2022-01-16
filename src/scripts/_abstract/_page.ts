@@ -1,24 +1,32 @@
 import type { IScene } from '@/app/scene-manager'
-// import { EVENTS } from '@/const'
 import { gsap } from '@/lib'
 
 export default abstract class implements IScene {
-  root!: HTMLElement
+  scope!: HTMLElement
   $!: gsap.utils.SelectorFunc
 
   constructor() {
     this.onAfterPageReady = this.onAfterPageReady.bind(this)
   }
 
+  /**
+   * @abstract
+   */
   protected onAfterPageReady() {
     //
   }
 
-  async enter(rootContext = document.body) {
-    this.root = rootContext
-    this.$ = gsap.utils.selector(this.root)
+  /**
+   * @abstract
+   */
+  enter = async (scope = document.body) => {
+    this.scope = scope
+    this.$ = gsap.utils.selector(this.scope)
   }
 
+  /**
+   * @abstract
+   */
   leave() {
     //
   }
