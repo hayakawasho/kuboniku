@@ -40,10 +40,10 @@
     data-module-menu
   >
     <div id="js-viewportRef" class="mask"></div>
+    {% include "_header.njk" %}
     <div id="xhr" class="site-window" data-router-wrapper>
       <div class="site-content" data-router-view="{{ namespace }}">
         <div class="site-content__refHeight"></div>
-        {% include "_header.njk" %}
         <main class="page-content | js-page">{{ content | safe }}</main>
       </div>
     </div>

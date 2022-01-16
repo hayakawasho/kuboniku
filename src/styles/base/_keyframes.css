@@ -1,1 +1,21 @@
-/* */
+@keyframes front {
+  0%,
+  70% {
+    transform: translateZ(0);
+  }
+
+  100% {
+    transform: translate3d(0, 20px, 0);
+  }
+}
+
+@keyframes back {
+  0%,
+  70% {
+    transform: translateZ(0) rotate(30deg) skewX(30deg);
+  }
+
+  100% {
+    transform: translate3d(0, -50px, 0) rotate(0) skewX(0);
+  }
+}

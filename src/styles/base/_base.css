@@ -4,12 +4,10 @@
   box-sizing: border-box;
 }
 
-/*
-  Fluid Typography
-  font-size: calc(
-    [min size] + ([max size] - [min size]) * ((100vw - [min vw]) / ([max vw] - [min vw]))
-  );
-*/
+  /**
+   * @Fluid Typography
+   * font-size: calc([min size] + ([max size] - [min size]) * ((100vw - [min vw]) / ([max vw] - [min vw])));
+   */
 
 html {
   min-height: 100vh;
@@ -29,6 +27,8 @@ html {
 }
 
 body {
+  color: var(--color-text);
+  background: #191918;
   overflow-x: hidden;
   font-family: var(--font);
   overflow-wrap: break-word;
@@ -51,6 +51,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  &[data-page="home"] {
+    overflow: hidden;
+  }
 }
 
 :any-link {
@@ -67,8 +71,4 @@ img {
   max-width: 100%;
   height: auto;
   vertical-align: middle;
-}
-
-img.lazyload:not([src]) {
-	visibility: hidden;
 }
