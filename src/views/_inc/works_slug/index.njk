@@ -1,9 +1,52 @@
-<div className="wrk-container">
-  <h1 className="wrk-heading">
-    <div>
-      Works<sup className="wrk-heading__total">{{"11"}}</sup>
+<div class="wkslug-kv | relative w-full overflow-hidden | sm:h-screen">
+  <div class="wkslug-kv__cont absolute top-1/2 left-0 w-full">
+    <h1 class="font-semibold">
+      <div class="inline-block overflow-hidden">
+        <span class="inline-block origin-right">
+          {{ props.title }}
+        </span>
+      </div>
+    </h1>
+    <p class="wkslug-sub overflow-hidden">
+      <span class="inline-block origin-right">
+        {{ props.category }}
+        <i class="icon-arrow-right" />
+      </span>
+    </p>
+  </div>
+  {#<Picture src={props.eyecatch.src} mobile={props.eyecatch.mobile} />#}
+  <div class="wkslug-kv__scrollDown | absolute left-1/2 overflow-hidden transform -translate-x-1/2 font-bold">
+    <div class="relative w-full h-full overflow-hidden">
+      <div class="wkslug-kv__scrollLabel">scroll</div>
     </div>
-  </h1>
-  <div className="o-grid wrk-entryList">
+    <i class="icon-arrow-down block text-center" />
+  </div>
+</div>
+<div class="wkslug-worksContent" ref="setSkewRef">
+  <div class="wkslug-intro">
+    <div class="wkslug-intro__info">
+      <dl class="wkslug-dl">
+        <dt class="wkslug-dt">Year :</dt>
+        <dd class="wkslug-dd">
+          {#{format(props.createAt, "MMMM d, yyyy")}#}
+        </dd>
+      </dl>
+      <dl class="wkslug-dl">
+        <dt class="wkslug-dt">Role :</dt>
+        <dd class="wkslug-dd">
+          <ul>
+
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <a
+      class="wkslug-intro__viewLink"
+      href={{ props.viewWebsite }}
+      target="_blank"
+    >
+      View website
+      <div class="wkslug-intro__viewLink__hr" />
+    </a>
   </div>
 </div>

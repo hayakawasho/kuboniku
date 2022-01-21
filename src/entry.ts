@@ -8,7 +8,7 @@ import { DefaultPage, WorksIndexPage } from '@/components/pages'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   router
     .use('/works', _req => {
       sceneManager.goto(new WorksIndexPage(), {})
@@ -16,10 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     .use('*', _req => {
       sceneManager.goto(new DefaultPage(), {})
     })
+}
 
-  // start listening for navigation events
-  router.listen()
-})
+if (document.readyState !== 'loading') {
+  init()
+} else {
+  document.addEventListener('DOMContentLoaded', init)
+}
 
 if (isDev) {
   const showStats = async () => {

@@ -1,3 +1,5 @@
+{% set metaTitle =  title + " | " + conf.siteName if title else conf.siteName %}
+{% set ogType = 'website' if namespace == 'home' else 'article' %}
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -6,14 +8,15 @@
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="Content-Type" content="text/html" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}" />
-    <meta property="og:type" content="{{ 'website' if namespace == 'home' else 'article' }}" />
-    <meta property="og:title" content="{{ title }}" />
-    <meta property="og:description" content="{{ description }}" />
+    <title>{{ metaTitle }}</title>
+    <meta name="description" content="{{ conf.metaDescription }}" />
+    <meta property="og:type" content="{{ ogType }}" />
+    <meta property="og:title" content="{{ metaTitle }}" />
+    <meta property="og:description" content="{{ conf.metaDescription }}" />
     <meta property="og:image" content="{{ conf.baseUrl }}/ogp.jpg" />
-    <meta name="twitter:title" content="{{ title }}" />
-    <meta name="twitter:description" content="{{ description }}" />
+    <meta property="og:site_name" content="{{ conf.siteName }}" />
+    <meta name="twitter:title" content="{{ metaTitle }}" />
+    <meta name="twitter:description" content="{{ conf.metaDescription }}" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,21 +44,24 @@
     data-page="{{ namespace }}"
     data-module-menu
   >
+    <div class="glWorld">
+      <canvas></canvas>
+    </div>
     <div id="js-viewportRef" class="mask"></div>
     {% include "_header.njk" %}
-    <div id="xhr" class="site-window" data-router-wrapper>
-      <div class="site-content" data-router-view="{{ namespace }}">
-        <div class="site-content__refHeight"></div>
+    <div class="relative z-1" data-router-wrapper>
+      <div class="relative" data-router-view="{{ namespace }}">
+        <div class="u-fitToParent pen invisible z-[-1]"></div>
         <main class="page-content | js-page">{{ content | safe }}</main>
       </div>
     </div>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
     <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
     {% if build.env == "production" %}
     {% viteScriptTag "src/entry.ts" %}
     {% else %}
-    <script type="module" src="http://localhost:3000/@vite/client"></script>
-    <script type="module" src="http://localhost:3000/src/entry.ts"></script>
+    <script type="module" src="http://localhost:3000/@vite/client" async></script>
+    <script type="module" src="http://localhost:3000/src/entry.ts" async></script>
     {% endif %}
   </body>
 </html>
