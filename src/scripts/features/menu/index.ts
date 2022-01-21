@@ -1,13 +1,27 @@
-import Abstract from '@/_abstract/_module';
+import Abstract from '@/_abstract/_module'
 
 export default class extends Abstract {
+  readonly events = {
+    click: {},
+  }
+
   init() {
-    console.log('init')
+    //
   }
 
   destroy() {
-    super.destroy()
+    //
+  }
 
-    console.log('destroy', this)
+  _toggle() {
+    //
+  }
+
+  _open() {
+    //
+  }
+
+  _close() {
+    //
   }
 }

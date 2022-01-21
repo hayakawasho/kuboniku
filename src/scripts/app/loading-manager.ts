@@ -1,5 +1,5 @@
 import type { IManifestProps } from './manifest'
-import { EVENTS } from '@/const'
+import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
 import { gsap, emit } from '@/lib'
 import { Utils } from '@/utils'
 
@@ -25,7 +25,7 @@ const handleProgress = (e: any) => {
 
       const val = Math.round(state.progress.now)
       state.progress.before = val
-      emit(EVENTS.LOADING_PROGRESS, { progress: val })
+      emit(LOADING_PROGRESS, { progress: val })
     },
   })
 }
@@ -37,7 +37,7 @@ const handleFileLoaed = (e: any) => {
     state.isTimeOuted = true
 
     // タイムアウト内（直後）で最後に読み込んだファイルID
-    emit(EVENTS.LOADING_TIMEOUT, {
+    emit(LOADING_TIMEOUT, {
       id: e.item.id,
     })
   }
@@ -49,7 +49,7 @@ const handleComplete = async (e: any) => {
   }
 
   await Utils.wait(300) // progressのduration分待機
-  emit(EVENTS.LOADING_END)
+  emit(LOADING_DONE)
 
   e.target.removeEventListener('progress', handleProgress)
   e.target.removeEventListener('fileload', handleFileLoaed)

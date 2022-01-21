@@ -3,7 +3,7 @@ import { gsap } from '@/lib'
 
 export default abstract class implements IScene {
   scope!: HTMLElement
-  $!: gsap.utils.SelectorFunc
+  $$!: gsap.utils.SelectorFunc
 
   constructor() {
     this.onAfterPageReady = this.onAfterPageReady.bind(this)
@@ -21,7 +21,7 @@ export default abstract class implements IScene {
    */
   enter = async (scope = document.body) => {
     this.scope = scope
-    this.$ = gsap.utils.selector(this.scope)
+    this.$$ = gsap.utils.selector(this.scope)
   }
 
   /**

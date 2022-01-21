@@ -3,19 +3,19 @@ import { loadingManager } from './loading-manager'
 import { manifest } from './manifest'
 import { H } from './pjax'
 import { router } from './router'
-import { EVENTS } from '@/const'
+import { AFTER_PAGE_READY } from '@/const'
 import { g } from '@/env'
 import globals from '@/globals'
 import { emit } from '@/lib'
 import * as modules from '@/modules'
 import { Utils } from '@/utils'
 
-export const app = new modular({
+const app = new modular({
   modules: modules,
 })
 
 export interface IScene {
-  enter(rootContext?: HTMLElement): Promise<void>
+  enter(scope?: HTMLElement): Promise<void>
   leave(): void | Promise<void>
 }
 
@@ -41,7 +41,7 @@ class SceneManager {
       await scene.enter(this._scope)
 
       this._newScene = scene
-      emit(EVENTS.AFTER_PAGE_READY)
+      emit(AFTER_PAGE_READY)
     }
   }
 

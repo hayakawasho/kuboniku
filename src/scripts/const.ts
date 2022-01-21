@@ -1,10 +1,8 @@
 export const WP_API_BASE = 'http://api.kuboniku.com'
 
-export const EVENTS = {
-  AFTER_PAGE_READY: Symbol(),
-  LOADING_PROGRESS: Symbol(),
-  LOADING_END: Symbol(),
-  LOADING_TIMEOUT: Symbol(),
-  RESIZE: Symbol(),
-  SCROLL: Symbol(),
-}
+export const AFTER_PAGE_READY = Symbol()
+export const LOADING_PROGRESS = Symbol()
+export const LOADING_DONE = Symbol()
+export const LOADING_TIMEOUT = Symbol()
+export const RESIZE = Symbol()
+export const SCROLL = Symbol()

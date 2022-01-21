@@ -1,6 +1,6 @@
 import { wideQuery, mediaPrint } from '@/env'
 
-export default function() {
+export default function () {
   const handleBreakpointChange = () => {
     location.reload()
   }
