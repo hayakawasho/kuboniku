@@ -5,17 +5,6 @@ export default abstract class implements IScene {
   scope!: HTMLElement
   $$!: gsap.utils.SelectorFunc
 
-  constructor() {
-    this.onAfterPageReady = this.onAfterPageReady.bind(this)
-  }
-
-  /**
-   * @abstract
-   */
-  protected onAfterPageReady() {
-    //
-  }
-
   /**
    * @abstract
    */
@@ -27,7 +16,7 @@ export default abstract class implements IScene {
   /**
    * @abstract
    */
-  leave() {
+  leave = async () => {
     //
   }
 }

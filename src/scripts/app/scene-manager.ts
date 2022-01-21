@@ -1,23 +1,29 @@
 import modular from 'modujs'
 import { loadingManager } from './loading-manager'
 import { manifest } from './manifest'
-import { H } from './pjax'
+import './pjax'
 import { router } from './router'
-import { AFTER_PAGE_READY } from '@/const'
+import {
+  AFTER_PAGE_READY,
+  PJAX_LEAVE,
+  PJAX_ENTER,
+  LOADING_DONE,
+  LOADING_TIMEOUT,
+} from '@/const'
 import { g } from '@/env'
 import globals from '@/globals'
-import { emit } from '@/lib'
+import { emit, on } from '@/lib'
 import * as modules from '@/modules'
-import { Utils } from '@/utils'
+// import { Utils } from '@/utils'
+
+export interface IScene {
+  enter(scope?: HTMLElement): Promise<void>
+  leave(): Promise<void>
+}
 
 const app = new modular({
   modules: modules,
 })
-
-export interface IScene {
-  enter(scope?: HTMLElement): Promise<void>
-  leave(): void | Promise<void>
-}
 
 class SceneManager {
   _pjaxIsStarted = false
@@ -26,39 +32,12 @@ class SceneManager {
   _oldScene!: IScene | undefined
 
   constructor() {
-    this._pjaxEvents()
-  }
+    on(PJAX_LEAVE, ({ from }) => {
+      app.destroy(from)
+    })
 
-  goto = async (scene: IScene, { isHome = false }: { isHome?: boolean }) => {
-    if (!this._pjaxIsStarted) {
-      await this._once(scene)
-      this._newScene = scene
-    } else {
-      this._oldScene = this._newScene
-      this._oldScene.leave()
-      app.destroy(this._oldScene)
-
-      await scene.enter(this._scope)
-
-      this._newScene = scene
-      emit(AFTER_PAGE_READY)
-    }
-  }
-
-  _once = async (scene: IScene) => {
-    const now = performance.now()
-    loadingManager.loadStart(now, manifest)
-
-    globals()
-    app.init(app)
-
-    await scene.enter()
-    this._pjaxIsStarted = true
-  }
-
-  _pjaxEvents() {
-    H.on('NAVIGATE_IN', ({ to }: any) => {
-      const newEl = to.view
+    on(PJAX_ENTER, ({ to }) => {
+      const newEl = to
       const namespace = newEl.dataset.routerView
 
       this._scope = newEl
@@ -67,6 +46,40 @@ class SceneManager {
 
       router.processCurrentPath()
     })
+
+    on(LOADING_TIMEOUT, () => {
+      //
+    })
+
+    on(LOADING_DONE, () => {
+      document.body.classList.replace('is-domLoading', 'is-domLoaded')
+    })
+  }
+
+  goto = async (scene: IScene) => {
+    if (!this._pjaxIsStarted) {
+      await this._once(scene)
+      this._newScene = scene
+    } else {
+      this._oldScene = this._newScene
+      await this._oldScene.leave()
+
+      this._newScene = scene
+      await this._newScene.enter(this._scope)
+
+      emit(AFTER_PAGE_READY)
+    }
+  }
+
+  _once = async (scene: IScene) => {
+    const { bootup } = g
+    loadingManager.loadStart(bootup as number, manifest)
+
+    globals()
+    app.init(app)
+
+    await scene.enter()
+    this._pjaxIsStarted = true
   }
 }
 

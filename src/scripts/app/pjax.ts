@@ -1,5 +1,6 @@
 import Highway from '@dogstudio/highway'
-import { gsap } from '@/lib'
+import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
+import { gsap, emit } from '@/lib'
 import { Utils } from '@/utils'
 
 class Fade extends Highway.Transition {
@@ -27,10 +28,22 @@ class Fade extends Highway.Transition {
   }
 }
 
-const H = new Highway.Core({
+const pjax = new Highway.Core({
   transitions: {
     default: Fade,
   },
 })
 
-export { H }
+pjax.on('NAVIGATE_OUT', ({ from }: any) => {
+  emit(PJAX_LEAVE, {
+    from: from.view,
+  })
+})
+
+pjax.on('NAVIGATE_IN', ({ to }: any) => {
+  emit(PJAX_ENTER, {
+    to: to.view,
+  })
+})
+
+export { pjax }

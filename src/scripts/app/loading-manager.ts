@@ -4,6 +4,7 @@ import { gsap, emit } from '@/lib'
 import { Utils } from '@/utils'
 
 const TIMEOUT = 4000
+
 const state = {
   clock: 0,
   isTimeOuted: false,
@@ -25,6 +26,7 @@ const handleProgress = (e: any) => {
 
       const val = Math.round(state.progress.now)
       state.progress.before = val
+
       emit(LOADING_PROGRESS, { progress: val })
     },
   })
@@ -36,20 +38,24 @@ const handleFileLoaed = (e: any) => {
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
 
-    // タイムアウト内（直後）で最後に読み込んだファイルID
+    // タイムアウト直後に読み込んだファイルID
     emit(LOADING_TIMEOUT, {
       id: e.item.id,
+      timeout: elapsedTime,
     })
+
+    e.target.removeEventListener('progress', handleProgress)
+    e.target.removeEventListener('fileload', handleFileLoaed)
+    e.target.removeEventListener('complete', handleComplete)
   }
 }
 
 const handleComplete = async (e: any) => {
-  if (state.isTimeOuted) {
-    return
-  }
-
   await Utils.wait(300) // progressのduration分待機
-  emit(LOADING_DONE)
+
+  emit(LOADING_DONE, {
+    done: Utils.checkElapsedTime(state.clock),
+  })
 
   e.target.removeEventListener('progress', handleProgress)
   e.target.removeEventListener('fileload', handleFileLoaed)

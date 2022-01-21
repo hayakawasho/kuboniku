@@ -34,6 +34,10 @@
     <style>
       body { color: #e3e3e3; background: #191918; }
     </style>
+    <script>
+      window.__KUBONIKU__ = window.__KUBONIKU__ || {};
+      window.__KUBONIKU__.bootup = performance.now();
+    </script>
     {% if build.env == "production" %}
       {% viteLinkStylesheetTags "src/entry.ts" %}
       {% viteLinkModulePreloadTags "src/entry.ts" %}
@@ -60,8 +64,8 @@
     {% if build.env == "production" %}
     {% viteScriptTag "src/entry.ts" %}
     {% else %}
-    <script type="module" src="http://localhost:3000/@vite/client" async></script>
-    <script type="module" src="http://localhost:3000/src/entry.ts" async></script>
+    <script type="module" src="http://localhost:3000/@vite/client"></script>
+    <script type="module" src="http://localhost:3000/src/entry.ts"></script>
     {% endif %}
   </body>
 </html>

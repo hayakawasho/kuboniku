@@ -11,11 +11,13 @@ const isDev = process.env.NODE_ENV === 'development'
 function init() {
   router
     .use('/works', _req => {
-      sceneManager.goto(new WorksIndexPage(), {})
+      sceneManager.goto(new WorksIndexPage())
     })
     .use('*', _req => {
-      sceneManager.goto(new DefaultPage(), {})
+      sceneManager.goto(new DefaultPage())
     })
+
+  router.listen()
 }
 
 if (document.readyState !== 'loading') {
