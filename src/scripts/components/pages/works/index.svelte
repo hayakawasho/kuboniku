@@ -1,7 +1,10 @@
 <script lang="ts">
-
+  import type { Work } from '@/domain/works'
+  export let posts: Work[]
 </script>
 
-<ul class="">
-  <li></li>
-</ul>
+{#each posts as i}
+  <li class="o-grid__item">
+    {i}
+  </li>
+{/each}

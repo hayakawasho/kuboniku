@@ -8,11 +8,11 @@ export default class extends Abstract {
   }
 
   init() {
-    //
+    console.log('init:sns')
   }
 
   destroy() {
-    //
+    console.log('destroy:sns')
   }
 
   _toggle(e: Event) {

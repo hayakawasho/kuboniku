@@ -1,6 +1,7 @@
 import modular from 'modujs'
-import { bootService } from './boot-machine'
 import './pjax'
+import { loadingManager } from './loading-manager'
+import { manifest } from './manifest'
 import { router } from './router'
 import {
   AFTER_PAGE_READY,
@@ -9,32 +10,36 @@ import {
   LOADING_DONE,
   LOADING_TIMEOUT,
 } from '@/const'
+import { g } from '@/env'
 import globals from '@/globals'
 import { emit, on } from '@/lib'
 import * as modules from '@/modules'
 
 export interface IScene {
-  enter(scope?: HTMLElement): Promise<void>
-  leave(): Promise<void>
+  enter(scope?: HTMLElement): Promise<unknown>
+  leave(): Promise<unknown>
 }
 
 const app = new modular({
   modules: modules,
 })
 
+const state = {
+  pjaxIsStarted: false,
+  scope: document.body,
+}
+
 class SceneManager {
-  _pjaxIsStarted = false
-  _scope!: HTMLElement
-  _newScene!: IScene
-  _oldScene!: IScene | undefined
+  private _newScene!: IScene
+  private _oldScene!: IScene
 
   constructor() {
     on(LOADING_TIMEOUT, () => {
-      bootService.send({ type: 'TIMEOUT' })
+      document.body.classList.replace('is-domLoading', 'is-domLoaded')
     })
 
     on(LOADING_DONE, () => {
-      bootService.send({ type: 'NEXT' })
+      document.body.classList.replace('is-domLoading', 'is-domLoaded')
     })
 
     on(PJAX_LEAVE, async ({ from }) => {
@@ -45,37 +50,39 @@ class SceneManager {
     })
 
     on(PJAX_ENTER, ({ to }) => {
-      const newEl = to
-      const namespace = newEl.dataset.routerView
+      const namespace = to.dataset.routerView
 
-      this._scope = newEl
       document.body.dataset.page = namespace
       window.scrollTo(0, 0)
 
+      app.update(to)
+
+      state.scope = to
       router.processCurrentPath()
     })
   }
 
-  goto = async (scene: IScene) => {
-    if (!this._pjaxIsStarted) {
-      await this._once(scene)
-      this._pjaxIsStarted = true
-    } else {
-      await scene.enter(this._scope)
-      this._newScene = scene
-    }
-
-    emit(AFTER_PAGE_READY)
-  }
-
-  _once = async (scene: IScene) => {
-    bootService.send({ type: 'NEXT' })
+  private _once = async (scene: IScene) => {
+    const { bootup } = g
+    loadingManager.loadStart(bootup as number, manifest)
 
     globals()
     app.init(app)
 
     await scene.enter()
     this._newScene = scene
+  }
+
+  goto = async (scene: IScene) => {
+    if (!state.pjaxIsStarted) {
+      await this._once(scene)
+      state.pjaxIsStarted = true
+    } else {
+      await scene.enter(state.scope)
+      this._newScene = scene
+    }
+
+    emit(AFTER_PAGE_READY)
   }
 }
 

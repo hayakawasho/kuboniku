@@ -1,58 +1,63 @@
-import { createMachine, interpret } from '@xstate/fsm'
+// import { createMachine, interpret } from '@xstate/fsm'
+import { createMachine, interpret } from 'xstate'
 import { loadingManager } from './loading-manager'
 import { manifest } from './manifest'
 import { g } from '@/env'
 
-const bootMachine = createMachine({
-  id: 'boot',
-  initial: 'idle',
-  states: {
-    idle: {
-      on: {
-        NEXT: {
-          target: 'loading',
-          actions: () => {
-            const { bootup } = g
-            loadingManager.loadStart(bootup as number, manifest)
+const bootMachine = createMachine(
+  {
+    id: 'boot',
+    initial: 'idle',
+    states: {
+      idle: {
+        on: {
+          ADD_TO_QUEUE: {
+            target: 'loading',
+            actions: () => {
+              const { bootup } = g
+              loadingManager.loadStart(bootup as number, manifest)
+            },
           },
         },
       },
-    },
 
-    loading: {
-      on: {
-        NEXT: {
-          target: 'loaded',
-          actions: () => {
-            //
-          },
+      loading: {
+        after: {
+          TIMEOUT: 'rejected',
         },
 
-        TIMEOUT: {
-          target: 'loaded',
-          actions: () => {
-            //
+        on: {
+          ADD_TO_QUEUE: {
+            target: 'done',
+            actions: () => {
+              document.body.classList.replace('is-domLoading', 'is-domLoaded')
+            },
           },
-        },
-      },
-    },
 
-    loaded: {
-      on: {
-        NEXT: {
-          target: 'done',
-          actions: () => {
-            document.body.classList.replace('is-domLoading', 'is-domLoaded')
+          TIMEOUT: {
+            target: 'done',
+            actions: () => {
+              document.body.classList.replace('is-domLoading', 'is-domLoaded')
+            },
           },
         },
       },
-    },
 
-    done: {
-      exit: 'final',
+      rejected: {},
+
+      done: {
+        exit: 'final',
+      },
     },
   },
-})
+  {
+    guards: {},
+
+    delays: {
+      TIMEOUT: 4000,
+    },
+  }
+)
 
 const bootService = interpret(bootMachine)
 bootService.start()
