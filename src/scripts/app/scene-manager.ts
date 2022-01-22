@@ -1,6 +1,5 @@
 import modular from 'modujs'
-import { loadingManager } from './loading-manager'
-import { manifest } from './manifest'
+import { bootService } from './boot-machine'
 import './pjax'
 import { router } from './router'
 import {
@@ -10,11 +9,9 @@ import {
   LOADING_DONE,
   LOADING_TIMEOUT,
 } from '@/const'
-import { g } from '@/env'
 import globals from '@/globals'
 import { emit, on } from '@/lib'
 import * as modules from '@/modules'
-// import { Utils } from '@/utils'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<void>
@@ -32,7 +29,18 @@ class SceneManager {
   _oldScene!: IScene | undefined
 
   constructor() {
-    on(PJAX_LEAVE, ({ from }) => {
+    on(LOADING_TIMEOUT, () => {
+      bootService.send({ type: 'TIMEOUT' })
+    })
+
+    on(LOADING_DONE, () => {
+      bootService.send({ type: 'NEXT' })
+    })
+
+    on(PJAX_LEAVE, async ({ from }) => {
+      this._oldScene = this._newScene
+      await this._oldScene.leave()
+
       app.destroy(from)
     })
 
@@ -46,40 +54,28 @@ class SceneManager {
 
       router.processCurrentPath()
     })
-
-    on(LOADING_TIMEOUT, () => {
-      //
-    })
-
-    on(LOADING_DONE, () => {
-      document.body.classList.replace('is-domLoading', 'is-domLoaded')
-    })
   }
 
   goto = async (scene: IScene) => {
     if (!this._pjaxIsStarted) {
       await this._once(scene)
-      this._newScene = scene
+      this._pjaxIsStarted = true
     } else {
-      this._oldScene = this._newScene
-      await this._oldScene.leave()
-
+      await scene.enter(this._scope)
       this._newScene = scene
-      await this._newScene.enter(this._scope)
-
-      emit(AFTER_PAGE_READY)
     }
+
+    emit(AFTER_PAGE_READY)
   }
 
   _once = async (scene: IScene) => {
-    const { bootup } = g
-    loadingManager.loadStart(bootup as number, manifest)
+    bootService.send({ type: 'NEXT' })
 
     globals()
     app.init(app)
 
     await scene.enter()
-    this._pjaxIsStarted = true
+    this._newScene = scene
   }
 }
 

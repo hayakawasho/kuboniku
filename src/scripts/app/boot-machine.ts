@@ -1,4 +1,7 @@
 import { createMachine, interpret } from '@xstate/fsm'
+import { loadingManager } from './loading-manager'
+import { manifest } from './manifest'
+import { g } from '@/env'
 
 const bootMachine = createMachine({
   id: 'boot',
@@ -6,7 +9,13 @@ const bootMachine = createMachine({
   states: {
     idle: {
       on: {
-        NEXT: 'loading',
+        NEXT: {
+          target: 'loading',
+          actions: () => {
+            const { bootup } = g
+            loadingManager.loadStart(bootup as number, manifest)
+          },
+        },
       },
     },
 
@@ -33,7 +42,7 @@ const bootMachine = createMachine({
         NEXT: {
           target: 'done',
           actions: () => {
-            //
+            document.body.classList.replace('is-domLoading', 'is-domLoaded')
           },
         },
       },

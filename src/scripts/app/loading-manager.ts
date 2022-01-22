@@ -33,7 +33,7 @@ const handleProgress = (e: any) => {
 }
 
 const handleFileLoaed = (e: any) => {
-  const elapsedTime = Utils.checkElapsedTime(state.clock)
+  const elapsedTime = performance.now() - state.clock
 
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
@@ -54,7 +54,7 @@ const handleComplete = async (e: any) => {
   await Utils.wait(300) // progressのduration分待機
 
   emit(LOADING_DONE, {
-    done: Utils.checkElapsedTime(state.clock),
+    done: performance.now() - state.clock,
   })
 
   e.target.removeEventListener('progress', handleProgress)
