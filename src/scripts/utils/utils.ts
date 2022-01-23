@@ -44,10 +44,6 @@ class Utils {
   static zeroPadding(num: number, length: number) {
     return String(num).padStart(length, '0')
   }
-
-  static checkElapsedTime(now: number) {
-    return performance.now() - now
-  }
 }
 
 export { Utils }

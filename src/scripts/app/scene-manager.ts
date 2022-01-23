@@ -30,10 +30,11 @@ const state = {
 }
 
 class SceneManager {
+  private static _instance: SceneManager
   private _newScene!: IScene
   private _oldScene!: IScene
 
-  constructor() {
+  private constructor() {
     on(LOADING_TIMEOUT, () => {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
     })
@@ -62,6 +63,13 @@ class SceneManager {
     })
   }
 
+  static create() {
+    if (!SceneManager._instance) {
+      SceneManager._instance = new SceneManager()
+    }
+    return SceneManager._instance
+  }
+
   private _once = async (scene: IScene) => {
     const { bootup } = g
     loadingManager.loadStart(bootup as number, manifest)
@@ -86,5 +94,4 @@ class SceneManager {
   }
 }
 
-const sceneManager = new SceneManager()
-export { sceneManager }
+export { SceneManager }

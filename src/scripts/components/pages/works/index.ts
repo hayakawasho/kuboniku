@@ -7,11 +7,14 @@ import { useIO } from '@/utils'
 interface IProps {
   repository: IWorksRepo
 }
-
 export default class extends Abstract {
   private _app!: SvelteComponent
   private readonly _repo
   private _io!: IntersectionObserver
+
+  private _state = {
+    fetching: false,
+  }
 
   constructor({ repository }: IProps) {
     super()
@@ -29,12 +32,10 @@ export default class extends Abstract {
       },
     })
 
-    const { io } = useIO(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this._onFetch()
-        }
-      })
+    const { io } = useIO(([entry]) => {
+      if (entry.isIntersecting) {
+        !this._state.fetching && this._onFetch()
+      }
     })
 
     this._io = io
@@ -46,28 +47,29 @@ export default class extends Abstract {
     this._io.disconnect()
   }
 
-  _getWorks = async () => {
-    const res = await this._repo.findSome({
-      where: {
-        size: 10,
-        offset: 10,
-      },
-    })
-
-    if (res.isErr()) {
-      return Promise.reject(res.error)
-    }
-
-    return res.value
+  _onFetch() {
+    this._state.fetching = true
+    this._getWorks()
   }
 
-  _onFetch = async () => {
-    try {
-      const posts = await this._getWorks()
-      this._app.$set({ posts: this._viewWorks(posts) })
-    } catch (error) {
-      //
-    }
+  _getWorks = async () => {
+    const result = await this._repo.findSome({
+      size: 10,
+      offset: 10,
+    })
+
+    result
+      .map(value => {
+        const posts = this._viewWorks(value)
+        this._app.$set({ posts })
+
+        this._state.fetching = false
+      })
+      .mapErr(err => {
+        this._app.$set({ error: err })
+
+        this._state.fetching = false
+      })
   }
 
   _viewWorks(data: any[]) {

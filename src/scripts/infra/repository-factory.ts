@@ -1,16 +1,11 @@
 import { WorksRepo } from './works/works-repo'
 
-const REPOSITORIES = ['works'] as const
-
-type IUnpacked<T> = T extends { [K in keyof T]: infer U } ? U : never
-type IRepoName = IUnpacked<typeof REPOSITORIES>
-
 const repositories = {
-  works: new WorksRepo(),
+  works: WorksRepo.create(),
 }
 
 const repositoryFactory = {
-  get: (name: IRepoName) => repositories[name],
+  get: (name: keyof typeof repositories) => repositories[name],
 }
 
 export { repositoryFactory }
