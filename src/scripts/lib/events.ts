@@ -6,6 +6,7 @@ import {
   AFTER_PAGE_READY,
   PJAX_ENTER,
   PJAX_LEAVE,
+  WINDOW_RESIZE,
 } from '@/const'
 
 type Events = {
@@ -25,6 +26,10 @@ type Events = {
   }
   [PJAX_ENTER]: {
     to: HTMLElement
+  }
+  [WINDOW_RESIZE]: {
+    windowH: number
+    vh: number
   }
 }
 

@@ -1,5 +1,5 @@
 import { ok, err } from 'neverthrow'
-import { WP_API_END_POINT } from '@/const'
+import { WP_API_BASE } from '@/const'
 import { IWorksRepo, Work } from '@/domain/works'
 import { handleHttpError } from '@/errors'
 
@@ -22,7 +22,7 @@ class WorksRepo extends IWorksRepo {
     IWorksRepo['findSome']
   > {
     try {
-      const res = await request<any>(WP_API_END_POINT, GET_POSTS, {
+      const res = await request<any>(WP_API_BASE, GET_POSTS, {
         offset: where.offset,
         size: where.size,
       })

@@ -32,11 +32,35 @@
       onload="this.media='all'"
     />
     <style>
-      body { color: #e3e3e3; background: #191918; }
+      body {
+        color: #e3e3e3;
+        background: #191918;
+      }
+
+      .mask {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .glworld {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        display: block;
+      }
     </style>
     <script>
       window.__KUBONIKU__ = window.__KUBONIKU__ || {};
-      window.__KUBONIKU__.bootup = performance.now();
+      window.__KUBONIKU__.boot = performance.now();
+      window.__KUBONIKU__.dpr = window.devicePixelRatio >= 2 ? 1.5 : window.devicePixelRatio;
     </script>
     {% if build.env == "production" %}
       {% viteLinkStylesheetTags "src/entry.ts" %}
@@ -48,7 +72,7 @@
     data-page="{{ namespace }}"
     data-module-menu
   >
-    <div class="glWorld">
+    <div class="glworld" data-module-glworld>
       <canvas></canvas>
     </div>
     <div id="js-viewportRef" class="mask"></div>

@@ -64,7 +64,6 @@
   "dependencies": {
     "@aspida/axios": "^1.7.1",
     "@dogstudio/highway": "^2.2.1",
-    "@xstate/fsm": "^1.6.2",
     "@xstate/svelte": "^0.2.0",
     "axios": "^0.24.0",
     "detect-gpu": "^3.1.25",

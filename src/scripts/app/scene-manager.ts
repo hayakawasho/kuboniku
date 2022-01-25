@@ -30,7 +30,8 @@ const state = {
 }
 
 class SceneManager {
-  private static _instance: SceneManager
+  private static _instance = new SceneManager()
+
   private _newScene!: IScene
   private _oldScene!: IScene
 
@@ -64,15 +65,11 @@ class SceneManager {
   }
 
   static create() {
-    if (!SceneManager._instance) {
-      SceneManager._instance = new SceneManager()
-    }
     return SceneManager._instance
   }
 
   private _once = async (scene: IScene) => {
-    const { bootup } = g
-    loadingManager.loadStart(bootup as number, manifest)
+    loadingManager.loadStart(g.boot as number, manifest)
 
     globals()
     app.init(app)
