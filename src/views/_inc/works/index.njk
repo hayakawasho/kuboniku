@@ -1,17 +1,26 @@
-<div class="wrk-container">
-  <h1 class="wrk-heading">
-    <div>
-      Works<sup class="wrk-heading__total">{{ props.total }}</sup>
-    </div>
+<div class="o-wrap">
+  <h1 class="works-heading | relative mt-[10rem] mb-[6rem]">
+    Works
+    <sup class="absolute top-[0.5em] ml-[0.5em]">{{ props.total }}</sup>
   </h1>
-
-  <div class=" wrk-entryList | js-works">
-    {% for i in props.metadata %}
-      <article>
-        <h2>{{ i.h1 | safe }}</h2>
-        <img src="{{ i.eyecatch.pc.src }}" alt="">
-      </article>
-    {% endfor %}
+  <div class="o-grid | js-works | mb-[2rem]">{% for i in props.metadata %}
+    <article class="o-grid__item | mb-[4rem]">
+      <a href="./{{ i.slug }}/" class="relative block">
+        <img
+          class="works-entryImg | opacity-[.8]"
+          src="{{ i.eyecatch.pc.src }}"
+          width="{{ i.eyecatch.pc.w }}"
+          height="{{ i.eyecatch.pc.h }}"
+          decoding="async"
+          loading="lazy"
+          alt=""
+        />
+        <div class="absolute bottom-[2rem] left-[-1.2rem]">
+          <p class="works-entryNum">00<span class="ml-[.5em]">Project</span></p>
+          <h2 class="works-entryHeading">{{ i.h1 | safe }}</h2>
+        </div>
+      </a>
+    </article>{% endfor %}
   </div>
   <div class="js-works__trigger"></div>
 </div>

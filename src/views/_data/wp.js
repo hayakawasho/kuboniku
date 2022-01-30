@@ -1,6 +1,8 @@
 // @ts-nocheck
 const WP_API_BASE = 'https://hykwsho.sub.jp/kuboniku/wp-json/'
 const axios = require('axios')
+const format = require('date-fns').format
+const parseISO = require('date-fns').parseISO
 
 module.exports = async () => {
   const rawWorks = await axios.get(WP_API_BASE + 'wp/v2/posts', {
@@ -18,7 +20,10 @@ module.exports = async () => {
       id: i.id,
       h1: i.title.rendered,
       slug: i.slug,
-      createAt: i.date,
+      createAt: {
+        date: i.date,
+        format: format(parseISO(i.date), "MMMM d, yyyy")
+      },
       category: i.acf.category.name,
       eyecatch: {
         pc: {

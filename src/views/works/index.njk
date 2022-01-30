@@ -2,11 +2,17 @@
 layout: _layout.njk
 title: WORKS
 namespace: works
+pagination:
+  data: wp.works.items
+  size: 10
+  addAllPagesToCollections: false
 ---
 
-{% set props = {
-  total: wp.works.total,
-  metadata: wp.works.items
-} %}
+{%
+  set props = {
+    metadata: pagination.items,
+    total: wp.works.total
+  }
+%}
 
 {% include '../_inc/works/index.njk' %}

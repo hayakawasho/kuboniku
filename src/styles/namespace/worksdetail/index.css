@@ -1,3 +1,33 @@
+.worksdetail-kv {
+  height: calc(var(--vh) * 100);
+}
+
+.worksdetail-kv__heading {
+  font-family: var(--font-roboto);
+  font-size: 3.9rem;
+  line-height: 1;
+  color: #fff;
+
+  @media (--pc) {
+    font-size: 7rem;
+  }
+}
+
+.worksdetail-kvSub {
+  font-family: var(--font-roboto);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+
+  & .icon-arrow-right {
+    font-size: 0.7rem;
+    margin-left: 0.8rem;
+  }
+}
+
 .wkslug-kv {
   height: calc(var(--vh) * 100);
   perspective: 1000px;

@@ -1,0 +1,68 @@
+<div class="worksdetail-kv | relative w-full overflow-hidden | sm:h-screen">
+  <picture>
+    <source media="(min-width: 640px)" srcset="{{ props.eyecatch.pc.src }}">
+    <img src="{{ props.eyecatch.sp.src }}" alt="">
+  </picture>
+  <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
+    <div class="worksdetail-hgroup">
+      <p class="worksdetail-kv__num">
+        00<span>Project</span>
+      </p>
+      <h1 class="worksdetail-kv__heading">
+        {{ props.h1 | safe }}
+      </h1>
+      <p class="wkslug-sub | overflow-hidden">
+        {{ props.category }}
+        <i class="icon-arrow-right"></i>
+      </p>
+    </div>
+  </div>
+  <div class="wkslug-kv__scrollDown
+    | absolute left-1/2 overflow-hidden transform -translate-x-1/2"
+  >
+    <div class="u-in overflow-hidden">
+      <div class="wkslug-kv__scrollLabel">scroll</div>
+    </div>
+    <i class="icon-arrow-down | block text-center"></i>
+  </div>
+</div>
+
+<div>
+  <div class="worksdetail-intro">
+    <div class="wkslug-intro__info">
+      <dl>
+        <dt class="mb-[1rem]">Year :</dt>
+        <dd class="wkslug-dd">
+          {{ props.createAt }}
+        </dd>
+      </dl>
+      <dl>
+        <dt class="mb-[1rem]">Role :</dt>
+        {% for i in props.role %}<dd class="uppercase">{{ i }}</dd>{% endfor %}
+      </dl>
+    </div>
+    {% if props.siteUrl %}
+      <a
+        class="wkslug-intro__viewLink"
+        href="{{ props.siteUrl }}"
+        target="_blank"
+      >
+        View website
+        <div class="wkslug-intro__viewLink__hr"></div>
+      </a>
+    {% endif %}
+  </div>
+
+  <ul>
+    <li></li>
+  </ul>
+
+  <aside>
+    <a href="../{{ props.next.slug }}/">
+      <picture class="">
+        <source media="(max-width: 639px)" srcset="{{ props.next.eyecatch.sp.src }}">
+        <img class="grayscale" src="{{ props.next.eyecatch.pc.src }}" alt="">
+      </picture>
+    </a>
+  </aside>
+</div>

@@ -1,0 +1,29 @@
+---
+layout: _layout.njk
+namespace: worksdetail
+pagination:
+  data: wp.works.items
+  size: 1
+  alias: this
+permalink: works/{{ this.slug }}/index.html
+title: ''
+---
+
+{%
+  set props = {
+    "h1": this.h1,
+    "eyecatch": this.eyecatch,
+    "category": this.category,
+    "createAt": this.createAt.format,
+    "role": this.role,
+    "siteUrl": this.siteUrl,
+    "gallery": this.gallery,
+    "next": {
+      "h1": pagination.page.first.h1 if pagination.page.last.id === this.id else pagination.page.next.h1,
+      "slug": pagination.page.first.slug if pagination.page.last.id === this.id else pagination.page.next.slug,
+      "eyecatch": pagination.page.first.eyecatch if pagination.page.last.id === this.id else pagination.page.next.eyecatch
+    }
+  }
+%}
+
+{% include '../_inc/worksdetail/index.njk' %}

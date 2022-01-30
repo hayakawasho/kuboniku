@@ -4,6 +4,7 @@
 @import './base/_vars.css';
 @import './base/_container.css';
 
+@import './parts/_wrap.css';
 @import './parts/_ctrl.css';
 @import './parts/_grid.css';
 @import './parts/_aspect.css';
@@ -12,7 +13,7 @@
 
 @import './namespace/profile/index.css';
 @import './namespace/works/index.css';
-@import './namespace/works_slug/index.css';
+@import './namespace/worksdetail/index.css';
 
 @import './_utils.css';
 @import './_shame.css';

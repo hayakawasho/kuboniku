@@ -66,6 +66,7 @@
     "@dogstudio/highway": "^2.2.1",
     "@xstate/svelte": "^0.2.0",
     "axios": "^0.24.0",
+    "date-fns": "^2.28.0",
     "detect-gpu": "^3.1.25",
     "gsap": "3.9.0",
     "lodash-es": "^4.17.21",
