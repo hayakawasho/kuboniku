@@ -15,6 +15,12 @@ const state = {
 }
 
 class LoadingManager {
+  private static _instance = new LoadingManager()
+
+  static create() {
+    return LoadingManager._instance
+  }
+
   loadStart(now: number, manifest: IManifestProps[]) {
     state.clock = now
     loadQueue.loadManifest(manifest)
@@ -35,10 +41,10 @@ const handleProgress = (e: any) => {
         return
       }
 
-      const val = Math.round(state.progress.now)
-      state.progress.before = val
+      const progress = Math.round(state.progress.now)
+      state.progress.before = progress
 
-      emit(LOADING_PROGRESS, { progress: val })
+      emit(LOADING_PROGRESS, { progress })
     },
   })
 }
@@ -49,7 +55,6 @@ const handleFileLoaed = (e: any) => {
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
 
-    // タイムアウト直後に読み込んだファイルID
     emit(LOADING_TIMEOUT, {
       id: e.item.id,
       timeout: elapsedTime,
@@ -62,7 +67,7 @@ const handleFileLoaed = (e: any) => {
 }
 
 const handleComplete = async (e: any) => {
-  await Utils.wait(300) // progressのduration分待機
+  await Utils.wait(300) // progressのduration待機
 
   emit(LOADING_DONE, {
     done: performance.now() - state.clock,
@@ -79,5 +84,6 @@ loadQueue.addEventListener('progress', handleProgress)
 loadQueue.addEventListener('fileload', handleFileLoaed)
 loadQueue.addEventListener('complete', handleComplete)
 
-const loadingManager = new LoadingManager()
+const loadingManager = LoadingManager.create()
+
 export { loadingManager }
