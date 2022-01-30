@@ -3,9 +3,9 @@ import './styles/global.css'
 import 'virtual:windi.css'
 
 import { router } from '@/app/router'
-import { SceneManager } from '@/app/scene-manager'
-import { DefaultPage } from '@/components/pages'
-// import { repositoryFactory } from '@/infra/repository-factory'
+import { SceneManager } from '@/app/sceneManager'
+import { DefaultPage, WorksIndexPage } from '@/components/pages'
+// import { repositoryFactory } from '@/infra/repositoryFactory'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -13,13 +13,13 @@ function init() {
   const sceneManager = SceneManager.create()
 
   router
-    // .use('/works', _req => {
-    //   sceneManager.goto(
-    //     new WorksIndexPage({
-    //       repository: repositoryFactory.get('works'),
-    //     })
-    //   )
-    // })
+    .use('/works', _req => {
+      sceneManager.goto(
+        new WorksIndexPage({
+          // repository: repositoryFactory.get('works'),
+        })
+      )
+    })
     .use('*', _req => {
       sceneManager.goto(new DefaultPage())
     })

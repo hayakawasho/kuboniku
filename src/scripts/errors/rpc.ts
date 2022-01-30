@@ -25,7 +25,6 @@ type IErrorCodeName =
 class HttpException extends Error {
   constructor(readonly code: IErrorCodeName, message?: string) {
     super(message)
-
     this.code = code
   }
 }

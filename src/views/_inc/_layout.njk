@@ -37,6 +37,10 @@
         background: #191918;
       }
 
+      img {
+        max-width: 100%;
+      }
+
       .mask {
         position: fixed;
         width: 100vw;
@@ -60,12 +64,13 @@
     <script>
       window.__KUBONIKU__ = window.__KUBONIKU__ || {};
       window.__KUBONIKU__.boot = performance.now();
-      window.__KUBONIKU__.dpr = window.devicePixelRatio >= 2 ? 1.5 : window.devicePixelRatio;
     </script>
     {% if build.env == "production" %}
       {% viteLinkStylesheetTags "src/entry.ts" %}
       {% viteLinkModulePreloadTags "src/entry.ts" %}
     {% endif %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
+    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
   </head>
   <body
     class="is-domLoading"
@@ -77,14 +82,12 @@
     </div>
     <div id="js-viewportRef" class="mask"></div>
     {% include "_header.njk" %}
-    <div class="relative z-1" data-router-wrapper>
-      <div class="relative" data-router-view="{{ namespace }}">
-        <div class="u-fitToParent pen invisible z-[-1]"></div>
+    <div class="site-window" data-router-wrapper>
+      <div class="site-content" data-router-view="{{ namespace }}">
+        <div class="site-content__h"></div>
         <main class="page-content | js-page">{{ content | safe }}</main>
       </div>
     </div>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
-    <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
     {% if build.env == "production" %}
     {% viteScriptTag "src/entry.ts" %}
     {% else %}

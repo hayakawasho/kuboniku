@@ -7,7 +7,8 @@ pagination:
 [{% for i in pagination.items %}
   {
     "id": "{{ i.id }}",
-    "h1": "{{ i.h1 }}",
+    "num": {{ wp.works.total - (loop.index0 + (10 * pagination.pageNumber)) }},
+    "title": "{{ i.title | safe }}",
     "slug": "{{ i.slug }}",
     "createAt": "{{ i.createAt }}",
     "category": "{{ i.category }}",
@@ -15,13 +16,11 @@ pagination:
       "pc": {
         "w": "{{ i.eyecatch.pc.w }}",
         "h": "{{ i.eyecatch.pc.h }}",
-        "aspect": "{{ i.eyecatch.pc.aspect }}",
         "src": "{{ i.eyecatch.pc.src }}"
       },
       "sp": {
         "w": "{{ i.eyecatch.sp.w }}",
         "h": "{{ i.eyecatch.sp.h }}",
-        "aspect": "{{ i.eyecatch.sp.aspect }}",
         "src": "{{ i.eyecatch.sp.src }}"
       }
     },

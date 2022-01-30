@@ -1,3 +1,24 @@
+.site-window {
+  position: relative;
+  z-index: 1;
+}
+
+.site-content {
+  position: relative;
+  min-height: 100vh;
+}
+
+.site-content__h {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
 .page-content {
   position: relative;
 

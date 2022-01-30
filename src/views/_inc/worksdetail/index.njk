@@ -6,10 +6,10 @@
   <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
     <div class="worksdetail-hgroup">
       <p class="worksdetail-kv__num">
-        00<span>Project</span>
+        {{ props.num }}<span>Project</span>
       </p>
       <h1 class="worksdetail-kv__heading">
-        {{ props.h1 | safe }}
+        {{ props.title }}
       </h1>
       <p class="wkslug-sub | overflow-hidden">
         {{ props.category }}
@@ -33,7 +33,7 @@
       <dl>
         <dt class="mb-[1rem]">Year :</dt>
         <dd class="wkslug-dd">
-          {{ props.createAt }}
+          <time datetime="{{ props.createAt.datetime }}">{{ props.createAt.format }}</time>
         </dd>
       </dl>
       <dl>

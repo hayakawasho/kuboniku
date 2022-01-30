@@ -3,7 +3,7 @@
     Works
     <sup class="absolute top-[0.5em] ml-[0.5em]">{{ props.total }}</sup>
   </h1>
-  <div class="o-grid | js-works | mb-[2rem]">{% for i in props.metadata %}
+  <div class="o-grid | js-works" data-total="{{ props.total }}">{% for i in props.metadata %}
     <article class="o-grid__item | mb-[4rem]">
       <a href="./{{ i.slug }}/" class="relative block">
         <img
@@ -16,8 +16,10 @@
           alt=""
         />
         <div class="absolute bottom-[2rem] left-[-1.2rem]">
-          <p class="works-entryNum">00<span class="ml-[.5em]">Project</span></p>
-          <h2 class="works-entryHeading">{{ i.h1 | safe }}</h2>
+          <p class="works-entryNum">
+            {{ (props.total - loop.index0) | zeroPadding("2") }}<span class="ml-[.5em]">Project</span>
+          </p>
+          <h2 class="works-entryHeading">{{ i.title | safe }}</h2>
         </div>
       </a>
     </article>{% endfor %}

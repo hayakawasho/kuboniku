@@ -1,6 +1,8 @@
 const fs = require('fs/promises')
 const path = require('path')
 const Image = require("@11ty/eleventy-img")
+const format = require('date-fns').format
+const parseISO = require('date-fns').parseISO
 
 const PATH_PREFIX = '/'
 
@@ -17,12 +19,16 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addNunjucksAsyncShortcode(
     'viteLinkStylesheetTags',
     viteLinkStylesheetTags
-  );
+  )
 
   eleventyConfig.addNunjucksAsyncShortcode(
     'viteLinkModulePreloadTags',
     viteLinkModulePreloadTags
-  );
+  )
+
+  eleventyConfig.addNunjucksFilter('day', dayFilter)
+
+  eleventyConfig.addNunjucksFilter('zeroPadding', zeroPadding)
 
   // Configuration
   return {
@@ -116,7 +122,7 @@ async function responsiveImageShortcode(src, mobileSrc, cls, alt, originalFormat
 //-----//
 async function viteScriptTag(entryFilename) {
   const entryChunk = await getChunkInformationFor(entryFilename);
-  return `<script type='module' src='${PATH_PREFIX}${entryChunk.file}'></script>`;
+  return `<script type='module' src='${PATH_PREFIX}${entryChunk.file}' async></script>`;
 }
 
 //-----//
@@ -187,4 +193,12 @@ async function getChunkInformationFor(entryFilename) {
   }
 
   return entryChunk;
+}
+
+function dayFilter(date, formatType = 'MMMM d, yyyy') {
+  return format(parseISO(date), formatType)
+}
+
+function zeroPadding(num, length = 2) {
+  return String(num).padStart(length, '0')
 }

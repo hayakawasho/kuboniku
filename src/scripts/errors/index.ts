@@ -1,2 +1,2 @@
-export * from './error'
+export * from './rpc'
 export * from './handle-http-error'
