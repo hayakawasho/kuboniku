@@ -1,0 +1,35 @@
+---
+permalink: /works-{{ pagination.pageNumber }}.json
+pagination:
+  data: wp.works.items
+  size: 10
+  alias: wpWorks
+---
+
+[{% for i in wpWorks %}
+  {
+    "id": "{{ i.id }}",
+    "h1": "{{ i.h1 }}",
+    "slug": "{{ i.slug }}",
+    "createAt": "{{ i.createAt }}",
+    "category": "{{ i.category }}",
+    "eyecatch": {
+      "pc": {
+        "w": "{{ i.eyecatch.pc.w }}",
+        "h": "{{ i.eyecatch.pc.h }}",
+        "aspect": "{{ i.eyecatch.pc.aspect }}",
+        "src": "{{ i.eyecatch.pc.src }}"
+      },
+      "sp": {
+        "w": "{{ i.eyecatch.sp.w }}",
+        "h": "{{ i.eyecatch.sp.h }}",
+        "aspect": "{{ i.eyecatch.sp.aspect }}",
+        "src": "{{ i.eyecatch.sp.src }}"
+      }
+    },
+    "color": "{{ i.color }}",
+    "gallery": "{{ i.gallery }}",
+    "siteUrl": "{{ i.siteUrl }}",
+    "role": [{% for j in i.role %}"{{ j }}"{% if loop.last === false %}, {% endif %}{% endfor %}]
+  }{% if loop.last === false %},{% endif %}{% endfor %}
+]

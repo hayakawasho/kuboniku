@@ -1,7 +1,12 @@
 ---
 layout: _layout.njk
 title: WORKS
-namespace: home
+namespace: works
 ---
+
+{% set props = {
+  total: wp.works.total,
+  metadata: wp.works.items
+} %}
 
 {% include '../_inc/works/index.njk' %}

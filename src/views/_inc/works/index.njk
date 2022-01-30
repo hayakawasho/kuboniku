@@ -1,9 +1,17 @@
 <div class="wrk-container">
   <h1 class="wrk-heading">
     <div>
-      Works<sup class="wrk-heading__total">{{"11"}}</sup>
+      Works<sup class="wrk-heading__total">{{ props.total }}</sup>
     </div>
   </h1>
-  <div class="o-grid wrk-entryList | js-works"></div>
+
+  <div class=" wrk-entryList | js-works">
+    {% for i in props.metadata %}
+      <article>
+        <h2>{{ i.h1 | safe }}</h2>
+        <img src="{{ i.eyecatch.pc.src }}" alt="">
+      </article>
+    {% endfor %}
+  </div>
   <div class="js-works__trigger"></div>
 </div>
