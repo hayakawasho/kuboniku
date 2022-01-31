@@ -22,7 +22,7 @@ type IErrorCodeName =
   | 'DATA_LOSS'
   | 'UNEXPECTED'
 
-class HttpException extends Error {
+class RpcError extends Error {
   constructor(readonly code: IErrorCodeName, message?: string) {
     super(message)
     this.code = code
@@ -30,4 +30,4 @@ class HttpException extends Error {
 }
 
 export type { IErrorCodeName }
-export { HttpException }
+export { RpcError }

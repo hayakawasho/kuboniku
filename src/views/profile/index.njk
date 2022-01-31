@@ -4,4 +4,11 @@ title: PROFILE
 namespace: profile
 ---
 
+{%
+  set props = {
+    title: wp.profile.title | safe,
+    html: wp.profile.html | safe
+  }
+%}
+
 {% include '../_inc/profile/index.njk' %}
