@@ -1,3 +1,4 @@
+import axios from 'axios'
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
 import Abstract from '@/_abstract/_page'
@@ -5,7 +6,7 @@ import type { IWorksRepo } from '@/domain/works'
 import { useIO } from '@/utils'
 
 interface IProps {
-  repository: IWorksRepo
+  repository?: IWorksRepo
 }
 export default class extends Abstract {
   private _app!: SvelteComponent
@@ -53,23 +54,22 @@ export default class extends Abstract {
   }
 
   _getWorks = async () => {
-    const result = await this._repo.findSome({
-      size: 10,
-      offset: 10,
-    })
+    const res = await axios('/works-3.json')
 
-    result
-      .map(value => {
-        const posts = this._viewWorks(value)
-        this._app.$set({ posts })
+    console.log(res)
 
-        this._state.fetching = false
-      })
-      .mapErr(err => {
-        this._app.$set({ error: err })
-
-        this._state.fetching = false
-      })
+    // result
+    //   .map(value => {
+    //     const posts = this._viewWorks(value)
+    //     this._app.$set({ posts })
+    //
+    //     this._state.fetching = false
+    //   })
+    //   .mapErr(err => {
+    //     this._app.$set({ error: err })
+    //
+    //     this._state.fetching = false
+    //   })
   }
 
   _viewWorks(data: any[]) {

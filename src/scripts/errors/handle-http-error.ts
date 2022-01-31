@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { HttpException } from './error'
+import { HttpException } from '@/errors'
 
 const handleHttpError = (error: unknown) => {
   if (error instanceof HttpException) {

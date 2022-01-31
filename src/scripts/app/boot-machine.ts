@@ -1,6 +1,6 @@
 // import { createMachine, interpret } from '@xstate/fsm'
 import { createMachine, interpret } from 'xstate'
-import { loadingManager } from './loading-manager'
+import { loadingManager } from './loadingManager'
 import { manifest } from './manifest'
 import { g } from '@/env'
 

@@ -51,7 +51,7 @@ class Work {
     }
     const createAt = raw.date && new Date(raw.date)
     const role = raw.acf.role?.map(item => item?.name)
-    const viewWebsite = raw.acf?.url
+    const link = raw.acf?.url
     const gallery = raw.acf.gallery?.map(item => {
       return {
         width: item?.mediaDetails?.width,
@@ -62,15 +62,15 @@ class Work {
     })
 
     return new Work({
-      id,
-      slug,
-      title,
+      id: raw.id,
+      slug: raw.slug,
+      title: raw.title,
       category,
       eyecatch,
       createAt,
       role,
-      viewWebsite,
       gallery,
+      link,
     })
   }
 }
