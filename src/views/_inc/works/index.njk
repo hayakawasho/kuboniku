@@ -3,26 +3,20 @@
     Works
     <sup class="absolute top-[0.5em] ml-[0.5em]">{{ props.total }}</sup>
   </h1>
-  <div class="o-grid | js-works" data-total="{{ props.total }}">{% for i in props.metadata %}
-    <article class="o-grid__item | mb-[4rem]">
-      <a href="./{{ i.slug }}/" class="relative block">
-        <img
-          class="works-entryImg | opacity-[.8]"
-          src="{{ i.eyecatch.pc.src }}"
-          width="{{ i.eyecatch.pc.w }}"
-          height="{{ i.eyecatch.pc.h }}"
-          decoding="async"
-          loading="lazy"
-          alt=""
-        />
-        <div class="absolute bottom-[2rem] left-[-1.2rem]">
-          <p class="works-entryNum">
-            {{ (props.total - loop.index0) | zeroPadding("2") }}<span class="ml-[.5em]">Project</span>
-          </p>
-          <h2 class="works-entryHeading">{{ i.title | safe }}</h2>
-        </div>
-      </a>
-    </article>{% endfor %}
+  <div class="o-grid | js-works" data-total="{{ props.total }}">
+  {% for i in props.metadata %}
+    {%
+      set j = {
+        ttl: i.title | safe,
+        slug: i.slug,
+        src: i.eyecatch.pc.src,
+        width: i.eyecatch.pc.w,
+        height: i.eyecatch.pc.h,
+        num: (props.total - loop.index0) | zeroPadding("2")
+      }
+    %}
+    {% include './_entry.njk' %}
+  {% endfor %}
   </div>
   <div class="js-works__trigger"></div>
 </div>

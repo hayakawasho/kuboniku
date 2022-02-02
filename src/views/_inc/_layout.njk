@@ -77,22 +77,65 @@
     data-page="{{ namespace }}"
     data-module-menu
   >
-    <div class="glworld" data-module-glworld>
-      <canvas></canvas>
+    <div id="js-viewportRef" class="l-mask"></div>
+
+    <div class="l-fixed">
+
+      <div class="glworld" data-module-glworld>
+        <canvas></canvas>
+      </div>
+
+      <a href="/" class="l-brandLogo">
+        <i class="icon-logo"></i>
+      </a>
+
+      <button class="burger u-mobile">
+        <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
+          <div class="burger__line js-burgerLine--1"></div>
+          <div class="burger__line js-burgerLine--2"></div>
+        </div>
+      </button>
+
+      <div class="l-sns" data-module-sns>
+        <ul class="mb-[2.5rem] text-center">
+          <li class="overflow-hidden mb-[2rem]">
+            <a href="{{ conf.fb }}"
+              target="_blank"
+              class="snsLabel"
+              data-sns-icon
+            >Fb</a>
+          </li>
+          <li class="overflow-hidden">
+            <a href="{{ conf.tw }}"
+              target="_blank"
+              class="snsLabel"
+              data-sns-icon
+            >Tw</a>
+          </li>
+        </ul>
+        <button class="snsPlus" data-sns-trigger>
+          <div class="u-in">
+            <div class="snsPlus__x"></div>
+            <div class="snsPlus__y"></div>
+          </div>
+        </button>
+      </div>
+
+      <small class="l-copyright"
+      >&copy; KuboNiku.com</small>
     </div>
-    <div id="js-viewportRef" class="mask"></div>
-    {% include "_header.njk" %}
-    <div class="site-window" data-router-wrapper>
-      <div class="site-content" data-router-view="{{ namespace }}">
-        <div class="site-content__h"></div>
-        <main class="page-content | js-page">{{ content | safe }}</main>
+
+    <div class="l-window" data-router-wrapper>
+      <div class="l-content" data-router-view="{{ namespace }}">
+        <div class="l-content__h"></div>
+        <main class="l-page | js-page">{{ content | safe }}</main>
       </div>
     </div>
+
     {% if build.env == "production" %}
     {% viteScriptTag "src/entry.ts" %}
     {% else %}
-    <script type="module" src="http://localhost:3000/@vite/client" async></script>
-    <script type="module" src="http://localhost:3000/src/entry.ts" async></script>
+    <script type="module" src="http://localhost:3000/src/entry.ts"></script>
     {% endif %}
   </body>
 </html>

@@ -21,31 +21,34 @@ module.exports = async () => {
     works: {
       total: rawWorks.headers['x-wp-total'],
       items: rawWorks.data.map(i => {
-        const eyecatch = i.acf.eyecatch
-        const eyecatchMobile = i.acf.eyecatch_mobile
+        const acf = i.acf
+
+        const img = (value) => {
+          return {
+            w: value.width,
+            h: value.height,
+            src: value.url
+          }
+        }
+
+        const gallery = acf.gallery === false
+          ? false
+          : acf.gallery.map(j => img(j))
 
         return {
           id: i.id,
           title: i.title.rendered,
           slug: i.slug,
           createAt: i.date,
-          category: i.acf.category.name,
+          category: acf.category.name,
           eyecatch: {
-            pc: {
-              w: eyecatch.width,
-              h: eyecatch.height,
-              src: eyecatch.url
-            },
-            sp: {
-              w: eyecatchMobile.width,
-              h: eyecatchMobile.height,
-              src: eyecatchMobile.url
-            }
+            pc: img(acf.eyecatch),
+            sp: img(acf.eyecatch_mobile)
           },
-          color: i.acf.theme_color,
-          gallery: i.acf.gallery,
-          siteUrl: i.acf.url,
-          role: i.acf.role.map(j => j.name),
+          color: acf.theme_color,
+          gallery,
+          siteUrl: acf.url,
+          role: acf.role.map(j => j.name),
         }
       })
     },

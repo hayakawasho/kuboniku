@@ -11,21 +11,21 @@ title: ""
 
 {%
   set props = {
-    "title": this.title | safe,
-    "num": (wp.works.total - pagination.pageNumber) | zeroPadding("2"),
-    "eyecatch": this.eyecatch,
-    "category": this.category,
-    "createAt": {
-      "format": this.createAt | day("MMMM d, yyyy"),
-      "datetime": this.createAt | day("yyyy-MM-dd")
+    title: this.title | safe,
+    num: (wp.works.total - pagination.pageNumber) | zeroPadding("2"),
+    eyecatch: this.eyecatch,
+    category: this.category,
+    createAt: {
+      format: this.createAt | day("MMMM d, yyyy"),
+      datetime: this.createAt | day("yyyy-MM-dd")
     },
-    "role": this.role,
-    "siteUrl": this.siteUrl,
-    "gallery": this.gallery,
-    "next": {
-      "title": pagination.page.first.title if pagination.page.last.id === this.id else pagination.page.next.title,
-      "slug": pagination.page.first.slug if pagination.page.last.id === this.id else pagination.page.next.slug,
-      "eyecatch": pagination.page.first.eyecatch if pagination.page.last.id === this.id else pagination.page.next.eyecatch
+    role: this.role,
+    siteUrl: this.siteUrl,
+    gallery: this.gallery,
+    next: {
+      title: pagination.page.first.title if pagination.page.last.id === this.id else pagination.page.next.title,
+      slug: pagination.page.first.slug if pagination.page.last.id === this.id else pagination.page.next.slug,
+      eyecatch: pagination.page.first.eyecatch if pagination.page.last.id === this.id else pagination.page.next.eyecatch
     }
   }
 %}

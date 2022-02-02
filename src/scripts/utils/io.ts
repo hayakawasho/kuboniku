@@ -1,15 +1,41 @@
 const defaults = {
   root: null,
-  rootMargin: '0px 0px 0px 0px',
-  threshold: [0, 0],
+  rootMargin: '0px',
+  threshold: [0, 1],
 }
 
-const useIO = (cb: IntersectionObserverCallback, opts = defaults) => {
-  const io = new IntersectionObserver(cb, opts)
+const useIObserver = (opts = defaults) => {
+  const handlers = new Set()
+  const io = new IntersectionObserver(([_entry]) => {
+    // handlers.forEach(i => )),
+  }, opts)
+
+  const observe = (el: HTMLElement, cb: () => unknown) => {
+    const handler = {
+      el,
+      cb,
+    }
+
+    handlers.add(handler)
+    io.observe(el)
+
+    return {
+      remove() {
+        handlers.delete(handler)
+        io.unobserve(el)
+      },
+    }
+  }
+
+  const destroy = () => {
+    handlers.clear()
+    io.disconnect()
+  }
 
   return {
-    io,
+    observe,
+    destroy,
   }
 }
 
-export { useIO }
+export { useIObserver }

@@ -2,14 +2,17 @@
 @import './base/_font.css';
 @import './base/_base.css';
 @import './base/_vars.css';
-@import './base/_container.css';
+
+@import './_layout.css';
 
 @import './parts/_wrap.css';
-@import './parts/_ctrl.css';
 @import './parts/_grid.css';
-@import './parts/_aspect.css';
+
+@import './parts/_sns.css';
+@import './parts/_ctrl.css';
 @import './parts/_progress.css';
 @import './parts/_burger.css';
+@import './parts/_aspect.css';
 
 @import './namespace/profile/index.css';
 @import './namespace/works/index.css';

@@ -5,7 +5,6 @@ import 'virtual:windi.css'
 import { router } from '@/app/router'
 import { SceneManager } from '@/app/sceneManager'
 import { DefaultPage, WorksIndexPage } from '@/components/pages'
-// import { repositoryFactory } from '@/infra/repositoryFactory'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -14,11 +13,7 @@ function init() {
 
   router
     .use('/works', _req => {
-      sceneManager.goto(
-        new WorksIndexPage({
-          // repository: repositoryFactory.get('works'),
-        })
-      )
+      sceneManager.goto(new WorksIndexPage())
     })
     .use('*', _req => {
       sceneManager.goto(new DefaultPage())
@@ -42,7 +37,7 @@ if (isDev) {
     const stats = new Stats()
     stats.showPanel(0)
 
-    document.body.appendChild(stats.dom)
+    // document.body.appendChild(stats.dom)
 
     const loop = () => {
       stats.update()
