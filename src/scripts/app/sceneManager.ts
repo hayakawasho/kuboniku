@@ -36,59 +36,6 @@ const state: {
   oldScene: undefined,
 }
 
-const once = async (scene: IScene) => {
-  loadingManager.loadStart(g.boot as number, manifest)
-
-  globals()
-  app.init(app)
-
-  await scene.enter()
-  state.newScene = scene
-}
-
-on(LOADING_TIMEOUT, () => {
-  document.body.classList.replace('is-domLoading', 'is-domLoaded')
-})
-
-on(LOADING_DONE, () => {
-  document.body.classList.replace('is-domLoading', 'is-domLoaded')
-})
-
-on(PJAX_LEAVE, async ({ from }) => {
-  state.oldScene = state.newScene as IScene
-  state.oldScene.leave()
-
-  app.destroy(from)
-})
-
-on(PJAX_ENTER, ({ to }) => {
-  const namespace = to.dataset.routerView
-
-  document.body.dataset.page = namespace
-  window.scrollTo(0, 0)
-
-  app.update(to)
-
-  state.scope = to
-  router.processCurrentPath()
-})
-
-const sceneManager = {
-  goto: async (scene: IScene) => {
-    if (!state.pjaxIsStarted) {
-      await once(scene)
-      state.pjaxIsStarted = true
-    } else {
-      await scene.enter(state.scope)
-      state.newScene = scene
-    }
-
-    emit(AFTER_PAGE_READY)
-  },
-}
-
-Object.freeze(sceneManager)
-
 class SceneManager {
   private static _instance = new SceneManager()
 
@@ -153,4 +100,8 @@ class SceneManager {
   }
 }
 
-export { SceneManager, sceneManager }
+const createSceneManager = () => {
+  return SceneManager.create()
+}
+
+export { createSceneManager }
