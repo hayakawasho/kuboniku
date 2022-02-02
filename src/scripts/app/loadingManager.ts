@@ -14,23 +14,6 @@ const state = {
   },
 }
 
-class LoadingManager {
-  private static _instance = new LoadingManager()
-
-  static create() {
-    return LoadingManager._instance
-  }
-
-  loadStart(now: number, manifest: IManifestProps[]) {
-    state.clock = now
-    loadQueue.loadManifest(manifest)
-  }
-
-  callLoadedFile = <T>(id: string) => {
-    return loadQueue.getResult(id) as T
-  }
-}
-
 const handleProgress = (e: any) => {
   gsap.killTweensOf(state.progress)
   gsap.to(state.progress, {
@@ -84,6 +67,17 @@ loadQueue.addEventListener('progress', handleProgress)
 loadQueue.addEventListener('fileload', handleFileLoaed)
 loadQueue.addEventListener('complete', handleComplete)
 
-const loadingManager = LoadingManager.create()
+const loadingManager = {
+  loadStart: (now: number, manifest: IManifestProps[]) => {
+    state.clock = now
+    loadQueue.loadManifest(manifest)
+  },
+
+  callLoadedFile: (id: string) => {
+    return loadQueue.getResult(id)
+  },
+}
+
+Object.freeze(loadingManager)
 
 export { loadingManager }

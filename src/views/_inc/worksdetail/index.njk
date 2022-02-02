@@ -1,7 +1,7 @@
 <div class="worksdetail-kv | relative w-full overflow-hidden | sm:h-screen">
   <picture>
-    <source media="(min-width: 640px)" srcset="{{ props.eyecatch.pc.src }}">
-    <img src="{{ props.eyecatch.sp.src }}" alt="">
+    <source media="(max-width: 639px)" srcset="{{ props.eyecatch.sp.src }}">
+    <img class="opacity-[.6]" src="{{ props.eyecatch.pc.src }}" alt="">
   </picture>
   <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
     <div class="worksdetail-hgroup">
@@ -57,12 +57,23 @@
     <li></li>
   </ul>
 
-  <aside>
+  <aside class="worksdetail-kv | relative w-full overflow-hidden | sm:h-screen">
     <a href="../{{ props.next.slug }}/">
-      <picture class="">
+      <picture>
         <source media="(max-width: 639px)" srcset="{{ props.next.eyecatch.sp.src }}">
-        <img class="grayscale" src="{{ props.next.eyecatch.pc.src }}" alt="">
+        <img class="filter grayscale opacity-[.6]" src="{{ props.next.eyecatch.pc.src }}" alt="">
       </picture>
+      <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
+        <div class="worksdetail-hgroup">
+          <h1 class="worksdetail-kv__heading">
+            Next Project
+          </h1>
+          <p class="wkslug-sub | overflow-hidden">
+            {{ props.next.title }}
+            <i class="icon-arrow-right"></i>
+          </p>
+        </div>
+      </div>
     </a>
   </aside>
 </div>

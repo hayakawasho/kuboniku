@@ -122,7 +122,7 @@ async function responsiveImageShortcode(src, mobileSrc, cls, alt, originalFormat
 //-----//
 async function viteScriptTag(entryFilename) {
   const entryChunk = await getChunkInformationFor(entryFilename);
-  return `<script type='module' src='${PATH_PREFIX}${entryChunk.file}' async></script>`;
+  return `<script type='module' src='${PATH_PREFIX}${entryChunk.file}' defer></script>`;
 }
 
 //-----//

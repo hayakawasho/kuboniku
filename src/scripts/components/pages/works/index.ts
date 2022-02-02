@@ -11,7 +11,7 @@ export default class extends Abstract {
     this._app = new App({
       target: $works,
       props: {
-        metadata: [],
+        loadMoreWorks: [],
       },
     })
   }

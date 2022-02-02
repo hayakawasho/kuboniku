@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { ok, err, Result } from 'neverthrow'
-import { handleHttpError, RpcError } from '@/errors'
+import { httpErrorHandler, RpcError } from '@/errors'
 
 const findWorks = async (where: {
-  offset: number
+  count: number
 }): Promise<Result<any, RpcError>> => {
   return axios
-    .get(`/v1/works-${where.offset}.json`)
+    .get(`/v1/works-${where.count}.json`)
     .then(res => ok(res.data))
-    .catch(e => err(handleHttpError(e)))
+    .catch(e => err(httpErrorHandler(e)))
 }
 
 export { findWorks }

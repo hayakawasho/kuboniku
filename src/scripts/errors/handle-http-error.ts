@@ -1,24 +1,21 @@
 import axios from 'axios'
-import { HttpException } from '@/errors'
+import { RpcError } from '@/errors'
 
-const handleHttpError = (error: unknown) => {
-  if (error instanceof HttpException) {
+const httpErrorHandler = (error: unknown) => {
+  if (error instanceof RpcError) {
     return error
   }
 
   if (axios.isAxiosError(error)) {
     switch (error.response?.status) {
       case 500:
-        return new HttpException('UNKNOWN', error.message)
+        return new RpcError('UNKNOWN', error.message)
       case 404:
-        return new HttpException('NOT_FOUND', error.message)
+        return new RpcError('NOT_FOUND', error.message)
     }
   }
 
-  return new HttpException(
-    'UNEXPECTED',
-    'Oops, an unexpected error has occurred.'
-  )
+  return new RpcError('UNEXPECTED', 'Oops, an unexpected error has occurred.')
 }
 
-export { handleHttpError }
+export { httpErrorHandler }

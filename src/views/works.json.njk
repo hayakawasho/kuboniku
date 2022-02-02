@@ -7,25 +7,31 @@ pagination:
 [{% for i in pagination.items %}
   {
     "id": "{{ i.id }}",
-    "num": {{ wp.works.total - (loop.index0 + (10 * pagination.pageNumber)) }},
+    "num": "{{ wp.works.total - (loop.index0 + (10 * pagination.pageNumber)) }}",
     "title": "{{ i.title | safe }}",
     "slug": "{{ i.slug }}",
     "createAt": "{{ i.createAt }}",
     "category": "{{ i.category }}",
     "eyecatch": {
       "pc": {
-        "w": "{{ i.eyecatch.pc.w }}",
-        "h": "{{ i.eyecatch.pc.h }}",
+        "width": "{{ i.eyecatch.pc.width }}",
+        "height": "{{ i.eyecatch.pc.height }}",
         "src": "{{ i.eyecatch.pc.src }}"
       },
       "sp": {
-        "w": "{{ i.eyecatch.sp.w }}",
-        "h": "{{ i.eyecatch.sp.h }}",
+        "width": "{{ i.eyecatch.sp.width }}",
+        "height": "{{ i.eyecatch.sp.height }}",
         "src": "{{ i.eyecatch.sp.src }}"
       }
     },
     "color": "{{ i.color }}",
-    "gallery": "{{ i.gallery }}",
+    "gallery": [{% for j in i.gallery %}
+      {
+        "width": "{{ j.width }}",
+        "height": "{{ j.height }}",
+        "src": "{{ j.src }}"
+      }{% if loop.last === false %},{% endif %}{% endfor %}
+    ],
     "siteUrl": "{{ i.siteUrl }}",
     "role": [{% for j in i.role %}"{{ j }}"{% if loop.last === false %}, {% endif %}{% endfor %}]
   }{% if loop.last === false %},{% endif %}{% endfor %}

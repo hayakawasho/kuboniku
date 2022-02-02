@@ -11,8 +11,8 @@
     "build:eleventy": "NODE_ENV=production eleventy",
     "build:vite": "NODE_ENV=production vite build",
     "type-check": "tsc",
-    "prettier:write": "yarn prettier --write ./src/**/*.ts",
-    "eslint": "eslint './src/**/*.ts' -c .eslintrc.json --fix",
+    "prettier:write": "yarn prettier --write ./src/**/*.{ts,svelte}",
+    "eslint": "eslint './src/**/*.{ts,svelte}' -c .eslintrc.json --fix",
     "format": "yarn prettier:write && yarn eslint"
   },
   "devDependencies": {
@@ -50,6 +50,7 @@
     "postcss-import": "^14.0.2",
     "postcss-nesting": "^10.0.2",
     "prettier": "^2.4.1",
+    "prettier-plugin-svelte": "^2.6.0",
     "svelte": "^3.44.2",
     "svelte-preprocess": "^4.9.8",
     "typescript": "^4.5.2",
@@ -82,7 +83,7 @@
   },
   "prepare": "husky install",
   "lint-staged": {
-    "*.{ts}": [
+    "*.{ts,svelte}": [
       "eslint --fix",
       "prettier --write"
     ]

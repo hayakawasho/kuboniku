@@ -39,26 +39,8 @@
 
       img {
         max-width: 100%;
-      }
-
-      .mask {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .glworld {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        display: block;
+        height: auto;
+        vertical-align: middle;
       }
     </style>
     <script>
@@ -71,20 +53,20 @@
     {% endif %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
     <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
+    {% if build.env == "production" %}
+    {% viteScriptTag "src/entry.ts" %}
+    {% else %}
+    <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
+    {% endif %}
   </head>
   <body
     class="is-domLoading"
     data-page="{{ namespace }}"
     data-module-menu
   >
-    <div id="js-viewportRef" class="l-mask"></div>
+    <div class="l-mask" id="js-viewportRef"></div>
 
-    <div class="l-fixed">
-
-      <div class="glworld" data-module-glworld>
-        <canvas></canvas>
-      </div>
-
+    <header class="l-fixed l-header">
       <a href="/" class="l-brandLogo">
         <i class="icon-logo"></i>
       </a>
@@ -120,22 +102,21 @@
           </div>
         </button>
       </div>
-
       <small class="l-copyright"
       >&copy; KuboNiku.com</small>
-    </div>
+    </header>
 
     <div class="l-window" data-router-wrapper>
       <div class="l-content" data-router-view="{{ namespace }}">
         <div class="l-content__h"></div>
-        <main class="l-page | js-page">{{ content | safe }}</main>
+        <main class="l-page">{{ content | safe }}</main>
       </div>
     </div>
 
-    {% if build.env == "production" %}
-    {% viteScriptTag "src/entry.ts" %}
-    {% else %}
-    <script type="module" src="http://localhost:3000/src/entry.ts"></script>
-    {% endif %}
+    <div class="fixed inset-0">
+      <div class="w-screen h-screen" data-module-glworld>
+        <canvas></canvas>
+      </div>
+    </div>
   </body>
 </html>
