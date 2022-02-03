@@ -4,13 +4,20 @@ const defaults = {
   threshold: [0, 1],
 }
 
+const callback = (entry: IntersectionObserverEntry, { cb }: any) => {
+  return entry ? cb(entry) : false
+}
+
 const useIObserver = (opts = defaults) => {
   const handlers = new Set()
-  const io = new IntersectionObserver(([_entry]) => {
-    // handlers.forEach(i => )),
+  const io = new IntersectionObserver(([entry]) => {
+    handlers.forEach(handler => callback(entry, handler))
   }, opts)
 
-  const observe = (el: HTMLElement, cb: () => unknown) => {
+  const observe = (
+    el: HTMLElement,
+    cb: (e: IntersectionObserverEntry) => unknown
+  ) => {
     const handler = {
       el,
       cb,

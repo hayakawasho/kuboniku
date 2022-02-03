@@ -78,8 +78,10 @@
   })
 
   onMount(() => {
-    io.observe(fetchTrigger, () => {
-      //
+    io.observe(fetchTrigger, e => {
+      if (e.isIntersecting) {
+        send({ type: 'FETCH' })
+      }
     })
   })
 
