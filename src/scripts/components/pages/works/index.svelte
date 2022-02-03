@@ -20,7 +20,7 @@
   let fetchTrigger: HTMLElement
   let errorMessage: string
 
-  const observer = useIObserver()
+  const io = useIObserver()
 
   const fetchMachine = createMachine({
     id: 'fetch',
@@ -78,13 +78,13 @@
   })
 
   onMount(() => {
-    observer.observe(fetchTrigger, () => {
+    io.observe(fetchTrigger, () => {
       //
     })
   })
 
   onDestroy(() => {
-    observer.destroy()
+    io.destroy()
   })
 </script>
 
