@@ -1,7 +1,7 @@
-import { WorksRepo } from './works/works-repo'
+import { WorksRepoImpl } from './works/repoImpl'
 
 const repositories = {
-  works: WorksRepo.create(),
+  works: new WorksRepoImpl(),
 }
 
 const repositoryFactory = {

@@ -1,14 +1,10 @@
 import Highway from '@dogstudio/highway'
 import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
 import { gsap, emit } from '@/lib'
-import { Utils } from '@/utils'
 
 class Fade extends Highway.Transition {
-  in = async ({ from, to, done }: any) => {
+  in({ from, to, done }: any) {
     from.remove()
-
-    await Utils.nextTick()
-
     done()
 
     gsap.to(to, {
@@ -18,7 +14,7 @@ class Fade extends Highway.Transition {
     })
   }
 
-  out = ({ from, done }: any) => {
+  out({ from, done }: any) {
     gsap.to(from, {
       ease: 'power1',
       duration: 0.35,

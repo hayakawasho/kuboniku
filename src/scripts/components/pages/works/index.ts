@@ -1,6 +1,7 @@
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
 import Abstract from '@/_abstract/_page'
+import { repositoryFactory } from '@/infra/repositoryFactory'
 
 export default class extends Abstract {
   private _app!: SvelteComponent
@@ -12,6 +13,7 @@ export default class extends Abstract {
       target: $works,
       props: {
         loadMoreWorks: [],
+        repo: repositoryFactory.get('works'),
       },
     })
   }

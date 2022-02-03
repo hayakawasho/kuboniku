@@ -2,8 +2,8 @@
   import { onMount, onDestroy } from 'svelte'
   import { createMachine } from 'xstate'
   import { useMachine } from '@xstate/svelte'
-  import { findWorks } from './findWorks'
   import { useIObserver } from '@/utils'
+  import type { IWorksRepo } from '@/domain/works'
 
   type ViewWork = {
     ttl: string
@@ -15,6 +15,8 @@
   }
 
   export let loadMoreWorks: ViewWork[]
+  export let repo: IWorksRepo
+
   let fetchTrigger: HTMLElement
   let errorMessage: string
 
@@ -60,8 +62,8 @@
   const { state, send } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
-        const result = await findWorks({
-          count: 1,
+        const result = await repo.findTen({
+          offset: 1,
         })
 
         result

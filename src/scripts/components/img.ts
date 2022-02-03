@@ -1,9 +1,9 @@
-export class Img {
+export class ImgValue {
   readonly src: string
   readonly width: number
   readonly height: number
 
-  constructor({
+  private constructor({
     src,
     width,
     height,
@@ -15,5 +15,9 @@ export class Img {
     this.src = src
     this.width = width
     this.height = height
+  }
+
+  static create(src: string, width: number, height: number) {
+    return new ImgValue({ src, width, height })
   }
 }

@@ -1,7 +1,7 @@
 import modular from 'modujs'
 import './pjax'
+import { manifest } from '../manifest'
 import { loadingManager } from './loadingManager'
-import { manifest } from './manifest'
 import { router } from './router'
 import {
   AFTER_PAGE_READY,
@@ -23,18 +23,6 @@ export interface IScene {
 const app = new modular({
   modules: modules,
 })
-
-const state: {
-  pjaxIsStarted: boolean
-  scope: HTMLElement
-  newScene: IScene | undefined
-  oldScene: IScene | undefined
-} = {
-  pjaxIsStarted: false,
-  scope: document.body,
-  newScene: undefined,
-  oldScene: undefined,
-}
 
 class SceneManager {
   private static _instance = new SceneManager()

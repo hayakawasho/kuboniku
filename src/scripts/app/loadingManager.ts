@@ -1,4 +1,4 @@
-import type { IManifestProps } from './manifest'
+import type { IManifestProps } from '../manifest'
 import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
 import { gsap, emit } from '@/lib'
 import { Utils } from '@/utils'
