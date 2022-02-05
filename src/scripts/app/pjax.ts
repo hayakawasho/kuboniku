@@ -24,22 +24,22 @@ class Fade extends Highway.Transition {
   }
 }
 
-const pjax = new Highway.Core({
+const H = new Highway.Core({
   transitions: {
     default: Fade,
   },
 })
 
-pjax.on('NAVIGATE_OUT', ({ from }: any) => {
+H.on('NAVIGATE_OUT', ({ from }: any) => {
   emit(PJAX_LEAVE, {
     from: from.view,
   })
 })
 
-pjax.on('NAVIGATE_IN', ({ to }: any) => {
+H.on('NAVIGATE_IN', ({ to }: any) => {
   emit(PJAX_ENTER, {
     to: to.view,
   })
 })
 
-export { pjax }
+export { H }

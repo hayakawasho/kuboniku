@@ -1,6 +1,7 @@
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
 import Abstract from '@/_abstract/_page'
+import { H } from '@/app/pjax'
 import type { IWorksRepo } from '@/components/works'
 
 export default class extends Abstract {
@@ -19,8 +20,13 @@ export default class extends Abstract {
       target: $works,
       props: {
         loadmore: [],
+        total: Number($works.dataset.total),
         repository: this.repository,
       },
+    })
+
+    this._app.$on('works:updated', () => {
+      H.attach(document.querySelectorAll('a'))
     })
   }
 

@@ -1,32 +1,37 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
-  import { createMachine } from 'xstate'
+  import { onMount, onDestroy, createEventDispatcher, tick } from 'svelte'
+  import { createMachine, assign } from 'xstate'
   import { useMachine } from '@xstate/svelte'
-  import { useIObserver } from '@/utils'
+  import { createIObserver } from '@/utils'
   import type { IWorksRepo } from '@/domain/works'
 
   type ViewWork = {
-    ttl: string
+    title: string
     slug: string
-    src: string
-    width: number
-    height: number
+    eyecatch: {
+      pc: {
+        src: string
+        width: number
+        height: number
+      }
+    }
     num: string
   }
 
   export let loadmore: ViewWork[]
+  export let total: number
   export let repository: IWorksRepo
 
   let fetchTrigger: HTMLElement
   let errorMessage: string
 
-  const io = useIObserver()
-
+  const dispatch = createEventDispatcher()
+  const io = createIObserver()
   const fetchMachine = createMachine({
     id: 'fetch',
     initial: 'idle',
     context: {
-      data: undefined,
+      data: loadmore,
       count: 1,
     },
     states: {
@@ -38,12 +43,12 @@
         on: {
           RESOLVE: {
             target: 'success',
-            // actions: assign({
-            //   data: (_, e: typeof fetchMachine.context) => e.data,
-            //   cnt: (_, e: typeof fetchMachine.context) => e.count++
-            // })
+            actions: assign<any, any>({
+              data: (_: any, event: any) => event.data,
+              count: (_: any, event: any) => event.count++,
+            }),
           },
-          REJECT: 'error',
+          REJECT: 'failure',
         },
       },
       success: {
@@ -52,23 +57,29 @@
           DONE: 'done',
         },
       },
-      error: {},
+      failure: {
+        on: {
+          RETRY: 'loading',
+        },
+      },
       done: {
         exit: 'final',
       },
     },
   })
 
-  const { state, send } = useMachine(fetchMachine, {
+  const { state, send, service } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
+        const { count } = service.state.context
         const result = await repository.findTen({
-          offset: 1,
+          offset: count,
         })
 
         result
           .map(value => {
             send({ type: 'RESOLVE', data: value })
+            tick().then(() => dispatch('works:updated'))
           })
           .mapErr(err => {
             send({ type: 'REJECT', data: err.message })
@@ -90,27 +101,29 @@
   })
 </script>
 
-{#each loadmore as j}
-  <article class="o-grid__item | mb-[4rem]">
-    <a href="./{j.slug}/" class="relative block">
-      <img
-        class="works-entryImg | opacity-[.8]"
-        src={j.src}
-        width={j.width}
-        height={j.height}
-        decoding="async"
-        loading="lazy"
-        alt=""
-      />
-      <div class="absolute bottom-[2rem] left-[-1.2rem]">
-        <p class="works-entryNum">
-          {j.num}<span class="ml-[.5em]">Project</span>
-        </p>
-        <h2 class="works-entryHeading">{j.ttl}</h2>
-      </div>
-    </a>
-  </article>
-{/each}
+{#if $state.context.data.length}
+  {#each $state.context.data as j}
+    <article class="o-grid__item | mb-[4rem]">
+      <a href="./{j.slug}/" class="relative block">
+        <img
+          data-src={j.eyecatch.pc.src}
+          class="lazyload | filter grayscale-100 opacity-[.8]"
+          width={j.eyecatch.pc.width}
+          height={j.eyecatch.pc.height}
+          decoding="async"
+          alt=""
+        />
+        <div class="absolute bottom-[2rem] left-[-1.2rem]">
+          <p class="works-entryNum">
+            {j.num}
+            <span class="ml-[.5em]">Project</span>
+          </p>
+          <h2 class="works-entryHeading">{@html j.title}</h2>
+        </div>
+      </a>
+    </article>
+  {/each}
+{/if}
 
 {#if $state.matches('idle')}
   <div bind:this={fetchTrigger} />

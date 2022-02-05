@@ -1,12 +1,19 @@
-<div class="worksdetail-kv | relative w-full overflow-hidden | sm:h-screen">
+<div class="worksdetail-kv">
   <picture>
     <source media="(max-width: 639px)" srcset="{{ props.eyecatch.sp.src }}">
-    <img class="opacity-[.6]" src="{{ props.eyecatch.pc.src }}" alt="">
+    <img
+      class="absolute h-full object-cover opacity-[.6]"
+      src="{{ props.eyecatch.pc.src }}"
+      alt=""
+      decoding="async"
+      importance="high"
+    />
   </picture>
   <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
     <div class="worksdetail-hgroup">
       <p class="worksdetail-kv__num">
-        {{ props.num }}<span>Project</span>
+        {{ props.num }}
+        <span>Project</span>
       </p>
       <h1 class="worksdetail-kv__heading">
         {{ props.title }}
@@ -41,6 +48,9 @@
         {% for i in props.role %}<dd class="uppercase">{{ i }}</dd>{% endfor %}
       </dl>
     </div>
+    {% if props.gallery %}
+
+    {% endif %}
     {% if props.siteUrl %}
       <a
         class="wkslug-intro__viewLink"
@@ -57,11 +67,16 @@
     <li></li>
   </ul>
 
-  <aside class="worksdetail-kv | relative w-full overflow-hidden | sm:h-screen">
-    <a href="../{{ props.next.slug }}/">
+  <aside class="worksdetail-kv">
+    <a class="block" href="../{{ props.next.slug }}/">
       <picture>
-        <source media="(max-width: 639px)" srcset="{{ props.next.eyecatch.sp.src }}">
-        <img class="filter grayscale opacity-[.6]" src="{{ props.next.eyecatch.pc.src }}" alt="">
+        <source media="(max-width: 639px)" data-srcset="{{ props.next.eyecatch.sp.src }}">
+        <img
+          class="lazyload | absolute h-full object-cover filter grayscale opacity-[.6]"
+          data-src="{{ props.next.eyecatch.pc.src }}"
+          alt=""
+          decoding="async"
+        />
       </picture>
       <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
         <div class="worksdetail-hgroup">

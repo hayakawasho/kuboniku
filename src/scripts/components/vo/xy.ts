@@ -1,4 +1,4 @@
-export class XyValue {
+export class Xy {
   x!: number
   y!: number
 
@@ -12,6 +12,6 @@ export class XyValue {
   }
 
   static create() {
-    return new XyValue()
+    return new Xy()
   }
 }
