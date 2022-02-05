@@ -2,93 +2,96 @@
   <picture>
     <source media="(max-width: 639px)" srcset="{{ props.eyecatch.sp.src }}">
     <img
-      class="absolute h-full object-cover opacity-[.6]"
+      class="absolute w-full h-full object-cover opacity-[.6]"
       src="{{ props.eyecatch.pc.src }}"
       alt=""
       decoding="async"
       importance="high"
     />
   </picture>
-  <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
-    <div class="worksdetail-hgroup">
-      <p class="worksdetail-kv__num">
-        {{ props.num }}
-        <span>Project</span>
-      </p>
-      <h1 class="worksdetail-kv__heading">
-        {{ props.title }}
-      </h1>
-      <p class="wkslug-sub | overflow-hidden">
-        {{ props.category }}
-        <i class="icon-arrow-right"></i>
-      </p>
-    </div>
+  <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">
+    <p class="worksdetail-kv__num">
+      {{ props.num }}
+      <span>Project</span>
+    </p>
+    <h1 class="worksdetail-kv__heading | pr-[.5em]">
+      {{ props.title }}
+    </h1>
+    <p class="wkslug-sub | overflow-hidden">
+      {{ props.category }}
+      <i class="icon-arrow-right"></i>
+    </p>
   </div>
-  <div class="wkslug-kv__scrollDown
-    | absolute left-1/2 overflow-hidden transform -translate-x-1/2"
-  >
+  <div class="absolute bottom-[4.5rem] left-1/2 overflow-hidden transform -translate-x-1/2">
     <div class="u-in overflow-hidden">
       <div class="wkslug-kv__scrollLabel">scroll</div>
     </div>
-    <i class="icon-arrow-down | block text-center"></i>
+    <i class="icon-arrow-down | block mt-[1.4rem] text-center"></i>
   </div>
 </div>
 
-<div>
-  <div class="worksdetail-intro">
-    <div class="wkslug-intro__info">
-      <dl>
-        <dt class="mb-[1rem]">Year :</dt>
-        <dd class="wkslug-dd">
-          <time datetime="{{ props.createAt.datetime }}">{{ props.createAt.format }}</time>
-        </dd>
-      </dl>
-      <dl>
-        <dt class="mb-[1rem]">Role :</dt>
-        {% for i in props.role %}<dd class="uppercase">{{ i }}</dd>{% endfor %}
-      </dl>
-    </div>
-    {% if props.gallery %}
-
-    {% endif %}
-    {% if props.siteUrl %}
-      <a
-        class="wkslug-intro__viewLink"
-        href="{{ props.siteUrl }}"
-        target="_blank"
-      >
-        View website
-        <div class="wkslug-intro__viewLink__hr"></div>
-      </a>
-    {% endif %}
+<div class="worksdetail-intro | px-[3rem] pt-[6rem] pb-[7rem]">
+  <div class="wkslug-intro__info">
+    <dl class="mb-[3.2rem]">
+      <dt class="mb-[1rem]">Year :</dt>
+      <dd class="wkslug-dd">
+        <time datetime="{{ props.createAt.datetime }}">{{ props.createAt.format }}</time>
+      </dd>
+    </dl>
+    <dl>
+      <dt class="mb-[1rem]">Role :</dt>
+      {% for i in props.role %}<dd class="uppercase">{{ i }}</dd>{% endfor %}
+    </dl>
   </div>
 
-  <ul>
-    <li></li>
-  </ul>
+  {% if props.siteUrl %}
+    <a
+      class="wkslug-intro__viewLink"
+      href="{{ props.siteUrl }}"
+      target="_blank"
+    >
+      View website
+      <div class="wkslug-intro__viewLink__hr"></div>
+    </a>
+  {% endif %}
+</div>
 
-  <aside class="worksdetail-kv">
-    <a class="block" href="../{{ props.next.slug }}/">
-      <picture>
-        <source media="(max-width: 639px)" data-srcset="{{ props.next.eyecatch.sp.src }}">
+{% if props.gallery.length %}
+  <ul class=" | px-[1.5rem]">
+    {% for i in props.gallery %}
+      <li class="mb-[2rem]">
         <img
-          class="lazyload | absolute h-full object-cover filter grayscale opacity-[.6]"
-          data-src="{{ props.next.eyecatch.pc.src }}"
+          class="lazyload"
+          data-src="{{ i.src }}"
+          width="{{ i.width }}"
+          height="{{ i.height }}"
           alt=""
           decoding="async"
         />
-      </picture>
-      <div class="wkslug-kv__cont | absolute top-1/2 left-0 w-full">
-        <div class="worksdetail-hgroup">
-          <h1 class="worksdetail-kv__heading">
-            Next Project
-          </h1>
-          <p class="wkslug-sub | overflow-hidden">
-            {{ props.next.title }}
-            <i class="icon-arrow-right"></i>
-          </p>
-        </div>
-      </div>
-    </a>
-  </aside>
-</div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+<aside class="worksdetail-kv | h-screen">
+  <a class="" href="../{{ props.next.slug }}/">
+    <picture>
+      <source media="(max-width: 639px)" data-srcset="{{ props.next.eyecatch.sp.src }}">
+      <img
+        class="lazyload | absolute w-full h-full object-cover filter grayscale opacity-[.6]"
+        data-src="{{ props.next.eyecatch.pc.src }}"
+        alt=""
+        decoding="async"
+      />
+    </picture>
+    <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">
+      <h2 class="worksdetail-kv__heading">
+        Next Project
+      </h2>
+      <p class="wkslug-sub | overflow-hidden">
+        {{ props.next.title }}
+        <i class="icon-arrow-right"></i>
+      </p>
+    </div>
+  </a>
+</aside>

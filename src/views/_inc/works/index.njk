@@ -3,7 +3,7 @@
     Works
     <sup class="absolute top-[0.5em] ml-[0.5em]">{{ props.total }}</sup>
   </h1>
-  <div class="o-grid | js-works" data-total="{{ props.total }}">
+  <div class="o-grid | js-works | pb-[2rem]" data-total="{{ props.total }}">
   {% for i in props.entries %}
     {%
       set j = {
@@ -18,5 +18,4 @@
     {% include './_entry.njk' %}
   {% endfor %}
   </div>
-  <div class="js-works__trigger"></div>
 </div>

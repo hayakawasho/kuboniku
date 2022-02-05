@@ -41,8 +41,8 @@ class Utils {
     await this.waitFrame(1)
   }
 
-  static zeroPadding(num: number, length: number) {
-    return String(num).padStart(length, '0')
+  static zeroPadding(num: number | string, length: number) {
+    return `${num}`.padStart(length, '0')
   }
 }
 

@@ -2,7 +2,7 @@
   import { onMount, onDestroy, createEventDispatcher, tick } from 'svelte'
   import { createMachine, assign } from 'xstate'
   import { useMachine } from '@xstate/svelte'
-  import { createIObserver } from '@/utils'
+  import { createIObserver, Utils } from '@/utils'
   import type { IWorksRepo } from '@/domain/works'
 
   type ViewWork = {
@@ -25,61 +25,93 @@
   let fetchTrigger: HTMLElement
   let errorMessage: string
 
+  let loadCount: number = 1
+
   const dispatch = createEventDispatcher()
+
   const io = createIObserver()
-  const fetchMachine = createMachine({
-    id: 'fetch',
-    initial: 'idle',
-    context: {
-      data: loadmore,
-      count: 1,
-    },
-    states: {
-      idle: {
-        on: { FETCH: 'loading' },
+
+  const fetchMachine = createMachine(
+    {
+      id: 'fetch',
+      initial: 'idle',
+      context: {
+        data: loadmore,
+        count: 1,
       },
-      loading: {
-        entry: ['load'],
-        on: {
-          RESOLVE: {
-            target: 'success',
-            actions: assign<any, any>({
-              data: (_: any, event: any) => event.data,
-              count: (_: any, event: any) => event.count++,
-            }),
+      states: {
+        idle: {
+          on: {
+            FETCH: {
+              target: 'loading',
+              cond: 'fetchValid',
+            },
           },
-          REJECT: 'failure',
         },
-      },
-      success: {
-        on: {
-          IDLE: 'idle',
-          DONE: 'done',
+        loading: {
+          entry: ['load'],
+          after: {
+            TIMEOUT: 'failure',
+          },
+          on: {
+            RESOLVE: {
+              target: 'success',
+              actions: assign<any, any>({
+                data: (_: any, event: any) => event.data,
+                // count: (_: any, event: any) => event.count++
+              }),
+            },
+            REJECT: 'failure',
+          },
         },
-      },
-      failure: {
-        on: {
-          RETRY: 'loading',
+        success: {
+          entry: () => {
+            tick().then(() => dispatch('works:updated'))
+          },
+          on: {
+            TO_IDLE: 'idle',
+            DONE: 'done',
+          },
         },
-      },
-      done: {
-        exit: 'final',
+        failure: {
+          on: {
+            RETRY: 'loading',
+          },
+        },
+        done: {
+          exit: 'final',
+        },
       },
     },
-  })
+    {
+      guards: {
+        fetchValid: () => {
+          // return total > context.count
+          return total > 3
+        },
+      },
+      delays: {
+        TIMEOUT: 2000,
+      },
+    }
+  )
 
   const { state, send, service } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
-        const { count } = service.state.context
         const result = await repository.findTen({
-          offset: count,
+          offset: loadCount,
         })
 
         result
           .map(value => {
-            send({ type: 'RESOLVE', data: value })
-            tick().then(() => dispatch('works:updated'))
+            const data = service.state.context.data.concat(value as any)
+
+            send({ type: 'RESOLVE', data })
+
+            send({ type: 'TO_IDLE' })
+
+            loadCount++
           })
           .mapErr(err => {
             send({ type: 'REJECT', data: err.message })
@@ -97,7 +129,7 @@
   })
 
   onDestroy(() => {
-    io.destroy()
+    // io.destroy()
   })
 </script>
 
@@ -115,7 +147,7 @@
         />
         <div class="absolute bottom-[2rem] left-[-1.2rem]">
           <p class="works-entryNum">
-            {j.num}
+            {Utils.zeroPadding(j.num, 2)}
             <span class="ml-[.5em]">Project</span>
           </p>
           <h2 class="works-entryHeading">{@html j.title}</h2>
@@ -125,9 +157,9 @@
   {/each}
 {/if}
 
-{#if $state.matches('idle')}
-  <div bind:this={fetchTrigger} />
-{:else if $state.matches('loading')}
+<div class="" bind:this={fetchTrigger} />
+
+{#if $state.matches('loading')}
   <div>Loading...</div>
 {:else if $state.matches('error')}
   <div>{errorMessage}</div>

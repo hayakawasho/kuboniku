@@ -13,10 +13,6 @@
   }
 }
 
-.works-entryImg {
-  filter: grayscale(100%);
-}
-
 .works-entryNum {
   font-size: 1.5rem;
   color: var(--color-text-primary);
