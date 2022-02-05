@@ -51,16 +51,16 @@
       window.__KUBONIKU__ = window.__KUBONIKU__ || {};
       window.__KUBONIKU__.boot = performance.now();
     </script>
-    {% if build.env == "production" %}
+    {% if conf.env == "production" %}
       {% viteLinkStylesheetTags "src/entry.ts" %}
       {% viteLinkModulePreloadTags "src/entry.ts" %}
     {% endif %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
     <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
-    {% if build.env == "production" %}
-    {% viteScriptTag "src/entry.ts" %}
+    {% if conf.env == "production" %}
+      {% viteScriptTag "src/entry.ts" %}
     {% else %}
-    <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
+      <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
     {% endif %}
   </head>
   <body
