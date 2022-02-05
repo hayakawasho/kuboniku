@@ -1,10 +1,16 @@
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
 import Abstract from '@/_abstract/_page'
-import { repositoryFactory } from '@/components/repositoryFactory'
+import type { IWorksRepo } from '@/components/works'
 
 export default class extends Abstract {
   private _app!: SvelteComponent
+  readonly repository: IWorksRepo
+
+  constructor(context: { repository: IWorksRepo }) {
+    super()
+    this.repository = context.repository
+  }
 
   init() {
     const $works = this.$$('.js-works')[0]
@@ -13,7 +19,7 @@ export default class extends Abstract {
       target: $works,
       props: {
         loadmore: [],
-        repository: repositoryFactory.works,
+        repository: this.repository,
       },
     })
   }

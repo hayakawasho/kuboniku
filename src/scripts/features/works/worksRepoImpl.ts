@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ok, err } from 'neverthrow'
 import { httpErrorHandler } from '@/app/errors'
-import { IWorksRepo } from '@/domain/works'
+import { IWorksRepo } from '@/components/works'
 
 class WorksRepoImpl extends IWorksRepo {
   findTen = async (where: { offset: number }) => {
