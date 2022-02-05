@@ -14,8 +14,8 @@
     num: string
   }
 
-  export let loadMoreWorks: ViewWork[]
-  export let repo: IWorksRepo
+  export let loadmore: ViewWork[]
+  export let repository: IWorksRepo
 
   let fetchTrigger: HTMLElement
   let errorMessage: string
@@ -62,7 +62,7 @@
   const { state, send } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
-        const result = await repo.findTen({
+        const result = await repository.findTen({
           offset: 1,
         })
 
@@ -90,7 +90,7 @@
   })
 </script>
 
-{#each loadMoreWorks as j}
+{#each loadmore as j}
   <article class="o-grid__item | mb-[4rem]">
     <a href="./{j.slug}/" class="relative block">
       <img
