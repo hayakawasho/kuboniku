@@ -73,9 +73,10 @@
     <header class="l-fixed l-header">
       <a href="/" class="l-brandLogo">
         <i class="icon-logo"></i>
+        <span class="sr-only">KuboNiku.com</span>
       </a>
 
-      <button class="burger u-mobile">
+      <button class="burger u-mobile" aria-label="MENU">
         <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
           <div class="burger__line js-burgerLine--1"></div>
           <div class="burger__line js-burgerLine--2"></div>
@@ -87,6 +88,7 @@
           <li class="overflow-hidden mb-[2rem]">
             <a href="{{ conf.fb }}"
               target="_blank"
+              rel="noopener"
               class="snsLabel"
               data-sns-icon
             >Fb</a>
@@ -94,6 +96,7 @@
           <li class="overflow-hidden">
             <a href="{{ conf.tw }}"
               target="_blank"
+              rel="noopener"
               class="snsLabel"
               data-sns-icon
             >Tw</a>
