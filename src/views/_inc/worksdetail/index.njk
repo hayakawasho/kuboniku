@@ -1,14 +1,22 @@
 <div class="worksdetail-kv">
   <picture>
-    <source media="(max-width: 639px)" srcset="{{ props.eyecatch.sp.src }}">
+    <source
+      media="(max-width: 639px)"
+      srcset="{{ props.eyecatch.sp.src }}"
+      width="{{ props.eyecatch.sp.width }}"
+      height="{{ props.eyecatch.sp.height}}"
+    >
     <img
       class="absolute w-full h-full object-cover opacity-[.6]"
       src="{{ props.eyecatch.pc.src }}"
       alt=""
       decoding="async"
       importance="high"
+      width="{{ props.eyecatch.pc.width }}"
+      height="{{ props.eyecatch.pc.height}}"
     />
   </picture>
+
   <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">
     <p class="worksdetail-kv__num">
       {{ props.num }}
@@ -22,6 +30,7 @@
       <i class="icon-arrow-right"></i>
     </p>
   </div>
+
   <div class="absolute bottom-[4.5rem] left-1/2 overflow-hidden transform -translate-x-1/2">
     <div class="u-in overflow-hidden">
       <div class="wkslug-kv__scrollLabel">scroll</div>
@@ -39,8 +48,8 @@
       </dd>
     </dl>
     <dl>
-      <dt class="mb-[1rem]">Role :</dt>
-      {% for i in props.role %}<dd class="uppercase">{{ i }}</dd>{% endfor %}
+      <dt class="mb-[1rem]">Role :</dt>{% for i in props.role %}
+      <dd class="uppercase">{{ i }}</dd>{% endfor %}
     </dl>
   </div>
 
@@ -76,12 +85,19 @@
 <aside class="worksdetail-kv | h-screen">
   <a class="" href="../{{ props.next.slug }}/">
     <picture>
-      <source media="(max-width: 639px)" data-srcset="{{ props.next.eyecatch.sp.src }}">
+      <source
+        media="(max-width: 639px)"
+        data-srcset="{{ props.next.eyecatch.sp.src }}"
+        width="{{ props.next.eyecatch.sp.width }}"
+        height="{{ props.next.eyecatch.sp.height}}"
+      >
       <img
         class="lazyload | absolute w-full h-full object-cover filter grayscale opacity-[.6]"
         data-src="{{ props.next.eyecatch.pc.src }}"
         alt=""
         decoding="async"
+        width="{{ props.next.eyecatch.pc.width }}"
+        height="{{ props.next.eyecatch.pc.height}}"
       />
     </picture>
     <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">

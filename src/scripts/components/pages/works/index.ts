@@ -14,19 +14,20 @@ export default class extends Abstract {
   }
 
   init() {
-    const $works = this.$$('.js-works')[0]
+    const $wrap = this.$$('.js-works')[0]
 
     this._app = new App({
-      target: $works,
+      target: $wrap,
       props: {
         loadmore: [],
-        total: Number($works.dataset.total),
+        total: Number($wrap.dataset.total),
         repository: this.repository,
       },
     })
 
-    this._app.$on('works:updated', () => {
-      H.attach(document.querySelectorAll('a'))
+    this._app.$on('worksindex:updated', () => {
+      const a = document.querySelectorAll('a:not([target])')
+      H.attach(a)
     })
   }
 

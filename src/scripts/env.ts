@@ -3,10 +3,10 @@ const wideQuery = window.matchMedia('(min-width: 640px)')
 const mediaPrint = window.matchMedia('print')
 
 function canUseWebP() {
-  const elem = document.createElement('canvas')
+  const canvas = document.createElement('canvas')
 
-  if (elem.getContext && elem.getContext('2d')) {
-    return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0
+  if (canvas.getContext && canvas.getContext('2d')) {
+    return canvas.toDataURL('image/webp').indexOf('data:image/webp') == 0
   }
 
   return false

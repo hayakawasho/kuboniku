@@ -22,14 +22,15 @@
   export let total: number
   export let repository: IWorksRepo
 
-  let fetchTrigger: HTMLElement
-  let errorMessage: string
-
-  let loadCount: number = 1
+  const totalpage = Math.ceil(total / 10)
 
   const dispatch = createEventDispatcher()
 
-  const io = createIObserver()
+  let dummy: HTMLElement
+  let errorMessage: string
+
+  const fetchIO = createIObserver()
+  // let ioListener: any
 
   const fetchMachine = createMachine(
     {
@@ -38,13 +39,17 @@
       context: {
         data: loadmore,
         count: 1,
+        attempts: 0,
+        errorMessage: undefined,
       },
       states: {
         idle: {
           on: {
             FETCH: {
               target: 'loading',
-              cond: 'fetchValid',
+              cond: ctx => {
+                return totalpage > ctx.count
+              },
             },
           },
         },
@@ -58,19 +63,10 @@
               target: 'success',
               actions: assign<any, any>({
                 data: (_: any, event: any) => event.data,
-                // count: (_: any, event: any) => event.count++
+                count: (_: any, event: any) => event.count + 1,
               }),
             },
             REJECT: 'failure',
-          },
-        },
-        success: {
-          entry: () => {
-            tick().then(() => dispatch('works:updated'))
-          },
-          on: {
-            TO_IDLE: 'idle',
-            DONE: 'done',
           },
         },
         failure: {
@@ -78,18 +74,25 @@
             RETRY: 'loading',
           },
         },
+        success: {
+          entry: () => {
+            tick().then(() => dispatch('worksindex:updated'))
+          },
+          on: {
+            RETURN: 'idle',
+            DONE: 'done',
+          },
+        },
+        error: {
+          on: {},
+        },
         done: {
           exit: 'final',
         },
       },
     },
     {
-      guards: {
-        fetchValid: () => {
-          // return total > context.count
-          return total > 3
-        },
-      },
+      guards: {},
       delays: {
         TIMEOUT: 2000,
       },
@@ -99,37 +102,41 @@
   const { state, send, service } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
+        const { data, count } = service.state.context
+
         const result = await repository.findTen({
-          offset: loadCount,
+          offset: count,
         })
 
         result
           .map(value => {
-            const data = service.state.context.data.concat(value as any)
+            const newValue = [...data, ...(value as ViewWork[])]
 
-            send({ type: 'RESOLVE', data })
+            send({
+              type: 'RESOLVE',
+              data: newValue,
+              count,
+            } as any)
 
-            send({ type: 'TO_IDLE' })
-
-            loadCount++
+            send({ type: 'RETURN' })
           })
-          .mapErr(err => {
-            send({ type: 'REJECT', data: err.message })
+          .mapErr(_err => {
+            send({ type: 'REJECT' })
           })
       },
     },
   })
 
   onMount(() => {
-    io.observe(fetchTrigger, e => {
-      if (e.isIntersecting) {
+    fetchIO.observe(dummy, entry => {
+      if (entry.isIntersecting) {
         send({ type: 'FETCH' })
       }
     })
   })
 
   onDestroy(() => {
-    // io.destroy()
+    fetchIO.destroy()
   })
 </script>
 
@@ -157,10 +164,12 @@
   {/each}
 {/if}
 
-<div class="" bind:this={fetchTrigger} />
+{#if $state.matches('done') === false}
+  <div bind:this={dummy} />
+{/if}
 
 {#if $state.matches('loading')}
   <div>Loading...</div>
-{:else if $state.matches('error')}
+{:else if $state.matches('failure')}
   <div>{errorMessage}</div>
 {/if}
