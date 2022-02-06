@@ -30,7 +30,18 @@
   let errorMessage: string
 
   const fetchIO = createIObserver()
-  // let ioListener: any
+
+  onMount(() => {
+    fetchIO.observe(dummy, entry => {
+      if (entry.isIntersecting) {
+        send({ type: 'FETCH' })
+      }
+    })
+  })
+
+  onDestroy(() => {
+    fetchIO.destroy()
+  })
 
   const fetchMachine = createMachine(
     {
@@ -125,18 +136,6 @@
           })
       },
     },
-  })
-
-  onMount(() => {
-    fetchIO.observe(dummy, entry => {
-      if (entry.isIntersecting) {
-        send({ type: 'FETCH' })
-      }
-    })
-  })
-
-  onDestroy(() => {
-    fetchIO.destroy()
   })
 </script>
 

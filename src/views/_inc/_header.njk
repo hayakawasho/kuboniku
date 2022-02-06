@@ -5,8 +5,9 @@
     | sm:top-[2.4rem] sm:left-[2.4rem]"
   >
     <i class="icon-logo"></i>
+    <span class="sr-only">KuboNiku.com</span>
   </a>
-  <button class={cn({ "is-open": isMenuOpen }) + " burger u-mobile"}>
+  <button class={cn({ "is-open": isMenuOpen }) + " burger u-mobile"} aria-label="MENU">
     <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
       <div class="burger__line js-burgerLine--1"></div>
       <div class="burger__line js-burgerLine--2"></div>
@@ -18,10 +19,10 @@
   >
     <ul class="mb-[2.5rem]">
       <li class="snsList__item">
-        <a href="{{ conf.fb }}" target="_blank" class="snsList__a" data-sns-icon>Fb</a>
+        <a href="{{ conf.fb }}" target="_blank" rel="noopener" class="snsList__a" data-sns-icon>Fb</a>
       </li>
       <li class="snsList__item">
-        <a href="{{ conf.tw }}" target="_blank" class="snsList__a" data-sns-icon>Tw</a>
+        <a href="{{ conf.tw }}" target="_blank" rel="noopener" class="snsList__a" data-sns-icon>Tw</a>
       </li>
     </ul>
     <button class={"plus js-snsTrigger " + cn({ "is-open": isOpen })} data-sns-trigger>
