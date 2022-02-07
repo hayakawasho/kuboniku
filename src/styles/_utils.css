@@ -1,11 +1,11 @@
-.u-mobile {
-  @media (min-width: 640px) {
+.u-sp {
+  @media (--pc) {
     display: none !important;
   }
 }
 
 .u-pc {
-  @media (--mobile) {
+  @media (--sp) {
     display: none !important;
   }
 }

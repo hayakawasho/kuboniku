@@ -1,53 +1,15 @@
-.prf-container {
-  position: relative;
-  margin: 0 3rem;
-  height: calc(var(--vh) * 100);
-
-  @media (min-width: 640px) {
-    text-align: left;
-  }
+.profile-logo {
+  background: url('/grad.jpg') repeat;
+  background-size: 300% 400%;
+  animation: gradAnim 10s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.prf-container__in {
-  position: absolute;
-  right: 0;
-  text-align: right;
-  bottom: 10rem;
-  z-index: 2;
-
-  @media (min-width: 640px) {
-    left: 50%;
-    text-align: right;
-  }
-}
-
-.prf-hgroup {
-  margin-bottom: 2.8rem;
-  font-family: var(--font-roboto);
-}
-
-.prf-hgroup__p {
-  font-size: 1.2rem;
-  color: #858585;
-
-  @media (min-width: 640px) {
-    font-size: 1.4rem;
-  }
-}
-
-.prf-heading {
-  font-weight: bold;
-  font-size: 2.4rem;
-  line-height: calc(60 / 24);
-
-  @media (min-width: 640px) {
-    font-size: 3rem;
-  }
-}
-
-.prf-about {
+.profile-about {
   font-size: 1.1rem;
   line-height: calc(40 / 22);
+  color: #d6d6d6;
 
   @media (min-width: 640px) {
     font-size: 1.3rem;

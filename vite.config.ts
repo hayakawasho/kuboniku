@@ -23,7 +23,7 @@ export default defineConfig({
     WindiCSS({
       scan: {
         dirs: ['./src'],
-        fileExtensions: ['njk'],
+        fileExtensions: ['njk', 'svelte'],
       },
     }),
     glsl(),

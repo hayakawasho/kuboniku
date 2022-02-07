@@ -1,2 +1,3 @@
-@custom-media --sm (min-width: 640px);
+@custom-media --sp (max-width: 639px);
+@custom-media --pc (min-width: 640px);
 @custom-media --hover (hover: hover) and (pointer: fine);
