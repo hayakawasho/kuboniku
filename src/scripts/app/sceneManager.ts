@@ -18,6 +18,7 @@ import * as modules from '@/modules'
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
   leave(): Promise<unknown> | void
+  scope: HTMLElement
 }
 
 const app = new modular({
@@ -30,27 +31,29 @@ class SceneManager {
   private _pjaxIsStarted = false
   private _scope!: HTMLElement
   private _newScene!: IScene
-  private _oldScene!: IScene
 
-  private constructor() {
-    on(LOADING_TIMEOUT, () => {
+  constructor() {
+    const fin = () => {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
+    }
+
+    on(LOADING_TIMEOUT, () => {
+      fin()
     })
 
     on(LOADING_DONE, () => {
-      document.body.classList.replace('is-domLoading', 'is-domLoaded')
+      fin()
     })
 
     on(PJAX_LEAVE, async ({ from }) => {
-      this._oldScene = this._newScene
-      this._oldScene.leave()
+      const oldScene = this._newScene
+      oldScene.leave()
 
       app.destroy(from)
     })
 
     on(PJAX_ENTER, ({ to }) => {
       const namespace = to.dataset.routerView
-
       document.body.dataset.page = namespace
       window.scrollTo(0, 0)
 
@@ -66,7 +69,8 @@ class SceneManager {
   }
 
   private _once = async (scene: IScene) => {
-    loadingManager.loadStart(g.boot as number, manifest)
+    const now: number = g.bootstart
+    loadingManager.loadStart(now, manifest)
 
     globals()
     app.init(app)

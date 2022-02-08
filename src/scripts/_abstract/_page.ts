@@ -22,13 +22,6 @@ export default abstract class implements IScene {
     this.destroy()
   }
 
-  /**
-   * @abstract
-   */
-  init() {} // eslint-disable-line @typescript-eslint/no-empty-function
-
-  /**
-   * @abstract
-   */
-  destroy() {} // eslint-disable-line @typescript-eslint/no-empty-function
+  protected init() {} // eslint-disable-line @typescript-eslint/no-empty-function
+  protected destroy() {} // eslint-disable-line @typescript-eslint/no-empty-function
 }
