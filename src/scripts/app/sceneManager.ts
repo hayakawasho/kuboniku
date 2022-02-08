@@ -12,7 +12,7 @@ import {
 } from '@/const'
 import { g } from '@/env'
 import globals from '@/globals'
-import { emit, on } from '@/lib'
+import { eventBus } from '@/lib'
 import * as modules from '@/modules'
 
 export interface IScene {
@@ -37,22 +37,22 @@ class SceneManager {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
     }
 
-    on(LOADING_TIMEOUT, () => {
+    eventBus.on(LOADING_TIMEOUT, () => {
       fin()
     })
 
-    on(LOADING_DONE, () => {
+    eventBus.on(LOADING_DONE, () => {
       fin()
     })
 
-    on(PJAX_LEAVE, async ({ from }) => {
+    eventBus.on(PJAX_LEAVE, async ({ from }) => {
       const oldScene = this._newScene
       oldScene.leave()
 
       app.destroy(from)
     })
 
-    on(PJAX_ENTER, ({ to }) => {
+    eventBus.on(PJAX_ENTER, ({ to }) => {
       const namespace = to.dataset.routerView
       document.body.dataset.page = namespace
       window.scrollTo(0, 0)
@@ -88,7 +88,7 @@ class SceneManager {
       this._newScene = scene
     }
 
-    emit(AFTER_PAGE_READY)
+    eventBus.emit(AFTER_PAGE_READY)
   }
 }
 

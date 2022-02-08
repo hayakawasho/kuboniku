@@ -33,6 +33,6 @@ type Events = {
   }
 }
 
-const { on, off, emit } = mitt<Events>()
+const eventBus = mitt<Events>()
 
-export { on, off, emit }
+export { eventBus }

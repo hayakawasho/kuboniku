@@ -26,11 +26,9 @@ function init() {
   router.listen()
 }
 
-if (document.readyState !== 'loading') {
-  init()
-} else {
-  document.addEventListener('DOMContentLoaded', init)
-}
+document.addEventListener('DOMContentLoaded', init, {
+  once: true,
+})
 
 if (isDev) {
   const showStats = async () => {
