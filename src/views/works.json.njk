@@ -16,12 +16,14 @@ pagination:
       "pc": {
         "width": "{{ i.eyecatch.pc.width }}",
         "height": "{{ i.eyecatch.pc.height }}",
-        "src": "{{ i.eyecatch.pc.src }}"
+        "src": "{{ i.eyecatch.pc.src }}",
+        "srcset": "{{ i.eyecatch.pc.srcset }}"
       },
       "sp": {
         "width": "{{ i.eyecatch.sp.width }}",
         "height": "{{ i.eyecatch.sp.height }}",
-        "src": "{{ i.eyecatch.sp.src }}"
+        "src": "{{ i.eyecatch.sp.src }}",
+        "srcset": "{{ i.eyecatch.sp.srcset }}"
       }
     },
     "color": "{{ i.color }}",
@@ -29,7 +31,8 @@ pagination:
       {
         "width": "{{ j.width }}",
         "height": "{{ j.height }}",
-        "src": "{{ j.src }}"
+        "src": "{{ j.src }}",
+        "srcset": "{{ j.srcset }}"
       }{% if loop.last === false %},{% endif %}{% endfor %}
     ],
     "siteUrl": "{{ i.siteUrl }}",

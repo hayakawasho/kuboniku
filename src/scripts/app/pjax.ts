@@ -1,6 +1,6 @@
 import Highway from '@dogstudio/highway'
 import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
-import { gsap, emit } from '@/lib'
+import { gsap, eventbus } from '@/lib'
 
 class Fade extends Highway.Transition {
   in({ from, to, done }: any) {
@@ -31,13 +31,13 @@ const H = new Highway.Core({
 })
 
 H.on('NAVIGATE_OUT', ({ from }: any) => {
-  emit(PJAX_LEAVE, {
+  eventbus.emit(PJAX_LEAVE, {
     from: from.view,
   })
 })
 
 H.on('NAVIGATE_IN', ({ to }: any) => {
-  emit(PJAX_ENTER, {
+  eventbus.emit(PJAX_ENTER, {
     to: to.view,
   })
 })

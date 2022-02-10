@@ -2,13 +2,14 @@
   <picture>
     <source
       media="(max-width: 639px)"
-      srcset="{{ props.eyecatch.sp.src }}"
+      srcset="{{ props.eyecatch.sp.srcset }}"
       width="{{ props.eyecatch.sp.width }}"
       height="{{ props.eyecatch.sp.height}}"
     >
     <img
       class="absolute w-full h-full object-cover opacity-[.6]"
       src="{{ props.eyecatch.pc.src }}"
+      srcset="{{ props.eyecatch.pc.srcset }}"
       alt=""
       decoding="async"
       importance="high"
@@ -18,30 +19,33 @@
   </picture>
 
   <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">
-    <p class="worksdetail-kv__num">
-      {{ props.num }}
-      <span>Project</span>
-    </p>
-    <h1 class="worksdetail-kv__heading | pr-[.5em]">
-      {{ props.title }}
-    </h1>
-    <p class="wkslug-sub | overflow-hidden">
-      {{ props.category }}
-      <i class="icon-arrow_right"></i>
-    </p>
+    <div class="relative">
+      <p class="font-en font-bold text-[1.3rem] text-[#e3e3e3] tracking-[-.02em] absolute top-[-2.8rem] left-[-1em]">
+        {{ props.num }}
+        <span class="text-[70%] tracking-[.02em]">Project</span>
+      </p>
+      <h1 class="font-roboto text-[3.9rem] pr-[.5em] text-[#fff]">
+        {{ props.title }}
+      </h1>
+      <p class="text-[#939393] font-roboto text-[1.3rem] tracking-[.02em] mt-[1rem]">
+        {{ props.category }}
+        <i class="icon-arrow_right | text-[1rem] inline-block transform scale-70"></i>
+      </p>
+    </div>
   </div>
 
-  <div class="absolute bottom-[4.5rem] left-1/2 overflow-hidden transform -translate-x-1/2">
+  <div class="absolute bottom-[10rem] left-1/2 overflow-hidden transform translate-x-[-50%] translate-y-[100%]">
     <div class="u-in overflow-hidden">
-      <div class="wkslug-kv__scrollLabel">scroll</div>
+      <div class="wkslug-kv__scrollLabel | font-en font-bold text-[1rem] tracking-[.02em]">scroll</div>
     </div>
-    <i class="icon-arrow_down | block mt-[1.4rem] text-center"></i>
+    <i class="icon-arrow_down | block mt-[1.4rem] text-[1.2rem] text-center"></i>
   </div>
 </div>
 
 <div class="px-[3rem] pt-[6rem] pb-[10rem]">
   <div class="sm:sticky">
     <div class="mb-[6rem]">
+
       <dl class="mb-[3rem] font-roboto | u-cf">
         <dt class="float-left mr-[.5em] text-[#858585]">Year :</dt>
         <dd class="mb-[1.2rem] font-light text-[#cbcbcb] tracking-[.08em]">
@@ -53,6 +57,7 @@
         {% endfor %}
         </dd>
       </dl>
+
       {% if props.siteUrl %}
         <a
           class="worksdetail-viewWebsite | font-en font-bold tracking-[.02em]"
@@ -65,6 +70,7 @@
         </a>
       {% endif %}
     </div>
+
     {% if props.gallery.length %}
       <ul class="">
         {% for i in props.gallery %}
@@ -72,6 +78,7 @@
             <img
               class="lazyload"
               data-src="{{ i.src }}"
+              data-srcset="{{ i.srcset }}"
               width="{{ i.width }}"
               height="{{ i.height }}"
               alt=""
@@ -81,6 +88,7 @@
         {% endfor %}
       </ul>
     {% endif %}
+
   </div>
 </div>
 
@@ -96,19 +104,21 @@
       <img
         class="lazyload | absolute w-full h-full object-cover filter grayscale opacity-[.6]"
         data-src="{{ props.next.eyecatch.pc.src }}"
+        data-srcset="{{ props.next.eyecatch.pc.srcset }}"
         alt=""
         decoding="async"
         width="{{ props.next.eyecatch.pc.width }}"
         height="{{ props.next.eyecatch.pc.height}}"
       />
     </picture>
+
     <div class="absolute top-1/2 left-[1rem] pl-[var(--grid)]">
-      <h2 class="worksdetail-kv__heading">
+      <h2 class="font-roboto text-[3.9rem] pr-[.5em] text-[#fff]">
         Next Project
       </h2>
-      <p class="wkslug-sub | overflow-hidden">
+      <p class="text-[#939393] font-roboto text-[1.3rem] tracking-[.02em] mt-[1rem]">
         {{ props.next.title }}
-        <i class="icon-arrow_right"></i>
+        <i class="icon-arrow_right | text-[1rem] inline-block transform scale-70"></i>
       </p>
     </div>
   </a>

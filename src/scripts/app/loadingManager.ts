@@ -1,6 +1,6 @@
 import type { IManifestProps } from '../manifest'
 import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
-import { gsap, eventBus } from '@/lib'
+import { gsap, eventbus } from '@/lib'
 import { Utils } from '@/utils'
 
 const TIMEOUT = 4000
@@ -27,7 +27,7 @@ const handleProgress = (e: any) => {
       const progress = Math.round(state.progress.now)
       state.progress.before = progress
 
-      eventBus.emit(LOADING_PROGRESS, { progress })
+      eventbus.emit(LOADING_PROGRESS, { progress })
     },
   })
 }
@@ -38,7 +38,7 @@ const handleFileLoaed = (e: any) => {
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
 
-    eventBus.emit(LOADING_TIMEOUT, {
+    eventbus.emit(LOADING_TIMEOUT, {
       id: e.item.id,
       timeout: elapsedTime,
     })
@@ -52,7 +52,7 @@ const handleFileLoaed = (e: any) => {
 const handleComplete = async (e: any) => {
   await Utils.wait(300) // progressのduration待機
 
-  eventBus.emit(LOADING_DONE, {
+  eventbus.emit(LOADING_DONE, {
     done: performance.now() - state.clock,
   })
 

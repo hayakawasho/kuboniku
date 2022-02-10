@@ -1,6 +1,6 @@
 import { WINDOW_RESIZE } from '@/const'
 import { wideQuery, mediaPrint } from '@/env'
-import { emit } from '@/lib/events'
+import { eventbus } from '@/lib/eventbus'
 
 export default function () {
   const handleBreakpointChange = () => {
@@ -31,7 +31,7 @@ export default function () {
 
       setVh(windowH)
 
-      emit(WINDOW_RESIZE, {
+      eventbus.emit(WINDOW_RESIZE, {
         vh: rect.height,
         windowH,
       })
