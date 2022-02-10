@@ -3,20 +3,8 @@
   import { createMachine, assign } from 'xstate'
   import { useMachine } from '@xstate/svelte'
   import { createIObserver, Utils } from '@/utils'
-  import type { IWorksRepo } from '@/domain/works'
-
-  type ViewWork = {
-    title: string
-    slug: string
-    eyecatch: {
-      pc: {
-        src: string
-        width: number
-        height: number
-      }
-    }
-    num: string
-  }
+  import type { IWorksRepo } from '../../works'
+  import type { ViewWork } from './model'
 
   export let loadmore: ViewWork[]
   export let total: number
@@ -26,30 +14,13 @@
 
   const dispatch = createEventDispatcher()
 
-  let dummy: HTMLElement
-  let errorMessage: string
-
-  const fetchIO = createIObserver()
-
-  onMount(() => {
-    fetchIO.observe(dummy, entry => {
-      if (entry.isIntersecting) {
-        send({ type: 'FETCH' })
-      }
-    })
-  })
-
-  onDestroy(() => {
-    fetchIO.destroy()
-  })
-
   const fetchMachine = createMachine(
     {
       id: 'fetch',
       initial: 'idle',
       context: {
         data: loadmore,
-        count: 1,
+        loadCount: 1,
         attempts: 0,
         errorMessage: undefined,
       },
@@ -59,7 +30,7 @@
             FETCH: {
               target: 'loading',
               cond: ctx => {
-                return totalpage > ctx.count
+                return totalpage > ctx.loadCount
               },
             },
           },
@@ -74,7 +45,7 @@
               target: 'success',
               actions: assign<any, any>({
                 data: (_: any, event: any) => event.data,
-                count: (_: any, event: any) => event.count + 1,
+                count: (_: any, event: any) => event.loadCount + 1,
               }),
             },
             REJECT: 'failure',
@@ -89,6 +60,7 @@
           entry: () => {
             tick().then(() => dispatch('worksindex:updated'))
           },
+          // entry: send({ type: 'RETURN' }),
           on: {
             RETURN: 'idle',
             DONE: 'done',
@@ -103,6 +75,7 @@
       },
     },
     {
+      actions: {},
       guards: {},
       delays: {
         TIMEOUT: 2000,
@@ -113,29 +86,44 @@
   const { state, send, service } = useMachine(fetchMachine, {
     actions: {
       load: async () => {
-        const { data, count } = service.state.context
-
+        const { data, loadCount } = service.state.context
         const result = await repository.findTen({
-          offset: count,
+          offset: loadCount,
         })
 
         result
           .map(value => {
-            const newValue = [...data, ...(value as ViewWork[])]
-
+            const newWorks = [...data, ...(value as ViewWork[])]
             send({
               type: 'RESOLVE',
-              data: newValue,
-              count,
+              data: newWorks,
+              loadCount,
             } as any)
-
-            send({ type: 'RETURN' })
           })
-          .mapErr(_err => {
-            send({ type: 'REJECT' })
+          .mapErr(err => {
+            if (err.code === 'DEADLINE_EXCEEDED') {
+              send({ type: 'RETRY' })
+            } else {
+              send({ type: 'REJECT' })
+            }
           })
       },
     },
+  })
+
+  const fetchIO = createIObserver()
+  let dummy: HTMLElement
+
+  onMount(() => {
+    fetchIO.observe(dummy, entry => {
+      if (entry.isIntersecting) {
+        send({ type: 'FETCH' })
+      }
+    })
+  })
+
+  onDestroy(() => {
+    fetchIO.destroy()
   })
 </script>
 
@@ -170,5 +158,5 @@
 {#if $state.matches('loading')}
   <div>Loading...</div>
 {:else if $state.matches('failure')}
-  <div>{errorMessage}</div>
+  <div>{$state.context.errorMessage}</div>
 {/if}
