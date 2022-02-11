@@ -1,4 +1,4 @@
-.burger {
+.c-burger {
   position: fixed;
   top: .8rem;
   right: 1rem;
@@ -7,7 +7,7 @@
   z-index: 101;
 }
 
-.burger__line {
+.c-burger__line {
   width: 20px;
   height: 1px;
   background-color: #fff;
