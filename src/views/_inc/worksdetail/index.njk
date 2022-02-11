@@ -2,9 +2,9 @@
   <picture>
     <source
       media="(max-width: 639px)"
-      srcset="{{ props.eyecatch.sp.src }}"
+      srcset="{{ props.eyecatch.sp.srcset }}"
       width="{{ props.eyecatch.sp.width }}"
-      height="{{ props.eyecatch.sp.height}}"
+      height="{{ props.eyecatch.sp.height }}"
     >
     <img
       class="absolute w-full h-full object-cover opacity-[.6]"
@@ -14,7 +14,7 @@
       decoding="async"
       importance="high"
       width="{{ props.eyecatch.pc.width }}"
-      height="{{ props.eyecatch.pc.height}}"
+      height="{{ props.eyecatch.pc.height }}"
     />
   </picture>
 
@@ -96,9 +96,9 @@
     <picture>
       <source
         media="(max-width: 639px)"
-        data-srcset="{{ props.next.eyecatch.sp.src }}"
+        data-srcset="{{ props.next.eyecatch.sp.srcset }}"
         width="{{ props.next.eyecatch.sp.width }}"
-        height="{{ props.next.eyecatch.sp.height}}"
+        height="{{ props.next.eyecatch.sp.height }}"
       >
       <img
         class="lazyload | absolute w-full h-full object-cover filter grayscale opacity-[.6]"
@@ -107,7 +107,7 @@
         alt=""
         decoding="async"
         width="{{ props.next.eyecatch.pc.width }}"
-        height="{{ props.next.eyecatch.pc.height}}"
+        height="{{ props.next.eyecatch.pc.height }}"
       />
     </picture>
 

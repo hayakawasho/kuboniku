@@ -22,15 +22,17 @@ const srcetPath = (sizes, map) => {
     return
   }
 
-  return Object.entries(sizes).reduce((acc, [key, value]) => {
+  const result = Object.entries(sizes).reduce((acc, [key, value]) => {
     if(map[key]) {
       acc.push(`${value} ${map[key]}`)
     }
     return acc
   }, [])
+
+  return String(result)
 };
 
-const imgVO = (value, map) => {
+const imgVo = (value, map) => {
   return {
     width: value.width,
     height: value.height,
@@ -52,34 +54,38 @@ module.exports = async () => {
     ]
   )
 
-  return {
-    works: {
-      total: rawWorks.headers['x-wp-total'],
-      items: rawWorks.data.map((i, index) => {
-        const gallery = i.acf.gallery === false
-          ? false
-          : i.acf.gallery.map(j => imgVO(j, pcImgSizeMap))
+  const metaWorks = {
+    total: rawWorks.headers['x-wp-total'],
+    items: rawWorks.data.map((i, index) => {
+      const gallery = i.acf.gallery === false
+        ? false
+        : i.acf.gallery.map(j => imgVo(j, pcImgSizeMap))
 
-        return {
-          id: i.id,
-          title: i.title.rendered,
-          slug: i.slug,
-          createAt: i.date,
-          category: i.acf.category.name,
-          eyecatch: {
-            pc: imgVO(i.acf.eyecatch, pcImgSizeMap),
-            sp: imgVO(i.acf.eyecatch_mobile, spImgSizeMap)
-          },
-          color: i.acf.theme_color,
-          gallery,
-          siteUrl: i.acf.url,
-          role: i.acf.role.map(j => j.name),
-        }
-      })
-    },
-    profile: {
-      title: rawProfile.data.title.rendered,
-      html: rawProfile.data.content.rendered
-    }
+      return {
+        id: i.id,
+        title: i.title.rendered,
+        slug: i.slug,
+        createAt: i.date,
+        category: i.acf.category.name,
+        eyecatch: {
+          pc: imgVo(i.acf.eyecatch, pcImgSizeMap),
+          sp: imgVo(i.acf.eyecatch_mobile, spImgSizeMap)
+        },
+        color: i.acf.theme_color,
+        gallery,
+        siteUrl: i.acf.url,
+        role: i.acf.role.map(j => j.name),
+      }
+    })
+  }
+
+  const metaProfile = {
+    title: rawProfile.data.title.rendered,
+    html: rawProfile.data.content.rendered
+  }
+
+  return {
+    works: metaWorks,
+    profile: metaProfile
   }
 }
