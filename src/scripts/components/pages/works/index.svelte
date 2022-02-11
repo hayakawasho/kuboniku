@@ -111,7 +111,7 @@
     },
   })
 
-  const fetchIO = createIObserver({ rootMargin: '0px 0px -25% 0px' })
+  const fetchIO = createIObserver()
   let dummy: HTMLElement
 
   onMount(() => {
