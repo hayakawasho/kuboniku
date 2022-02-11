@@ -6,7 +6,7 @@ type Props = {
 
 const defaults: Props = {
   root: null,
-  rootMargin: '0px 0px -25% 0px',
+  rootMargin: '0px',
   threshold: [0, 1],
 }
 
