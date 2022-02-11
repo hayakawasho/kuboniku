@@ -4,6 +4,7 @@ export type ViewWork = {
   eyecatch: {
     pc: {
       src: string
+      srcset: string
       width: number
       height: number
     }

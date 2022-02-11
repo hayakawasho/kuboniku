@@ -8,16 +8,16 @@ const pcImgSizeMap = {
   medium: '750w',
   medium_large: '1080w',
   large: '1280w',
-  '1536x1536': '1536w',
+  '1536x1536': '1680w',
   '2048x2048': '2048w',
 }
 
-const mobileImgSizeMap = {
+const spImgSizeMap = {
   medium: '750w',
   medium_large: '1080w',
 }
 
-const imgSrcetPath = (sizes, map) => {
+const srcetPath = (sizes, map) => {
   if(!sizes) {
     return
   }
@@ -30,12 +30,12 @@ const imgSrcetPath = (sizes, map) => {
   }, [])
 };
 
-const imgObj = (value, map) => {
+const imgVO = (value, map) => {
   return {
     width: value.width,
     height: value.height,
     src: value.url,
-    srcset: imgSrcetPath(value.sizes, map)
+    srcset: srcetPath(value.sizes, map)
   }
 }
 
@@ -58,7 +58,7 @@ module.exports = async () => {
       items: rawWorks.data.map((i, index) => {
         const gallery = i.acf.gallery === false
           ? false
-          : i.acf.gallery.map(j => imgObj(j, pcImgSizeMap))
+          : i.acf.gallery.map(j => imgVO(j, pcImgSizeMap))
 
         return {
           id: i.id,
@@ -67,8 +67,8 @@ module.exports = async () => {
           createAt: i.date,
           category: i.acf.category.name,
           eyecatch: {
-            pc: imgObj(i.acf.eyecatch, pcImgSizeMap),
-            sp: imgObj(i.acf.eyecatch_mobile, mobileImgSizeMap)
+            pc: imgVO(i.acf.eyecatch, pcImgSizeMap),
+            sp: imgVO(i.acf.eyecatch_mobile, spImgSizeMap)
           },
           color: i.acf.theme_color,
           gallery,

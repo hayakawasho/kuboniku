@@ -133,6 +133,7 @@
       <a href="./{j.slug}/" class="relative block">
         <img
           data-src={j.eyecatch.pc.src}
+          data-srcset={j.eyecatch.pc.srcset}
           class="lazyload | filter grayscale-100 opacity-[.8]"
           width={j.eyecatch.pc.width}
           height={j.eyecatch.pc.height}
