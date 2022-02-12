@@ -45,7 +45,7 @@
               target: 'success',
               actions: assign<any, any>({
                 data: (_: any, event: any) => event.data,
-                count: (_: any, event: any) => event.loadCount + 1,
+                loadCount: (_: any, event: any) => event.loadCount + 1,
               }),
             },
             REJECT: 'failure',
