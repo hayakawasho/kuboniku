@@ -1,5 +1,4 @@
 import modular from 'modujs'
-import './pjax'
 import { manifest } from '../manifest'
 import { loadingManager } from './loadingManager'
 import { router } from './router'
@@ -22,7 +21,7 @@ export interface IScene {
 }
 
 const app = new modular({
-  modules: modules,
+  modules,
 })
 
 class SceneManager {

@@ -1,16 +1,17 @@
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
 import Abstract from '@/_abstract/_page'
-import { H } from '@/app/pjax'
 import type { IWorksRepo } from '@/components/works'
+import { DOM_UPDATED } from '@/const'
+import { eventbus } from '@/lib'
 
 export default class extends Abstract {
   private _app!: SvelteComponent
-  readonly repository: IWorksRepo
+  readonly worksRepo: IWorksRepo
 
-  constructor(context: { repository: IWorksRepo }) {
+  constructor(context: { worksRepo: IWorksRepo }) {
     super()
-    this.repository = context.repository
+    this.worksRepo = context.worksRepo
   }
 
   init() {
@@ -21,17 +22,17 @@ export default class extends Abstract {
       props: {
         loadmore: [],
         total: Number($wrap.dataset.total),
-        repository: this.repository,
+        worksRepo: this.worksRepo,
       },
     })
 
-    this._app.$on('worksindex:updated', () => {
-      const a = document.querySelectorAll('a:not([target])')
-      H.attach(a)
-    })
+    this._app.$on('worksindex:updated', () => eventbus.emit(DOM_UPDATED))
   }
 
   destroy() {
-    this._app.$destroy()
+    // transitionの秒数、破棄するのを待つ
+    setTimeout(() => {
+      this._app.$destroy()
+    }, 700)
   }
 }

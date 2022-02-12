@@ -1,5 +1,5 @@
 import Highway from '@dogstudio/highway'
-import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
+import { PJAX_ENTER, PJAX_LEAVE, DOM_UPDATED } from '@/const'
 import { gsap, eventbus } from '@/lib'
 
 class Fade extends Highway.Transition {
@@ -40,6 +40,11 @@ H.on('NAVIGATE_IN', ({ to }: any) => {
   eventbus.emit(PJAX_ENTER, {
     to: to.view,
   })
+})
+
+eventbus.on(DOM_UPDATED, () => {
+  const a = document.querySelectorAll('a:not([target])')
+  H.attach(a)
 })
 
 export { H }

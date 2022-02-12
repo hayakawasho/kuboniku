@@ -1,6 +1,6 @@
 import { WINDOW_RESIZE } from '@/const'
 import { wideQuery, mediaPrint } from '@/env'
-import { eventbus } from '@/lib/eventbus'
+import { eventbus } from '@/lib'
 
 export default function () {
   const handleBreakpointChange = () => {

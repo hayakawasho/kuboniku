@@ -8,7 +8,7 @@
 
   export let loadmore: ViewWork[]
   export let total: number
-  export let repository: IWorksRepo
+  export let worksRepo: IWorksRepo
 
   const totalpage = Math.ceil(total / 10)
 
@@ -87,7 +87,7 @@
     actions: {
       load: async () => {
         const { data, loadCount } = service.state.context
-        const result = await repository.findTen({
+        const result = await worksRepo.findTen({
           offset: loadCount,
         })
 
@@ -111,7 +111,7 @@
     },
   })
 
-  const fetchIO = createIObserver()
+  const fetchIO = createIObserver({ rootMargin: '0px 0px 25% 0px' })
   let dummy: HTMLElement
 
   onMount(() => {

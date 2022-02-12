@@ -14,9 +14,12 @@ function init() {
   const sceneManager = createSceneManager()
 
   router
+    .use('/works/:slug', _req => {
+      sceneManager.goto(new DefaultPage())
+    })
     .use('/works', _req => {
       sceneManager.goto(
-        new WorksIndexPage({ repository: repositoryFactory.works })
+        new WorksIndexPage({ worksRepo: repositoryFactory.works })
       )
     })
     .use('*', _req => {
@@ -26,9 +29,7 @@ function init() {
   router.listen()
 }
 
-document.addEventListener('DOMContentLoaded', init, {
-  once: true,
-})
+document.addEventListener('DOMContentLoaded', init)
 
 if (isDev) {
   const showStats = async () => {
