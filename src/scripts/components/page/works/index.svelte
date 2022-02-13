@@ -44,7 +44,7 @@
   }
 
   enum Status {
-    IDLE = 'idel',
+    IDLE = 'idle',
     LOADING = 'loading',
     DONE = 'done',
     ERROR = 'error',
@@ -57,7 +57,7 @@
         loadWorks,
         transition(
           'done',
-          Status.DONE,
+          Status.IDLE,
           reduce<any, any>((ctx, { data }) => ({
             ...ctx,
             posts: data.value,
@@ -67,7 +67,7 @@
         ),
         transition(
           'error',
-          'error',
+          Status.ERROR,
           reduce<any, any>((ctx, ev) => ({
             ...ctx,
             error: ev.data,
