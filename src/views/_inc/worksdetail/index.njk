@@ -44,7 +44,9 @@
 
 <div class="px-[3rem] pt-[6rem] pb-[10rem]">
   <div class="worksdetail-content | sm:mx-auto">
-    <div class="mb-[6rem] | sm:sticky sm:top-1/2 sm:mb-0">
+    <div class="mb-[6rem]
+     | sm:sticky sm:top-1/2 sm:mb-0"
+    >
       <p class="u-pc | font-en font-medium text-[1.3rem] text-[#e3e3e3] tracking-[.02em] mb-[1em]">Project</p>
       <h2 class="u-pc | font-roboto text-[3.2rem] text-[#fff] mb-[5rem]">{{ props.title }}</h2>
       <dl class="font-roboto text-[1.2rem] mb-[3rem] | u-cf">
@@ -61,7 +63,9 @@
 
       {% if props.siteUrl %}
         <a
-          class="worksdetail-viewWebsite | font-en font-bold text-[1.2rem] tracking-[.02em] | text-[1.4rem]"
+          class="worksdetail-viewWebsite
+          | font-en font-bold text-[1.2rem] tracking-[.02em]
+          | text-[1.4rem]"
           href="{{ props.siteUrl }}"
           target="_blank"
           rel="noopener"
@@ -72,7 +76,7 @@
       {% endif %}
     </div>
     {% if props.gallery.length %}
-      <ul class="">
+      <ul class="mx-[-1.5rem]">
         {% for i in props.gallery %}
           <li class="mb-[2rem]">
             <img
@@ -117,7 +121,9 @@
       </h2>
       <p class="text-[#939393] font-roboto text-[1.3rem] tracking-[.02em] mt-[1rem]">
         {{ props.next.title }}
-        <i class="icon-arrow_right | text-[1rem] inline-block transform scale-70"></i>
+        <i class="icon-arrow_right
+         | text-[1rem] inline-block transform scale-70"
+        ></i>
       </p>
     </div>
   </a>

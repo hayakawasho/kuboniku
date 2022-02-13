@@ -20,7 +20,7 @@ export default class extends Abstract {
     this._app = new App({
       target: $wrap,
       props: {
-        loadmore: [],
+        posts: [],
         total: Number($wrap.dataset.total),
         worksRepo: this.worksRepo,
       },
