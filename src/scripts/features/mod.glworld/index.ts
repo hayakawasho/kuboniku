@@ -1,7 +1,7 @@
 import { Core } from './core'
-import Abstract from '@/_abstract/_module'
-import { WINDOW_RESIZE } from '@/const'
 import { eventbus } from '@/lib'
+import Abstract from 'abstract/abstractModule'
+import { WINDOW_RESIZE } from 'const'
 
 export default class extends Abstract {
   readonly _core = Core.create()

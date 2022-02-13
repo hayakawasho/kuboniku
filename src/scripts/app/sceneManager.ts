@@ -1,18 +1,19 @@
 import modular from 'modujs'
+import globals from '../global'
 import { manifest } from '../manifest'
+import * as modules from '../modules'
 import { loadingManager } from './loadingManager'
 import { router } from './router'
+import { eventbus } from '@/lib'
 import {
   AFTER_PAGE_READY,
   PJAX_LEAVE,
   PJAX_ENTER,
   LOADING_DONE,
   LOADING_TIMEOUT,
-} from '@/const'
-import { g } from '@/env'
-import globals from '@/globals'
-import { eventbus } from '@/lib'
-import * as modules from '@/modules'
+} from 'const'
+import { g } from 'env'
+import '@/features/pjax'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -32,16 +33,16 @@ class SceneManager {
   private _newScene!: IScene
 
   constructor() {
-    const fin = () => {
+    const doneLoading = () => {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
     }
 
     eventbus.on(LOADING_TIMEOUT, () => {
-      fin()
+      doneLoading()
     })
 
     eventbus.on(LOADING_DONE, () => {
-      fin()
+      doneLoading()
     })
 
     eventbus.on(PJAX_LEAVE, async ({ from }) => {

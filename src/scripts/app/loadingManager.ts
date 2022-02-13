@@ -1,7 +1,7 @@
-import type { IManifestProps } from '../manifest'
-import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
 import { gsap, eventbus } from '@/lib'
-import { Utils } from '@/utils'
+import type { IManifestProps } from '@/manifest'
+import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from 'const'
+import { Utils } from 'utils'
 
 const TIMEOUT = 4000
 

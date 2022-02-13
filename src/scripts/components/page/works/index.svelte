@@ -11,8 +11,8 @@
     immediate as _immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Utils } from '@/utils'
-  import type { IWorksRepo } from '../../works'
+  import { createIObserver, Utils } from 'utils'
+  import type { IWorksRepo } from '../../model/works'
   import type { ViewWork } from './model'
 
   export let posts: ViewWork[]
@@ -24,7 +24,7 @@
   const PER_PAGE = 10
   const totalpage = Math.ceil(total / PER_PAGE)
 
-  console.log({ totalpage, dispatch, tick, Utils })
+  console.log({ totalpage, dispatch, tick })
 
   const loadWorks = async () => {
     const result = await worksRepo.findTen({

@@ -1,4 +1,4 @@
-import { WorksRepoImpl } from '@/features/works'
+import { WorksRepoImpl } from './features/works'
 
 const repositoryFactory = {
   works: new WorksRepoImpl(),

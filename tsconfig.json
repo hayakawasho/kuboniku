@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "moduleResolution": "Node",
     "strict": true,
     "sourceMap": true,
@@ -30,9 +33,13 @@
     "checkJs": true
   },
   "include": [
-    "./src",
-    "@types"
+    "src/**/*",
+    "@types",
+    "src/scripts/node_modules/**/*",
   ],
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules/*",
+    "static/*",
+  ],
   "extends": "@tsconfig/svelte/tsconfig.json"
 }

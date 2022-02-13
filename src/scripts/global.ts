@@ -1,6 +1,6 @@
-import { WINDOW_RESIZE } from '@/const'
-// import { wideQuery, mediaPrint } from '@/env'
 import { eventbus } from '@/lib'
+import { WINDOW_RESIZE } from 'const'
+// import { wideQuery, mediaPrint } from 'env'
 
 export default function () {
   // const handleBreakpointChange = () => {
@@ -8,14 +8,13 @@ export default function () {
   // }
 
   // wideQuery.addEventListener('change', handleBreakpointChange)
-
-  //mediaPrint.addEventListener('change', e => {
-  //  if (e.matches) {
-  //    wideQuery.removeEventListener('change', handleBreakpointChange)
-  //  } else {
-  //    wideQuery.addEventListener('change', handleBreakpointChange)
-  //  }
-  //})
+  // mediaPrint.addEventListener('change', e => {
+  //   if (e.matches) {
+  //     wideQuery.removeEventListener('change', handleBreakpointChange)
+  //   } else {
+  //     wideQuery.addEventListener('change', handleBreakpointChange)
+  //   }
+  // })
 
   const setVh = (wh: number) => {
     const vh = wh * 0.01

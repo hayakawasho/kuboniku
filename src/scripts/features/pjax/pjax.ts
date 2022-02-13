@@ -1,6 +1,6 @@
 import Highway from '@dogstudio/highway'
-import { PJAX_ENTER, PJAX_LEAVE, DOM_UPDATED } from '@/const'
 import { gsap, eventbus } from '@/lib'
+import { PJAX_ENTER, PJAX_LEAVE, DOM_UPDATED } from 'const'
 
 class Fade extends Highway.Transition {
   in({ from, to, done }: any) {

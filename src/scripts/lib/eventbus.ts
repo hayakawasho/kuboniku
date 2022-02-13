@@ -8,7 +8,7 @@ import {
   PJAX_LEAVE,
   WINDOW_RESIZE,
   DOM_UPDATED,
-} from '@/const'
+} from 'const'
 
 type Events = {
   [LOADING_PROGRESS]: {

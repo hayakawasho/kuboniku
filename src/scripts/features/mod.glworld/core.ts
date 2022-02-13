@@ -1,6 +1,6 @@
 import type { Scene, PerspectiveCamera, WebGLRenderer, Clock } from 'three'
-import { g } from '@/env'
 import { THREE } from '@/lib'
+import { g } from 'env'
 
 const { dpr } = g
 

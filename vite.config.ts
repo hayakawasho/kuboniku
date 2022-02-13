@@ -14,6 +14,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src/scripts'),
+      const: resolve(__dirname, 'src/scripts/node_modules/const'),
+      env: resolve(__dirname, 'src/scripts/node_modules/env'),
+      utils: resolve(__dirname, 'src/scripts/node_modules/utils'),
+      abstract: resolve(__dirname, 'src/scripts/node_modules/abstract'),
     },
   },
   server: {

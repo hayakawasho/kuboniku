@@ -1,6 +1,6 @@
 import { round } from 'lodash-es'
-import Abstract from '@/_abstract/_module'
-import { lerp } from '@/utils'
+import Abstract from 'abstract/abstractModule'
+import { lerp } from 'utils'
 
 const EASE = 0.14
 const THRESHOLD = 100

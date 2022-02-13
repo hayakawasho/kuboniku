@@ -1,9 +1,9 @@
 import type { SvelteComponent } from 'svelte'
 import App from './index.svelte'
-import Abstract from '@/_abstract/_page'
-import type { IWorksRepo } from '@/components/works'
-import { DOM_UPDATED } from '@/const'
+import type { IWorksRepo } from '@/components/model/works'
 import { eventbus } from '@/lib'
+import Abstract from 'abstract/abstractPage'
+import { DOM_UPDATED } from 'const'
 
 export default class extends Abstract {
   private _app!: SvelteComponent
