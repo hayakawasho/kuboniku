@@ -35,7 +35,7 @@
 
     return result
       .map(value => {
-        const newWorks = [... ctx.posts, ...(value as ViewWork[])]
+        const newWorks = [...ctx.posts, ...(value as ViewWork[])]
         return newWorks
       })
       .mapErr(err => {
