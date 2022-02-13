@@ -1,35 +1,37 @@
 <script lang="ts">
-  import { onMount, onDestroy, createEventDispatcher, tick } from 'svelte'
+  import {
+    onMount,
+    onDestroy,
+    createEventDispatcher as __,
+    tick as _tick,
+  } from 'svelte'
   import {
     createMachine,
     state,
     transition,
     invoke,
     reduce,
-    guard as _guard,
+    guard,
     action as _action,
     immediate as _immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
   import { createIObserver, Utils } from 'utils'
-  import type { IWorksRepo } from '../../model/works'
+  import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './model'
 
   export let posts: ViewWork[]
   export let total: number
   export let worksRepo: IWorksRepo
 
-  const dispatch = createEventDispatcher()
+  // const dispatch = createEventDispatcher()
 
   const PER_PAGE = 10
-  const totalpage = Math.ceil(total / PER_PAGE)
+  const TOTAL_PAGE = Math.ceil(total / PER_PAGE)
 
-  console.log({ totalpage, dispatch, tick })
-
-  const loadWorks = async () => {
-    const result = await worksRepo.findTen({
-      offset: 1,
-    })
+  const loadWorks = async (ctx: { posts: ViewWork[]; loadCount: number }) => {
+    const offset = ctx.loadCount
+    const result = await worksRepo.findTen({ offset })
 
     return result
       .map(value => {
@@ -41,38 +43,52 @@
       })
   }
 
-  const fetchMachine = createMachine({
-    idle: state(transition('fetch', 'loading')),
-    loading: invoke(
-      loadWorks,
-      transition(
-        'done',
-        'loaded',
-        reduce<any, any>((ctx, ev) => {
-          return {
-            ...ctx,
-            posts: ev.data,
-            loadCount: 1,
-          }
-        })
-        // guard<any, any>(ctx => totalpage > ctx.loadCount)
-      ),
-      transition(
-        'error',
-        'error',
-        reduce<any, any>((ctx, ev) => ({
-          ...ctx,
-          error: ev.data,
-        }))
-      )
-    ),
-    loaded: state(),
-  })
+  enum Status {
+    IDLE = 'idel',
+    LOADING = 'loading',
+    DONE = 'done',
+    ERROR = 'error',
+  }
 
-  const service = useMachine(fetchMachine, () => ({
+  const fetchMachine = createMachine(
+    {
+      [Status.IDLE]: state(transition('fetch', Status.LOADING)),
+      [Status.LOADING]: invoke(
+        loadWorks,
+        transition(
+          'done',
+          Status.DONE,
+          reduce<any, any>((ctx, { data }) => ({
+            ...ctx,
+            posts: data.value,
+            loadCount: ctx.loadCount + 1,
+          })),
+          guard<any, any>(ctx => TOTAL_PAGE > ctx.loadCount)
+        ),
+        transition(
+          'error',
+          'error',
+          reduce<any, any>((ctx, ev) => ({
+            ...ctx,
+            error: ev.data,
+          }))
+        )
+      ),
+      [Status.DONE]: state(),
+    },
+    event => ({
+      posts: (event as any).posts,
+      loadCount: (event as any).loadCount,
+    })
+  )
+
+  const service = useMachine(fetchMachine, {
     posts,
     loadCount: 1,
-  }))
+  })
+
+  const send = $service.send
+  $: current = $service.machine.current
 
   const fetchIO = createIObserver({
     rootMargin: '0px 0px 25% 0px',
@@ -83,7 +99,7 @@
   onMount(() => {
     fetchIO.observe(dummy, entry => {
       if (entry.isIntersecting) {
-        $service.send({ type: 'fetch' })
+        send({ type: 'fetch' })
       }
     })
   })
@@ -93,8 +109,8 @@
   })
 </script>
 
-{#if $service.context.posts?.value.length}
-  {#each $service.context.posts.value as i}
+{#if $service.context.posts?.length}
+  {#each $service.context.posts as i}
     <article class="o-grid__item | mb-[4rem]">
       <a href="./{i.slug}/" class="relative block">
         <img
@@ -118,18 +134,12 @@
   {/each}
 {/if}
 
-<div bind:this={dummy} />
-
-<!--
-
-{#if $state.matches('done') === false}
+{#if current !== Status.DONE}
   <div bind:this={dummy} />
 {/if}
 
-{#if $state.matches('loading')}
+{#if current === Status.LOADING}
   <div>Loading...</div>
-{:else if $state.matches('failure')}
-  <div>{$state.context.errorMessage}</div>
+{:else if current === Status.ERROR}
+  <div />
 {/if}
-
--->

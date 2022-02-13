@@ -40,7 +40,7 @@ if (isDev) {
     const stats = new Stats()
     stats.showPanel(0)
 
-    // document.body.appendChild(stats.dom)
+    document.body.appendChild(stats.dom)
 
     const loop = () => {
       stats.update()

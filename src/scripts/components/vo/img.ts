@@ -4,6 +4,4 @@ export class Img extends ValueObject<{
   src: string
   width: number
   height: number
-}> {
-  //
-}
+}> {}

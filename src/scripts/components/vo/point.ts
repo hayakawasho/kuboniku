@@ -1,5 +1,3 @@
 import { ValueObject } from './vo'
 
-export class Point extends ValueObject<{ x: string; y: number }> {
-  //
-}
+export class Point extends ValueObject<{ x: string; y: number }> {}
