@@ -1,6 +1,6 @@
 import { round } from 'lodash-es'
 import Abstract from 'abstract/abstractModule'
-import { lerp } from 'utils'
+import { Math } from 'utils'
 
 const EASE = 0.14
 const THRESHOLD = 100
@@ -19,7 +19,7 @@ export default class extends Abstract {
 
     const { val } = this.$scroll
 
-    this._last = lerp(this._last, val, EASE)
+    this._last = Math.lerp(this._last, val, EASE)
     this._last < 0.1 && (this._last = 0)
 
     const diff = val - this._last
