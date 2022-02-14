@@ -28,9 +28,9 @@ const app = new modular({
 class SceneManager {
   private static _instance = new SceneManager()
 
-  private _pjaxIsStarted = false
-  private _scope!: HTMLElement
-  private _newScene!: IScene
+  #pjaxIsStarted = false
+  #scope!: HTMLElement
+  #newScene!: IScene
 
   constructor() {
     const doneLoading = () => {
@@ -46,7 +46,7 @@ class SceneManager {
     })
 
     eventbus.on(PJAX_LEAVE, async ({ from }) => {
-      const oldScene = this._newScene
+      const oldScene = this.#newScene
       oldScene.leave()
 
       app.destroy(from)
@@ -59,7 +59,7 @@ class SceneManager {
 
       app.update(to)
 
-      this._scope = to
+      this.#scope = to
       router.processCurrentPath()
     })
   }
@@ -68,24 +68,25 @@ class SceneManager {
     return SceneManager._instance
   }
 
-  private _once = async (scene: IScene) => {
+  #once = async (scene: IScene) => {
     const now: number = g.bootstart
     loadingManager.loadStart(now, manifest)
 
     globals()
     app.init(app)
 
-    await scene.enter()
-    this._newScene = scene
+    await Promise.all([import('lazysizes'), scene.enter()])
+
+    this.#newScene = scene
   }
 
   goto = async (scene: IScene) => {
-    if (!this._pjaxIsStarted) {
-      await this._once(scene)
-      this._pjaxIsStarted = true
+    if (!this.#pjaxIsStarted) {
+      await this.#once(scene)
+      this.#pjaxIsStarted = true
     } else {
-      await scene.enter(this._scope)
-      this._newScene = scene
+      await scene.enter(this.#scope)
+      this.#newScene = scene
     }
 
     eventbus.emit(AFTER_PAGE_READY)

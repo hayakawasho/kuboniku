@@ -20,6 +20,7 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "downlevelIteration": true,
+    "useDefineForClassFields": true,
     "paths": {
       "@/*": ["src/scripts/*"]
     },

@@ -6,7 +6,6 @@ import { router } from '@/app/router'
 import { createSceneManager } from '@/app/sceneManager'
 import { DefaultPage, WorksIndexPage } from '@/components/page'
 import { repositoryFactory } from '@/repositoryFactory'
-import 'lazysizes'
 
 const isDev = process.env.NODE_ENV === 'development'
 
