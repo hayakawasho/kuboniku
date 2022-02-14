@@ -12,7 +12,7 @@ title: ""
 {%
   set props = {
     title: this.title | safe,
-    num: (wp.works.total - pagination.pageNumber) | zeroPadding("2"),
+    index: (wp.works.total - pagination.pageNumber) | zeroPadding("2"),
     eyecatch: this.eyecatch,
     category: this.category,
     createAt: {
@@ -23,7 +23,7 @@ title: ""
     siteUrl: this.siteUrl,
     gallery: this.gallery,
     next: {
-      title: pagination.page.first.title if pagination.page.last.id === this.id else pagination.page.next.title,
+      title: pagination.page.first.title if pagination.page.last.id === this.id else pagination.page.next.title | safe,
       slug: pagination.page.first.slug if pagination.page.last.id === this.id else pagination.page.next.slug,
       eyecatch: pagination.page.first.eyecatch if pagination.page.last.id === this.id else pagination.page.next.eyecatch
     }

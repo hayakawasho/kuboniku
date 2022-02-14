@@ -152,7 +152,7 @@
         />
         <div class="absolute bottom-[2rem] left-[-1.2rem]">
           <p class="works-entryNum">
-            {Utils.zeroPadding(i.num, 2)}
+            {Utils.zeroPadding(i.index, 2)}
             <span class="ml-[.5em]">Project</span>
           </p>
           <h2 class="works-entryHeading">{@html i.title}</h2>
