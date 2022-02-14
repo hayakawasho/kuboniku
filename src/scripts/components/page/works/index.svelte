@@ -61,18 +61,6 @@
     error: undefined,
   }
 
-  const loadWorks = async (ctx: FetchContext) => {
-    const result = await worksRepo.findTen({ offset: ctx.loadCount })
-    return result
-      .map(value => {
-        const newWorks = [...ctx.posts, ...(value as ViewWork[])]
-        return newWorks
-      })
-      .mapErr(err => {
-        return err
-      })
-  }
-
   const fetchMachine = createMachine(
     {
       [Status.IDLE]: state(
@@ -83,7 +71,17 @@
         on(Send.FETCH, Status.LOADING)
       ),
       [Status.LOADING]: invoke(
-        loadWorks,
+        async (ctx: FetchContext) => {
+          const result = await worksRepo.findTen({ offset: ctx.loadCount })
+          return result
+            .map(value => {
+              const newWorks = [...ctx.posts, ...(value as ViewWork[])]
+              return newWorks
+            })
+            .mapErr(err => {
+              return err
+            })
+        },
         on(
           'done',
           Status.RESOLVE,
