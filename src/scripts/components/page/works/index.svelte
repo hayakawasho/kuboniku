@@ -19,6 +19,7 @@
   export let posts: ViewWork[]
   export let total: number
   export let worksRepo: IWorksRepo
+  export let initialCount: number
 
   const dispatch = createEventDispatcher()
 
@@ -35,6 +36,10 @@
     DONE = 'done',
   }
 
+  enum Send {
+    FETCH = 'fetch',
+  }
+
   const fetchContext = (initialContext: any) => ({
     posts: initialContext.posts,
     loadCount: initialContext.loadCount,
@@ -42,7 +47,6 @@
     error: initialContext.error,
   })
 
-  const initialCount = 1
   const initialContext = {
     posts,
     loadCount: initialCount,
@@ -64,7 +68,7 @@
 
   const fetchMachine = createMachine(
     {
-      [Status.IDLE]: state(on('fetch', Status.LOADING)),
+      [Status.IDLE]: state(on(Send.FETCH, Status.LOADING)),
       [Status.LOADING]: invoke(
         loadWorks,
         on(
@@ -122,7 +126,7 @@
   onMount(() => {
     fetchIO.observe(dummy, entry => {
       if (entry.isIntersecting) {
-        send('fetch')
+        send(Send.FETCH)
       }
     })
   })

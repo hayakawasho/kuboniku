@@ -23,6 +23,7 @@ export default class extends Abstract {
         posts: [],
         total: Number($wrap.dataset.total),
         worksRepo: this.worksRepo,
+        initialCount: 1,
       },
     })
 
