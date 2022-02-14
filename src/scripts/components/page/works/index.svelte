@@ -61,27 +61,31 @@
     error: undefined,
   }
 
+  const alreadyLoaded = ctx => ctx.loadCount >= TOTAL_PAGE
+
+  const loadWorks = async (ctx: FetchContext) => {
+    const result = await worksRepo.findTen({ offset: ctx.loadCount })
+    return result
+      .map(value => {
+        const newWorks = [...ctx.posts, ...(value as ViewWork[])]
+        return newWorks
+      })
+      .mapErr(err => {
+        return err
+      })
+    }
+
   const fetchMachine = createMachine(
     {
       [Status.IDLE]: state(
         immediate(
           Status.DONE,
-          guard<any, any>(ctx => ctx.loadCount >= TOTAL_PAGE)
+          guard<any, any>(alreadyLoaded)
         ),
         on(Send.FETCH, Status.LOADING)
       ),
       [Status.LOADING]: invoke(
-        async (ctx: FetchContext) => {
-          const result = await worksRepo.findTen({ offset: ctx.loadCount })
-          return result
-            .map(value => {
-              const newWorks = [...ctx.posts, ...(value as ViewWork[])]
-              return newWorks
-            })
-            .mapErr(err => {
-              return err
-            })
-        },
+        loadWorks,
         on(
           'done',
           Status.RESOLVE,
@@ -107,7 +111,7 @@
       [Status.RESOLVE]: state(
         immediate(
           Status.DONE,
-          guard<any, any>(ctx => ctx.loadCount >= TOTAL_PAGE)
+          guard<any, any>(alreadyLoaded)
         ),
         immediate(Status.IDLE)
       ),
