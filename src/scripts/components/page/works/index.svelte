@@ -61,7 +61,7 @@
     error: undefined,
   }
 
-  const alreadyLoaded = ctx => ctx.loadCount >= TOTAL_PAGE
+  const checkLoaded = ctx => ctx.loadCount >= TOTAL_PAGE
 
   const loadWorks = async (ctx: FetchContext) => {
     const result = await worksRepo.findTen({ offset: ctx.loadCount })
@@ -80,7 +80,7 @@
       [Status.IDLE]: state(
         immediate(
           Status.DONE,
-          guard<any, any>(alreadyLoaded)
+          guard<any, any>(checkLoaded)
         ),
         on(Send.FETCH, Status.LOADING)
       ),
@@ -111,7 +111,7 @@
       [Status.RESOLVE]: state(
         immediate(
           Status.DONE,
-          guard<any, any>(alreadyLoaded)
+          guard<any, any>(checkLoaded)
         ),
         immediate(Status.IDLE)
       ),
