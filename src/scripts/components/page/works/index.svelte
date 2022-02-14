@@ -61,18 +61,13 @@
     error: undefined,
   }
 
-  const checkLoaded = ctx => ctx.loadCount >= TOTAL_PAGE
+  const checkLoaded = ({ loadCount }: FetchContext) => loadCount >= TOTAL_PAGE
 
-  const loadWorks = async (ctx: FetchContext) => {
-    const result = await worksRepo.findTen({ offset: ctx.loadCount })
+  const loadWorks = async ({ loadCount, posts }: FetchContext) => {
+    const result = await worksRepo.findTen({ offset: loadCount })
     return result
-      .map(value => {
-        const newWorks = [...ctx.posts, ...(value as ViewWork[])]
-        return newWorks
-      })
-      .mapErr(err => {
-        return err
-      })
+      .map(value => [...posts, ...(value as ViewWork[])])
+      .mapErr(err => err)
     }
 
   const fetchMachine = createMachine(
