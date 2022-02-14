@@ -13,7 +13,6 @@ import {
   LOADING_TIMEOUT,
 } from 'const'
 import { g } from 'env'
-import '@/features/pjax'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -75,7 +74,11 @@ class SceneManager {
     globals()
     app.init(app)
 
-    await Promise.all([import('lazysizes'), scene.enter()])
+    await Promise.all([
+      import('lazysizes'),
+      import('@/features/pjax'),
+      scene.enter(),
+    ])
 
     this.#newScene = scene
   }
