@@ -12,7 +12,7 @@
     immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Utils } from 'utils'
+  import { createIObserver, Utils, RpcError } from 'utils'
   import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './model'
 
@@ -40,7 +40,14 @@
     FETCH = 'fetch',
   }
 
-  const fetchContext = (initialContext: any) => ({
+  type FetchContext = {
+    posts: ViewWork[]
+    loadCount: number
+    retryCount: number
+    error?: RpcError
+  }
+
+  const fetchContext = (initialContext: FetchContext) => ({
     posts: initialContext.posts,
     loadCount: initialContext.loadCount,
     retryCount: initialContext.retryCount,
@@ -54,7 +61,7 @@
     error: undefined,
   }
 
-  const loadWorks = async (ctx: { posts: ViewWork[]; loadCount: number }) => {
+  const loadWorks = async (ctx: FetchContext) => {
     const result = await worksRepo.findTen({ offset: ctx.loadCount })
     return result
       .map(value => {
@@ -68,7 +75,13 @@
 
   const fetchMachine = createMachine(
     {
-      [Status.IDLE]: state(on(Send.FETCH, Status.LOADING)),
+      [Status.IDLE]: state(
+        immediate(
+          Status.DONE,
+          guard<any, any>(ctx => ctx.loadCount >= TOTAL_PAGE)
+        ),
+        on(Send.FETCH, Status.LOADING)
+      ),
       [Status.LOADING]: invoke(
         loadWorks,
         on(
@@ -78,7 +91,6 @@
             ...ctx,
             posts: data.value,
             loadCount: ctx.loadCount + 1,
-            //----- reset
             retryCount: 0,
             error: undefined,
           })),
@@ -97,14 +109,14 @@
       [Status.RESOLVE]: state(
         immediate(
           Status.DONE,
-          guard<any, any>(ctx => ctx.loadCount === TOTAL_PAGE)
+          guard<any, any>(ctx => ctx.loadCount >= TOTAL_PAGE)
         ),
         immediate(Status.IDLE)
       ),
       [Status.REJECT]: state(
         immediate(
           Status.ERROR,
-          guard<any, any>(ctx => ctx.retryCount === MAX_RETRY)
+          guard<any, any>(ctx => ctx.retryCount >= MAX_RETRY)
         ),
         immediate(Status.LOADING)
       ),
@@ -122,14 +134,15 @@
     rootMargin: '0px 0px 25% 0px',
   })
 
-  let dummy: HTMLElement
+  let dummy: HTMLElement | undefined
 
   onMount(() => {
-    fetchIO.observe(dummy, entry => {
-      if (entry.isIntersecting) {
-        send(Send.FETCH)
-      }
-    })
+    dummy &&
+      fetchIO.observe(dummy, entry => {
+        if (entry.isIntersecting) {
+          send(Send.FETCH)
+        }
+      })
   })
 
   onDestroy(() => {
