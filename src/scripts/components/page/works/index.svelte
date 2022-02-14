@@ -78,7 +78,8 @@
             ...ctx,
             posts: data.value,
             loadCount: ctx.loadCount + 1,
-            retryCount: 0, // reset
+            //----- reset
+            retryCount: 0,
             error: undefined,
           })),
           action(() => tick().then(() => dispatch('worksindex:updated')))
