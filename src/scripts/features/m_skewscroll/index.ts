@@ -29,7 +29,7 @@ export default class extends Abstract {
 
     this._cache.forEach(item => {
       const { top, bottom, el } = item
-      const isVisible = this._isVisible(top, bottom)
+      const isVisible = this.#isVisible(top, bottom)
 
       if (isVisible || this._isResizing) {
         item.out = false
@@ -42,7 +42,7 @@ export default class extends Abstract {
     })
   }
 
-  _setCache() {
+  #setCache() {
     this._cache = this._targetDoms.reduce((acc, cur) => {
       const { top, bottom } = cur.getBoundingClientRect()
       acc.push({
@@ -55,7 +55,7 @@ export default class extends Abstract {
     }, [])
   }
 
-  _updateCache() {
+  #updateCache() {
     this._cache.forEach(item => {
       const { el } = item
 
@@ -72,7 +72,7 @@ export default class extends Abstract {
     })
   }
 
-  _isVisible(top: number, bottom: number) {
+  #isVisible(top: number, bottom: number) {
     const { val } = this.$scroll
 
     const start = top - val
@@ -83,9 +83,9 @@ export default class extends Abstract {
     return isVisible
   }
 
-  _onResize = () => {
+  #onResize = () => {
     this._isResizing = true
-    this._updateCache()
+    this.#updateCache()
     this._isResizing = false
   }
 }

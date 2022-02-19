@@ -66,6 +66,7 @@
     "@aspida/axios": "^1.7.1",
     "@dogstudio/highway": "^2.2.1",
     "axios": "^0.24.0",
+    "current-device": "^0.10.2",
     "date-fns": "^2.28.0",
     "detect-gpu": "^3.1.25",
     "gsap": "3.9.0",

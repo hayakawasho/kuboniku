@@ -11,7 +11,6 @@ const isDev = process.env.NODE_ENV === 'development'
 
 function init() {
   const sceneManager = createSceneManager()
-
   router
     .use('/works/:slug', _req => {
       sceneManager.goto(new DefaultPage())

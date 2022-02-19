@@ -30,7 +30,8 @@ type Events = {
   }
   [WINDOW_RESIZE]: {
     windowH: number
-    vh: number
+    screenW: number
+    screenH: number
   }
   [DOM_UPDATED]: undefined
 }

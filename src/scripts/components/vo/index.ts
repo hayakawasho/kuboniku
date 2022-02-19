@@ -1,2 +1,2 @@
-export { Img } from './img'
+export { Rect } from './rect'
 export { Point } from './point'

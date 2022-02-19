@@ -1,3 +1,4 @@
+import device from 'current-device'
 import { eventbus } from '@/lib'
 import { WINDOW_RESIZE } from 'const'
 // import { wideQuery, mediaPrint } from 'env'
@@ -16,6 +17,8 @@ export default function () {
   //   }
   // })
 
+  console.log(device)
+
   const setVh = (wh: number) => {
     const vh = wh * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -31,7 +34,8 @@ export default function () {
       setVh(windowH)
 
       eventbus.emit(WINDOW_RESIZE, {
-        vh: rect.height,
+        screenW: rect.width,
+        screenH: rect.height,
         windowH,
       })
     }

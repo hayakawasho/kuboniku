@@ -13,15 +13,11 @@ export default class extends Abstract {
     //
   }
 
-  _toggle() {
+  #open() {
     //
   }
 
-  _open() {
-    //
-  }
-
-  _close() {
+  #close() {
     //
   }
 }

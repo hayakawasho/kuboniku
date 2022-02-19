@@ -3,7 +3,7 @@ import Abstract from 'abstract/abstractModule'
 export default class extends Abstract {
   readonly events = {
     click: {
-      toggle: '_toggle',
+      trigger: '#toggle',
     },
   }
 
@@ -15,15 +15,15 @@ export default class extends Abstract {
     console.log('destroy:sns')
   }
 
-  _toggle(e: Event) {
+  #toggle(e: Event) {
     e.preventDefault()
   }
 
-  _open() {
+  #open() {
     //
   }
 
-  _close() {
+  #close() {
     //
   }
 }
