@@ -1,7 +1,7 @@
 import modular from 'modujs'
 import * as modules from '../../modules'
 import globals from './global'
-import { loadingManager } from './loadingManager'
+import { loader } from './loader'
 import { manifest } from './manifest'
 import { eventbus, router } from '@/lib'
 import {
@@ -10,8 +10,8 @@ import {
   PJAX_ENTER,
   LOADING_DONE,
   LOADING_TIMEOUT,
-} from 'const'
-import { g } from 'env'
+} from 'constant/const'
+import { g } from 'constant/env'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -68,7 +68,7 @@ class SceneManager {
 
   #once = async (scene: IScene) => {
     const now: number = g.bootstart
-    loadingManager.loadStart(now, manifest)
+    loader.loadStart(now, manifest)
 
     globals()
     app.init(app)

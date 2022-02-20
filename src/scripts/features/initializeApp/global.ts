@@ -1,5 +1,5 @@
 import { eventbus } from '@/lib'
-import { WINDOW_RESIZE } from 'const'
+import { WINDOW_RESIZE } from 'constant/const'
 
 export default function () {
   const setVh = (wh: number) => {

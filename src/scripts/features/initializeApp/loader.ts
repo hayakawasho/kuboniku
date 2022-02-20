@@ -1,6 +1,6 @@
 import type { IManifestProps } from './manifest'
-import { gsap, eventbus } from '@/lib'
-import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from 'const'
+import { tween, eventbus } from '@/lib'
+import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from 'constant/const'
 import { Utils } from 'utils'
 
 const TIMEOUT = 4000
@@ -15,8 +15,8 @@ const state = {
 }
 
 const handleProgress = (e: any) => {
-  gsap.killTweensOf(state.progress)
-  gsap.to(state.progress, {
+  // tween.kill(state.progress)
+  tween.to(state.progress, {
     duration: 0.3,
     now: (e.progress as number) * 100,
     onUpdate: () => {
@@ -67,7 +67,7 @@ loadQueue.addEventListener('progress', handleProgress)
 loadQueue.addEventListener('fileload', handleFileLoaed)
 loadQueue.addEventListener('complete', handleComplete)
 
-const loadingManager = {
+const loader = {
   loadStart: (now: number, manifest: IManifestProps[]) => {
     state.clock = now
     loadQueue.loadManifest(manifest)
@@ -78,6 +78,6 @@ const loadingManager = {
   },
 }
 
-Object.freeze(loadingManager)
+Object.freeze(loader)
 
-export { loadingManager }
+export { loader }

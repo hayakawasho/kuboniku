@@ -20,6 +20,7 @@
     "@11ty/eleventy-img": "^1.0.0",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
     "@tsconfig/svelte": "^2.0.1",
+    "@types/animejs": "^3.1.4",
     "@types/eslint": "^8.2.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/lodash-es": "^4.17.5",
@@ -65,6 +66,7 @@
   "dependencies": {
     "@aspida/axios": "^1.7.1",
     "@dogstudio/highway": "^2.2.1",
+    "animejs": "^3.2.1",
     "axios": "^0.24.0",
     "current-device": "^0.10.2",
     "date-fns": "^2.28.0",
