@@ -1,4 +1,4 @@
-import type { IScene } from '@/app/sceneManager'
+import type { IScene } from '@/features/initializeApp/sceneManager'
 import { gsap } from '@/lib'
 
 export default abstract class implements IScene {

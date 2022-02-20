@@ -14,7 +14,7 @@
   import { useMachine } from 'svelte-robot-factory'
   import { createIObserver, Utils, RpcError } from 'utils'
   import type { IWorksRepo } from '@/components/model/works'
-  import type { ViewWork } from './model'
+  import type { ViewWork } from './type'
 
   export let posts: ViewWork[]
   export let total: number
@@ -68,15 +68,12 @@
     return result
       .map(value => [...posts, ...(value as ViewWork[])])
       .mapErr(err => err)
-    }
+  }
 
   const fetchMachine = createMachine(
     {
       [Status.IDLE]: state(
-        immediate(
-          Status.DONE,
-          guard<any, any>(checkLoaded)
-        ),
+        immediate(Status.DONE, guard<any, any>(checkLoaded)),
         on(Send.FETCH, Status.LOADING)
       ),
       [Status.LOADING]: invoke(
@@ -104,10 +101,7 @@
         )
       ),
       [Status.RESOLVE]: state(
-        immediate(
-          Status.DONE,
-          guard<any, any>(checkLoaded)
-        ),
+        immediate(Status.DONE, guard<any, any>(checkLoaded)),
         immediate(Status.IDLE)
       ),
       [Status.REJECT]: state(

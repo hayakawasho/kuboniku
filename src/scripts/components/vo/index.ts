@@ -1,2 +1,2 @@
-export { Rect } from './rect'
-export { Point } from './point'
+export { Rect } from './Rect'
+export { Point } from './Point'

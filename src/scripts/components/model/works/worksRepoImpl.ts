@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ok, err } from 'neverthrow'
-import { IWorksRepo } from '@/components/model/works'
+import { IWorksRepo } from './worksRepo'
 import { httpErrorHandler } from 'utils'
 
 class WorksRepoImpl extends IWorksRepo {

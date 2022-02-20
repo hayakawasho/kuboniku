@@ -1,10 +1,9 @@
 import modular from 'modujs'
-import globals from '../global'
-import { manifest } from '../manifest'
-import * as modules from '../modules'
+import * as modules from '../../modules'
+import globals from './global'
 import { loadingManager } from './loadingManager'
-import { router } from './router'
-import { eventbus } from '@/lib'
+import { manifest } from './manifest'
+import { eventbus, router } from '@/lib'
 import {
   AFTER_PAGE_READY,
   PJAX_LEAVE,
@@ -75,6 +74,7 @@ class SceneManager {
     app.init(app)
 
     await Promise.all([
+      import('current-device'),
       import('lazysizes'),
       import('@/features/pjax'),
       scene.enter(),

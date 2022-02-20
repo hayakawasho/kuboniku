@@ -1,23 +1,16 @@
 import type { SvelteComponent } from 'svelte'
-import App from './index.svelte'
-import type { IWorksRepo } from '@/components/model/works'
-import { eventbus } from '@/lib'
-import Abstract from 'abstract/abstractPage'
-import { DOM_UPDATED } from 'const'
+import LoadmoreApp from './loadmore.svelte'
+import { repositoryFactory } from '@/components/model/repositoryFactory'
+import Abstract from '@/components/page/_AbstractPage'
 
 export default class extends Abstract {
   private _app!: SvelteComponent
-  readonly worksRepo: IWorksRepo
-
-  constructor(context: { worksRepo: IWorksRepo }) {
-    super()
-    this.worksRepo = context.worksRepo
-  }
+  readonly worksRepo = repositoryFactory.works
 
   init() {
     const $wrap = this.$$('.js-works')[0]
 
-    this._app = new App({
+    this._app = new LoadmoreApp({
       target: $wrap,
       props: {
         posts: [],
@@ -27,7 +20,9 @@ export default class extends Abstract {
       },
     })
 
-    this._app.$on('worksindex:updated', () => eventbus.emit(DOM_UPDATED))
+    this._app.$on('worksindex:updated', () => {
+      //
+    })
   }
 
   destroy() {

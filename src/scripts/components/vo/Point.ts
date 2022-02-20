@@ -1,4 +1,4 @@
-import { ValueObject } from './vo'
+import { ValueObject } from './_Vo'
 
 export class Point extends ValueObject<{ x: number; y: number }> {
   set(x: number, y: number) {

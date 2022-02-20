@@ -1,24 +1,7 @@
-import device from 'current-device'
 import { eventbus } from '@/lib'
 import { WINDOW_RESIZE } from 'const'
-// import { wideQuery, mediaPrint } from 'env'
 
 export default function () {
-  // const handleBreakpointChange = () => {
-  //   location.reload()
-  // }
-  //
-  // wideQuery.addEventListener('change', handleBreakpointChange)
-  // mediaPrint.addEventListener('change', e => {
-  //   if (e.matches) {
-  //     wideQuery.removeEventListener('change', handleBreakpointChange)
-  //   } else {
-  //     wideQuery.addEventListener('change', handleBreakpointChange)
-  //   }
-  // })
-
-  console.log(device)
-
   const setVh = (wh: number) => {
     const vh = wh * 0.01
     document.documentElement.style.setProperty('--vh', `${vh}px`)
