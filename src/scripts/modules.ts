@@ -1,4 +1,4 @@
-export { default as Skewscroll } from './features/mod.skewscroll'
-export { default as Sns } from './features/mod.sns'
-export { default as Menu } from './features/mod.menu'
-export { default as Glworld } from './features/mod.glworld'
+export { default as Skewscroll } from './features/m_skewscroll'
+export { default as Sns } from './features/m_sns'
+export { default as Menu } from './features/m_menu'
+export { default as Glworld } from './features/m_glworld'

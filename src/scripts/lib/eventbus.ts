@@ -7,7 +7,8 @@ import {
   PJAX_ENTER,
   PJAX_LEAVE,
   WINDOW_RESIZE,
-} from '@/const'
+  DOM_UPDATED,
+} from 'constant/const'
 
 type Events = {
   [LOADING_PROGRESS]: {
@@ -29,8 +30,10 @@ type Events = {
   }
   [WINDOW_RESIZE]: {
     windowH: number
-    vh: number
+    screenW: number
+    screenH: number
   }
+  [DOM_UPDATED]: undefined
 }
 
 const eventbus = mitt<Events>()

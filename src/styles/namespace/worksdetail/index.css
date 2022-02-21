@@ -35,3 +35,12 @@
     margin-left: 0.8rem;
   }
 }
+
+.worksdetail-content {
+  @media (--pc) {
+    display: grid;
+    grid-template-columns: calc(var(--grid) * 3) calc(var(--grid) * 7);
+    align-items: flex-start;
+    width: calc(var(--grid) * 10);
+  }
+}

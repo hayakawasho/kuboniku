@@ -2,33 +2,11 @@ import 'ress'
 import './styles/global.css'
 import 'virtual:windi.css'
 
-import { router } from '@/app/router'
-import { createSceneManager } from '@/app/sceneManager'
-import { DefaultPage, WorksIndexPage } from '@/components/pages'
-import { repositoryFactory } from '@/components/repositoryFactory'
-import 'lazysizes'
+import { init } from '@/features/initializeApp'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-function init() {
-  const sceneManager = createSceneManager()
-
-  router
-    .use('/works', _req => {
-      sceneManager.goto(
-        new WorksIndexPage({ repository: repositoryFactory.works })
-      )
-    })
-    .use('*', _req => {
-      sceneManager.goto(new DefaultPage())
-    })
-
-  router.listen()
-}
-
-document.addEventListener('DOMContentLoaded', init, {
-  once: true,
-})
+document.addEventListener('DOMContentLoaded', init)
 
 if (isDev) {
   const showStats = async () => {
@@ -39,7 +17,7 @@ if (isDev) {
     const stats = new Stats()
     stats.showPanel(0)
 
-    // document.body.appendChild(stats.dom)
+    document.body.appendChild(stats.dom)
 
     const loop = () => {
       stats.update()
