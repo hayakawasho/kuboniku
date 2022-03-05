@@ -17,16 +17,17 @@ const state = {
 const handleProgress = (e: any) => {
   Tween.tween(state.progress, 0.3, null, {
     now: (e.progress as number) * 100,
-  }).onUpdate(() => {
-    if (state.progress.now <= state.progress.before) {
-      return
-    }
-
-    const progress = Math.round(state.progress.now)
-    state.progress.before = progress
-
-    bus.emit(LOADING_PROGRESS, { progress })
   })
+    .onUpdate(() => {
+      if (state.progress.now <= state.progress.before) {
+        return
+      }
+
+      const progress = Math.round(state.progress.now)
+      state.progress.before = progress
+      bus.emit(LOADING_PROGRESS, { progress })
+    })
+    .play()
 }
 
 const handleFileLoaed = (e: any) => {

@@ -1,4 +1,4 @@
-export const mapRenge = (
+export const mapRange = (
   val: number,
   inputMin: number,
   inputMax: number,
@@ -18,7 +18,7 @@ export const mapRenge = (
 }
 
 export const normalize = (val: number, min: number, max: number) => {
-  return mapRenge(val, min, max, 0, 1)
+  return mapRange(val, min, max, 0, 1)
 }
 
 export class MathUtil {

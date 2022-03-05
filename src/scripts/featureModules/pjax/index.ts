@@ -7,13 +7,14 @@ class Fade extends Highway.Transition {
     from.remove()
     done()
 
-    Tween.tween(to, 0.35, Ease._2_QuadOut).alpha(1)
+    Tween.tween(to, 0.35, Ease._2_QuadOut).opacity(1).play()
   }
 
   out({ from, done }: any) {
     Tween.tween(from, 0.35, Ease._2_QuadOut)
-      .alpha(0)
+      .opacity(0)
       .onComplete(() => done())
+      .play()
   }
 }
 
