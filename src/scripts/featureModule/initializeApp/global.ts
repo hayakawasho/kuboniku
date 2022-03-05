@@ -1,5 +1,5 @@
-import { eventbus } from '@/lib'
-import { WINDOW_RESIZE } from 'constant/const'
+import { WINDOW_RESIZE } from '@/const'
+import { bus } from '@/lib'
 
 export default function () {
   const setVh = (wh: number) => {
@@ -16,7 +16,7 @@ export default function () {
 
       setVh(windowH)
 
-      eventbus.emit(WINDOW_RESIZE, {
+      bus.emit(WINDOW_RESIZE, {
         screenW: rect.width,
         screenH: rect.height,
         windowH,

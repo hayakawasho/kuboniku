@@ -1,7 +1,7 @@
-import type { IManifestProps } from './manifest'
-import { tween, eventbus } from '@/lib'
-import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from 'constant/const'
-import { Utils } from 'utils'
+import type { Manifest } from './sceneManager'
+import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
+import { Tween, bus } from '@/lib'
+import { Utils } from '@/utils'
 
 const TIMEOUT = 4000
 
@@ -15,20 +15,17 @@ const state = {
 }
 
 const handleProgress = (e: any) => {
-  // tween.kill(state.progress)
-  tween.to(state.progress, {
-    duration: 0.3,
+  Tween.tween(state.progress, 0.3, null, {
     now: (e.progress as number) * 100,
-    onUpdate: () => {
-      if (state.progress.now <= state.progress.before) {
-        return
-      }
+  }).onUpdate(() => {
+    if (state.progress.now <= state.progress.before) {
+      return
+    }
 
-      const progress = Math.round(state.progress.now)
-      state.progress.before = progress
+    const progress = Math.round(state.progress.now)
+    state.progress.before = progress
 
-      eventbus.emit(LOADING_PROGRESS, { progress })
-    },
+    bus.emit(LOADING_PROGRESS, { progress })
   })
 }
 
@@ -38,7 +35,7 @@ const handleFileLoaed = (e: any) => {
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
 
-    eventbus.emit(LOADING_TIMEOUT, {
+    bus.emit(LOADING_TIMEOUT, {
       id: e.item.id,
       timeout: elapsedTime,
     })
@@ -52,7 +49,7 @@ const handleFileLoaed = (e: any) => {
 const handleComplete = async (e: any) => {
   await Utils.wait(300) // progressのduration待機
 
-  eventbus.emit(LOADING_DONE, {
+  bus.emit(LOADING_DONE, {
     done: performance.now() - state.clock,
   })
 
@@ -68,7 +65,7 @@ loadQueue.addEventListener('fileload', handleFileLoaed)
 loadQueue.addEventListener('complete', handleComplete)
 
 const loader = {
-  loadStart: (now: number, manifest: IManifestProps[]) => {
+  loadStart: (now: number, manifest: Manifest) => {
     state.clock = now
     loadQueue.loadManifest(manifest)
   },

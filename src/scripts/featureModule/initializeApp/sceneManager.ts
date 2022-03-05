@@ -1,17 +1,25 @@
 import modular from 'modujs'
-import * as modules from '../../modules'
+import * as modules from '../modules'
 import globals from './global'
 import { loader } from './loader'
-import { manifest } from './manifest'
-import { eventbus, router } from '@/lib'
 import {
   AFTER_PAGE_READY,
   PJAX_LEAVE,
   PJAX_ENTER,
   LOADING_DONE,
   LOADING_TIMEOUT,
-} from 'constant/const'
-import { g } from 'constant/env'
+} from '@/const'
+import { g } from '@/env'
+import { bus, router } from '@/lib'
+
+const manifest = [
+  {
+    id: 'fonts',
+    src: '/fonts/kuboniku.ttf',
+  },
+]
+
+export type Manifest = typeof manifest
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -19,9 +27,7 @@ export interface IScene {
   scope: HTMLElement
 }
 
-const app = new modular({
-  modules,
-})
+const app = new modular({ modules })
 
 class SceneManager {
   private static _instance = new SceneManager()
@@ -35,22 +41,22 @@ class SceneManager {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
     }
 
-    eventbus.on(LOADING_TIMEOUT, () => {
+    bus.on(LOADING_TIMEOUT, () => {
       doneLoading()
     })
 
-    eventbus.on(LOADING_DONE, () => {
+    bus.on(LOADING_DONE, () => {
       doneLoading()
     })
 
-    eventbus.on(PJAX_LEAVE, async ({ from }) => {
+    bus.on(PJAX_LEAVE, async ({ from }) => {
       const oldScene = this.#newScene
       oldScene.leave()
 
       app.destroy(from)
     })
 
-    eventbus.on(PJAX_ENTER, ({ to }) => {
+    bus.on(PJAX_ENTER, ({ to }) => {
       const namespace = to.dataset.routerView
       document.body.dataset.page = namespace
       window.scrollTo(0, 0)
@@ -76,7 +82,7 @@ class SceneManager {
     await Promise.all([
       import('current-device'),
       import('lazysizes'),
-      import('@/features/pjax'),
+      import('@/featureModule/pjax'),
       scene.enter(),
     ])
 
@@ -92,7 +98,7 @@ class SceneManager {
       this.#newScene = scene
     }
 
-    eventbus.emit(AFTER_PAGE_READY)
+    bus.emit(AFTER_PAGE_READY)
   }
 }
 
