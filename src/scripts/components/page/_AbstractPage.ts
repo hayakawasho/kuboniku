@@ -1,4 +1,4 @@
-import type { IScene } from '@/featureModule/initializeApp/sceneManager'
+import type { IScene } from '@/featureModules/initializeApp/sceneManagerr'
 
 export default abstract class implements IScene {
   scope!: HTMLElement

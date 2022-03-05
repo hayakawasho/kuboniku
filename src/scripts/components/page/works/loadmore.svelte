@@ -12,8 +12,8 @@
     immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Utils } from 'utils'
-  import type { RpcError } from '@/features/error'
+  import { createIObserver, Utils } from '@/utils'
+  import type { RpcError } from '@/featureModules/error'
   import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './type'
 

@@ -82,7 +82,7 @@ class SceneManager {
     await Promise.all([
       import('current-device'),
       import('lazysizes'),
-      import('@/featureModule/pjax'),
+      import('@/featureModules/pjax'),
       scene.enter(),
     ])
 
