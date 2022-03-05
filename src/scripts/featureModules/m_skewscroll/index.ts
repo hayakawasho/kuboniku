@@ -1,6 +1,6 @@
 import { round } from 'lodash-es'
-import Abstract from 'abstract/abstractModule'
-import { Math } from 'utils'
+import Abstract from '../_AbstractModule'
+import { Math } from '@/utils'
 
 const EASE = 0.14
 const THRESHOLD = 100

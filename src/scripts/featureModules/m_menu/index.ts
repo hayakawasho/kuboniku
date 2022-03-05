@@ -1,4 +1,4 @@
-import Abstract from 'abstract/abstractModule'
+import Abstract from '../_AbstractModule'
 
 export default class extends Abstract {
   readonly events = {

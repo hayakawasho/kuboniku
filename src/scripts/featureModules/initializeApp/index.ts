@@ -4,6 +4,7 @@ import { router } from '@/lib'
 
 export function init() {
   const sceneManager = createSceneManager()
+
   router
     .use('/works/:slug', _req => {
       sceneManager.goto(new DefaultPage())

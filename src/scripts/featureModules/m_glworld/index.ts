@@ -1,7 +1,7 @@
+import Abstract from '../_AbstractModule'
 import { Core } from './core'
-import { eventbus } from '@/lib'
-import Abstract from 'abstract/abstractModule'
-import { WINDOW_RESIZE } from 'const'
+import { WINDOW_RESIZE } from '@/const'
+import { bus } from '@/lib'
 
 export default class extends Abstract {
   readonly _core = Core.create()
@@ -13,11 +13,11 @@ export default class extends Abstract {
     this._core.resize(width, height)
     this._core.init(canvas)
 
-    eventbus.on(WINDOW_RESIZE, this.onResize)
+    // bus.on(WINDOW_RESIZE, this.onResize)
   }
 
-  onResize = ({ vh }: { vh: number }) => {
-    this._core.resize(window.innerWidth, vh)
+  onResize = () => {
+    // this._core.resize(window.innerWidth, vh)
   }
 
   loop() {

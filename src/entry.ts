@@ -2,7 +2,7 @@ import 'ress'
 import './styles/global.css'
 import 'virtual:windi.css'
 
-import { init } from '@/features/initializeApp'
+import { init } from '@/featureModules/initializeApp'
 
 const isDev = process.env.NODE_ENV === 'development'
 

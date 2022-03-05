@@ -1,10 +1,15 @@
 export type Await<T> = T extends {
-  then(onfulfilled?: (value: infer U) => unknown): unknown;
-} ? U : T
+  then(onfulfilled?: (value: infer U) => unknown): unknown
+}
+  ? U
+  : T
 
 const timeoutPromise = (timeout: number) => {
   return new Promise((_resolve, reject) => {
-    window.setTimeout(() => reject(new Error(`timed out after ${timeout} ms`)), timeout)
+    window.setTimeout(
+      () => reject(new Error(`timed out after ${timeout} ms`)),
+      timeout
+    )
   })
 }
 
