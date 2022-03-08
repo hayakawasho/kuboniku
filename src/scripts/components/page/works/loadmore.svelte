@@ -12,7 +12,7 @@
     immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Utils } from '@/utils'
+  import { createIObserver, Util } from '@/utils'
   import type { RpcError } from '@/featureModules/error'
   import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './type'
@@ -46,20 +46,6 @@
     loadCount: number
     retryCount: number
     error?: RpcError
-  }
-
-  const fetchContext = (initialContext: FetchContext) => ({
-    posts: initialContext.posts,
-    loadCount: initialContext.loadCount,
-    retryCount: initialContext.retryCount,
-    error: initialContext.error,
-  })
-
-  const initialContext = {
-    posts,
-    loadCount: initialCount,
-    retryCount: 0,
-    error: undefined,
   }
 
   const checkLoaded = ({ loadCount }: FetchContext) => loadCount >= TOTAL_PAGE
@@ -115,10 +101,21 @@
       [Status.ERROR]: fin(),
       [Status.DONE]: fin(),
     },
-    fetchContext
+    (initial: FetchContext) => ({
+      posts: initial.posts,
+      loadCount: initial.loadCount,
+      retryCount: initial.retryCount,
+      error: initial.error,
+    })
   )
 
-  const service = useMachine(fetchMachine, initialContext)
+  const service = useMachine(fetchMachine, {
+    posts,
+    loadCount: initialCount,
+    retryCount: 0,
+    error: undefined,
+  })
+
   const send = $service.send
   $: current = $service.machine.current
 
@@ -157,7 +154,7 @@
         />
         <div class="absolute bottom-[2rem] left-[-1.2rem]">
           <p class="works-entryNum">
-            {Utils.zeroPadding(i.index, 2)}
+            {Util.zeroPadding(i.index, 2)}
             <span class="ml-[.5em]">Project</span>
           </p>
           <h2 class="works-entryHeading">{@html i.title}</h2>

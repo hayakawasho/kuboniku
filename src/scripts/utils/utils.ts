@@ -13,7 +13,7 @@ const timeoutPromise = (timeout: number) => {
   })
 }
 
-export class Utils {
+export class Util {
   static wait(ms: number): Promise<void> {
     return new Promise(resolve => {
       window.setTimeout(() => resolve(), ms)
@@ -53,7 +53,7 @@ export class Utils {
   }
 
   static async nextTick(): Promise<void> {
-    await Utils.waitFrame(1)
+    await Util.waitFrame(1)
   }
 
   static zeroPadding(num: number | string, length: number) {

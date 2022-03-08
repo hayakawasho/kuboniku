@@ -36,7 +36,6 @@
   "include": [
     "src/**/*",
     "@types",
-    "src/scripts/node_modules/**/*",
   ],
   "exclude": [
     "node_modules/*",

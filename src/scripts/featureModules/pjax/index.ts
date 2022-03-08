@@ -1,17 +1,17 @@
 import Highway from '@dogstudio/highway'
 import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
-import { Tween, Ease, bus } from '@/lib'
+import { TWEEN, Ease, bus } from '@/lib'
 
 class Fade extends Highway.Transition {
   in({ from, to, done }: any) {
     from.remove()
     done()
 
-    Tween.tween(to, 0.35, Ease._2_QuadOut).opacity(1).play()
+    TWEEN.tween(to, 0.35, Ease._2_QuadOut).opacity(1).play()
   }
 
   out({ from, done }: any) {
-    Tween.tween(from, 0.35, Ease._2_QuadOut)
+    TWEEN.tween(from, 0.35, Ease._2_QuadOut)
       .opacity(0)
       .onComplete(() => done())
       .play()

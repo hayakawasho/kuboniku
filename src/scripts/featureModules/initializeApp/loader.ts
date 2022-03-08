@@ -1,7 +1,7 @@
 import type { Manifest } from './sceneManager'
 import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
-import { Tween, bus } from '@/lib'
-import { Utils } from '@/utils'
+import { TWEEN, bus } from '@/lib'
+import { Util } from '@/utils'
 
 const TIMEOUT = 4000
 
@@ -15,7 +15,7 @@ const state = {
 }
 
 const handleProgress = (e: any) => {
-  Tween.tween(state.progress, 0.3, null, {
+  TWEEN.tween(state.progress, 0.3, null, {
     now: (e.progress as number) * 100,
   })
     .onUpdate(() => {
@@ -25,6 +25,7 @@ const handleProgress = (e: any) => {
 
       const progress = Math.round(state.progress.now)
       state.progress.before = progress
+
       bus.emit(LOADING_PROGRESS, { progress })
     })
     .play()
@@ -48,7 +49,7 @@ const handleFileLoaed = (e: any) => {
 }
 
 const handleComplete = async (e: any) => {
-  await Utils.wait(300) // progressのduration待機
+  await Util.wait(300) // progressのduration待機
 
   bus.emit(LOADING_DONE, {
     done: performance.now() - state.clock,

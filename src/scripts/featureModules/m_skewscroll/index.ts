@@ -1,6 +1,7 @@
 import { round } from 'lodash-es'
 import Abstract from '../_AbstractModule'
-import { Math } from '@/utils'
+import { TWEEN } from '@/lib'
+import { lerp } from '@/utils'
 
 const EASE = 0.14
 const THRESHOLD = 100
@@ -19,7 +20,7 @@ export default class extends Abstract {
 
     const { val } = this.$scroll
 
-    this._last = Math.lerp(this._last, val, EASE)
+    this._last = lerp(this._last, val, EASE)
     this._last < 0.1 && (this._last = 0)
 
     const diff = val - this._last
@@ -33,9 +34,8 @@ export default class extends Abstract {
 
       if (isVisible || this._isResizing) {
         item.out = false
-        gsap.set(el, {
-          skewY,
-        })
+
+        TWEEN.prop(el).skewX(skewY)
       } else if (!item.out) {
         item.out = true
       }
