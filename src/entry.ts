@@ -1,6 +1,6 @@
 import 'ress'
 import './styles/global.css'
-import 'virtual:windi.css'
+import './tailwind.dist.css'
 
 import { init } from '@/featureModules/initializeApp'
 
