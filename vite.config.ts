@@ -1,6 +1,5 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import WindiCSS from 'vite-plugin-windicss'
 import glsl from 'vite-plugin-glsl'
 import glslifyCompiler from 'vite-plugin-glslify'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
@@ -23,12 +22,6 @@ export default defineConfig({
     host: '0.0.0.0',
   },
   plugins: [
-    WindiCSS({
-      scan: {
-        dirs: ['./src'],
-        fileExtensions: ['njk', 'svelte'],
-      },
-    }),
     glsl(),
     glslifyCompiler(),
     svelte({
