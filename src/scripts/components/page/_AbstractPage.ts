@@ -1,5 +1,6 @@
+import { components } from '@/client/components'
+import { createComponent } from '@/client/createComponent'
 import type { IScene } from '@/client/sceneManager'
-import { createComponent, components } from '@/components/Fc'
 import { selector as $$ } from '@/foundation'
 
 export default abstract class implements IScene {

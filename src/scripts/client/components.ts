@@ -1,5 +1,5 @@
-import Sns from '../Sns/index.svelte'
-import Test from '../Test/Test.svelte'
+import Test from '../components//Test.svelte'
+import Sns from '../components/Sns/index.svelte'
 import { WithSvelte } from './WithSvelte'
 
 export const components: any = {
