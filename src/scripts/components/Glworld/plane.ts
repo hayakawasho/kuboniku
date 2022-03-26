@@ -1,4 +1,4 @@
-class Noise {}
+export class Noise {}
 
 /**
 const loader = new THREE.TextureLoader()

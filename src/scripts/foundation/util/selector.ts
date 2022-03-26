@@ -4,6 +4,9 @@ export type DOMTarget =
   | null
   | ArrayLike<Element | string | null>
 
-export const selector = (query: string, context = document.body) => {
+export const selector = (
+  query: string,
+  context = document.body
+): HTMLElement[] => {
   return Array.from(context.querySelectorAll(query))
 }

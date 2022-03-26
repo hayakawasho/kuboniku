@@ -36,6 +36,6 @@ type Events = {
   [DOM_UPDATED]: undefined
 }
 
-const bus = mitt<Events>()
+const eventbus = mitt<Events>()
 
-export { bus }
+export { eventbus }

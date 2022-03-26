@@ -1,9 +1,15 @@
-<div class="o-wrap">
+<div
+  class="o-wrap"
+  data-component="Test"
+  data-props='{
+    "total": "{{ props.total }}"
+  }'
+>
   <h1 class="works-heading | relative mt-[10rem] mb-[6rem]">
     Works
-    <sup class="absolute top-[0.5em] ml-[0.5em]">{{ props.total }}</sup>
+    <sup class="absolute top-[0.5em] ml-[0.5em]"></sup>
   </h1>
-  <div class="o-grid | js-works | pb-[2rem]" data-total="{{ props.total }}">
+  <div class="o-grid | js-works | pb-[2rem]" data-total="{{ props.total }}" data-ref="Test.entries">
   {% for i in props.entries %}
     {%
       set j = {

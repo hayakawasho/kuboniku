@@ -12,10 +12,11 @@
     immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Util } from '@/utils'
-  import type { RpcError } from '@/featureModules/error'
+  import { createIObserver, Util } from '@/foundation'
+  // import { unknown2Error } from '@/foundation'
   import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './type'
+  // import { match, __, not, select, when } from 'ts-pattern'
 
   export let posts: ViewWork[]
   export let total: number
@@ -27,6 +28,50 @@
   const PER_PAGE = 10
   const TOTAL_PAGE = Math.ceil(total / PER_PAGE)
   const MAX_RETRY = 3
+
+  //type FetchStatus =
+  //  | { status: 'idle' }
+  //  | { status: 'loading'; startTime: number }
+  //  | { status: 'success'; data: string }
+  //  | { status: 'error'; error: Error }
+  //
+  //type FetchEvent =
+  //  | { type: 'fetch' }
+  //  | { type: 'success'; data: string }
+  //  | { type: 'error'; error: Error }
+  //  | { type: 'cancel' }
+
+  /*
+  const reducer = (state: FetchStatus, event: FetchEvent): FetchStatus => {
+    return match<[FetchStatus, FetchEvent], FetchStatus>([state, event])
+      .with([{ status: 'loading' }, { type: 'success' }], ([, event]) => ({
+        status: 'success',
+        data: event.data,
+      }))
+      .with(
+        [{ status: 'loading' }, { type: 'error', error: select() }],
+        error => ({
+          status: 'error',
+          error,
+        })
+      )
+      .with([{ status: not('loading') }, { type: 'fetch' }], () => ({
+        status: 'loading',
+        startTime: Date.now(),
+      }))
+      .with(
+        [
+          { status: 'loading', startTime: when(t => t + 2000 < Date.now()) },
+          { type: 'cancel' },
+        ],
+        () => ({
+          status: 'idle',
+        })
+      )
+      .with(__, () => state)
+      .exhaustive()
+  }
+  */
 
   enum Status {
     IDLE = 'idle',
@@ -45,7 +90,7 @@
     posts: ViewWork[]
     loadCount: number
     retryCount: number
-    error?: RpcError
+    error?: Error
   }
 
   const checkLoaded = ({ loadCount }: FetchContext) => loadCount >= TOTAL_PAGE

@@ -1,6 +1,6 @@
-import { module } from 'modujs'
+// import { module } from 'modujs'
 
-export default abstract class extends module {
+export default abstract class {
   // $$ = gsap.utils.selector(this.el)
 
   /**

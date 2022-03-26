@@ -1,7 +1,6 @@
-import { round } from 'lodash-es'
+// import { round } from 'lodash-es'
 import Abstract from '../_AbstractModule'
-import { TWEEN } from '@/lib'
-import { lerp } from '@/utils'
+import { TWEEN, lerp } from '@/foundation'
 
 const EASE = 0.14
 const THRESHOLD = 100
@@ -15,7 +14,9 @@ export default class extends Abstract {
     //
   }
 
-  _run = ({ frame }) => {
+  // _run = ({ frame }) => {}
+
+  /*
     if (!this._isReady && frame % 2 === 0) return
 
     const { val } = this.$scroll
@@ -24,7 +25,7 @@ export default class extends Abstract {
     this._last < 0.1 && (this._last = 0)
 
     const diff = val - this._last
-    const acc = round(diff / this.$store.state.windowWidth, 2)
+    const acc = (diff / this.$store.state.windowWidth, 2)
     const velo = +acc
     const skewY = velo * 5.5 * -1
 
@@ -88,4 +89,5 @@ export default class extends Abstract {
     this.#updateCache()
     this._isResizing = false
   }
+  */
 }

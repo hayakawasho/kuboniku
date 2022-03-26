@@ -1,9 +1,11 @@
-import type { IScene } from '@/featureModules/initializeApp/sceneManager'
-import { selector } from '@/utils/selector'
+import type { IScene } from '@/client/sceneManager'
+import { selector } from '@/foundation'
 
 export default abstract class implements IScene {
   scope!: HTMLElement
   $$!: typeof selector
+
+  static exec: () => IScene
 
   /**
    * DO NOT OVERWRITE

@@ -1,7 +1,6 @@
 import type { Manifest } from './sceneManager'
 import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
-import { TWEEN, bus } from '@/lib'
-import { Util } from '@/utils'
+import { TWEEN, eventbus, Util } from '@/foundation'
 
 const TIMEOUT = 4000
 
@@ -26,7 +25,7 @@ const handleProgress = (e: any) => {
       const progress = Math.round(state.progress.now)
       state.progress.before = progress
 
-      bus.emit(LOADING_PROGRESS, { progress })
+      eventbus.emit(LOADING_PROGRESS, { progress })
     })
     .play()
 }
@@ -37,7 +36,7 @@ const handleFileLoaed = (e: any) => {
   if (elapsedTime > TIMEOUT && !state.isTimeOuted) {
     state.isTimeOuted = true
 
-    bus.emit(LOADING_TIMEOUT, {
+    eventbus.emit(LOADING_TIMEOUT, {
       id: e.item.id,
       timeout: elapsedTime,
     })
@@ -51,7 +50,7 @@ const handleFileLoaed = (e: any) => {
 const handleComplete = async (e: any) => {
   await Util.wait(300) // progressのduration待機
 
-  bus.emit(LOADING_DONE, {
+  eventbus.emit(LOADING_DONE, {
     done: performance.now() - state.clock,
   })
 

@@ -1,16 +1,14 @@
-import modular from 'modujs'
-import * as modules from '../modules'
 import globals from './global'
 import { loader } from './loader'
 import {
   AFTER_PAGE_READY,
-  PJAX_LEAVE,
   PJAX_ENTER,
   LOADING_DONE,
   LOADING_TIMEOUT,
+  PJAX_LEAVE,
 } from '@/const'
 import { g } from '@/env'
-import { bus, router } from '@/lib'
+import { eventbus, router } from '@/foundation'
 
 const manifest = [
   {
@@ -27,49 +25,45 @@ export interface IScene {
   scope: HTMLElement
 }
 
-const app = new modular({ modules })
-
 class SceneManager {
-  private static _instance = new SceneManager()
+  static #instance = new SceneManager()
 
   #pjaxIsStarted = false
   #scope!: HTMLElement
   #newScene!: IScene
 
-  constructor() {
+  private constructor() {
     const doneLoading = () => {
       document.body.classList.replace('is-domLoading', 'is-domLoaded')
     }
 
-    bus.on(LOADING_TIMEOUT, () => {
+    eventbus.on(LOADING_TIMEOUT, () => {
+      doneLoading()
+
+      console.log(this)
+    })
+
+    eventbus.on(LOADING_DONE, () => {
       doneLoading()
     })
 
-    bus.on(LOADING_DONE, () => {
-      doneLoading()
-    })
-
-    bus.on(PJAX_LEAVE, async ({ from }) => {
+    eventbus.on(PJAX_LEAVE, async ({ from }) => {
       const oldScene = this.#newScene
       oldScene.leave()
-
-      app.destroy(from)
     })
 
-    bus.on(PJAX_ENTER, ({ to }) => {
+    eventbus.on(PJAX_ENTER, ({ to }) => {
       const namespace = to.dataset.routerView
       document.body.dataset.page = namespace
       window.scrollTo(0, 0)
 
-      app.update(to)
-
       this.#scope = to
-      router.processCurrentPath()
+      router.exec()
     })
   }
 
   static create() {
-    return SceneManager._instance
+    return SceneManager.#instance
   }
 
   #once = async (scene: IScene) => {
@@ -77,12 +71,10 @@ class SceneManager {
     loader.loadStart(now, manifest)
 
     globals()
-    app.init(app)
 
     await Promise.all([
-      import('current-device'),
       import('lazysizes'),
-      import('@/featureModules/pjax'),
+      import('@/components/Pjax'),
       scene.enter(),
     ])
 
@@ -90,15 +82,15 @@ class SceneManager {
   }
 
   goto = async (scene: IScene) => {
-    if (!this.#pjaxIsStarted) {
-      await this.#once(scene)
-      this.#pjaxIsStarted = true
-    } else {
+    if (this.#pjaxIsStarted) {
       await scene.enter(this.#scope)
       this.#newScene = scene
+    } else {
+      await this.#once(scene)
+      this.#pjaxIsStarted = true
     }
 
-    bus.emit(AFTER_PAGE_READY)
+    eventbus.emit(AFTER_PAGE_READY)
   }
 }
 
