@@ -1,5 +1,6 @@
 import globals from './global'
 import { loader } from './loader'
+import { assetsManifest } from './manifest'
 import {
   AFTER_PAGE_READY,
   PJAX_ENTER,
@@ -9,15 +10,6 @@ import {
 } from '@/const'
 import { g } from '@/env'
 import { eventbus, router } from '@/foundation'
-
-const manifest = [
-  {
-    id: 'fonts',
-    src: '/fonts/kuboniku.ttf',
-  },
-]
-
-export type Manifest = typeof manifest
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -67,8 +59,9 @@ class SceneManager {
   }
 
   #once = async (scene: IScene) => {
-    const now: number = g.bootstart
-    loader.loadStart(now, manifest)
+    const now = g.bootstart
+
+    loader.loadStart(now, assetsManifest)
 
     globals()
 

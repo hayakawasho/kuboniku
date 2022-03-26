@@ -1,4 +1,4 @@
-import type { Manifest } from './sceneManager'
+import type { AssetsManifest } from './manifest'
 import { LOADING_PROGRESS, LOADING_TIMEOUT, LOADING_DONE } from '@/const'
 import { TWEEN, eventbus, Util } from '@/foundation'
 
@@ -66,7 +66,7 @@ loadQueue.addEventListener('fileload', handleFileLoaed)
 loadQueue.addEventListener('complete', handleComplete)
 
 const loader = {
-  loadStart: (now: number, manifest: Manifest) => {
+  loadStart: (now: number, manifest: AssetsManifest) => {
     state.clock = now
     loadQueue.loadManifest(manifest)
   },

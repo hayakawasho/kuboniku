@@ -1,9 +1,11 @@
 import type { IScene } from '@/client/sceneManager'
-import { selector } from '@/foundation'
+import { createComponent, components } from '@/components/Fc'
+import { selector as $$ } from '@/foundation'
 
 export default abstract class implements IScene {
   scope!: HTMLElement
-  $$!: typeof selector
+  $$!: typeof $$
+  #children!: any[]
 
   static exec: () => IScene
 
@@ -11,8 +13,20 @@ export default abstract class implements IScene {
    * DO NOT OVERWRITE
    */
   enter = async (scope = document.body) => {
+    const children = $$('[data-component]', scope).map(el => {
+      const componentName = el.dataset.component
+      const props = el.dataset.props ?? '{}'
+      const json = JSON.parse(props)
+
+      return createComponent(components[componentName as any], {
+        ...json,
+        el,
+      })
+    })
+
     this.scope = scope
-    this.$$ = selector
+    this.$$ = $$
+    this.#children = children
 
     this.init()
   }
@@ -21,6 +35,8 @@ export default abstract class implements IScene {
    * DO NOT OVERWRITE
    */
   leave = async () => {
+    this.#children.forEach(c => c.destroy())
+
     this.destroy()
   }
 

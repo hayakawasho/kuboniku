@@ -3,16 +3,17 @@ import { DefaultPage, WorksPage } from '@/components/page'
 import { router } from '@/foundation'
 
 export function initApp() {
-  const sceneManager = createSceneManager()
+  const { goto } = createSceneManager()
 
   router
     .route('/works/:slug', _req => {
-      sceneManager.goto(DefaultPage.exec())
+      goto(DefaultPage.exec())
     })
     .route('/works', _req => {
-      sceneManager.goto(WorksPage.exec())
+      goto(WorksPage.exec())
     })
     .route('*', _req => {
-      sceneManager.goto(DefaultPage.exec())
+      goto(DefaultPage.exec())
     })
+    .exec()
 }

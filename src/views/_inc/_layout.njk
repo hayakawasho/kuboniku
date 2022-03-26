@@ -78,7 +78,7 @@
         </div>
       </button>
 
-      <div class="l-sns" data-module-sns>
+      <div class="l-sns" data-module-sns data-component="Sns">
         <ul class="mb-[2.5rem] text-center">
           <li class="overflow-hidden mb-[2rem]">
             <a href="{{ conf.fb }}"
@@ -86,6 +86,7 @@
               rel="noopener"
               class="snsLabel"
               data-sns-icon
+              data-ref="Sns.icon"
             >Fb</a>
           </li>
           <li class="overflow-hidden">
@@ -94,10 +95,11 @@
               rel="noopener"
               class="snsLabel"
               data-sns-icon
+              data-ref="icon"
             >Tw</a>
           </li>
         </ul>
-        <button class="snsPlus" data-sns-trigger aria-label="SNS">
+        <button class="snsPlus" data-sns-trigger aria-label="SNS" data-ref="Sns.trigger">
           <div class="u-in">
             <div class="snsPlus__x"></div>
             <div class="snsPlus__y"></div>
