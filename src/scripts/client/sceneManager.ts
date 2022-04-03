@@ -32,8 +32,6 @@ class SceneManager {
 
     eventbus.on(LOADING_TIMEOUT, () => {
       doneLoading()
-
-      console.log(this)
     })
 
     eventbus.on(LOADING_DONE, () => {
@@ -75,7 +73,7 @@ class SceneManager {
     this.#newScene = scene
   }
 
-  gotoScene(scene: IScene) {
+  gotoScene = (scene: IScene) => {
     match(this.#pjaxIsStarted)
       .with(true, async () => {
         await scene.enter(this.#scope)

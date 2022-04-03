@@ -2,11 +2,11 @@
   import { onMount, onDestroy } from 'svelte'
 
   onMount(() => {
-    console.log('mount')
+    // console.log('mount')
   })
 
   onDestroy(() => {
-    console.log('destroy')
+    // console.log('destroy')
   })
 </script>
 

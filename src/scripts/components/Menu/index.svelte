@@ -1,17 +1,15 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
 
+  // function onToggle(e) {
+  //   console.log('Toggle', e)
+  // }
+
   onMount(() => {
-    console.log('mount')
+    // console.log('mount')
   })
 
   onDestroy(() => {
-    console.log('destroy')
+    // console.log('destroy')
   })
 </script>
-
-<div class="fixed inset-0">
-  <div class="h-screen w-screen">
-    <canvas />
-  </div>
-</div>

@@ -12,8 +12,8 @@
     immediate,
   } from 'robot3'
   import { useMachine } from 'svelte-robot-factory'
-  import { createIObserver, Util } from '@/foundation'
-  // import { unknown2Error } from '@/foundation'
+  import { createIO, Util } from '@/foundation'
+  // import { unknown2Err } from '@/foundation'
   import type { IWorksRepo } from '@/components/model/works'
   import type { ViewWork } from './type'
   // import { match, __, not, select, when } from 'ts-pattern'
@@ -164,7 +164,7 @@
   const send = $service.send
   $: current = $service.machine.current
 
-  const fetchIO = createIObserver({
+  const fetchIO = createIO({
     rootMargin: '0px 0px 25% 0px',
   })
 
@@ -191,7 +191,7 @@
         <img
           data-src={i.eyecatch.pc.src}
           data-srcset={i.eyecatch.pc.srcset}
-          class="lazyload | filter grayscale-100 opacity-[.8]"
+          class="lazyload | grayscale-100 opacity-[.8] filter"
           width={i.eyecatch.pc.width}
           height={i.eyecatch.pc.height}
           decoding="async"

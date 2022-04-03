@@ -21,21 +21,19 @@ export function create() {
     }
   }
 
-  const definitions: {
-    [id: string]: Def
-  } = {} as const
+  const definitions = new Map<string, Def>()
 
   // const instances = {};
 
   function define<T>(id: string, fn: T) {
-    definitions[id] = {
+    definitions.set(id, {
       id,
       fn: fn as T,
-    }
+    })
   }
 
   function require(id: string) {
-    return definitions[id]
+    return definitions.get(id)
   }
 
   return {
