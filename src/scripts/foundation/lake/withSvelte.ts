@@ -1,8 +1,13 @@
 import type { SvelteComponent } from 'svelte'
 
 export type FC = {
-  init: any
-  destroy: any
+  init(
+    el: HTMLElement,
+    props: {
+      [key: string]: any
+    }
+  ): void
+  destroy(): void
 }
 
 class WithSvelte {

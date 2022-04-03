@@ -14,7 +14,7 @@ const callback = (entry: IntersectionObserverEntry, { cb }: any) => {
   return entry ? cb(entry) : false
 }
 
-const createIObserver = (opts = defaults) => {
+const createIO = (opts = defaults) => {
   const handlers = new Set()
   const io = new IntersectionObserver(([entry]) => {
     handlers.forEach(handler => callback(entry, handler))
@@ -51,4 +51,4 @@ const createIObserver = (opts = defaults) => {
   }
 }
 
-export { createIObserver }
+export { createIO }
