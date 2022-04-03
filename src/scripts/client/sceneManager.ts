@@ -1,3 +1,4 @@
+import { match } from 'ts-pattern'
 import globals from './global'
 import { loader } from './loader'
 import { assetsManifest } from './manifest'
@@ -58,7 +59,7 @@ class SceneManager {
     return SceneManager.#instance
   }
 
-  #once = async (scene: IScene) => {
+  async #once(scene: IScene) {
     const now = g.bootstart
 
     loader.loadStart(now, assetsManifest)
@@ -74,14 +75,17 @@ class SceneManager {
     this.#newScene = scene
   }
 
-  goto = async (scene: IScene) => {
-    if (this.#pjaxIsStarted) {
-      await scene.enter(this.#scope)
-      this.#newScene = scene
-    } else {
-      await this.#once(scene)
-      this.#pjaxIsStarted = true
-    }
+  gotoScene(scene: IScene) {
+    match(this.#pjaxIsStarted)
+      .with(true, async () => {
+        await scene.enter(this.#scope)
+        this.#newScene = scene
+      })
+      .with(false, async () => {
+        await this.#once(scene)
+        this.#pjaxIsStarted = true
+      })
+      .exhaustive()
 
     eventbus.emit(AFTER_PAGE_READY)
   }
