@@ -1,19 +1,12 @@
 import type { SvelteComponent } from 'svelte'
+import type { IComponent } from './type'
 
-export type FC = {
-  init(
-    el: HTMLElement,
-    props: {
-      [key: string]: any
-    }
-  ): void
-  destroy(): void
-}
+type SvelteAppType = typeof SvelteComponent
 
-class WithSvelte {
+class WithSvelte implements IComponent {
   #app!: SvelteComponent
 
-  constructor(private Svelte: typeof SvelteComponent) {}
+  constructor(private Svelte: SvelteAppType) {}
 
   init(el: HTMLElement, props = {}) {
     this.#app = new this.Svelte({
@@ -27,7 +20,7 @@ class WithSvelte {
   }
 }
 
-const withSvelte = (Svelte: typeof SvelteComponent): FC => {
+const withSvelte = (Svelte: SvelteAppType): IComponent => {
   return new WithSvelte(Svelte)
 }
 

@@ -1,16 +1,9 @@
 import { createSceneManager } from './sceneManager'
 import Glworld from '@/components/Glworld/index.svelte'
-import Menu from '@/components/Menu/index.svelte'
+// import Menu from '@/components/Menu/index.svelte'
 import Sns from '@/components/Sns/index.svelte'
 import { DefaultPage, WorksPage } from '@/components/page'
-import {
-  router,
-  withSvelte,
-  define,
-  require,
-  selector as $$,
-  onInit,
-} from '@/foundation'
+import { router, withSvelte, define, onInit } from '@/foundation'
 
 export function initApp() {
   const { gotoScene } = createSceneManager()

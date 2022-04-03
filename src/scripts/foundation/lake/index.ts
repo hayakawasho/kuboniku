@@ -1,11 +1,11 @@
 import { create } from './lake'
 
-const ___ = create()
+const __lake = create()
 
-export const lake = ___.definitions
-export const define = ___.define
-export const require = ___.require
-export const onInit = ___.onInit
-export const onDestroy = ___.onDestroy
+export const lake = __lake.definitions
+export const define = __lake.define
+export const require = __lake.require
+export const onInit = __lake.onInit
+export const onDestroy = __lake.onDestroy
 
 export * from './withSvelte'

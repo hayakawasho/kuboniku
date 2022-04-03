@@ -1,5 +1,6 @@
-import { selector as $$ } from '@/foundation'
-// import { match } from 'ts-pattern'
+import { match } from 'ts-pattern'
+import { getNodeDataType } from './util/html'
+import { selector as $$ } from './util/selector'
 
 type Def = {
   id: string
@@ -43,16 +44,22 @@ export function create() {
   }
 
   function onInit() {
-    const moduleEls = $$('[data-component]')
-    const matches = moduleEls
-      .filter(el => definitions.has(el.dataset.component ?? 'UNKNOWN'))
-      .forEach(el => {
-        const module = definitions.get(el.dataset.component ?? '')
-      })
+    const initEls = $$('[data-component]')
+    const matches = initEls.filter(el =>
+      definitions.has(el.dataset.component ?? 'UNKNOWN')
+    )
+
+    console.log(matches)
+    // .forEach(el => {
+    //   check(el)
+    //   // const module = definitions.get(el.dataset.component ?? '')
+    // })
   }
 
   function onDestroy(scope = document.body) {
-    // const moduleEls = $$(`[${COMPONENT}]`, scope)
+    console.log(definitions)
+
+    // const destroyEls = $$(`[${COMPONENT}]`, scope)
     // const matches = moduleEls.filter(el => el.getAttribute(COMPONENT))
     // matches.forEach(el => {
     //
