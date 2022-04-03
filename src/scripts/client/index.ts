@@ -9,6 +9,7 @@ import {
   define,
   require,
   selector as $$,
+  onInit,
 } from '@/foundation'
 
 export function initApp() {
@@ -16,18 +17,9 @@ export function initApp() {
 
   define('Sns', withSvelte(Sns))
   define('Glworld', withSvelte(Glworld))
-  define('Menu', withSvelte(Menu))
+  // define('Menu', withSvelte(Menu))
 
-  $$('[data-component]').forEach(el => {
-    const componentName = el.dataset.component ?? ''
-    // const fc = require(componentName)
-
-    // if (!fc) {
-    //   return
-    // }
-
-    // fc.fn.init(el, {})
-  })
+  onInit()
 
   router
     .route('/works/:slug', _req => {

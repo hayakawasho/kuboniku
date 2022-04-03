@@ -1,29 +1,35 @@
+import { selector as $$ } from '@/foundation'
+// import { match } from 'ts-pattern'
+
 type Def = {
   id: string
   fn: any
 }
 
-export function create() {
-  const defaults = {
-    component: '[data-component]',
-    ref: '[data-ref]',
-    props: '[data-props]',
-  }
+// const COMPONENT_PROPS = 'data-props'
+// const DOM_REF = 'data-ref'
 
-  function defineConfig(config: {
-    component?: string
-    ref?: string
-    props?: string
-  }) {
-    return {
-      ...defaults,
-      ...config,
-    }
-  }
+export function create() {
+  // const defaults = {
+  //   component: '[data-component]',
+  //   ref: '[data-ref]',
+  //   props: '[data-props]',
+  // }
+
+  // function defineConfig(config: {
+  //   component?: string
+  //   ref?: string
+  //   props?: string
+  // }) {
+  //   return {
+  //     ...defaults,
+  //     ...config,
+  //   }
+  // }
 
   const definitions = new Map<string, Def>()
 
-  // const instances = {};
+  const instances = {}
 
   function define<T>(id: string, fn: T) {
     definitions.set(id, {
@@ -36,21 +42,28 @@ export function create() {
     return definitions.get(id)
   }
 
+  function onInit() {
+    const moduleEls = $$('[data-component]')
+    const matches = moduleEls
+      .filter(el => definitions.has(el.dataset.component ?? 'UNKNOWN'))
+      .forEach(el => {
+        const module = definitions.get(el.dataset.component ?? '')
+      })
+  }
+
+  function onDestroy(scope = document.body) {
+    // const moduleEls = $$(`[${COMPONENT}]`, scope)
+    // const matches = moduleEls.filter(el => el.getAttribute(COMPONENT))
+    // matches.forEach(el => {
+    //
+    // })
+  }
+
   return {
-    defaults,
     definitions,
-    defineConfig,
     define,
     require,
+    onInit,
+    onDestroy,
   }
 }
-
-const ___ = create()
-
-const lake = ___.definitions
-const config = ___.defaults
-const defineConfig = ___.defineConfig
-const define = ___.define
-const require = ___.require
-
-export { lake, config, defineConfig, define, require }
