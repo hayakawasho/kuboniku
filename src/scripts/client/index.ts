@@ -1,9 +1,14 @@
 import { createSceneManager } from './sceneManager'
+import Glworld from '@/components/Glworld/index.svelte'
+import Sns from '@/components/Sns/index.svelte'
 import { DefaultPage, WorksPage } from '@/components/page'
-import { router } from '@/foundation'
+import { router, lake, withSvelte, define, require } from '@/foundation'
 
 export function initApp() {
   const { gotoScene } = createSceneManager()
+
+  define('Sns', withSvelte(Sns))
+  define('Glworld', withSvelte(Glworld))
 
   router
     .route('/works/:slug', _req => {

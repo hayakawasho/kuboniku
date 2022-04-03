@@ -58,54 +58,16 @@
       <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
     {% endif %}
   </head>
-  <body
-    class="is-domLoading"
-    data-page="{{ namespace }}"
-    data-module-menu
-  >
-    <div class="l-mask" id="js-viewportRef"></div>
 
+  <body class="is-domLoading" data-page="{{ namespace }}">
+    <div class="l-mask" id="js-viewportRef"></div>
     <header class="l-fixed l-header">
       <a href="/" class="l-brandLogo">
         <i class="icon-logo"></i>
         <span class="sr-only">KuboNiku.com</span>
       </a>
-
-      <button class="c-burger u-sp" aria-label="MENU">
-        <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
-          <div class="c-burger__line js-burgerLine--1"></div>
-          <div class="c-burger__line js-burgerLine--2"></div>
-        </div>
-      </button>
-
-      <div class="l-sns" data-module-sns data-component="Sns">
-        <ul class="mb-[2.5rem] text-center">
-          <li class="overflow-hidden mb-[2rem]">
-            <a href="{{ conf.fb }}"
-              target="_blank"
-              rel="noopener"
-              class="snsLabel"
-              data-sns-icon
-              data-ref="Sns.icon"
-            >Fb</a>
-          </li>
-          <li class="overflow-hidden">
-            <a href="{{ conf.tw }}"
-              target="_blank"
-              rel="noopener"
-              class="snsLabel"
-              data-sns-icon
-              data-ref="icon"
-            >Tw</a>
-          </li>
-        </ul>
-        <button class="snsPlus" data-sns-trigger aria-label="SNS" data-ref="Sns.trigger">
-          <div class="u-in">
-            <div class="snsPlus__x"></div>
-            <div class="snsPlus__y"></div>
-          </div>
-        </button>
-      </div>
+      {% include './_burger.njk' %}
+      {% include './_sns.njk' %}
       <small class="l-copyright"
       >&copy; KuboNiku.com</small>
     </header>
@@ -113,14 +75,12 @@
     <div class="l-window" data-router-wrapper>
       <div class="l-content" data-router-view="{{ namespace }}">
         <div class="l-content__h"></div>
-        <main class="l-page">{{ content | safe }}</main>
+        <main class="l-page">
+          {{ content | safe }}
+        </main>
       </div>
     </div>
 
-    <div class="fixed inset-0">
-      <div class="w-screen h-screen" data-module-glworld>
-        <canvas></canvas>
-      </div>
-    </div>
+    <div data-component="Glworld"></div>
   </body>
 </html>
