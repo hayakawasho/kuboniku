@@ -2,13 +2,13 @@
   import { onMount, onDestroy } from 'svelte'
   import type { DOMRef } from '../../@lake'
 
-  type Refs = {
+  type RefVal = {
     icon: HTMLLIElement
   }
 
   export let useDOMRef: DOMRef
 
-  const refs = useDOMRef<Refs>({
+  const { refs } = useDOMRef<RefVal>({
     icon: 'icon',
   })
 
