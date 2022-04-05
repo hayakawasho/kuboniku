@@ -19,7 +19,7 @@ if (isDev) {
 
     document.body.appendChild(stats.dom)
 
-    const loop = () => {
+    function loop() {
       stats.update()
       requestAnimationFrame(loop)
     }

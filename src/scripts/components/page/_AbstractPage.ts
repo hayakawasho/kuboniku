@@ -1,9 +1,9 @@
 import type { IScene } from '@/client/sceneManager'
-import { selector as $$ } from '@/foundation'
+import { q } from '@/foundation'
 
 export default abstract class implements IScene {
   scope!: HTMLElement
-  $$!: typeof $$
+  q!: typeof q
   // #children!: any[]
 
   static exec: () => IScene
@@ -13,7 +13,7 @@ export default abstract class implements IScene {
    */
   enter = async (scope = document.body) => {
     this.scope = scope
-    this.$$ = $$
+    this.q = q
     // this.#children = children
 
     this.init()

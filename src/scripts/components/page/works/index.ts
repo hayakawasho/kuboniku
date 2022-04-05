@@ -29,7 +29,7 @@ export class WorksPage extends Abstract {
   }
 
   init() {
-    const $wrap = this.$$('.js-works')[0]
+    const $wrap = this.q('.js-works')[0]
 
     this.#app = new LoadmoreApp({
       target: $wrap,

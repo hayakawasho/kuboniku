@@ -57,18 +57,16 @@ class SceneManager {
     return SceneManager.#instance
   }
 
-  async #once(scene: IScene) {
+  #once = async (scene: IScene) => {
     const now = g.bootstart
 
     loader.loadStart(now, assetsManifest)
 
     globals()
 
-    await Promise.all([
-      import('lazysizes'),
-      import('@/components/Pjax'),
-      scene.enter(),
-    ])
+    Promise.all([import('lazysizes'), import('../components/Pjax')])
+
+    await scene.enter()
 
     this.#newScene = scene
   }

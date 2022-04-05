@@ -1,8 +1,10 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
 
-  function onToggle(e) {
-    console.log('Toggle', e)
+  export let useDOMRef: any
+
+  function onToggle() {
+    //
   }
 
   onMount(() => {
