@@ -10,14 +10,15 @@ class WithSvelte implements IComponent {
   constructor(private SvelteApp: SvelteAppType) {}
 
   init(element: HTMLElement, props = {}) {
-    const target = element
+    const rootRef = element
     const newProps = {
       ...props,
+      rootRef,
       useDOMRef,
     }
 
     this.#app = new this.SvelteApp({
-      target,
+      target: rootRef,
       props: newProps,
     })
   }
