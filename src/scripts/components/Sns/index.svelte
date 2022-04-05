@@ -2,17 +2,15 @@
   import { onMount, onDestroy } from 'svelte'
   import type { DOMRef } from '@/foundation'
 
-  type RefVal = {
-    icon: HTMLAnchorElement[]
+  type Refs = {
     trigger: HTMLButtonElement
+    icon: HTMLAnchorElement[]
   }
 
   export let useDOMRef: DOMRef
 
-  const { refs } = useDOMRef<RefVal>({
-    icon: null,
-    trigger: null,
-  })
+  const refsMap = new Set(['trigger', 'icon'])
+  const { refs } = useDOMRef<Refs>(refsMap)
 
   onMount(() => {
     console.log('onMount:Sns', refs)
