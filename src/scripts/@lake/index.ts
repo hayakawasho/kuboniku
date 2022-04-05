@@ -1,7 +1,6 @@
-export type { DOMRef } from './domRef'
 export * from './Lake'
+export type { DOMRef } from './domRef'
 export { withSvelte } from './withSvelte'
 
-// util
 export { assert } from './assert'
 export { q } from './selector'

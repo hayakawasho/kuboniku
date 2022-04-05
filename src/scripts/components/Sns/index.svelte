@@ -1,21 +1,21 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import type { DOMRef } from '../../@lake'
+  import type { DOMRef } from '@/foundation'
 
   type RefVal = {
-    icon: HTMLLIElement
+    icon: HTMLAnchorElement[]
+    trigger: HTMLButtonElement
   }
 
   export let useDOMRef: DOMRef
 
   const { refs } = useDOMRef<RefVal>({
-    icon: 'icon',
+    icon: null,
+    trigger: null,
   })
 
-  console.log(refs)
-
   onMount(() => {
-    console.log('onMount:Sns')
+    console.log('onMount:Sns', refs)
   })
 
   onDestroy(() => {

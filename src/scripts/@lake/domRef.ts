@@ -1,13 +1,39 @@
-interface IRefValue {
-  [key: string]: string
+import { match } from 'ts-pattern'
+import { q } from './selector'
+
+type RefValue = {
+  [key: string]: null
 }
 
-export function useDOMRef<T>(ref: any): { refs: T } {
-  const domRefs = ref
+type ReturnDOMRef<T> = {
+  refs: T
+}
 
-  return {
-    refs: domRefs,
+type DOMRef = <T>(ref: RefValue) => ReturnDOMRef<T>
+
+export function domRefs(refs: RefValue, scope: HTMLElement) {
+  const parent = scope
+
+  const $ = (query: string) => {
+    const nodes = q(`[data-ref="${query}"]`, parent)
+
+    return match(nodes.length)
+      .when(
+        v => v === 1,
+        () => nodes[0]
+      )
+      .when(
+        v => v > 1,
+        () => nodes
+      )
+      .otherwise(() => {
+        throw new Error('element is not exists')
+      })
   }
+
+  const childRefs = Object.keys(refs).map(refKey => $(refKey))
+
+  return childRefs
 }
 
-export type DOMRef = typeof useDOMRef
+export type { RefValue, ReturnDOMRef, DOMRef }

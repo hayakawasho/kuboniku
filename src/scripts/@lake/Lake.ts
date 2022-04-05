@@ -25,7 +25,7 @@ export const define = __.define
 export const require = __.require
 
 export function onInit() {
-  // elements.
+  //
 }
 
 export function onDestroy() {

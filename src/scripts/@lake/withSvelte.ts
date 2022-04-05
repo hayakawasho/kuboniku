@@ -1,5 +1,6 @@
 import type { SvelteComponent } from 'svelte'
-import { useDOMRef } from './domRef'
+import { domRefs } from './domRef'
+import type { RefValue, ReturnDOMRef } from './domRef'
 import type { IComponent } from './types'
 
 type SvelteAppType = typeof SvelteComponent
@@ -11,9 +12,16 @@ class WithSvelte implements IComponent {
 
   init(element: HTMLElement, props = {}) {
     const rootRef = element
+
+    const useDOMRef = <T>(ref: RefValue): ReturnDOMRef<T> => {
+      const refs = domRefs(ref, rootRef)
+      return {
+        refs: refs as any,
+      }
+    }
+
     const newProps = {
       ...props,
-      rootRef,
       useDOMRef,
     }
 
