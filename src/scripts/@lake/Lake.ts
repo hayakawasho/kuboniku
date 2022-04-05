@@ -1,6 +1,6 @@
-import { assert } from './util/assert'
-import { getNodeDataType } from './util/html'
-import { q } from './util/selector'
+import { assert } from './assert'
+import { getNodeDataType } from './html'
+import { q } from './selector'
 
 class Lake {
   definitions = new Map<string, [any, any[]]>()

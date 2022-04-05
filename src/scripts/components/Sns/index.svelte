@@ -1,19 +1,24 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
+  import type { DOMRef } from '../../@lake'
 
-  export let useDOMRef: any
-
-  function onToggle() {
-    //
+  type Refs = {
+    icon: HTMLLIElement
   }
 
+  export let useDOMRef: DOMRef
+
+  const refs = useDOMRef<Refs>({
+    icon: 'icon',
+  })
+
+  console.log(refs)
+
   onMount(() => {
-    console.log('mount', 'SNS')
+    console.log('onMount:Sns')
   })
 
   onDestroy(() => {
-    console.log('destroy')
+    console.log('onDestroy:Sns')
   })
 </script>
-
-<button class="absolute inset-0" on:click={onToggle} />
