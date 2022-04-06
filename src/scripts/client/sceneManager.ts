@@ -18,6 +18,7 @@ import {
   withSvelte,
   defineComponent,
   onSetup,
+  onCleanup,
 } from '@/foundation'
 
 export interface IScene {
@@ -77,13 +78,13 @@ class SceneManager {
     defineComponent('GLWorld', withSvelte(GLWorld))
     defineComponent('Menu', withSvelte(Menu))
 
-    onSetup()
-
     await Promise.all([
       import('lazysizes'),
       await scene.enter(),
       import('../components/Pjax'),
     ])
+
+    onSetup()
   }
 
   gotoScene = async (scene: IScene) => {

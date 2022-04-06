@@ -54,7 +54,11 @@
     <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
   </head>
 
-  <body class="is-domLoading" data-page="{{ namespace }}">
+  <body
+    class="is-domLoading"
+    data-page="{{ namespace }}"
+    data-component="Menu"
+  >
     <div class="l-mask" id="js-viewportRef"></div>
     <header class="l-fixed l-header">
       <a href="/" class="l-brandLogo">
@@ -63,8 +67,7 @@
       </a>
       {% include './_burger.njk' %}
       {% include './_sns.njk' %}
-      <small class="l-copyright"
-      >&copy; KuboNiku.com</small>
+      <small class="l-copyright">&copy; KuboNiku.com</small>
     </header>
 
     <div class="l-window" data-router-wrapper>

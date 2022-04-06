@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
+  import type { DOMRef } from '@/foundation'
+  // import { TWEEN } from '@/foundation'
 
-  // function onToggle(e) {
-  //   console.log('Toggle', e)
-  // }
+  type Refs = {
+    menuTrigger: HTMLButtonElement
+  }
 
-  onMount(() => {
-    // console.log('mount')
-  })
+  export let useDOMRef: DOMRef
 
-  onDestroy(() => {
-    // console.log('destroy')
-  })
+  const refmap = new Set(['menuTrigger'])
+  const { refs: _ } = useDOMRef<Refs>(refmap)
+
+  onMount(() => {})
 </script>
