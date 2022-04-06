@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import type { DOMRef } from '@/foundation'
   // import { TWEEN } from '@/foundation'
 
@@ -19,9 +19,9 @@
 
   onMount(() => {
     refs.trigger.addEventListener('click', onToggle)
+  })
 
-    return () => {
-      refs.trigger.removeEventListener('click', onToggle)
-    }
+  onDestroy(() => {
+    refs.trigger.removeEventListener('click', onToggle)
   })
 </script>
