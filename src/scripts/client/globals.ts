@@ -9,19 +9,17 @@ export default function () {
 
   setVh(window.innerHeight)
 
-  const ro = new ResizeObserver(entries => {
-    for (const entry of entries) {
-      const rect = entry.contentRect
-      const windowH = window.innerHeight
+  const ro = new ResizeObserver(([entry]) => {
+    const rect = entry.contentRect
+    const windowH = window.innerHeight
 
-      setVh(windowH)
+    setVh(windowH)
 
-      eventbus.emit(WINDOW_RESIZE, {
-        screenW: rect.width,
-        screenH: rect.height,
-        windowH,
-      })
-    }
+    eventbus.emit(WINDOW_RESIZE, {
+      screenWidth: rect.width,
+      screenHeight: rect.height,
+      windowHeight: windowH,
+    })
   })
 
   ro.observe(document.getElementById('js-viewportRef') as HTMLElement)

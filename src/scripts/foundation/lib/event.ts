@@ -29,9 +29,9 @@ type Events = {
     to: HTMLElement
   }
   [WINDOW_RESIZE]: {
-    windowH: number
-    screenW: number
-    screenH: number
+    windowHeight: number
+    screenWidth: number
+    screenHeight: number
   }
   [DOM_UPDATED]: undefined
 }

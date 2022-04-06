@@ -1,7 +1,7 @@
 import { createSceneManager } from './sceneManager'
 import GLWorld from '@/components/GLWorld/index.svelte'
-import Menu from '@/components/Menu/index.svelte'
-import Sns from '@/components/Sns/index.svelte'
+import Menu from '@/components/Menu.svelte'
+import Sns from '@/components/Sns.svelte'
 import { DefaultPage, WorksPage } from '@/components/page'
 import { router, q, withSvelte, defineComponent } from '@/foundation'
 

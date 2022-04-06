@@ -1,5 +1,4 @@
-import { match } from 'ts-pattern'
-import globals from './global'
+import globals from './globals'
 import { loader } from './loader'
 import { assetsManifest } from './manifest'
 import {
@@ -59,29 +58,27 @@ class SceneManager {
 
   #once = async (scene: IScene) => {
     const now = g.bootstart
-
     loader.loadStart(now, assetsManifest)
 
     globals()
 
-    Promise.all([import('lazysizes'), import('../components/Pjax')])
-
-    await scene.enter()
+    Promise.all([
+      import('lazysizes'),
+      await scene.enter(),
+      import('../components/Pjax'),
+    ])
 
     this.#newScene = scene
   }
 
-  gotoScene = (scene: IScene) => {
-    match(this.#pjaxIsStarted)
-      .with(true, async () => {
-        await scene.enter(this.#scope)
-        this.#newScene = scene
-      })
-      .with(false, async () => {
-        await this.#once(scene)
-        this.#pjaxIsStarted = true
-      })
-      .exhaustive()
+  gotoScene = async (scene: IScene) => {
+    if (this.#pjaxIsStarted) {
+      await scene.enter(this.#scope)
+      this.#newScene = scene
+    } else {
+      await this.#once(scene)
+      this.#pjaxIsStarted = true
+    }
 
     eventbus.emit(AFTER_PAGE_READY)
   }
