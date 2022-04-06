@@ -1,19 +1,9 @@
 import { createSceneManager } from './sceneManager'
-import GLWorld from '@/components/GLWorld/index.svelte'
-import Menu from '@/components/Menu.svelte'
-import Sns from '@/components/Sns.svelte'
 import { DefaultPage, WorksPage } from '@/components/page'
-import { router, q, withSvelte, defineComponent } from '@/foundation'
+import { router } from '@/foundation'
 
 export function initApp() {
   const { gotoScene } = createSceneManager()
-
-  defineComponent('Sns', withSvelte(Sns))
-  defineComponent('GLWorld', withSvelte(GLWorld))
-  defineComponent('Menu', withSvelte(Menu))
-
-  const modujs = withSvelte(Sns)
-  modujs.init(q('[data-component="Sns"]')[0], {})
 
   router
     .route('/works/:slug', _req => {
@@ -25,5 +15,5 @@ export function initApp() {
     .route('*', _req => {
       gotoScene(DefaultPage.exec())
     })
-    .exec()
+    .run()
 }

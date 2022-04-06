@@ -10,9 +10,8 @@ const router = Do(() => {
       use(path, callback)
       return this
     },
-    exec() {
-      listen()
-    },
+    run: listen,
+    rerun: processCurrentPath,
   }
 })
 
