@@ -1,9 +1,6 @@
 import globals from './globals'
 import { loader } from './loader'
 import { assetsManifest } from './manifest'
-import GLWorld from '@/components/GLWorld/index.svelte'
-import Menu from '@/components/Menu.svelte'
-import Sns from '@/components/Sns.svelte'
 import {
   AFTER_PAGE_READY,
   PJAX_ENTER,
@@ -12,14 +9,7 @@ import {
   PJAX_LEAVE,
 } from '@/const'
 import { g } from '@/env'
-import {
-  eventbus,
-  router,
-  withSvelte,
-  defineComponent,
-  onSetup,
-  onCleanup,
-} from '@/foundation'
+import { eventbus, router } from '@/foundation'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -74,17 +64,11 @@ class SceneManager {
 
     globals()
 
-    defineComponent('Sns', withSvelte(Sns))
-    defineComponent('GLWorld', withSvelte(GLWorld))
-    defineComponent('Menu', withSvelte(Menu))
-
     await Promise.all([
       import('lazysizes'),
       await scene.enter(),
       import('../components/Pjax'),
     ])
-
-    onSetup()
   }
 
   gotoScene = async (scene: IScene) => {
