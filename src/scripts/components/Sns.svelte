@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount } from 'svelte'
   import type { DOMRef } from '@/foundation'
+  // import { TWEEN } from '@/foundation'
 
   type Refs = {
     trigger: HTMLButtonElement
@@ -12,11 +13,15 @@
   const refsMap = new Set(['trigger', 'icon'])
   const { refs } = useDOMRef<Refs>(refsMap)
 
-  onMount(() => {
-    console.log('onMount:Sns', refs)
-  })
+  function onToggle(e: Event) {
+    e.preventDefault()
+  }
 
-  onDestroy(() => {
-    console.log('onDestroy:Sns')
+  onMount(() => {
+    refs.trigger.addEventListener('click', onToggle)
+
+    return () => {
+      refs.trigger.removeEventListener('click', onToggle)
+    }
   })
 </script>
