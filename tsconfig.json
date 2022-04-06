@@ -30,7 +30,7 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["src/**/*", "@types", "src/node_modules/~lake"],
+  "include": ["src/**/*", "@types"],
   "exclude": ["node_modules/*", "static/*"],
   "extends": "@tsconfig/svelte/tsconfig.json"
 }

@@ -10,8 +10,8 @@
 
   export let useDOMRef: DOMRef
 
-  const refsMap = new Set(['trigger', 'icon'])
-  const { refs } = useDOMRef<Refs>(refsMap)
+  const refmap = new Set(['trigger', 'icon'])
+  const { refs } = useDOMRef<Refs>(refmap)
 
   function onToggle(e: Event) {
     e.preventDefault()
