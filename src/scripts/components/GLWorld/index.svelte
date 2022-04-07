@@ -1,8 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import type { DOMRef } from '@/foundation'
-
-  export let useDOMRef: DOMRef
 
   onMount(() => {
     //

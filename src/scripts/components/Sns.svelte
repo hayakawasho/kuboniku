@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
-  import type { DOMRef } from '@/foundation'
+  import { onMount, onDestroy, getContext } from 'svelte'
+  import type { ContextProps$ } from '@/foundation'
   // import { TWEEN } from '@/foundation'
 
   type Refs = {
@@ -8,7 +8,7 @@
     icon: HTMLAnchorElement[]
   }
 
-  export let useDOMRef: DOMRef
+  const { useDOMRef } = getContext<ContextProps$>('$')
 
   const refmap = new Set(['trigger', 'icon'])
   const { refs } = useDOMRef<Refs>(refmap)
