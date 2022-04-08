@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy, getContext } from 'svelte'
   import type { Context$ } from '@/foundation'
+  import { CONTEXT_$ } from '@/foundation'
   // import { TWEEN } from '@/foundation'
 
   type Refs = {
@@ -8,7 +9,7 @@
     icon: HTMLAnchorElement[]
   }
 
-  const { useDOMRef } = getContext<Context$>('$')
+  const { useDOMRef } = getContext<Context$>(CONTEXT_$)
   const { refs } = useDOMRef<Refs>(new Set(['trigger', 'icon']))
 
   function onToggle(e: Event) {

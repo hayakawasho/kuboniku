@@ -1,13 +1,14 @@
 <script lang="ts">
   import { onMount, onDestroy, getContext } from 'svelte'
   import type { Context$ } from '@/foundation'
+  import { CONTEXT_$ } from '@/foundation'
   // import { TWEEN } from '@/foundation'
 
   type Refs = {
     targets: HTMLElement[]
   }
 
-  const { useDOMRef, rootRef } = getContext<Context$>('$')
+  const { useDOMRef, rootRef } = getContext<Context$>(CONTEXT_$)
   const { refs } = useDOMRef<Refs>(new Set(['target']))
 
   onMount(() => {
