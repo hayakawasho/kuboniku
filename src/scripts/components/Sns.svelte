@@ -1,14 +1,13 @@
 <script lang="ts">
-  import { onMount, onDestroy, getContext } from 'svelte'
-  import type { Context$ } from '@/foundation'
-  import { refKeySet, TWEEN as __ } from '@/foundation'
+  import { onMount, onDestroy } from 'svelte'
+  import { refKeySet, getContext$, TWEEN as __ } from '@/foundation'
 
   type Refs = {
     trigger: HTMLButtonElement
     icon: HTMLAnchorElement[]
   }
 
-  const { useDOMRef } = getContext<Context$>('$')
+  const { useDOMRef } = getContext$()
   const { refs } = useDOMRef<Refs>(refKeySet('trigger', 'icon'))
 
   function onToggle(e: Event) {
