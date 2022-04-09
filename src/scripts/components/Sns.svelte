@@ -18,10 +18,10 @@
 
   let isOpen: boolean | undefined
 
-  $: isOpen && openSns()
-  $: isOpen === false && closeSns()
+  $: isOpen && onOpen()
+  $: isOpen === false && onClose()
 
-  function openSns() {
+  function onOpen() {
     TWEEN.parallel(
       TWEEN.tween(refs.toggleTrigger, 0.55, EASE._3_CubicInOut).rotation(90),
       TWEEN.serial(
@@ -34,7 +34,7 @@
     ).play()
   }
 
-  function closeSns() {
+  function onClose() {
     TWEEN.parallel(
       TWEEN.tween(refs.toggleTrigger, 0.55, EASE._3_CubicInOut).rotation(0),
       TWEEN.lagSort(
