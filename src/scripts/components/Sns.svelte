@@ -1,24 +1,52 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
-  import { refKeySet, getContext$, TWEEN as __ } from '@/foundation'
+  import {
+    refKeySet,
+    getContext$,
+    useEvent,
+    TWEEN,
+    EASE,
+    REVERSE,
+  } from '@/foundation'
 
   type Refs = {
-    trigger: HTMLButtonElement
+    toggleTrigger: HTMLButtonElement
     icon: HTMLAnchorElement[]
   }
 
   const { useDOMRef } = getContext$()
-  const { refs } = useDOMRef<Refs>(refKeySet('trigger', 'icon'))
+  const { refs } = useDOMRef<Refs>(refKeySet('toggleTrigger', 'icon'))
 
-  function onToggle(e: Event) {
-    e.preventDefault()
+  let isOpen: boolean | undefined
+
+  $: isOpen && openSns()
+  $: isOpen === false && closeSns()
+
+  function openSns() {
+    TWEEN.parallel(
+      TWEEN.tween(refs.toggleTrigger, 0.55, EASE._3_CubicInOut).rotation(90),
+      TWEEN.serial(
+        TWEEN.prop(refs.icon).y(20).opacity(0),
+        TWEEN.lag(
+          0.07,
+          TWEEN.tween(refs.icon, 0.5, EASE._3_CubicOut).y(0).opacity(1)
+        )
+      )
+    ).play()
   }
 
-  onMount(() => {
-    refs.trigger.addEventListener('click', onToggle)
-  })
+  function closeSns() {
+    TWEEN.parallel(
+      TWEEN.tween(refs.toggleTrigger, 0.55, EASE._3_CubicInOut).rotation(0),
+      TWEEN.lagSort(
+        0.07,
+        REVERSE,
+        TWEEN.tween(refs.icon, 0.5, EASE._3_CubicOut).y(20).opacity(0)
+      )
+    ).play()
+  }
 
-  onDestroy(() => {
-    refs.trigger.removeEventListener('click', onToggle)
+  useEvent(refs.toggleTrigger, 'click', evt => {
+    evt.preventDefault()
+    isOpen = !isOpen
   })
 </script>

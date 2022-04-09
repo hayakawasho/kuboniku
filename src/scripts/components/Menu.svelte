@@ -1,23 +1,14 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte'
-  import { refKeySet, TWEEN as __, getContext$ } from '@/foundation'
+  import { refKeySet, getContext$, useEvent } from '@/foundation'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
   }
 
-  const { useDOMRef, rootRef: _ } = getContext$()
+  const { useDOMRef, rootRef: __ } = getContext$()
   const { refs } = useDOMRef<Refs>(refKeySet('menuTrigger'))
 
-  function onToggle(e: Event) {
-    e.preventDefault()
-  }
-
-  onMount(() => {
-    refs.menuTrigger.addEventListener('click', onToggle)
-  })
-
-  onDestroy(() => {
-    refs.menuTrigger.removeEventListener('click', onToggle)
+  useEvent(refs.menuTrigger, 'click', evt => {
+    evt.preventDefault()
   })
 </script>
