@@ -3,9 +3,16 @@ import GLWorld from '@/components/GLWorld/index.svelte'
 import Menu from '@/components/Menu.svelte'
 import Skewscroll from '@/components/Skewscroll.svelte'
 import Sns from '@/components/Sns.svelte'
+import WorksLoadmore from '@/components/WorksLoadmore/index.svelte'
 import { DefaultPage, WorksPage } from '@/components/page'
 import { router } from '@/foundation'
-import { withSvelte, defineComponent, onSetup, Do } from '@/foundation'
+import {
+  withSvelte,
+  defineComponent,
+  resolveComponent,
+  onSetup,
+  Do,
+} from '@/foundation'
 import type { IComponent } from '@/foundation'
 
 export function initApp() {
@@ -15,27 +22,19 @@ export function initApp() {
   defineComponent('GLWorld', withSvelte(GLWorld))
   defineComponent('Menu', withSvelte(Menu))
   defineComponent('Skewscroll', withSvelte(Skewscroll))
-
-  defineComponent('DefaultPage', {
-    setup() {
-      //
-    },
-    destroy() {
-      //
-    },
-  })
+  defineComponent('WorksLoadmore', withSvelte(WorksLoadmore))
 
   defineComponent(
     'WorksPage',
-    Do<IComponent & { children: [] }, [HTMLElement, HTMLElement]>(() => {
+    Do<IComponent, never>(() => {
       return {
         setup() {
           //
         },
+
         destroy() {
           //
         },
-        children: [],
       }
     }),
     []
