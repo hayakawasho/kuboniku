@@ -1,10 +1,11 @@
 .c-burger {
   position: fixed;
-  top: .8rem;
+  top: 0.8rem;
   right: 1rem;
   width: 4rem;
   height: 4rem;
   z-index: 101;
+  pointer-events: auto;
 }
 
 .c-burger__line {

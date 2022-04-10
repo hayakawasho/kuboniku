@@ -59,7 +59,9 @@
     data-page="{{ namespace }}"
     data-component="Menu"
   >
+
     <div class="l-mask" id="js-viewportRef"></div>
+
     <header class="l-fixed l-header">
       <a href="/" class="l-brandLogo">
         <i class="icon-logo"></i>
@@ -69,6 +71,8 @@
       {% include './_sns.njk' %}
       <small class="l-copyright">&copy; KuboNiku.com</small>
     </header>
+
+    {% include './_nav.njk' %}
 
     <div class="l-window" data-router-wrapper>
       <div class="l-content" data-router-view="{{ namespace }}">

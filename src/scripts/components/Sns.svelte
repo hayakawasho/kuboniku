@@ -21,6 +21,11 @@
   $: isOpen && onOpen()
   $: isOpen === false && onClose()
 
+  useEvent(refs.toggleTrigger, 'click', evt => {
+    evt.preventDefault()
+    isOpen = !isOpen
+  })
+
   function onOpen() {
     TWEEN.serial(
       TWEEN.prop(refs.icon).y(20).opacity(0).style('visibility', 'visible'),
@@ -47,9 +52,4 @@
       TWEEN.prop(refs.icon).y(20).opacity(0).style('visibility', 'hidden')
     ).play()
   }
-
-  useEvent(refs.toggleTrigger, 'click', evt => {
-    evt.preventDefault()
-    isOpen = !isOpen
-  })
 </script>
