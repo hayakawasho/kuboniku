@@ -12,6 +12,10 @@
   border-width: 0
 }
 
+.visible {
+  visibility: visible
+}
+
 .static {
   position: static
 }
@@ -168,6 +172,10 @@
 
 .flex {
   display: flex
+}
+
+.hidden {
+  display: none
 }
 
 .h-full {
