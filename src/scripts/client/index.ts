@@ -7,7 +7,7 @@ import Sns from '@/components/Sns.svelte'
 // import WorksPage from '@/components/WorksPage'
 import { DefaultPage, WorksPage } from '@/components/page'
 import { router } from '@/foundation'
-import { withSvelte, register, q, mount } from '@/foundation'
+import { withSvelte, register } from '@/foundation'
 
 export function initializeApp() {
   const { gotoScene } = createSceneManager()

@@ -6,6 +6,7 @@ export { Util } from './util/utils'
 export { createIntersectionWatch } from './util/io'
 export { splitTextNode } from './util/split'
 export { Do } from './util/fp'
+export { parseValue } from './util/html'
 
 export * from './error/unknown2Err'
 

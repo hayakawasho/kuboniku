@@ -1,12 +1,15 @@
 import { assert } from './assert'
 import type { IComponent } from './types'
 
-const DEFINETATIONS = new Map<string, IComponent>()
+const COMPONENTS_IMPLEMENTATION_MAP = new Map<string, IComponent>()
 
-const DOM_COMPONENT_INSTANCE = new WeakMap<HTMLElement, IComponent>()
+const DOM_COMPONENT_INSTANCE_PROPERTY = new WeakMap<HTMLElement, IComponent>()
 
-function bindNodeToComponent(node: HTMLElement, Component: IComponent) {
-  DOM_COMPONENT_INSTANCE.set(node, Component)
+function bindDOMNodeToComponentObject(
+  node: HTMLElement,
+  Component: IComponent
+) {
+  DOM_COMPONENT_INSTANCE_PROPERTY.set(node, Component)
 }
 
 function defineComponent({ setup, cleanup }: IComponent) {
@@ -16,38 +19,42 @@ function defineComponent({ setup, cleanup }: IComponent) {
   }
 }
 
-function mount(targets: HTMLElement[]) {
-  return targets.map(el => {
-    const { component, props: _ } = el.dataset
-    const context = DEFINETATIONS.get(component as string)
-    const props = {}
+function mountComponent<T extends HTMLElement>(
+  el: T,
+  props: object,
+  componentName: string
+) {
+  if (!COMPONENTS_IMPLEMENTATION_MAP.has(componentName)) {
+    return
+  }
 
-    assert(context, `${component} was already registered`)
+  const context = COMPONENTS_IMPLEMENTATION_MAP.get(componentName) as IComponent
 
-    bindNodeToComponent(el, context)
-    context.setup(el, props)
+  bindDOMNodeToComponentObject(el, context)
 
-    return el
-  })
+  context.setup(el, props)
+
+  return context
 }
 
 function unmount(targets: HTMLElement[]) {
   return targets.map(el => {
-    const context = DOM_COMPONENT_INSTANCE.get(el)
-    context?.cleanup()
+    if (!DOM_COMPONENT_INSTANCE_PROPERTY.has(el)) {
+      return
+    }
+
+    DOM_COMPONENT_INSTANCE_PROPERTY.get(el)!.cleanup()
 
     return el
   })
 }
 
 function register(name: string, Component: IComponent) {
-  assert(!DEFINETATIONS.has(name), `${name} was already registered`)
-  DEFINETATIONS.set(name, Component)
-}
-
-function unregister(name: string) {
-  assert(DEFINETATIONS.has(name), `${name} was never registered`)
-  DEFINETATIONS.delete(name)
+  assert(
+    !COMPONENTS_IMPLEMENTATION_MAP.has(name),
+    `${name} was already registered`
+  )
+  COMPONENTS_IMPLEMENTATION_MAP.set(name, Component)
 }
 
 function createSubComponents(components = {}) {
@@ -59,9 +66,8 @@ function createSubComponents(components = {}) {
 
 export {
   defineComponent,
-  mount,
+  mountComponent,
   unmount,
   register,
-  unregister,
   createSubComponents,
 }

@@ -9,7 +9,18 @@ import {
   PJAX_LEAVE,
 } from '@/const'
 import { g } from '@/env'
-import { eventbus, router, mount, q } from '@/foundation'
+import { eventbus, router, q, mountComponent, parseValue } from '@/foundation'
+
+function mount(targets: HTMLElement[]) {
+  return targets.map(el => {
+    const { props, component } = el.dataset
+    const newProps = parseValue(props) ?? {}
+
+    mountComponent(el, newProps, component as string)
+
+    return el
+  })
+}
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
