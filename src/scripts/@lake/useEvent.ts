@@ -14,6 +14,7 @@ export function useEvent<
   target.addEventListener(eventType, handler, options)
 
   onDestroy(() => {
+    console.log('destroy')
     target.removeEventListener(eventType, handler, options)
   })
 }

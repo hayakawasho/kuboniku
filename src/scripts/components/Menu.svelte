@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { refKeySet, getContext$, useEvent, TWEEN, EASE } from '@/foundation'
+  import { getContext$, useEvent, TWEEN, EASE } from '@/foundation'
   import { enablePageScroll, disablePageScroll } from 'scroll-lock'
 
   type Refs = {
@@ -14,23 +14,16 @@
 
   const { useDOMRef, rootRef } = getContext$()
   const { refs } = useDOMRef<Refs>(
-    refKeySet(
-      'menuTrigger',
-      'burgerTopLine',
-      'burgerBottomLine',
-      'menuBody',
-      'menuMask',
-      'menuBg',
-      'menuLabel'
-    )
+    'menuTrigger',
+    'burgerTopLine',
+    'burgerBottomLine',
+    'menuBody',
+    'menuMask',
+    'menuBg',
+    'menuLabel'
   )
 
   let isOpen: boolean | undefined // 初期描画しないように初期値はundefinedにする
-
-  const CLIP_PATH = {
-    x1: 100,
-    x2: 100,
-  }
 
   $: isOpen && onOpen()
   $: isOpen === false && onClose()
@@ -52,9 +45,6 @@
     disablePageScroll()
 
     TWEEN.serial(
-      TWEEN.prop(CLIP_PATH, {
-        x1: 100,
-      }),
       TWEEN.parallel(
         //TWEEN.tween(CLIP_PATH, 0.8, EASE._3_CubicInOut).onUpdate(() => {
         //  CLIP_PATH.x1 = 100
@@ -68,9 +58,6 @@
 
   function onClose() {
     TWEEN.serial(
-      TWEEN.prop(CLIP_PATH, {
-        x1: 100,
-      }),
       TWEEN.parallel(
         //TWEEN.tween(CLIP_PATH, 0.8, EASE._3_CubicInOut).onUpdate(() => {
         //  CLIP_PATH.x1 = 100

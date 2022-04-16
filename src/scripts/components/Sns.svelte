@@ -1,12 +1,5 @@
 <script lang="ts">
-  import {
-    refKeySet,
-    getContext$,
-    useEvent,
-    TWEEN,
-    EASE,
-    REVERSE,
-  } from '@/foundation'
+  import { getContext$, useEvent, TWEEN, EASE, REVERSE } from '@/foundation'
 
   type Refs = {
     toggleTrigger: HTMLButtonElement
@@ -14,7 +7,7 @@
   }
 
   const { useDOMRef } = getContext$()
-  const { refs } = useDOMRef<Refs>(refKeySet('toggleTrigger', 'icon'))
+  const { refs } = useDOMRef<Refs>('toggleTrigger', 'icon')
 
   let isOpen: boolean | undefined // 初期描画しないように初期値はundefinedにする
 

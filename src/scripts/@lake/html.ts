@@ -8,10 +8,10 @@ export function parseValue(value: any) {
       return false
     case 'null':
       return null
-    case  +value + '': // Only convert to a number if it doesn't change the string
+    case +value + '': // Only convert to a number if it doesn't change the string
       return +value
     default:
-      break;
+      break
   }
 
   if (rbrace.test(value)) {
@@ -19,15 +19,4 @@ export function parseValue(value: any) {
   }
 
   return value
-}
-
-export function getNodeDataType(node: HTMLElement) {
-  const data: { [key: string]: any } = {}
-  const attrs = node.dataset
-
-  for (const i in attrs) {
-    data[i] = parseValue(attrs[i])
-  }
-
-  return data
 }

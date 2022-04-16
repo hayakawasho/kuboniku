@@ -1,6 +1,6 @@
 import Highway from '@dogstudio/highway'
 import { PJAX_ENTER, PJAX_LEAVE } from '@/const'
-import { TWEEN, EASE, eventbus, onCleanup } from '@/foundation'
+import { TWEEN, EASE, eventbus, unmount, q } from '@/foundation'
 
 class Fade extends Highway.Transition {
   in({ from, to, done }: any) {
@@ -14,8 +14,8 @@ class Fade extends Highway.Transition {
     TWEEN.tween(from, 0.35, EASE._2_QuadOut)
       .opacity(0)
       .onComplete(() => {
+        unmount(q('[data-component]', from))
         done()
-        onCleanup()
       })
       .play()
   }

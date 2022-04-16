@@ -1,44 +1,21 @@
+import type { SvelteComponent } from 'svelte'
 import { createSceneManager } from './sceneManager'
 import GLWorld from '@/components/GLWorld/index.svelte'
 import Menu from '@/components/Menu.svelte'
-import Skewscroll from '@/components/Skewscroll.svelte'
+// import Skewscroll from '@/components/Skewscroll.svelte'
 import Sns from '@/components/Sns.svelte'
-import WorksLoadmore from '@/components/WorksLoadmore/index.svelte'
+// import WorksPage from '@/components/WorksPage'
 import { DefaultPage, WorksPage } from '@/components/page'
 import { router } from '@/foundation'
-import {
-  withSvelte,
-  defineComponent,
-  resolveComponent,
-  onSetup,
-  Do,
-} from '@/foundation'
-import type { IComponent } from '@/foundation'
+import { withSvelte, register, q, mount } from '@/foundation'
 
-export function initApp() {
+export function initializeApp() {
   const { gotoScene } = createSceneManager()
 
-  defineComponent('Sns', withSvelte(Sns))
-  defineComponent('GLWorld', withSvelte(GLWorld))
-  defineComponent('Menu', withSvelte(Menu))
-  defineComponent('Skewscroll', withSvelte(Skewscroll))
-  defineComponent('WorksLoadmore', withSvelte(WorksLoadmore))
-
-  defineComponent(
-    'WorksPage',
-    Do<IComponent, never>(() => {
-      return {
-        setup() {
-          //
-        },
-
-        destroy() {
-          //
-        },
-      }
-    }),
-    []
-  )
+  register('GLWorld', withSvelte(GLWorld as unknown as typeof SvelteComponent))
+  register('Menu', withSvelte(Menu as any))
+  register('Skewscroll', withSvelte(GLWorld as any))
+  register('Sns', withSvelte(Sns as any))
 
   router
     .route('/works/:slug', _req => {
@@ -51,6 +28,4 @@ export function initApp() {
       gotoScene(DefaultPage.exec())
     })
     .run()
-
-  onSetup()
 }

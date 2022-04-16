@@ -9,7 +9,7 @@ import {
   PJAX_LEAVE,
 } from '@/const'
 import { g } from '@/env'
-import { eventbus, router } from '@/foundation'
+import { eventbus, router, mount, q } from '@/foundation'
 
 export interface IScene {
   enter(scope?: HTMLElement): Promise<unknown>
@@ -63,6 +63,8 @@ class SceneManager {
     loader.loadStart(now, assetsManifest)
 
     globals()
+
+    mount(q('[data-component]'))
 
     await Promise.all([
       import('lazysizes'),
