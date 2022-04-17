@@ -14,8 +14,8 @@ export function initializeApp() {
 
   q('[data-component]').forEach(el => {
     const { props, component } = el.dataset
-    const newProps = parseValue(props) || {}
-    mountComponent(el, newProps, component as string)
+    const parsedProps = parseValue(props) || {}
+    mountComponent(el, parsedProps, component as string)
   })
 
   // router
