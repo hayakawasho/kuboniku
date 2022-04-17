@@ -1,4 +1,3 @@
-import type { SvelteComponent } from 'svelte'
 import { createSceneManager } from './sceneManager'
 import GLWorld from '@/components/GLWorld/index.svelte'
 import Menu from '@/components/Menu.svelte'
@@ -12,10 +11,10 @@ import { withSvelte, register } from '@/foundation'
 export function initializeApp() {
   const { gotoScene } = createSceneManager()
 
-  register('GLWorld', withSvelte(GLWorld as unknown as typeof SvelteComponent))
-  register('Menu', withSvelte(Menu as any))
-  register('Skewscroll', withSvelte(GLWorld as any))
-  register('Sns', withSvelte(Sns as any))
+  register('GLWorld', withSvelte(GLWorld))
+  register('Menu', withSvelte(Menu))
+  register('Skewscroll', withSvelte(GLWorld))
+  register('Sns', withSvelte(Sns))
 
   router
     .route('/works/:slug', _req => {

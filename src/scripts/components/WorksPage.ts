@@ -7,7 +7,7 @@ export default defineComponent({
   },
 
   setup(_, _props) {
-    return this
+    //
   },
 
   cleanup() {

@@ -5,19 +5,18 @@ import { domRefs } from './domRefs'
 import type { Context$ } from './types'
 
 function withSvelte(SvelteApp: typeof SvelteComponent) {
-  const symbol = {} as const
+  const appKey = {} as const
   const app$ = new WeakMap<object, SvelteComponent>()
 
   return defineComponent({
-    setup(el, props) {
-      const rootRef = el
+    setup(rootRef, props) {
       const context = new Map<'$', Context$>()
 
       context.set('$', {
+        rootRef,
         useDOMRef: (...ref) => ({
           refs: domRefs(new Set(ref), rootRef),
         }),
-        rootRef: rootRef,
       })
 
       const app = new SvelteApp({
@@ -26,11 +25,11 @@ function withSvelte(SvelteApp: typeof SvelteComponent) {
         context,
       })
 
-      app$.set(symbol, app)
+      app$.set(appKey, app)
     },
 
     cleanup() {
-      app$.get(symbol)?.$destroy()
+      app$.get(appKey)?.$destroy()
     },
   })
 }

@@ -1,14 +1,10 @@
 import { assert } from './assert'
-import type { IComponent } from './types'
+import type { IComponent, DOMNode } from './types'
 
 const COMPONENTS_IMPLEMENTATION_MAP = new Map<string, IComponent>()
+const DOM_COMPONENT_INSTANCE_PROPERTY = new WeakMap<DOMNode, IComponent>()
 
-const DOM_COMPONENT_INSTANCE_PROPERTY = new WeakMap<HTMLElement, IComponent>()
-
-function bindDOMNodeToComponentObject(
-  node: HTMLElement,
-  Component: IComponent
-) {
+function bindDOMNodeToComponentObject(node: DOMNode, Component: IComponent) {
   DOM_COMPONENT_INSTANCE_PROPERTY.set(node, Component)
 }
 
@@ -19,31 +15,29 @@ function defineComponent({ setup, cleanup }: IComponent) {
   }
 }
 
-function mountComponent<T extends HTMLElement>(
-  el: T,
-  props: object,
-  componentName: string
-) {
+function mountComponent(el: DOMNode, props: object, componentName: string) {
   if (!COMPONENTS_IMPLEMENTATION_MAP.has(componentName)) {
     return
   }
 
-  const context = COMPONENTS_IMPLEMENTATION_MAP.get(componentName) as IComponent
+  const component = COMPONENTS_IMPLEMENTATION_MAP.get(
+    componentName
+  ) as IComponent
 
-  bindDOMNodeToComponentObject(el, context)
+  bindDOMNodeToComponentObject(el, component)
 
-  context.setup(el, props)
+  component.setup(el, props)
 
-  return context
+  return component
 }
 
-function unmount(targets: HTMLElement[]) {
+function unmount(targets: DOMNode[]) {
   return targets.map(el => {
     if (!DOM_COMPONENT_INSTANCE_PROPERTY.has(el)) {
       return
     }
 
-    DOM_COMPONENT_INSTANCE_PROPERTY.get(el)!.cleanup()
+    ;(DOM_COMPONENT_INSTANCE_PROPERTY.get(el) as IComponent).cleanup()
 
     return el
   })
@@ -54,20 +48,8 @@ function register(name: string, Component: IComponent) {
     !COMPONENTS_IMPLEMENTATION_MAP.has(name),
     `${name} was already registered`
   )
+
   COMPONENTS_IMPLEMENTATION_MAP.set(name, Component)
 }
 
-function createSubComponents(components = {}) {
-  return Object.entries(components).reduce<any>((acc, [key, value]) => {
-    acc[key] = value
-    return acc
-  }, {})
-}
-
-export {
-  defineComponent,
-  mountComponent,
-  unmount,
-  register,
-  createSubComponents,
-}
+export { defineComponent, mountComponent, unmount, register }
