@@ -4,25 +4,18 @@ import type { IComponent, DOMNode } from './types'
 const COMPONENTS_IMPLEMENTATION_MAP = new Map<string, IComponent>()
 const DOM_COMPONENT_INSTANCE_PROPERTY = new WeakMap<DOMNode, IComponent>()
 
-function bindDOMNodeToComponentObject(node: DOMNode, Component: IComponent) {
-  DOM_COMPONENT_INSTANCE_PROPERTY.set(node, Component)
+function bindDOMNodeToComponentObject(node: DOMNode, component: IComponent) {
+  DOM_COMPONENT_INSTANCE_PROPERTY.set(node, component)
 }
 
-function defineComponent({ setup, cleanup }: IComponent) {
-  return {
-    setup,
-    cleanup,
-  }
-}
+const defineComponent = (options: IComponent) => options
 
 function mountComponent(el: DOMNode, props: object, componentName: string) {
   if (!COMPONENTS_IMPLEMENTATION_MAP.has(componentName)) {
     return
   }
 
-  const component = COMPONENTS_IMPLEMENTATION_MAP.get(
-    componentName
-  ) as IComponent
+  const component = COMPONENTS_IMPLEMENTATION_MAP.get(componentName) as IComponent
 
   bindDOMNodeToComponentObject(el, component)
 
@@ -43,13 +36,12 @@ function unmount(targets: DOMNode[]) {
   })
 }
 
-function register(name: string, Component: IComponent) {
-  assert(
-    !COMPONENTS_IMPLEMENTATION_MAP.has(name),
-    `${name} was already registered`
-  )
+function registerComponent(name: string, component: IComponent) {
+  assert(!COMPONENTS_IMPLEMENTATION_MAP.has(name), `${name} was already registered`)
 
-  COMPONENTS_IMPLEMENTATION_MAP.set(name, Component)
+  COMPONENTS_IMPLEMENTATION_MAP.set(name, component)
+
+  return COMPONENTS_IMPLEMENTATION_MAP
 }
 
-export { defineComponent, mountComponent, unmount, register }
+export { defineComponent, mountComponent, unmount, registerComponent }
