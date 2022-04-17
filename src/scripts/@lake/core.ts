@@ -20,27 +20,17 @@ function mountComponent(el: DOMNode, props: object, componentName: string) {
   bindDOMNodeToComponentObject(el, component)
 
   component.setup(el, props)
-
-  return component
 }
 
 function unmount(targets: DOMNode[]) {
-  return targets.map(el => {
-    if (!DOM_COMPONENT_INSTANCE_PROPERTY.has(el)) {
-      return
-    }
-
-    ;(DOM_COMPONENT_INSTANCE_PROPERTY.get(el) as IComponent).cleanup()
-
-    return el
-  })
+  return targets
+    .filter(el => DOM_COMPONENT_INSTANCE_PROPERTY.has(el))
+    .forEach(el => (DOM_COMPONENT_INSTANCE_PROPERTY.get(el) as IComponent).cleanup())
 }
 
 function registerComponent(name: string, component: IComponent) {
   assert(!COMPONENTS_IMPLEMENTATION_MAP.has(name), `${name} was already registered`)
-
   COMPONENTS_IMPLEMENTATION_MAP.set(name, component)
-
   return COMPONENTS_IMPLEMENTATION_MAP
 }
 
