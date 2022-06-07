@@ -106,6 +106,14 @@
   margin-bottom: 2rem
 }
 
+.mb-\[4rem\] {
+  margin-bottom: 4rem
+}
+
+.ml-\[\.5em\] {
+  margin-left: .5em
+}
+
 .mb-\[3\.4rem\] {
   margin-bottom: 3.4rem
 }
@@ -116,14 +124,6 @@
 
 .mb-\[2\.4rem\] {
   margin-bottom: 2.4rem
-}
-
-.mb-\[4rem\] {
-  margin-bottom: 4rem
-}
-
-.ml-\[\.5em\] {
-  margin-left: .5em
 }
 
 .mt-\[10rem\] {

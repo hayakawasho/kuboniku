@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getContext$, useEvent, TWEEN, EASE } from '@/foundation'
+  import { TWEEN, EASE } from '@/foundation'
+  import { getContext$, useEvent } from 'lake'
   import { enablePageScroll, disablePageScroll } from 'scroll-lock'
 
   type Refs = {
@@ -13,6 +14,7 @@
   }
 
   const { useDOMRef, rootRef } = getContext$()
+
   const { refs } = useDOMRef<Refs>(
     'menuTrigger',
     'burgerTopLine',
@@ -25,20 +27,19 @@
 
   let isOpen: boolean | undefined // 初期描画しないように初期値はundefinedにする
 
-  $: isOpen && onOpen()
-  $: isOpen === false && onClose()
+  $: switch (isOpen) {
+    case true:
+      onOpen()
+      break
+    case false:
+      onClose()
+      break
+  }
 
   useEvent(refs.menuTrigger, 'click', evt => {
     evt.preventDefault()
     isOpen = !isOpen
   })
-
-  // domBg.style.clipPath = `polygon(
-  //   ${CLIP_PATH.x1}% 0px,
-  //   100% 0px,
-  //   100% 100vh,
-  //   ${CLIP_PATH.x2}% 100vh
-  // )`;
 
   function onOpen() {
     rootRef.classList.add('is-menuOpen')
@@ -46,9 +47,6 @@
 
     TWEEN.serial(
       TWEEN.parallel(
-        //TWEEN.tween(CLIP_PATH, 0.8, EASE._3_CubicInOut).onUpdate(() => {
-        //  CLIP_PATH.x1 = 100
-        //}),
         TWEEN.tween(refs.menuTrigger, 0.8, EASE._3_CubicInOut).rotation(180),
         TWEEN.tween(refs.burgerTopLine, 0.8, EASE._3_CubicInOut).y(2.5),
         TWEEN.tween(refs.burgerBottomLine, 0.8, EASE._3_CubicInOut).scaleX(0)
@@ -59,19 +57,14 @@
   function onClose() {
     TWEEN.serial(
       TWEEN.parallel(
-        //TWEEN.tween(CLIP_PATH, 0.8, EASE._3_CubicInOut).onUpdate(() => {
-        //  CLIP_PATH.x1 = 100
-        //}),
         TWEEN.tween(refs.menuTrigger, 0.8, EASE._3_CubicInOut).rotation(360),
         TWEEN.tween(refs.burgerTopLine, 0.8, EASE._3_CubicInOut).y(0),
-        TWEEN.tween(refs.burgerBottomLine, 0.8, EASE._3_CubicInOut).scaleX(
-          32 / 40
-        )
+        TWEEN.tween(refs.burgerBottomLine, 0.8, EASE._3_CubicInOut).scaleX(32 / 40)
       )
     )
       .onComplete(() => {
-        enablePageScroll()
         rootRef.classList.remove('is-menuOpen')
+        enablePageScroll()
       })
       .play()
   }

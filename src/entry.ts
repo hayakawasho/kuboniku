@@ -2,30 +2,20 @@ import 'ress'
 import './styles/global.css'
 import './tailwind.dist.css'
 
-import { initializeApp } from './scripts/client'
+import { register, withSvelte, mount, q } from 'lake'
+import GLWorld from '@/components/GLWorld/index.svelte'
+import Menu from '@/components/Menu.svelte'
+import Sns from '@/components/Sns.svelte'
+import WorksIndex from '@/components/WorksIndex'
 
-const isDev = process.env.NODE_ENV === 'development'
+document.addEventListener('DOMContentLoaded', () => {
+  register('Menu', withSvelte(Menu))
+  register('Sns', withSvelte(Sns))
+  register('GLWorld', withSvelte(GLWorld))
+  register('WorksIndex', WorksIndex)
 
-document.addEventListener('DOMContentLoaded', initializeApp)
-
-if (isDev) {
-  const showStats = async () => {
-    const Stats = await (
-      (await import('https://cdn.skypack.dev/stats.js')) as any
-    ).default
-
-    const stats = new Stats()
-    stats.showPanel(0)
-
-    document.body.appendChild(stats.dom)
-
-    const loop = () => {
-      stats.update()
-      requestAnimationFrame(loop)
-    }
-
-    loop()
-  }
-
-  showStats()
-}
+  q('[data-component]').forEach(el => {
+    const componentName = el.dataset.component + ''
+    mount(el, {}, componentName)
+  })
+})
