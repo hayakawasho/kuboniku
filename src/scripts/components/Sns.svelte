@@ -1,13 +1,15 @@
 <script lang="ts">
   import { TWEEN, EASE, REVERSE } from '@/foundation'
-  import { getContext$, useEvent } from 'lake'
+  import { useEvent } from '@/foundation/lib/useEvent'
+  import type { Context$ } from 'lake'
+  import { getContext } from 'svelte'
 
   type Refs = {
     toggleTrigger: HTMLButtonElement
     icon: HTMLAnchorElement[]
   }
 
-  const { useDOMRef } = getContext$()
+  const { useDOMRef } = getContext<Context$>('$')
   const { refs } = useDOMRef<Refs>('toggleTrigger', 'icon')
 
   let isOpen: boolean | undefined

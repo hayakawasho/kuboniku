@@ -3080,8 +3080,8 @@ kleur@^4.1.4, "kleur@^4.1.4 ":
   integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
 
 "lake@https://github.com/hayakawasho/lake":
-  version "0.5.4"
-  resolved "https://github.com/hayakawasho/lake#b86b02f24f9a33bf22ce4f9595a4e30e379d44da"
+  version "0.6.0"
+  resolved "https://github.com/hayakawasho/lake#f3cb7acef03fa8c576d99c3f4fbee66dec603c71"
 
 lazysizes@^5.3.2:
   version "5.3.2"

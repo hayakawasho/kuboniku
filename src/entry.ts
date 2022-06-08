@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   register('WorksIndex', WorksIndex)
 
   q('[data-component]').forEach(el => {
-    const componentName = el.dataset.component + ''
+    const componentName = el.dataset.component as string
     mount(el, {}, componentName)
   })
 })

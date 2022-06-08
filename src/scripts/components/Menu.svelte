@@ -1,6 +1,8 @@
 <script lang="ts">
   import { TWEEN, EASE } from '@/foundation'
-  import { getContext$, useEvent } from 'lake'
+  import { useEvent } from '@/foundation/lib/useEvent'
+  import type { Context$ } from 'lake'
+  import { getContext } from 'svelte'
   import { enablePageScroll, disablePageScroll } from 'scroll-lock'
 
   type Refs = {
@@ -13,7 +15,7 @@
     menuLabel: HTMLAnchorElement[]
   }
 
-  const { useDOMRef, rootRef } = getContext$()
+  const { useDOMRef, rootRef } = getContext<Context$>('$')
 
   const { refs } = useDOMRef<Refs>(
     'menuTrigger',

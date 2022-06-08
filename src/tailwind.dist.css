@@ -16,10 +16,6 @@
   visibility: visible
 }
 
-.static {
-  position: static
-}
-
 .fixed {
   position: fixed
 }
@@ -98,20 +94,20 @@
   margin-right: -1.5rem
 }
 
-.mb-\[2\.5rem\] {
-  margin-bottom: 2.5rem
-}
-
-.mb-\[2rem\] {
-  margin-bottom: 2rem
-}
-
 .mb-\[4rem\] {
   margin-bottom: 4rem
 }
 
 .ml-\[\.5em\] {
   margin-left: .5em
+}
+
+.mb-\[2\.5rem\] {
+  margin-bottom: 2.5rem
+}
+
+.mb-\[2rem\] {
+  margin-bottom: 2rem
 }
 
 .mb-\[3\.4rem\] {
