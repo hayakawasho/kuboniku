@@ -1,4 +1,4 @@
-import { defineComponent, ref, withSvelte, useDOMRef, useEvent, readonly } from 'lake'
+import { defineComponent, withSvelte, useDOMRef } from 'lake'
 import { enablePageScroll, disablePageScroll } from 'scroll-lock'
 import MenuTrigger from './MenuTrigger.svelte'
 import { TWEEN, EASE } from '@/foundation'

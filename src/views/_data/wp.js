@@ -18,48 +18,45 @@ const spImgSizeMap = {
 }
 
 const srcetPath = (sizes, map) => {
-  if(!sizes) {
+  if (!sizes) {
     return
   }
 
   const result = Object.entries(sizes).reduce((acc, [key, value]) => {
-    if(map[key]) {
+    if (map[key]) {
       acc.push(`${value} ${map[key]}`)
     }
     return acc
   }, [])
 
   return String(result)
-};
+}
 
-const imgVo = (value, map) => {
+const imgObj = (value, map) => {
   return {
     width: value.width,
     height: value.height,
     src: value.url,
-    srcset: srcetPath(value.sizes, map)
+    srcset: srcetPath(value.sizes, map),
   }
 }
 
 module.exports = async () => {
-  const [rawWorks, rawProfile] = await Promise.all(
-    [
-      axios.get(WP_API_BASE + 'wp/v2/posts', {
-        params: {
-          per_page: 99,
-          order: 'desc'
-        }
-      }),
-      axios.get(WP_API_BASE + 'wp/v2/pages/490'),
-    ]
-  )
+  const [rawWorks, rawProfile] = await Promise.all([
+    axios.get(WP_API_BASE + 'wp/v2/posts', {
+      params: {
+        per_page: 99,
+        order: 'desc',
+      },
+    }),
+    axios.get(WP_API_BASE + 'wp/v2/pages/490'),
+  ])
 
   const metaWorks = {
     total: rawWorks.headers['x-wp-total'],
     items: rawWorks.data.map((i, index) => {
-      const gallery = i.acf.gallery === false
-        ? false
-        : i.acf.gallery.map(j => imgVo(j, pcImgSizeMap))
+      const gallery =
+        i.acf.gallery === false ? false : i.acf.gallery.map(j => imgObj(j, pcImgSizeMap))
 
       return {
         id: i.id,
@@ -68,24 +65,24 @@ module.exports = async () => {
         createAt: i.date,
         category: i.acf.category.name,
         eyecatch: {
-          pc: imgVo(i.acf.eyecatch, pcImgSizeMap),
-          sp: imgVo(i.acf.eyecatch_mobile, spImgSizeMap)
+          pc: imgObj(i.acf.eyecatch, pcImgSizeMap),
+          sp: imgObj(i.acf.eyecatch_mobile, spImgSizeMap),
         },
         color: i.acf.theme_color,
         gallery,
         siteUrl: i.acf.url,
         role: i.acf.role.map(j => j.name),
       }
-    })
+    }),
   }
 
   const metaProfile = {
     title: rawProfile.data.title.rendered,
-    html: rawProfile.data.content.rendered
+    html: rawProfile.data.content.rendered,
   }
 
   return {
     works: metaWorks,
-    profile: metaProfile
+    profile: metaProfile,
   }
 }

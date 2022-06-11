@@ -9,10 +9,34 @@ pagination:
 ---
 
 {%
-  set props = {
-    entries: pagination.items,
-    total: wp.works.total
-  }
+  set total = wp.works.total
 %}
 
-{% include '../_inc/works/index.njk' %}
+<div class="o-wrap" data-component="Skewscroll">
+  <h1 class="works-heading | relative mt-[10rem] mb-[6rem]" data-skew>
+    Works
+    <sup class="absolute top-[0.5em] ml-[0.5em]"></sup>
+  </h1>
+
+  <div
+    class="o-grid | pb-[2rem] | js-works"
+    data-skew
+    data-total="{{ props.total }}"
+    data-ref="works"
+  >
+  {% for i in pagination.items %}
+    {%
+      set j = {
+        tilte: i.title | safe,
+        slug: i.slug,
+        src: i.eyecatch.pc.src,
+        srcset: i.eyecatch.pc.srcset,
+        width: i.eyecatch.pc.width,
+        height: i.eyecatch.pc.height,
+        index: (props.total - loop.index0) | zeroPadding("2")
+      }
+    %}
+    {% include '../_inc/works/_entry.njk' %}
+  {% endfor %}
+  </div>
+</div>
