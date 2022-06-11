@@ -1,15 +1,12 @@
 <script lang="ts">
   import { TWEEN, EASE, REVERSE } from '@/foundation'
-  import { useEvent } from '@/foundation/lib/useEvent'
-  import type { Context$ } from 'lake'
-  import { getContext } from 'svelte'
+  import { useEvent, useDOMRef } from 'lake'
 
   type Refs = {
     toggleTrigger: HTMLButtonElement
     icon: HTMLAnchorElement[]
   }
 
-  const { useDOMRef } = getContext<Context$>('$')
   const { refs } = useDOMRef<Refs>('toggleTrigger', 'icon')
 
   let isOpen: boolean | undefined
@@ -23,12 +20,12 @@
       break
   }
 
-  useEvent(refs.toggleTrigger, 'click', evt => {
-    evt.preventDefault()
+  useEvent(refs.toggleTrigger, 'click', e => {
+    e.preventDefault()
     isOpen = !isOpen
   })
 
-  function onOpen() {
+  const onOpen = () => {
     TWEEN.serial(
       TWEEN.prop(refs.icon).y(20).opacity(0).style('visibility', 'visible'),
       TWEEN.parallel(
@@ -38,7 +35,7 @@
     ).play()
   }
 
-  function onClose() {
+  const onClose = () => {
     TWEEN.serial(
       TWEEN.parallel(
         TWEEN.lagSort(0.07, REVERSE, TWEEN.tween(refs.icon, 0.5, EASE._3_CubicIn).y(20).opacity(0)),
