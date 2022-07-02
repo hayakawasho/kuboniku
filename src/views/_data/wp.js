@@ -4,7 +4,7 @@ const axios = require('axios')
 const format = require('date-fns').format
 const parseISO = require('date-fns').parseISO
 
-const pcImgSizeMap = {
+const PC_IMG_SIZE_MAP = {
   medium: '750w',
   medium_large: '1080w',
   large: '1280w',
@@ -12,12 +12,12 @@ const pcImgSizeMap = {
   '2048x2048': '2048w',
 }
 
-const spImgSizeMap = {
+const SP_IMG_SIZE_MAP = {
   medium: '750w',
   medium_large: '1080w',
 }
 
-const srcetPath = (sizes, map) => {
+const srcsetpath = (sizes, map) => {
   if (!sizes) {
     return
   }
@@ -32,57 +32,65 @@ const srcetPath = (sizes, map) => {
   return String(result)
 }
 
-const imgObj = (value, map) => {
-  return {
-    width: value.width,
-    height: value.height,
-    src: value.url,
-    srcset: srcetPath(value.sizes, map),
+class Img {
+  constructor(value, sizeMap) {
+    this.width = value.width
+    this.height = value.height
+    this.src = value.url
+    this.srcset = srcsetpath(value.sizes, sizeMap)
+  }
+}
+
+class WorksGallery {
+  constructor(raw) {
+    this.value = raw.acf.gallery.map(img => new Img(img, PC_IMG_SIZE_MAP)) || false
+  }
+}
+
+class Works {
+  constructor(raw) {
+    this.id = raw.id
+    this.title = raw.title.rendered
+    this.slug = raw.slug
+    this.createAt = raw.date
+    this.category = raw.acf.category.name
+
+    this.eyecatch = {
+      pc: new Img(raw.acf.eyecatch, PC_IMG_SIZE_MAP),
+      sp: new Img(raw.acf.eyecatch_mobile, SP_IMG_SIZE_MAP),
+    }
+
+    this.gallery = new WorksGallery(raw).value
+
+    this.color = raw.acf.theme_color
+    this.siteUrl = raw.acf.url
+    this.role = raw.acf.role.map(j => j.name)
   }
 }
 
 module.exports = async () => {
+  const postsParam = {
+    per_page: 99,
+    order: 'desc',
+  }
+
   const [rawWorks, rawProfile] = await Promise.all([
-    axios.get(WP_API_BASE + 'wp/v2/posts', {
-      params: {
-        per_page: 99,
-        order: 'desc',
-      },
-    }),
+    axios.get(WP_API_BASE + 'wp/v2/posts', { params: postsParam }),
     axios.get(WP_API_BASE + 'wp/v2/pages/490'),
   ])
 
-  const metaWorks = {
+  const works = {
     total: rawWorks.headers['x-wp-total'],
-    items: rawWorks.data.map((i, index) => {
-      const gallery =
-        i.acf.gallery === false ? false : i.acf.gallery.map(j => imgObj(j, pcImgSizeMap))
-
-      return {
-        id: i.id,
-        title: i.title.rendered,
-        slug: i.slug,
-        createAt: i.date,
-        category: i.acf.category.name,
-        eyecatch: {
-          pc: imgObj(i.acf.eyecatch, pcImgSizeMap),
-          sp: imgObj(i.acf.eyecatch_mobile, spImgSizeMap),
-        },
-        color: i.acf.theme_color,
-        gallery,
-        siteUrl: i.acf.url,
-        role: i.acf.role.map(j => j.name),
-      }
-    }),
+    items: rawWorks.data.map((raw, index) => new Works(raw)),
   }
 
-  const metaProfile = {
+  const profile = {
     title: rawProfile.data.title.rendered,
     html: rawProfile.data.content.rendered,
   }
 
   return {
-    works: metaWorks,
-    profile: metaProfile,
+    works,
+    profile,
   }
 }

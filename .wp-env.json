@@ -1,0 +1,6 @@
+{
+  "core": "https://ja.wordpress.org/latest-ja.zip",
+  "phpVersion": "7.4",
+  "themes": ["./wp/wp-content/themes/theme"],
+  "plugins": ["https://downloads.wordpress.org/plugin/mw-wp-form.4.4.1.zip"]
+}

@@ -16,6 +16,10 @@
   visibility: visible
 }
 
+.static {
+  position: static
+}
+
 .fixed {
   position: fixed
 }
@@ -57,10 +61,6 @@
 
 .left-1\/2 {
   left: 50%
-}
-
-.top-\[0\.5em\] {
-  top: 0.5em
 }
 
 .bottom-\[2rem\] {
@@ -136,10 +136,6 @@
 
 .mt-\[10rem\] {
   margin-top: 10rem
-}
-
-.ml-\[0\.5em\] {
-  margin-left: 0.5em
 }
 
 .mb-\[4rem\] {

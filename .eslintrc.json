@@ -31,21 +31,6 @@
   ],
   "rules": {
     "sort-imports": 0,
-    "import/order": [2, { "alphabetize": { "order": "asc" } }],
-    // "no-restricted-importd": [
-    //   "error",
-    //   {
-    //     "patterns": ["@/features/*/*"]
-    //   }
-    // ],
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "variable",
-        "types": ["boolean"],
-        "format": ["PascalCase"],
-        "prefix": ["is", "has", "should"]
-      }
-    ]
+    "import/order": [2, { "alphabetize": { "order": "asc" } }]
   }
 }

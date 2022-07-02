@@ -13,9 +13,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src/scripts'),
-      const: resolve(__dirname, 'src/scripts/node_modules/constant'),
-      utils: resolve(__dirname, 'src/scripts/node_modules/utils'),
-      abstract: resolve(__dirname, 'src/scripts/node_modules/abstract'),
     },
   },
   server: {
@@ -35,7 +32,10 @@ export default defineConfig({
     sourcemap: isDev,
     manifest: true,
     rollupOptions: {
-      input: './src/entry.ts',
+      input: '/src/entry.ts',
+      output: {
+        entryFileNames: 'main.js',
+      },
     },
   },
   css: {
