@@ -9,7 +9,6 @@ import Noop from '@/components/Noop'
 import Skewscroll from '@/components/Skewscroll'
 import Sns from '@/components/Sns.svelte'
 import WorksIndex from '@/components/WorksIndex'
-import 'lazysizes'
 
 document.addEventListener('DOMContentLoaded', () => {
   register('Menu', Menu)

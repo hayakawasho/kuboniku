@@ -4,6 +4,7 @@ pagination:
   data: wp.works.items
   size: 10
 ---
+
 [{% for i in pagination.items %}
   {
     "id": "{{ i.id }}",
@@ -13,24 +14,22 @@ pagination:
     "createAt": "{{ i.createAt }}",
     "category": "{{ i.category }}",
     "eyecatch": {
-      "pc": {
-        "width": "{{ i.eyecatch.pc.width }}",
-        "height": "{{ i.eyecatch.pc.height }}",
-        "src": "{{ i.eyecatch.pc.src }}",
-        "srcset": "{{ i.eyecatch.pc.srcset }}"
-      },
-      "sp": {
-        "width": "{{ i.eyecatch.sp.width }}",
-        "height": "{{ i.eyecatch.sp.height }}",
-        "src": "{{ i.eyecatch.sp.src }}",
-        "srcset": "{{ i.eyecatch.sp.srcset }}"
-      }
+      "width": {{ i.eyecatch.width }},
+      "height": {{ i.eyecatch.height }},
+      "src": "{{ i.eyecatch.src }}",
+      "srcset": "{{ i.eyecatch.srcset }}"
+    },
+    "eyecatchMobile": {
+      "width": {{ i.eyecatchMobile.width }},
+      "height": {{ i.eyecatchMobile.height }},
+      "src": "{{ i.eyecatchMobile.src }}",
+      "srcset": "{{ i.eyecatchMobile.srcset }}"
     },
     "color": "{{ i.color }}",
     "gallery": [{% for j in i.gallery %}
       {
-        "width": "{{ j.width }}",
-        "height": "{{ j.height }}",
+        "width": {{ j.width }},
+        "height": {{ j.height }},
         "src": "{{ j.src }}",
         "srcset": "{{ j.srcset }}"
       }{% if loop.last === false %},{% endif %}{% endfor %}

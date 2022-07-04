@@ -15,9 +15,7 @@
     <meta property="og:description" content="{{ conf.metaDescription }}" />
     <meta property="og:image" content="{{ conf.baseUrl }}/ogp.jpg" />
     <meta property="og:site_name" content="{{ conf.siteName }}" />
-    <meta name="twitter:title" content="{{ metaTitle }}" />
-    <meta name="twitter:description" content="{{ conf.metaDescription }}" />
-    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -26,27 +24,11 @@
       media="print"
       onload="this.media='all'"
     />
-    <style>
-      body {
-        color: #e3e3e3;
-        background: #191918;
-      }
-
-      img {
-        max-width: 100%;
-        height: auto;
-        vertical-align: middle;
-      }
-
-      img.lazyload:not([src]) {
-        visibility: hidden;
-      }
-    </style>
-    {% if conf.env == "production" %}
-      {% viteLinkStylesheetTags "src/entry.ts" %}
-      {% viteLinkModulePreloadTags "src/entry.ts" %}
-    {% endif %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver" defer></script>
+
+    {% if conf.env === "production" %}<script type="module" src="./main.js" defer></script>
+    {% else %}<script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
+    {% endif %}
   </head>
 
   <body
@@ -55,25 +37,70 @@
     data-component="Menu"
   >
 
-    <div class="l-mask" id="js-viewportRef"></div>
-
     <header class="l-fixed l-header">
+
       <a href="/" class="l-brandLogo">
         <i class="icon-logo"></i>
         <span class="sr-only">KuboNiku.com</span>
       </a>
-      {% include './_burger.njk' %}
-      {% include './_sns.njk' %}
+
+      <button class="c-burger | js-menu__onOff" aria-label="menu" data-ref="menuTrigger" mobile>
+        <div class="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
+          <div class="c-burger__line" data-ref="burgerTopLine"></div>
+          <div class="c-burger__line" data-ref="burgerBottomLine"></div>
+        </div>
+      </button>
+
+      <div class="l-sns" data-component="Sns">
+        <ul class="mb-[2.5rem] text-center">
+          <li class="overflow-hidden mb-[2rem]">
+            <a
+              href="{{ conf.fb }}"
+              target="_blank"
+              rel="noopener"
+              class="snsLabel"
+              data-ref="icon"
+            >Fb</a>
+          </li>
+          <li class="overflow-hidden">
+            <a
+              href="{{ conf.tw }}"
+              target="_blank"
+              rel="noopener"
+              class="snsLabel"
+              data-ref="icon"
+            >Tw</a>
+          </li>
+        </ul>
+        <button
+          class="snsPlus"
+          aria-label="sns"
+          data-ref="toggleTrigger"
+        >
+          <div class="u-in">
+            <div class="snsPlus__x"></div>
+            <div class="snsPlus__y"></div>
+          </div>
+        </button>
+      </div>
+
       <small class="l-copyright">&copy; KuboNiku.com</small>
     </header>
 
-    {% include './_nav.njk' %}
+    <nav class="navMenu" data-ref="menuBody">
+      <div class="u-in">
+        <div class="navMenu__mask" data-ref="menuMask" mobile></div>
+        <div class="navMenu__bg" data-ref="menuBg" mobile></div>
+        <ul class="menuList">
+          <li><a href="/profile/" class="menuLink" data-ref="menuLabel">Profile</a></li>
+          <li><a href="/works/" class="menuLink" data-ref="menuLabel">Works</a></li>
+          <li><a href="{{ conf.mailto }}" class="menuLink" data-ref="menuLabel">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
 
     <div class="l-window" data-router-wrapper>
-      <div class="l-content"
-        data-router-view="{{ namespace }}"
-        data-component="{{ namespace }}"
-      >
+      <div class="l-content" data-router-view="{{ namespace }}" data-component="{{ namespace }}">
         <div class="l-content__h"></div>
         <main class="l-page">
           {{ content | safe }}
@@ -82,11 +109,5 @@
     </div>
 
     <div class="gl" data-component="GLWorld"></div>
-
-    {% if conf.env == "production" %}
-      {% viteScriptTag "src/entry.ts" %}
-    {% else %}
-      <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
-    {% endif %}
   </body>
 </html>

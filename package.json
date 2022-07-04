@@ -15,7 +15,10 @@
     "type-check": "tsc",
     "prettier:write": "yarn prettier --write ./src/**/*.{ts,svelte}",
     "eslint": "eslint './src/**/*.{ts,svelte}' -c .eslintrc.json --fix",
-    "format": "yarn prettier:write && yarn eslint"
+    "format": "yarn prettier:write && yarn eslint",
+    "wp": "wp-env start",
+    "wp:stop": "wp-env stop",
+    "wp:update": "wp-env start --update"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.1",

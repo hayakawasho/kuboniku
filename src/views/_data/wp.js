@@ -17,7 +17,7 @@ const SP_IMG_SIZE_MAP = {
   medium_large: '1080w',
 }
 
-const srcsetpath = (sizes, map) => {
+const createSrcset = (sizes, map) => {
   if (!sizes) {
     return
   }
@@ -37,13 +37,7 @@ class Img {
     this.width = value.width
     this.height = value.height
     this.src = value.url
-    this.srcset = srcsetpath(value.sizes, sizeMap)
-  }
-}
-
-class WorksGallery {
-  constructor(raw) {
-    this.value = raw.acf.gallery.map(img => new Img(img, PC_IMG_SIZE_MAP)) || false
+    this.srcset = createSrcset(value.sizes, sizeMap)
   }
 }
 
@@ -55,12 +49,11 @@ class Works {
     this.createAt = raw.date
     this.category = raw.acf.category.name
 
-    this.eyecatch = {
-      pc: new Img(raw.acf.eyecatch, PC_IMG_SIZE_MAP),
-      sp: new Img(raw.acf.eyecatch_mobile, SP_IMG_SIZE_MAP),
-    }
+    this.eyecatch = new Img(raw.acf.eyecatch, PC_IMG_SIZE_MAP)
+    this.eyecatchMobile = new Img(raw.acf.eyecatch_mobile, SP_IMG_SIZE_MAP)
 
-    this.gallery = new WorksGallery(raw).value
+    const createGallery = images => images.map(img => new Img(img, PC_IMG_SIZE_MAP))
+    this.gallery = createGallery(raw.acf.gallery || [])
 
     this.color = raw.acf.theme_color
     this.siteUrl = raw.acf.url
@@ -81,7 +74,7 @@ module.exports = async () => {
 
   const works = {
     total: rawWorks.headers['x-wp-total'],
-    items: rawWorks.data.map((raw, index) => new Works(raw)),
+    items: rawWorks.data.map((raw, _index) => new Works(raw)),
   }
 
   const profile = {

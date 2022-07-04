@@ -57,6 +57,7 @@ async function imageShortcode(
       .join('\n')}
       <img
         class="${cls}"
+        src="${lowsrc.url}"
         width="${highsrc.width}"
         height="${highsrc.height}"
         alt="${alt}"

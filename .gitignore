@@ -4,3 +4,4 @@ _site
 # System files
 *.log
 .DS_Store
+.cache
