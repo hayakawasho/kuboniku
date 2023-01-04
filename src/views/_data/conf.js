@@ -4,6 +4,6 @@ module.exports = {
   siteName: 'KUBONIKU.COM | WEB DESIGNER',
   metaDescription: 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site',
   fb: 'https://www.facebook.com/k.b.nagisa',
-  tw: '#',
+  tw: 'https://twitter.com/p3b9lwry',
   mailto: 'mailto:k.bo.n10.05@gmail.com',
-};
+}

@@ -1,1 +1,1 @@
-export const WP_API_BASE = 'https://hykwsho.sub.jp/kuboniku/wp-json/'
+export const WP_API_BASE = 'http://localhost:8888/wp-json/'
