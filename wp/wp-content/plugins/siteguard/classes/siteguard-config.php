@@ -11,7 +11,7 @@ class SiteGuard_Config {
 	function get( $key ) {
 		return isset( $this->config[ $key ] ) ? $this->config[ $key ] : '';
 	}
-	function update( ) {
+	function update() {
 		update_option( 'siteguard_config', $this->config );
 	}
 }

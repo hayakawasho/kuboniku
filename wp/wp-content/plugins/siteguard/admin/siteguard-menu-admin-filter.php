@@ -4,20 +4,20 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 	const OPT_NAME_FEATURE = 'admin_filter_enable';
 	const OPT_NAME_EXCLUDE = 'admin_filter_exclude_path';
 
-	function __construct( ) {
-		$this->render_page( );
+	function __construct() {
+		$this->render_page();
 	}
-	function render_page( ) {
+	function render_page() {
 		global $siteguard_admin_filter, $siteguard_config;
 
 		$opt_val_feature = $siteguard_config->get( self::OPT_NAME_FEATURE );
 		$opt_val_exclude = $this->cvt_camma2ret( $siteguard_config->get( self::OPT_NAME_EXCLUDE ) );
 		if ( isset( $_POST['update'] ) && check_admin_referer( 'siteguard-menu-admin-filter-submit' ) ) {
-			$error = false;
-			$errors = siteguard_check_multisite( );
+			$error  = false;
+			$errors = siteguard_check_multisite();
 			if ( is_wp_error( $errors ) ) {
 				echo '<div class="error settings-error"><p><strong>';
-				esc_html_e( $errors->get_error_message( ), 'siteguard' );
+				echo esc_html( $errors->get_error_message() );
 				echo '</strong></p></div>';
 				$error = true;
 			}
@@ -27,8 +27,8 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 				echo '</strong></p></div>';
 				$error = true;
 				$siteguard_config->set( self::OPT_NAME_FEATURE, '0' );
-				$siteguard_config->update( );
-				$siteguard_admin_filter->feature_off( );
+				$siteguard_config->update();
+				$siteguard_admin_filter->feature_off();
 				$opt_val_feature = '0';
 			}
 			if ( false === $error && false === $this->is_switch_value( $_POST[ self::OPT_NAME_FEATURE ] ) ) {
@@ -37,7 +37,7 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 				echo '</strong></p></div>';
 				$error = true;
 			}
-			if ( false === $error && '1' === $_POST[ self::OPT_NAME_FEATURE ] && false === SiteGuard_Htaccess::test_htaccess( ) ) {
+			if ( false === $error && '1' === $_POST[ self::OPT_NAME_FEATURE ] && false === SiteGuard_Htaccess::test_htaccess() ) {
 				echo '<div class="error settings-error"><p><strong>';
 				esc_html_e( 'mod_rewrite of .htaccess can not be used', 'siteguard' );
 				echo '</strong></p></div>';
@@ -46,16 +46,16 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 			if ( false === $error ) {
 				$old_opt_val_feature = $opt_val_feature;
 				$old_opt_val_exclude = $opt_val_exclude;
-				$opt_val_feature = $_POST[ self::OPT_NAME_FEATURE ];
-				$opt_val_exclude = stripslashes( $_POST[ self::OPT_NAME_EXCLUDE ] );
+				$opt_val_feature     = sanitize_text_field( $_POST[ self::OPT_NAME_FEATURE ] );
+				$opt_val_exclude     = stripslashes( sanitize_textarea_field( $_POST[ self::OPT_NAME_EXCLUDE ] ) );
 				$siteguard_config->set( self::OPT_NAME_FEATURE, $opt_val_feature );
 				$siteguard_config->set( self::OPT_NAME_EXCLUDE, $this->cvt_ret2camma( $opt_val_exclude ) );
-				$siteguard_config->update( );
+				$siteguard_config->update();
 				$result = true;
 				if ( '0' === $opt_val_feature ) {
-					$result = $siteguard_admin_filter->feature_off( );
+					$result = $siteguard_admin_filter->feature_off();
 				} else {
-					$result = $siteguard_admin_filter->feature_on( $this->get_ip( ) );
+					$result = $siteguard_admin_filter->feature_on( $this->get_ip() );
 				}
 				if ( true === $result ) {
 					$opt_val_exclude = $this->cvt_camma2ret( $opt_val_exclude );
@@ -67,7 +67,7 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 					$opt_val_exclude = $old_opt_val_exclude;
 					$siteguard_config->set( self::OPT_NAME_FEATURE, $opt_val_feature );
 					$siteguard_config->set( self::OPT_NAME_EXCLUDE, $this->cvt_ret2camma( $opt_val_exclude ) );
-					$siteguard_config->update( );
+					$siteguard_config->update();
 					echo '<div class="error settings-error"><p><strong>';
 					esc_html_e( 'ERROR: Failed to .htaccess update.', 'siteguard' );
 					echo '</strong></p></div>';
@@ -93,19 +93,19 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 		<th scope="row" colspan="2">
 			<ul class="siteguard-radios">
 			<li>
-			<input type="radio" name="<?php echo self::OPT_NAME_FEATURE ?>" id="<?php echo self::OPT_NAME_FEATURE . '_on' ?>" value="1" <?php checked( $opt_val_feature, '1' ) ?> >
-			<label for="<?php echo self::OPT_NAME_FEATURE.'_on' ?>" ><?php echo esc_html_e( 'ON', 'siteguard' ) ?></label>
+			<input type="radio" name="<?php echo self::OPT_NAME_FEATURE; ?>" id="<?php echo self::OPT_NAME_FEATURE . '_on'; ?>" value="1" <?php checked( $opt_val_feature, '1' ); ?> >
+			<label for="<?php echo self::OPT_NAME_FEATURE . '_on'; ?>" ><?php echo esc_html_e( 'ON', 'siteguard' ); ?></label>
 			</li>
 			<li>
-			<input type="radio" name="<?php echo self::OPT_NAME_FEATURE ?>" id="<?php echo self::OPT_NAME_FEATURE . '_off' ?>" value="0" <?php checked( $opt_val_feature, '0' ) ?> >
-			<label for="<?php echo self::OPT_NAME_FEATURE.'_off' ?>" ><?php echo esc_html_e( 'OFF', 'siteguard' ) ?></label>
+			<input type="radio" name="<?php echo self::OPT_NAME_FEATURE; ?>" id="<?php echo self::OPT_NAME_FEATURE . '_off'; ?>" value="0" <?php checked( $opt_val_feature, '0' ); ?> >
+			<label for="<?php echo self::OPT_NAME_FEATURE . '_off'; ?>" ><?php echo esc_html_e( 'OFF', 'siteguard' ); ?></label>
 			</li>
 			</ul>
 			<?php
-			$error = siteguard_check_multisite( );
+			$error = siteguard_check_multisite();
 			if ( is_wp_error( $error ) ) {
 				echo '<p class="description">';
-				echo $error->get_error_message( );
+				echo esc_html( $error->get_error_message() );
 				echo '</p>';
 			}
 			echo '<p class="description">';
@@ -114,9 +114,9 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 			?>
 		</th>
 		</tr><tr>
-		<th scope="row"><label for="<?php echo self::OPT_NAME_EXCLUDE ?>"><?php echo esc_html_e( 'Exclude Path', 'siteguard' ) ?></label></th>
-		<td><textarea name="<?php echo self::OPT_NAME_EXCLUDE ?>" id="<?php echo self::OPT_NAME_EXCLUDE ?>" cols=40 rows=5 ><?php echo esc_textarea( $opt_val_exclude ) ?></textarea>
-		<p class="description"><?php esc_html_e( 'The path of /wp-admin/ henceforth is specified. To specify more than one, separate them with new line. ', 'siteguard' ) ?></p></td>
+		<th scope="row"><label for="<?php echo self::OPT_NAME_EXCLUDE; ?>"><?php echo esc_html_e( 'Exclude Path', 'siteguard' ); ?></label></th>
+		<td><textarea name="<?php echo self::OPT_NAME_EXCLUDE; ?>" id="<?php echo self::OPT_NAME_EXCLUDE; ?>" cols=40 rows=5 ><?php echo esc_textarea( $opt_val_exclude ); ?></textarea>
+		<p class="description"><?php esc_html_e( 'The path of /wp-admin/ henceforth is specified. To specify more than one, separate them with new line. ', 'siteguard' ); ?></p></td>
 		</tr>
 		</table>
 		<input type="hidden" name="update" value="Y">
@@ -126,7 +126,7 @@ class SiteGuard_Menu_Admin_Filter extends SiteGuard_Base {
 		<hr />
 		<?php
 		wp_nonce_field( 'siteguard-menu-admin-filter-submit' );
-		submit_button( );
+		submit_button();
 		?>
 		</form>
 		</div>

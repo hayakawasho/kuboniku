@@ -3,17 +3,17 @@
 class SiteGuard_Disable_XMLRPC extends SiteGuard_Base {
 	public static $htaccess_mark = '#==== SITEGUARD_DISABLE_XMLRPC_SETTINGS';
 
-	function __construct( ) {
+	function __construct() {
 	}
-	static function get_mark( ) {
-		return SiteGuard_Disable_XMLRPC::$htaccess_mark;
+	static function get_mark() {
+		return self::$htaccess_mark;
 	}
-	function init( ) {
+	function init() {
 		global $siteguard_config;
 		$siteguard_config->set( 'disable_xmlrpc_enable', '0' );
-		$siteguard_config->update( );
+		$siteguard_config->update();
 	}
-	function update_settings( ) {
+	function update_settings() {
 		global $siteguard_config;
 
 		$htaccess_str  = "<Files xmlrpc.php>\n";
@@ -28,17 +28,17 @@ class SiteGuard_Disable_XMLRPC extends SiteGuard_Base {
 
 		return $htaccess_str;
 	}
-	function feature_on( ) {
+	function feature_on() {
 		global $siteguard_htaccess;
-		if ( false === SiteGuard_Htaccess::check_permission( ) ) {
+		if ( false === SiteGuard_Htaccess::check_permission() ) {
 			return false;
 		}
-		$data = $this->update_settings( );
-		$mark = $this->get_mark( );
+		$data = $this->update_settings();
+		$mark = $this->get_mark();
 		return $siteguard_htaccess->update_settings( $mark, $data );
 	}
-	static function feature_off( ) {
-		$mark = SiteGuard_Disable_XMLRPC::get_mark( );
+	static function feature_off() {
+		$mark = self::get_mark();
 		return SiteGuard_Htaccess::clear_settings( $mark );
 	}
 }

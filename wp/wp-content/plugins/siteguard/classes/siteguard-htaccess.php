@@ -5,27 +5,27 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 	const HTACCESS_MARK_START = '#SITEGUARD_PLUGIN_SETTINGS_START';
 	const HTACCESS_MARK_END   = '#SITEGUARD_PLUGIN_SETTINGS_END';
 
-	function __construct( ) {
+	function __construct() {
 	}
-	static function get_htaccess_file( ) {
-		return ABSPATH.'.htaccess';
+	static function get_htaccess_file() {
+		return ABSPATH . '.htaccess';
 	}
-	static function get_tmp_dir( ) {
+	static function get_tmp_dir() {
 		return SITEGUARD_PATH . 'tmp/';
 	}
-	static function test_htaccess( ) {
+	static function test_htaccess() {
 		return true;
-#		$result = wp_remote_get( SITEGUARD_URL_PATH . 'test/siteguard-test.php' );
-#		if ( ! is_wp_error( $result ) && 200 === $result['response']['code'] ) {
-#				return true;
-#		}
-#		return false;
+		// $result = wp_remote_get( SITEGUARD_URL_PATH . 'test/siteguard-test.php' );
+		// if ( ! is_wp_error( $result ) && 200 === $result['response']['code'] ) {
+		// return true;
+		// }
+		// return false;
 	}
-	static function get_htaccess_new_file( ) {
-		return tempnam( SiteGuard_Htaccess::get_tmp_dir( ), 'htaccess_' );
+	static function get_htaccess_new_file() {
+		return tempnam( self::get_tmp_dir(), 'htaccess_' );
 	}
-	static function make_tmp_dir( ) {
-		$dir = SiteGuard_Htaccess::get_tmp_dir( );
+	static function make_tmp_dir() {
+		$dir = self::get_tmp_dir();
 		if ( ! wp_mkdir_p( $dir ) ) {
 			siteguard_error_log( "make tempdir failed: $dir" );
 			return false;
@@ -34,7 +34,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 
 		if ( file_exists( $htaccess_file ) ) {
 			$lines = file( $htaccess_file );
-			$res =  preg_grep( '/IfModule authz_core_module/', $lines );
+			$res   = preg_grep( '/IfModule authz_core_module/', $lines );
 			if ( ! empty( $res ) ) {
 				return true;
 			}
@@ -62,7 +62,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			$mark_start = $mark . '_START';
 			$mark_end   = $mark . '_END';
 		}
-		$current_file = SiteGuard_Htaccess::get_htaccess_file( );
+		$current_file = self::get_htaccess_file();
 		if ( ! file_exists( $current_file ) ) {
 			return $result;
 		}
@@ -70,9 +70,9 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		if ( null === $fr ) {
 			return $result;
 		}
-		$line_num = 0;
+		$line_num   = 0;
 		$start_line = 0;
-		$end_line = 0;
+		$end_line   = 0;
 		while ( ! feof( $fr ) ) {
 			$line = fgets( $fr, 4096 );
 			$line_num++;
@@ -92,7 +92,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		return $result;
 	}
 	static function check_permission( $flag_create = true ) {
-		$file = SiteGuard_Htaccess::get_htaccess_file( );
+		$file = self::get_htaccess_file();
 		if ( true === $flag_create ) {
 			self::get_apply_permission( $file );
 		}
@@ -112,7 +112,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		return true;
 	}
 	static function get_apply_permission_itr( $file ) {
-		clearstatcache( );
+		clearstatcache();
 		$perm = intval( substr( sprintf( '%o', fileperms( $file ) ), -4 ), 8 );
 		return $perm;
 	}
@@ -127,7 +127,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		return $perm;
 	}
 	static function clear_settings( $mark ) {
-		if ( ! SiteGuard_Htaccess::make_tmp_dir( ) ) {
+		if ( ! self::make_tmp_dir() ) {
 			return false;
 		}
 		if ( '' === $mark ) {
@@ -138,8 +138,8 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			$mark_end   = $mark . '_END';
 		}
 		$flag_settings = false;
-		$current_file = SiteGuard_Htaccess::get_htaccess_file( );
-		$perm = self::get_apply_permission( $current_file );
+		$current_file  = self::get_htaccess_file();
+		$perm          = self::get_apply_permission( $current_file );
 		if ( ! self::check_permission( false ) ) {
 			return false;
 		}
@@ -148,8 +148,8 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			siteguard_error_log( "fopen failed: $current_file" );
 			return false;
 		}
-		$new_file = SiteGuard_Htaccess::get_htaccess_new_file( );
-		$fw = @fopen( $new_file, 'w' );
+		$new_file = self::get_htaccess_new_file();
+		$fw       = @fopen( $new_file, 'w' );
 		if ( null === $fw ) {
 			siteguard_error_log( "fopen failed: $new_file" );
 			return false;
@@ -176,7 +176,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		return true;
 	}
 	function update_settings( $mark, $data ) {
-		if ( ! SiteGuard_Htaccess::make_tmp_dir( ) ) {
+		if ( ! self::make_tmp_dir() ) {
 			return false;
 		}
 		$flag_write    = false;
@@ -188,7 +188,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 		$mark_end      = $mark . '_END';
 		$mark_wp_start = '# BEGIN WordPress';
 		$mark_wp_end   = '# END WordPress';
-		$current_file  = SiteGuard_Htaccess::get_htaccess_file( );
+		$current_file  = self::get_htaccess_file();
 		$perm          = self::get_apply_permission( $current_file );
 		if ( ! self::check_permission( false ) ) {
 			return false;
@@ -198,7 +198,7 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			siteguard_error_log( "fopen failed: $current_file" );
 			return false;
 		}
-		$new_file = SiteGuard_Htaccess::get_htaccess_new_file( );
+		$new_file = self::get_htaccess_new_file();
 		if ( ! is_writable( $new_file ) ) {
 			siteguard_error_log( "file not writable: $new_file" );
 			return false;
@@ -226,10 +226,10 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			}
 
 			if ( false !== strpos( $line, $mark_start ) ) {
-				fwrite( $fw, $line , strlen( $line ) );
-				fwrite( $fw, $data,  strlen( $data ) );
-				$flag_write = true;
-				$flag_through  = false;
+				fwrite( $fw, $line, strlen( $line ) );
+				fwrite( $fw, $data, strlen( $data ) );
+				$flag_write   = true;
+				$flag_through = false;
 				continue;
 			}
 			if ( false === $flag_write && false !== strpos( $line, self::HTACCESS_MARK_END ) ) {
@@ -259,10 +259,10 @@ class SiteGuard_Htaccess extends SiteGuard_Base {
 			fwrite( $fw, "\n", 1 );
 			fwrite( $fw, $wp_settings, strlen( $wp_settings ) );
 			fwrite( $fw, "\n", 1 );
-		} else if ( false === $flag_wp ) { // Write empty WordPress Settings
+		} elseif ( false === $flag_wp ) { // Write empty WordPress Settings
 			fwrite( $fw, "\n", 1 );
 			fwrite( $fw, $mark_wp_start . "\n", strlen( $mark_wp_start ) + 1 );
-			fwrite( $fw, $mark_wp_end   . "\n", strlen( $mark_wp_end ) + 1 );
+			fwrite( $fw, $mark_wp_end . "\n", strlen( $mark_wp_end ) + 1 );
 			fwrite( $fw, "\n", 1 );
 		}
 		fclose( $fr );

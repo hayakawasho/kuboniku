@@ -13,21 +13,22 @@ Base-Version: 1.8
 Base-Author URI: http://ideasilo.wordpress.com/
 */
 
-/*  Copyright 2007-2014 Takayuki Miyoshi (email: takayukister at gmail.com)
+/*
+  Copyright 2007-2014 Takayuki Miyoshi (email: takayukister at gmail.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
@@ -62,15 +63,15 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 	protected $answer_file_mode;
 
 	public function __construct() {
-		$this->lang_mode = 'jp';
-		$this->char_length = 4;
-		$this->tmp_dir = path_join( dirname( __FILE__ ), 'tmp' );
-		$this->img_size = array( 72, 24 );
-		$this->base = array( 6, 18 );
-		$this->font_size = 14;
-		$this->font_char_width = 15;
-		$this->img_type = 'png';
-		$this->file_mode = 0444;
+		$this->lang_mode        = 'jp';
+		$this->char_length      = 4;
+		$this->tmp_dir          = path_join( dirname( __FILE__ ), 'tmp' );
+		$this->img_size         = array( 72, 24 );
+		$this->base             = array( 6, 18 );
+		$this->font_size        = 14;
+		$this->font_char_width  = 15;
+		$this->img_type         = 'png';
+		$this->file_mode        = 0444;
 		$this->answer_file_mode = 0440;
 	}
 
@@ -95,8 +96,8 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 
 		$chars_size = mb_strlen( $this->chars );
 		for ( $i = 0; $i < $this->char_length; $i++ ) {
-			$pos = mt_rand( 0, $chars_size - 1 );
-			$char = mb_substr( $this->chars, $pos, 1 );
+			$pos   = mt_rand( 0, $chars_size - 1 );
+			$char  = mb_substr( $this->chars, $pos, 1 );
 			$word .= $char;
 		}
 
@@ -111,8 +112,9 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 	 * @return string|bool The file name of the CAPTCHA image. Return false if temp directory is not available.
 	 */
 	public function generate_image( $prefix, $word ) {
-		if ( ! $this->make_tmp_dir() )
+		if ( ! $this->make_tmp_dir() ) {
 			return false;
+		}
 
 		$this->cleanup();
 
@@ -120,48 +122,48 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 		if ( 'jp' == $this->lang_mode ) {
 			$this->fonts = array(
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-black.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-heavy.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-regular.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-thin.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-bold.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-heavy.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1c-hiragana-thin.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-regular.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-thin.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-bold.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1m-hiragana-thin.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-bold.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-regular.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-thin.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-black.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-heavy.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1mn-hiragana-thin.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-black.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-bold.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-heavy.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-light.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-regular.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-thin.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-black.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-heavy.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-1p-hiragana-thin.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-black.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-bold.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-heavy.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-regular.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2c-hiragana-thin.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-bold.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-regular.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2m-hiragana-thin.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-black.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-black.ttf',
 				dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-bold.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-heavy.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-light.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-medium.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-regular.ttf',
-				//dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-thin.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-heavy.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-light.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-medium.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-regular.ttf',
+				// dirname( __FILE__ ) . '/mplus-TESTFLIGHT-058/mplus-2p-hiragana-thin.ttf',
 			);
 		} else {
 			$this->fonts = array(
@@ -169,10 +171,10 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 				dirname( __FILE__ ) . '/gentium/GenBkBasI.ttf',
 				dirname( __FILE__ ) . '/gentium/GenBkBasBI.ttf',
 				dirname( __FILE__ ) . '/gentium/GenBkBasB.ttf',
-			 );
+			);
 		}
 
-		$dir = trailingslashit( $this->tmp_dir );
+		$dir      = trailingslashit( $this->tmp_dir );
 		$filename = null;
 
 		if ( $im = imagecreatetruecolor( $this->img_size[0], $this->img_size[1] ) ) {
@@ -183,13 +185,13 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 
 			// randam lines
 			for ( $i = 0; $i < 5; $i++ ) {
-				$color  = imagecolorallocate( $im, 196, 196, 196 );
+				$color = imagecolorallocate( $im, 196, 196, 196 );
 				imageline( $im, mt_rand( 0, $this->img_size[0] - 1 ), mt_rand( 0, $this->img_size[1] - 1 ), mt_rand( 0, $this->img_size[0] - 1 ), mt_rand( 0, $this->img_size[1] - 1 ), $color );
 			}
 
 			$x = $this->base[0] + mt_rand( -2, 2 );
 
-			$gd_info = gd_info( );
+			$gd_info   = gd_info();
 			$word_size = mb_strlen( $word );
 			for ( $i = 0; $i < $word_size; $i++ ) {
 				$font = $this->fonts[ array_rand( $this->fonts ) ];
@@ -206,18 +208,18 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 			switch ( $this->img_type ) {
 				case 'jpeg':
 					$filename = sanitize_file_name( $prefix . '.jpeg' );
-					$file = $this->normalize_path( $dir . $filename );
+					$file     = $this->normalize_path( $dir . $filename );
 					imagejpeg( $im, $file );
 					break;
 				case 'gif':
 					$filename = sanitize_file_name( $prefix . '.gif' );
-					$file = $this->normalize_path( $dir . $filename );
+					$file     = $this->normalize_path( $dir . $filename );
 					imagegif( $im, $file );
 					break;
 				case 'png':
 				default:
 					$filename = sanitize_file_name( $prefix . '.png' );
-					$file = $this->normalize_path( $dir . $filename );
+					$file     = $this->normalize_path( $dir . $filename );
 					imagepng( $im, $file );
 			}
 
@@ -237,7 +239,7 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 	 * @param string $word Random word generated by generate_random_word()
 	 */
 	public function generate_answer_file( $prefix, $word ) {
-		$dir = trailingslashit( $this->tmp_dir );
+		$dir         = trailingslashit( $this->tmp_dir );
 		$answer_file = $dir . sanitize_file_name( $prefix . '.txt' );
 		$answer_file = $this->normalize_path( $answer_file );
 
@@ -272,9 +274,9 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 		$response = str_replace( array( ' ', "\t" ), '', $response );
 		$response = strtoupper( $response );
 
-		$dir = trailingslashit( $this->tmp_dir );
+		$dir      = trailingslashit( $this->tmp_dir );
 		$filename = sanitize_file_name( $prefix . '.txt' );
-		$file = $this->normalize_path( $dir . $filename );
+		$file     = $this->normalize_path( $dir . $filename );
 
 		if ( @is_readable( $file ) && ( $code = file_get_contents( $file ) ) ) {
 			$code = explode( '|', $code, 2 );
@@ -304,9 +306,9 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 		$suffixes = array( '.jpeg', '.gif', '.png', '.php', '.txt' );
 
 		foreach ( $suffixes as $suffix ) {
-			$dir = trailingslashit( $this->tmp_dir );
+			$dir      = trailingslashit( $this->tmp_dir );
 			$filename = sanitize_file_name( $prefix . $suffix );
-			$file = $this->normalize_path( $dir . $filename );
+			$file     = $this->normalize_path( $dir . $filename );
 
 			if ( @is_file( $file ) ) {
 				unlink( $file );
@@ -340,8 +342,9 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 
 		if ( $handle = @opendir( $dir ) ) {
 			while ( false !== ( $filename = readdir( $handle ) ) ) {
-				if ( ! preg_match( '/^[0-9]+\.(php|txt|png|gif|jpeg)$/', $filename ) )
+				if ( ! preg_match( '/^[0-9]+\.(php|txt|png|gif|jpeg)$/', $filename ) ) {
 					continue;
+				}
 
 				$file = $this->normalize_path( $dir . $filename );
 
@@ -420,7 +423,7 @@ class SiteGuardReallySimpleCaptcha extends SiteGuard_Base {
 	}
 
 	/**
- 	 * set $this->lang_mode
+	 * set $this->lang_mode
 	 */
 	public function set_lang_mode( $mode ) {
 		if ( 'jp' === $mode || 'en' === $mode ) {

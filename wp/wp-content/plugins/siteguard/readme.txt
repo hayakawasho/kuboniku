@@ -3,8 +3,8 @@ Contributors: jp-secure
 Donate link: -
 Tags: security, waf, brute force, password list, login lock, login alert, captcha, pingback, fail once
 Requires at least: 3.9
-Tested up to: 5.9
-Stable tag: 1.6.1
+Tested up to: 6.1
+Stable tag: 1.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ Notes
 * It only supports Apache 1.3, 2.x for Web servers.
 * To use the CAPTCHA function, the expansion library “mbstring” and “gd” should be installed on php.
 * To use the management page filter function and login page change function, “mod_rewrite” should be loaded on Apache.
-* To use the WAF Tuning Support, WAF ( SiteGuard Lite ) should be installed on Apache.
+* To use the WAF Tuning Support, WAF ( SiteGuard Server Edition ) should be installed on Apache.
 
 There are the following functions.
 
@@ -77,7 +77,7 @@ Basic of security is that always you use the latest version. If WordPress core, 
 * WAF Tuning Support
 
 It is the function to create the rule to avoid the false detection in WordPress (including 403 error occurrence with normal access,)
-if WAF ( SiteGuard Lite ) by JP-Secure is installed on a Web server. WAF prevents the attack from the outside against the Web server,
+if WAF ( SiteGuard Server Edition ) by EG Secure Solutions is installed on a Web server. WAF prevents the attack from the outside against the Web server,
 but for some WordPress or plugin functions, WAF may detect the attack which is actually not attack and block the function.
 By creating the WAF exclude rule, the WAF protection function can be activated while the false detection for the specified function is prevented.
 
@@ -106,6 +106,14 @@ If you have created your own language pack, or have an update of an existing one
 [Japanese Page](https://www.jp-secure.com/siteguard_wp_plugin/faq/)
 
 == Changelog ==
+= 1.7.3 =
+* Fix an issue where password reset could not be sent from the management page when CAPTCHA was enabled
+= 1.7.2 =
+* Reviewed and modified source code related to security
+= 1.7.1 =
+* Fix the problem that a syntax error occurs in PHP5.6 or earlier
+= 1.7.0 =
+* Removed ability to get client IP address from X-Forwarded-For due to IP spoofing risk
 = 1.6.1 =
 * Fix the problem that an error occurs when suppressing the redirect from the management page to the login page
 = 1.6.0 =

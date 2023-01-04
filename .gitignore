@@ -5,3 +5,8 @@ _site
 *.log
 .DS_Store
 .cache
+
+.env
+.node-version
+
+tmp

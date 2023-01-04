@@ -5,3 +5,4 @@ src/__generated__
 _site/
 /.eslintrc.js
 /vite.config.ts
+wp
