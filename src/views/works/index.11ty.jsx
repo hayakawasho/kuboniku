@@ -1,17 +1,9 @@
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { Page } = require('../components/Page')
 const { css } = require('@emotion/react')
+const { zeroPadding } = require('../components/works/converter')
 
-exports.data = {
-  pagination: {
-    data: 'wp.works.items',
-    size: 10,
-    addAllPagesToCollections: false,
-    alias: 'posts',
-  },
-}
-
-exports.render = function (props) {
+function WorksIndex(props) {
   const total = props.wp.works.total
   const posts = props.posts
 
@@ -36,10 +28,10 @@ exports.render = function (props) {
                 </div>
                 <div css={entry__hgroup}>
                   <p css={num}>
-                    {(total - i).toString().padStart(2, '0')}
+                    {zeroPadding(total - i)}
                     <span>Project</span>
                   </p>
-                  <h2 css={entry__heading}>{item.title}</h2>
+                  <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }}></h2>
                 </div>
               </div>
             </a>
@@ -49,6 +41,17 @@ exports.render = function (props) {
     </Page>
   )}`
 }
+
+exports.data = {
+  pagination: {
+    data: 'wp.works.items',
+    size: 10,
+    addAllPagesToCollections: false,
+    alias: 'posts',
+  },
+}
+
+exports.render = WorksIndex
 
 const heading = css`
   position: relative;

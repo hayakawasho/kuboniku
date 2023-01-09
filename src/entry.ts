@@ -1,4 +1,3 @@
-import 'ress'
 import 'virtual:windi.css'
 
 import { register, withSvelte, mount, q } from 'lake'

@@ -1,18 +1,9 @@
-const { css } = require('@emotion/react')
+const { css, keyframes } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { PageWithProgressbar } = require('../components/PageWithProgressbar')
-const { cdate: day } = require('cdate')
+const { selectRole, selectYear, zeroPadding } = require('../components/works/converter')
 
-exports.data = {
-  pagination: {
-    data: 'wp.works.items',
-    size: 1,
-    alias: 'post',
-  },
-  permalink: context => `works/${context.post.slug}/index.html`,
-}
-
-exports.render = props => {
+function WorksSlug(props) {
   const total = props.wp.works.total
   const projectNumber = total - props.pagination.pageNumber
 
@@ -34,7 +25,7 @@ exports.render = props => {
       <div css={kv}>
         <div css={kv__cont}>
           <p className="">
-            {projectNumber.toString().padStart(2, '0')}
+            {zeroPadding(projectNumber)}
             <span className="">Project</span>
           </p>
           <h1 css={heading}>
@@ -42,7 +33,7 @@ exports.render = props => {
               <span className="inline-block origin-right">{post.title}</span>
             </div>
           </h1>
-          <p css={sub} tw="overflow-hidden">
+          <p css={sub} className="overflow-hidden">
             <span className="inline-block origin-right">
               {post.category}
               <i className="icon-arrow-right" />
@@ -57,7 +48,7 @@ exports.render = props => {
           <div className="relative w-full h-full overflow-hidden">
             <div css={kv__scrollLabel}>scroll</div>
           </div>
-          <i className="icon-arrow-down" />
+          <i className="icon-arrow_down" />
         </div>
       </div>
 
@@ -66,11 +57,11 @@ exports.render = props => {
           <div css={intro__info}>
             <dl css={dl}>
               <dt css={dt}>Year :</dt>
-              <dd css={dd}>{day(post.createAt).format('MMMM D, YYYY')}</dd>
+              <dd css={dd}>{selectYear(post)}</dd>
             </dl>
             <dl css={dl}>
               <dt css={dt}>Role :</dt>
-              <dd css={dd}>{post.role.join(' / ')}</dd>
+              <dd css={dd}>{selectRole(post)}</dd>
             </dl>
           </div>
           {post.viewWebsite && (
@@ -120,6 +111,17 @@ exports.render = props => {
   )}`
 }
 
+exports.data = {
+  pagination: {
+    data: 'wp.works.items',
+    size: 1,
+    alias: 'post',
+  },
+  permalink: context => `works/${context.post.slug}/index.html`,
+}
+
+exports.render = WorksSlug
+
 const kv = css`
   position: relative;
   width: 100%;
@@ -152,12 +154,17 @@ const kvNext = css`
 `
 
 const kv__cont = css`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
   z-index: 2;
   padding-left: var(--grid);
   color: #fff;
 `
 
 const heading = css`
+  font-weight: 600;
   padding-left: 1.2rem;
   font-family: var(--font-roboto);
   font-size: 3.9rem;
@@ -185,7 +192,12 @@ const sub = css`
 `
 
 const kv__scrollDown = css`
+  position: absolute;
+  left: 50%;
   bottom: 5rem;
+  overflow: hidden;
+  transform: translateX(-50%);
+  font-weight: bold;
   font-family: var(--font-en);
   font-size: 1rem;
   line-height: 1;
@@ -197,18 +209,44 @@ const kv__scrollDown = css`
     font-size: 1.3rem;
   }
 
-  .icon-arrow-down {
+  .icon-arrow_down {
     margin-top: 1.2rem;
   }
 `
 
+const front = keyframes`
+  0%,
+  70% {
+    transform: translateZ(0);
+  }
+
+  100% {
+    transform: translate3d(0, 20px, 0);
+  }
+`
+
+const back = keyframes`
+  0%,
+  70% {
+    transform: translateZ(0) rotate(30deg) skewX(30deg);
+  }
+
+  100% {
+    transform: translate3d(0, -50px, 0) rotate(0) skewX(0);
+  }
+`
+
 const kv__scrollLabel = css`
-  animation: front 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  display: inline-block;
+  animation: ${front} 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 
   &::before {
+    position: absolute;
+    display: block;
+    transform-origin: right;
     bottom: -30px;
     content: 'scroll';
-    animation: back 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: ${back} 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 `
 
@@ -217,9 +255,15 @@ const body = css`
 `
 
 const intro = css`
+  position: relative;
+  width: 100%;
   padding: 6rem calc(var(--gap) * 2) 7rem;
 
   @media (min-width: 640px) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0 auto;
     width: calc(var(--grid) * 10);
     padding: 10rem var(--grid) 9rem;
   }
@@ -249,6 +293,7 @@ const dt = css`
 `
 
 const dd = css`
+  font-weight: 300;
   line-height: calc(52 / 24);
   letter-spacing: 0.08em;
   color: #cbcbcb;
@@ -256,28 +301,12 @@ const dd = css`
   @media (min-width: 640px) {
     font-size: 1.3rem;
   }
-
-  > ul {
-    &:after {
-      content: "";
-      display: block
-      clear: both;
-    }
-
-    > li {
-      float: left;
-
-      + li {
-        &:before {
-          content: "/";
-          margin: 0 .5em;
-        }
-      }
-    }
-  }
 `
 
 const intro__viewLink = css`
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
   margin-top: 4rem;
   padding-left: 2.6em;
   font-family: var(--font-en);
@@ -291,6 +320,10 @@ const intro__viewLink = css`
 `
 
 const intro__viewLink__hr = css`
+  position: absolute;
+  left: 0;
+  display: block;
+  height: 0;
   top: 0.7em;
   width: 1.75em;
   content: '';

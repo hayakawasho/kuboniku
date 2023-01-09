@@ -1,4 +1,5 @@
 import { Global, css } from '@emotion/react'
+import { Header } from './Header'
 
 const TITLE = 'KUBONIKU.COM | WEB DESIGNER'
 const DESCRIPTION = 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site'
@@ -28,6 +29,7 @@ export const Page = props => {
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <Global styles={styles} />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap"
@@ -38,13 +40,14 @@ export const Page = props => {
           src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
           defer
         ></script>
-        {props.env === 'production' && <script type="module" src="./main.js" defer></script>}
         {props.env === 'development' && (
           <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
         )}
-        <Global styles={styles} />
+        {props.env === 'production' && <script type="module" src="./main.js" defer></script>}
+        <Global styles={utilities} />
       </head>
       <body>
+        <Header />
         <div className="l-window">
           <div className="l-content">
             <main className="l-page">{props.children}</main>
@@ -57,10 +60,6 @@ export const Page = props => {
 }
 
 const styles = css`
-  @custom-media --sp (max-width: 639px);
-  @custom-media --pc (min-width: 640px);
-  @custom-media --hover (hover: hover) and (pointer: fine);
-
   :root {
     --font: 'Noto Sans JP', sans-serif;
     --font-en: 'Montserrat', sans-serif;
@@ -154,12 +153,12 @@ const styles = css`
 
   @font-face {
     font-family: 'kuboniku';
-    src: url('/fonts/kuboniku.ttf?mk7nz0') format('truetype'),
-      url('/fonts/kuboniku.woff?mk7nz0') format('woff'),
-      url('/fonts/kuboniku.svg?mk7nz0#kuboniku') format('svg');
+    src: url('/assets/kuboniku.ttf?f4g4p2') format('truetype'),
+      url('/assets/kuboniku.woff?f4g4p2') format('woff'),
+      url('/assets/kuboniku.svg?f4g4p2#kuboniku') format('svg');
     font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: block;
   }
 
   [class^='icon-'],
@@ -178,20 +177,20 @@ const styles = css`
     -moz-osx-font-smoothing: grayscale;
   }
 
-  .icon-arrow_right:before {
-    content: '\e903';
-  }
-
   .icon-arrow_down:before {
-    content: '\e902';
-  }
-
-  .icon-logo_sp:before {
     content: '\e900';
   }
 
-  .icon-logo:before {
+  .icon-arrow_right:before {
     content: '\e901';
+  }
+
+  .icon-logo_sp:before {
+    content: '\e902';
+  }
+
+  .icon-logo:before {
+    content: '\e903';
   }
 
   @keyframes drawPlus {
@@ -220,28 +219,6 @@ const styles = css`
     }
   }
 
-  @keyframes front {
-    0%,
-    70% {
-      transform: translateZ(0);
-    }
-
-    100% {
-      transform: translate3d(0, 20px, 0);
-    }
-  }
-
-  @keyframes back {
-    0%,
-    70% {
-      transform: translateZ(0) rotate(30deg) skewX(30deg);
-    }
-
-    100% {
-      transform: translate3d(0, -50px, 0) rotate(0) skewX(0);
-    }
-  }
-
   .l-fixed {
     position: fixed;
     top: 0;
@@ -264,57 +241,6 @@ const styles = css`
     z-index: -1;
   }
 
-  .l-brandLogo {
-    font-size: 2.6rem;
-    line-height: 1;
-    color: var(--color-text-primary);
-    position: absolute;
-    top: 1.5rem;
-    left: 2rem;
-    display: block;
-    pointer-events: auto;
-    z-index: 99;
-
-    @media (--pc) {
-      font-size: 3.6rem;
-      top: 2.4rem;
-      left: 2.4rem;
-    }
-  }
-
-  .l-copyright {
-    font-family: var(--font-en);
-    font-size: 0.8rem;
-    font-weight: 500;
-    line-height: 1;
-    color: var(--color-text-primary);
-    letter-spacing: 0.2em;
-    position: absolute;
-    right: 3rem;
-    bottom: 2.5rem;
-    display: inline-block;
-    z-index: 99;
-
-    @media (--pc) {
-      font-size: 1rem;
-      bottom: 4rem;
-      right: 4rem;
-    }
-  }
-
-  .l-sns {
-    position: absolute;
-    text-align: center;
-    bottom: 1rem;
-    left: 2rem;
-    z-index: 99;
-
-    @media (--pc) {
-      bottom: 4rem;
-      left: 4rem;
-    }
-  }
-
   .l-window {
     position: relative;
     z-index: 1;
@@ -325,18 +251,52 @@ const styles = css`
     min-height: 100vh;
   }
 
-  .l-content__h {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    visibility: hidden;
-    z-index: -1;
-  }
-
   .l-page {
     position: relative;
+  }
+`
+
+const utilities = css`
+  .u-sp {
+    @media (--pc) {
+      display: none !important;
+    }
+  }
+
+  .u-pc {
+    @media (--sp) {
+      display: none !important;
+    }
+  }
+
+  .u-in {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .u-cf {
+    &::after {
+      display: block;
+      clear: both;
+      content: '';
+    }
+  }
+
+  .u-fitToParent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .u-posC {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
   }
 `
