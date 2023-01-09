@@ -1,6 +1,7 @@
+// @ts-nocheck
+const { css } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { Page } = require('./components/Page')
-const { css } = require('@emotion/react')
 const { zeroPadding } = require('./components/works/converter')
 
 function WorksIndex(props) {

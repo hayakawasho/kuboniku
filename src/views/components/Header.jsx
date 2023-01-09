@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css, keyframes } from '@emotion/react'
 
 export const Header = _props => {

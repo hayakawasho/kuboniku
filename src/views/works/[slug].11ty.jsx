@@ -1,9 +1,10 @@
+// @ts-nocheck
 const { css, keyframes } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { PageWithProgressbar } = require('../components/PageWithProgressbar')
 const { selectRole, selectYear, zeroPadding } = require('../components/works/converter')
 
-function WorksSlug(props) {
+function WorksDetail(props) {
   const total = props.wp.works.total
   const projectNumber = total - props.pagination.pageNumber
 
@@ -24,11 +25,11 @@ function WorksSlug(props) {
     <PageWithProgressbar title={post.title} env={props.build.env} progressbar={<div></div>}>
       <div css={kv}>
         <div css={kv__cont}>
-          <p className="">
+          <p css={project}>
             {zeroPadding(projectNumber)}
-            <span className="">Project</span>
+            <span className="ml-[.8rem]">Project</span>
           </p>
-          <h1 css={heading}>
+          <h1 css={heading} className="pr-[.5em]">
             <div className="inline-block overflow-hidden">
               <span
                 className="inline-block origin-right"
@@ -39,7 +40,7 @@ function WorksSlug(props) {
           <p css={sub} className="overflow-hidden">
             <span className="inline-block origin-right">
               {post.category}
-              <i className="icon-arrow_right || text-[1rem] inline-block align-middle transform scale-70" />
+              <i className="icon-arrow_right" />
             </span>
           </p>
         </div>
@@ -104,7 +105,7 @@ function WorksSlug(props) {
             <h2 css={heading}>Next Project</h2>
             <p css={sub}>
               {next.title}
-              <i className="icon-arrow_right || text-[1rem] inline-block align-middle transform scale-70" />
+              <i className="icon-arrow_right" />
             </p>
           </div>
           <picture>
@@ -126,7 +127,7 @@ exports.data = {
   permalink: context => `works/${context.post.slug}/index.html`,
 }
 
-exports.render = WorksSlug
+exports.render = WorksDetail
 
 const kv = css`
   position: relative;
@@ -180,6 +181,20 @@ const heading = css`
   }
 `
 
+const project = css`
+  position: absolute;
+  top: calc(-1em - 1rem);
+  font-weight: bold;
+  font-family: var(--font-en);
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+
+  > span {
+    font-size: 70%;
+    letter-spacing: 0.02em;
+  }
+`
+
 const sub = css`
   font-family: var(--font-roboto);
   font-size: 1.3rem;
@@ -189,9 +204,12 @@ const sub = css`
   padding-left: 1.2rem;
   margin-top: 1rem;
 
-  .icon-arrow-right {
-    font-size: 0.7rem;
+  .icon-arrow_right {
+    font-size: 1rem;
     margin-left: 0.8rem;
+    transform: scale(0.7);
+    transform-origin: left;
+    display: inline-block;
   }
 `
 

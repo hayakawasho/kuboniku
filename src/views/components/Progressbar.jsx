@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css } from '@emotion/react'
 
 export const Progressbar = ({ bar, index, max }) => {

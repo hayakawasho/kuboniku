@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Global, css } from '@emotion/react'
 import { Header } from './Header'
 
