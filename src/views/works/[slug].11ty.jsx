@@ -64,8 +64,8 @@ function WorksSlug(props) {
               <dd css={dd}>{selectRole(post)}</dd>
             </dl>
           </div>
-          {post.viewWebsite && (
-            <a css={intro__viewLink} href={post.viewWebsite} target="_blank" rel="noopener">
+          {post.siteUrl && (
+            <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
               View website
               <div css={intro__viewLink__hr} />
             </a>
@@ -73,36 +73,39 @@ function WorksSlug(props) {
         </div>
         {post.gallery && (
           <ul css={captchaList}>
-            {post.gallery?.map((item, i) => {
-              const aspect = Math.round((item.height / item.width) * 100)
+            {post.gallery.map((item, i) => {
               const css = {
-                '--aspect': `${aspect}%`,
-                backgroundColor: `transparent`,
+                '--aspect': `${item.width / item.height}`,
+                backgroundColor: post.color,
               }
               return (
-                <li className="relative" key={i}>
-                  <div css={aspect} style={css} />
-                  <div className="absolute w-full h-full top-0 left-0">
-                    {
-                      // <Img src={item.src} alt="" width={item.width} height={item.height} />
-                    }
+                <li className="relative bg-[#191918]" key={i}>
+                  <div css={aspect} style={css} className="opacity-20" />
+                  <div className="u-fit">
+                    <img
+                      src={item.src}
+                      alt=""
+                      width={item.width}
+                      height={item.height}
+                      loading="lazy"
+                    />
                   </div>
                 </li>
               )
             })}
           </ul>
         )}
-        <aside css={[kv, kvNext]} className="is-next">
-          <a href={'/works/' + next.slug} className="absolute w-full h-full z-10"></a>
+        <aside css={[kv, kvNext]}>
+          <a href={'../' + next.slug} className="u-fit z-10"></a>
           <div css={kv__cont}>
             <h2 css={heading}>Next Project</h2>
             <p css={sub}>
               {next.title}
-              <i className="icon-arrow-right" />
+              <i className="icon-arrow_right" />
             </p>
           </div>
           <picture>
-            <source srcSet={next.eyecatchMobile.src} media="(min-width: 640px)" />
+            <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
             <img src={next.eyecatchMobile.src} />
           </picture>
         </aside>
@@ -139,15 +142,13 @@ const kv = css`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.8;
   }
 `
 
 const kvNext = css`
   height: 100vh;
 
-  a {
-    z-index: 3;
-  }
   img {
     filter: grayscale(1);
   }
@@ -238,7 +239,7 @@ const back = keyframes`
 
 const kv__scrollLabel = css`
   display: inline-block;
-  animation: ${front} 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  animation: ${front} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 
   &::before {
     position: absolute;
@@ -246,7 +247,7 @@ const kv__scrollLabel = css`
     transform-origin: right;
     bottom: -30px;
     content: 'scroll';
-    animation: ${back} 6s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: ${back} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
 `
 

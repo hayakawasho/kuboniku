@@ -1,6 +1,7 @@
 <script lang="ts">
   import { TWEEN, EASE, REVERSE } from '@/libs'
   import { useEvent, useDOMRef } from 'lake'
+  import { match } from 'ts-pattern'
 
   type Refs = {
     toggleTrigger: HTMLButtonElement
@@ -11,7 +12,10 @@
 
   let isOpen: boolean | undefined
 
-  $: isOpen ? onOpen() : onClose()
+  $: match(isOpen)
+    .with(true, onOpen)
+    .with(false, onClose)
+    .otherwise(() => {})
 
   useEvent(refs.toggleTrigger, 'click', e => {
     e.preventDefault()

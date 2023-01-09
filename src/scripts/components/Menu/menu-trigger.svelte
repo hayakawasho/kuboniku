@@ -2,6 +2,7 @@
   import type { Context$ } from 'lake'
   import { useEvent } from 'lake'
   import { getContext } from 'svelte'
+  import { match } from 'ts-pattern'
 
   export let onOpen: () => void
   export let onClose: () => void
@@ -15,5 +16,8 @@
     isOpen = !isOpen
   })
 
-  $: isOpen ? onOpen() : onClose()
+  $: match(isOpen)
+    .with(true, onOpen)
+    .with(false, onClose)
+    .otherwise(() => {})
 </script>

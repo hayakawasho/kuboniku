@@ -3,16 +3,21 @@ import { css, keyframes } from '@emotion/react'
 export const Header = _props => {
   return (
     <>
-      <header className="l-fixed l-header">
+      <header className="">
         <a href="/" css={brandLogo}>
           <i className="icon-logo"></i>
           <span className="sr-only">KuboNiku.com</span>
         </a>
 
-        <button className="u-sp" css={burger} aria-label="menu" data-ref="menuTrigger">
+        <button
+          className="js-menu__onOff || u-sp"
+          css={burger}
+          aria-label="menu"
+          data-ref="menuTrigger"
+        >
           <div className="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
-            <div css={burgerLine} data-ref="burgerTopLine"></div>
-            <div css={burgerLine} data-ref="burgerBottomLine"></div>
+            <div css={burger__line} data-ref="burgerTopLine"></div>
+            <div css={burger__line} data-ref="burgerBottomLine"></div>
           </div>
         </button>
 
@@ -20,10 +25,10 @@ export const Header = _props => {
           <ul className="mb-[2.5rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a
-                href="{{ conf.fb }}"
+                href="https://www.facebook.com/k.b.nagisa"
                 target="_blank"
                 rel="noopener"
-                className="snsLabel"
+                css={snsLabel}
                 data-ref="icon"
               >
                 Fb
@@ -31,10 +36,10 @@ export const Header = _props => {
             </li>
             <li className="overflow-hidden">
               <a
-                href="{{ conf.tw }}"
+                href="https://twitter.com/p3b9lwry"
                 target="_blank"
                 rel="noopener"
-                className="snsLabel"
+                css={snsLabel}
                 data-ref="icon"
               >
                 Tw
@@ -53,18 +58,18 @@ export const Header = _props => {
         <small css={copyright}>&copy; KuboNiku.com</small>
       </header>
 
-      <nav css={navMenu} data-ref="menuBody">
-        <div className="w-full h-full relative">
-          <div css={navMenu__mask} className="u-sp" data-ref="menuMask" />
-          <div css={navMenu__bg} className="u-sp" data-ref="menuBg" />
-          <ul css={menuList}>
+      <nav css={menu} data-ref="menuBody">
+        <div class="u-in">
+          <div css={menu__mask} className="u-sp" data-ref="menuMask" />
+          <div css={menu__bg} className="u-sp" data-ref="menuBg" />
+          <ul css={menu__links}>
             <li>
               <a href="/profile/" css={link} data-ref="menuLabel">
                 Profile
               </a>
             </li>
             <li>
-              <a href="/works/" css={link} data-ref="menuLabel">
+              <a href="/" css={link} data-ref="menuLabel">
                 Works
               </a>
             </li>
@@ -84,7 +89,7 @@ const brandLogo = css`
   font-size: 2.6rem;
   line-height: 1;
   color: var(--color-text-primary);
-  position: absolute;
+  position: fixed;
   top: 1.5rem;
   left: 2rem;
   display: block;
@@ -105,7 +110,7 @@ const copyright = css`
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.2em;
-  position: absolute;
+  position: fixed;
   right: 3rem;
   bottom: 2.5rem;
   display: inline-block;
@@ -118,7 +123,7 @@ const copyright = css`
   }
 `
 
-const navMenu = css`
+const menu = css`
   position: fixed;
   width: 100%;
   height: 100dvh;
@@ -128,16 +133,16 @@ const navMenu = css`
   left: 0;
   z-index: 100;
 
-  &.is-menuOpen {
+  .is-menuOpen & {
     pointer-events: all;
   }
 
-  &.is-menuAnimating {
+  .is-menuAnimating & {
     pointer-events: none;
   }
 `
 
-const navMenu__mask = css`
+const menu__mask = css`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -156,7 +161,7 @@ const navMenu__mask = css`
   }
 `
 
-const navMenu__bg = css`
+const menu__bg = css`
   position: absolute;
   width: 100%;
   height: 100dvh;
@@ -164,7 +169,7 @@ const navMenu__bg = css`
   right: 0;
   width: calc(46rem * 0.5);
   background-color: #000;
-  clip-path: polygon(100% 0px, 100% 0px, 100% calc(var(--vh) * 100), 100% calc(var(--vh) * 100));
+  clip-path: polygon(100% 0px, 100% 0px, 100% 100svh, 100% 100svh);
   backface-visibility: hidden;
 
   .is-menuAnimating & {
@@ -172,7 +177,7 @@ const navMenu__bg = css`
   }
 `
 
-const menuList = css`
+const menu__links = css`
   position: absolute;
   height: 100dvh;
   top: 0;
@@ -229,7 +234,7 @@ const burger = css`
   pointer-events: auto;
 `
 
-const burgerLine = css`
+const burger__line = css`
   width: 20px;
   height: 1px;
   background-color: #fff;
@@ -254,7 +259,7 @@ const drawPlus = keyframes`
 `
 
 const sns = css`
-  position: absolute;
+  position: fixed;
   text-align: center;
   bottom: 1rem;
   left: 2rem;
@@ -266,30 +271,19 @@ const sns = css`
   }
 `
 
-const snsList = css`
-  margin-bottom: 2.5rem;
+const snsLabel = css`
+  display: inline-block;
+  pointer-events: auto;
+  visibility: hidden;
+  opacity: 0;
+  font-family: var(--font-en);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  backface-visibility: hidden;
 
-  > li {
-    overflow: hidden;
-    text-align: center;
-    margin-bottom: 2rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    a {
-      // ${tw`inline-block pointer-events-auto invisible opacity-0`}
-      font-family: var(--font-en);
-      font-size: 1.2rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      backface-visibility: hidden;
-
-      @media (min-width: 640px) {
-        font-size: 1.3rem;
-      }
-    }
+  @media (min-width: 640px) {
+    font-size: 1.3rem;
   }
 `
 

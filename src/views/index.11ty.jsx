@@ -1,7 +1,7 @@
 const { renderToStaticMarkup: r } = require('react-dom/server')
-const { Page } = require('../components/Page')
+const { Page } = require('./components/Page')
 const { css } = require('@emotion/react')
-const { zeroPadding } = require('../components/works/converter')
+const { zeroPadding } = require('./components/works/converter')
 
 function WorksIndex(props) {
   const total = props.wp.works.total
@@ -20,7 +20,7 @@ function WorksIndex(props) {
       <div id="js-works" css={entries} className="works-entries || o-grid" data-total={total}>
         {posts.map((item, i) => (
           <article key={i} className="o-grid__item">
-            <a css={entry} href={`./${item.slug}/`}>
+            <a css={entry} href={`./works/${item.slug}/`}>
               <div css={aspect} />
               <div css={entry__g}>
                 <div css={eyecatch}>

@@ -46,7 +46,7 @@ export const Page = props => {
         {props.env === 'production' && <script type="module" src="./main.js" defer></script>}
         <Global styles={utilities} />
       </head>
-      <body>
+      <body data-component="Menu">
         <Header />
         <div className="l-window">
           <div className="l-content">
@@ -193,20 +193,6 @@ const styles = css`
     content: '\e903';
   }
 
-  @keyframes drawPlus {
-    0% {
-      transform: scaleX(1);
-    }
-
-    50% {
-      transform: scaleX(0);
-    }
-
-    100% {
-      transform: scaleX(1);
-    }
-  }
-
   @keyframes gradAnim {
     0% {
       background-position: 0% 50%;
@@ -258,13 +244,13 @@ const styles = css`
 
 const utilities = css`
   .u-sp {
-    @media (--pc) {
+    @media (min-width: 640px) {
       display: none !important;
     }
   }
 
   .u-pc {
-    @media (--sp) {
+    @media (max-width: 639px) {
       display: none !important;
     }
   }
@@ -283,7 +269,7 @@ const utilities = css`
     }
   }
 
-  .u-fitToParent {
+  .u-fit {
     position: absolute;
     top: 0;
     left: 0;
