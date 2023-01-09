@@ -1,6 +1,7 @@
+const { css } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { PageWithProgressbar } = require('../components/PageWithProgressbar')
-const { css } = require('@emotion/react')
+const { cdate: day } = require('cdate')
 
 exports.data = {
   pagination: {
@@ -11,58 +12,65 @@ exports.data = {
   permalink: context => `works/${context.post.slug}/index.html`,
 }
 
-exports.render = function (props) {
+exports.render = props => {
   const total = props.wp.works.total
   const projectNumber = total - props.pagination.pageNumber
+
   const post = props.post
+
+  const page = props.pagination.page
+  const isLast = page.last.id === post.id
+
+  const next = {
+    title: isLast ? page.first.title : page.next.title,
+    slug: isLast ? page.first.slug : page.next.slug,
+    eyecatch: isLast ? page.first.eyecatch : page.next.eyecatch,
+    eyecatchMobile: isLast ? page.first.eyecatchMobile : page.next.eyecatchMobile,
+  }
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithProgressbar title={post.title} env={props.build.env}>
+    <PageWithProgressbar title={post.title} env={props.build.env} progressbar={<div></div>}>
       <div css={kv}>
-        <div css={kv__cont} data-target="skew.item">
+        <div css={kv__cont}>
           <p className="">
             {projectNumber.toString().padStart(2, '0')}
             <span className="">Project</span>
           </p>
           <h1 css={heading}>
-            <div tw="inline-block overflow-hidden">
-              <span tw="inline-block origin-right">{post.title}</span>
+            <div className="inline-block overflow-hidden">
+              <span className="inline-block origin-right">{post.title}</span>
             </div>
           </h1>
           <p css={sub} tw="overflow-hidden">
-            <span tw="inline-block origin-right">
+            <span className="inline-block origin-right">
               {post.category}
               <i className="icon-arrow-right" />
             </span>
           </p>
         </div>
-        {
-          //<Picture src={props.eyecatch.src} mobile={props.eyecatch.mobile} />
-        }
+        <picture>
+          <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
+          <img src={post.eyecatchMobile.src} />
+        </picture>
         <div css={kv__scrollDown}>
-          <div tw="relative w-full h-full overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden">
             <div css={kv__scrollLabel}>scroll</div>
           </div>
           <i className="icon-arrow-down" />
         </div>
       </div>
-      <div css={worksContent} data-target="skew.item">
+
+      <div css={body}>
         <div css={intro}>
           <div css={intro__info}>
             <dl css={dl}>
               <dt css={dt}>Year :</dt>
-              <dd css={dd}>
-                {
-                  //format(props.createAt, 'MMMM d, yyyy')
-                }
-              </dd>
+              <dd css={dd}>{day(post.createAt).format('MMMM D, YYYY')}</dd>
             </dl>
             <dl css={dl}>
               <dt css={dt}>Role :</dt>
-              <dd css={dd}>
-                <ul>{post.role && post.role?.map((item, i) => <li key={i}>{item}</li>)}</ul>
-              </dd>
+              <dd css={dd}>{post.role.join(' / ')}</dd>
             </dl>
           </div>
           {post.viewWebsite && (
@@ -81,9 +89,9 @@ exports.render = function (props) {
                 backgroundColor: `transparent`,
               }
               return (
-                <li tw="relative" key={i}>
-                  <div className="c-aspect" style={css} />
-                  <div tw="absolute w-full h-full top-0 left-0">
+                <li className="relative" key={i}>
+                  <div css={aspect} style={css} />
+                  <div className="absolute w-full h-full top-0 left-0">
                     {
                       // <Img src={item.src} alt="" width={item.width} height={item.height} />
                     }
@@ -93,23 +101,20 @@ exports.render = function (props) {
             })}
           </ul>
         )}
-        {/*
-          props.prev && (
-            <aside css={[kv, kvNext]} className="is-next">
-              <Link scroll={false} href={'/works/' + props.prev.slug}>
-                <a tw="absolute w-full h-full z-10" />
-              </Link>
-              <div css={kv__cont}>
-                <h2 css={heading}>Next Project</h2>
-                <p css={sub}>
-                  {props.prev.title}
-                  <i className="icon-arrow-right" />
-                </p>
-              </div>
-              <Picture src={props.prev.eyecatch.src} mobile={props.prev.eyecatch.mobile} />
-            </aside>
-          )
-          */}
+        <aside css={[kv, kvNext]} className="is-next">
+          <a href={'/works/' + next.slug} className="absolute w-full h-full z-10"></a>
+          <div css={kv__cont}>
+            <h2 css={heading}>Next Project</h2>
+            <p css={sub}>
+              {next.title}
+              <i className="icon-arrow-right" />
+            </p>
+          </div>
+          <picture>
+            <source srcSet={next.eyecatchMobile.src} media="(min-width: 640px)" />
+            <img src={next.eyecatchMobile.src} />
+          </picture>
+        </aside>
       </div>
     </PageWithProgressbar>
   )}`
@@ -158,6 +163,7 @@ const heading = css`
   font-size: 3.9rem;
   line-height: 1;
   color: #fff;
+
   @media (min-width: 640px) {
     font-size: 7rem;
   }
@@ -171,6 +177,7 @@ const sub = css`
   letter-spacing: 0.02em;
   padding-left: 1.2rem;
   margin-top: 1rem;
+
   .icon-arrow-right {
     font-size: 0.7rem;
     margin-left: 0.8rem;
@@ -205,7 +212,7 @@ const kv__scrollLabel = css`
   }
 `
 
-const worksContent = css`
+const body = css`
   backface-visibility: hidden;
 `
 
@@ -293,6 +300,11 @@ const intro__viewLink__hr = css`
   @media (min-width: 640px) {
     border-top-width: 2px;
   }
+`
+
+const aspect = css`
+  aspect-ratio: var(--aspect);
+  background-color: 'transparent';
 `
 
 const captchaList = css`

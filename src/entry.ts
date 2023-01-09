@@ -1,5 +1,4 @@
 import 'ress'
-import './styles/global.css'
 import './tailwind.dist.css'
 
 import { register, withSvelte, mount, q } from 'lake'

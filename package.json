@@ -77,6 +77,7 @@
   "dependencies": {
     "@dogstudio/highway": "^2.2.1",
     "axios": "0.24.0",
+    "cdate": "^0.0.4",
     "date-fns": "^2.29.3",
     "detect-gpu": "^3.1.25",
     "lake": "https://github.com/hayakawasho/lake",
