@@ -1,5 +1,5 @@
 import 'ress'
-import './tailwind.dist.css'
+import 'virtual:windi.css'
 
 import { register, withSvelte, mount, q } from 'lake'
 import Gl from '@/components/gl/index.svelte'

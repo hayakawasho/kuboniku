@@ -5,6 +5,7 @@ import glslifyCompiler from 'vite-plugin-glslify'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import preprocess from 'svelte-preprocess'
 import viteCompression from 'vite-plugin-compression'
+import WindiCSS from 'vite-plugin-windicss'
 
 const isDev = process.env.NODE_ENV !== 'production'
 
@@ -26,6 +27,7 @@ export default defineConfig({
       preprocess: preprocess(),
     }),
     viteCompression(),
+    WindiCSS(),
   ],
   build: {
     outDir: '_site',
