@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   register('WorksIndex', WorksIndex)
   register('WorksDetail', Noop)
   register('Profile', Noop)
-  register('Home', Noop)
 
   q('[data-component]').forEach(el => {
     const name = el.dataset.component ?? ''
