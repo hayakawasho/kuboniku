@@ -17,21 +17,21 @@ function WorksIndex(props) {
         </h1>
       </div>
 
-      <div id="js-works" css={entries} className="works-entries || o-grid" data-total={total}>
+      <div id="js-works" css={entries} className="o-grid" data-total={total}>
         {posts.map((item, i) => (
           <article key={i} className="o-grid__item">
             <a css={entry} href={`./works/${item.slug}/`}>
               <div css={aspect} />
               <div css={entry__g}>
                 <div css={eyecatch}>
-                  <img src={item.eyecatch.src} alt="" className="opacity-[.8]" />
+                  <img src={item.eyecatch.src} alt="" loading="lazy" />
                 </div>
                 <div css={entry__hgroup}>
                   <p css={num}>
                     {zeroPadding(total - i)}
                     <span>Project</span>
                   </p>
-                  <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }}></h2>
+                  <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }} />
                 </div>
               </div>
             </a>
@@ -133,6 +133,7 @@ const num = css`
     font-size: 1.9rem;
     margin-bottom: 2rem;
   }
+
   > span {
     font-size: 1rem;
     letter-spacing: 0.02em;
@@ -154,12 +155,7 @@ const eyecatch = css`
   opacity: 0.8;
   backface-visibility: hidden;
 
-  div {
-    width: 100%;
-    height: 100%;
-  }
-
-  img {
+  > img {
     position: absolute;
     top: 0;
     left: 0;
@@ -170,6 +166,7 @@ const eyecatch = css`
     filter: grayscale(1);
     backface-visibility: hidden;
     transition: filter 1s;
+    opacity: 0.8;
   }
 `
 

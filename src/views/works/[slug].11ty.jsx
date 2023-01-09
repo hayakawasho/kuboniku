@@ -30,13 +30,16 @@ function WorksSlug(props) {
           </p>
           <h1 css={heading}>
             <div className="inline-block overflow-hidden">
-              <span className="inline-block origin-right">{post.title}</span>
+              <span
+                className="inline-block origin-right"
+                dangerouslySetInnerHTML={{ __html: post.title }}
+              />
             </div>
           </h1>
           <p css={sub} className="overflow-hidden">
             <span className="inline-block origin-right">
               {post.category}
-              <i className="icon-arrow-right" />
+              <i className="icon-arrow_right || text-[1rem] inline-block align-middle transform scale-70" />
             </span>
           </p>
         </div>
@@ -48,7 +51,7 @@ function WorksSlug(props) {
           <div className="relative w-full h-full overflow-hidden">
             <div css={kv__scrollLabel}>scroll</div>
           </div>
-          <i className="icon-arrow_down" />
+          <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
         </div>
       </div>
 
@@ -101,7 +104,7 @@ function WorksSlug(props) {
             <h2 css={heading}>Next Project</h2>
             <p css={sub}>
               {next.title}
-              <i className="icon-arrow_right" />
+              <i className="icon-arrow_right || text-[1rem] inline-block align-middle transform scale-70" />
             </p>
           </div>
           <picture>
@@ -142,7 +145,7 @@ const kv = css`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.8;
+    opacity: 0.6;
   }
 `
 

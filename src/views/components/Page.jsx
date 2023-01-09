@@ -178,19 +178,19 @@ const styles = css`
   }
 
   .icon-arrow_down:before {
-    content: '\e900';
+    content: '\\e900';
   }
 
   .icon-arrow_right:before {
-    content: '\e901';
+    content: '\\e901';
   }
 
   .icon-logo_sp:before {
-    content: '\e902';
+    content: '\\e902';
   }
 
   .icon-logo:before {
-    content: '\e903';
+    content: '\\e903';
   }
 
   @keyframes gradAnim {
