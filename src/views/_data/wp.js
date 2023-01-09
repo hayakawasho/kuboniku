@@ -1,3 +1,4 @@
+// @ts-nocheck
 const WP_API_BASE = 'http://localhost:8888/wp-json/'
 const WP_API = process.env.WP_API_BASE || WP_API_BASE
 

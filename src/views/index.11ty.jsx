@@ -1,7 +1,8 @@
 // @ts-nocheck
 const { css } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
-const { Page } = require('./components/Page')
+const { PageWithHeader } = require('./components/page/PageWithHeader')
+const { PageWithPjax } = require('./components/page/PageWithPjax')
 const { zeroPadding } = require('./components/works/converter')
 
 function WorksIndex(props) {
@@ -10,36 +11,40 @@ function WorksIndex(props) {
 
   return `<!DOCTYPE html>
   ${r(
-    <Page title="WORKS" env={props.build.env}>
-      <div className="o-wrap || pt-[10rem]">
-        <h1 css={heading}>
-          Works
-          <sup css={heading__total}>{total}</sup>
-        </h1>
-      </div>
+    <PageWithHeader title="WORKS" env={props.build.env}>
+      <PageWithPjax>
+        <main className="l-page">
+          <div className="o-wrap || pt-[10rem]">
+            <h1 css={heading}>
+              Works
+              <sup css={heading__total}>{total}</sup>
+            </h1>
+          </div>
 
-      <div id="js-works" css={entries} className="o-grid" data-total={total}>
-        {posts.map((item, i) => (
-          <article key={i} className="o-grid__item">
-            <a css={entry} href={`./works/${item.slug}/`}>
-              <div css={aspect} />
-              <div css={entry__g}>
-                <div css={eyecatch}>
-                  <img src={item.eyecatch.src} alt="" loading="lazy" />
-                </div>
-                <div css={entry__hgroup}>
-                  <p css={num}>
-                    {zeroPadding(total - i)}
-                    <span>Project</span>
-                  </p>
-                  <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }} />
-                </div>
-              </div>
-            </a>
-          </article>
-        ))}
-      </div>
-    </Page>
+          <div id="js-works" css={entries} className="o-grid" data-total={total}>
+            {posts.map((item, i) => (
+              <article key={i} className="o-grid__item">
+                <a css={entry} href={`./works/${item.slug}/`}>
+                  <div css={aspect} />
+                  <div css={entry__g}>
+                    <div css={eyecatch}>
+                      <img src={item.eyecatch.src} alt="" loading="lazy" />
+                    </div>
+                    <div css={entry__hgroup}>
+                      <p css={num}>
+                        {zeroPadding(total - i)}
+                        <span>Project</span>
+                      </p>
+                      <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }} />
+                    </div>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        </main>
+      </PageWithPjax>
+    </PageWithHeader>
   )}`
 }
 

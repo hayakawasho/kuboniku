@@ -1,23 +1,28 @@
 // @ts-nocheck
 const { css } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
-const { Page } = require('../components/Page')
+const { PageWithHeader } = require('../components/page/PageWithHeader')
+const { PageWithPjax } = require('../components/page/PageWithPjax')
 
 function Profile(props) {
   return `<!DOCTYPE html>
   ${r(
-    <Page title={'PROFILE'} env={props.build.env}>
-      <h1 className="sr-only">PROFILE</h1>
-      <div css={container}>
-        <div css={container__in}>
-          <div css={hgroup}>
-            <h2 css={heading}>Nagisa Kubo</h2>
-            <p>Art Director & Designer</p>
+    <PageWithHeader title="PROFILE" env={props.build.env}>
+      <PageWithPjax>
+        <main className="l-page">
+          <h1 className="sr-only">PROFILE</h1>
+          <div css={container}>
+            <div css={container__in}>
+              <div css={hgroup}>
+                <h2 css={heading}>Nagisa Kubo</h2>
+                <p>Art Director & Designer</p>
+              </div>
+              <div css={about} dangerouslySetInnerHTML={{ __html: props.wp.profile.html }} />
+            </div>
           </div>
-          <div css={about} dangerouslySetInnerHTML={{ __html: props.wp.profile.html }} />
-        </div>
-      </div>
-    </Page>
+        </main>
+      </PageWithPjax>
+    </PageWithHeader>
   )}`
 }
 

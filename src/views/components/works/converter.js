@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { cdate } from 'cdate'
 
 export const zeroPadding = (num, pad = 2) => {

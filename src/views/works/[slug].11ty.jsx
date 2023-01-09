@@ -1,7 +1,9 @@
 // @ts-nocheck
 const { css, keyframes } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
-const { PageWithProgressbar } = require('../components/PageWithProgressbar')
+const { Progressbar } = require('../components/Progressbar')
+const { PageWithHeader } = require('../components/page/PageWithHeader')
+const { PageWithPjax } = require('../components/page/PageWithPjax')
 const { selectRole, selectYear, zeroPadding } = require('../components/works/converter')
 
 function WorksDetail(props) {
@@ -22,99 +24,103 @@ function WorksDetail(props) {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithProgressbar title={post.title} env={props.build.env} progressbar={<div></div>}>
-      <div css={kv}>
-        <div css={kv__cont}>
-          <p css={project}>
-            {zeroPadding(projectNumber)}
-            <span className="ml-[.8rem]">Project</span>
-          </p>
-          <h1 css={heading} className="pr-[.5em]">
-            <div className="inline-block overflow-hidden">
-              <span
-                className="inline-block origin-right"
-                dangerouslySetInnerHTML={{ __html: post.title }}
-              />
+    <PageWithHeader title={post.title} env={props.build.env} progressbar={<Progressbar />}>
+      <PageWithPjax>
+        <main className="l-page">
+          <div css={kv}>
+            <div css={kv__cont}>
+              <p css={project}>
+                {zeroPadding(projectNumber)}
+                <span className="ml-[.8rem]">Project</span>
+              </p>
+              <h1 css={heading} className="pr-[.5em]">
+                <div className="inline-block overflow-hidden">
+                  <span
+                    className="inline-block origin-right"
+                    dangerouslySetInnerHTML={{ __html: post.title }}
+                  />
+                </div>
+              </h1>
+              <p css={sub} className="overflow-hidden">
+                <span className="inline-block origin-right">
+                  {post.category}
+                  <i className="icon-arrow_right" />
+                </span>
+              </p>
             </div>
-          </h1>
-          <p css={sub} className="overflow-hidden">
-            <span className="inline-block origin-right">
-              {post.category}
-              <i className="icon-arrow_right" />
-            </span>
-          </p>
-        </div>
-        <picture>
-          <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-          <img src={post.eyecatchMobile.src} />
-        </picture>
-        <div css={kv__scrollDown}>
-          <div className="relative w-full h-full overflow-hidden">
-            <div css={kv__scrollLabel}>scroll</div>
+            <picture>
+              <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
+              <img src={post.eyecatchMobile.src} />
+            </picture>
+            <div css={kv__scrollDown}>
+              <div className="relative w-full h-full overflow-hidden">
+                <div css={kv__scrollLabel}>scroll</div>
+              </div>
+              <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
+            </div>
           </div>
-          <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
-        </div>
-      </div>
 
-      <div css={body}>
-        <div css={intro}>
-          <div css={intro__info}>
-            <dl css={dl}>
-              <dt css={dt}>Year :</dt>
-              <dd css={dd}>{selectYear(post)}</dd>
-            </dl>
-            <dl css={dl}>
-              <dt css={dt}>Role :</dt>
-              <dd css={dd}>{selectRole(post)}</dd>
-            </dl>
+          <div css={body}>
+            <div css={intro}>
+              <div css={intro__info}>
+                <dl css={dl}>
+                  <dt css={dt}>Year :</dt>
+                  <dd css={dd}>{selectYear(post)}</dd>
+                </dl>
+                <dl css={dl}>
+                  <dt css={dt}>Role :</dt>
+                  <dd css={dd}>{selectRole(post)}</dd>
+                </dl>
+              </div>
+              {post.siteUrl && (
+                <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
+                  View website
+                  <div css={intro__viewLink__hr} />
+                </a>
+              )}
+            </div>
+            {post.gallery && (
+              <ul css={captchaList}>
+                {post.gallery.map((item, i) => {
+                  const css = {
+                    '--aspect': `${item.width / item.height}`,
+                    backgroundColor: post.color,
+                  }
+                  return (
+                    <li className="relative bg-[#191918]" key={i}>
+                      <div css={aspect} style={css} className="opacity-20" />
+                      <div className="u-fit">
+                        <img
+                          src={item.src}
+                          alt=""
+                          width={item.width}
+                          height={item.height}
+                          loading="lazy"
+                        />
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+            <aside css={[kv, kvNext]}>
+              <a href={'../' + next.slug} className="u-fit z-10"></a>
+              <div css={kv__cont}>
+                <h2 css={heading}>Next Project</h2>
+                <p css={sub}>
+                  {next.title}
+                  <i className="icon-arrow_right" />
+                </p>
+              </div>
+              <picture>
+                <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
+                <img src={next.eyecatchMobile.src} />
+              </picture>
+            </aside>
           </div>
-          {post.siteUrl && (
-            <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
-              View website
-              <div css={intro__viewLink__hr} />
-            </a>
-          )}
-        </div>
-        {post.gallery && (
-          <ul css={captchaList}>
-            {post.gallery.map((item, i) => {
-              const css = {
-                '--aspect': `${item.width / item.height}`,
-                backgroundColor: post.color,
-              }
-              return (
-                <li className="relative bg-[#191918]" key={i}>
-                  <div css={aspect} style={css} className="opacity-20" />
-                  <div className="u-fit">
-                    <img
-                      src={item.src}
-                      alt=""
-                      width={item.width}
-                      height={item.height}
-                      loading="lazy"
-                    />
-                  </div>
-                </li>
-              )
-            })}
-          </ul>
-        )}
-        <aside css={[kv, kvNext]}>
-          <a href={'../' + next.slug} className="u-fit z-10"></a>
-          <div css={kv__cont}>
-            <h2 css={heading}>Next Project</h2>
-            <p css={sub}>
-              {next.title}
-              <i className="icon-arrow_right" />
-            </p>
-          </div>
-          <picture>
-            <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
-            <img src={next.eyecatchMobile.src} />
-          </picture>
-        </aside>
-      </div>
-    </PageWithProgressbar>
+        </main>
+      </PageWithPjax>
+    </PageWithHeader>
   )}`
 }
 
