@@ -9,16 +9,14 @@ import Sns from '@/components/sns/sns.svelte'
 import WorksIndex from '@/components/works'
 
 document.addEventListener('DOMContentLoaded', () => {
+  register('Noop', Noop)
   register('Menu', Menu)
   register('Sns', withSvelte(Sns))
   register('Gl', withSvelte(Gl))
-  register('Scroll', Scroll)
   register('WorksIndex', WorksIndex)
-  register('WorksDetail', Noop)
-  register('Profile', Noop)
 
   q('[data-component]').forEach(el => {
-    const name = el.dataset.component ?? ''
+    const name = el.dataset.component || 'Noop'
     mount(el, {}, name)
   })
 })
