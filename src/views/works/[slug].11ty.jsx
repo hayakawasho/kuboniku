@@ -4,6 +4,7 @@ const { renderToStaticMarkup: r } = require('react-dom/server')
 const { Progressbar } = require('../components/Progressbar')
 const { PageWithHeader } = require('../components/page/PageWithHeader')
 const { PageWithPjax } = require('../components/page/PageWithPjax')
+const { PageWithProgressbar } = require('../components/page/PageWithProgressbar')
 const { selectRole, selectYear, zeroPadding } = require('../components/works/converter')
 
 function WorksDetail(props) {
@@ -24,101 +25,103 @@ function WorksDetail(props) {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title={post.title} env={props.build.env} progressbar={<Progressbar />}>
+    <PageWithHeader title={post.title} env={props.build.env}>
       <PageWithPjax>
-        <main className="l-page">
-          <div css={kv}>
-            <div css={kv__cont}>
-              <p css={project}>
-                {zeroPadding(projectNumber)}
-                <span className="ml-[.8rem]">Project</span>
-              </p>
-              <h1 css={heading} className="pr-[.5em]">
-                <div className="inline-block overflow-hidden">
-                  <span
-                    className="inline-block origin-right"
-                    dangerouslySetInnerHTML={{ __html: post.title }}
-                  />
-                </div>
-              </h1>
-              <p css={sub} className="overflow-hidden">
-                <span className="inline-block origin-right">
-                  {post.category}
-                  <i className="icon-arrow_right" />
-                </span>
-              </p>
-            </div>
-            <picture>
-              <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-              <img src={post.eyecatchMobile.src} />
-            </picture>
-            <div css={kv__scrollDown}>
-              <div className="relative w-full h-full overflow-hidden">
-                <div css={kv__scrollLabel}>scroll</div>
-              </div>
-              <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
-            </div>
-          </div>
-
-          <div css={body}>
-            <div css={intro}>
-              <div css={intro__info}>
-                <dl css={dl}>
-                  <dt css={dt}>Year :</dt>
-                  <dd css={dd}>{selectYear(post)}</dd>
-                </dl>
-                <dl css={dl}>
-                  <dt css={dt}>Role :</dt>
-                  <dd css={dd}>{selectRole(post)}</dd>
-                </dl>
-              </div>
-              {post.siteUrl && (
-                <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
-                  View website
-                  <div css={intro__viewLink__hr} />
-                </a>
-              )}
-            </div>
-            {post.gallery && (
-              <ul css={captchaList}>
-                {post.gallery.map((item, i) => {
-                  const css = {
-                    '--aspect': `${item.width / item.height}`,
-                    backgroundColor: post.color,
-                  }
-                  return (
-                    <li className="relative bg-[#191918]" key={i}>
-                      <div css={aspect} style={css} className="opacity-20" />
-                      <div className="u-fit">
-                        <img
-                          src={item.src}
-                          alt=""
-                          width={item.width}
-                          height={item.height}
-                          loading="lazy"
-                        />
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-            <aside css={[kv, kvNext]}>
-              <a href={'../' + next.slug} className="u-fit z-10"></a>
+        <PageWithProgressbar progressbar={<Progressbar />}>
+          <main className="l-page">
+            <div css={kv}>
               <div css={kv__cont}>
-                <h2 css={heading}>Next Project</h2>
-                <p css={sub}>
-                  {next.title}
-                  <i className="icon-arrow_right" />
+                <p css={project}>
+                  {zeroPadding(projectNumber)}
+                  <span className="ml-[.8rem]">Project</span>
+                </p>
+                <h1 css={heading} className="pr-[.5em]">
+                  <div className="inline-block overflow-hidden">
+                    <span
+                      className="inline-block origin-right"
+                      dangerouslySetInnerHTML={{ __html: post.title }}
+                    />
+                  </div>
+                </h1>
+                <p css={sub} className="overflow-hidden">
+                  <span className="inline-block origin-right">
+                    {post.category}
+                    <i className="icon-arrow_right" />
+                  </span>
                 </p>
               </div>
               <picture>
-                <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
-                <img src={next.eyecatchMobile.src} />
+                <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
+                <img src={post.eyecatchMobile.src} />
               </picture>
-            </aside>
-          </div>
-        </main>
+              <div css={kv__scrollDown}>
+                <div className="relative w-full h-full overflow-hidden">
+                  <div css={kv__scrollLabel}>scroll</div>
+                </div>
+                <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
+              </div>
+            </div>
+
+            <div css={body}>
+              <div css={intro}>
+                <div css={intro__info}>
+                  <dl css={dl}>
+                    <dt css={dt}>Year :</dt>
+                    <dd css={dd}>{selectYear(post)}</dd>
+                  </dl>
+                  <dl css={dl}>
+                    <dt css={dt}>Role :</dt>
+                    <dd css={dd}>{selectRole(post)}</dd>
+                  </dl>
+                </div>
+                {post.siteUrl && (
+                  <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
+                    View website
+                    <div css={intro__viewLink__hr} />
+                  </a>
+                )}
+              </div>
+              {post.gallery && (
+                <ul css={captchaList}>
+                  {post.gallery.map((item, i) => {
+                    const css = {
+                      '--aspect': `${item.width / item.height}`,
+                      backgroundColor: post.color,
+                    }
+                    return (
+                      <li className="relative bg-[#191918]" key={i}>
+                        <div css={aspect} style={css} className="opacity-20" />
+                        <div className="u-fit">
+                          <img
+                            src={item.src}
+                            alt=""
+                            width={item.width}
+                            height={item.height}
+                            loading="lazy"
+                          />
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
+              <aside css={[kv, kvNext]}>
+                <a href={'../' + next.slug} className="u-fit z-10"></a>
+                <div css={kv__cont}>
+                  <h2 css={heading}>Next Project</h2>
+                  <p css={sub}>
+                    {next.title}
+                    <i className="icon-arrow_right" />
+                  </p>
+                </div>
+                <picture>
+                  <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
+                  <img src={next.eyecatchMobile.src} />
+                </picture>
+              </aside>
+            </div>
+          </main>
+        </PageWithProgressbar>
       </PageWithPjax>
     </PageWithHeader>
   )}`
@@ -383,10 +386,6 @@ const captchaList = css`
 
     @media (min-width: 640px) {
       margin-bottom: 6rem;
-    }
-
-    .c-aspect {
-      opacity: 0.2;
     }
   }
 `
