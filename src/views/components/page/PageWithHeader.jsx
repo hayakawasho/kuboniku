@@ -18,7 +18,6 @@ export const PageWithHeader = props => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="format-detection" content="telephone=no" />
         <meta httpEquiv="Content-Type" content="text/html" />
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta property="og:title" content={title} />
@@ -50,7 +49,7 @@ export const PageWithHeader = props => {
       <body data-component="Menu">
         <Header />
         {props.children}
-        <div className="gl" data-component="Gl"></div>
+        <div data-component="Gl"></div>
       </body>
     </html>
   )
@@ -190,18 +189,6 @@ const styles = css`
     content: '\\e903';
   }
 
-  @keyframes gradAnim {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
   .l-fixed {
     position: fixed;
     top: 0;
@@ -272,14 +259,5 @@ const utilities = css`
     left: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .u-posC {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
   }
 `

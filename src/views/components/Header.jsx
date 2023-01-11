@@ -170,6 +170,7 @@ const menu__bg = css`
   right: 0;
   width: calc(46rem * 0.5);
   background-color: #000;
+  clip-path: polygon(100% 0px, 100% 0px, 100% 100vh, 100% 100vh);
   clip-path: polygon(100% 0px, 100% 0px, 100% 100svh, 100% 100svh);
   backface-visibility: hidden;
 
@@ -180,6 +181,7 @@ const menu__bg = css`
 
 const menu__links = css`
   position: absolute;
+  height: 100vh;
   height: 100dvh;
   top: 0;
   right: 0;
@@ -236,8 +238,8 @@ const burger = css`
 `
 
 const burger__line = css`
-  width: 20px;
-  height: 1px;
+  width: 2rem;
+  height: 0.1rem;
   background-color: #fff;
   transform-origin: left;
 
@@ -266,8 +268,8 @@ const sns = css`
   left: 2rem;
   z-index: 99;
 
-  @media (--pc) {
-    bottom: 4rem;
+  @media (min-width: 640px) {
+    bottom: 3rem;
     left: 4rem;
   }
 `
@@ -292,8 +294,8 @@ const plus = css`
   position: relative;
   z-index: 2;
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 1.6rem;
+  height: 1.6rem;
   pointer-events: auto;
   cursor: pointer;
   padding: 1rem;
@@ -311,12 +313,17 @@ const plus = css`
 const plus__x = css`
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 16px;
-  height: 1px;
+  width: 1.6rem;
+  height: 0.1rem;
   background-color: var(--color-text-primary);
   backface-visibility: hidden;
   transform-origin: left;
+
+  @media (min-width: 640px) {
+    width: 2.5rem;
+    left: 0;
+    margin-left: 0;
+  }
 
   .is-hover & {
     animation: ${drawPlus} 0.6s;
@@ -326,14 +333,19 @@ const plus__x = css`
 const plus__y = css`
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 16px;
-  height: 1px;
+  width: 1.6rem;
+  height: 0.1rem;
   content: '';
   background-color: var(--color-text-primary);
   backface-visibility: hidden;
   transform: rotate(90deg);
   transform-origin: center;
+
+  @media (min-width: 640px) {
+    width: 2.5rem;
+    left: 0;
+    margin-left: 0;
+  }
 
   .is-hover & {
     animation: ${drawPlus} 0.6s 0.3s;

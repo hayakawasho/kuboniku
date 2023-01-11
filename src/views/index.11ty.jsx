@@ -51,7 +51,7 @@ function WorksIndex(props) {
 exports.data = {
   pagination: {
     data: 'wp.works.items',
-    size: 10,
+    size: 40,
     addAllPagesToCollections: false,
     alias: 'posts',
   },

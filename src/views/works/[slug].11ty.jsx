@@ -35,18 +35,15 @@ function WorksDetail(props) {
                   {zeroPadding(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
-                <h1 css={heading} className="pr-[.5em]">
-                  <div className="inline-block overflow-hidden">
-                    <span
-                      className="inline-block origin-right"
-                      dangerouslySetInnerHTML={{ __html: post.title }}
-                    />
-                  </div>
-                </h1>
-                <p css={sub} className="overflow-hidden">
+                <h1
+                  css={heading}
+                  className="pr-[.5em]"
+                  dangerouslySetInnerHTML={{ __html: post.title }}
+                />
+                <p css={sub} className="mt-[1rem] overflow-hidden">
                   <span className="inline-block origin-right">
                     {post.category}
-                    <i className="icon-arrow_right" />
+                    <i className="icon-arrow_right ml-[.8rem]" />
                   </span>
                 </p>
               </div>
@@ -75,22 +72,28 @@ function WorksDetail(props) {
                   </dl>
                 </div>
                 {post.siteUrl && (
-                  <a css={intro__viewLink} href={post.siteUrl} target="_blank" rel="noopener">
+                  <a
+                    css={intro__viewLink}
+                    className="mt-[4rem]"
+                    href={post.siteUrl}
+                    target="_blank"
+                    rel="noopener"
+                  >
                     View website
                     <div css={intro__viewLink__hr} />
                   </a>
                 )}
               </div>
               {post.gallery && (
-                <ul css={captchaList}>
+                <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
                   {post.gallery.map((item, i) => {
                     const css = {
                       '--aspect': `${item.width / item.height}`,
                       backgroundColor: post.color,
                     }
                     return (
-                      <li className="relative bg-[#191918]" key={i}>
-                        <div css={aspect} style={css} className="opacity-20" />
+                      <li className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]" key={i}>
+                        <div css={aspect} style={css} />
                         <div className="u-fit">
                           <img
                             src={item.src}
@@ -109,9 +112,9 @@ function WorksDetail(props) {
                 <a href={'../' + next.slug} className="u-fit z-10"></a>
                 <div css={kv__cont}>
                   <h2 css={heading}>Next Project</h2>
-                  <p css={sub}>
+                  <p css={sub} className="mt-[1rem]">
                     {next.title}
-                    <i className="icon-arrow_right" />
+                    <i className="icon-arrow_right ml-[.8rem]" />
                   </p>
                 </div>
                 <picture>
@@ -131,6 +134,7 @@ exports.data = {
   pagination: {
     data: 'wp.works.items',
     size: 1,
+    addAllPagesToCollections: true,
     alias: 'post',
   },
   permalink: context => `works/${context.post.slug}/index.html`,
@@ -143,8 +147,9 @@ const kv = css`
   width: 100%;
   overflow: hidden;
   display: block;
+  height: 100vh;
   height: 100svh;
-  perspective: 1000px;
+  // perspective: 1000px;
 
   @media (min-width: 640px) {
     height: 100vh;
@@ -155,7 +160,7 @@ const kv = css`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 `
 
@@ -197,6 +202,7 @@ const project = css`
   font-family: var(--font-en);
   font-size: 1.3rem;
   letter-spacing: 0.02em;
+  color: var(--color-text-primary);
 
   > span {
     font-size: 70%;
@@ -211,11 +217,9 @@ const sub = css`
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
   padding-left: 1.2rem;
-  margin-top: 1rem;
 
   .icon-arrow_right {
     font-size: 1rem;
-    margin-left: 0.8rem;
     transform: scale(0.7);
     transform-origin: left;
     display: inline-block;
@@ -238,10 +242,6 @@ const kv__scrollDown = css`
 
   @media (min-width: 640px) {
     font-size: 1.3rem;
-  }
-
-  .icon-arrow_down {
-    margin-top: 1.2rem;
   }
 `
 
@@ -275,7 +275,7 @@ const kv__scrollLabel = css`
     position: absolute;
     display: block;
     transform-origin: right;
-    bottom: -30px;
+    bottom: -3rem;
     content: 'scroll';
     animation: ${back} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }
@@ -338,7 +338,6 @@ const intro__viewLink = css`
   position: relative;
   display: inline-block;
   font-weight: bold;
-  margin-top: 4rem;
   padding-left: 2.6em;
   font-family: var(--font-en);
   font-size: 1.2rem;
@@ -369,23 +368,14 @@ const intro__viewLink__hr = css`
 const aspect = css`
   aspect-ratio: var(--aspect);
   background-color: 'transparent';
+  opacity: 0.2;
 `
 
 const captchaList = css`
   padding: 0 var(--gap);
-  margin-bottom: 10.5rem;
 
   @media (min-width: 640px) {
     width: calc(var(--grid) * 10);
     padding: 0;
-    margin: 0 auto 12rem;
-  }
-
-  > li {
-    margin-bottom: 2rem;
-
-    @media (min-width: 640px) {
-      margin-bottom: 6rem;
-    }
   }
 `
