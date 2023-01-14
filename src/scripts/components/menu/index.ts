@@ -1,5 +1,5 @@
 import { defineComponent, withSvelte, useDOMRef } from 'lake'
-import { enablePageScroll, disablePageScroll } from 'scroll-lock'
+// import { enablePageScroll, disablePageScroll } from 'scroll-lock'
 import MenuTrigger from './menu-trigger.svelte'
 import { TWEEN, EASE } from '@/libs'
 
@@ -31,28 +31,32 @@ export default defineComponent({
 
     return {
       onOpen: () => {
+        // refs.menuBody.showModal()
+
         el.classList.add('is-menuOpen')
-        disablePageScroll()
 
         TWEEN.serial(
           TWEEN.parallel(
-            TWEEN.tween(refs.menuTrigger, 0.8, EASE._3_CubicInOut).rotation(180),
-            TWEEN.tween(refs.burgerTopLine, 0.8, EASE._3_CubicInOut).y(2.5),
-            TWEEN.tween(refs.burgerBottomLine, 0.8, EASE._3_CubicInOut).scaleX(0)
+            TWEEN.tween(refs.menuTrigger, 0.8, EASE.cubicInOut).rotation(180),
+            TWEEN.tween(refs.burgerTopLine, 0.8, EASE.cubicInOut).y(2.5).willChange(),
+            TWEEN.tween(refs.burgerBottomLine, 0.8, EASE.cubicInOut).scaleX(0).willChange()
           )
         ).play()
       },
       onClose: () => {
         TWEEN.serial(
           TWEEN.parallel(
-            TWEEN.tween(refs.menuTrigger, 0.8, EASE._3_CubicInOut).rotation(360),
-            TWEEN.tween(refs.burgerTopLine, 0.8, EASE._3_CubicInOut).y(0),
-            TWEEN.tween(refs.burgerBottomLine, 0.8, EASE._3_CubicInOut).scaleX(32 / 40)
+            TWEEN.tween(refs.menuTrigger, 0.8, EASE.cubicInOut).rotation(360),
+            TWEEN.tween(refs.burgerTopLine, 0.8, EASE.cubicInOut).y(0).willChange(),
+            TWEEN.tween(refs.burgerBottomLine, 0.8, EASE.cubicInOut)
+              .scaleX(32 / 40)
+              .willChange()
           )
         )
           .onComplete(() => {
             el.classList.remove('is-menuOpen')
-            enablePageScroll()
+
+            // refs.menuBody.close()
           })
           .play()
       },

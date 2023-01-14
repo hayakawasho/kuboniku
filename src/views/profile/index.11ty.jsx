@@ -9,8 +9,10 @@ function Profile(props) {
   ${r(
     <PageWithHeader title="PROFILE" env={props.build.env}>
       <PageWithPjax>
-        <main className="l-page">
+        <main className="l-page overflow-hidden">
           <h1 className="sr-only">PROFILE</h1>
+          <i css={logo} className="icon-logo || u-pc"></i>
+          <i css={logo} className="icon-logo_sp || u-sp"></i>
           <div css={container}>
             <div css={container__in}>
               <div css={hgroup}>
@@ -28,10 +30,30 @@ function Profile(props) {
 
 exports.render = Profile
 
+const logo = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% + 2rem), calc(-100% - 7.5rem));
+  font-size: 17rem;
+  background: url('/assets/grad.jpg');
+  background-size: 100% 160%;
+  background-position: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  @media (min-width: 640px) {
+    font-size: 31rem;
+    transform: translate(calc(-50% + 7rem), calc(-100% - 0rem));
+  }
+`
+
 const container = css`
   position: relative;
   margin: 0 3rem;
   height: calc(var(--vh) * 100);
+  height: 100dvh;
 
   @media (min-width: 640px) {
     text-align: left;
@@ -48,6 +70,7 @@ const container__in = css`
   @media (min-width: 640px) {
     left: 50%;
     text-align: left;
+    mix-blend-mode: difference;
   }
 `
 

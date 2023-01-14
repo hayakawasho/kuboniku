@@ -6,7 +6,9 @@ const DESCRIPTION = 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site'
 const SITE_URL = 'https://kuboniku.com'
 
 export const Head = props => {
-  const { title, description, pagePath } = props
+  const title = props.title + '| ' + TITLE
+  const description = DESCRIPTION
+  const pagePath = ''
 
   return (
     <head>
@@ -99,6 +101,33 @@ export const Head = props => {
             @media (min-resolution: 1.5dppx) {
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
+            }
+          }
+
+          :where(dialog:modal) {
+            all: revert;
+          }
+
+          dialog {
+            padding: 0;
+            margin: 0;
+            max-width: 100%;
+            height: 100%;
+            max-height: 100%;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            background-color: transparent;
+            border: none;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+
+            &::backdrop {
+              background-color: transparent;
             }
           }
 

@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { createScene, resize } from './scene'
+  import { createBgCanvas, resize } from './main'
 
   let canvas: HTMLCanvasElement
 
   onMount(() => {
-    createScene(canvas)
+    createBgCanvas(canvas)
   })
 </script>
 

@@ -49,7 +49,7 @@ function WorksDetail(props) {
               </div>
               <picture>
                 <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-                <img src={post.eyecatchMobile.src} />
+                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-50" />
               </picture>
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
@@ -119,7 +119,11 @@ function WorksDetail(props) {
                 </div>
                 <picture>
                   <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
-                  <img src={next.eyecatchMobile.src} />
+                  <img
+                    src={next.eyecatchMobile.src}
+                    css={imgFit}
+                    className="opacity-50 filter grayscale-100"
+                  />
                 </picture>
               </aside>
             </div>
@@ -142,6 +146,13 @@ exports.data = {
 
 exports.render = WorksDetail
 
+const imgFit = css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
 const kv = css`
   position: relative;
   width: 100%;
@@ -154,22 +165,10 @@ const kv = css`
   @media (min-width: 640px) {
     height: 100vh;
   }
-
-  img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.5;
-  }
 `
 
 const kvNext = css`
   height: 100vh;
-
-  img {
-    filter: grayscale(1);
-  }
 `
 
 const kv__cont = css`
@@ -252,7 +251,7 @@ const front = keyframes`
   }
 
   100% {
-    transform: translate3d(0, 20px, 0);
+    transform: translate3d(0, 2rem, 0);
   }
 `
 
@@ -263,7 +262,7 @@ const back = keyframes`
   }
 
   100% {
-    transform: translate3d(0, -50px, 0) rotate(0) skewX(0);
+    transform: translate3d(0, -5.2rem, 0) rotate(0) skewX(0);
   }
 `
 
@@ -275,7 +274,7 @@ const kv__scrollLabel = css`
     position: absolute;
     display: block;
     transform-origin: right;
-    bottom: -3rem;
+    bottom: -3.2rem;
     content: 'scroll';
     animation: ${back} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
   }

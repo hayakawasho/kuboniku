@@ -23,7 +23,7 @@ export const Header = _props => {
         </button>
 
         <div css={sns} data-component="Sns">
-          <ul className="mb-[2.5rem] text-center">
+          <ul className="mb-[1.5rem] sm:mb-[2.5rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a
                 href="https://www.facebook.com/k.b.nagisa"
@@ -56,10 +56,10 @@ export const Header = _props => {
           </button>
         </div>
 
-        <small css={copyright}>&copy; KuboNiku.com</small>
+        <small css={copyright}>@KuboNiku.com</small>
       </header>
 
-      <nav css={menu} data-ref="menuBody">
+      <nav css={menu} data-ref="menuBody" role="navigation">
         <div className="u-in">
           <div css={menu__mask} className="u-sp" data-ref="menuMask" />
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
@@ -98,9 +98,9 @@ const brandLogo = css`
   z-index: 99;
 
   @media (min-width: 640px) {
-    font-size: 3.6rem;
-    top: 2.4rem;
-    left: 2.4rem;
+    font-size: 3.7rem;
+    top: 2.5rem;
+    left: 2.5rem;
   }
 `
 
@@ -133,6 +133,7 @@ const menu = css`
   top: 0;
   left: 0;
   z-index: 100;
+  overscroll-behavior: contain;
 
   .is-menuOpen & {
     pointer-events: all;
@@ -191,7 +192,7 @@ const menu__links = css`
   padding-right: 3rem;
 
   @media (min-width: 640px) {
-    padding-top: 4rem;
+    padding-top: 3.2rem;
     padding-right: 4rem;
   }
 
@@ -239,7 +240,7 @@ const burger = css`
 
 const burger__line = css`
   width: 2rem;
-  height: 0.1rem;
+  height: 1px;
   background-color: #fff;
   transform-origin: left;
 
@@ -269,7 +270,7 @@ const sns = css`
   z-index: 99;
 
   @media (min-width: 640px) {
-    bottom: 3rem;
+    bottom: 2.5rem;
     left: 4rem;
   }
 `
@@ -314,7 +315,7 @@ const plus__x = css`
   position: absolute;
   top: 50%;
   width: 1.6rem;
-  height: 0.1rem;
+  height: 1px;
   background-color: var(--color-text-primary);
   backface-visibility: hidden;
   transform-origin: left;
@@ -334,7 +335,7 @@ const plus__y = css`
   position: absolute;
   top: 50%;
   width: 1.6rem;
-  height: 0.1rem;
+  height: 1px;
   content: '';
   background-color: var(--color-text-primary);
   backface-visibility: hidden;
