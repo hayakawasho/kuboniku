@@ -3,7 +3,7 @@ const { css } = require('@emotion/react')
 const { renderToStaticMarkup: r } = require('react-dom/server')
 const { PageWithHeader } = require('./components/page/PageWithHeader')
 const { PageWithPjax } = require('./components/page/PageWithPjax')
-const { zeroPadding } = require('./components/works/converter')
+const { selectProjectNumber } = require('./components/works/selector')
 
 function WorksIndex(props) {
   const total = props.wp.works.total
@@ -32,7 +32,7 @@ function WorksIndex(props) {
                     </div>
                     <div css={entry__hgroup}>
                       <p css={num}>
-                        {zeroPadding(total - i)}
+                        {selectProjectNumber(total - i)}
                         <span>Project</span>
                       </p>
                       <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }} />
@@ -51,7 +51,7 @@ function WorksIndex(props) {
 exports.data = {
   pagination: {
     data: 'wp.works.items',
-    size: 40,
+    size: 10,
     addAllPagesToCollections: false,
     alias: 'posts',
   },
@@ -114,6 +114,7 @@ const entries = css`
     }
   }
 `
+
 const entry__heading = css`
   font-family: var(--font-roboto);
   font-size: 2.4rem;

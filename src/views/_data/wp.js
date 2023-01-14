@@ -62,17 +62,15 @@ class Works {
 module.exports = async () => {
   const [responseWorks, responseProfile] = await Promise.all([
     fetch(
-      WP_API +
-        'wp/v2/posts?' +
-        new URLSearchParams({
-          per_page: 99,
-          order: 'desc',
-        })
+      `${WP_API}wp/v2/posts?${new URLSearchParams({
+        per_page: 99,
+        order: 'desc',
+      })}`
     ),
     fetch(WP_API + 'wp/v2/pages/490'),
   ])
 
-  const totalResultWorks = responseWorks.headers['x-wp-total']
+  const totalResultWorks = responseWorks.headers.get('x-wp-total')
 
   const rawWorks = await responseWorks.json()
   const rawProfile = await responseProfile.json()
@@ -82,6 +80,7 @@ module.exports = async () => {
       total: totalResultWorks,
       items: rawWorks.map((raw, _index) => new Works(raw)),
     },
+
     profile: {
       title: rawProfile.title.rendered,
       html: rawProfile.content.rendered,

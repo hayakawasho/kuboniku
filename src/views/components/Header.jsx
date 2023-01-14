@@ -60,7 +60,7 @@ export const Header = _props => {
       </header>
 
       <nav css={menu} data-ref="menuBody">
-        <div class="u-in">
+        <div className="u-in">
           <div css={menu__mask} className="u-sp" data-ref="menuMask" />
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>

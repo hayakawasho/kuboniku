@@ -5,7 +5,7 @@ const { Progressbar } = require('../components/Progressbar')
 const { PageWithHeader } = require('../components/page/PageWithHeader')
 const { PageWithPjax } = require('../components/page/PageWithPjax')
 const { PageWithProgressbar } = require('../components/page/PageWithProgressbar')
-const { selectRole, selectYear, zeroPadding } = require('../components/works/converter')
+const { selectRole, selectYear, selectProjectNumber } = require('../components/works/selector')
 
 function WorksDetail(props) {
   const total = props.wp.works.total
@@ -32,7 +32,7 @@ function WorksDetail(props) {
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>
-                  {zeroPadding(projectNumber)}
+                  {selectProjectNumber(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
                 <h1
