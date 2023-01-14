@@ -2,8 +2,6 @@
 const WP_API_BASE = 'http://localhost:8888/wp-json/'
 const WP_API = process.env.WP_API_BASE || WP_API_BASE
 
-const axios = require('axios')
-
 const PC_IMG_SIZE_MAP = {
   medium: '750w',
   medium_large: '1080w',
@@ -62,24 +60,31 @@ class Works {
 }
 
 module.exports = async () => {
-  const [rawWorks, rawProfile] = await Promise.all([
-    axios.get(WP_API + 'wp/v2/posts', {
-      params: {
-        per_page: 99,
-        order: 'desc',
-      },
-    }),
-    axios.get(WP_API + 'wp/v2/pages/490'),
+  const [responseWorks, responseProfile] = await Promise.all([
+    fetch(
+      WP_API +
+        'wp/v2/posts?' +
+        new URLSearchParams({
+          per_page: 99,
+          order: 'desc',
+        })
+    ),
+    fetch(WP_API + 'wp/v2/pages/490'),
   ])
+
+  const totalResultWorks = responseWorks.headers['x-wp-total']
+
+  const rawWorks = await responseWorks.json()
+  const rawProfile = await responseProfile.json()
 
   return {
     works: {
-      total: rawWorks.headers['x-wp-total'],
-      items: rawWorks.data.map((raw, _index) => new Works(raw)),
+      total: totalResultWorks,
+      items: rawWorks.map((raw, _index) => new Works(raw)),
     },
     profile: {
-      title: rawProfile.data.title.rendered,
-      html: rawProfile.data.content.rendered,
+      title: rawProfile.title.rendered,
+      html: rawProfile.content.rendered,
     },
   }
 }
