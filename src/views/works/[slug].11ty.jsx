@@ -1,11 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-const { css, keyframes } = require('@emotion/react')
-const { renderToStaticMarkup: r } = require('react-dom/server')
-const { Progressbar } = require('../components/Progressbar')
-const { PageWithHeader } = require('../components/page/PageWithHeader')
-const { PageWithPjax } = require('../components/page/PageWithPjax')
-const { PageWithProgressbar } = require('../components/page/PageWithProgressbar')
-const { selectRole, selectYear, selectProjectNumber } = require('../components/works/selector')
+import { css, keyframes } from '@emotion/react'
+import { renderToStaticMarkup as r } from 'react-dom/server'
+import { Progressbar } from '../components/Progressbar'
+import { PageWithHeader } from '../components/page/PageWithHeader'
+import { PageWithPjax } from '../components/page/PageWithPjax'
+import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
+import { selectRole, selectYear, selectProjectNumber } from '../components/works/selector'
 
 function WorksDetail(props) {
   const total = props.wp.works.total
@@ -49,7 +50,7 @@ function WorksDetail(props) {
               </div>
               <picture>
                 <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-50" />
+                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-50" alt="" />
               </picture>
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
@@ -109,22 +110,24 @@ function WorksDetail(props) {
                 </ul>
               )}
               <aside css={[kv, kvNext]}>
-                <a href={'../' + next.slug} className="u-fit z-10"></a>
-                <div css={kv__cont}>
-                  <h2 css={heading}>Next Project</h2>
-                  <p css={sub} className="mt-[1rem]">
-                    {next.title}
-                    <i className="icon-arrow_right ml-[.8rem]" />
-                  </p>
-                </div>
-                <picture>
-                  <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
-                  <img
-                    src={next.eyecatchMobile.src}
-                    css={imgFit}
-                    className="opacity-50 filter grayscale-100"
-                  />
-                </picture>
+                <a href={'../' + next.slug} className="u-fit z-10">
+                  <div css={kv__cont}>
+                    <h2 css={heading}>Next Project</h2>
+                    <p css={sub} className="mt-[1rem]">
+                      {next.title}
+                      <i className="icon-arrow_right ml-[.8rem]" />
+                    </p>
+                  </div>
+                  <picture>
+                    <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
+                    <img
+                      src={next.eyecatchMobile.src}
+                      css={imgFit}
+                      className="opacity-50 filter grayscale-100"
+                      alt=""
+                    />
+                  </picture>
+                </a>
               </aside>
             </div>
           </main>

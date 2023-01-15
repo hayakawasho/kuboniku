@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Global, css } from '@emotion/react'
 import { Head } from '../Head'
@@ -8,6 +9,7 @@ export const PageWithHeader = props => {
     <html lang="ja">
       <Head title={props.title} description={props.description} pagePath={props.pagePath} />
       <body data-component="Menu">
+        <div data-component="Cursor"></div>
         <Header />
         {props.children}
         <div data-component="Gl"></div>

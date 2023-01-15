@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Global, css } from '@emotion/react'
 
@@ -189,38 +190,6 @@ export const Head = props => {
             content: '\\e903';
           }
 
-          .l-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            pointer-events: none;
-            z-index: 99;
-          }
-
-          .l-mask {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            visibility: hidden;
-            pointer-events: none;
-            z-index: -1;
-          }
-
-          .l-window {
-            position: relative;
-            z-index: 1;
-          }
-
-          .l-content {
-            position: relative;
-            min-height: 100vh;
-          }
-
           .l-page {
             position: relative;
           }
@@ -229,14 +198,14 @@ export const Head = props => {
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap"
-        // media="print"
-        // onLoad="this.media='all'"
+        media="print"
+        onLoad="this.media='all'"
       />
       <script
         src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
         defer
       ></script>
-      {props.env === 'development' && (
+      {props.env !== 'production' && (
         <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
       )}
       {props.env === 'production' && <script type="module" src="./main.js" defer></script>}

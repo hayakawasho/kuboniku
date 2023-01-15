@@ -1,8 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-const { css } = require('@emotion/react')
-const { renderToStaticMarkup: r } = require('react-dom/server')
-const { PageWithHeader } = require('../components/page/PageWithHeader')
-const { PageWithPjax } = require('../components/page/PageWithPjax')
+import { css } from '@emotion/react'
+import { renderToStaticMarkup as r } from 'react-dom/server'
+import { PageWithHeader } from '../components/page/PageWithHeader'
+import { PageWithPjax } from '../components/page/PageWithPjax'
 
 function Profile(props) {
   return `<!DOCTYPE html>
