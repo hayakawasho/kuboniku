@@ -105,10 +105,6 @@ export const Head = props => {
             }
           }
 
-          :where(dialog:modal) {
-            all: revert;
-          }
-
           dialog {
             padding: 0;
             margin: 0;

@@ -6,7 +6,12 @@ import { Progressbar } from '../components/Progressbar'
 import { PageWithHeader } from '../components/page/PageWithHeader'
 import { PageWithPjax } from '../components/page/PageWithPjax'
 import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
-import { selectRole, selectYear, selectProjectNumber } from '../components/works/selector'
+import {
+  selectRole,
+  selectYear,
+  selectProjectNumber,
+  selectTitle,
+} from '../components/works/selector'
 
 function WorksDetail(props) {
   const total = props.wp.works.total
@@ -36,11 +41,9 @@ function WorksDetail(props) {
                   {selectProjectNumber(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
-                <h1
-                  css={heading}
-                  className="pr-[.5em]"
-                  dangerouslySetInnerHTML={{ __html: post.title }}
-                />
+                <h1 css={heading} className="pr-[.5em]">
+                  {selectTitle(post)}
+                </h1>
                 <p css={sub} className="mt-[1rem] overflow-hidden">
                   <span className="inline-block origin-right">
                     {post.category}
@@ -50,7 +53,7 @@ function WorksDetail(props) {
               </div>
               <picture>
                 <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-50" alt="" />
+                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-40" alt="" />
               </picture>
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
@@ -114,7 +117,7 @@ function WorksDetail(props) {
                   <div css={kv__cont}>
                     <h2 css={heading}>Next Project</h2>
                     <p css={sub} className="mt-[1rem]">
-                      {next.title}
+                      {selectTitle(next)}
                       <i className="icon-arrow_right ml-[.8rem]" />
                     </p>
                   </div>
@@ -123,7 +126,7 @@ function WorksDetail(props) {
                     <img
                       src={next.eyecatchMobile.src}
                       css={imgFit}
-                      className="opacity-50 filter grayscale-100"
+                      className="opacity-40 filter grayscale-100"
                       alt=""
                     />
                   </picture>

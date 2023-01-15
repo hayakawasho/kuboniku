@@ -4,7 +4,7 @@ import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
 import { PageWithHeader } from './components/page/PageWithHeader'
 import { PageWithPjax } from './components/page/PageWithPjax'
-import { selectProjectNumber } from './components/works/selector'
+import { selectProjectNumber, selectTitle } from './components/works/selector'
 
 function WorksIndex(props) {
   const total = props.wp.works.total
@@ -36,7 +36,7 @@ function WorksIndex(props) {
                         {selectProjectNumber(total - i)}
                         <span>Project</span>
                       </p>
-                      <h2 css={entry__heading} dangerouslySetInnerHTML={{ __html: item.title }} />
+                      <h2 css={entry__heading}>{selectTitle(item)}</h2>
                     </div>
                   </div>
                 </a>
@@ -52,7 +52,7 @@ function WorksIndex(props) {
 exports.data = {
   pagination: {
     data: 'wp.works.items',
-    size: 10,
+    size: 40,
     addAllPagesToCollections: false,
     alias: 'posts',
   },

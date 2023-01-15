@@ -4,6 +4,7 @@ import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
 import { PageWithHeader } from '../components/page/PageWithHeader'
 import { PageWithPjax } from '../components/page/PageWithPjax'
+import parse from 'html-react-parser'
 
 function Profile(props) {
   return `<!DOCTYPE html>
@@ -17,10 +18,10 @@ function Profile(props) {
           <div css={container}>
             <div css={container__in}>
               <div css={hgroup}>
-                <h2 css={heading}>Nagisa Kubo</h2>
+                <h2 css={heading}>Nagis a Kubo</h2>
                 <p>Art Director & Designer</p>
               </div>
-              <div css={about} dangerouslySetInnerHTML={{ __html: props.wp.profile.html }} />
+              <div css={about}>{parse(props.wp.profile.html)}</div>
             </div>
           </div>
         </main>
@@ -46,7 +47,7 @@ const logo = css`
 
   @media (min-width: 640px) {
     font-size: 31rem;
-    transform: translate(calc(-50% + 7rem), calc(-100% - 0rem));
+    transform: translate(calc(-50% + 7rem), calc(-100% + 0.1em));
   }
 `
 
@@ -65,7 +66,7 @@ const container__in = css`
   position: absolute;
   right: 0;
   text-align: right;
-  bottom: 10rem;
+  bottom: calc(100 / 800 * 100%);
   z-index: 2;
 
   @media (min-width: 640px) {
