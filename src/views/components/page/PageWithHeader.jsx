@@ -9,7 +9,7 @@ export const PageWithHeader = props => {
     <html lang="ja">
       <Head title={props.title} description={props.description} pagePath={props.pagePath} />
       <body data-component="Menu">
-        <div data-component="Cursor"></div>
+        <div data-component="Cursor" className="u-pc"></div>
         <Header />
         {props.children}
         <div data-component="Gl"></div>

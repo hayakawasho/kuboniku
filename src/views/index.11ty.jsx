@@ -4,7 +4,8 @@ import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
 import { PageWithHeader } from './components/page/PageWithHeader'
 import { PageWithPjax } from './components/page/PageWithPjax'
-import { selectProjectNumber, selectTitle } from './components/works/selector'
+import { selectTitle } from './components/works/selector'
+import { zeroPadding } from './components/utils'
 
 function WorksIndex(props) {
   const total = props.wp.works.total
@@ -12,7 +13,7 @@ function WorksIndex(props) {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="WORKS" env={props.build.env}>
+    <PageWithHeader title="WORKS" pagePath="">
       <PageWithPjax>
         <main className="l-page">
           <div className="o-wrap || pt-[10rem]">
@@ -33,7 +34,7 @@ function WorksIndex(props) {
                     </div>
                     <div css={entry__hgroup}>
                       <p css={num}>
-                        {selectProjectNumber(total - i)}
+                        {zeroPadding(total - i)}
                         <span>Project</span>
                       </p>
                       <h2 css={entry__heading}>{selectTitle(item)}</h2>

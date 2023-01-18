@@ -2,14 +2,17 @@
 // @ts-nocheck
 import { Global, css } from '@emotion/react'
 
-const TITLE = 'KUBONIKU.COM | WEB DESIGNER'
+const SITE_TITLE = 'KUBONIKU.COM | WEB DESIGNER'
 const DESCRIPTION = 'WEB DESIGNER NAGISA KUBO 久保渚 portfolio site'
 const SITE_URL = 'https://kuboniku.com'
 
+const idDev = process.env.NODE_ENV !== 'production'
+
 export const Head = props => {
-  const title = props.title + '| ' + TITLE
-  const description = DESCRIPTION
-  const pagePath = ''
+  const title = props.title + ' | ' + SITE_TITLE
+  const description = props.description || DESCRIPTION
+  const pagePath = props.pagePath
+  const isHome = pagePath === ''
 
   return (
     <head>
@@ -20,14 +23,19 @@ export const Head = props => {
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={isHome ? 'website' : 'article'} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={SITE_URL + pagePath} />
-      <meta property="og:site_name" content={title} />
+      <meta property="og:site_name" content={SITE_TITLE} />
       <meta property="og:image" content={SITE_URL + '/ogp.jpg'} />
       <link rel="icon" href="/favicon.ico" />
+      {!idDev && <link rel="preload" href="/assets/entry.css" as="style" />}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap"
+      />
       <Global
         styles={css`
           :root {
@@ -191,20 +199,13 @@ export const Head = props => {
           }
         `}
       />
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap"
-        media="print"
-        onLoad="this.media='all'"
-      />
+      {!idDev && <link rel="stylesheet" href="/assets/entry.css" />}
       <script
         src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
         defer
-      ></script>
-      {props.env !== 'production' && (
-        <script type="module" src="http://localhost:3000/src/entry.ts" defer></script>
-      )}
-      {props.env === 'production' && <script type="module" src="./main.js" defer></script>}
+      />
+      {idDev && <script type="module" src="http://localhost:3000/src/entry.ts" defer />}
+      {!idDev && <script type="module" src="/assets/entry.js" defer />}
       <Global
         styles={css`
           .u-sp {

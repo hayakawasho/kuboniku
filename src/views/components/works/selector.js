@@ -11,10 +11,6 @@ export const selectRole = data => {
   return data.role.join(' / ')
 }
 
-export const selectProjectNumber = num => {
-  return num.toString().padStart(2, '0')
-}
-
 export const selectTitle = data => {
   return parse(data.title)
 }

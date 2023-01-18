@@ -9,7 +9,7 @@ import parse from 'html-react-parser'
 function Profile(props) {
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="PROFILE" env={props.build.env}>
+    <PageWithHeader title="PROFILE" pagePath="/profile/">
       <PageWithPjax>
         <main className="l-page overflow-hidden">
           <h1 className="sr-only">PROFILE</h1>
@@ -18,7 +18,7 @@ function Profile(props) {
           <div css={container}>
             <div css={container__in}>
               <div css={hgroup}>
-                <h2 css={heading}>Nagis a Kubo</h2>
+                <h2 css={heading}>Nagisa Kubo</h2>
                 <p>Art Director & Designer</p>
               </div>
               <div css={about}>{parse(props.wp.profile.html)}</div>

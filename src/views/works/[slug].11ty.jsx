@@ -6,43 +6,33 @@ import { Progressbar } from '../components/Progressbar'
 import { PageWithHeader } from '../components/page/PageWithHeader'
 import { PageWithPjax } from '../components/page/PageWithPjax'
 import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
-import {
-  selectRole,
-  selectYear,
-  selectProjectNumber,
-  selectTitle,
-} from '../components/works/selector'
+import { selectRole, selectYear, selectTitle } from '../components/works/selector'
+import { zeroPadding } from '../components/utils'
 
 function WorksDetail(props) {
   const total = props.wp.works.total
   const projectNumber = total - props.pagination.pageNumber
 
   const post = props.post
-
   const page = props.pagination.page
-  const isLast = page.last.id === post.id
+  const nextPost = page.last.id === post.id ? { ...page.first } : { ...page.next }
 
-  const next = {
-    title: isLast ? page.first.title : page.next.title,
-    slug: isLast ? page.first.slug : page.next.slug,
-    eyecatch: isLast ? page.first.eyecatch : page.next.eyecatch,
-    eyecatchMobile: isLast ? page.first.eyecatchMobile : page.next.eyecatchMobile,
-  }
+  const pageTitle = selectTitle(post)
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title={post.title} env={props.build.env}>
+    <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`}>
       <PageWithPjax>
         <PageWithProgressbar progressbar={<Progressbar />}>
           <main className="l-page">
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>
-                  {selectProjectNumber(projectNumber)}
+                  {zeroPadding(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
                 <h1 css={heading} className="pr-[.5em]">
-                  {selectTitle(post)}
+                  {pageTitle}
                 </h1>
                 <p css={sub} className="mt-[1rem] overflow-hidden">
                   <span className="inline-block origin-right">
@@ -96,7 +86,7 @@ function WorksDetail(props) {
                       backgroundColor: post.color,
                     }
                     return (
-                      <li className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]" key={i}>
+                      <li key={i} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
                         <div css={aspect} style={css} />
                         <div className="u-fit">
                           <img
@@ -113,21 +103,22 @@ function WorksDetail(props) {
                 </ul>
               )}
               <aside css={[kv, kvNext]}>
-                <a href={'../' + next.slug} className="u-fit z-10">
+                <a href={`../${nextPost.slug}/`} className="u-fit z-10">
                   <div css={kv__cont}>
                     <h2 css={heading}>Next Project</h2>
                     <p css={sub} className="mt-[1rem]">
-                      {selectTitle(next)}
+                      {selectTitle(nextPost)}
                       <i className="icon-arrow_right ml-[.8rem]" />
                     </p>
                   </div>
                   <picture>
-                    <source srcSet={next.eyecatch.src} media="(min-width: 640px)" />
+                    <source srcSet={nextPost.eyecatch.src} media="(min-width: 640px)" />
                     <img
-                      src={next.eyecatchMobile.src}
+                      src={nextPost.eyecatchMobile.src}
                       css={imgFit}
                       className="opacity-40 filter grayscale-100"
                       alt=""
+                      loading="lazy"
                     />
                   </picture>
                 </a>
