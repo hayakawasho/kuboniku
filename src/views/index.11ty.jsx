@@ -7,42 +7,54 @@ import { PageWithPjax } from './components/page/PageWithPjax'
 import { zeroPadding } from './components/utils'
 import { selectTitle } from './components/works/selector'
 
-function WorksIndex(props) {
-  const total = props.wp.works.total
+export const data = {
+  pagination: {
+    data: 'wp.works.items',
+    size: 10,
+    addAllPagesToCollections: false,
+    alias: 'posts',
+  },
+}
+
+export const render = props => {
   const posts = props.posts
+  const total = props.wp.works.total
 
   return `<!DOCTYPE html>
   ${r(
     <PageWithHeader title="WORKS" pagePath="">
       <PageWithPjax>
-        <main className="l-page">
-          <div className="o-wrap || pt-[10rem]">
+        <main className="l-page" data-component="SkewScrollContainer">
+          <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
             <h1 css={heading}>
               Works
               <sup css={heading__total}>{total}</sup>
             </h1>
           </div>
 
-          <div id="js-works" css={entries} className="o-grid" data-total={total}>
-            {posts.map((item, i) => (
-              <article key={i} className="o-grid__item">
-                <a css={entry} href={`./works/${item.slug}/`}>
-                  <div css={aspect} />
-                  <div css={entry__g}>
-                    <div css={eyecatch}>
-                      <img src={item.eyecatch.src} alt="" loading="lazy" />
+          <div id="js-works" css={entries} className="" data-total={total}>
+            {posts.map((item, i) => {
+              const load = i < 4 ? { loading: 'auto', decoding: 'async' } : { loading: 'lazy' }
+              return (
+                <article key={i} css={entryWap} className="mb-[4rem] sm:mb-[6.4rem]">
+                  <a css={entry} href={`./works/${item.slug}/`}>
+                    <div css={aspect}></div>
+                    <div css={entry__g}>
+                      <div css={eyecatch}>
+                        <img src={item.eyecatch.src} alt="" {...load} />
+                      </div>
+                      <div css={entry__hgroup}>
+                        <p css={num}>
+                          {zeroPadding(total - i)}
+                          <span>Project</span>
+                        </p>
+                        <h2 css={entry__heading}>{selectTitle(item)}</h2>
+                      </div>
                     </div>
-                    <div css={entry__hgroup}>
-                      <p css={num}>
-                        {zeroPadding(total - i)}
-                        <span>Project</span>
-                      </p>
-                      <h2 css={entry__heading}>{selectTitle(item)}</h2>
-                    </div>
-                  </div>
-                </a>
-              </article>
-            ))}
+                  </a>
+                </article>
+              )
+            })}
           </div>
         </main>
       </PageWithPjax>
@@ -50,28 +62,16 @@ function WorksIndex(props) {
   )}`
 }
 
-exports.data = {
-  pagination: {
-    data: 'wp.works.items',
-    size: 40,
-    addAllPagesToCollections: false,
-    alias: 'posts',
-  },
-}
-
-exports.render = WorksIndex
-
 const heading = css`
   position: relative;
   font-weight: bold;
   padding: 0 calc(var(--gap) * 2);
-  margin: 0 0 6rem;
   font-family: var(--font-roboto);
   font-size: 5.3rem;
   line-height: 1;
 
   @media (min-width: 640px) {
-    margin: 0 auto 3.6rem;
+    margin: 0 auto;
     left: 2rem;
     width: calc(var(--grid) * 10);
     padding: 0 0 0 calc(var(--grid) * 0.5 + var(--gutter));
@@ -101,19 +101,25 @@ const entries = css`
     padding: 0;
     width: calc(var(--grid) * 10);
   }
+`
 
-  > .o-grid__item {
-    margin-bottom: 4rem;
+const entryWap = css`
+  @media (min-width: 640px) {
+    width: calc(var(--grid) * 4);
 
-    @media (min-width: 640px) {
-      width: calc(var(--grid) * 4);
-      margin-bottom: 6.4rem;
-
-      &:nth-of-type(2n - 1) {
-        margin-top: 9.6rem;
-        margin-left: 3.4rem;
-      }
+    &:nth-of-type(2n - 1) {
+      margin-top: 9.6rem;
+      margin-left: 3.4rem;
     }
+  }
+`
+
+const entry = css`
+  position: relative;
+  display: block;
+
+  @media (min-width: 640px) {
+    margin-left: 0;
   }
 `
 
@@ -126,6 +132,27 @@ const entry__heading = css`
 
   @media (min-width: 640px) {
     font-size: 3rem;
+  }
+`
+
+const entry__g = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`
+
+const entry__hgroup = css`
+  position: absolute;
+  bottom: 2rem;
+  left: -1.2rem;
+  z-index: 2;
+
+  @media (min-width: 640px) {
+    bottom: 4rem;
+    left: -3.6rem;
+    padding-right: 3.6rem;
   }
 `
 
@@ -176,36 +203,6 @@ const eyecatch = css`
     backface-visibility: hidden;
     transition: filter 1s;
     opacity: 0.8;
-  }
-`
-
-const entry__g = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`
-
-const entry__hgroup = css`
-  position: absolute;
-  bottom: 2rem;
-  left: -1.2rem;
-  z-index: 2;
-
-  @media (min-width: 640px) {
-    bottom: 4rem;
-    left: -3.6rem;
-    padding-right: 3.6rem;
-  }
-`
-
-const entry = css`
-  position: relative;
-  display: block;
-
-  @media (min-width: 640px) {
-    margin-left: 0;
   }
 `
 

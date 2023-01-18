@@ -9,14 +9,22 @@ import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
 import { zeroPadding } from '../components/utils'
 import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 
-function WorksDetail(props) {
-  const total = props.wp.works.total
-  const projectNumber = total - props.pagination.pageNumber
+export const data = {
+  pagination: {
+    data: 'wp.works.items',
+    size: 1,
+    addAllPagesToCollections: true,
+    alias: 'post',
+  },
+  permalink: context => `works/${context.post.slug}/index.html`,
+}
 
+export const render = props => {
   const post = props.post
   const page = props.pagination.page
   const nextPost = page.last.id === post.id ? { ...page.first } : { ...page.next }
 
+  const projectNumber = props.wp.works.total - props.pagination.pageNumber
   const pageTitle = selectTitle(post)
 
   return `<!DOCTYPE html>
@@ -24,7 +32,7 @@ function WorksDetail(props) {
     <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`}>
       <PageWithPjax>
         <PageWithProgressbar progressbar={<Progressbar />}>
-          <main className="l-page">
+          <main className="l-page" data-component="SkewScrollContainer">
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>
@@ -130,18 +138,6 @@ function WorksDetail(props) {
     </PageWithHeader>
   )}`
 }
-
-exports.data = {
-  pagination: {
-    data: 'wp.works.items',
-    size: 1,
-    addAllPagesToCollections: true,
-    alias: 'post',
-  },
-  permalink: context => `works/${context.post.slug}/index.html`,
-}
-
-exports.render = WorksDetail
 
 const imgFit = css`
   position: absolute;

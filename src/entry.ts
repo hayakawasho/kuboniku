@@ -6,7 +6,7 @@ import Gl from '@/components/gl/index.svelte'
 import Menu from '@/components/menu'
 import Noop from '@/components/noop'
 // import Scroll from '@/components/scroll'
-import SkewScroll from '@/components/skew-scroll'
+import SkewScrollContainer from '@/components/skew-scroll'
 import Sns from '@/components/sns/sns.svelte'
 import WorksIndex from '@/components/works'
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   register('Sns', withSvelte(Sns))
   register('Gl', withSvelte(Gl))
   register('Cursor', withSvelte(Cursor))
-  register('SkewScroll', SkewScroll)
+  register('SkewScrollContainer', SkewScrollContainer)
   register('WorksIndex', WorksIndex)
 
   q('[data-component]').forEach(el => {

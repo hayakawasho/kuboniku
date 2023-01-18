@@ -4627,8 +4627,8 @@ kolorist@^1.6.0:
   integrity sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==
 
 "lake@https://github.com/hayakawasho/lake":
-  version "0.8.1"
-  resolved "https://github.com/hayakawasho/lake#906636794834df11a598aef9347e4308902827c3"
+  version "0.8.2"
+  resolved "https://github.com/hayakawasho/lake#3efc252af6b3e9dffbeec7949ec4bf83d85ef5c7"
 
 language-subtag-registry@~0.3.2:
   version "0.3.22"
@@ -5963,6 +5963,11 @@ regjsparser@^0.9.1:
   integrity sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==
   dependencies:
     jsesc "~0.5.0"
+
+remeda@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.6.0.tgz#37dd182cb9be170bc800ef81b4aee13d1718f714"
+  integrity sha512-2NBGJZrwWeqAY+Tzo66FyBYyW0CmMFh0tCg97T8G76krXmI45j/EK1oy+5WYrl2j7oPbgRkN6loGIiliiquvxg==
 
 require-directory@^2.1.1:
   version "2.1.1"

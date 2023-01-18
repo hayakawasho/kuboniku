@@ -197,6 +197,10 @@ export const Head = props => {
           .l-page {
             position: relative;
           }
+
+          .o-wrap {
+            padding: 0 calc(30 / 750 * 100vw * 2);
+          }
         `}
       />
       {!idDev && <link rel="stylesheet" href="/assets/entry.css" />}

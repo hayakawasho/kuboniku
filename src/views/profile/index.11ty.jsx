@@ -6,7 +6,7 @@ import { renderToStaticMarkup as r } from 'react-dom/server'
 import { PageWithHeader } from '../components/page/PageWithHeader'
 import { PageWithPjax } from '../components/page/PageWithPjax'
 
-function Profile(props) {
+export const render = props => {
   return `<!DOCTYPE html>
   ${r(
     <PageWithHeader title="PROFILE" pagePath="/profile/">
@@ -29,8 +29,6 @@ function Profile(props) {
     </PageWithHeader>
   )}`
 }
-
-exports.render = Profile
 
 const logo = css`
   position: absolute;
