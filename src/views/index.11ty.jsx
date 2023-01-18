@@ -4,8 +4,8 @@ import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
 import { PageWithHeader } from './components/page/PageWithHeader'
 import { PageWithPjax } from './components/page/PageWithPjax'
-import { selectTitle } from './components/works/selector'
 import { zeroPadding } from './components/utils'
+import { selectTitle } from './components/works/selector'
 
 function WorksIndex(props) {
   const total = props.wp.works.total

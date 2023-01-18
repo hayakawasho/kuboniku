@@ -6,8 +6,8 @@ import { Progressbar } from '../components/Progressbar'
 import { PageWithHeader } from '../components/page/PageWithHeader'
 import { PageWithPjax } from '../components/page/PageWithPjax'
 import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
-import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 import { zeroPadding } from '../components/utils'
+import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 
 function WorksDetail(props) {
   const total = props.wp.works.total
