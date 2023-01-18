@@ -1,21 +1,25 @@
 import { onMounted } from 'lake'
 
-export function useTick(callback: (delta: number) => void) {
+const FPS_60_SEC = 1000 / 60
+
+export function useTick(callback: (deltaTime: number) => void) {
   let then = 0
 
   onMounted(() => {
     const loop = (timestamp: number) => {
       rafId = requestAnimationFrame(loop)
 
-      const now = timestamp * 0.001
+      const now = timestamp
 
       if (then === 0) {
         then = now
         return
       }
 
-      const delta = now - then
-      callback(delta)
+      const d = now - then
+      const deltaTime = Math.round((d / FPS_60_SEC) * 10000) * 0.0001
+
+      callback(deltaTime)
 
       then = now
     }

@@ -10,13 +10,13 @@ export default defineComponent({
   },
 
   setup(el, { ease }) {
-    const ww = ref(window.innerWidth)
-
     const isRunning = ref(false)
     const current = ref(0)
     const last = ref(0)
 
-    let timer: NodeJS.Timeout
+    const ww = ref(window.innerWidth)
+
+    let timer: number
 
     useEvent(
       window as any,
@@ -27,7 +27,7 @@ export default defineComponent({
         isRunning.value = true
         current.value = window.scrollY
 
-        timer = setTimeout(() => {
+        timer = window.setTimeout(() => {
           isRunning.value = false
         }, 300)
       },
@@ -38,7 +38,7 @@ export default defineComponent({
       ww.value = window.innerWidth
     })
 
-    useTick(_d => {
+    useTick(_deltaTime => {
       if (!isRunning.value) {
         return
       }
