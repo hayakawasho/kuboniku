@@ -2,7 +2,7 @@ import { onMounted } from 'lake'
 
 const FPS_60_SEC = 1000 / 60
 
-export function useTick(callback: (deltaTime: number) => void) {
+export function useTick(callback: (timeRetio: number) => void) {
   let then = 0
 
   onMounted(() => {
@@ -16,10 +16,10 @@ export function useTick(callback: (deltaTime: number) => void) {
         return
       }
 
-      const d = now - then
-      const deltaTime = Math.round((d / FPS_60_SEC) * 10000) * 0.0001
+      const dTime = now - then
+      const timeRetio = Math.round((dTime / FPS_60_SEC) * 10000) * 0.0001
 
-      callback(deltaTime)
+      callback(timeRetio)
 
       then = now
     }

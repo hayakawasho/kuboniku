@@ -1,8 +1,5 @@
-import { defineComponent, useEvent, ref } from 'lake'
-import { clamp } from 'remeda'
-import { TWEEN } from '@/libs'
-import { lerp } from '@/libs/math'
-import { useTick } from '@/libs/useTick'
+import { defineComponent, ref, useEvent } from 'lake'
+import { clamp, lerp, TWEEN, useTick } from '@/libs'
 
 export default defineComponent({
   props: {
@@ -38,7 +35,7 @@ export default defineComponent({
       ww.value = window.innerWidth
     })
 
-    useTick(_deltaTime => {
+    useTick(_timeRetio => {
       if (!isRunning.value) {
         return
       }
