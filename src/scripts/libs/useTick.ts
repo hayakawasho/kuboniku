@@ -17,7 +17,7 @@ export function useTick(callback: (timeRetio: number) => void) {
       }
 
       const dTime = now - then
-      const timeRetio = Math.round((dTime / FPS_60_SEC) * 10000) * 0.0001
+      const timeRetio = Math.round((dTime / FPS_60_SEC) * 1000) * 0.001
 
       callback(timeRetio)
 

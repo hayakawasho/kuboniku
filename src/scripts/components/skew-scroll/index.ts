@@ -8,6 +8,7 @@ export default defineComponent({
 
   setup(el, { ease }) {
     const isRunning = ref(false)
+
     const current = ref(0)
     const last = ref(0)
 
@@ -46,10 +47,10 @@ export default defineComponent({
         last.value = 0
       }
 
-      const skewY = 7.5 * +((current.value - last.value) / ww.value)
-      const val = clamp(skewY, { min: -4, max: 4 })
+      const skewY = 7.5 * ((current.value - last.value) / ww.value)
+      const val = clamp(skewY, { min: -5, max: 5 })
 
-      TWEEN.prop(el).style('transform', `skew(0, ${val}deg) translateZ(0)`).play()
+      TWEEN.tween(el, 0).style('transform', `skew(0, ${val}deg) translateZ(0)`).play()
     })
   },
 })
