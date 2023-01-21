@@ -1,5 +1,5 @@
-import { defineComponent, ref, useEvent } from 'lake'
-import { clamp, lerp, TWEEN, useTick } from '@/libs'
+import { defineComponent, ref, readonly, useEvent } from 'lake'
+import { clamp, lerp, TWEEN, useTick, debounce } from '@/libs'
 
 export default defineComponent({
   props: {
@@ -7,14 +7,14 @@ export default defineComponent({
   },
 
   setup(el, { ease }) {
-    const isRunning = ref(false)
-
-    const current = ref(0)
-    const last = ref(0)
-
-    const ww = ref(window.innerWidth)
-
+    let isRunning = false
+    let ww = window.innerWidth
     let timer: number
+
+    let current = 0
+    let last = 0
+
+    const val = ref(0)
 
     useEvent(
       window as any,
@@ -22,35 +22,43 @@ export default defineComponent({
       () => {
         clearTimeout(timer)
 
-        isRunning.value = true
-        current.value = window.scrollY
+        isRunning = true
+        current = window.scrollY
 
         timer = window.setTimeout(() => {
-          isRunning.value = false
+          isRunning = false
         }, 300)
       },
       { passive: true }
     )
 
-    useEvent(window as any, 'resize', () => {
-      ww.value = window.innerWidth
-    })
+    useEvent(
+      window as any,
+      'resize',
+      debounce(() => {
+        ww = window.innerWidth
+      }, 250)
+    )
 
     useTick(_timeRetio => {
-      if (!isRunning.value) {
+      if (!isRunning) {
         return
       }
 
-      last.value = lerp(last.value, current.value, ease)
+      last = lerp(last, current, ease)
 
-      if (last.value < 0.1) {
-        last.value = 0
+      if (last < 0.1) {
+        last = 0
       }
 
-      const skewY = 7.5 * ((current.value - last.value) / ww.value)
-      const val = clamp(skewY, { min: -5, max: 5 })
+      const skewY = 7.5 * ((current - last) / ww)
+      val.value = clamp(skewY, { min: -5, max: 5 })
 
-      TWEEN.tween(el, 0).style('transform', `skew(0, ${val}deg) translateZ(0)`).play()
+      TWEEN.tween(el, 0).style('transform', `skew(0, ${val.value}deg) translateZ(0)`).play()
     })
+
+    return {
+      val: readonly(val),
+    }
   },
 })
