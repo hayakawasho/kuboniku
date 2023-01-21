@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { createBgCanvas, resize } from './main'
+  import { debounce } from '@/libs'
 
   let canvas: HTMLCanvasElement
 
@@ -13,4 +14,4 @@
   <canvas class="h-screen w-screen" bind:this={canvas} />
 </div>
 
-<svelte:window on:resize={resize} />
+<svelte:window on:resize={debounce(resize, 250)} />

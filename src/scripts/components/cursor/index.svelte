@@ -46,7 +46,7 @@
   </div>
 </div>
 
-<svelte:window on:mousemove|passive={onMousemove} />
+<svelte:body on:mousemove|passive={onMousemove} />
 
 <style>
   .cursor {

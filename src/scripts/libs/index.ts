@@ -1,5 +1,6 @@
+export { clamp } from 'remeda'
 export * from './tween'
 export * from './aspida'
 export * from './math'
 export * from './useTick'
-export { clamp } from 'remeda'
+export * from './debounce'

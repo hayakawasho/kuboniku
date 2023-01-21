@@ -10,7 +10,7 @@ import { selectTitle } from './components/works/selector'
 export const data = {
   pagination: {
     data: 'wp.works.items',
-    size: 10,
+    size: 40,
     addAllPagesToCollections: false,
     alias: 'posts',
   },
