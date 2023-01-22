@@ -6,6 +6,8 @@ export default defineComponent({
     ease: 0.2,
   },
 
+  components: {},
+
   setup(el, { ease }) {
     let ww = window.innerWidth
     let timer: number
@@ -41,7 +43,7 @@ export default defineComponent({
       }, 250)
     )
 
-    useTick(_timeRetio => {
+    useTick(_timeRatio => {
       if (!isRunning) {
         return
       }

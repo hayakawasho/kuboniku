@@ -36,7 +36,7 @@
     last.x = lerp(last.x, now.x, 0.2)
     last.y = lerp(last.y, now.y, 0.2)
 
-    TWEEN.tween(cursor, 0).x(last.x).y(last.y).play()
+    TWEEN.tween(cursor, 0).xy(last.x, last.y).play()
   })
 </script>
 

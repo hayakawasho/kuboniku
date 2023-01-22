@@ -12,7 +12,8 @@ export const Header = _props => {
         </a>
 
         <button
-          className="js-menu__onOff || u-sp"
+          id="js-menu__onOff"
+          className="u-sp"
           css={burger}
           aria-label="menu"
           data-ref="menuTrigger"
@@ -67,17 +68,29 @@ export const Header = _props => {
           <ul css={menu__links}>
             <li>
               <a href="/profile/" css={link}>
-                <span data-ref="menuLabel">Profile</span>
+                <span className="inline-block overflow-hidden leading-[1]">
+                  <span css={linkLabel} data-ref="menuLabel">
+                    Profile
+                  </span>
+                </span>
               </a>
             </li>
             <li>
               <a href="/" css={link}>
-                <span data-ref="menuLabel">Works</span>
+                <span className="inline-block overflow-hidden leading-[1]">
+                  <span css={linkLabel} data-ref="menuLabel">
+                    Works
+                  </span>
+                </span>
               </a>
             </li>
             <li>
               <a href="mailto:k.bo.n10.05@gmail.com" css={link}>
-                <span data-ref="menuLabel">Contact</span>
+                <span className="inline-block overflow-hidden leading-[1]">
+                  <span css={linkLabel} data-ref="menuLabel">
+                    Contact
+                  </span>
+                </span>
               </a>
             </li>
           </ul>
@@ -153,11 +166,6 @@ const menu__mask = css`
   left: 0;
   opacity: 0;
   background-color: #000000;
-  transition: opacity 0.8s;
-
-  .is-menuOpen & {
-    opacity: 0.5;
-  }
 
   .is-menuAnimating & {
     will-change: opacity;
@@ -219,14 +227,20 @@ const link = css`
   > span {
     line-height: 1;
     display: inline-block;
-
-    .is-menuAnimating & {
-      will-change: transform, opacity;
-    }
   }
 
   .is-menuOpen & {
     pointer-events: auto;
+  }
+`
+
+const linkLabel = css`
+  display: inline-block;
+  transform: translateY(100%);
+  transform-origin: left;
+
+  .is-menuAnimating & {
+    will-change: transform, opacity;
   }
 `
 
