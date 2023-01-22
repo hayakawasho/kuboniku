@@ -18,8 +18,8 @@ export const Header = _props => {
           data-ref="menuTrigger"
         >
           <div className="u-in my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
-            <div css={burger__line} data-ref="burgerTopLine"></div>
-            <div css={burger__line} data-ref="burgerBottomLine"></div>
+            <div css={burger__line} data-ref="burgerTL"></div>
+            <div css={burger__line} data-ref="burgerBL"></div>
           </div>
         </button>
 
@@ -66,18 +66,18 @@ export const Header = _props => {
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>
             <li>
-              <a href="/profile/" css={link} data-ref="menuLabel">
-                Profile
+              <a href="/profile/" css={link}>
+                <span data-ref="menuLabel">Profile</span>
               </a>
             </li>
             <li>
-              <a href="/" css={link} data-ref="menuLabel">
-                Works
+              <a href="/" css={link}>
+                <span data-ref="menuLabel">Works</span>
               </a>
             </li>
             <li>
-              <a href="mailto:k.bo.n10.05@gmail.com" css={link} data-ref="menuLabel">
-                Contact
+              <a href="mailto:k.bo.n10.05@gmail.com" css={link}>
+                <span data-ref="menuLabel">Contact</span>
               </a>
             </li>
           </ul>
@@ -196,15 +196,10 @@ const menu__links = css`
     padding-top: 3.2rem;
     padding-right: 4rem;
   }
-
-  > li {
-    overflow: hidden;
-  }
 `
 
 const link = css`
   display: inline-block;
-  opacity: 0;
   vertical-align: top;
   font-family: var(--font-en);
   font-weight: 500;
@@ -212,6 +207,7 @@ const link = css`
   line-height: calc(86 / 28);
   letter-spacing: 0.41em;
   color: #fff;
+  overflow: hidden;
 
   @media (min-width: 640px) {
     font-size: 1.3rem;
@@ -220,8 +216,13 @@ const link = css`
     pointer-events: auto;
   }
 
-  .is-menuAnimating & {
-    will-change: transform, opacity;
+  > span {
+    line-height: 1;
+    display: inline-block;
+
+    .is-menuAnimating & {
+      will-change: transform, opacity;
+    }
   }
 
   .is-menuOpen & {
@@ -237,6 +238,10 @@ const burger = css`
   height: 4rem;
   z-index: 101;
   pointer-events: auto;
+
+  .is-menuAnimating & {
+    will-change: transform;
+  }
 `
 
 const burger__line = css`
@@ -248,6 +253,10 @@ const burger__line = css`
   &:nth-of-type(2) {
     margin: 5px 0 0;
     transform: scaleX(calc(32 / 40));
+  }
+
+  .is-menuAnimating & {
+    will-change: transform;
   }
 `
 
@@ -289,6 +298,10 @@ const snsLabel = css`
 
   @media (min-width: 640px) {
     font-size: 1.3rem;
+  }
+
+  .is-animating & {
+    will-change: transform, opacity;
   }
 `
 

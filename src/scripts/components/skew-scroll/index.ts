@@ -7,9 +7,10 @@ export default defineComponent({
   },
 
   setup(el, { ease }) {
-    let isRunning = false
     let ww = window.innerWidth
     let timer: number
+
+    const isRunning = ref(false)
 
     let current = 0
     let last = 0
@@ -22,11 +23,11 @@ export default defineComponent({
       () => {
         clearTimeout(timer)
 
-        isRunning = true
+        isRunning.value = true
         current = window.scrollY
 
         timer = window.setTimeout(() => {
-          isRunning = false
+          isRunning.value = false
         }, 300)
       },
       { passive: true }
@@ -58,6 +59,7 @@ export default defineComponent({
     })
 
     return {
+      isRunning: readonly(isRunning),
       val: readonly(val),
     }
   },
