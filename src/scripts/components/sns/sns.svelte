@@ -3,7 +3,6 @@
   import { TWEEN, EASE, SORT, nextTick } from '@/libs'
   import { useEvent, useDOMRef } from 'lake'
   import { getContext } from 'svelte'
-  import { match } from 'ts-pattern'
 
   type Refs = {
     toggleTrigger: HTMLButtonElement
@@ -15,15 +14,13 @@
 
   let isOpen: boolean | undefined
 
-  $: match(isOpen)
-    .with(true, onOpen)
-    .with(false, onClose)
-    .otherwise(() => {})
-
   useEvent(refs.toggleTrigger, 'click', e => {
     e.preventDefault()
     isOpen = !isOpen
   })
+
+  $: isOpen === true && onOpen()
+  $: isOpen === false && onClose()
 
   const onOpen = async () => {
     rootRef.classList.add('is-animating')

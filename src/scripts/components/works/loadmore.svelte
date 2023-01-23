@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { useIntersectionWatch } from 'lake'
-  import { match, P } from 'ts-pattern'
+  // import { match, P } from 'ts-pattern'
 
   export let total: number
 
   const PER_PAGE = 10
   const TOTAL_PAGE = Math.ceil(total / PER_PAGE)
-  // const MAX_RETRY = 3
+  const MAX_RETRY = 3
 
   const posts: any[] = []
 
@@ -15,19 +15,13 @@
 
   onMount(() => {
     const MAX = TOTAL_PAGE - 1
-    let count = 0
+    console.log(MAX, MAX_RETRY)
+    // let count = 0
 
-    const { unwatch } = useIntersectionWatch(
+    const { unwatch: _ } = useIntersectionWatch(
       refFetchTrigger,
-      ([entry]) => {
-        return match([entry.isIntersecting, count] as const)
-          .with([true, P.when(count => count < MAX)], () => {
-            count++
-          })
-          .with([true, MAX], () => {
-            unwatch(refFetchTrigger)
-          })
-          .run()
+      ([_entry]) => {
+        //
       },
       {
         rootMargin: '0px 0px 25% 0px',

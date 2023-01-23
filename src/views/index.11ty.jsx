@@ -24,7 +24,7 @@ export const render = props => {
   ${r(
     <PageWithHeader title="WORKS" pagePath="">
       <PageWithPjax>
-        <main className="l-page" data-component="SkewScrollContainer">
+        <main className="l-page" data-component="WorksIndex">
           <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
             <h1 css={heading}>
               Works
@@ -32,7 +32,7 @@ export const render = props => {
             </h1>
           </div>
 
-          <div id="js-works" css={entries} className="" data-total={total}>
+          <div css={entries} data-ref="works" data-total={total}>
             {posts.map((item, i) => {
               const load = i < 4 ? { loading: 'auto', decoding: 'async' } : { loading: 'lazy' }
               return (

@@ -6,8 +6,6 @@ export default defineComponent({
     ease: 0.2,
   },
 
-  components: {},
-
   setup(el, { ease }) {
     let ww = window.innerWidth
     let timer: number

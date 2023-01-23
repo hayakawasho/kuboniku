@@ -1,27 +1,36 @@
 import 'virtual:windi.css'
 
 import { createApp, withSvelte, q } from 'lake'
+import type { IComponent } from 'lake/types/core/types'
 import Cursor from '@/components/cursor/index.svelte'
+import Default from '@/components/default'
 import Gl from '@/components/gl/index.svelte'
-import Menu from '@/components/menu'
+import Menu from '@/components/menu/index.svelte'
 import Noop from '@/components/noop'
-import SkewScrollContainer from '@/components/skew-scroll'
 import Sns from '@/components/sns/sns.svelte'
 import WorksIndex from '@/components/works'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const { register, mount } = createApp()
+  const { component, unmount: _ } = createApp()
 
-  register('Noop', Noop)
-  register('Menu', Menu)
-  register('Sns', withSvelte(Sns))
-  register('Gl', withSvelte(Gl))
-  register('Cursor', withSvelte(Cursor))
-  register('SkewScrollContainer', SkewScrollContainer)
-  register('WorksIndex', WorksIndex)
+  const components: Record<string, IComponent> = {
+    Noop,
+    Sns: withSvelte(Sns),
+    Gl: withSvelte(Gl),
+    Cursor: withSvelte(Cursor),
+    Menu: withSvelte(Menu),
+    WorksIndex,
+    Default,
+  }
 
   q('[data-component]').forEach(el => {
     const name = el.dataset.component || 'Noop'
-    mount(el, {}, name)
+
+    try {
+      const mount = component(components[`${name}`])
+      mount(el, {})
+    } catch (error) {
+      console.error(error)
+    }
   })
 })

@@ -25,7 +25,7 @@ export const Header = _props => {
         </button>
 
         <div css={sns} data-component="Sns">
-          <ul className="mb-[1.5rem] sm:mb-[2.5rem] text-center">
+          <ul className="mb-[2rem] sm:mb-[2.5rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a
                 href="https://www.facebook.com/k.b.nagisa"
@@ -63,7 +63,7 @@ export const Header = _props => {
 
       <nav css={menu} data-ref="menuBody" role="navigation">
         <div className="u-in">
-          <div css={menu__mask} className="u-sp" data-ref="menuMask" />
+          <div css={menu__mask} className="u-sp || js-menu__close" data-ref="menuMask" />
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>
             <li>
