@@ -51,12 +51,12 @@
 <style>
   .cursor {
     position: fixed;
-    top: -20px;
-    left: -20px;
+    top: -2rem;
+    left: -2rem;
     pointer-events: none;
     z-index: 1000;
-    height: 40px;
-    width: 40px;
+    height: 4rem;
+    width: 4rem;
     backface-visibility: hidden;
   }
 

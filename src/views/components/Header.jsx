@@ -25,7 +25,7 @@ export const Header = _props => {
         </button>
 
         <div css={sns} data-component="Sns">
-          <ul className="mb-[2rem] sm:mb-[2.5rem] text-center">
+          <ul className="mb-[2rem] sm:mb-[3rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a
                 href="https://www.facebook.com/k.b.nagisa"
@@ -63,7 +63,7 @@ export const Header = _props => {
 
       <nav css={menu} data-ref="menuBody" role="navigation">
         <div className="u-in">
-          <div css={menu__mask} className="u-sp || js-menu__close" data-ref="menuMask" />
+          <div css={menu__mask} className="u-sp" data-ref="menuMask" />
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>
             <li>
@@ -141,7 +141,7 @@ const copyright = css`
 const menu = css`
   position: fixed;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
   overflow: hidden;
   pointer-events: none;
   top: 0;
@@ -175,7 +175,7 @@ const menu__mask = css`
 const menu__bg = css`
   position: absolute;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
   top: 0;
   right: 0;
   width: calc(46rem * 0.5);
@@ -238,6 +238,10 @@ const linkLabel = css`
   display: inline-block;
   transform: translateY(100%);
   transform-origin: left;
+
+  @media (min-width: 640px) {
+    transform: none;
+  }
 
   .is-menuAnimating & {
     will-change: transform, opacity;

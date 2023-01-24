@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Context$ } from 'lake'
-  import { useDOMRef, children, ref, readonly } from 'lake'
+  import { useDOMRef, useSlots, ref, readonly } from 'lake'
   import { getContext, onMount } from 'svelte'
   import MenuToggle from './toggle'
   import MenuClose from './close'
@@ -55,7 +55,7 @@
         TWEEN.tween(refs.burgerTL, 0.75, EASE.cubicInOut).y(2.5),
         TWEEN.tween(refs.burgerBL, 0.75, EASE.cubicInOut).scaleX(0),
         TWEEN.serial(
-          TWEEN.tween(refs.menuLabel, 0).rotation(-6).y('200%').opacity(1),
+          TWEEN.tween(refs.menuLabel, 0).rotation(-7).y('200%').opacity(1),
           TWEEN.lag(0.065, TWEEN.tween(refs.menuLabel, 0.75, EASE.cubicInOut).rotation(0).y('0%'))
         ),
         TWEEN.parallel(
@@ -85,7 +85,7 @@
         TWEEN.tween(refs.burgerBL, 0.75, EASE.cubicInOut).scaleX(32 / 40),
         TWEEN.serial(
           TWEEN.tween(refs.menuLabel, 0).rotation(0).y('0%'),
-          TWEEN.lag(0.06, TWEEN.tween(refs.menuLabel, 0.65, EASE.cubicInOut).rotation(6).y('-200%'))
+          TWEEN.lag(0.06, TWEEN.tween(refs.menuLabel, 0.65, EASE.cubicInOut).rotation(7).y('-200%'))
         ),
         TWEEN.parallel(
           TWEEN.tween(CLIP_PATH, 0.85, EASE.cubicInOut, { x1: 100 }),
@@ -102,19 +102,14 @@
 
   let isOpen = ref<boolean | undefined>(undefined)
 
-  const onOpen = () => {
-    isOpen.value = true
-  }
-
-  const onClose = () => {
-    isOpen.value = false
-  }
-
   $: isOpen.value === true && _open()
   $: isOpen.value === false && _close()
 
   onMount(() => {
-    const { addChild } = children()
+    const { addChild } = useSlots()
+
+    const onOpen = () => (isOpen.value = true)
+    const onClose = () => (isOpen.value = false)
 
     addChild(refs.menuTrigger, MenuToggle, {
       isOpen: readonly(isOpen),

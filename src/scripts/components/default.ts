@@ -1,9 +1,9 @@
-import { defineComponent, children } from 'lake'
+import { defineComponent, useSlots } from 'lake'
 import SkewScrollContainer from './skew-scroll'
 
 export default defineComponent({
   setup(el) {
-    const { addChild } = children()
+    const { addChild } = useSlots()
     addChild(el, SkewScrollContainer, {})
   },
 })

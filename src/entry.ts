@@ -1,7 +1,7 @@
 import 'virtual:windi.css'
 
 import { createApp, withSvelte, q } from 'lake'
-import type { IComponent } from 'lake/types/core/types'
+import type { IComponent } from 'lake'
 import Cursor from '@/components/cursor/index.svelte'
 import Default from '@/components/default'
 import Gl from '@/components/gl/index.svelte'
@@ -11,9 +11,9 @@ import Sns from '@/components/sns/sns.svelte'
 import WorksIndex from '@/components/works'
 
 document.addEventListener('DOMContentLoaded', () => {
-  const { component, unmount: _ } = createApp()
+  const { component } = createApp()
 
-  const components: Record<string, IComponent> = {
+  const table: Record<string, IComponent> = {
     Noop,
     Sns: withSvelte(Sns),
     Gl: withSvelte(Gl),
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = el.dataset.component || 'Noop'
 
     try {
-      const mount = component(components[`${name}`])
+      const mount = component(table[`${name}`])
       mount(el, {})
     } catch (error) {
       console.error(error)

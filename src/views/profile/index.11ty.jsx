@@ -11,7 +11,7 @@ export const render = props => {
   ${r(
     <PageWithHeader title="PROFILE" pagePath="/profile/">
       <PageWithPjax>
-        <main className="l-page overflow-hidden">
+        <main className="l-page overflow-hidden" data-component="Default">
           <h1 className="sr-only">PROFILE</h1>
           <i css={logo} className="icon-logo || u-pc"></i>
           <i css={logo} className="icon-logo_sp || u-sp"></i>
