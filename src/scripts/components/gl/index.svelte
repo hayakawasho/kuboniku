@@ -1,12 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { createBgCanvas, resize } from './main'
-  import { debounce } from '@/libs'
+  import { useSlot } from 'lake'
+  import BgCanvas from './main'
 
   let canvas: HTMLCanvasElement
 
+  let w = 0
+  let h = 0
+
+  const { addChild } = useSlot()
+
   onMount(() => {
-    createBgCanvas(canvas)
+    addChild(canvas, BgCanvas, {
+      w,
+      h,
+    })
   })
 </script>
 
@@ -14,4 +22,4 @@
   <canvas class="h-screen w-screen" bind:this={canvas} />
 </div>
 
-<svelte:window on:resize={debounce(resize, 250)} />
+<svelte:window bind:innerWidth={w} bind:innerHeight={h} />
