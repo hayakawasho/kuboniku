@@ -2,7 +2,7 @@ import { onUnmounted } from 'lake'
 
 const FPS_60_SEC = 1000 / 60
 
-export function useTick(callback: (timeRatio: number) => void) {
+export const useTick = (callback: (timeRatio: number) => void) => {
   let then = 0
 
   const loop = (timestamp: number) => {

@@ -1,4 +1,4 @@
-import { withSvelte, defineComponent, useSlots, useDOMRef } from 'lake'
+import { withSvelte, defineComponent, useSlot, useDOMRef } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
 import WorksLoadmore from './loadmore.svelte'
 
@@ -7,11 +7,9 @@ export default defineComponent({
     const { refs } = useDOMRef<{ works: HTMLElement }>('works')
     const { total } = refs.works.dataset
 
-    const { addChild } = useSlots()
+    const { addChild } = useSlot()
 
-    addChild(refs.works, withSvelte(WorksLoadmore), {
-      total: Number(total),
-    })
-    addChild(el, SkewScrollContainer, {})
+    addChild(refs.works, withSvelte(WorksLoadmore), { total: Number(total) })
+    addChild(el, SkewScrollContainer)
   },
 })

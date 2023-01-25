@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Context$ } from 'lake'
-  import { useDOMRef, useSlots, ref, readonly } from 'lake'
-  import { getContext, onMount } from 'svelte'
+  import { useDOMRef, useSlot, ref, readonly } from 'lake'
+  import { getContext } from 'svelte'
   import MenuToggle from './toggle'
   import MenuClose from './close'
-  import { TWEEN, EASE, nextTick } from '@/libs'
+  import { TWEEN, EASE, nextTick, beforeLeave } from '@/libs'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
@@ -105,20 +105,22 @@
   $: isOpen.value === true && _open()
   $: isOpen.value === false && _close()
 
-  onMount(() => {
-    const { addChild } = useSlots()
+  const { addChild } = useSlot()
 
-    const onOpen = () => (isOpen.value = true)
-    const onClose = () => (isOpen.value = false)
+  const onOpen = () => (isOpen.value = true)
+  const onClose = () => (isOpen.value = false)
+  const readonlyIsOpen = readonly(isOpen)
 
-    addChild(refs.menuTrigger, MenuToggle, {
-      isOpen: readonly(isOpen),
-      onOpen,
-      onClose,
-    })
+  addChild(refs.menuTrigger, MenuToggle, {
+    isOpen: readonlyIsOpen,
+    onOpen,
+    onClose,
+  })
+  addChild(refs.menuMask, MenuClose, {
+    onClose,
+  })
 
-    addChild(refs.menuMask, MenuClose, {
-      onClose,
-    })
+  beforeLeave(_data => {
+    isOpen.value === true && onClose()
   })
 </script>

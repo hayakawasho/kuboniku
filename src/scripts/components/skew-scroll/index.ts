@@ -1,4 +1,4 @@
-import { defineComponent, ref, readonly, useEvent } from 'lake'
+import { defineComponent, ref, readonly as _, useEvent } from 'lake'
 import { clamp, lerp, TWEEN, useTick, debounce } from '@/libs'
 
 export default defineComponent({
@@ -57,10 +57,5 @@ export default defineComponent({
 
       TWEEN.tween(el, 0).style('transform', `skew(0, ${val.value}deg) translateZ(0)`).play()
     })
-
-    return {
-      isRunning: readonly(isRunning),
-      val: readonly(val),
-    }
   },
 })
