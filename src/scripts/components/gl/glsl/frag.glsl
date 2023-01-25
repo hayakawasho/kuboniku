@@ -1,8 +1,8 @@
 precision highp float;
 
-#pragma glslify: random2d = require('../utils/random2d.glsl')
-#pragma glslify: circle = require('../utils/circle.glsl')
-#pragma glslify: rect = require('../utils/rect.glsl')
+#pragma glslify: random2d = require('./random2d.glsl')
+#pragma glslify: circle = require('./circle.glsl')
+#pragma glslify: rect = require('./rect.glsl')
 
 uniform sampler2D uSamplerOut;
 uniform sampler2D uSamplerIn;

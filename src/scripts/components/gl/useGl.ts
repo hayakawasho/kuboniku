@@ -78,8 +78,9 @@ export const useGl = (canvas: HTMLCanvasElement, width: number, height: number) 
       })
     },
 
-    render(_timeRatio: number) {
+    render(timestamp: number) {
       renderer.render({ scene: mesh })
+      program.uniforms.uTime.value = timestamp * 0.001
     },
   }
 }

@@ -1,15 +1,17 @@
 import 'virtual:windi.css'
 
-import barba from '@barba/core'
-import { createApp, withSvelte, q } from 'lake'
 import Cursor from '@/components/cursor/index.svelte'
-import type { IComponent } from 'lake'
+import barba from '@barba/core'
 import Default from '@/components/default'
+import { createApp, withSvelte, q } from 'lake'
 import Gl from '@/components/gl/index.svelte'
+import type { IComponent } from 'lake'
 import Menu from '@/components/menu/index.svelte'
 import Noop from '@/components/noop'
 import Sns from '@/components/sns/sns.svelte'
 import WorksIndex from '@/components/works'
+import WorksDetail from '@/components/works/[slug]'
+import { TWEEN, EASE } from '@/libs'
 
 document.addEventListener('DOMContentLoaded', () => {
   const { component, unmount } = createApp()
@@ -21,43 +23,60 @@ document.addEventListener('DOMContentLoaded', () => {
     Cursor: withSvelte(Cursor),
     Menu: withSvelte(Menu),
     WorksIndex,
+    WorksDetail,
     Default,
   }
 
-  const boot = (scope = document.documentElement, reboot = false) => {
+  const bootstrap = (scope: HTMLElement, { reboot = false }) => {
     q('[data-component]', scope).forEach(el => {
       const name = el.dataset.component || 'Noop'
 
       try {
         const mount = component(table[`${name}`])
-        mount(el, {
-          reboot,
-        })
+        mount(el, { reboot })
       } catch (error) {
         console.error(error)
       }
     })
   }
 
-  boot()
+  bootstrap(document.documentElement, { reboot: false })
 
   barba.init({
     schema: {
-      prefix: 'data-router',
+      prefix: 'data-pjax',
       wrapper: 'wrap',
       container: 'view',
     },
     transitions: [
       {
         name: 'default',
-        sync: true,
+        sync: false,
         leave(data) {
-          const current = data.current.container
-          unmount('[data-component]', current)
+          return new Promise(resolve => {
+            const current = data.current.container
+
+            TWEEN.tween(current, 1, EASE.expoOut)
+              .opacity(0)
+              .onComplete(() => {
+                unmount('[data-component]', current)
+              })
+              .play()
+
+            setTimeout(() => {
+              resolve(true)
+            }, 500)
+          })
         },
         enter(data) {
           const next = data.next.container
-          boot(next, true)
+
+          TWEEN.serial(
+            TWEEN.prop(next).opacity(0),
+            TWEEN.tween(next, 1, EASE.expoOut).opacity(1)
+          ).play()
+
+          bootstrap(next, { reboot: true })
         },
       },
     ],

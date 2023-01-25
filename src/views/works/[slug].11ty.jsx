@@ -32,7 +32,7 @@ export const render = props => {
     <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`}>
       <PageWithPjax>
         <PageWithProgressbar progressbar={<Progressbar />}>
-          <main className="l-page" data-component="Default">
+          <main className="l-page" data-component="WorksDetail">
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>
@@ -50,8 +50,20 @@ export const render = props => {
                 </p>
               </div>
               <picture>
-                <source srcSet={post.eyecatch.src} media="(min-width: 640px)" />
-                <img src={post.eyecatchMobile.src} css={imgFit} className="opacity-40" alt="" />
+                <source
+                  srcSet={post.eyecatch.src}
+                  media="(min-width: 640px)"
+                  width={post.eyecatch.width}
+                  height={post.eyecatch.height}
+                />
+                <img
+                  src={post.eyecatchMobile.src}
+                  css={imgFit}
+                  className="opacity-40"
+                  alt=""
+                  width={post.eyecatchMobile.width}
+                  height={post.eyecatchMobile.height}
+                />
               </picture>
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
@@ -120,13 +132,20 @@ export const render = props => {
                     </p>
                   </div>
                   <picture>
-                    <source srcSet={nextPost.eyecatch.src} media="(min-width: 640px)" />
+                    <source
+                      srcSet={nextPost.eyecatch.src}
+                      media="(min-width: 640px)"
+                      width={nextPost.eyecatch.width}
+                      height={nextPost.eyecatch.height}
+                    />
                     <img
                       src={nextPost.eyecatchMobile.src}
                       css={imgFit}
                       className="opacity-40 filter grayscale-100"
                       alt=""
                       loading="lazy"
+                      width={nextPost.eyecatchMobile.width}
+                      height={nextPost.eyecatchMobile.height}
                     />
                   </picture>
                 </a>

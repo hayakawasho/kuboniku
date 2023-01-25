@@ -4,8 +4,8 @@ import { css } from '@emotion/react'
 
 export const PageWithPjax = props => {
   return (
-    <div css={wrap} data-router="wrap">
-      <div css={content} data-router="view">
+    <div css={wrap} data-pjax="wrap">
+      <div css={content} data-pjax="view">
         {props.children}
       </div>
     </div>

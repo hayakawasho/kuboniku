@@ -8,6 +8,7 @@ const EASE = {
   cubicOut: Ease24._3_CubicOut,
   cubicInOut: Ease24._3_CubicInOut,
   cubicIn: Ease24._3_CubicIn,
+  expoOut: Ease24._6_ExpoOut,
 }
 
 const SORT = {

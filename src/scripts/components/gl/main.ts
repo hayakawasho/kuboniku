@@ -18,8 +18,8 @@ export default defineComponent<Props>({
 
     ro.observe(canvas.parentElement!)
 
-    useTick(timeRatio => {
-      render(timeRatio)
+    useTick(({ timestamp }) => {
+      render(timestamp)
     })
   },
 })

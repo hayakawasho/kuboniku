@@ -2,7 +2,7 @@ import { onUnmounted } from 'lake'
 
 const FPS_60_SEC = 1000 / 60
 
-export const useTick = (callback: (timeRatio: number) => void) => {
+export const useTick = (callback: (payload: { timestamp: number; timeRatio: number }) => void) => {
   let then = 0
 
   const loop = (timestamp: number) => {
@@ -16,9 +16,12 @@ export const useTick = (callback: (timeRatio: number) => void) => {
     }
 
     const dTime = now - then
-    const timeRatio = Math.round((dTime / FPS_60_SEC) * 1000) * 0.001
+    const timeRatio = dTime / FPS_60_SEC
 
-    callback(timeRatio)
+    callback({
+      timestamp,
+      timeRatio,
+    })
 
     then = now
   }

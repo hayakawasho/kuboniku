@@ -41,7 +41,13 @@ export const render = props => {
                     <div css={aspect}></div>
                     <div css={entry__g}>
                       <div css={eyecatch}>
-                        <img src={item.eyecatch.src} alt="" {...load} />
+                        <img
+                          src={item.eyecatch.src}
+                          alt=""
+                          {...load}
+                          width={item.eyecatch.width}
+                          height={item.eyecatch.height}
+                        />
                       </div>
                       <div css={entry__hgroup}>
                         <p css={num}>
