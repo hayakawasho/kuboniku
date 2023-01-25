@@ -36,7 +36,7 @@ export const render = props => {
             {posts.map((item, i) => {
               const load = i < 4 ? { loading: 'auto', decoding: 'async' } : { loading: 'lazy' }
               return (
-                <article key={i} css={entryWap} className="mb-[4rem] sm:mb-[6.4rem]">
+                <article key={i} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
                   <a css={entry} href={`./works/${item.slug}/`}>
                     <div css={aspect}></div>
                     <div css={entry__g}>
@@ -109,7 +109,7 @@ const entries = css`
   }
 `
 
-const entryWap = css`
+const entryWrap = css`
   @media (min-width: 640px) {
     width: calc(var(--grid) * 4);
 

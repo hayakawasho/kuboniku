@@ -1,24 +1,31 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { useSlot } from 'lake'
-  import BgCanvas from './main'
+  import { useGl } from './useGl'
+  import { useTick } from '@/libs'
 
+  let wrap: HTMLDivElement
   let canvas: HTMLCanvasElement
 
   let w = 0
   let h = 0
 
-  const { addChild } = useSlot()
-
   onMount(() => {
-    addChild(canvas, BgCanvas, {
-      w,
-      h,
+    const { render, resize } = useGl(canvas, w, h)
+
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      resize(width, height)
+    })
+
+    ro.observe(wrap)
+
+    useTick(({ timestamp }) => {
+      render(timestamp)
     })
   })
 </script>
 
-<div class="fixed inset-0">
+<div class="fixed inset-0" bind:this={wrap}>
   <canvas class="h-screen w-screen" bind:this={canvas} />
 </div>
 

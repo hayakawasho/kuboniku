@@ -28,7 +28,7 @@
     }, 300)
   }
 
-  useTick(_timeRatio => {
+  useTick(() => {
     if (!isRunning) {
       return
     }

@@ -41,7 +41,7 @@ export default defineComponent({
       }, 250)
     )
 
-    useTick(_timeRatio => {
+    useTick(() => {
       if (!isRunning) {
         return
       }
