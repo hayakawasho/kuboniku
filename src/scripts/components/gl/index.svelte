@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { useGl } from './useGl'
-  import { useTick } from '@/libs'
+  import { debounce } from '@/libs'
 
   let wrap: HTMLDivElement
   let canvas: HTMLCanvasElement
@@ -10,18 +10,16 @@
   let h = 0
 
   onMount(() => {
-    const { render, resize } = useGl(canvas, w, h)
+    const { resize } = useGl(canvas, w, h)
 
-    const ro = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect
-      resize(width, height)
-    })
+    const ro = new ResizeObserver(
+      debounce(([entry]) => {
+        const { width, height } = entry.contentRect
+        resize(width, height)
+      }, 250)
+    )
 
     ro.observe(wrap)
-
-    useTick(({ timestamp }) => {
-      render(timestamp)
-    })
   })
 </script>
 
