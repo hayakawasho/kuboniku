@@ -11,5 +11,11 @@ export const createRenderer = (
 
   renderer.setSize(size.width, size.height)
 
-  return { renderer }
+  const { gl } = renderer
+  gl.clearColor(0, 0, 0, 0)
+
+  return {
+    renderer,
+    gl,
+  }
 }

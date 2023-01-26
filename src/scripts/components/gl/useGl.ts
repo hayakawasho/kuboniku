@@ -6,12 +6,9 @@ import { useTick } from '@/libs'
 export const useGl = (canvas: HTMLCanvasElement, width: number, height: number) => {
   const size = { width, height }
 
-  const { renderer } = createRenderer(canvas, size)
-
-  const { gl } = renderer
-  gl.clearColor(0, 0, 0, 0)
-
+  const { renderer, gl } = createRenderer(canvas, size)
   const { camera } = createCamera(gl, size)
+
   const { scene, program } = createScene(gl)
 
   useTick(({ timestamp }) => {
