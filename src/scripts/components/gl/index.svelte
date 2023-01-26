@@ -6,11 +6,8 @@
   let wrap: HTMLDivElement
   let canvas: HTMLCanvasElement
 
-  let w = 0
-  let h = 0
-
   onMount(() => {
-    const { resize } = useGl(canvas, w, h)
+    const { resize } = useGl(canvas, window.innerWidth, window.innerHeight)
 
     const ro = new ResizeObserver(
       debounce(([entry]) => {
@@ -26,5 +23,3 @@
 <div class="fixed inset-0" bind:this={wrap}>
   <canvas class="h-screen w-screen" bind:this={canvas} />
 </div>
-
-<svelte:window bind:innerWidth={w} bind:innerHeight={h} />

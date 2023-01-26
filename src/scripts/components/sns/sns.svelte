@@ -19,10 +19,10 @@
     isOpen = !isOpen
   })
 
-  $: isOpen === true && onOpen()
-  $: isOpen === false && onClose()
+  $: isOpen === true && _open()
+  $: isOpen === false && _close()
 
-  const onOpen = async () => {
+  const _open = async () => {
     rootRef.classList.add('is-animating')
 
     await nextTick()
@@ -40,7 +40,7 @@
       .play()
   }
 
-  const onClose = async () => {
+  const _close = async () => {
     rootRef.classList.add('is-animating')
 
     await nextTick()

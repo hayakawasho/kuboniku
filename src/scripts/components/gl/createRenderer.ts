@@ -11,7 +11,5 @@ export const createRenderer = (
 
   renderer.setSize(size.width, size.height)
 
-  renderer.gl.clearColor(0, 0, 0, 0)
-
   return { renderer }
 }
