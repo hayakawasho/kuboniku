@@ -32,12 +32,17 @@ export const render = props => {
             </h1>
           </div>
 
-          <div css={entries} data-ref="works" data-total={total}>
+          <div css={entries} data-ref="projects" data-total={total}>
             {posts.map((item, i) => {
               const load = i < 4 ? { loading: 'auto', decoding: 'async' } : { loading: 'lazy' }
               return (
                 <article key={i} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
-                  <a css={entry} href={`./works/${item.slug}/`}>
+                  <a
+                    css={entry}
+                    href={`./works/${item.slug}/`}
+                    data-ref="project"
+                    data-color={item.color}
+                  >
                     <div css={aspect}></div>
                     <div css={entry__g}>
                       <div css={eyecatch}>

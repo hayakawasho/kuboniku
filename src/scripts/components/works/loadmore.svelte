@@ -1,25 +1,26 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { useIntersectionWatch } from 'lake'
+  import { useIntersectionWatch, useDOMRef, useSlot } from 'lake'
+  import Hover from './hover'
   // import { match, P } from 'ts-pattern'
 
-  export let total: number
-
-  const PER_PAGE = 10
-  const TOTAL_PAGE = Math.ceil(total / PER_PAGE)
-  const MAX_RETRY = 3
+  export let totalPage: number
 
   const posts: any[] = []
 
-  let refFetchTrigger: HTMLElement
+  let refFetcher: HTMLElement
+
+  console.log(totalPage)
 
   onMount(() => {
-    const MAX = TOTAL_PAGE - 1
-    console.log(MAX, MAX_RETRY)
-    // let count = 0
+    const { refs } = useDOMRef<{ project: HTMLElement[] }>('project')
 
-    const { unwatch: _ } = useIntersectionWatch(
-      refFetchTrigger,
+    const { addChild } = useSlot()
+
+    addChild(refs.project, Hover)
+
+    useIntersectionWatch(
+      refFetcher,
       ([_entry]) => {
         //
       },
@@ -27,17 +28,13 @@
         rootMargin: '0px 0px 25% 0px',
       }
     )
-
-    return () => {
-      //
-    }
   })
 </script>
 
 {#if posts.length > 0}
   {#each posts as i}
     <article class="o-grid__item">
-      <a href="./{i.slug}/">
+      <a href="./{i.slug}/" data-ref="project" data-color={i.color}>
         <div class="u-absolute u-pos-tl u-fit" data-scroll-skew>
           <div class="works-eyecatch">
             <img
@@ -65,4 +62,11 @@
   {/each}
 {/if}
 
-<div class="works-loader" bind:this={refFetchTrigger} />
+<div class="refFetcher" bind:this={refFetcher} />
+
+<style>
+  .refFetcher {
+    position: absolute;
+    bottom: 0;
+  }
+</style>

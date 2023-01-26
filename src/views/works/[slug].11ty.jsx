@@ -32,7 +32,7 @@ export const render = props => {
     <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`}>
       <PageWithPjax>
         <PageWithProgressbar progressbar={<Progressbar />}>
-          <main className="l-page" data-component="WorksDetail">
+          <main className="l-page" data-component="WorksDetail" data-color={post.color}>
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>

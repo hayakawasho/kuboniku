@@ -27,10 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Default,
   }
 
-  const bootstrap = (scope: HTMLElement, { reboot = false }) => {
-    q('[data-component]', scope).forEach(el => {
+  const bootstrap = (targets: HTMLElement[], { reboot = false }) => {
+    targets.forEach(el => {
       const name = el.dataset.component || 'Noop'
-
       try {
         const mount = component(table[`${name}`])
         mount(el, { reboot })
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  bootstrap(document.documentElement, { reboot: false })
+  bootstrap(q('[data-component]'), { reboot: false })
 
   barba.init({
     schema: {
@@ -76,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             TWEEN.tween(next, 1, EASE.expoOut).opacity(1)
           ).play()
 
-          bootstrap(next, { reboot: true })
+          bootstrap(q('[data-component]', next), { reboot: true })
         },
       },
     ],

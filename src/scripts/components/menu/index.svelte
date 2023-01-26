@@ -116,6 +116,7 @@
     onOpen,
     onClose,
   })
+
   addChild(refs.menuMask, MenuClose, {
     onClose,
   })

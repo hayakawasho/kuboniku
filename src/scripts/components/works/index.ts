@@ -1,15 +1,21 @@
 import { withSvelte, defineComponent, useSlot, useDOMRef } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
-import WorksLoadmore from './loadmore.svelte'
+import Loadmore from './loadmore.svelte'
 
 export default defineComponent({
   setup(el) {
-    const { refs } = useDOMRef<{ works: HTMLElement }>('works')
-    const { total } = refs.works.dataset
+    const { refs } = useDOMRef<{ projects: HTMLElement }>('projects')
+
+    const total = Number(refs.projects.dataset.total)
+
+    const PER_PAGE = 10
+    const totalPage = Math.ceil(total / PER_PAGE)
 
     const { addChild } = useSlot()
 
-    addChild(refs.works, withSvelte(WorksLoadmore), { total: Number(total) })
+    addChild(refs.projects, withSvelte(Loadmore), {
+      totalPage,
+    })
     addChild(el, SkewScrollContainer)
   },
 })

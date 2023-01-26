@@ -4621,8 +4621,8 @@ kolorist@^1.6.0:
   integrity sha512-dLkz37Ab97HWMx9KTes3Tbi3D1ln9fCAy2zr2YVExJasDRPGRaKcoE4fycWNtnCAJfjFqe0cnY+f8KT2JePEXQ==
 
 "lake@https://github.com/hayakawasho/lake":
-  version "0.8.5"
-  resolved "https://github.com/hayakawasho/lake#bd96b7ea5fb482fb64920ec30d317515ee54abde"
+  version "0.8.6"
+  resolved "https://github.com/hayakawasho/lake#7a85e6f5d86c3b79297b726e21c28e6417c96156"
 
 language-subtag-registry@~0.3.2:
   version "0.3.22"
@@ -5053,6 +5053,11 @@ nanoid@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
+
+nanostores@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/nanostores/-/nanostores-0.7.1.tgz#ed27fa3f9b1c2ab9b28f14373811e28b9d3fc5eb"
+  integrity sha512-7HenoVpZOjRudHCmAVWKloBTk3+Ozw49KuRWq/pNlEIIVS3x9dID+I5z3Rhjxl1muhHwv4dFhpT+0FebT9jvaA==
 
 napi-build-utils@^1.0.1:
   version "1.0.2"
