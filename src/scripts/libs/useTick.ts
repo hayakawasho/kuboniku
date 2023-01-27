@@ -1,4 +1,4 @@
-import { onUnmounted } from 'lake'
+import { useUnmount } from 'lake'
 
 const FPS_60_SEC = 1000 / 60
 
@@ -28,7 +28,7 @@ export const useTick = (callback: (payload: { timestamp: number; timeRatio: numb
 
   let rafId = requestAnimationFrame(loop)
 
-  onUnmounted(() => {
+  useUnmount(() => {
     cancelAnimationFrame(rafId)
   })
 }

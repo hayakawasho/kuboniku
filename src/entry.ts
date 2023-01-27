@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             TWEEN.tween(current, 1, EASE.expoOut)
               .opacity(0)
               .onComplete(() => {
-                unmount('[data-component]', current)
+                unmount(q('[data-component]', current))
               })
               .play()
 
