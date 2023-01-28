@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bootstrap = (targets: HTMLElement[], { reboot = false }) => {
     targets.forEach(el => {
       const name = el.dataset.component || 'Noop'
+
       try {
         const mount = component(table[`${name}`])
         mount(el, { reboot })
@@ -39,7 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  bootstrap(q('[data-component]'), { reboot: false })
+  bootstrap(q('[data-component]'), {
+    reboot: false,
+  })
 
   barba.init({
     schema: {
@@ -67,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500)
           })
         },
+
         enter(data) {
           const next = data.next.container
 
@@ -75,7 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
             TWEEN.tween(next, 1, EASE.expoOut).opacity(1)
           ).play()
 
-          bootstrap(q('[data-component]', next), { reboot: true })
+          bootstrap(q('[data-component]', next), {
+            reboot: true,
+          })
         },
       },
     ],

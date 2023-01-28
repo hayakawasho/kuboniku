@@ -1,8 +1,5 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import type { Plugin } from 'vite'
-import glsl from 'vite-plugin-glsl'
-import glslify from 'rollup-plugin-glslify'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import preprocess from 'svelte-preprocess'
 import viteCompression from 'vite-plugin-compression'
@@ -23,8 +20,6 @@ export default defineConfig({
     strictPort: true,
   },
   plugins: [
-    glsl(),
-    glslify() as Plugin,
     svelte({
       emitCss: false,
       preprocess: preprocess(),

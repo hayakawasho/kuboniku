@@ -1,28 +1,16 @@
-import { createCamera } from './createCamera'
-import { createRenderer } from './createRenderer'
-import { createScene } from './createScene'
+import Gl from './main'
 import { useTick } from '@/libs'
 
 export const useGl = (canvas: HTMLCanvasElement, width: number, height: number) => {
-  const size = { width, height }
+  const gl = new Gl(canvas, width, height)
 
-  const { renderer, gl } = createRenderer(canvas, size)
-  const { camera } = createCamera(gl, size)
-
-  const { scene, program } = createScene(gl)
-
-  useTick(({ timestamp }) => {
-    renderer.render({ scene })
-    program.uniforms.uTime.value = timestamp * 0.001
+  useTick(() => {
+    gl.render()
   })
 
   return {
     resize(w: number, h: number) {
-      renderer.setSize(w, h)
-
-      camera.perspective({
-        aspect: gl.canvas.width / gl.canvas.height,
-      })
+      gl.resize(w, h)
     },
   }
 }
