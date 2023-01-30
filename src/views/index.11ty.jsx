@@ -2,8 +2,9 @@
 // @ts-nocheck
 import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { PageWithHeader } from './components/page/PageWithHeader'
-import { PageWithPjax } from './components/page/PageWithPjax'
+import { Content } from './components/Content'
+import { Header } from './components/Header'
+import { PageWithHeader } from './components/PageWithHeader'
 import { zeroPadding } from './components/utils'
 import { selectTitle } from './components/works/selector'
 
@@ -22,9 +23,9 @@ export const render = props => {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="WORKS" pagePath="">
-      <PageWithPjax>
-        <main className="l-page" data-component="WorksIndex">
+    <PageWithHeader title="WORKS" pagePath="" header={<Header />}>
+      <Content namespace="Works">
+        <main className="l-page" data-component="Works">
           <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
             <h1 css={heading}>
               Works
@@ -68,7 +69,7 @@ export const render = props => {
             })}
           </div>
         </main>
-      </PageWithPjax>
+      </Content>
     </PageWithHeader>
   )}`
 }

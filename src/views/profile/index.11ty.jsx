@@ -3,15 +3,16 @@
 import { css } from '@emotion/react'
 import parse from 'html-react-parser'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { PageWithHeader } from '../components/page/PageWithHeader'
-import { PageWithPjax } from '../components/page/PageWithPjax'
+import { Content } from '../components/Content'
+import { Header } from '../components/Header'
+import { PageWithHeader } from '../components/PageWithHeader'
 
 export const render = props => {
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="PROFILE" pagePath="/profile/">
-      <PageWithPjax>
-        <main className="l-page overflow-hidden" data-component="Default">
+    <PageWithHeader title="PROFILE" pagePath="/profile/" header={<Header />}>
+      <Content namespace="Profile">
+        <main className="l-page overflow-hidden">
           <h1 className="sr-only">PROFILE</h1>
           <i css={logo} className="icon-logo || u-pc"></i>
           <i css={logo} className="icon-logo_sp || u-sp"></i>
@@ -25,7 +26,7 @@ export const render = props => {
             </div>
           </div>
         </main>
-      </PageWithPjax>
+      </Content>
     </PageWithHeader>
   )}`
 }

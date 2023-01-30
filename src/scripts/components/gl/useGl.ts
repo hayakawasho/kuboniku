@@ -1,16 +1,24 @@
-import Gl from './main'
+import Gl from './core'
 import { useTick } from '@/libs'
 
 export const useGl = (canvas: HTMLCanvasElement, width: number, height: number) => {
   const gl = new Gl(canvas, width, height)
 
-  useTick(() => {
+  useTick(({ timestamp: _ }) => {
     gl.render()
   })
 
   return {
-    resize(w: number, h: number) {
-      gl.resize(w, h)
+    onResize(width: number, height: number) {
+      gl.resize(width, height)
+    },
+
+    addScene() {
+      console.log('addScene')
+    },
+
+    removeScene() {
+      console.log('removeScene')
     },
   }
 }

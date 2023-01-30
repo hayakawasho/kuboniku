@@ -2,10 +2,15 @@
 // @ts-nocheck
 import { css } from '@emotion/react'
 
-export const PageWithPjax = props => {
+export const Content = props => {
   return (
     <div css={wrap} data-pjax="wrap">
-      <div css={content} data-pjax="view">
+      <div
+        css={view}
+        data-pjax="view"
+        data-pjax-namespace={props.namespace}
+        data-component={props['data-component']}
+      >
         {props.children}
       </div>
     </div>
@@ -17,7 +22,6 @@ const wrap = css`
   z-index: 1;
 `
 
-const content = css`
+const view = css`
   position: relative;
-  min-height: 100vh;
 `

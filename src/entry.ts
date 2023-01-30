@@ -1,46 +1,49 @@
 import 'virtual:windi.css'
-
 import Cursor from '@/components/cursor/index.svelte'
 import barba from '@barba/core'
-import Default from '@/components/default'
+import Gl from '@/components/gl'
 import { createApp, withSvelte, q } from 'lake'
-import Gl from '@/components/gl/index.svelte'
-import type { IComponent } from 'lake'
 import Menu from '@/components/menu/index.svelte'
+import type { IComponent } from 'lake'
 import Noop from '@/components/noop'
+import Observer from '@/components/observer/index.svelte'
 import Sns from '@/components/sns/sns.svelte'
-import WorksIndex from '@/components/works'
+import Works from '@/components/works'
 import WorksDetail from '@/components/works/[slug]'
 import { TWEEN, EASE } from '@/libs'
+
+const table: Record<string, IComponent> = {
+  Noop,
+  Sns: withSvelte(Sns),
+  Cursor: withSvelte(Cursor),
+  Menu: withSvelte(Menu),
+  Works,
+  WorksDetail,
+  Observer: withSvelte(Observer),
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const { component, unmount } = createApp()
 
-  const table: Record<string, IComponent> = {
-    Noop,
-    Sns: withSvelte(Sns),
-    Gl: withSvelte(Gl),
-    Cursor: withSvelte(Cursor),
-    Menu: withSvelte(Menu),
-    WorksIndex,
-    WorksDetail,
-    Default,
-  }
+  const gl = component(Gl)(document.getElementById('js-gl')!)
 
-  const bootstrap = (targets: HTMLElement[], { reboot = false }) => {
-    targets.forEach(el => {
+  const bootstrap = (scope: HTMLElement, { reboot = false }) => {
+    q('[data-component]', scope).forEach(el => {
       const name = el.dataset.component || 'Noop'
 
       try {
         const mount = component(table[`${name}`])
-        mount(el, { reboot })
+        mount(el, {
+          REBOOT: reboot,
+          GL: gl.current,
+        })
       } catch (error) {
         console.error(error)
       }
     })
   }
 
-  bootstrap(q('[data-component]'), {
+  bootstrap(document.documentElement, {
     reboot: false,
   })
 
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             TWEEN.tween(next, 1, EASE.expoOut).opacity(1)
           ).play()
 
-          bootstrap(q('[data-component]', next), {
+          bootstrap(next, {
             reboot: true,
           })
         },

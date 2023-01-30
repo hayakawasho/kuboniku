@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { colorCodeAccessors, colorCodeWatch } from '@/states/color'
+import { colorCodeGetters, colorCodeWatch } from '@/states/color'
 
 export default class {
   private _transforms: any
@@ -14,7 +14,7 @@ export default class {
     },
     uCol: {
       type: 'v3',
-      value: new THREE.Color(colorCodeAccessors()),
+      value: new THREE.Color(colorCodeGetters()),
     },
     uActiveClouds: {
       type: 'f',

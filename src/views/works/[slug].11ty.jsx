@@ -2,10 +2,10 @@
 // @ts-nocheck
 import { css, keyframes } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
+import { Content } from '../components/Content'
+import { Header } from '../components/Header'
+import { PageWithHeader } from '../components/PageWithHeader'
 import { Progressbar } from '../components/Progressbar'
-import { PageWithHeader } from '../components/page/PageWithHeader'
-import { PageWithPjax } from '../components/page/PageWithPjax'
-import { PageWithProgressbar } from '../components/page/PageWithProgressbar'
 import { zeroPadding } from '../components/utils'
 import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 
@@ -29,131 +29,130 @@ export const render = props => {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`}>
-      <PageWithPjax>
-        <PageWithProgressbar progressbar={<Progressbar />}>
-          <main className="l-page" data-component="WorksDetail" data-color={post.color}>
-            <div css={kv}>
-              <div css={kv__cont}>
-                <p css={project}>
-                  {zeroPadding(projectNumber)}
-                  <span className="ml-[.8rem]">Project</span>
-                </p>
-                <h1 css={heading} className="pr-[.5em]">
-                  {pageTitle}
-                </h1>
-                <p css={sub} className="mt-[1rem] overflow-hidden">
-                  <span className="inline-block origin-right">
-                    {post.category}
-                    <i className="icon-arrow_right ml-[.8rem]" />
-                  </span>
-                </p>
-              </div>
-              <picture>
-                <source
-                  srcSet={post.eyecatch.src}
-                  media="(min-width: 640px)"
-                  width={post.eyecatch.width}
-                  height={post.eyecatch.height}
-                />
-                <img
-                  src={post.eyecatchMobile.src}
-                  css={imgFit}
-                  className="opacity-40"
-                  alt=""
-                  width={post.eyecatchMobile.width}
-                  height={post.eyecatchMobile.height}
-                />
-              </picture>
-              <div css={kv__scrollDown}>
-                <div className="relative w-full h-full overflow-hidden">
-                  <div css={kv__scrollLabel}>scroll</div>
-                </div>
-                <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
-              </div>
+    <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`} header={<Header />}>
+      <Content namespace="WorksDetail">
+        <main className="l-page" data-component="WorksDetail" data-color={post.color}>
+          <Progressbar />
+          <div css={kv}>
+            <div css={kv__cont}>
+              <p css={project}>
+                {zeroPadding(projectNumber)}
+                <span className="ml-[.8rem]">Project</span>
+              </p>
+              <h1 css={heading} className="pr-[.5em]">
+                {pageTitle}
+              </h1>
+              <p css={sub} className="mt-[1rem] overflow-hidden">
+                <span className="inline-block origin-right">
+                  {post.category}
+                  <i className="icon-arrow_right ml-[.8rem]" />
+                </span>
+              </p>
             </div>
+            <picture>
+              <source
+                srcSet={post.eyecatch.src}
+                media="(min-width: 640px)"
+                width={post.eyecatch.width}
+                height={post.eyecatch.height}
+              />
+              <img
+                src={post.eyecatchMobile.src}
+                css={imgFit}
+                className="opacity-40"
+                alt=""
+                width={post.eyecatchMobile.width}
+                height={post.eyecatchMobile.height}
+              />
+            </picture>
+            <div css={kv__scrollDown}>
+              <div className="relative w-full h-full overflow-hidden">
+                <div css={kv__scrollLabel}>scroll</div>
+              </div>
+              <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
+            </div>
+          </div>
 
-            <div css={body}>
-              <div css={intro}>
-                <div css={intro__info}>
-                  <dl css={dl}>
-                    <dt css={dt}>Year :</dt>
-                    <dd css={dd}>{selectYear(post)}</dd>
-                  </dl>
-                  <dl css={dl}>
-                    <dt css={dt}>Role :</dt>
-                    <dd css={dd}>{selectRole(post)}</dd>
-                  </dl>
-                </div>
-                {post.siteUrl && (
-                  <a
-                    css={intro__viewLink}
-                    className="mt-[4rem]"
-                    href={post.siteUrl}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    View website
-                    <div css={intro__viewLink__hr} />
-                  </a>
-                )}
+          <div css={body}>
+            <div css={intro}>
+              <div css={intro__info}>
+                <dl css={dl}>
+                  <dt css={dt}>Year :</dt>
+                  <dd css={dd}>{selectYear(post)}</dd>
+                </dl>
+                <dl css={dl}>
+                  <dt css={dt}>Role :</dt>
+                  <dd css={dd}>{selectRole(post)}</dd>
+                </dl>
               </div>
-              {post.gallery && (
-                <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
-                  {post.gallery.map((item, i) => {
-                    const css = {
-                      '--aspect': `${item.width / item.height}`,
-                      backgroundColor: post.color,
-                    }
-                    return (
-                      <li key={i} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
-                        <div css={aspect} style={css} />
-                        <div className="u-fit">
-                          <img
-                            src={item.src}
-                            alt=""
-                            width={item.width}
-                            height={item.height}
-                            loading="lazy"
-                          />
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-              <aside css={[kv, kvNext]}>
-                <a href={`../${nextPost.slug}/`} className="u-fit z-10">
-                  <div css={kv__cont}>
-                    <h2 css={heading}>Next Project</h2>
-                    <p css={sub} className="mt-[1rem]">
-                      {selectTitle(nextPost)}
-                      <i className="icon-arrow_right ml-[.8rem]" />
-                    </p>
-                  </div>
-                  <picture>
-                    <source
-                      srcSet={nextPost.eyecatch.src}
-                      media="(min-width: 640px)"
-                      width={nextPost.eyecatch.width}
-                      height={nextPost.eyecatch.height}
-                    />
-                    <img
-                      src={nextPost.eyecatchMobile.src}
-                      css={imgFit}
-                      className="opacity-40 filter grayscale-100"
-                      alt=""
-                      loading="lazy"
-                      width={nextPost.eyecatchMobile.width}
-                      height={nextPost.eyecatchMobile.height}
-                    />
-                  </picture>
+              {post.siteUrl && (
+                <a
+                  css={intro__viewLink}
+                  className="mt-[4rem]"
+                  href={post.siteUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  View website
+                  <div css={intro__viewLink__hr} />
                 </a>
-              </aside>
+              )}
             </div>
-          </main>
-        </PageWithProgressbar>
-      </PageWithPjax>
+            {post.gallery && (
+              <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
+                {post.gallery.map((item, i) => {
+                  const css = {
+                    '--aspect': `${item.width / item.height}`,
+                    backgroundColor: post.color,
+                  }
+                  return (
+                    <li key={i} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
+                      <div css={aspect} style={css} />
+                      <div className="u-fit">
+                        <img
+                          src={item.src}
+                          alt=""
+                          width={item.width}
+                          height={item.height}
+                          loading="lazy"
+                        />
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
+            )}
+            <aside css={[kv, kvNext]}>
+              <a href={`../${nextPost.slug}/`} className="u-fit z-10">
+                <div css={kv__cont}>
+                  <h2 css={heading}>Next Project</h2>
+                  <p css={sub} className="mt-[1rem]">
+                    {selectTitle(nextPost)}
+                    <i className="icon-arrow_right ml-[.8rem]" />
+                  </p>
+                </div>
+                <picture>
+                  <source
+                    srcSet={nextPost.eyecatch.src}
+                    media="(min-width: 640px)"
+                    width={nextPost.eyecatch.width}
+                    height={nextPost.eyecatch.height}
+                  />
+                  <img
+                    src={nextPost.eyecatchMobile.src}
+                    css={imgFit}
+                    className="opacity-40 filter grayscale-100"
+                    alt=""
+                    loading="lazy"
+                    width={nextPost.eyecatchMobile.width}
+                    height={nextPost.eyecatchMobile.height}
+                  />
+                </picture>
+              </a>
+            </aside>
+          </div>
+        </main>
+      </Content>
     </PageWithHeader>
   )}`
 }
@@ -173,6 +172,7 @@ const kv = css`
   height: 100vh;
   height: 100svh;
   // perspective: 1000px;
+  background: #191918;
 
   @media (min-width: 640px) {
     height: 100vh;

@@ -5,9 +5,15 @@ export default defineComponent({
   setup(el: HTMLElement) {
     const colorCode = el.dataset.color!
 
-    useEvent(el, 'mouseenter', e => {
-      e.preventDefault()
-      colorCodeMutators(colorCode)
-    })
+    useEvent(
+      el,
+      'mouseenter',
+      _e => {
+        colorCodeMutators(colorCode)
+      },
+      {
+        passive: true,
+      }
+    )
   },
 })

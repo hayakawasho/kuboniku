@@ -1,5 +1,6 @@
-import { defineComponent, ref, readonly as _, useEvent } from 'lake'
+import { defineComponent, ref, useEvent } from 'lake'
 import { clamp, lerp, TWEEN, useTick, debounce } from '@/libs'
+import { scrollPosYGetters, scrollRunningGetters } from '@/states/scroll'
 
 export default defineComponent({
   props: {
@@ -8,30 +9,9 @@ export default defineComponent({
 
   setup(el, { ease }) {
     let ww = window.innerWidth
-    let timer: number
-
-    const isRunning = ref(false)
-
-    let current = 0
     let last = 0
 
     const val = ref(0)
-
-    useEvent(
-      window as any,
-      'scroll',
-      () => {
-        clearTimeout(timer)
-
-        isRunning.value = true
-        current = window.scrollY
-
-        timer = window.setTimeout(() => {
-          isRunning.value = false
-        }, 300)
-      },
-      { passive: true }
-    )
 
     useEvent(
       window as any,
@@ -42,10 +22,11 @@ export default defineComponent({
     )
 
     useTick(() => {
-      if (!isRunning) {
+      if (!scrollRunningGetters()) {
         return
       }
 
+      const current = scrollPosYGetters()
       last = lerp(last, current, ease)
 
       if (last < 0.1) {
