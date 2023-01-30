@@ -1,6 +1,7 @@
-import { defineComponent, ref, useEvent } from 'lake'
-import { clamp, lerp, TWEEN, useTick, debounce } from '@/libs'
+import { defineComponent, ref } from 'lake'
+import { clamp, lerp, TWEEN, useTick } from '@/libs'
 import { scrollPosYGetters, scrollRunningGetters } from '@/states/scroll'
+import { viewportGetters } from '@/states/viewport'
 
 export default defineComponent({
   props: {
@@ -8,18 +9,8 @@ export default defineComponent({
   },
 
   setup(el, { ease }) {
-    let ww = window.innerWidth
     let last = 0
-
     const val = ref(0)
-
-    useEvent(
-      window as any,
-      'resize',
-      debounce(() => {
-        ww = window.innerWidth
-      }, 250)
-    )
 
     useTick(() => {
       if (!scrollRunningGetters()) {
@@ -33,7 +24,8 @@ export default defineComponent({
         last = 0
       }
 
-      const skewY = 7.5 * ((current - last) / ww)
+      const { width } = viewportGetters()
+      const skewY = 7.5 * ((current - last) / width)
       val.value = clamp(skewY, { min: -5, max: 5 })
 
       TWEEN.tween(el, 0).style('transform', `skew(0, ${val.value}deg) translateZ(0)`).play()
