@@ -80,13 +80,13 @@ module.exports = async () => {
   // const rawProfile = await responseProfile.json()
 
   const [rawWorks, rawProfile] = await Promise.all([
-    axios.get(WP_API_BASE + 'wp/v2/posts', {
+    axios.get(WP_API + 'wp/v2/posts', {
       params: {
         per_page: 99,
         order: 'desc',
       },
     }),
-    axios.get(WP_API_BASE + 'wp/v2/pages/490'),
+    axios.get(WP_API + 'wp/v2/pages/490'),
   ])
 
   const totalResultWorks = rawWorks.headers['x-wp-total']
