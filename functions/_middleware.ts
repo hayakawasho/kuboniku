@@ -3,17 +3,15 @@ const Credentials = {
   PASSWORD: 'password',
 }
 
-const errorHandler = async ({ next }) => {
-  try {
-    return await next()
-  } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
-  }
-}
+export async function onRequest(context: {
+  request: Request
+  next: () => Promise<Response>
+  env: { BASIC_USERNAME?: string; BASIC_PASSWORD?: string }
+}) {
+  const { request, next, env } = context
 
-const guardByBasicAuth = async ({ next, request }) => {
   // Check header
-  if (!request.headers.has('Authorization')) {
+  if (request.headers.has('Authorization') === false) {
     return new Response('You need to login.', {
       status: 401,
       headers: {
@@ -22,8 +20,9 @@ const guardByBasicAuth = async ({ next, request }) => {
       },
     })
   }
+
   // Decode header value
-  const [scheme, encoded] = request.headers.get('Authorization').split(' ')
+  const [scheme, encoded] = request.headers.get('Authorization')!.split(' ')
 
   if (!encoded || scheme !== 'Basic') {
     return new Response('Malformed authorization header.', {
@@ -35,6 +34,7 @@ const guardByBasicAuth = async ({ next, request }) => {
   const decoded = new TextDecoder().decode(buffer).normalize()
   const index = decoded.indexOf(':')
 
+  // eslint-disable-next-line no-control-regex
   if (index === -1 || /[\0-\x1F\x7F]/.test(decoded)) {
     return new Response('Invalid authorization value.', {
       status: 400,
@@ -43,8 +43,8 @@ const guardByBasicAuth = async ({ next, request }) => {
 
   // Verify credentials
   const creds = {
-    username: process.env.BASIC_USERNAME || Credentials.USERNAME,
-    password: process.env.BASIC_PASSWORD || Credentials.PASSWORD,
+    username: env.BASIC_USERNAME || Credentials.USERNAME,
+    password: env.BASIC_PASSWORD || Credentials.PASSWORD,
   }
 
   const username = decoded.substring(0, index)
@@ -55,7 +55,6 @@ const guardByBasicAuth = async ({ next, request }) => {
       status: 401,
     })
   }
+
   return await next()
 }
-
-export const onRequest = [errorHandler, guardByBasicAuth]
