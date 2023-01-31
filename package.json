@@ -72,6 +72,7 @@
   "dependencies": {
     "@aspida/fetch": "^1.11.0",
     "@barba/core": "^2.9.7",
+    "axios": "0.24.0",
     "cdate": "^0.0.4",
     "detect-gpu": "^5.0.7",
     "lake": "https://github.com/hayakawasho/lake",

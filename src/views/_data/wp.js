@@ -1,5 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+
+const axios = require('axios')
+
 const WP_API_BASE = 'http://localhost:8888/wp-json/'
 const WP_API = process.env.WP_API_BASE || WP_API_BASE
 
@@ -61,30 +64,42 @@ class Works {
 }
 
 module.exports = async () => {
-  const [responseWorks, responseProfile] = await Promise.all([
-    fetch(
-      `${WP_API}wp/v2/posts?${new URLSearchParams({
+  // const [responseWorks, responseProfile] = await Promise.all([
+  //   fetch(
+  //     `${WP_API}wp/v2/posts?${new URLSearchParams({
+  //       per_page: 99,
+  //       order: 'desc',
+  //     })}`
+  //   ),
+  //   fetch(WP_API + 'wp/v2/pages/490'),
+  // ])
+  //
+  // const totalResultWorks = responseWorks.headers.get('x-wp-total')
+  //
+  // const rawWorks = await responseWorks.json()
+  // const rawProfile = await responseProfile.json()
+
+  const [rawWorks, rawProfile] = await Promise.all([
+    axios.get(WP_API_BASE + 'wp/v2/posts', {
+      params: {
         per_page: 99,
         order: 'desc',
-      })}`
-    ),
-    fetch(WP_API + 'wp/v2/pages/490'),
+      },
+    }),
+    axios.get(WP_API_BASE + 'wp/v2/pages/490'),
   ])
 
-  const totalResultWorks = responseWorks.headers.get('x-wp-total')
-
-  const rawWorks = await responseWorks.json()
-  const rawProfile = await responseProfile.json()
+  const totalResultWorks = rawWorks.headers['x-wp-total']
 
   return {
     works: {
       total: totalResultWorks,
-      items: rawWorks.map((raw, _index) => new Works(raw)),
+      items: rawWorks.data.map((raw, _index) => new Works(raw)),
     },
 
     profile: {
-      title: rawProfile.title.rendered,
-      html: rawProfile.content.rendered,
+      title: rawProfile.data.title.rendered,
+      html: rawProfile.data.content.rendered,
     },
   }
 }
