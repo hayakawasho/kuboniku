@@ -2,9 +2,9 @@
 Contributors: TinyPNG
 Donate link: https://tinypng.com/
 Tags: compress images, compression, image size, page speed, performance
-Requires at least: 3.4
-Tested up to: 5.8
-Stable tag: 3.3
+Requires at least: 3.4.1
+Tested up to: 6.0.2
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,6 @@ Make your website faster by optimizing your JPEG, PNG, and WebP images. This plu
 * Convert CMYK to RGB to save more space and add compatibility.
 * Dashboard widget with your total savings.
 * Optimize and resize uploads with the WordPress mobile app.
-* No file size limits.
 
 = How does it work? =
 
@@ -114,7 +113,7 @@ A: When you remove the plugin all your optimized images will remain optimized.
 A: When you upload an image to your website, WordPress will create different sized versions of it (see *Settings > TinyPNG - JPEG, PNG & WebP image compression*). The plugin will compress each of these sizes, so when you have 100 images and 5 different sizes you will do 500 compressions.
 
 = Q: Is there a file size limit? =
-A: No. There are no limitations on the size of the images you want to compress.
+A: Yes, but they are **very** generous! The maximum file size is 500MB and the maximum canvas size is 256MP (16000px by 16000px in any ratio).
 
 = Q: Can I use the same API key on all my websites? =
 A: Yes, there are no limitations. You can add the same key everywhere.
@@ -132,6 +131,13 @@ A: Yes! After installing the plugin, go to *Media > Bulk Optimization*, and clic
 A: You can upgrade to a paid account by adding your *Payment details* on your [account dashboard](https://tinypng.com/dashboard/api). Additional compressions above 500 will then be charged at the end of each month as a one-time fee.
 
 == Changelog ==
+= 3.4.1 =
+* Fixed a bug that sometimes prevented failing requests to the Tinify servers from being retried.
+
+= 3.4 =
+* Correct filesize metadata retrieval for compressed images in WordPress 6.
+* Updated WordPress compatibility.
+
 = 3.3 =
 * You can now optimise WebP images, in addition to JPEG and PNG.
 

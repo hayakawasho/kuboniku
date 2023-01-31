@@ -1,8 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-const WP_API_BASE = 'https://hykwsho.sub.jp/kuboniku/wp-json/'
-const axios = require('axios')
-const format = require('date-fns').format
-const parseISO = require('date-fns').parseISO
+const WP_API_BASE = 'http://localhost:8888/wp-json/'
+const WP_API = process.env.WP_API_BASE || WP_API_BASE
 
 const PC_IMG_SIZE_MAP = {
   medium: '750w',
@@ -17,7 +16,7 @@ const SP_IMG_SIZE_MAP = {
   medium_large: '1080w',
 }
 
-const createSrcset = (sizes, map) => {
+const createImgSrcSet = (sizes, map) => {
   if (!sizes) {
     return
   }
@@ -37,7 +36,7 @@ class Img {
     this.width = value.width
     this.height = value.height
     this.src = value.url
-    this.srcset = createSrcset(value.sizes, sizeMap)
+    this.srcset = createImgSrcSet(value.sizes, sizeMap)
   }
 }
 
@@ -62,28 +61,30 @@ class Works {
 }
 
 module.exports = async () => {
-  const postsParam = {
-    per_page: 99,
-    order: 'desc',
-  }
-
-  const [rawWorks, rawProfile] = await Promise.all([
-    axios.get(WP_API_BASE + 'wp/v2/posts', { params: postsParam }),
-    axios.get(WP_API_BASE + 'wp/v2/pages/490'),
+  const [responseWorks, responseProfile] = await Promise.all([
+    fetch(
+      `${WP_API}wp/v2/posts?${new URLSearchParams({
+        per_page: 99,
+        order: 'desc',
+      })}`
+    ),
+    fetch(WP_API + 'wp/v2/pages/490'),
   ])
 
-  const works = {
-    total: rawWorks.headers['x-wp-total'],
-    items: rawWorks.data.map((raw, _index) => new Works(raw)),
-  }
+  const totalResultWorks = responseWorks.headers.get('x-wp-total')
 
-  const profile = {
-    title: rawProfile.data.title.rendered,
-    html: rawProfile.data.content.rendered,
-  }
+  const rawWorks = await responseWorks.json()
+  const rawProfile = await responseProfile.json()
 
   return {
-    works,
-    profile,
+    works: {
+      total: totalResultWorks,
+      items: rawWorks.map((raw, _index) => new Works(raw)),
+    },
+
+    profile: {
+      title: rawProfile.title.rendered,
+      html: rawProfile.content.rendered,
+    },
   }
 }
