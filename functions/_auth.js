@@ -42,15 +42,15 @@ const guardByBasicAuth = async ({ next, request }) => {
   }
 
   // Verify credentials
-  // const creds = {
-  //   username: env.BASIC_USERNAME || Credentials.USERNAME,
-  //   password: env.BASIC_PASSWORD || Credentials.PASSWORD,
-  // }
+  const creds = {
+    username: process.env.BASIC_USERNAME || Credentials.USERNAME,
+    password: process.env.BASIC_PASSWORD || Credentials.PASSWORD,
+  }
 
   const username = decoded.substring(0, index)
   const password = decoded.substring(index + 1)
 
-  if (username !== Credentials.USERNAME || password !== Credentials.PASSWORD) {
+  if (username !== creds.username || password !== creds.password) {
     return new Response('Invalid username or password.', {
       status: 401,
     })
