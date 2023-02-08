@@ -25,7 +25,7 @@ export const render = props => {
   ${r(
     <PageWithHeader title="WORKS" pagePath="" header={<Header />}>
       <Content namespace="Works">
-        <main className="l-page" data-component="Works">
+        <main data-component="Works">
           <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
             <h1 css={heading}>
               Works

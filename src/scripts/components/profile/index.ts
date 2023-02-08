@@ -1,22 +1,13 @@
-import { defineComponent, useSlot } from 'lake'
-import SkewScrollContainer from '../skew-scroll'
+import { defineComponent } from 'lake'
 import type { Provides } from '@/const'
 import { TWEEN, EASE } from '@/libs'
 import { useOnEnter, useOnLeave } from '@/libs/lake'
-import { colorCodeMutators } from '@/states/color'
 
 type Props = Provides
 
 export default defineComponent<Props>({
   setup(el, { flush }) {
-    const colorCode = el.dataset.color!
-    colorCodeMutators(colorCode)
-
-    const { addChild } = useSlot()
-
-    addChild(SkewScrollContainer, el)
-
-    //------------------------------------------------------------------------------
+    //----------------------------------------------------------------
 
     useOnEnter(({ to }) => {
       TWEEN.serial(

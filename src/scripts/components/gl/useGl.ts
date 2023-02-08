@@ -1,5 +1,5 @@
 import Gl from './core'
-import { useTick } from '@/libs'
+import { useTick } from '@/libs/lake'
 
 export const useGl = (canvas: HTMLCanvasElement, width: number, height: number) => {
   const gl = new Gl(canvas, width, height)

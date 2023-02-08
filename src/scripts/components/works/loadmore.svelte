@@ -17,7 +17,7 @@
 
     const { addChild } = useSlot()
 
-    addChild(refs.project, Hover)
+    addChild(Hover, refs.project)
 
     useIntersectionWatch(
       refFetcher,

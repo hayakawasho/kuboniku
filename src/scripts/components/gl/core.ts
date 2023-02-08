@@ -72,9 +72,9 @@ export default class Gl {
       post: {
         noise: true,
         clouds: true,
-        amount: 0.16,
-        alpha: 0.2,
-        blur: 0.16,
+        amount: 0.07,
+        alpha: 0.16,
+        blur: 0.2,
         rad: 0.9,
       },
     }

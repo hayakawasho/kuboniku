@@ -31,7 +31,7 @@ export const render = props => {
   ${r(
     <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`} header={<Header />}>
       <Content namespace="WorksDetail">
-        <main className="l-page" data-component="WorksDetail" data-color={post.color}>
+        <main data-component="WorksDetail" data-color={post.color}>
           <Progressbar />
           <div css={kv}>
             <div css={kv__cont}>

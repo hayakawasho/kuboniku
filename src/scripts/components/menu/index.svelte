@@ -4,7 +4,8 @@
   import { getContext } from 'svelte'
   import MenuToggle from './toggle'
   import MenuClose from './close'
-  import { TWEEN, EASE, nextTick, beforeLeave } from '@/libs'
+  import { TWEEN, EASE, nextTick } from '@/libs'
+  import { useOnLeave } from '@/libs/lake'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
@@ -111,16 +112,17 @@
   const onClose = () => (isOpen.value = false)
   const readonlyIsOpen = readonly(isOpen)
 
-  addChild(refs.menuTrigger, MenuToggle, {
+  addChild(MenuToggle, refs.menuTrigger, {
     isOpen: readonlyIsOpen,
     onOpen,
     onClose,
   })
-  addChild(refs.menuMask, MenuClose, {
+
+  addChild(MenuClose, refs.menuMask, {
     onClose,
   })
 
-  beforeLeave(_data => {
+  useOnLeave(() => {
     isOpen.value === true && onClose()
   })
 </script>

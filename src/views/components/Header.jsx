@@ -24,7 +24,7 @@ export const Header = _props => {
           </div>
         </button>
 
-        <div css={sns} data-component="Sns">
+        <div css={sns} data-component="Sns" data-ignore>
           <ul className="mb-[2rem] sm:mb-[3rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a

@@ -11,7 +11,7 @@ export const render = props => {
   return `<!DOCTYPE html>
   ${r(
     <PageWithHeader title="PROFILE" pagePath="/profile/" header={<Header />}>
-      <Content namespace="Profile">
+      <Content data-component="Profile" namespace="Profile">
         <main className="l-page overflow-hidden">
           <h1 className="sr-only">PROFILE</h1>
           <i css={logo} className="icon-logo || u-pc"></i>
