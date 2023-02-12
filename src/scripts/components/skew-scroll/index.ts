@@ -1,5 +1,6 @@
 import { defineComponent, ref } from 'lake'
-import { clamp, lerp, TWEEN, useTick } from '@/libs'
+import { clamp, lerp, TWEEN } from '@/libs'
+import { useTick } from '@/libs/lake'
 import { scrollPosYGetters, scrollRunningGetters } from '@/states/scroll'
 import { viewportGetters } from '@/states/viewport'
 

@@ -71,12 +71,12 @@
   },
   "dependencies": {
     "@aspida/fetch": "^1.11.0",
-    "@barba/core": "^2.9.7",
     "axios": "0.24.0",
     "cdate": "^0.0.4",
     "detect-gpu": "^5.0.7",
     "lake": "https://github.com/hayakawasho/lake",
     "lil-gui": "^0.16.1",
+    "modularload": "^1.2.8",
     "nanostores": "^0.7.1",
     "remeda": "^1.6.0",
     "robot3": "^0.3.2",

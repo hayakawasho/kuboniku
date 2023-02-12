@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { lerp, useTick, TWEEN } from '@/libs'
+  import { lerp, TWEEN } from '@/libs'
+  import { useTick } from '@/libs/lake'
 
   let cursor: HTMLElement
 
