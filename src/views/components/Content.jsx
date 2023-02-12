@@ -3,10 +3,8 @@
 
 export const Content = props => {
   return (
-    <div data-router-wrapper>
-      <div data-router-view={props.namespace} className="relative">
-        {props.children}
-      </div>
+    <div data-load-container={props.namespace} className="relative">
+      {props.children}
     </div>
   )
 }

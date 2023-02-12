@@ -10,9 +10,9 @@ import { PageWithHeader } from '../components/PageWithHeader'
 export const render = props => {
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="PROFILE" pagePath="/profile/" header={<Header />}>
-      <Content data-component="Profile" namespace="Profile">
-        <main className="l-page overflow-hidden">
+    <PageWithHeader title="PROFILE" pagePath="/profile/" header={<Header />} namespace="Profile">
+      <Content namespace="Profile">
+        <main data-component="Profile" className="overflow-hidden">
           <h1 className="sr-only">PROFILE</h1>
           <i css={logo} className="icon-logo || u-pc"></i>
           <i css={logo} className="icon-logo_sp || u-sp"></i>

@@ -5,7 +5,6 @@
   import MenuToggle from './toggle'
   import MenuClose from './close'
   import { TWEEN, EASE, nextTick } from '@/libs'
-  import { useOnLeave } from '@/libs/lake'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
@@ -120,9 +119,5 @@
 
   addChild(MenuClose, refs.menuMask, {
     onClose,
-  })
-
-  useOnLeave(() => {
-    isOpen.value === true && onClose()
   })
 </script>

@@ -29,7 +29,12 @@ export const render = props => {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title={pageTitle} pagePath={`/works/${post.slug}/`} header={<Header />}>
+    <PageWithHeader
+      title={pageTitle}
+      pagePath={`/works/${post.slug}/`}
+      header={<Header />}
+      namespace="WorksDetail"
+    >
       <Content namespace="WorksDetail">
         <main data-component="WorksDetail" data-color={post.color}>
           <Progressbar />

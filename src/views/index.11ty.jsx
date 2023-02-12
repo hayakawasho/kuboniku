@@ -23,7 +23,7 @@ export const render = props => {
 
   return `<!DOCTYPE html>
   ${r(
-    <PageWithHeader title="WORKS" pagePath="" header={<Header />}>
+    <PageWithHeader title="WORKS" pagePath="" header={<Header />} namespace="Works">
       <Content namespace="Works">
         <main data-component="Works">
           <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">

@@ -1,33 +1,34 @@
 import 'virtual:windi.css'
 import Cursor from '@/components/cursor/index.svelte'
 import Gl from '@/components/gl'
-import { createApp, withSvelte, q } from 'lake'
+import Load from '@/components/load'
+import { createApp as factory, withSvelte, q, type IComponent, type ComponentContext } from 'lake'
 import Menu from '@/components/menu/index.svelte'
-import type { IComponent, ComponentContext } from 'lake'
 import Noop from '@/components/noop'
 import Observer from '@/components/observer/index.svelte'
+import Profile from '@/components/profile'
 import Sns from '@/components/sns/sns.svelte'
 import Works from '@/components/works'
 import WorksDetail from '@/components/works/[slug]'
 import type { Provides } from '@/const'
-import { beforeEnter } from '@/libs/highway'
 
-const table: Record<string, IComponent> = {
-  Noop,
-  Sns: withSvelte(Sns),
-  Cursor: withSvelte(Cursor),
-  Menu: withSvelte(Menu),
-  Works,
-  WorksDetail,
-  Observer: withSvelte(Observer),
-}
+function init() {
+  const { component, unmount } = factory()
 
-document.addEventListener('DOMContentLoaded', () => {
-  const { component, unmount } = createApp()
+  const table: Record<string, IComponent> = {
+    Noop,
+    Sns: withSvelte(Sns),
+    Cursor: withSvelte(Cursor),
+    Menu: withSvelte(Menu),
+    Observer: withSvelte(Observer),
+    Works,
+    WorksDetail,
+    Profile,
+  }
 
   const glWorld = component(Gl)(document.getElementById('js-gl')!)
 
-  const bootstrap = (scope: HTMLElement, reload: Provides['reload'] = false) => {
+  const bootstrap = (scope: HTMLElement, reload = false) => {
     return q(`[data-component]`, scope).reduce<ComponentContext[]>((acc, el) => {
       const name = el.dataset.component || 'Noop'
       try {
@@ -35,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         acc.push(
           mount(el, {
             reload,
-            glWorld: glWorld.current,
-            flush: () => unmount(q(`[data-component]:not([data-ignore])`)),
+            glWorld: glWorld.current as Provides['glWorld'],
           })
         )
       } catch (error) {
@@ -46,14 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, [])
   }
 
-  bootstrap(document.documentElement)
-
-  beforeEnter(({ to }) => {
-    const container = to.view
-    const { routerView } = container.dataset
-
-    bootstrap(container, {
-      namespace: routerView!,
-    })
+  component(Load)(document.documentElement, {
+    bind: (scope: HTMLElement) => bootstrap(scope, true),
+    unbind: (scope: HTMLElement) => unmount(q(`[data-component]`, scope)),
   })
-})
+
+  bootstrap(document.documentElement)
+}
+
+if (document.readyState !== 'loading') {
+  init()
+} else {
+  document.addEventListener('DOMContentLoaded', init, false)
+}

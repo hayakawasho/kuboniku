@@ -1,14 +1,13 @@
-import { defineComponent, useSlot } from 'lake'
+import { defineComponent, useSlot, useMount, useUnmount } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
 import type { Provides } from '@/const'
-import { TWEEN, EASE } from '@/libs'
-import { useOnEnter, useOnLeave } from '@/libs/lake'
+import { TWEEN, EASE, wait } from '@/libs'
 import { colorCodeMutators } from '@/states/color'
 
 type Props = Provides
 
 export default defineComponent<Props>({
-  setup(el, { flush }) {
+  setup(el, { reload }) {
     const colorCode = el.dataset.color!
     colorCodeMutators(colorCode)
 
@@ -16,22 +15,20 @@ export default defineComponent<Props>({
 
     addChild(SkewScrollContainer, el)
 
-    //------------------------------------------------------------------------------
+    useMount(async () => {
+      if (reload) {
+        TWEEN.prop(el).opacity(0).play()
+        await wait(500)
+        TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
+      }
 
-    useOnEnter(({ to }) => {
-      TWEEN.serial(
-        TWEEN.prop(to.view).opacity(0),
-        TWEEN.tween(to.view, 1, EASE.expoOut).opacity(1)
-      ).play()
+      return () => {
+        //
+      }
     })
 
-    useOnLeave(() => {
-      TWEEN.tween(el, 1, EASE.expoOut)
-        .opacity(0)
-        .onComplete(() => {
-          flush()
-        })
-        .play()
+    useUnmount(() => {
+      TWEEN.tween(el, 1, EASE.expoOut).opacity(0).play()
     })
   },
 })
