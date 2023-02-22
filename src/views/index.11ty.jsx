@@ -35,7 +35,6 @@ export const render = props => {
 
           <div css={entries} data-ref="projects" data-total={total}>
             {posts.map((item, i) => {
-              const load = i < 4 ? { loading: 'auto', decoding: 'async' } : { loading: 'lazy' }
               return (
                 <article key={i} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
                   <a
@@ -50,9 +49,10 @@ export const render = props => {
                         <img
                           src={item.eyecatch.src}
                           alt=""
-                          {...load}
                           width={item.eyecatch.width}
                           height={item.eyecatch.height}
+                          loading="auto"
+                          decoding="async"
                         />
                       </div>
                       <div css={entry__hgroup}>
