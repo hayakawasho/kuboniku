@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Context$ } from 'lake'
-  import { useDOMRef, useSlot, ref, readonly } from 'lake'
+  import { useDomRef, useSlot, ref, readonly } from 'lake'
   import { getContext } from 'svelte'
   import MenuToggle from './toggle'
   import MenuClose from './close'
@@ -21,7 +21,7 @@
     x2: 100,
   }
 
-  const { refs } = useDOMRef<Refs>(
+  const { refs } = useDomRef<Refs>(
     'menuTrigger',
     'burgerTL',
     'burgerBL',
@@ -111,13 +111,12 @@
   const onClose = () => (isOpen.value = false)
   const readonlyIsOpen = readonly(isOpen)
 
-  addChild(MenuToggle, refs.menuTrigger, {
+  addChild(refs.menuTrigger, MenuToggle, {
     isOpen: readonlyIsOpen,
     onOpen,
     onClose,
   })
-
-  addChild(MenuClose, refs.menuMask, {
+  addChild(refs.menuMask, MenuClose, {
     onClose,
   })
 </script>

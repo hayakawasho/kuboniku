@@ -1,8 +1,8 @@
 export const WP_API_BASE = 'http://localhost:8888/wp-json/'
 
 export type Provides = {
-  reload: boolean
-  glWorld: {
+  initialLoad: boolean
+  glContext: {
     onResize: (width: number, height: number) => void
     addScene: () => void
     removeScene: () => void

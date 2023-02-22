@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Context$ } from 'lake'
   import { TWEEN, EASE, SORT, nextTick } from '@/libs'
-  import { useEvent, useDOMRef } from 'lake'
+  import { useEvent, useDomRef } from 'lake'
   import { getContext } from 'svelte'
 
   type Refs = {
@@ -10,7 +10,7 @@
   }
 
   const { rootRef } = getContext<Context$>('$')
-  const { refs } = useDOMRef<Refs>('toggleTrigger', 'icon')
+  const { refs } = useDomRef<Refs>('toggleTrigger', 'icon')
 
   let isOpen: boolean | undefined
 

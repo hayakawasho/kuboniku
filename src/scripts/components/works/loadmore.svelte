@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { useIntersectionWatch, useDOMRef, useSlot } from 'lake'
+  import { useIntersectionWatch, useDomRef, useSlot } from 'lake'
   import Hover from './hover'
   // import { match, P } from 'ts-pattern'
 
@@ -13,11 +13,10 @@
   console.log(totalPage)
 
   onMount(() => {
-    const { refs } = useDOMRef<{ project: HTMLElement[] }>('project')
-
+    const { refs } = useDomRef<{ project: HTMLElement[] }>('project')
     const { addChild } = useSlot()
 
-    addChild(Hover, refs.project)
+    addChild(refs.project, Hover)
 
     useIntersectionWatch(
       refFetcher,

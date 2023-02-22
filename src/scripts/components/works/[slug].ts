@@ -7,24 +7,22 @@ import { colorCodeMutators } from '@/states/color'
 type Props = Provides
 
 export default defineComponent<Props>({
-  setup(el, { reload }) {
+  setup(el, { initialLoad }) {
     const colorCode = el.dataset.color!
     colorCodeMutators(colorCode)
 
     const { addChild } = useSlot()
 
-    addChild(SkewScrollContainer, el)
+    addChild(el, SkewScrollContainer)
 
     useMount(async () => {
-      if (reload) {
-        TWEEN.prop(el).opacity(0).play()
-        await wait(500)
-        TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
+      if (initialLoad) {
+        return
       }
 
-      return () => {
-        //
-      }
+      TWEEN.prop(el).opacity(0).play()
+      await wait(500)
+      TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
     })
 
     useUnmount(() => {

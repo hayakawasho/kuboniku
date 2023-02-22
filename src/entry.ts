@@ -2,7 +2,8 @@ import 'virtual:windi.css'
 import Cursor from '@/components/cursor/index.svelte'
 import Gl from '@/components/gl'
 import Load from '@/components/load'
-import { createApp as factory, withSvelte, q, type IComponent, type ComponentContext } from 'lake'
+import $ from 'bianco.query'
+import factory, { withSvelte, type IComponent, type ComponentContext } from 'lake'
 import Menu from '@/components/menu/index.svelte'
 import Noop from '@/components/noop'
 import Observer from '@/components/observer/index.svelte'
@@ -10,7 +11,6 @@ import Profile from '@/components/profile'
 import Sns from '@/components/sns/sns.svelte'
 import Works from '@/components/works'
 import WorksDetail from '@/components/works/[slug]'
-import type { Provides } from '@/const'
 
 function init() {
   const { component, unmount } = factory()
@@ -28,15 +28,15 @@ function init() {
 
   const glWorld = component(Gl)(document.getElementById('js-gl')!)
 
-  const bootstrap = (scope: HTMLElement, reload = false) => {
-    return q(`[data-component]`, scope).reduce<ComponentContext[]>((acc, el) => {
+  const bootstrap = (scope: HTMLElement, initialLoad = true) => {
+    return $<HTMLElement>(`[data-component]`, scope).reduce<ComponentContext[]>((acc, el) => {
       const name = el.dataset.component || 'Noop'
       try {
         const mount = component(table[`${name}`])
         acc.push(
           mount(el, {
-            reload,
-            glWorld: glWorld.current as Provides['glWorld'],
+            initialLoad,
+            glContext: glWorld.current,
           })
         )
       } catch (error) {
@@ -46,12 +46,14 @@ function init() {
     }, [])
   }
 
-  component(Load)(document.documentElement, {
-    bind: (scope: HTMLElement) => bootstrap(scope, true),
-    unbind: (scope: HTMLElement) => unmount(q(`[data-component]`, scope)),
-  })
+  const html = document.documentElement
 
-  bootstrap(document.documentElement)
+  component(Load)(html, {
+    componentDidMount: () => bootstrap(html),
+    componentDidUpdate: (scope: HTMLElement) => bootstrap(scope, false),
+    cleanup: (scope: HTMLElement) => unmount($(`[data-component]`, scope)),
+    glContext: glWorld.current,
+  })
 }
 
 if (document.readyState !== 'loading') {

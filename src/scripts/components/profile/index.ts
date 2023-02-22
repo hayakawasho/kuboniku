@@ -5,17 +5,15 @@ import { TWEEN, EASE, wait } from '@/libs'
 type Props = Provides
 
 export default defineComponent<Props>({
-  setup(el, { reload }) {
+  setup(el, { initialLoad }) {
     useMount(async () => {
-      if (reload) {
-        TWEEN.prop(el).opacity(0).play()
-        await wait(500)
-        TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
+      if (initialLoad) {
+        return
       }
 
-      return () => {
-        //
-      }
+      TWEEN.prop(el).opacity(0).play()
+      await wait(500)
+      TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
     })
 
     useUnmount(() => {

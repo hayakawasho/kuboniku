@@ -1,27 +1,32 @@
-import { defineComponent, type RefElement } from 'lake'
+import { defineComponent } from 'lake'
 import modularLoad from 'modularload'
 import type { Provides } from '@/const'
 
-type Props = Provides & {
-  bind: (scope: RefElement) => void
-  unbind: (scope: RefElement) => void
-}
+type Props = {
+  componentDidMount: () => void
+  componentDidUpdate: (scope: HTMLElement) => void
+  cleanup: (scope: HTMLElement) => void
+} & Provides['glContext']
 
 export default defineComponent<Props>({
-  setup(_el, { bind, unbind }) {
+  setup(_el, { componentDidMount, componentDidUpdate, cleanup }) {
+    componentDidMount()
+
     const load = new modularLoad({
       enterDelay: 300,
+      transitions: {
+        //
+      },
     })
 
     load.on('loading', (_transition: string, oldContainer: HTMLElement) => {
-      unbind(oldContainer)
+      cleanup(oldContainer)
     })
 
     load.on(
       'loaded',
       (_transition: string, _oldContainer: HTMLElement, newContainer: HTMLElement) => {
-        window.scrollTo(0, 0)
-        bind(newContainer)
+        componentDidUpdate(newContainer)
       }
     )
   },
