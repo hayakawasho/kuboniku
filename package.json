@@ -75,7 +75,7 @@
     "bianco.query": "^1.1.4",
     "cdate": "^0.0.4",
     "detect-gpu": "^5.0.7",
-    "lake": "./lib//lake",
+    "lake": "./lib/lake",
     "lil-gui": "^0.16.1",
     "modularload": "^1.2.8",
     "nanostores": "^0.7.1",
