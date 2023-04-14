@@ -1,4 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
+import plugin from 'windicss/plugin'
 
 export default defineConfig({
   extract: {
@@ -8,10 +9,22 @@ export default defineConfig({
   theme: {
     extend: {
       fontFamily: {
-        en: ['Montserrat'],
+        montserrat: ['Montserrat'],
         roboto: ['Roboto Condensed'],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.fit2parent': {
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+        },
+      })
+    }),
+  ],
 })

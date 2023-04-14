@@ -21,6 +21,8 @@
     "paths": {
       "@/*": ["src/scripts/*"]
     },
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     /**
      * Typecheck JS in `.svelte` and `.js` files by default.
      * Disable checkJs if you'd like to use dynamic types in JS.
@@ -30,7 +32,7 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": ["src/**/*", "@types", "functions"],
-  "exclude": ["node_modules/*", "static/*"],
+  "include": ["src/**/*", "@types"],
+  "exclude": ["node_modules/*", "static/*", "./lib"],
   "extends": "@tsconfig/svelte/tsconfig.json"
 }
