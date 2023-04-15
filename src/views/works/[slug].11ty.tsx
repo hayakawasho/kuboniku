@@ -65,7 +65,7 @@ module.exports = class {
                 spSrc={post.eyecatchMobile.src}
                 spW={post.eyecatchMobile.width}
                 spH={post.eyecatchMobile.height}
-                className="opacity-40"
+                className="opacity-40 object-cover fit2parent"
                 alt=""
               />
               <div css={kv__scrollDown}>
@@ -141,7 +141,7 @@ module.exports = class {
                     spSrc={nextPost.eyecatchMobile.src}
                     spW={nextPost.eyecatchMobile.width}
                     spH={nextPost.eyecatchMobile.height}
-                    className="opacity-40 filter grayscale-100"
+                    className="opacity-40 filter grayscale-100 object-cover fit2parent"
                     alt=""
                   />
                 </a>
