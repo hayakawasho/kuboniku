@@ -2,12 +2,12 @@
   import { getContext } from 'svelte'
   import { useEvent } from 'lake'
   import type { Context$ } from 'lake'
-  import type { Provides } from '@/const'
+  import type { GlobalContext } from '@/const'
   import { createScrollHandler } from './createScrollHandler'
   import { createResizeObserver } from './createResizeObserver'
   import { createMouseHandler } from './createMouseHandler'
 
-  const { rootRef } = getContext<Context$<Provides>>('$')
+  const { rootRef } = getContext<Context$<GlobalContext>>('$')
 
   createResizeObserver(rootRef)
 

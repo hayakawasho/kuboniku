@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { lerp, TWEEN } from '@/libs'
+  import { lerp } from '@/libs'
   import { useTick } from '@/libs/lake'
 
   let cursor: HTMLElement
@@ -29,15 +29,17 @@
     }, 300)
   }
 
-  useTick(() => {
+  useTick(({ timeRatio }) => {
     if (!isRunning) {
       return
     }
 
-    last.x = lerp(last.x, now.x, 0.2)
-    last.y = lerp(last.y, now.y, 0.2)
+    const easeVal = 1 - (1 - 0.2) ** timeRatio
 
-    TWEEN.tween(cursor, 0).xy(last.x, last.y).play()
+    last.x = lerp(last.x, now.x, easeVal)
+    last.y = lerp(last.y, now.y, easeVal)
+
+    cursor.style.transform = `transition3d(last.x, last.y, 0)`
   })
 </script>
 

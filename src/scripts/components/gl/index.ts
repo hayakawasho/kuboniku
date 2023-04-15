@@ -3,6 +3,7 @@ import { useGl } from './useGl'
 import { viewportGetters } from '@/states/viewport'
 
 export default defineComponent({
+  tagName: 'Gl',
   setup() {
     const { width, height } = viewportGetters()
     const { refs } = useDomRef<{ canvas: HTMLCanvasElement }>('canvas')

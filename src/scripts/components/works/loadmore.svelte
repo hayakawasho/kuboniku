@@ -34,7 +34,7 @@
   {#each posts as i}
     <article class="o-grid__item">
       <a href="./{i.slug}/" data-ref="project" data-color={i.color}>
-        <div class="u-absolute u-pos-tl u-fit" data-scroll-skew>
+        <div class="u-absolute u-pos-tl fit2parent" data-scroll-skew>
           <div class="works-eyecatch">
             <img
               src={i.eyecatch.pc.src}

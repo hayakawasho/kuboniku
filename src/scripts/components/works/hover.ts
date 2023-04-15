@@ -2,6 +2,7 @@ import { defineComponent, useEvent } from 'lake'
 import { colorCodeMutators } from '@/states/color'
 
 export default defineComponent({
+  tagName: 'Hover',
   setup(el: HTMLElement) {
     const colorCode = el.dataset.color!
 

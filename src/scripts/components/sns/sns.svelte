@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Context$ } from 'lake'
-  import { TWEEN, EASE, SORT, nextTick } from '@/libs'
+  import { Tween, nextTick } from '@/libs'
   import { useEvent, useDomRef } from 'lake'
   import { getContext } from 'svelte'
 
@@ -27,11 +27,21 @@
 
     await nextTick()
 
-    TWEEN.serial(
-      TWEEN.prop(refs.icon).y(20).opacity(0).style('visibility', 'visible'),
-      TWEEN.parallel(
-        TWEEN.tween(refs.toggleTrigger, 0.55, EASE.cubicInOut).rotation(90),
-        TWEEN.lag(0.07, TWEEN.tween(refs.icon, 0.5, EASE.cubicOut).y(0).opacity(1))
+    Tween.serial(
+      Tween.prop(refs.icon, {
+        y: 20,
+        opacity: 0,
+        visibility: 'visible',
+      }),
+      Tween.parallel(
+        Tween.tween(refs.toggleTrigger, 0.55, 'power2.inOut', {
+          rotation: 90,
+        }),
+        Tween.tween(refs.icon, 0.5, 'power2.inOut', {
+          y: 0,
+          opacity: 1,
+          stagger: 0.07,
+        })
       )
     )
       .onComplete(() => {
@@ -45,20 +55,28 @@
 
     await nextTick()
 
-    TWEEN.serial(
-      TWEEN.parallel(
-        TWEEN.lagSort(
-          0.07,
-          SORT.reverse,
-          TWEEN.tween(refs.icon, 0.5, EASE.cubicIn).y(20).opacity(0)
-        ),
-        TWEEN.tween(refs.toggleTrigger, 0.55, EASE.cubicInOut).rotation(0)
+    Tween.serial(
+      Tween.parallel(
+        Tween.tween(refs.toggleTrigger, 0.55, 'power2.inOut', {
+          rotation: 0,
+        }),
+        Tween.tween(refs.icon, 0.5, 'power2.in', {
+          y: 20,
+          opacity: 0,
+          stagger: {
+            amount: 0.07,
+            from: 'end',
+          },
+        })
       ),
-      TWEEN.prop(refs.icon).y(20).opacity(0).style('visibility', 'hidden')
-    )
-      .onComplete(() => {
+      Tween.prop(refs.icon, {
+        y: 20,
+        opacity: 0,
+        visibility: 'hidden',
+      }),
+      Tween.immediate(() => {
         rootRef.classList.remove('is-animating')
       })
-      .play()
+    )
   }
 </script>

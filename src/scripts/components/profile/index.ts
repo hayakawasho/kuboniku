@@ -1,23 +1,30 @@
 import { defineComponent, useMount, useUnmount } from 'lake'
-import type { Provides } from '@/const'
-import { TWEEN, EASE, wait } from '@/libs'
+import type { GlobalContext } from '@/const'
+import { Tween } from '@/libs'
 
-type Props = Provides
-
-export default defineComponent<Props>({
-  setup(el, { initialLoad }) {
-    useMount(async () => {
+export default defineComponent({
+  tagName: 'Profile',
+  setup(el, { initialLoad }: GlobalContext) {
+    useMount(() => {
       if (initialLoad) {
         return
       }
 
-      TWEEN.prop(el).opacity(0).play()
-      await wait(500)
-      TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
+      Tween.serial(
+        Tween.prop(el, {
+          opacity: 0,
+        }),
+        Tween.wait(500),
+        Tween.tween(el, 1, 'expo.out', {
+          opacity: 1,
+        })
+      )
     })
 
     useUnmount(() => {
-      TWEEN.tween(el, 1, EASE.expoOut).opacity(0).play()
+      Tween.tween(el, 1, 'expo.out', {
+        opacity: 0,
+      })
     })
   },
 })

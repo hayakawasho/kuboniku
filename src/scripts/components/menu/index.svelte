@@ -4,7 +4,7 @@
   import { getContext } from 'svelte'
   import MenuToggle from './toggle'
   import MenuClose from './close'
-  import { TWEEN, EASE, nextTick } from '@/libs'
+  import { Tween, nextTick } from '@/libs'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
@@ -45,59 +45,112 @@
   const _open = async () => {
     rootRef.classList.add('is-menuOpen', 'is-menuAnimating')
 
+    Tween.kill([refs.menuLabel, refs.menuTrigger])
+
     await nextTick()
 
-    TWEEN.serial(
-      TWEEN.prop(refs.menuTrigger).pointerEvents(false),
-      TWEEN.parallel(
-        TWEEN.tween(refs.menuMask, 0.75).opacity(0.5),
-        TWEEN.tween(refs.menuTrigger, 0.75, EASE.cubicInOut).rotation(180),
-        TWEEN.tween(refs.burgerTL, 0.75, EASE.cubicInOut).y(2.5),
-        TWEEN.tween(refs.burgerBL, 0.75, EASE.cubicInOut).scaleX(0),
-        TWEEN.serial(
-          TWEEN.tween(refs.menuLabel, 0).rotation(-7).y('200%').opacity(1),
-          TWEEN.lag(0.065, TWEEN.tween(refs.menuLabel, 0.75, EASE.cubicInOut).rotation(0).y('0%'))
+    Tween.serial(
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: 'none',
+        rotation: 0,
+      }),
+      Tween.parallel(
+        Tween.tween(refs.menuMask, 0.75, undefined, {
+          opacity: 0.5,
+        }),
+        Tween.tween(refs.menuTrigger, 0.75, 'power2.inOut', {
+          rotation: 180,
+        }),
+        Tween.tween(refs.burgerTL, 0.75, 'power2.inOut', {
+          y: 2.5,
+        }),
+        Tween.tween(refs.burgerBL, 0.75, 'power2.inOut', {
+          scaleX: 0,
+        }),
+        Tween.serial(
+          Tween.prop(refs.menuLabel, {
+            rotation: -7,
+            y: '200%',
+            opacity: 1,
+          }),
+          Tween.tween(refs.menuLabel, 0.75, 'power2.inOut', {
+            rotation: 0,
+            y: '0%',
+            stagger: 0.065,
+          })
         ),
-        TWEEN.parallel(
-          TWEEN.tween(CLIP_PATH, 0.85, EASE.cubicInOut, { x1: 0 }),
-          TWEEN.tween(CLIP_PATH, 0.75, EASE.cubicInOut, { x2: 0 }).delay(0.1)
-        ).onUpdate(updateMenuBg)
+        Tween.parallel(
+          Tween.tween(CLIP_PATH, 0.85, 'power2.inOut', {
+            x1: 0,
+            onUpdate: updateMenuBg,
+          }),
+          Tween.tween(CLIP_PATH, 0.75, 'power2.inOut', {
+            x2: 0,
+          }).delay(0.1)
+        )
       ),
-      TWEEN.prop(refs.menuTrigger).pointerEvents(true)
-    )
-      .onComplete(() => {
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: 'auto',
+      }),
+      Tween.immediate(() => {
         rootRef.classList.remove('is-menuAnimating')
       })
-      .play()
+    )
   }
 
   const _close = async () => {
     rootRef.classList.add('is-menuAnimating')
 
+    Tween.kill([refs.menuLabel, refs.menuTrigger])
+
     await nextTick()
 
-    TWEEN.serial(
-      TWEEN.prop(refs.menuTrigger).pointerEvents(false),
-      TWEEN.parallel(
-        TWEEN.tween(refs.menuMask, 0.75).opacity(0),
-        TWEEN.tween(refs.menuTrigger, 0.75, EASE.cubicInOut).rotation(360),
-        TWEEN.tween(refs.burgerTL, 0.75, EASE.cubicInOut).y(0),
-        TWEEN.tween(refs.burgerBL, 0.75, EASE.cubicInOut).scaleX(32 / 40),
-        TWEEN.serial(
-          TWEEN.tween(refs.menuLabel, 0).rotation(0).y('0%'),
-          TWEEN.lag(0.06, TWEEN.tween(refs.menuLabel, 0.65, EASE.cubicInOut).rotation(7).y('-200%'))
+    Tween.serial(
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: 'none',
+        rotation: 180,
+      }),
+      Tween.parallel(
+        Tween.tween(refs.menuMask, 0.75, undefined, {
+          opacity: 0,
+        }),
+        Tween.tween(refs.menuTrigger, 0.75, 'power2.inOut', {
+          rotation: 360,
+        }),
+        Tween.tween(refs.burgerTL, 0.75, 'power2.inOut', {
+          y: 0,
+        }),
+        Tween.tween(refs.burgerBL, 0.75, 'power2.inOut', {
+          scaleX: 32 / 40,
+        }),
+        Tween.serial(
+          Tween.prop(refs.menuLabel, {
+            rotation: 0,
+            y: '0%',
+          }),
+          Tween.tween(refs.menuLabel, 0.65, 'power2.inOut', {
+            rotation: 7,
+            y: '-200%',
+            stagger: 0.06,
+          })
         ),
-        TWEEN.parallel(
-          TWEEN.tween(CLIP_PATH, 0.85, EASE.cubicInOut, { x1: 100 }),
-          TWEEN.tween(CLIP_PATH, 0.75, EASE.cubicInOut, { x2: 100 }).delay(0.1)
-        ).onUpdate(updateMenuBg)
+        Tween.parallel(
+          Tween.tween(CLIP_PATH, 0.85, 'power2.inOut', {
+            x1: 100,
+            onUpdate: updateMenuBg,
+          }),
+          Tween.tween(CLIP_PATH, 0.75, 'power2.inOut', {
+            x2: 100,
+          }).delay(0.1)
+        )
       ),
-      TWEEN.prop(refs.menuTrigger).pointerEvents(true)
-    )
-      .onComplete(() => {
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: 'auto',
+      }),
+      Tween.immediate(() => {
         rootRef.classList.remove('is-menuOpen', 'is-menuAnimating')
       })
-      .play()
+    )
   }
 
   let isOpen = ref<boolean | undefined>(undefined)
@@ -116,6 +169,7 @@
     onOpen,
     onClose,
   })
+
   addChild(refs.menuMask, MenuClose, {
     onClose,
   })

@@ -1,13 +1,12 @@
 import { withSvelte, defineComponent, useSlot, useDomRef, useMount, useUnmount } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
-import type { Provides } from '@/const'
+import type { GlobalContext } from '@/const'
 import Loadmore from './loadmore.svelte'
-import { TWEEN, EASE, wait } from '@/libs'
+import { Tween, wait } from '@/libs'
 
-type Props = Provides
-
-export default defineComponent<Props>({
-  setup(el, { initialLoad }) {
+export default defineComponent({
+  tagName: 'Works',
+  setup(el, { initialLoad }: GlobalContext) {
     const { refs } = useDomRef<{ projects: HTMLElement }>('projects')
     const { addChild } = useSlot()
 
@@ -16,23 +15,31 @@ export default defineComponent<Props>({
     const PER_PAGE = 10
     const totalPage = Math.ceil(total / PER_PAGE)
 
-    addChild(refs.projects, withSvelte(Loadmore), {
+    addChild(refs.projects, withSvelte(Loadmore, 'loadmore'), {
       totalPage,
     })
     addChild(el, SkewScrollContainer)
 
-    useMount(async () => {
+    useMount(() => {
       if (initialLoad) {
         return
       }
 
-      TWEEN.prop(el).opacity(0).play()
-      await wait(500)
-      TWEEN.tween(el, 1, EASE.expoOut).opacity(1).play()
+      Tween.serial(
+        Tween.prop(el, {
+          opacity: 0,
+        }),
+        Tween.wait(500),
+        Tween.tween(el, 1, 'expo.out', {
+          opacity: 1,
+        })
+      )
     })
 
     useUnmount(() => {
-      TWEEN.tween(el, 1, EASE.expoOut).opacity(0).play()
+      Tween.tween(el, 1, 'expo.out', {
+        opacity: 0,
+      })
     })
   },
 })
