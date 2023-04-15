@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { useIntersectionWatch, useDomRef, useSlot } from 'lake'
-  import Hover from './hover'
+  import ChangeColor from '../change-color'
   // import { match, P } from 'ts-pattern'
 
   export let totalPage: number
@@ -16,7 +16,7 @@
     const { refs } = useDomRef<{ project: HTMLElement[] }>('project')
     const { addChild } = useSlot()
 
-    addChild(refs.project, Hover)
+    addChild(refs.project, ChangeColor)
 
     useIntersectionWatch(
       refFetcher,

@@ -39,10 +39,10 @@ module.exports = class {
               </h1>
             </div>
 
-            <div css={entries} data-ref="projects" data-total={total}>
-              {posts.map((item: any, i: number) => {
+            <div css={entries} data-ref="index" data-total={total}>
+              {posts.map((item: any, index: number) => {
                 return (
-                  <article key={i} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
+                  <article key={index} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
                     <a
                       css={entry}
                       href={`./works/${item.slug}/`}
@@ -58,11 +58,12 @@ module.exports = class {
                             width={item.eyecatch.width}
                             height={item.eyecatch.height}
                             decoding="async"
+                            className="_img"
                           />
                         </div>
                         <div css={entry__hgroup}>
                           <p css={num}>
-                            {zeroPadding(total - i)}
+                            {zeroPadding(total - index)}
                             <span>Project</span>
                           </p>
                           <h2 css={entry__heading}>{selectTitle(item)}</h2>
@@ -209,7 +210,7 @@ const eyecatch = css`
   opacity: 0.8;
   backface-visibility: hidden;
 
-  > img {
+  & > ._img {
     position: absolute;
     top: 0;
     left: 0;

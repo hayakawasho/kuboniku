@@ -2,7 +2,7 @@ import { defineComponent, useSlot, useMount, useUnmount } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
 import type { GlobalContext } from '@/const'
 import { Tween } from '@/libs'
-import { colorCodeMutators } from '@/states/color'
+import { themeColorMutators } from '@/states/color'
 
 type Props = GlobalContext
 
@@ -12,7 +12,10 @@ export default defineComponent({
     const { addChild } = useSlot()
 
     const colorCode = el.dataset.color!
-    colorCodeMutators(colorCode)
+
+    themeColorMutators({
+      code: colorCode,
+    })
 
     addChild(el, SkewScrollContainer)
 

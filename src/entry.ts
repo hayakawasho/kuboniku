@@ -17,14 +17,14 @@ function bootstrap() {
   const { component, unmount } = factory()
 
   const table: Record<string, IComponent> = {
-    Noop: withSvelte(Noop, 'Noop'),
+    Noop: withSvelte(Noop),
     Sns: withSvelte(Sns, 'Sns'),
     Cursor: withSvelte(Cursor, 'Cursor'),
     Menu: withSvelte(Menu, 'Menu'),
     Works,
     WorksDetail,
     Profile,
-  }
+  } as const
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
     return q<HTMLElement>(`[data-component]`, scope).reduce<ComponentContext[]>((acc, el) => {

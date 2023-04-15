@@ -9,10 +9,10 @@ type Props = {
 
 export default defineComponent({
   tagName: 'MenuToggle',
-  setup(el, props: Props) {
+  setup(el: HTMLElement, props: Props) {
     const { isOpen, onClose, onOpen } = props
 
-    useEvent(el as HTMLElement, 'click', e => {
+    useEvent(el, 'click', e => {
       e.preventDefault()
       isOpen.value ? onClose() : onOpen()
     })

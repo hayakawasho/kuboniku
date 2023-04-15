@@ -1,15 +1,21 @@
 import { ref } from 'lake'
-import { atom } from 'nanostores'
+import { map } from 'nanostores'
 
-const colorCode = atom('#1793a9')
+type Parameters = {
+  code: string
+}
 
-export const colorCodeGetters = () => colorCode.get()
-export const colorCodeMutators = (update: string) => colorCode.set(update)
+const themeColor = map<Parameters>({
+  code: '#1793a9',
+})
 
-export const colorCodeRef = ref(colorCode)
+export const themeColorGetters = () => themeColor.get()
+export const themeColorMutators = (update: Parameters) => themeColor.set(update)
 
-export const colorCodeWatch = (callback: (code: string) => void) => {
-  colorCode.subscribe(value => {
-    callback(value)
+export const themeColorRef = ref(themeColor)
+
+export const themeColorCodeWatch = (callback: (code: string) => void) => {
+  themeColor.subscribe(value => {
+    callback(value.code)
   })
 }

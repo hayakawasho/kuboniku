@@ -6,10 +6,10 @@ type Props = {
 
 export default defineComponent({
   tagName: 'MenuClose',
-  setup(el, props: Props) {
+  setup(el: HTMLElement, props: Props) {
     const { onClose } = props
 
-    useEvent(el as HTMLElement, 'click', e => {
+    useEvent(el, 'click', e => {
       e.preventDefault()
       onClose()
     })

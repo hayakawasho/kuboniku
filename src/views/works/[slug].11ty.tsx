@@ -103,15 +103,15 @@ module.exports = class {
               </div>
               {post.gallery && (
                 <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
-                  {post.gallery.map((item, i) => {
+                  {post.gallery.map((item: any, index: number) => {
                     const css = {
                       '--aspect': `${item.width / item.height}`,
                       backgroundColor: post.color,
                     }
                     return (
-                      <li key={i} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
+                      <li key={index} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
                         <div css={aspect} style={css} />
-                        <div className="fit2parent">
+                        <figure className="fit2parent">
                           <img
                             src={item.src}
                             alt=""
@@ -119,7 +119,7 @@ module.exports = class {
                             height={item.height}
                             decoding="async"
                           />
-                        </div>
+                        </figure>
                       </li>
                     )
                   })}

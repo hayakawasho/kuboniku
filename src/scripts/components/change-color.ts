@@ -1,8 +1,8 @@
 import { defineComponent, useEvent } from 'lake'
-import { colorCodeMutators } from '@/states/color'
+import { themeColorMutators } from '@/states/color'
 
 export default defineComponent({
-  tagName: 'Hover',
+  tagName: 'ChangeColor',
   setup(el: HTMLElement) {
     const colorCode = el.dataset.color!
 
@@ -10,7 +10,9 @@ export default defineComponent({
       el,
       'mouseenter',
       _e => {
-        colorCodeMutators(colorCode)
+        themeColorMutators({
+          code: colorCode,
+        })
       },
       {
         passive: true,

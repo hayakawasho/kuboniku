@@ -42,7 +42,7 @@
     )`
   }
 
-  const _open = async () => {
+  const openAnime = async () => {
     rootRef.classList.add('is-menuOpen', 'is-menuAnimating')
 
     Tween.kill([refs.menuLabel, refs.menuTrigger])
@@ -98,7 +98,7 @@
     )
   }
 
-  const _close = async () => {
+  const closeAnime = async () => {
     rootRef.classList.add('is-menuAnimating')
 
     Tween.kill([refs.menuLabel, refs.menuTrigger])
@@ -155,8 +155,8 @@
 
   let isOpen = ref<boolean | undefined>(undefined)
 
-  $: isOpen.value === true && _open()
-  $: isOpen.value === false && _close()
+  $: isOpen.value === true && openAnime()
+  $: isOpen.value === false && closeAnime()
 
   const { addChild } = useSlot()
 

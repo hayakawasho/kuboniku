@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { colorCodeGetters, colorCodeWatch } from '@/states/color'
+import { themeColorGetters, themeColorCodeWatch } from '@/states/color'
 
 export default class {
   private _transforms: any
@@ -14,7 +14,7 @@ export default class {
     },
     uCol: {
       type: 'v3',
-      value: new THREE.Color(colorCodeGetters()),
+      value: new THREE.Color(themeColorGetters().code),
     },
     uActiveClouds: {
       type: 'f',
@@ -57,7 +57,7 @@ export default class {
   constructor() {
     this._setup()
 
-    colorCodeWatch(colorCode => {
+    themeColorCodeWatch(colorCode => {
       this._uniforms.uCol.value = new THREE.Color(colorCode)
     })
   }

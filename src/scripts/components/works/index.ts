@@ -2,22 +2,25 @@ import { withSvelte, defineComponent, useSlot, useDomRef, useMount, useUnmount }
 import SkewScrollContainer from '../skew-scroll'
 import type { GlobalContext } from '@/const'
 import Loadmore from './loadmore.svelte'
-import { Tween, wait } from '@/libs'
+import { Tween } from '@/libs'
+
+const PER_PAGE = 10
 
 export default defineComponent({
   tagName: 'Works',
   setup(el, { initialLoad }: GlobalContext) {
-    const { refs } = useDomRef<{ projects: HTMLElement }>('projects')
+    const { refs } = useDomRef<{
+      index: HTMLElement
+    }>('index')
     const { addChild } = useSlot()
 
-    const total = Number(refs.projects.dataset.total)
-
-    const PER_PAGE = 10
+    const total = Number(refs.index.dataset.total)
     const totalPage = Math.ceil(total / PER_PAGE)
 
-    addChild(refs.projects, withSvelte(Loadmore, 'loadmore'), {
+    addChild(refs.index, withSvelte(Loadmore, 'Loadmore'), {
       totalPage,
     })
+
     addChild(el, SkewScrollContainer)
 
     useMount(() => {
