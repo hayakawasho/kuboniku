@@ -67,7 +67,8 @@ export const Head = (props: any) => {
           }
 
           html {
-            min-height: 100vh;
+            min-height: calc(var(--vh) * 100);
+            min-height: 100svh;
             font-size: calc(10 / 1280 * 100vw);
 
             @media (min-width: 1280px) {

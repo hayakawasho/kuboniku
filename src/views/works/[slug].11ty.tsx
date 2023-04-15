@@ -65,7 +65,7 @@ module.exports = class {
                 spSrc={post.eyecatchMobile.src}
                 spW={post.eyecatchMobile.width}
                 spH={post.eyecatchMobile.height}
-                className=""
+                className="opacity-40"
                 alt=""
               />
               <div css={kv__scrollDown}>
@@ -141,7 +141,7 @@ module.exports = class {
                     spSrc={nextPost.eyecatchMobile.src}
                     spW={nextPost.eyecatchMobile.width}
                     spH={nextPost.eyecatchMobile.height}
-                    className=""
+                    className="opacity-40 filter grayscale-100"
                     alt=""
                   />
                 </a>
@@ -310,7 +310,7 @@ const intro = css`
 
 const intro__info = css`
   @media (min-width: 640px) {
-    width: calc(3 / 8 * 100%);
+    // width: calc(3 / 8 * 100%);
     margin-bottom: 0;
   }
 `
@@ -325,6 +325,7 @@ const dl = css`
 const dt = css`
   color: var(--color-text-primary);
   line-height: calc(52 / 24);
+  white-space: nowrap;
 
   @media (min-width: 640px) {
     font-size: 1.1rem;
