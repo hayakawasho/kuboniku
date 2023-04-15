@@ -17,7 +17,7 @@ export const PageWithHeader: React.FC<any> = props => {
         ></div>
         <div
           data-ref="glWorld"
-          className="fixed inset-0 w-screen h-screen pointer-events-none z-10"
+          className="fixed inset-0 w-screen h-screen pointer-events-none"
           aria-hidden="true"
         >
           <canvas className="w-screen h-screen" data-ref="canvas"></canvas>
