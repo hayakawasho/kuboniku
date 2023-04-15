@@ -6,6 +6,8 @@ export default defineComponent({
   tagName: 'Profile',
   setup(el, { initialLoad }: GlobalContext) {
     useMount(() => {
+      console.log('mount:/profile')
+
       if (initialLoad) {
         return
       }
@@ -14,7 +16,7 @@ export default defineComponent({
         Tween.prop(el, {
           opacity: 0,
         }),
-        Tween.wait(500),
+        Tween.wait(0.5),
         Tween.tween(el, 1, 'expo.out', {
           opacity: 1,
         })
@@ -22,6 +24,8 @@ export default defineComponent({
     })
 
     useUnmount(() => {
+      console.log('unmount:/profile')
+
       Tween.tween(el, 1, 'expo.out', {
         opacity: 0,
       })

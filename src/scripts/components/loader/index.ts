@@ -32,10 +32,10 @@ export default defineComponent({
     const provides = {
       env,
       glContext: gl.current,
-    } as const
+    }
 
     const load = new modularLoad({
-      enterDelay: 300,
+      enterDelay: 500,
       transitions: {
         //
       },
@@ -52,9 +52,9 @@ export default defineComponent({
     load.on(
       'loaded',
       (_transition: string, _oldContainer: HTMLElement, newContainer: HTMLElement) => {
-        onUpdated(newContainer, {
-          ...provides,
-        })
+        window.scrollTo(0, 0)
+
+        onUpdated(newContainer, provides)
       }
     )
 
