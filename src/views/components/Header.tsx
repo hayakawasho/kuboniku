@@ -1,6 +1,6 @@
 import { css, keyframes } from '@emotion/react'
 
-export const Header = (props: { currentPath: string }) => {
+export const Header = (_props: { currentPath: string }) => {
   return (
     <>
       <header className="">
@@ -22,7 +22,7 @@ export const Header = (props: { currentPath: string }) => {
           </div>
         </button>
 
-        <div css={sns} data-component="Sns" data-ignore>
+        <div css={sns} data-component="Sns">
           <ul className="mb-[2rem] sm:mb-[3rem] text-center">
             <li className="overflow-hidden mb-[2rem]">
               <a
@@ -65,7 +65,7 @@ export const Header = (props: { currentPath: string }) => {
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>
             <li>
-              <a href="/profile/" css={link}>
+              <a href="/profile/" css={link} data-ref="menuLink">
                 <span className="inline-block overflow-hidden leading-[1]">
                   <span css={linkLabel} data-ref="menuLabel">
                     Profile
@@ -74,7 +74,7 @@ export const Header = (props: { currentPath: string }) => {
               </a>
             </li>
             <li>
-              <a href="/" css={link}>
+              <a href="/" css={link} data-ref="menuLink">
                 <span className="inline-block overflow-hidden leading-[1]">
                   <span css={linkLabel} data-ref="menuLabel">
                     Works

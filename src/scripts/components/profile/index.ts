@@ -6,11 +6,11 @@ export default defineComponent({
   tagName: 'Profile',
   setup(el, { initialLoad }: GlobalContext) {
     useMount(() => {
-      console.log('mount:/profile')
-
       if (initialLoad) {
         return
       }
+
+      console.log('[mount] /profile')
 
       Tween.serial(
         Tween.prop(el, {
@@ -24,7 +24,7 @@ export default defineComponent({
     })
 
     useUnmount(() => {
-      console.log('unmount:/profile')
+      console.log('[unmount] /profile')
 
       Tween.tween(el, 1, 'expo.out', {
         opacity: 0,

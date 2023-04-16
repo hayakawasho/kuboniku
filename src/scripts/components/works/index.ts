@@ -20,15 +20,14 @@ export default defineComponent({
     addChild(refs.index, withSvelte(Loadmore, 'Loadmore'), {
       totalPage,
     })
-
     addChild(el, SkewScrollContainer)
 
     useMount(() => {
-      console.log('mount:/work')
-
       if (initialLoad) {
         return
       }
+
+      console.log('[mount] /')
 
       Tween.serial(
         Tween.prop(el, {
@@ -42,7 +41,7 @@ export default defineComponent({
     })
 
     useUnmount(() => {
-      console.log('unmount:/work')
+      console.log('[unmount] /')
 
       Tween.tween(el, 1, 'expo.out', {
         opacity: 0,

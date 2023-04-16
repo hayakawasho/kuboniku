@@ -1,14 +1,16 @@
-import { defineComponent, useSlot, useMount, useUnmount } from 'lake'
+import { defineComponent, useSlot, useMount, useUnmount, useDomRef } from 'lake'
 import SkewScrollContainer from '../skew-scroll'
 import type { GlobalContext } from '@/const'
 import { Tween } from '@/libs'
+import ProgressBar from './progressbar'
 import { themeColorMutators } from '@/states/color'
-
-type Props = GlobalContext
 
 export default defineComponent({
   tagName: 'WorksDetail',
-  setup(el, { initialLoad }: Props) {
+  setup(el, { initialLoad }: GlobalContext) {
+    const { refs } = useDomRef<{
+      progressBar: HTMLElement
+    }>('progressBar')
     const { addChild } = useSlot()
 
     const colorCode = el.dataset.color!
@@ -18,13 +20,14 @@ export default defineComponent({
     })
 
     addChild(el, SkewScrollContainer)
+    addChild(refs.progressBar, ProgressBar)
 
     useMount(() => {
-      console.log('mount:/work/[slug]')
-
       if (initialLoad) {
         return
       }
+
+      console.log('[mount] /works/[slug]')
 
       Tween.serial(
         Tween.prop(el, {
@@ -38,7 +41,7 @@ export default defineComponent({
     })
 
     useUnmount(() => {
-      console.log('unmount:/work/[slug]')
+      console.log('[unmount] /work/[slug]')
 
       Tween.tween(el, 1, 'expo.out', {
         opacity: 0,

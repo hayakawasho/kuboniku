@@ -5,6 +5,7 @@
   import MenuToggle from './toggle'
   import MenuClose from './close'
   import { Tween, nextTick } from '@/libs'
+  import type { GlobalContext } from '@/const'
 
   type Refs = {
     menuTrigger: HTMLButtonElement
@@ -13,7 +14,8 @@
     menuBody: HTMLElement
     menuMask: HTMLElement
     menuBg: HTMLElement
-    menuLabel: HTMLAnchorElement[]
+    menuLink: HTMLAnchorElement[]
+    menuLabel: HTMLElement[]
   }
 
   const CLIP_PATH = {
@@ -28,10 +30,11 @@
     'menuBody',
     'menuMask',
     'menuBg',
-    'menuLabel'
+    'menuLabel',
+    'menuLink'
   )
 
-  const { rootRef } = getContext<Context$>('$')
+  const { rootRef, env } = getContext<Context$<GlobalContext>>('$')
 
   const updateMenuBg = () => {
     refs.menuBg.style.clipPath = `polygon(
@@ -173,4 +176,10 @@
   addChild(refs.menuMask, MenuClose, {
     onClose,
   })
+
+  if (env.mq === 'sp') {
+    addChild(refs.menuLink, MenuClose, {
+      onClose,
+    })
+  }
 </script>

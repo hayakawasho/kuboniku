@@ -39,9 +39,7 @@ module.exports = class {
       >
         <PageContent namespace="WorksDetail">
           <main data-component="WorksDetail" data-color={post.color}>
-            {
-              //<Progressbar />
-            }
+            <div data-ref="progressBar"></div>
             <div css={kv}>
               <div css={kv__cont}>
                 <p css={project}>
@@ -224,7 +222,7 @@ const sub = css`
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
-  padding-left: 1.2rem;
+  padding-left: 1.4rem;
 
   .icon-arrow_right {
     font-size: 1rem;
@@ -316,8 +314,8 @@ const intro__info = css`
 `
 
 const dl = css`
-  display: grid;
-  grid-template-columns: 3.25em 1fr;
+  display: flex;
+  gap: 0.5rem;
   font-size: 1.2rem;
   font-family: var(--font-en);
 `

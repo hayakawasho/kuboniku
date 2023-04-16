@@ -9,8 +9,7 @@ export default defineComponent({
   setup(el: HTMLElement, props: Props) {
     const { onClose } = props
 
-    useEvent(el, 'click', e => {
-      e.preventDefault()
+    useEvent(el, 'click', _e => {
       onClose()
     })
   },

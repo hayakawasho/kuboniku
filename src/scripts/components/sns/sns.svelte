@@ -42,12 +42,9 @@
           opacity: 1,
           stagger: 0.07,
         })
-      )
+      ),
+      Tween.immediate(() => rootRef.classList.remove('is-animating'))
     )
-      .onComplete(() => {
-        rootRef.classList.remove('is-animating')
-      })
-      .play()
   }
 
   const _close = async () => {
@@ -74,9 +71,7 @@
         opacity: 0,
         visibility: 'hidden',
       }),
-      Tween.immediate(() => {
-        rootRef.classList.remove('is-animating')
-      })
+      Tween.immediate(() => rootRef.classList.remove('is-animating'))
     )
   }
 </script>

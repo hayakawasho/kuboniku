@@ -112,5 +112,6 @@ const about = css`
 
   @media (min-width: 640px) {
     font-size: 1.3rem;
+    text-align: justify;
   }
 `
