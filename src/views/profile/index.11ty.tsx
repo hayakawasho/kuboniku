@@ -18,15 +18,17 @@ module.exports = class {
         <PageContent namespace="Profile">
           <main data-component="Profile" className="overflow-hidden">
             <h1 className="sr-only">PROFILE</h1>
-            <i css={logo} className="icon-logo || u-pc"></i>
-            <i css={logo} className="icon-logo_sp || u-sp"></i>
-            <div css={container}>
-              <div css={container__in}>
-                <div css={hgroup}>
-                  <h2 css={heading}>Nagisa Kubo</h2>
-                  <p>Art Director & Designer</p>
+            <div className="relative">
+              <i css={logo} className="icon-logo || u-pc"></i>
+              <i css={logo} className="icon-logo_sp || u-sp"></i>
+              <div css={container}>
+                <div css={container__in}>
+                  <div css={hgroup}>
+                    <h2 css={heading}>Nagisa Kubo</h2>
+                    <p>Art Director & Designer</p>
+                  </div>
+                  <div css={about}>{parse(props.wp.profile.html)}</div>
                 </div>
-                <div css={about}>{parse(props.wp.profile.html)}</div>
               </div>
             </div>
           </main>
