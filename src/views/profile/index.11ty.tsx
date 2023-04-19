@@ -4,16 +4,15 @@ import { renderToStaticMarkup as r } from 'react-dom/server'
 import { Header } from '../components/Header'
 import { PageContent } from '../components/PageContent'
 import { PageWithHeader } from '../components/PageWithHeader'
+import { Seo } from '../components/Seo'
 
 module.exports = class {
   render(props: any) {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        title="PROFILE"
-        pagePath="/profile/"
+        seo={<Seo title="PROFILE" pagePath="/profile/" />}
         header={<Header currentPath="/profile/" />}
-        namespace="Profile"
       >
         <PageContent namespace="Profile">
           <main data-component="Profile" className="overflow-hidden">

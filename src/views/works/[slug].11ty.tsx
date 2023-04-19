@@ -3,8 +3,9 @@ import { renderToStaticMarkup as r } from 'react-dom/server'
 import { Header } from '../components/Header'
 import { PageContent } from '../components/PageContent'
 import { PageWithHeader } from '../components/PageWithHeader'
+import { ResponsiveImage } from '../components/ResponsiveImage'
+import { Seo } from '../components/Seo'
 // import { Progressbar } from '../components/Progressbar'
-import { Picture } from '../components/Picture'
 import { zeroPadding } from '../components/utils'
 import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 
@@ -32,10 +33,8 @@ module.exports = class {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        title={pageTitle}
-        pagePath={`/works/${post.slug}/`}
+        seo={<Seo title={pageTitle} pagePath={`/works/${post.slug}/`} />}
         header={<Header currentPath="/works/[slug]/" />}
-        namespace="WorksDetail"
       >
         <PageContent namespace="WorksDetail">
           <main data-component="WorksDetail" data-color={post.color}>
@@ -56,7 +55,7 @@ module.exports = class {
                   </span>
                 </p>
               </div>
-              <Picture
+              <ResponsiveImage
                 pcSrc={post.eyecatch.src}
                 pcW={post.eyecatch.width}
                 pcH={post.eyecatch.height}
@@ -132,7 +131,7 @@ module.exports = class {
                       <i className="icon-arrow_right ml-[.8rem]" />
                     </p>
                   </div>
-                  <Picture
+                  <ResponsiveImage
                     pcSrc={nextPost.eyecatch.src}
                     pcW={nextPost.eyecatch.width}
                     pcH={nextPost.eyecatch.height}

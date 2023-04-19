@@ -1,11 +1,11 @@
 import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { Header } from './components/Header'
-import { PageContent } from './components/PageContent'
-import { PageWithHeader } from './components/PageWithHeader'
-import { Seo } from './components/Seo'
-import { zeroPadding } from './components/utils'
-import { selectTitle } from './components/works/selector'
+import { Header } from '../components/Header'
+import { PageContent } from '../components/PageContent'
+import { PageWithHeader } from '../components/PageWithHeader'
+import { Seo } from '../components/Seo'
+import { zeroPadding } from '../components/utils'
+import { selectTitle } from '../components/works/selector'
 
 module.exports = class {
   data() {
@@ -25,7 +25,10 @@ module.exports = class {
 
     return `<!DOCTYPE html>
     ${r(
-      <PageWithHeader seo={<Seo title="WORKS" pagePath="" />} header={<Header currentPath="" />}>
+      <PageWithHeader
+        seo={<Seo title="WORKS" pagePath="/works/" />}
+        header={<Header currentPath="/works/" />}
+      >
         <PageContent namespace="Works">
           <main data-component="Works">
             <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">

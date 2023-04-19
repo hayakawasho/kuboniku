@@ -1,13 +1,18 @@
 import { css } from '@emotion/react'
 import type React from 'react'
-import { Head } from './Head'
 
 const idDev = process.env.NODE_ENV !== 'production'
 
-export const PageWithHeader: React.FC<any> = props => {
+type Props = {
+  header: React.ReactNode
+  children: React.ReactNode
+  seo: React.ReactNode
+}
+
+export const PageWithHeader: React.FC<Props> = props => {
   return (
     <html lang="ja">
-      <Head title={props.title} description={props.description} pagePath={props.pagePath} />
+      {props.seo}
       <body data-component="Menu">
         <div
           className="fixed inset-0 w-screen pointer-events-none -z-1 invisible"

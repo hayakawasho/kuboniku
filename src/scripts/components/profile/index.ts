@@ -16,8 +16,8 @@ export default defineComponent({
         Tween.prop(el, {
           opacity: 0,
         }),
-        Tween.wait(0.5),
-        Tween.tween(el, 1, 'expo.out', {
+        Tween.wait(0.25),
+        Tween.tween(el, 0.55, 'expo.out', {
           opacity: 1,
         })
       )
@@ -26,7 +26,7 @@ export default defineComponent({
     useUnmount(() => {
       console.log('[unmount] /profile')
 
-      Tween.tween(el, 1, 'expo.out', {
+      Tween.tween(el, 0.55, 'expo.out', {
         opacity: 0,
       })
     })

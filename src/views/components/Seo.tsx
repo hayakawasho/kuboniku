@@ -6,7 +6,7 @@ const SITE_URL = 'https://kuboniku.com'
 
 const idDev = process.env.NODE_ENV !== 'production'
 
-export const Head = (props: any) => {
+export const Seo = (props: any) => {
   const title = props.title + ' | ' + SITE_TITLE
   const description = props.description || DESCRIPTION
   const pagePath = props.pagePath
@@ -110,28 +110,9 @@ export const Head = (props: any) => {
               -webkit-font-smoothing: antialiased;
               -moz-osx-font-smoothing: grayscale;
             }
-          }
 
-          dialog {
-            padding: 0;
-            margin: 0;
-            max-width: 100%;
-            height: 100%;
-            max-height: 100%;
-            padding: 0;
-            margin: 0;
-            overflow-y: auto;
-            background-color: transparent;
-            border: none;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-
-            &::-webkit-scrollbar {
-              display: none;
-            }
-
-            &::backdrop {
-              background-color: transparent;
+            &.is-menuOpen {
+              overflow: hidden;
             }
           }
 
@@ -148,7 +129,7 @@ export const Head = (props: any) => {
           img {
             max-width: 100%;
             height: auto;
-            vertical-align: middle;
+            display: block;
           }
 
           @font-face {
