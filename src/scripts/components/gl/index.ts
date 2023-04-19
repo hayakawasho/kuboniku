@@ -1,5 +1,5 @@
 import { defineComponent, useDomRef } from 'lake'
-import { useGl } from './useGl'
+import { useGl } from './use-gl'
 import { viewportGetters } from '@/states/viewport'
 
 export default defineComponent({
