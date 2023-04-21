@@ -36,10 +36,6 @@ const createImageMetadata = (src, widths, formats) => {
   })
 }
 
-const createImgHtmlString = (img, alt = '', className = '', ...attrs) => {
-  return `<img src="${img.url}" width="${img.width}" height="${img.height}" decoding="async" alt="${alt}" class="${className}" ${attrs}>`
-}
-
 const createSourceHtmlString = (imageMetadata, sizes, media) => {
   return Object.values(imageMetadata)
     .map(images => {
@@ -72,8 +68,21 @@ const imageShortcode = async (
   sizes = '100vw'
 ) => {
   const imageMetadata = await createImageMetadata(src, widths, formats)
+
   const largestUnoptimizedImg = getLargestImage(imageMetadata, formats[0])
   const sourceHtmlString = createSourceHtmlString(imageMetadata, sizes, '(min-width:640px)')
+
+  const createImgHtmlString = (img, alt, className) => {
+    return `<img
+      src="${img.url}"
+      width="${img.width}"
+      height="${img.height}"
+      decoding="async"
+      alt="${alt}"
+      class="${className}"
+    >`
+  }
+
   const imgHtmlString = createImgHtmlString(largestUnoptimizedImg, alt, className)
 
   const picture = `<picture>

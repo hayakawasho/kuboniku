@@ -1,6 +1,7 @@
 import 'virtual:windi.css'
 import 'ress'
 import Cursor from '@/components/cursor/index.svelte'
+import Hover from '@/components/hover/hover'
 import q from 'bianco.query'
 import Loader from '@/components/loader'
 import type { IComponent, ComponentContext } from 'lake'
@@ -8,7 +9,7 @@ import Menu from '@/components/menu/index.svelte'
 import factory, { withSvelte } from 'lake'
 import Noop from '@/components/noop.svelte'
 import Profile from '@/components/profile'
-import Sns from '@/components/sns/sns.svelte'
+import Sns from '@/components/sns.svelte'
 import Works from '@/components/works'
 import WorksDetail from '@/components/works/[slug]'
 import type { LoaderProps } from '@/const'
@@ -24,6 +25,7 @@ function bootstrap() {
     Works,
     WorksDetail,
     Profile,
+    Hover,
   } as const
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
