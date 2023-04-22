@@ -47,7 +47,7 @@ module.exports = class {
                     >
                       <div css={aspect}></div>
                       <div css={entry__g}>
-                        <div css={eyecatch}>
+                        <div css={eyecatch} data-ref="clipTarget">
                           <img
                             src={item.eyecatch.src}
                             alt=""
@@ -216,8 +216,12 @@ const eyecatch = css`
     object-position: center;
     filter: grayscale(1);
     backface-visibility: hidden;
-    transition: filter 1s;
+    transition: filter 0.75s;
     opacity: 0.8;
+
+    .isHover & {
+      filter: grayscale(0);
+    }
   }
 `
 

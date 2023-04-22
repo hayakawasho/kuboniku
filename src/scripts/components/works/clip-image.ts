@@ -18,14 +18,14 @@ export default defineComponent({
     })
 
     const aspect = height / width
-    const portrait = aspect > 1
+    const isPortrait = aspect > 1
 
     const state = {
       x: 0,
       y: 0,
       rate: {
-        x: portrait ? 1 : 0.5,
-        y: portrait ? 0.5 : 1,
+        x: isPortrait ? 1 : 0.5,
+        y: isPortrait ? 0.5 : 1,
       },
     }
 
@@ -38,9 +38,7 @@ export default defineComponent({
       }
     })
 
-    const onEnter = async (e: MouseEvent | TouchEvent) => {
-      e.preventDefault()
-
+    const onEnter = async (_e: MouseEvent | TouchEvent) => {
       el.classList.add('isHover', 'isAnimating')
       refs.clipTarget.style.willChange = 'clip-path'
 
@@ -64,9 +62,7 @@ export default defineComponent({
       )
     }
 
-    const onLeave = async (e: MouseEvent | TouchEvent) => {
-      e.preventDefault()
-
+    const onLeave = async (_e: MouseEvent | TouchEvent) => {
       el.classList.add('isAnimating')
       refs.clipTarget.style.willChange = 'clip-path'
 
@@ -95,7 +91,9 @@ export default defineComponent({
 
     useEvent(el, 'mouseenter', onEnter)
     useEvent(el, 'mouseleave', onLeave)
-    useEvent(el, 'touchstart', onEnter)
+    useEvent(el, 'touchstart', onEnter, {
+      passive: true,
+    })
     useEvent(el, 'touchend', onLeave)
   },
 })

@@ -1,16 +1,30 @@
-import { useWatch } from './watch'
-import { viewportRef } from '@/states/viewport'
+import { ref, readonly } from 'lake'
+import { viewport } from '@/states/viewport'
 
 export const useWindowSize = (
-  callback: (payload: { ww: number; wh: number; aspect: number }) => void
+  callback: (payload: { windowWidth: number; windowHeight: number; aspect: number }) => void
 ) => {
-  useWatch(viewportRef, payload => {
-    const aspect = payload.width / payload.height
+  const { width, height } = viewport.get()
+  const state = {
+    windowWidth: ref(width),
+    windowHeight: ref(height),
+  }
+
+  viewport.listen(({ width, height }) => {
+    const aspect = width / height
 
     callback({
-      ww: payload.width,
-      wh: payload.height,
+      windowWidth: width,
+      windowHeight: height,
       aspect,
     })
+
+    state.windowWidth.value = width
+    state.windowHeight.value = height
   })
+
+  return {
+    windowWidth: readonly(state.windowWidth),
+    windowHeight: readonly(state.windowHeight),
+  }
 }

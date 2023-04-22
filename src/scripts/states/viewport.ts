@@ -1,16 +1,14 @@
-import { ref } from 'lake'
 import { map } from 'nanostores'
 import type { Size } from '@/const'
 
-type Parameters = Size
+type WindowParams = Size
 
 const { innerWidth, innerHeight } = window
 
-const viewport = map<Parameters>({
+export const viewport = map<WindowParams>({
   width: innerWidth,
   height: innerHeight,
 })
 
 export const viewportGetters = () => viewport.get()
-export const viewportMutators = (update: Parameters) => viewport.set(update)
-export const viewportRef = ref(viewport)
+export const viewportMutators = (update: WindowParams) => viewport.set(update)
