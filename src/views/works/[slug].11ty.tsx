@@ -44,10 +44,10 @@ module.exports = class {
                   {zeroPadding(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
-                <h1 css={heading} className="pr-[.5em]">
+                <h1 css={heading} className="pl-[1.1rem] pr-[.5em]">
                   {pageTitle}
                 </h1>
-                <p css={sub} className="mt-[.8rem] overflow-hidden">
+                <p css={sub} className="pl-[1.3rem] mt-[.8rem] overflow-hidden">
                   <span className="inline-block origin-right">
                     {post.category}
                     <i className="icon-arrow_right ml-[.8rem]" />
@@ -121,8 +121,10 @@ module.exports = class {
               <aside css={[kv, kvNext]}>
                 <a href={`../${nextPost.slug}/`} className="fit2parent z-10">
                   <div css={kv__cont}>
-                    <h2 css={heading}>Next Project</h2>
-                    <p css={sub} className="mt-[1rem]">
+                    <h2 css={heading} className="pl-[1.1rem] pr-[.5em]">
+                      Next Project
+                    </h2>
+                    <p css={sub} className="pl-[1.3rem] mt-[.8rem] overflow-hidden">
                       {selectTitle(nextPost)}
                       <i className="icon-arrow_right ml-[.8rem]" />
                     </p>
@@ -177,7 +179,6 @@ const kv__cont = css`
 
 const heading = css`
   font-weight: 600;
-  padding-left: 1.1rem;
   font-family: var(--font-roboto);
   font-size: 3.9rem;
   line-height: 1;
@@ -209,7 +210,6 @@ const sub = css`
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
-  padding-left: 1.4rem;
 
   .icon-arrow_right {
     font-size: 1rem;
