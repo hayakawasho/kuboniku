@@ -54,6 +54,8 @@ export const Seo = (props: any) => {
             --color-text-primary: #858585;
             --color-theme: #1793a9;
 
+            --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
+
             @media (min-width: 640px) {
               --gap: calc(40 / 1280 * 100vw);
               --gutter: calc(16 / 1280 * 100vw);

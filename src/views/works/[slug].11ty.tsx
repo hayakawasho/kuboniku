@@ -66,7 +66,9 @@ module.exports = class {
               />
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
-                  <div css={kv__scrollLabel}>scroll</div>
+                  <div css={kv__scrollLabel} data-text="scroll">
+                    scroll
+                  </div>
                 </div>
                 <i className="icon-arrow_down | block mt-[1.4rem] text-[1.2rem] text-center" />
               </div>
@@ -238,7 +240,7 @@ const kv__scrollDown = css`
 
 const front = keyframes`
   0%,
-  70% {
+  50% {
     transform: translateZ(0);
   }
 
@@ -249,7 +251,7 @@ const front = keyframes`
 
 const back = keyframes`
   0%,
-  70% {
+  50% {
     transform: translateZ(0) rotate(30deg) skewX(30deg);
   }
 
@@ -260,15 +262,17 @@ const back = keyframes`
 
 const kv__scrollLabel = css`
   display: inline-block;
-  animation: ${front} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  animation: ${front} 2.5s var(--ease-power3-inOut) infinite;
 
   &::before {
+    content: attr(data-text);
     position: absolute;
+    bottom: -3.2rem;
     display: block;
     transform-origin: right;
-    bottom: -3.2rem;
-    content: 'scroll';
-    animation: ${back} 4s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    animation: ${back} 2.5s var(--ease-power3-inOut) infinite;
+    animation-delay: 0.05s;
+    transform-origin: bottom;
   }
 `
 

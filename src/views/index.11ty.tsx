@@ -60,7 +60,7 @@ module.exports = class {
                         <div css={entry__hgroup}>
                           <p css={num} className="mb-[1.2rem] | sm:mb-[2rem]">
                             {zeroPadding(total - index)}
-                            <span>Project</span>
+                            <span className="ml-[.8em]">Project</span>
                           </p>
                           <h2 css={entry__heading}>{selectTitle(item)}</h2>
                         </div>
@@ -185,8 +185,6 @@ const num = css`
 
   > span {
     font-size: 1rem;
-    letter-spacing: 0.02em;
-    margin-left: 0.8rem;
     letter-spacing: 0.02em;
 
     @media (min-width: 640px) {
