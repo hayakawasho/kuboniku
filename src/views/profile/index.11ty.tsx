@@ -12,14 +12,14 @@ module.exports = class {
     ${r(
       <PageWithHeader
         seo={<Seo title="PROFILE" pagePath="/profile/" />}
-        header={<Header currentPath="/profile/" />}
+        header={<Header current="PROFILE" />}
       >
-        <PageContent namespace="Profile">
+        <PageContent namespace="PROFILE">
           <main data-component="Profile" className="overflow-hidden">
             <h1 className="sr-only">PROFILE</h1>
             <div className="relative">
-              <i css={logo} className="icon-logo || u-pc"></i>
-              <i css={logo} className="icon-logo_sp || u-sp"></i>
+              <i css={logo} className="icon-logo | u-pc"></i>
+              <i css={logo} className="icon-logo_sp | u-sp"></i>
               <div css={container}>
                 <div css={container__in}>
                   <div css={hgroup}>

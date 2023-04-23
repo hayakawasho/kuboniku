@@ -10,6 +10,8 @@ type Props = {
 }
 
 export const PageWithHeader: React.FC<Props> = props => {
+  const LOCAL_DOMAIN = 'http://localhost:3000'
+
   return (
     <html lang="ja">
       {props.seo}
@@ -35,7 +37,7 @@ export const PageWithHeader: React.FC<Props> = props => {
           defer
         />
         <script src="https://code.createjs.com/1.0.0/preloadjs.min.js" defer></script>
-        {idDev && <script type="module" src="http://localhost:3000/src/entry.ts" />}
+        {idDev && <script type="module" src={`${LOCAL_DOMAIN}/src/entry.ts`} />}
         {!idDev && <script type="module" src="/assets/entry.js" />}
       </body>
     </html>

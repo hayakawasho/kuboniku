@@ -1,4 +1,4 @@
-import { ref, readonly } from 'lake'
+import { ref, readonly, useUnmount } from 'lake'
 import { viewport } from '@/states/viewport'
 
 export const useWindowSize = (
@@ -10,7 +10,7 @@ export const useWindowSize = (
     windowHeight: ref(height),
   }
 
-  viewport.listen(({ width, height }) => {
+  const unbind = viewport.listen(({ width, height }) => {
     const aspect = width / height
 
     callback({
@@ -21,6 +21,10 @@ export const useWindowSize = (
 
     state.windowWidth.value = width
     state.windowHeight.value = height
+  })
+
+  useUnmount(() => {
+    unbind()
   })
 
   return {

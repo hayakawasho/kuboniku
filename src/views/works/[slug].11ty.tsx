@@ -34,9 +34,9 @@ module.exports = class {
     ${r(
       <PageWithHeader
         seo={<Seo title={pageTitle} pagePath={`/works/${post.slug}/`} />}
-        header={<Header currentPath="/works/[slug]/" />}
+        header={<Header current="WORKS_DETAIL" />}
       >
-        <PageContent namespace="WorksDetail">
+        <PageContent namespace="WORKS_DETAIL">
           <main data-component="WorksDetail" data-color={post.color}>
             <div data-ref="progressBar"></div>
             <div css={kv}>
@@ -48,7 +48,7 @@ module.exports = class {
                 <h1 css={heading} className="pr-[.5em]">
                   {pageTitle}
                 </h1>
-                <p css={sub} className="mt-[1rem] overflow-hidden">
+                <p css={sub} className="mt-[.8rem] overflow-hidden">
                   <span className="inline-block origin-right">
                     {post.category}
                     <i className="icon-arrow_right ml-[.8rem]" />
@@ -69,34 +69,36 @@ module.exports = class {
                 <div className="relative w-full h-full overflow-hidden">
                   <div css={kv__scrollLabel}>scroll</div>
                 </div>
-                <i className="icon-arrow_down || block mt-[1.4rem] text-[1.2rem] text-center" />
+                <i className="icon-arrow_down | block mt-[1.4rem] text-[1.2rem] text-center" />
               </div>
             </div>
 
             <div css={body}>
-              <div css={intro}>
-                <div css={intro__info}>
-                  <dl css={dl}>
-                    <dt css={dt}>Year :</dt>
-                    <dd css={dd}>{selectYear(post)}</dd>
-                  </dl>
-                  <dl css={dl}>
-                    <dt css={dt}>Role :</dt>
-                    <dd css={dd}>{selectRole(post)}</dd>
-                  </dl>
+              <div css={introLayout}>
+                <div css={intro}>
+                  <div css={intro__info}>
+                    <dl css={dl}>
+                      <dt css={dt}>Year :</dt>
+                      <dd css={dd}>{selectYear(post)}</dd>
+                    </dl>
+                    <dl css={dl}>
+                      <dt css={dt}>Role :</dt>
+                      <dd css={dd}>{selectRole(post)}</dd>
+                    </dl>
+                  </div>
+                  {post.siteUrl && (
+                    <a
+                      css={intro__viewLink}
+                      className="mt-[2rem] | sm:mt-0"
+                      href={post.siteUrl}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      View website
+                      <div css={intro__viewLink__hr} />
+                    </a>
+                  )}
                 </div>
-                {post.siteUrl && (
-                  <a
-                    css={intro__viewLink}
-                    className="mt-[4rem]"
-                    href={post.siteUrl}
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    View website
-                    <div css={intro__viewLink__hr} />
-                  </a>
-                )}
               </div>
               {post.gallery && (
                 <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
@@ -151,13 +153,6 @@ module.exports = class {
   }
 }
 
-const imgFit = css`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
-
 const kv = css`
   position: relative;
   width: 100%;
@@ -165,7 +160,6 @@ const kv = css`
   display: block;
   height: 100vh;
   height: 100svh;
-  // perspective: 1000px;
   background: #191918;
 
   @media (min-width: 640px) {
@@ -189,7 +183,7 @@ const kv__cont = css`
 
 const heading = css`
   font-weight: 600;
-  padding-left: 1.2rem;
+  padding-left: 1.1rem;
   font-family: var(--font-roboto);
   font-size: 3.9rem;
   line-height: 1;
@@ -202,7 +196,7 @@ const heading = css`
 
 const project = css`
   position: absolute;
-  top: calc(-1em - 1rem);
+  top: calc(-1em - 2rem);
   font-weight: bold;
   font-family: var(--font-en);
   font-size: 1.3rem;
@@ -221,7 +215,7 @@ const sub = css`
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
-  padding-left: 1.4rem;
+  padding-left: 1.3rem;
 
   .icon-arrow_right {
     font-size: 1rem;
@@ -241,7 +235,7 @@ const kv__scrollDown = css`
   font-family: var(--font-en);
   font-size: 1rem;
   line-height: 1;
-  color: #fff;
+  color: #e3e3e3;
   letter-spacing: 0.02em;
   z-index: 2;
 
@@ -290,18 +284,25 @@ const body = css`
   backface-visibility: hidden;
 `
 
-const intro = css`
+const introLayout = css`
   position: relative;
   width: 100%;
   padding: 6rem calc(var(--gap) * 2) 7rem;
 
   @media (min-width: 640px) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
     margin: 0 auto;
     width: calc(var(--grid) * 10);
     padding: 10rem var(--grid) 9rem;
+  }
+`
+
+const intro = css`
+  position: relative;
+
+  @media (min-width: 640px) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
 `
 
@@ -316,7 +317,7 @@ const dl = css`
   display: flex;
   gap: 0.5rem;
   font-size: 1.2rem;
-  font-family: var(--font-en);
+  font-family: var(--font-roboto);
 `
 
 const dt = css`
@@ -352,6 +353,9 @@ const intro__viewLink = css`
 
   @media (min-width: 640px) {
     font-size: 1.4rem;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0;
   }
 `
 

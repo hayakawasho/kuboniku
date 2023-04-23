@@ -25,8 +25,8 @@ module.exports = class {
 
     return `<!DOCTYPE html>
     ${r(
-      <PageWithHeader seo={<Seo title="WORKS" pagePath="" />} header={<Header currentPath="" />}>
-        <PageContent namespace="Works">
+      <PageWithHeader seo={<Seo title="WORKS" pagePath="" />} header={<Header current="WORKS" />}>
+        <PageContent namespace="WORKS">
           <main data-component="Works">
             <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
               <h1 css={heading}>

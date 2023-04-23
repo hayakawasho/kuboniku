@@ -1,6 +1,10 @@
 import { css, keyframes } from '@emotion/react'
 
-export const Header = (_props: { currentPath: string }) => {
+type Props = {
+  current: 'WORKS' | 'WORKS_DETAIL' | 'PROFILE'
+}
+
+export const Header = ({ current }: Props) => {
   return (
     <>
       <header className="">
@@ -65,7 +69,12 @@ export const Header = (_props: { currentPath: string }) => {
           <div css={menu__bg} className="u-sp" data-ref="menuBg" />
           <ul css={menu__links}>
             <li>
-              <a href="/profile/" css={link} data-ref="menuLink">
+              <a
+                href="/profile/"
+                css={link}
+                data-ref="menuLink"
+                data-disabled={current === 'PROFILE'}
+              >
                 <span className="inline-block overflow-hidden leading-[1]">
                   <span css={linkLabel} data-ref="menuLabel">
                     Profile
@@ -74,7 +83,7 @@ export const Header = (_props: { currentPath: string }) => {
               </a>
             </li>
             <li>
-              <a href="/" css={link} data-ref="menuLink">
+              <a href="/" css={link} data-ref="menuLink" data-disabled={current === 'WORKS'}>
                 <span className="inline-block overflow-hidden leading-[1]">
                   <span css={linkLabel} data-ref="menuLabel">
                     Works
@@ -220,6 +229,11 @@ const link = css`
     line-height: calc(52 / 26);
     opacity: 1;
     pointer-events: auto;
+  }
+
+  &[data-disabled='true'] {
+    color: #858585;
+    pointer-events: none !important;
   }
 
   > span {

@@ -25,11 +25,8 @@ module.exports = class {
 
     return `<!DOCTYPE html>
     ${r(
-      <PageWithHeader
-        seo={<Seo title="WORKS" pagePath="/works/" />}
-        header={<Header currentPath="/works/" />}
-      >
-        <PageContent namespace="Works">
+      <PageWithHeader seo={<Seo title="WORKS" pagePath="" />} header={<Header current="WORKS" />}>
+        <PageContent namespace="WORKS">
           <main data-component="Works">
             <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
               <h1 css={heading}>
@@ -50,7 +47,7 @@ module.exports = class {
                     >
                       <div css={aspect}></div>
                       <div css={entry__g}>
-                        <div css={eyecatch}>
+                        <div css={eyecatch} data-ref="clipTarget">
                           <img
                             src={item.eyecatch.src}
                             alt=""

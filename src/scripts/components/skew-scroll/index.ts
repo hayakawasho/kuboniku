@@ -1,14 +1,20 @@
-import { defineComponent, ref } from 'lake'
+import { defineComponent } from 'lake'
 import { clamp, lerp } from '@/libs'
 import { useTick } from '@/libs/lake'
+import { useWindowSize } from '@/libs/lake'
 import { scrollPosYGetters, scrollRunningGetters } from '@/states/scroll'
-import { viewportGetters } from '@/states/viewport'
 
 export default defineComponent({
   tagName: 'SkewScrollContainer',
   setup(el: HTMLElement) {
-    const lastY = ref(0)
-    const val = ref(0)
+    const { windowWidth } = useWindowSize(() => {
+      //
+    })
+
+    const state = {
+      lastY: 0,
+      val: 0,
+    }
 
     useTick(({ timeRatio }) => {
       if (!scrollRunningGetters()) {
@@ -18,21 +24,20 @@ export default defineComponent({
       const currentY = scrollPosYGetters()
 
       const easeVal = 1 - (1 - 0.2) ** timeRatio
-      lastY.value = lerp(lastY.value, currentY, easeVal)
+      state.lastY = lerp(state.lastY, currentY, easeVal)
 
-      if (lastY.value < 0.1) {
-        lastY.value = 0
+      if (state.lastY < 0.1) {
+        state.lastY = 0
       }
 
-      const { width } = viewportGetters()
-      const skewY = 7.5 * ((currentY - lastY.value) / width)
+      const skewY = 7.5 * ((currentY - state.lastY) / windowWidth.value)
 
-      val.value = clamp(skewY, {
+      state.val = clamp(skewY, {
         min: -5,
         max: 5,
       })
 
-      el.style.transform = `skew(0, ${val.value}deg) translateZ(0)`
+      el.style.transform = `skew(0, ${state.val}deg) translateZ(0)`
     })
   },
 })
