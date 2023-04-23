@@ -5,7 +5,6 @@ import { PageContent } from '../components/PageContent'
 import { PageWithHeader } from '../components/PageWithHeader'
 import { ResponsiveImage } from '../components/ResponsiveImage'
 import { Seo } from '../components/Seo'
-// import { Progressbar } from '../components/Progressbar'
 import { zeroPadding } from '../components/utils'
 import { selectRole, selectYear, selectTitle } from '../components/works/selector'
 
@@ -74,7 +73,7 @@ module.exports = class {
             </div>
 
             <div css={body}>
-              <div css={introLayout}>
+              <div css={introLayout} className="my-[6rem] | sm:mt-[10rem] sm:mb-[9rem]">
                 <div css={intro}>
                   <div css={intro__info}>
                     <dl css={dl}>
@@ -95,30 +94,23 @@ module.exports = class {
                       rel="noopener"
                     >
                       View website
-                      <div css={intro__viewLink__hr} />
+                      <div css={intro__viewLinkLine} />
                     </a>
                   )}
                 </div>
               </div>
               {post.gallery && (
-                <ul css={captchaList} className="mb-[10.5rem] sm:mx-auto sm:mb-[12rem]">
+                <ul css={captchaItems} className="mb-[10.5rem] | sm:mx-auto sm:mb-[18.2rem]">
                   {post.gallery.map((item: any, index: number) => {
-                    const css = {
-                      '--aspect': `${item.width / item.height}`,
-                      backgroundColor: post.color,
-                    }
                     return (
-                      <li key={index} className="relative bg-[#191918] mb-[2rem] sm:mb-[6rem]">
-                        <div css={aspect} style={css} />
-                        <figure className="fit2parent">
-                          <img
-                            src={item.src}
-                            alt=""
-                            width={item.width}
-                            height={item.height}
-                            decoding="async"
-                          />
-                        </figure>
+                      <li key={index} className="mb-[2rem] sm:mb-[6rem]">
+                        <img
+                          src={item.src}
+                          alt=""
+                          width={item.width}
+                          height={item.height}
+                          decoding="async"
+                        />
                       </li>
                     )
                   })}
@@ -215,7 +207,7 @@ const sub = css`
   line-height: 1;
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
-  padding-left: 1.3rem;
+  padding-left: 1.4rem;
 
   .icon-arrow_right {
     font-size: 1rem;
@@ -287,12 +279,13 @@ const body = css`
 const introLayout = css`
   position: relative;
   width: 100%;
-  padding: 6rem calc(var(--gap) * 2) 7rem;
+  padding: 0 calc(var(--gap) * 2);
 
   @media (min-width: 640px) {
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: calc(var(--grid) * 10);
-    padding: 10rem var(--grid) 9rem;
+    padding: 0 var(--grid);
   }
 `
 
@@ -308,7 +301,6 @@ const intro = css`
 
 const intro__info = css`
   @media (min-width: 640px) {
-    // width: calc(3 / 8 * 100%);
     margin-bottom: 0;
   }
 `
@@ -359,7 +351,7 @@ const intro__viewLink = css`
   }
 `
 
-const intro__viewLink__hr = css`
+const intro__viewLinkLine = css`
   position: absolute;
   left: 0;
   display: block;
@@ -375,13 +367,7 @@ const intro__viewLink__hr = css`
   }
 `
 
-const aspect = css`
-  aspect-ratio: var(--aspect);
-  background-color: 'transparent';
-  opacity: 0.2;
-`
-
-const captchaList = css`
+const captchaItems = css`
   padding: 0 var(--gap);
 
   @media (min-width: 640px) {

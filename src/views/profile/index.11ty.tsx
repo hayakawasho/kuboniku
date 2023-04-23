@@ -77,7 +77,7 @@ const container__in = css`
   @media (min-width: 640px) {
     left: 50%;
     text-align: left;
-    mix-blend-mode: difference;
+    // mix-blend-mode: difference;
   }
 `
 

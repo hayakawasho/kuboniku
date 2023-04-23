@@ -58,7 +58,7 @@ module.exports = class {
                           />
                         </div>
                         <div css={entry__hgroup}>
-                          <p css={num}>
+                          <p css={num} className="mb-[1.2rem] | sm:mb-[2rem]">
                             {zeroPadding(total - index)}
                             <span>Project</span>
                           </p>
@@ -177,12 +177,10 @@ const num = css`
   font-weight: bold;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
   line-height: 1;
 
   @media (min-width: 640px) {
     font-size: 1.9rem;
-    margin-bottom: 2rem;
   }
 
   > span {
