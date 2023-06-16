@@ -1,25 +1,25 @@
 import { css } from '@emotion/react'
 import parse from 'html-react-parser'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { Header } from '../components/Header'
-import { PageContent } from '../components/PageContent'
-import { PageWithHeader } from '../components/PageWithHeader'
-import { Seo } from '../components/Seo'
+import { Header } from '../_components/header'
+import { PageContent } from '../_components/page-content'
+import { PageWithHeader } from '../_components/page-with-header'
+import { Seo } from '../_components/seo'
 
 module.exports = class {
   render(props: any) {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        seo={<Seo title="PROFILE" pagePath="/profile/" />}
         header={<Header current="PROFILE" />}
+        seo={<Seo pagePath="/profile/" title="PROFILE" />}
       >
         <PageContent namespace="PROFILE">
-          <main data-component="Profile" className="overflow-hidden">
+          <main className="overflow-hidden" data-component="Profile">
             <h1 className="sr-only">PROFILE</h1>
             <div className="relative">
-              <i css={logo} className="icon-logo | u-pc"></i>
-              <i css={logo} className="icon-logo_sp | u-sp"></i>
+              <i className="icon-logo | u-pc" css={logo}></i>
+              <i className="icon-logo_sp | u-sp" css={logo}></i>
               <div css={container}>
                 <div css={container__in}>
                   <div css={hgroup}>

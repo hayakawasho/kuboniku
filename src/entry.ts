@@ -1,31 +1,31 @@
 import 'virtual:windi.css'
 import 'ress'
-import Cursor from '@/components/cursor/index.svelte'
-import Hover from '@/components/hover/hover'
 import q from 'bianco.query'
-import Loader from '@/components/loader'
-import type { IComponent, ComponentContext } from 'lake'
-import Menu from '@/components/menu/index.svelte'
 import factory, { withSvelte } from 'lake'
-import Noop from '@/components/noop.svelte'
-import Profile from '@/components/profile'
-import Sns from '@/components/sns.svelte'
-import Works from '@/components/works'
-import WorksDetail from '@/components/works/[slug]'
-import type { LoaderProps } from '@/const'
+import Cursor from '@/_components/cursor/index.svelte'
+import Hover from '@/_components/hover/hover'
+import Loader from '@/_components/loader'
+import type { LoaderProps } from '@/_foundation/const'
+import type { IComponent, ComponentContext } from 'lake'
+import Menu from '@/_components/menu/index.svelte'
+import Noop from '@/_components/noop.svelte'
+import Profile from '@/_components/profile'
+import Sns from '@/_components/sns.svelte'
+import Works from '@/_components/works'
+import WorksDetail from '@/_components/works/[slug]'
 
 function bootstrap() {
   const { component, unmount } = factory()
 
   const table: Record<string, IComponent> = {
-    Noop: withSvelte(Noop),
-    Sns: withSvelte(Sns, 'Sns'),
     Cursor: withSvelte(Cursor, 'Cursor'),
+    Hover,
     Menu: withSvelte(Menu, 'Menu'),
+    Noop: withSvelte(Noop),
+    Profile,
+    Sns: withSvelte(Sns, 'Sns'),
     Works,
     WorksDetail,
-    Profile,
-    Hover,
   } as const
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
@@ -44,6 +44,8 @@ function bootstrap() {
   const html = document.documentElement
 
   component(Loader)(html, {
+    onCleanup: (scope: Parameters<LoaderProps['onCleanup']>[0]) =>
+      unmount(q(`[data-component]`, scope)),
     onCreated: (GlobalContext?: Parameters<LoaderProps['onCreated']>[0]) =>
       mountComponents(html, {
         ...GlobalContext,
@@ -57,8 +59,6 @@ function bootstrap() {
         ...GlobalContext,
         initialLoad: false,
       }),
-    onCleanup: (scope: Parameters<LoaderProps['onCleanup']>[0]) =>
-      unmount(q(`[data-component]`, scope)),
   })
 }
 

@@ -1,21 +1,21 @@
 import { css, keyframes } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { Header } from '../components/Header'
-import { PageContent } from '../components/PageContent'
-import { PageWithHeader } from '../components/PageWithHeader'
-import { ResponsiveImage } from '../components/ResponsiveImage'
-import { Seo } from '../components/Seo'
-import { zeroPadding } from '../components/utils'
-import { selectRole, selectYear, selectTitle } from '../components/works/selector'
+import { Header } from '../_components/header'
+import { PageContent } from '../_components/page-content'
+import { PageWithHeader } from '../_components/page-with-header'
+import { ResponsiveImage } from '../_components/responsive-image'
+import { Seo } from '../_components/seo'
+import { zeroPadding } from '../_components/utils'
+import { selectRole, selectYear, selectTitle } from '../_components/works/selector'
 
 module.exports = class {
   data() {
     return {
       pagination: {
-        data: 'wp.works.items',
-        size: 1,
         addAllPagesToCollections: true,
         alias: 'post',
+        data: 'wp.works.items',
+        size: 1,
       },
       permalink: (context: any) => `works/${context.post.slug}/index.html`,
     }
@@ -32,11 +32,11 @@ module.exports = class {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        seo={<Seo title={pageTitle} pagePath={`/works/${post.slug}/`} />}
         header={<Header current="WORKS_DETAIL" />}
+        seo={<Seo pagePath={`/works/${post.slug}/`} title={pageTitle} />}
       >
         <PageContent namespace="WORKS_DETAIL">
-          <main data-component="WorksDetail" data-color={post.color}>
+          <main data-color={post.color} data-component="WorksDetail">
             <div data-ref="progressBar"></div>
             <div css={kv}>
               <div css={kv__cont}>
@@ -44,10 +44,10 @@ module.exports = class {
                   {zeroPadding(projectNumber)}
                   <span className="ml-[.8rem]">Project</span>
                 </p>
-                <h1 css={heading} className="pl-[1.1rem] pr-[.5em]">
+                <h1 className="pl-[1.1rem] pr-[.5em]" css={heading}>
                   {pageTitle}
                 </h1>
-                <p css={sub} className="pl-[1.3rem] mt-[.8rem] overflow-hidden">
+                <p className="pl-[1.3rem] mt-[.8rem] overflow-hidden" css={sub}>
                   <span className="inline-block origin-right">
                     {post.category}
                     <i className="icon-arrow_right ml-[.8rem]" />
@@ -55,14 +55,14 @@ module.exports = class {
                 </p>
               </div>
               <ResponsiveImage
+                alt=""
+                className="opacity-40 object-cover fit2parent"
+                pcH={post.eyecatch.height}
                 pcSrc={post.eyecatch.src}
                 pcW={post.eyecatch.width}
-                pcH={post.eyecatch.height}
+                spH={post.eyecatchMobile.height}
                 spSrc={post.eyecatchMobile.src}
                 spW={post.eyecatchMobile.width}
-                spH={post.eyecatchMobile.height}
-                className="opacity-40 object-cover fit2parent"
-                alt=""
               />
               <div css={kv__scrollDown}>
                 <div className="relative w-full h-full overflow-hidden">
@@ -75,7 +75,7 @@ module.exports = class {
             </div>
 
             <div css={body}>
-              <div css={introLayout} className="my-[6rem] | sm:mt-[10rem] sm:mb-[9rem]">
+              <div className="my-[6rem] | sm:mt-[10rem] sm:mb-[9rem]" css={introLayout}>
                 <div css={intro}>
                   <div css={intro__info}>
                     <dl css={dl}>
@@ -89,11 +89,11 @@ module.exports = class {
                   </div>
                   {post.siteUrl && (
                     <a
-                      css={intro__viewLink}
                       className="mt-[2rem] | sm:mt-0"
+                      css={intro__viewLink}
                       href={post.siteUrl}
-                      target="_blank"
                       rel="noopener"
+                      target="_blank"
                     >
                       View website
                       <div css={intro__viewLinkLine} />
@@ -101,43 +101,58 @@ module.exports = class {
                   )}
                 </div>
               </div>
-              {post.gallery && (
-                <ul css={captchaItems} className="mb-[10.5rem] | sm:mx-auto sm:mb-[18.2rem]">
-                  {post.gallery.map((item: any, index: number) => {
-                    return (
-                      <li key={index} className="mb-[2rem] sm:mb-[6rem]">
-                        <img
-                          src={item.src}
-                          alt=""
-                          width={item.width}
-                          height={item.height}
-                          decoding="async"
-                        />
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
+              {
+                <div className="mb-[10.5rem] | sm:mx-auto sm:mb-[18.2rem]" css={captchaItems}>
+                  {post.gallery.length > 0 && (
+                    <ul>
+                      {post.gallery.map((item: any, index: number) => {
+                        return (
+                          <li className="mb-[2rem] sm:mb-[6rem]" key={index}>
+                            <img
+                              alt=""
+                              decoding="async"
+                              height={item.height}
+                              src={item.src}
+                              width={item.width}
+                            />
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )}
+                  {post.showreel && (
+                    <video
+                      autoPlay
+                      className="w-full"
+                      loop
+                      muted
+                      playsInline
+                      preload="none"
+                      src={post.showreel.url}
+                    ></video>
+                  )}
+                </div>
+              }
               <aside css={[kv, kvNext]}>
-                <a href={`../${nextPost.slug}/`} className="fit2parent z-10">
+                <a className="fit2parent z-10" href={`../${nextPost.slug}/`}>
                   <div css={kv__cont}>
-                    <h2 css={heading} className="pl-[1.1rem] pr-[.5em]">
+                    <h2 className="pl-[1.1rem] pr-[.5em]" css={heading}>
                       Next Project
                     </h2>
-                    <p css={sub} className="pl-[1.3rem] mt-[.8rem] overflow-hidden">
+                    <p className="pl-[1.3rem] mt-[.8rem] overflow-hidden" css={sub}>
                       {selectTitle(nextPost)}
                       <i className="icon-arrow_right ml-[.8rem]" />
                     </p>
                   </div>
                   <ResponsiveImage
+                    alt=""
+                    className="opacity-40 filter grayscale-100 object-cover fit2parent"
+                    pcH={nextPost.eyecatch.height}
                     pcSrc={nextPost.eyecatch.src}
                     pcW={nextPost.eyecatch.width}
-                    pcH={nextPost.eyecatch.height}
+                    spH={nextPost.eyecatchMobile.height}
                     spSrc={nextPost.eyecatchMobile.src}
                     spW={nextPost.eyecatchMobile.width}
-                    spH={nextPost.eyecatchMobile.height}
-                    className="opacity-40 filter grayscale-100 object-cover fit2parent"
-                    alt=""
                   />
                 </a>
               </aside>

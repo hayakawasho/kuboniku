@@ -24,6 +24,10 @@ export default defineConfig({
           width: '100%',
           height: '100%',
         },
+        '.sizefull': {
+          width: '100%',
+          height: '100%',
+        },
       })
     }),
   ],

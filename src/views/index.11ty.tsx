@@ -1,20 +1,20 @@
 import { css } from '@emotion/react'
 import { renderToStaticMarkup as r } from 'react-dom/server'
-import { Header } from './components/Header'
-import { PageContent } from './components/PageContent'
-import { PageWithHeader } from './components/PageWithHeader'
-import { Seo } from './components/Seo'
-import { zeroPadding } from './components/utils'
-import { selectTitle } from './components/works/selector'
+import { Header } from './_components/header'
+import { PageContent } from './_components/page-content'
+import { PageWithHeader } from './_components/page-with-header'
+import { Seo } from './_components/seo'
+import { zeroPadding } from './_components/utils'
+import { selectTitle } from './_components/works/selector'
 
 module.exports = class {
   data() {
     return {
       pagination: {
-        data: 'wp.works.items',
-        size: 40,
         addAllPagesToCollections: false,
         alias: 'posts',
+        data: 'wp.works.items',
+        size: 40,
       },
     }
   }
@@ -25,7 +25,7 @@ module.exports = class {
 
     return `<!DOCTYPE html>
     ${r(
-      <PageWithHeader seo={<Seo title="WORKS" pagePath="" />} header={<Header current="WORKS" />}>
+      <PageWithHeader header={<Header current="WORKS" />} seo={<Seo pagePath="" title="WORKS" />}>
         <PageContent namespace="WORKS">
           <main data-component="Works">
             <div className="pt-[10rem] mb-[6rem] sm:mb-[3.6rem]">
@@ -38,27 +38,27 @@ module.exports = class {
             <div css={entries} data-ref="index" data-total={total}>
               {posts.map((item: any, index: number) => {
                 return (
-                  <article key={index} css={entryWrap} className="mb-[4rem] sm:mb-[6.4rem]">
+                  <article className="mb-[4rem] sm:mb-[6.4rem]" css={entryWrap} key={index}>
                     <a
                       css={entry}
-                      href={`./works/${item.slug}/`}
-                      data-ref="project"
                       data-color={item.color}
+                      data-ref="project"
+                      href={`./works/${item.slug}/`}
                     >
                       <div css={aspect}></div>
                       <div css={entry__g}>
                         <div css={eyecatch} data-ref="clipTarget">
                           <img
-                            src={item.eyecatch.src}
                             alt=""
-                            width={item.eyecatch.width}
-                            height={item.eyecatch.height}
-                            decoding="async"
                             className="_img"
+                            decoding="async"
+                            height={item.eyecatch.height}
+                            src={item.eyecatch.src}
+                            width={item.eyecatch.width}
                           />
                         </div>
                         <div css={entry__hgroup}>
-                          <p css={num} className="mb-[1.2rem] | sm:mb-[2rem]">
+                          <p className="mb-[1.2rem] | sm:mb-[2rem]" css={num}>
                             {zeroPadding(total - index)}
                             <span className="ml-[.8em]">Project</span>
                           </p>

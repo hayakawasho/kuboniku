@@ -60,6 +60,12 @@ class Works {
     this.color = raw.acf.theme_color
     this.siteUrl = raw.acf.url
     this.role = raw.acf.role.map(j => j.name)
+
+    this.showreel = raw.acf.showreel
+      ? {
+          url: raw.acf.showreel.url,
+        }
+      : null
   }
 }
 
