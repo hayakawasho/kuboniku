@@ -41,7 +41,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<label for="ai1wm-encrypt-backups">
 						<input type="checkbox" id="ai1wm-encrypt-backups" name="options[encrypt_backups]" />
 						<?php _e( 'Protect this backup with a password', AI1WM_PLUGIN_NAME ); ?>
-						<small style="color: red;">beta</small>
 					</label>
 					<div class="ai1wm-encrypt-backups-passwords-toggle">
 						<div class="ai1wm-encrypt-backups-passwords-container">
@@ -124,6 +123,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</li>
 
 			<?php do_action( 'ai1wm_export_advanced_settings' ); ?>
+
+			<?php do_action( 'ai1wm_export_exclude_db_tables' ); ?>
 		</ul>
 	</div>
 </div>
