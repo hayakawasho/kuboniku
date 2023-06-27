@@ -201,7 +201,7 @@ class Assets extends Settings_Component {
 	 * Enqueue assets.
 	 */
 	public function enqueue_assets() {
-		if ( current_user_can( 'manage_options' ) && 'on' === $this->plugin->settings->image_settings->_overlay ) {
+		if ( Utils::user_can( 'status' ) && 'on' === $this->plugin->settings->image_settings->_overlay ) {
 			wp_enqueue_script( 'front-overlay', $this->plugin->dir_url . 'js/front-overlay.js', array(), $this->plugin->version, true );
 			wp_enqueue_style( 'front-overlay', $this->plugin->dir_url . 'css/front-overlay.css', array(), $this->plugin->version );
 		}
@@ -231,7 +231,7 @@ class Assets extends Settings_Component {
 	 * @param \WP_Admin_Bar $admin_bar The admin bar object.
 	 */
 	public function admin_bar_cache( $admin_bar ) {
-		if ( ! Utils::user_can( 'clear_cache' ) || is_admin() ) {
+		if ( ! Utils::user_can( 'status' ) || is_admin() ) {
 			return;
 		}
 
@@ -266,6 +266,10 @@ class Assets extends Settings_Component {
 	public function can_sync( $can, $asset_id ) {
 		if ( self::is_asset_type( $asset_id ) && 'off' === $this->settings->get_value( 'auto_sync' ) && 'on' === $this->settings->get_value( 'content.enabled' ) ) {
 			$can = true;
+		}
+
+		if ( $can && ! $this->plugin->get_component( 'delivery' )->is_deliverable( $asset_id ) ) {
+			$can = false;
 		}
 
 		return $can;
@@ -319,18 +323,23 @@ class Assets extends Settings_Component {
 			foreach ( $this->delivery->unusable as $unusable ) {
 				if ( 'asset' === $unusable['sync_type'] && isset( $this->active_parents[ $unusable['parent_path'] ] ) && ! in_array( $unusable['post_id'], $assets, true ) ) {
 					$asset_id = (int) $unusable['post_id'];
-					$this->media->sync->set_signature_item( $asset_id, 'cld_asset', 'reset' );
-					$this->media->sync->add_to_sync( $asset_id );
-					$assets[] = $unusable['post_id'];
+					if ( $this->media->sync->can_sync( $asset_id ) ) {
+						$this->media->sync->set_signature_item( $asset_id, 'cld_asset', 'reset' );
+						$this->media->sync->add_to_sync( $asset_id );
+						$assets[] = $unusable['post_id'];
+					}
 				}
 			}
 		}
 
 		// Create found asset that's not media library.
 		if ( ! empty( $this->to_create ) && ! empty( $this->delivery->unknown ) ) {
-			foreach ( $this->delivery->unknown as $url ) {
-				if ( isset( $this->to_create[ $url ] ) ) {
-					$this->create_asset( $url, $this->to_create[ $url ] );
+			// Do not create assets if the image delivery is disabled.
+			if ( 'on' === $this->plugin->settings->get_value( 'image_delivery' ) ) {
+				foreach ( $this->delivery->unknown as $url ) {
+					if ( isset( $this->to_create[ $url ] ) ) {
+						$this->create_asset( $url, $this->to_create[ $url ] );
+					}
 				}
 			}
 		}
@@ -342,6 +351,11 @@ class Assets extends Settings_Component {
 	 * @hook cloudinary_string_replace
 	 */
 	public function add_url_replacements() {
+		// Due to the output buffers, this can be called multiple times.
+		if ( 1 < did_action( 'cloudinary_string_replace' ) ) {
+			return;
+		}
+
 		$overlay = Utils::get_sanitized_text( 'cloudinary-cache-overlay' );
 		$setting = $this->plugin->settings->image_settings->overlay;
 
@@ -568,7 +582,8 @@ class Assets extends Settings_Component {
 		);
 
 		$folder       = untrailingslashit( $this->media->get_cloudinary_folder() );
-		$asset_parent = self::POST_TYPE_SLUG === get_post_parent( $asset_id )->post_type ? true : false;
+		$asset_parent = self::POST_TYPE_SLUG === Utils::get_post_parent( $asset_id )->post_type;
+
 		if ( ! empty( $asset_parent ) ) {
 			$folder                     = $this->get_asset_storage_folder( get_the_title( $asset_id ) );
 			$options['overwrite']       = true; // Ensure we maintain this path and filename.
@@ -629,6 +644,16 @@ class Assets extends Settings_Component {
 			if ( ! $parent ) {
 				$valid = false;
 			}
+		}
+
+		if ( $valid && $this->delivery->is_deliverable( $attachment_id ) ) {
+			$valid = false;
+
+			// translators: The attachment ID.
+			$action_message = sprintf( __( 'Clean up sync metadata for %d', 'cloudinary' ), $attachment_id );
+			do_action( '_cloudinary_queue_action', $action_message );
+
+			Utils::clean_up_sync_meta( $attachment_id );
 		}
 
 		return $valid;
@@ -845,8 +870,11 @@ class Assets extends Settings_Component {
 			}
 		}
 		if ( $found instanceof \WP_Post ) {
-			$is_local                = true;
-			$this->to_create[ $url ] = $found->ID;
+			$is_local = true;
+
+			if ( $this->delivery->is_deliverable( $found->ID ) ) {
+				$this->to_create[ $url ] = $found->ID;
+			}
 		}
 
 		return $is_local;
@@ -963,7 +991,7 @@ class Assets extends Settings_Component {
 		$path   = $this->clean_path( $this->media->local_url( $asset_id ) );
 		$parent = $this->get_param( $path );
 		if ( empty( $parent ) ) {
-			$parent = get_post_parent( $asset_id );
+			$parent = Utils::get_post_parent( $asset_id );
 		}
 
 		return $parent instanceof \WP_Post ? $parent : null;
@@ -1078,7 +1106,7 @@ class Assets extends Settings_Component {
 		}
 		$base        = get_post( $parent_id )->post_title;
 		$size        = getimagesize( $file_path );
-		$size        = $size[0] . 'x' . $size[1];
+		$size        = ! empty( $size[0] ) && ! empty( $size[1] ) ? $size[0] . 'x' . $size[1] : '0x0'; // phpcs:ignore PHPCompatibility.Miscellaneous.ValidIntegers.HexNumericStringFound,PHPCompatibility.Numbers.RemovedHexadecimalNumericStrings.Found
 		$hash_name   = md5( $url );
 		$wp_filetype = wp_check_filetype( wp_basename( $url ), wp_get_mime_types() );
 		$args        = array(
@@ -1270,7 +1298,7 @@ class Assets extends Settings_Component {
 			if ( ! isset( $plugins[ $plugin ] ) ) {
 				continue;
 			}
-			$slug       = sanitize_file_name( Utils::pathinfo( $plugin, PATHINFO_FILENAME ) );
+			$slug       = sanitize_title_with_dashes( Utils::pathinfo( $plugin, PATHINFO_FILENAME ) );
 			$plugin_url = plugins_url( $plugin );
 			$details    = $plugins[ $plugin ];
 			$rows[]     = array(
@@ -1355,7 +1383,7 @@ class Assets extends Settings_Component {
 		foreach ( $themes as $theme ) {
 			$theme_location = $theme->get_stylesheet_directory();
 			$theme_slug     = wp_basename( dirname( $theme_location ) ) . '/' . wp_basename( $theme_location );
-			$slug           = sanitize_file_name( Utils::pathinfo( $theme_slug, PATHINFO_FILENAME ) );
+			$slug           = sanitize_title_with_dashes( Utils::pathinfo( $theme_slug, PATHINFO_FILENAME ) );
 			$rows[]         = array(
 				'slug'    => $slug,
 				'title'   => $theme->get( 'Name' ),

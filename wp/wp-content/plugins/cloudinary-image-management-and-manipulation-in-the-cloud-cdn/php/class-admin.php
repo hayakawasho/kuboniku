@@ -118,7 +118,7 @@ class Admin {
 			'callback'            => array( $this, 'rest_save_settings' ),
 			'args'                => array(),
 			'permission_callback' => function () {
-				return current_user_can( 'manage_options' );
+				return Utils::user_can( 'manage_settings' );
 			},
 		);
 
@@ -308,7 +308,7 @@ class Admin {
 			// If the section has a defined template, use that instead eg. wizard.
 			$file = $this->plugin->dir_path . 'ui-definitions/components/' . $template . '.php';
 		}
-		include $file;
+		include $file; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 	}
 
 	/**
@@ -414,7 +414,6 @@ class Admin {
 		$saving = filter_input_array( INPUT_POST, $args, false );
 		if ( ! empty( $saving ) && ! empty( $saving[ $submission ] ) && wp_verify_nonce( $saving['_cld_nonce'], 'cloudinary-settings' ) ) {
 			$referer = $saving['_wp_http_referer'];
-			wp_parse_str( wp_parse_url( $referer, PHP_URL_QUERY ), $query );
 
 			$data = $saving[ $submission ];
 			$this->save_settings( $submission, $data );

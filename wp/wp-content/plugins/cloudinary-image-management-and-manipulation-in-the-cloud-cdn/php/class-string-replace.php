@@ -94,10 +94,33 @@ class String_Replace implements Setup {
 				add_filter( 'rest_prepare_' . $type, array( $this, 'pre_filter_rest_content' ), 10, 3 );
 			}
 		}
+		add_filter( 'rest_pre_echo_response', array( $this, 'pre_filter_rest_echo' ), 900, 3 );
 	}
 
 	/**
-	 * Filter out local urls in an 'edit' context rest request ( i.e for Gutenburg ).
+	 * Filter the result of a rest Request before it's echoed.
+	 *
+	 * @param array            $result  The result of the REST API.
+	 * @param \WP_REST_Server  $server  The REST server instance.
+	 * @param \WP_REST_Request $request The original request.
+	 *
+	 * @return array
+	 */
+	public function pre_filter_rest_echo( $result, $server, $request ) {
+		$route = trim( $request->get_route(), '/' );
+		if ( 0 !== strpos( $route, REST_API::BASE ) ) {
+			// Only for non-Cloudinary requests.
+			$context = $request->get_param( 'context' );
+			if ( ! $context || 'view' === $context ) {
+				$result = $this->replace_strings( $result, $context );
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Filter out local urls in an 'edit' context rest request ( i.e for Gutenberg ).
 	 *
 	 * @param \WP_REST_Response $response The post data array to save.
 	 * @param \WP_Post          $post     The current post.
@@ -107,7 +130,7 @@ class String_Replace implements Setup {
 	 */
 	public function pre_filter_rest_content( $response, $post, $request ) {
 		$context = $request->get_param( 'context' );
-		if ( 'view' === $context || 'edit' === $context ) {
+		if ( 'edit' === $context ) {
 			$data = $response->get_data();
 			$data = $this->replace_strings( $data, $context );
 			$response->set_data( $data );
@@ -195,6 +218,12 @@ class String_Replace implements Setup {
 	 */
 	public function flatten( $content ) {
 		$flat = '';
+		if ( Utils::looks_like_json( $content ) ) {
+			$maybe_content = json_decode( $content, true );
+			if ( ! empty( $maybe_content ) ) {
+				$content = $maybe_content;
+			}
+		}
 		if ( self::is_iterable( $content ) ) {
 			foreach ( $content as $item ) {
 				$flat .= "\r\n" . $this->flatten( $item );

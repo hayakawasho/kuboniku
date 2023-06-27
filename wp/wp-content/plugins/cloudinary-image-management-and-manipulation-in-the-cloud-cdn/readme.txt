@@ -1,46 +1,38 @@
-=== Cloudinary – Image and Video Optimization, Manipulation, and Delivery ===
+=== Cloudinary - Deliver Images and Videos at Scale ===
 Contributors: Cloudinary, XWP, Automattic
-Tags: images, videos, DAM, optimization, CDN
+Tags: image-optimizer, crop, core-web-vitals, responsive, resize, product-gallery, performance
 Requires at least: 4.7
-Tested up to: 6.0
+Tested up to: 6.2.2
 Requires PHP: 5.6
-Stable tag: 3.0.5
+Stable tag: 3.1.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Use Cloudinary's plugin to efficiently create, manage and deliver images, videos, and other media, personalized and optimized for every device and channel.
 
-== Description ==
+== What can Cloudinary do for you? ==
 
-Cloudinary’s [award-winning plugin](https://www.businesswire.com/news/home/20200923005566/en/Cloudinary-Wins-2020-MarTech-Breakthrough-Award-for-Best-WordPress-Plugin) makes automating your image, video, and visual media workflows easy, offering a variety of features. From image and video upload through management, transformation, optimization, and global CDN delivery, all features are offered within the plugin. Users can get started in minutes with a true plug-and-play solution paired with an intuitive onboarding wizard helping deliver optimized and responsive media out-of-the-box.
+> * Provide best in class image and video optimization.[Try out our magic!](https://cloudinary.com/developers)
+* Deliver dynamically created responsive images across various devices, in different resolutions with exact pixel accuracy.
+* Lazy load images automatically with customizable placeholder settings.
+* Automatically optimize existing videos and images, as well as any future uploads.
+* Offer image and video editing capabilities, powered by AI, including transcoding, smart cropping, applying filters, generating thumbnails, and more.
+* Maintain compatibility with popular page builders.
+* Provide end-to-end support for the WooCommerce plugin.
+
+== About ==
+
+Cloudinary’s [award-winning plugin](https://www.businesswire.com/news/home/20200923005566/en/Cloudinary-Wins-2020-MarTech-Breakthrough-Award-for-Best-WordPress-Plugin)  makes automating your image, video, and visual media workflows easy, offering a variety of features. From image and video upload through management, transformation, optimization, and global CDN delivery, all features are offered within the plugin. Users can get started in minutes with a true plug-and-play solution paired with an intuitive onboarding wizard helping deliver optimized and responsive media out-of-the-box.
 
 https://youtu.be/B1Jx5hB1Ijk
 
 On top of that, users can also leverage a dashboard giving insights into optimization metrics and data usage so there are never any surprises. No matter if your use case is for personal use or business needs, the Cloudinary plugin offers enterprise quality and architecture for all.
 
-Optimize your site performance and user experience with faster page load times and advanced auto-responsive delivery, allowing you to improve your Google page rankings, Core Web Vitals, and Lighthouse scores. Publish faster while consistently delivering positive user experiences via an array of automated features such as video and image optimization, advanced responsive design, customizable lazy loading, and fast CDN delivery of assets. Display engaging visual experiences with automated quality and encoding settings, video and image resizing and cropping via AI, comprehensive transformations and effects, and delivery to any device in any resolution or pixel density.
-
-And with a full Digital Asset Management platform embedded in the plugin, you won’t need to leave your WordPress environment. Take full advantage of advanced search, AI-based tagging, rich media editing, collections, structured metadata, and an intuitive UI as well as our Video and Image APIs for headless DAM functionality, making it much easier to manage all of your media in WordPress.
-
-
-== Highlights ==
-
-* End-to-end support for the popular WooCommerce plugin along with the ability to replace the WooCommerce gallery with a responsive and customizable product gallery.
-* Compatibility with popular page builders helping with tasks such as building forms, fine-tuning SEO, establishing communities, managing multi language setups, and more.
-* Automatically optimize videos and images and apply specified global transformations to pre-existing media upon plugin installation as well as all future uploads.
-* Automatic responsive images for delivery on various devices in different resolutions with exact pixel accuracy.
-* Automatically lazy load images and videos with customizable placeholder settings.
-* Automatic image and video optimization of assets located outside of the media library in themes, plugins, and more.
-* Ability to display videos using Cloudinary’s video player giving additional features such as bitrate limit, autoplay, analytics, monetization, and more.
-* The most comprehensive array of image and video transformation capabilities, powered by AI.
-* Set transformations by “category” or “tag” in real time with taxonomy level transformations.
-* Transcode, AI crop, apply filters, generate thumbnails, and more with our video transformation capabilities.
-* Search and browse your media with AI-powered tagging and attributes including file type, size, format, and many other parameters all within the media library.
-* Utilize developer friendly documentation allowing users to further extend the plugin with advanced capabilities and features.
+**Optimize your site performance**  and user experience with faster page load times and advanced auto-responsive delivery, allowing you to improve your **Google page rankings**, **Core Web Vitals**, and **Lighthouse scores**. Publish faster while consistently delivering positive user experiences via an array of automated features such as video and image optimization, advanced responsive design, customizable lazy loading, and fast CDN delivery of assets. Display engaging visual experiences with automated quality and encoding settings, **video and image resizing** and **cropping via AI**, comprehensive transformations and effects, and delivery to any device in any resolution or pixel density.
 
 == Getting Started ==
 
-To use the Cloudinary Plugin and all the functionality that comes with it, you will need to have a Cloudinary Account. **If you don’t have an account yet, [sign up](https://cloudinary.com/signup?source=wp&utm_source=wp&utm_medium=wporgmarketplace&utm_campaign=wporgmarketplace) now for a free Cloudinary Programmable Media account**. You’ll start with generous usage limits and when your requirements grow, you can easily upgrade to a plan that best fits your needs. Upon account creation you can plug in your account credentials and customize your configurations as desired. That’s it.
+To use the Cloudinary Plugin and all the functionality that comes with it, you will need to have a Cloudinary Account. **If you don’t have an account yet, [sign up](https://cloudinary.com/signup?utm_source=wordpress-plugin-page&utm_medium=affiliate&utm_content=sign-up&utm_campaign=1976) now for a free Cloudinary Programmable Media account**. You’ll start with generous usage limits and when your requirements grow, you can easily upgrade to a plan that best fits your needs. Upon account creation you can plug in your account credentials and customize your configurations as desired. That’s it.
 
 **Upgrade Messaging**
 
@@ -141,6 +133,89 @@ Your site is now setup to start using Cloudinary.
 1. Need help? We’ve got you covered
 
 == Changelog ==
+
+= 3.1.3 (19 JUNE 2023) =
+
+Fixes and Improvements:
+
+* Added filters to allow extended metadata sync from Cloudinary to WordPress
+* Added a filter to extend the limit of imported assets in a bulk from Cloudinary to WordPress
+* Added a beta feature by the use of filters in order change the Crop and Gravity controls
+* Fixed plan status in the Cloudinary dashboard page
+* Fixed saving the taxonomy transformations
+
+
+= 3.1.2 (29 MARCH 2023) =
+
+Fixes and Improvements:
+
+* Fixed support for special characters as (^) causing a broken thumbnail
+* Fixed Cloudinary URLs for all non-media library assets
+* Fixed PHP error caused by transformations on unsupported file types
+
+= 3.1.1 (06 MARCH 2023) =
+
+Fixes and Improvements:
+
+* Fixed the *Add transformation* on the media library for newly added assets
+* Fixed PHP warning in error log after upgrading to PHP 8/8.X
+
+= 3.1 (22 FEBRUARY 2023) =
+
+Fixes and Improvements:
+
+* Added proactive mechanism that improves the support of synced assets using a cron job
+* Improved the very first initialisation of the setup wizard
+* Fixed the warning message when adding multi page PDFs
+* Fixed the Cloudinary status from the WP admin bar
+* Fixed the DivisionByZeroError Fatal error message
+
+= 3.0.9 (25 OCTOBER 2022) =
+
+Fixes and Improvements:
+
+* Added support to bypass lazy-loading above-the-fold
+* Added flag to easily spot synced/un-synced assets via Media endpoint on REST API
+* Improved SVG support
+* Improved compatibility with older versions of WordPress
+* Fixed a post featured image Lazy-load conflict error
+* Fixed Fetched URLs being switched to URL of unsyncable/broken assets
+* Fixed taxonomy term ordering
+* Fixed deprecated warnings on PHP 8.1
+
+= 3.0.8 (13 SEPTEMBER 2022) =
+
+Fixes and Improvements:
+
+* Added filters for capabilities checks
+* Fixed WebP being converted to gif when pulling assets from Cloudinary
+* Fixed Conflict with WP Rest API Cache where the plugin is ignoring Cloudinary URL
+* Fixed Lazy Loading breaks loading of images rendered from the headless source - WPGraphQL
+* Fixed PHPCompatibiltyWP missing from PHPCS config file
+* Improved PHP 8.X plugin compatibility
+* Improved Front-end JS compatibility issues originating from other media-related plugins
+* Improved Lazy Loading and general sliders compatibility issues
+
+
+= 3.0.7 (01 August 2022) =
+
+Fixes and Improvements:
+
+* Fixed issue of transformations being lost while pulling an asset from Cloudinary
+
+= 3.0.6 (25 July 2022) =
+
+Fixes and Improvements:
+
+* Fixed PHP Illegal string offset warning
+* Fixed Uncaught Error: Call to undefined function Cloudinary\Media\get_current_screen()
+* Fixed[WPGraphQL] Inconsistent media URLs in response
+* Fixed the alt-text on the initial import from Cloudinary
+* Improved Product gallery widget color palette compatibility with various themes
+* Moved asset transformations to relationship table
+* Added Support for upload_prefix in URLs
+* Updated the plugin deactivation screen
+
 
 = 3.0.5 (29 June 2022) =
 

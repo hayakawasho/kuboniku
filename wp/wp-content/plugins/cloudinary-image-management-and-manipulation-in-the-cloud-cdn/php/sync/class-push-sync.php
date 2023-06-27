@@ -8,6 +8,7 @@
 namespace Cloudinary\Sync;
 
 use Cloudinary\Sync;
+use Cloudinary\Utils;
 
 /**
  * Class Push_Sync
@@ -112,14 +113,14 @@ class Push_Sync {
 			'method'              => \WP_REST_Server::READABLE,
 			'callback'            => array( $this, 'rest_get_queue_status' ),
 			'args'                => array(),
-			'permission_callback' => array( $this, 'rest_can_manage_options' ),
+			'permission_callback' => array( $this, 'rest_can_manage_assets' ),
 		);
 
 		$endpoints['sync'] = array(
 			'method'              => \WP_REST_Server::CREATABLE,
 			'callback'            => array( $this, 'rest_start_sync' ),
 			'args'                => array(),
-			'permission_callback' => array( $this, 'rest_can_manage_options' ),
+			'permission_callback' => array( $this, 'rest_can_manage_assets' ),
 		);
 
 		$endpoints['queue'] = array(
@@ -143,8 +144,8 @@ class Push_Sync {
 	 *
 	 * @return bool
 	 */
-	public function rest_can_manage_options() {
-		return current_user_can( 'manage_options' );
+	public function rest_can_manage_assets() {
+		return Utils::user_can( 'manage_assets', 'manage_options', 'push_sync' );
 	}
 
 	/**
@@ -227,17 +228,7 @@ class Push_Sync {
 				}
 			}
 
-			// remove pending.
-			delete_post_meta( $attachment_id, Sync::META_KEYS['pending'] );
-
-			// Remove processing flag.
-			delete_post_meta( $attachment_id, Sync::META_KEYS['syncing'] );
-
-			$sync_thread = get_post_meta( $attachment_id, Sync::META_KEYS['queued'], true );
-			if ( ! empty( $sync_thread ) ) {
-				delete_post_meta( $attachment_id, Sync::META_KEYS['queued'] );
-				delete_post_meta( $attachment_id, $sync_thread );
-			}
+			Utils::clean_up_sync_meta( $attachment_id );
 		}
 
 		return $stat;

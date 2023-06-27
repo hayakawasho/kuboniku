@@ -685,7 +685,7 @@ class Filter {
 		$str_container  = strpos( $template, $str_div ) !== false ? $str_div : '<fieldset class="setting-group">';
 		$str_vid_edit   = '<# if ( ! _.isEmpty( data.model.poster ) ) { #>';
 		$str_vid_insert = '<# if ( \'undefined\' !== typeof data.sizes ) { #>';
-		$str_gen_edit   = '<h2>' . __( 'Attachment Display Settings', 'cloudinary' ) . '</h2>'; // phpcs:ignore
+		$str_gen_edit   = '<h2>' . __( 'Attachment Display Settings' ) . '</h2>'; // phpcs:ignore
 		$template       = str_replace( $str_label, $this->template_overwrite_insert() . $str_label, $template );
 		$template       = str_replace( $str_container, $this->template_overwrite_edit() . $str_container, $template );
 		$template       = str_replace( $str_vid_edit, $this->template_overwrite_video_edit() . $str_vid_edit, $template );

@@ -8,9 +8,11 @@
 namespace Cloudinary\Media;
 
 use Cloudinary\Connect\Api;
+use Cloudinary\Relate;
 use Cloudinary\Settings\Setting;
 use Cloudinary\Sync;
 use Cloudinary\REST_API;
+use Cloudinary\Utils;
 use WP_Post;
 
 /**
@@ -172,15 +174,17 @@ class Global_Transformations {
 	 */
 	private function get_term_transformations( $term_id, $type ) {
 		$meta_data = array();
-		foreach ( $this->taxonomy_fields[ $type ] as $setting ) {
-			$slug               = $setting->get_param( 'slug' );
-			$meta_key           = self::META_ORDER_KEY . '_' . $slug;
-			$value              = get_term_meta( $term_id, $meta_key, true );
-			$meta_data[ $slug ] = $value;
-		}
+		if ( ! empty( $this->taxonomy_fields[ $type ] ) ) {
+			foreach ( $this->taxonomy_fields[ $type ] as $setting ) {
+				$slug               = $setting->get_param( 'slug' );
+				$meta_key           = self::META_ORDER_KEY . '_' . $slug;
+				$value              = get_term_meta( $term_id, $meta_key, true );
+				$meta_data[ $slug ] = $value;
+			}
 
-		// Clear out empty items.
-		$meta_data = array_filter( $meta_data );
+			// Clear out empty items.
+			$meta_data = array_filter( $meta_data );
+		}
 
 		return $meta_data;
 	}
@@ -537,7 +541,7 @@ class Global_Transformations {
 				'type'          => 'boolean',
 				'description'   => esc_html__( 'Flag on whether transformation should be overwritten for a featured image.', 'cloudinary' ),
 				'auth_callback' => function () {
-					return current_user_can( 'edit_posts' );
+					return Utils::user_can( 'override_transformation', 'edit_posts' );
 				},
 			)
 		);
@@ -647,12 +651,17 @@ class Global_Transformations {
 				return;
 			}
 
+			// If asset isn't deliverable, don't show transformations.
+			if ( ! $this->media->plugin->get_component( 'delivery' )->is_deliverable( $attachment_id ) ) {
+				return;
+			}
+
 			$item = $this->media->plugin->get_component( 'assets' )->get_asset( $attachment_id, 'dataset' );
 			if ( ! empty( $item['data']['public_id'] ) ) {
 				$text            = __( 'Add transformations', 'cloudinary' );
-				$transformations = $this->media->get_post_meta( $attachment_id, Sync::META_KEYS['transformation'], true );
+				$transformations = Relate::get_transformations( $attachment_id, true );
 				if ( ! empty( $transformations ) ) {
-					$text = Api::generate_transformation_string( $transformations, $this->media->get_resource_type( $attachment_id ) );
+					$text = $transformations;
 				}
 				$args = array(
 					'page'    => 'cloudinary',

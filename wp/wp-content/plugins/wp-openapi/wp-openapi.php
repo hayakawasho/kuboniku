@@ -9,7 +9,7 @@
  *
  * Plugin Name: WP OpenAPI
  * Plugin URI: https://github.com/moon0326/wp-openapi
- * Version:     1.0.6
+ * Version:     1.0.10
  * Author:      Moon K
  * Author URI: https://github.com/moon0326
  * License:     GPL v2 or later
@@ -127,7 +127,7 @@ class WPOpenAPI {
 			'admin_email'     => get_option( 'admin_email' ),
 			'blogname'        => get_option( 'blogname' ),
 			'blogdescription' => get_option( 'blogdescription' ),
-			'siteurl'         => get_option( 'siteurl' ),
+			'home'            => get_option( 'home' ),
 			'wp_version'      => $wp_version,
 		);
 
@@ -168,9 +168,9 @@ class WPOpenAPI {
 		$permalink_structure = get_option( 'permalink_structure' );
 		$namespace           = $this->getNamespace();
 		if ( $permalink_structure === '' ) {
-			$endpoint = site_url( '?rest_route=/wp-openapi/v1/schema&namespace=' . $namespace );
+			$endpoint = home_url( '?rest_route=/wp-openapi/v1/schema&namespace=' . $namespace );
 		} else {
-			$endpoint = site_url( '/wp-json-openapi?namespace=' . $namespace );
+			$endpoint = home_url( '/wp-json-openapi?namespace=' . $namespace );
 		}
 
 		$data = array(
