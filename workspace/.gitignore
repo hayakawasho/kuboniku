@@ -1,0 +1,16 @@
+_site
+/_transpiled
+/_bk
+
+
+# Node dependencies
+node_modules
+# System files
+*.log
+.DS_Store
+.cache
+
+.env
+.node-version
+
+tmp
