@@ -1,6 +1,0 @@
-export { clamp } from 'remeda'
-export * from '../_foundation/tween'
-export * from '../_foundation/math'
-export * from '../_foundation/debounce'
-export * from '../_foundation/sleep'
-export * from './utils'
