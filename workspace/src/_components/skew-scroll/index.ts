@@ -1,0 +1,54 @@
+import { defineComponent, ref } from "lake";
+import { clamp } from "remeda";
+import { useTick } from "@/_foundation/hooks";
+import { lerp } from "@/_foundation/math";
+import { useScrollPos } from "@/_states/scroll";
+import { useWindowSize } from "@/_states/window-size";
+import type { AppContext } from "@/_foundation/type";
+
+export default defineComponent({
+  name: "SkewScrollContainer",
+  setup(el: HTMLElement, context: AppContext) {
+    const { mq } = context;
+
+    const state = {
+      resizing: false,
+    };
+
+    const [ww] = useWindowSize(() => {
+      state.resizing = true;
+      //
+      state.resizing = false;
+    });
+
+    const [y] = useScrollPos();
+
+    const lastY = ref(y.value);
+    const ty = ref(y.value);
+
+    const EASE = {
+      pc: 0.14,
+      sp: 0.2,
+    } as const;
+
+    useTick(({ timeRatio }) => {
+      if (state.resizing) {
+        return;
+      }
+
+      const currentY = y.value;
+
+      const easeVal = 1 - (1 - EASE[mq.value]) ** timeRatio;
+      lastY.value = lerp(lastY.value, currentY, easeVal);
+
+      if (lastY.value < 0.1) {
+        lastY.value = 0;
+      }
+
+      const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
+      ty.value = clamp(skewY, { max: 5, min: -5 });
+
+      el.style.transform = `skew(0, ${ty.value}deg) translateZ(0)`;
+    });
+  },
+});

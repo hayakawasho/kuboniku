@@ -1,5 +1,5 @@
-import { css, keyframes } from '@emotion/react'
-import { mq } from '@/_foundation/mq'
+import { css, keyframes } from "@emotion/react";
+import { mq } from "@/_foundation/mq";
 
 export const kv = css`
   position: relative;
@@ -13,11 +13,11 @@ export const kv = css`
   @media ${mq.pc} {
     height: 100vh;
   }
-`
+`;
 
 export const kvNext = css`
   height: 100vh;
-`
+`;
 
 export const kv__cont = css`
   position: absolute;
@@ -27,7 +27,7 @@ export const kv__cont = css`
   z-index: 2;
   padding-left: var(--grid);
   color: #fff;
-`
+`;
 
 export const heading = css`
   font-weight: 600;
@@ -39,7 +39,7 @@ export const heading = css`
   @media ${mq.pc} {
     font-size: 7rem;
   }
-`
+`;
 
 export const project = css`
   position: absolute;
@@ -54,7 +54,7 @@ export const project = css`
     font-size: 70%;
     letter-spacing: 0.02em;
   }
-`
+`;
 
 export const sub = css`
   font-family: var(--font-roboto);
@@ -69,7 +69,7 @@ export const sub = css`
     transform-origin: left;
     display: inline-block;
   }
-`
+`;
 
 export const kv__scrollDown = css`
   position: absolute;
@@ -88,7 +88,7 @@ export const kv__scrollDown = css`
   @media ${mq.pc} {
     font-size: 1.3rem;
   }
-`
+`;
 
 export const front = keyframes`
   0%,
@@ -99,7 +99,7 @@ export const front = keyframes`
   100% {
     transform: translate3d(0, 2rem, 0);
   }
-`
+`;
 
 export const back = keyframes`
   0%,
@@ -110,7 +110,7 @@ export const back = keyframes`
   100% {
     transform: translate3d(0, -5.2rem, 0) rotate(0) skewX(0);
   }
-`
+`;
 
 export const kv__scrollLabel = css`
   display: inline-block;
@@ -126,11 +126,11 @@ export const kv__scrollLabel = css`
     animation-delay: 0.05s;
     transform-origin: bottom;
   }
-`
+`;
 
 export const body = css`
   backface-visibility: hidden;
-`
+`;
 
 export const introLayout = css`
   position: relative;
@@ -143,7 +143,7 @@ export const introLayout = css`
     width: calc(var(--grid) * 10);
     padding: 0 var(--grid);
   }
-`
+`;
 
 export const intro = css`
   position: relative;
@@ -153,20 +153,20 @@ export const intro = css`
     align-items: flex-start;
     justify-content: space-between;
   }
-`
+`;
 
 export const intro__info = css`
   @media ${mq.pc} {
     margin-bottom: 0;
   }
-`
+`;
 
 export const dl = css`
   display: flex;
   gap: 0.5rem;
   font-size: 1.2rem;
   font-family: var(--font-roboto);
-`
+`;
 
 export const dt = css`
   color: var(--color-text-primary);
@@ -176,7 +176,7 @@ export const dt = css`
   @media ${mq.pc} {
     font-size: 1.1rem;
   }
-`
+`;
 
 export const dd = css`
   font-weight: 300;
@@ -187,7 +187,7 @@ export const dd = css`
   @media ${mq.pc} {
     font-size: 1.3rem;
   }
-`
+`;
 
 export const intro__viewLink = css`
   position: relative;
@@ -205,7 +205,7 @@ export const intro__viewLink = css`
     bottom: 0.5rem;
     right: 0;
   }
-`
+`;
 
 export const intro__viewLinkLine = css`
   position: absolute;
@@ -214,14 +214,14 @@ export const intro__viewLinkLine = css`
   height: 0;
   top: 0.7em;
   width: 1.75em;
-  content: '';
+  content: "";
   border: solid;
   border-width: 1px 0 0;
 
   @media ${mq.pc} {
     border-top-width: 2px;
   }
-`
+`;
 
 export const captchaItems = css`
   padding: 0 var(--gap);
@@ -230,4 +230,4 @@ export const captchaItems = css`
     width: calc(var(--grid) * 10);
     padding: 0;
   }
-`
+`;

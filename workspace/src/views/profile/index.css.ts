@@ -1,5 +1,5 @@
-import { css } from '@emotion/react'
-import { mq } from '@/_foundation/mq'
+import { css } from "@emotion/react";
+import { mq } from "@/_foundation/mq";
 
 export const logo = css`
   position: absolute;
@@ -7,7 +7,7 @@ export const logo = css`
   left: 50%;
   transform: translate(calc(-50% + 2rem), calc(-100% - 7.5rem));
   font-size: 17rem;
-  background: url('/assets/grad.jpg');
+  background: url("/assets/grad.jpg");
   background-size: 100% 160%;
   background-position: center;
   background-clip: text;
@@ -18,7 +18,7 @@ export const logo = css`
     font-size: 31rem;
     transform: translate(calc(-50% + 7rem), calc(-100% + 0.1em));
   }
-`
+`;
 
 export const container = css`
   position: relative;
@@ -29,7 +29,7 @@ export const container = css`
   @media ${mq.pc} {
     text-align: left;
   }
-`
+`;
 
 export const container__in = css`
   position: absolute;
@@ -43,7 +43,7 @@ export const container__in = css`
     text-align: left;
     // mix-blend-mode: difference;
   }
-`
+`;
 
 export const hgroup = css`
   margin-bottom: 2.8rem;
@@ -57,7 +57,7 @@ export const hgroup = css`
       font-size: 1.4rem;
     }
   }
-`
+`;
 
 export const heading = css`
   font-weight: bold;
@@ -67,7 +67,7 @@ export const heading = css`
   @media ${mq.pc} {
     font-size: 3rem;
   }
-`
+`;
 
 export const about = css`
   font-size: 1.1rem;
@@ -77,4 +77,4 @@ export const about = css`
     font-size: 1.3rem;
     text-align: justify;
   }
-`
+`;

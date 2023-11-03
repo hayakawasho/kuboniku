@@ -14,7 +14,7 @@ export const PageWithHeader: FC<{
   return (
     <html lang="ja">
       <Head seo={seo} />
-      <body data-component="Menu">
+      <body data-page={namespace}>
         <div
           aria-hidden="true"
           className="fixed inset-0 w-screen pointer-events-none -z-1 invisible"
@@ -22,6 +22,13 @@ export const PageWithHeader: FC<{
           data-ref="windowSizeWatcher"
         />
         {header}
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 w-screen h-screen pointer-events-none"
+          data-ref="glWorld"
+        >
+          <canvas className="w-screen h-screen" data-ref="canvas"></canvas>
+        </div>
         <div
           aria-live="polite"
           className="relative backface-hidden"
@@ -36,16 +43,9 @@ export const PageWithHeader: FC<{
         <div css={ui}>
           <div className="hidden" data-component="Cursor" />
         </div>
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 w-screen h-screen pointer-events-none z-10"
-          data-ref="glWorld"
-        >
-          <canvas className="w-screen h-screen" data-ref="canvas"></canvas>
-        </div>
         <script
           defer={true}
-          src="https://polyfill.io/v3/polyfill.min.js?features=MediaQueryList.prototype.addEventListener%2CMediaQueryList.prototype.removeEventListener%2CString.prototype.padStart%2CIntersectionObserver%2CResizeObserver"
+          src="https://polyfill.io/v3/polyfill.min.js?version=3.111.0&flags=gated&features=fetch%2CMediaQueryList.prototype.addEventListener%2CResizeObserver%2CString.prototype.padStart"
         />
         {idDev && (
           <script

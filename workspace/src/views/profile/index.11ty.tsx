@@ -5,17 +5,17 @@ import { Header } from "../_components/header";
 import { PageWithHeader } from "../_components/page-with-header";
 import { Seo } from "../_components/seo";
 
-module.exports = class {
+class Component {
   render(props: any) {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
         header={<Header current="PROFILE" />}
         namespace="PROFILE"
-        seo={<Seo permalink="/profile/" title="PROFILE" />}
+        seo={<Seo permalink="/profile/" prepend={<></>} title="Profile" />}
       >
         <main className="overflow-hidden" data-component="Profile">
-          <h1 className="sr-only">PROFILE</h1>
+          <h1 className="sr-only">Profile</h1>
           <div className="relative">
             <i className="icon-logo | sp:hidden" css={styles.logo}></i>
             <i className="icon-logo_sp | pc:hidden" css={styles.logo}></i>
@@ -25,7 +25,7 @@ module.exports = class {
                   <h2 css={styles.heading}>Nagisa Kubo</h2>
                   <p>Art Director & Designer</p>
                 </div>
-                <div css={styles.about}>{parse(props.wp.profile.html)}</div>
+                <div css={styles.about}>{parse(props.wp.profile)}</div>
               </div>
             </div>
           </div>
@@ -33,4 +33,6 @@ module.exports = class {
       </PageWithHeader>
     )}`;
   }
-};
+}
+
+module.exports = Component;

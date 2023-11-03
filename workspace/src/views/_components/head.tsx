@@ -9,6 +9,13 @@ export const Head: FC<{
 }> = ({ seo }) => {
   return (
     <head>
+      <link
+        as="font"
+        crossOrigin=""
+        href="/assets/kuboniku.woff"
+        rel="preload"
+        type="font/woff"
+      />
       {!idDev && (
         <link
           as="style"
@@ -155,11 +162,13 @@ const base = css`
     display: block;
   }
 
+  picture {
+    display: block;
+  }
+
   @font-face {
     font-family: "kuboniku";
-    src: url("/assets/kuboniku.ttf?f4g4p2") format("truetype"),
-      url("/assets/kuboniku.woff?f4g4p2") format("woff"),
-      url("/assets/kuboniku.svg?f4g4p2#kuboniku") format("svg");
+    src: url("/assets/kuboniku.woff") format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -195,11 +204,5 @@ const base = css`
 
   .icon-logo:before {
     content: "\\e903";
-  }
-
-  .u-in {
-    width: 100%;
-    height: 100%;
-    position: relative;
   }
 `;

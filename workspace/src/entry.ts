@@ -2,7 +2,6 @@ import "virtual:windi.css";
 import "ress";
 import { create, withSvelte } from "lake";
 import Cursor from "./_components/cursor/index.svelte";
-import Hover from "./_components/hover/hover";
 import Load from "./_components/load";
 import Menu from "./_components/menu/index.svelte";
 import Noop from "./_components/noop.svelte";
@@ -18,7 +17,6 @@ const init = () => {
 
   const table: Record<string, IComponent> = {
     Cursor: withSvelte(Cursor, "Cursor"),
-    Hover,
     Menu: withSvelte(Menu, "Menu"),
     Noop: withSvelte(Noop),
     Profile,

@@ -1,19 +1,24 @@
 import { renderToStaticMarkup as r } from "react-dom/server";
+import { mq } from "@/_foundation/mq";
 import { zeroPadding } from "@/_foundation/utils";
-import { selectRole, selectYear, selectTitle } from "@/_works/selector";
+import { cloudinaryApiConverter } from "@/_models/image/conveter";
+import { selectRole, selectYear, selectTitle } from "@/_models/works/selector";
 import * as styles from "./[slug].css";
 import { Header } from "../_components/header";
 import { PageWithHeader } from "../_components/page-with-header";
 import { Seo } from "../_components/seo";
+import { ImagePreloader } from "../_components/ui/image-preloader";
+import { Link } from "../_components/ui/link";
 import { ResponsiveImage } from "../_components/ui/responsive-image";
+import type { WorkMetadata } from "@/_models/works";
 
-module.exports = class {
+class Component {
   data() {
     return {
       pagination: {
         addAllPagesToCollections: true,
         alias: "post",
-        data: "wp.works.items",
+        data: "wp.works",
         size: 1,
       },
       permalink: (context: any) => `works/${context.post.slug}/index.html`,
@@ -21,12 +26,15 @@ module.exports = class {
   }
 
   render(props: any) {
-    const post = props.post;
-    const page = props.pagination.page;
-    const nextPost =
+    const post: WorkMetadata = props.post;
+    const totalCount = props.wp.totalCount as number;
+
+    const { page, pageNumber } = props.pagination;
+
+    const next: WorkMetadata =
       page.last.id === post.id ? { ...page.first } : { ...page.next };
 
-    const projectNumber = props.wp.works.total - props.pagination.pageNumber;
+    const projectNumber = totalCount - pageNumber;
     const pageTitle = selectTitle(post) as string;
 
     return `<!DOCTYPE html>
@@ -34,9 +42,32 @@ module.exports = class {
       <PageWithHeader
         header={<Header current="WORKS_DETAIL" />}
         namespace="WORKS_DETAIL"
-        seo={<Seo permalink={`/works/${post.slug}/`} title={pageTitle} />}
+        seo={
+          <Seo
+            permalink={`/works/${post.slug}/`}
+            prepend={
+              <>
+                <ImagePreloader
+                  href={cloudinaryApiConverter(
+                    post.thumb["pc"].url,
+                    "f_auto,q_auto,w_1680"
+                  )}
+                  media={mq.pc}
+                />
+                <ImagePreloader
+                  href={cloudinaryApiConverter(
+                    post.thumb["sp"].url,
+                    "f_auto,q_auto,w_750"
+                  )}
+                  media={mq.sp}
+                />
+              </>
+            }
+            title={pageTitle}
+          />
+        }
       >
-        <main data-color={post.color} data-component="Work">
+        <main data-color={post.theme} data-component="Work">
           <div data-ref="progressBar"></div>
           <div css={styles.kv}>
             <div css={styles.kv__cont}>
@@ -60,10 +91,16 @@ module.exports = class {
             <ResponsiveImage
               alt=""
               className="opacity-40 object-cover fit2parent"
-              pcSize={[post.eyecatch.width, post.eyecatch.height]}
-              pcSrc={post.eyecatch.src}
-              spSize={[post.eyecatchMobile.width, post.eyecatchMobile.height]}
-              spSrc={post.eyecatchMobile.src}
+              mob={cloudinaryApiConverter(
+                post.thumb["sp"].url,
+                "f_auto,q_auto,w_750"
+              )}
+              mobSize={[post.thumb["sp"].width, post.thumb["sp"].height]}
+              size={[post.thumb["pc"].width, post.thumb["pc"].height]}
+              src={cloudinaryApiConverter(
+                post.thumb["pc"].url,
+                "f_auto,q_auto,w_1680"
+              )}
             />
             <div css={styles.kv__scrollDown}>
               <div className="relative w-full h-full overflow-hidden">
@@ -111,17 +148,24 @@ module.exports = class {
                 className="mb-[10.5rem] | pc:mx-auto pc:mb-[18.2rem]"
                 css={styles.captchaItems}
               >
-                {post.gallery.length > 0 && (
+                {post.screenshots && (
                   <ul>
-                    {post.gallery.map((item: any, index: number) => {
+                    {post.screenshots.map((item, index: number) => {
                       return (
                         <li className="mb-[2rem] pc:mb-[6rem]" key={index}>
-                          <img
+                          <ResponsiveImage
                             alt=""
-                            decoding="async"
-                            height={item.height}
-                            src={item.src}
-                            width={item.width}
+                            className="w-full"
+                            mob={cloudinaryApiConverter(
+                              item.url,
+                              "f_auto,q_auto,w_750"
+                            )}
+                            mobSize={[item.width, item.height]}
+                            size={[item.width, item.height]}
+                            src={cloudinaryApiConverter(
+                              item.url,
+                              "f_auto,q_auto,w_1440"
+                            )}
                           />
                         </li>
                       );
@@ -143,7 +187,7 @@ module.exports = class {
             }
 
             <aside css={[styles.kv, styles.kvNext]}>
-              <a className="fit2parent z-10" href={`../${nextPost.slug}/`}>
+              <Link className="fit2parent z-10" to={`../${next.slug}/`}>
                 <div css={styles.kv__cont}>
                   <h2 className="pl-[1.1rem] pr-[.5em]" css={styles.heading}>
                     Next Project
@@ -152,26 +196,31 @@ module.exports = class {
                     className="pl-[1.3rem] mt-[.8rem] overflow-hidden"
                     css={styles.sub}
                   >
-                    {selectTitle(nextPost)}
+                    {selectTitle(next)}
                     <i className="icon-arrow_right ml-[.8rem]" />
                   </p>
                 </div>
                 <ResponsiveImage
                   alt=""
                   className="opacity-40 filter grayscale-100 object-cover fit2parent"
-                  pcSize={[nextPost.eyecatch.width, nextPost.eyecatch.height]}
-                  pcSrc={nextPost.eyecatch.src}
-                  spSize={[
-                    nextPost.eyecatchMobile.width,
-                    nextPost.eyecatchMobile.height,
-                  ]}
-                  spSrc={nextPost.eyecatchMobile.src}
+                  mob={cloudinaryApiConverter(
+                    next.thumb["sp"].url,
+                    "f_auto,q_auto,w_750"
+                  )}
+                  mobSize={[next.thumb["sp"].width, next.thumb["sp"].height]}
+                  size={[next.thumb["pc"].width, next.thumb["pc"].height]}
+                  src={cloudinaryApiConverter(
+                    next.thumb["pc"].url,
+                    "f_auto,q_auto,w_1440"
+                  )}
                 />
-              </a>
+              </Link>
             </aside>
           </div>
         </main>
       </PageWithHeader>
     )}`;
   }
-};
+}
+
+module.exports = Component;

@@ -1,11 +1,11 @@
-// import type GlContext from "../_components/glworld";
+import type GlContext from "../_components/glworld";
 import type { ReadonlyRef } from "lake";
 
 export type AppContext = {
   once: boolean;
-  history: ReadonlyRef<"pushstate" | "popstate">;
+  history: ReadonlyRef<"push" | "pop">;
   mq: ReadonlyRef<"pc" | "sp">;
-  // glContext: ReturnType<(typeof GlContext)["setup"]>;
+  glContext: ReturnType<(typeof GlContext)["setup"]>;
 };
 
 //----------------------------------------------------------------
