@@ -39,8 +39,6 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/scroll-lock": "^2.1.0",
-    "@types/stats.js": "^0.17.0",
-    "@types/three": "^0.148.1",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@wordpress/env": "^4.9.0",
@@ -89,7 +87,7 @@
     "ress": "^5.0.2",
     "scroll-lock": "^2.1.5",
     "split-type": "^0.3.3",
-    "three": "^0.158.0",
+    "three": "^0.110.0",
     "ts-pattern": "^4.0.6"
   },
   "browserslist": [
