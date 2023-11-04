@@ -1,0 +1,193 @@
+<script lang="ts">
+  import { useDomRef, useSlot, ref, readonly, withSvelte } from "lake";
+  import { getContext } from "svelte";
+  import { Tween } from "@/_foundation/tween";
+  import { nextTick } from "@/_foundation/utils";
+  import MenuClose from "./close";
+  import Menu from "./menu.svelte";
+  import MenuToggle from "./toggle";
+  import type { AppContext } from "@/_foundation/type";
+  import type { Context$ } from "lake";
+
+  type Refs = {
+    menuTrigger: HTMLButtonElement;
+    burgerTL: HTMLElement;
+    burgerBL: HTMLElement;
+    menuBody: HTMLElement;
+    menuMask: HTMLElement;
+    menuBg: HTMLElement;
+    menuLink: HTMLAnchorElement[];
+    menuLinks: HTMLElement;
+    menuLabel: HTMLElement[];
+  };
+
+  const CLIP_PATH = {
+    x1: 100,
+    x2: 100,
+  };
+
+  const { refs } = useDomRef<Refs>(
+    "menuTrigger",
+    "burgerTL",
+    "burgerBL",
+    "menuBody",
+    "menuMask",
+    "menuBg",
+    "menuLabel",
+    "menuLink",
+    "menuLinks"
+  );
+
+  const { rootRef, mq } = getContext<Context$<AppContext>>("$");
+
+  const drawMenuBg = () => {
+    refs.menuBg.style.clipPath = `polygon(
+      ${CLIP_PATH.x1}% 0px,
+      100% 0px,
+      100% 100vh,
+      ${CLIP_PATH.x2}% 100vh
+    )`;
+  };
+
+  const openAnime = async () => {
+    rootRef.classList.add("isMenuAnimating");
+    Tween.kill([refs.menuLabel, refs.menuTrigger]);
+
+    await nextTick();
+
+    rootRef.classList.add("isMenuOpen");
+
+    Tween.serial(
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: "none",
+        rotation: 0,
+      }),
+      Tween.parallel(
+        Tween.tween(refs.menuMask, 0.75, undefined, {
+          opacity: 0.5,
+        }),
+        Tween.tween(refs.menuTrigger, 0.75, "power2.inOut", {
+          rotation: 180,
+        }),
+        Tween.tween(refs.burgerTL, 0.75, "power2.inOut", {
+          y: 2.5,
+        }),
+        Tween.tween(refs.burgerBL, 0.75, "power2.inOut", {
+          scaleX: 0,
+        }),
+        Tween.serial(
+          Tween.prop(refs.menuLabel, {
+            opacity: 1,
+            rotation: -7,
+            y: "200%",
+          }),
+          Tween.tween(refs.menuLabel, 0.75, "power2.inOut", {
+            rotation: 0,
+            stagger: 0.065,
+            y: "0%",
+          })
+        ),
+        Tween.parallel(
+          Tween.tween(CLIP_PATH, 0.85, "power2.inOut", {
+            onUpdate: drawMenuBg,
+            x1: 0,
+          }),
+          Tween.tween(CLIP_PATH, 0.75, "power2.inOut", {
+            x2: 0,
+          }).delay(0.1)
+        )
+      ),
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: "auto",
+      }),
+      Tween.immediate(() => {
+        rootRef.classList.remove("isMenuAnimating");
+      })
+    );
+  };
+
+  const closeAnime = async () => {
+    rootRef.classList.add("isMenuAnimating");
+    Tween.kill([refs.menuLabel, refs.menuTrigger]);
+
+    await nextTick();
+
+    Tween.serial(
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: "none",
+        rotation: 180,
+      }),
+      Tween.parallel(
+        Tween.tween(refs.menuMask, 0.75, undefined, {
+          opacity: 0,
+        }),
+        Tween.tween(refs.menuTrigger, 0.75, "power2.inOut", {
+          rotation: 360,
+        }),
+        Tween.tween(refs.burgerTL, 0.75, "power2.inOut", {
+          y: 0,
+        }),
+        Tween.tween(refs.burgerBL, 0.75, "power2.inOut", {
+          scaleX: 32 / 40,
+        }),
+        Tween.serial(
+          Tween.prop(refs.menuLabel, {
+            rotation: 0,
+            y: "0%",
+          }),
+          Tween.tween(refs.menuLabel, 0.65, "power2.inOut", {
+            rotation: 7,
+            stagger: 0.06,
+            y: "-200%",
+          })
+        ),
+        Tween.parallel(
+          Tween.tween(CLIP_PATH, 0.85, "power2.inOut", {
+            onUpdate: drawMenuBg,
+            x1: 100,
+          }),
+          Tween.tween(CLIP_PATH, 0.75, "power2.inOut", {
+            x2: 100,
+          }).delay(0.1)
+        )
+      ),
+      Tween.prop(refs.menuTrigger, {
+        pointerEvents: "auto",
+      }),
+      Tween.immediate(() => {
+        rootRef.classList.remove("isMenuOpen", "isMenuAnimating");
+      })
+    );
+  };
+
+  let isOpen = ref<boolean | undefined>(undefined);
+
+  $: isOpen.value === true && openAnime();
+  $: isOpen.value === false && closeAnime();
+
+  const { addChild } = useSlot();
+
+  const onOpen = () => (isOpen.value = true);
+  const onClose = () => (isOpen.value = false);
+  const readonlyIsOpen = readonly(isOpen);
+
+  addChild(refs.menuTrigger, MenuToggle, {
+    isOpen: readonlyIsOpen,
+    onClose,
+    onOpen,
+  });
+
+  addChild(refs.menuMask, MenuClose, {
+    onClose,
+  });
+
+  addChild(refs.menuLinks, withSvelte(Menu), {
+    current: "WORKS",
+  });
+
+  if (mq.value === "sp") {
+    // addChild(refs.menuLink, MenuClose, {
+    //   onClose,
+    // })
+  }
+</script>

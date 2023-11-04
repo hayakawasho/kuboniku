@@ -1,6 +1,0 @@
-export { clamp } from 'remeda'
-export * from './tween'
-export * from './aspida'
-export * from './math'
-export * from './debounce'
-export * from './sleep'
