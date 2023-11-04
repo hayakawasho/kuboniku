@@ -5,6 +5,7 @@ export const convertWorkFromCMS = (raw: any): WorkMetadata => {
   return {
     category: raw.acf.category.name,
     createAt: new Date(raw.date),
+    description: raw.description,
     id: raw.id,
     role: raw.acf.role.map((j: any) => j.name),
     screenshots:

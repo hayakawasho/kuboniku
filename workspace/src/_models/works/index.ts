@@ -11,6 +11,7 @@ export type WorkMetadata = {
     sp: ImageMetadata;
   };
   theme: string;
+  description?: string;
   siteUrl?: string;
   showreel?: {
     url: string;

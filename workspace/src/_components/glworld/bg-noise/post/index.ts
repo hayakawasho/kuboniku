@@ -1,72 +1,66 @@
 import * as THREE from "three";
-import { themeColorGetters, themeColorCodeWatch } from "@/_states/color";
+import { Tween } from "@/_foundation/tween";
 
 export default class {
   private _transforms: any;
   private _scene = new THREE.Scene();
   private _clock = new THREE.Clock(true);
   private _cameraOrtho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  private _mesh: any;
-  private _uniforms = {
-    uActiveClouds: {
-      type: "f",
-      value: null,
-    },
-    uActiveNoise: {
-      type: "f",
-      value: null,
-    },
-    uAlpha: {
-      type: "f",
-      value: 0.2,
-    },
-    uAmount: {
-      type: "f",
-      value: 0.2,
-    },
-    uBlur: {
-      type: "f",
-      value: 0.0,
-    },
-    uCol: {
-      type: "v3",
-      value: new THREE.Color(themeColorGetters().code),
-    },
-    uRad: {
-      type: "f",
-      value: 0.0,
-    },
-    uResolution: {
-      type: "v2",
-      value: new THREE.Vector2(),
-    },
-    uSamplerIn: {
-      type: "t",
-      value: null,
-    },
-    uSamplerOut: {
-      type: "t",
-      value: null,
-    },
-    uTime: {
-      type: "f",
-      value: 0.2,
-    },
-  };
+  private _mesh: THREE.Mesh;
+  private _uniforms: any;
+  private _colorCode = "#1793a9";
 
   constructor() {
-    this._setup();
-
-    themeColorCodeWatch((colorCode) => {
-      this._uniforms.uCol.value = new THREE.Color(colorCode);
-    });
-  }
-
-  private _setup() {
     this._transforms = {};
 
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
+    this._uniforms = {
+      uActiveClouds: {
+        type: "f",
+        value: null,
+      },
+      uActiveNoise: {
+        type: "f",
+        value: null,
+      },
+      uAlpha: {
+        type: "f",
+        value: 0.2,
+      },
+      uAmount: {
+        type: "f",
+        value: 0.2,
+      },
+      uBlur: {
+        type: "f",
+        value: 0.0,
+      },
+      uCol: {
+        type: "v3",
+        value: new THREE.Color(this._colorCode),
+      },
+      uRad: {
+        type: "f",
+        value: 0.0,
+      },
+      uResolution: {
+        type: "v2",
+        value: new THREE.Vector2(),
+      },
+      uSamplerIn: {
+        type: "t",
+        value: null,
+      },
+      uSamplerOut: {
+        type: "t",
+        value: null,
+      },
+      uTime: {
+        type: "f",
+        value: 0.2,
+      },
+    };
 
+    const geometry = new THREE.PlaneBufferGeometry(2, 2);
     const material = new THREE.ShaderMaterial({
       fragmentShader: `
         precision highp float;
@@ -126,7 +120,7 @@ export default class {
           gl_FragColor = vec4(color, 1.0);
         }
       `,
-      uniforms: this._uniforms as any,
+      uniforms: this._uniforms,
       vertexShader: `
         precision highp float;
         varying vec2 vUv;
@@ -139,15 +133,29 @@ export default class {
     });
 
     this._mesh = new THREE.Mesh(geometry, material);
-
     this._scene.add(this._mesh);
   }
 
-  render() {
-    this._uniforms.uTime.value = Math.sin(this._clock.getElapsedTime());
-  }
+  setColorCode = (colorCode: string) => {
+    const newColorCode = new THREE.Color(colorCode);
 
-  transform() {
+    Tween.serial(
+      Tween.tween(this._uniforms.uCol.value, 1, "opacity", {
+        b: newColorCode.b,
+        g: newColorCode.g,
+        r: newColorCode.r,
+      }),
+      Tween.immediate(() => {
+        this._colorCode = colorCode;
+      })
+    );
+  };
+
+  render = () => {
+    this._uniforms.uTime.value = Math.sin(this._clock.getElapsedTime());
+  };
+
+  transform = () => {
     const transforms = this._transforms;
     const uni = this._uniforms;
 
@@ -159,7 +167,7 @@ export default class {
       uni.uActiveNoise.value = transforms.post.noise ? 1 : (0 as any);
       uni.uActiveClouds.value = transforms.post.clouds ? 1 : (0 as any);
     }
-  }
+  };
 
   set width(value: number) {
     this._uniforms.uResolution.value.x = value;

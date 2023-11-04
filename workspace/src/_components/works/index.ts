@@ -6,6 +6,7 @@ import {
   useMount,
 } from "lake";
 import { Tween } from "@/_foundation/tween";
+import Project from "./project";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
@@ -23,6 +24,7 @@ export default defineComponent({
     const { refs } = useDomRef<Refs>("index", "project");
 
     addChild(el, SkewScrollContainer, context);
+    addChild(refs.project, Project, context);
 
     useMount(() => {
       if (!once && history.value === "push") {

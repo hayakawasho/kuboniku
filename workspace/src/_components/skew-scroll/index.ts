@@ -12,8 +12,8 @@ export default defineComponent({
     const { mq } = context;
 
     const state = {
-      resizing: false,
       active: false,
+      resizing: false,
     };
 
     const [ww] = useWindowSize(() => {

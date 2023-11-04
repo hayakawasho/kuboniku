@@ -10,12 +10,12 @@ export const Link: FC<{
     <a
       {...props}
       className={`${className} cursor-pointer`}
+      href={to}
       hx-get={to}
       hx-push-url="true"
       hx-select="[data-xhr]"
       hx-swap={`${swap}`}
       hx-target="#main"
-      href={to}
     >
       {children}
     </a>

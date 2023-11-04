@@ -5,8 +5,8 @@ import { selectTitle } from "@/_models/works/selector";
 import { Header } from "./_components/header";
 import { PageWithHeader } from "./_components/page-with-header";
 import { Seo } from "./_components/seo";
-import { Link } from "./_components/ui/link";
 import { ImagePreloader } from "./_components/ui/image-preloader";
+import { Link } from "./_components/ui/link";
 import * as styles from "./index.css";
 import type { WorkMetadata } from "@/_models/works";
 

@@ -1,9 +1,9 @@
 import { getGPUTier } from "detect-gpu";
 import { defineComponent, useDomRef } from "lake";
-import { Bg } from "./bg-noise/core";
+import * as THREE from "three";
 import { useTick } from "@/_foundation/hooks";
 import { useWindowSize } from "@/_states/window-size";
-import * as THREE from "three";
+import { Bg } from "./bg-noise/core";
 import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
@@ -55,7 +55,7 @@ export default defineComponent({
       }
 
       renderer.render(scene, camera);
-      bg.render();
+      bg.onRender();
     });
 
     useWindowSize(({ aspect, wh, ww }) => {
@@ -67,13 +67,16 @@ export default defineComponent({
       camera.position.z = calcCamDistance(wh);
       camera.updateProjectionMatrix();
 
-      bg.resize();
+      bg.onResize();
 
       state.resizing = false;
     });
 
     return {
       addScene,
+      onChangeColorPallete: (colorCode: string) => {
+        bg.onChangeColorCode(colorCode);
+      },
       removeScene,
     };
   },

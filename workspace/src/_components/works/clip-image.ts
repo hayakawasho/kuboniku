@@ -39,7 +39,7 @@ export default defineComponent({
       };
     });
 
-    const onEnter = async (_e: MouseEvent | TouchEvent) => {
+    useEvent(el, "mouseenter", async (_e) => {
       el.classList.add("isHover", "isAnimating");
       refs.clipTarget.style.willChange = "clip-path";
 
@@ -61,9 +61,9 @@ export default defineComponent({
           y: cache.value.height * (INSET_VAL * state.rate.y),
         })
       );
-    };
+    });
 
-    const onLeave = async (_e: MouseEvent | TouchEvent) => {
+    useEvent(el, "mouseleave", async (_e) => {
       el.classList.add("isAnimating");
       refs.clipTarget.style.willChange = "clip-path";
 
@@ -88,13 +88,6 @@ export default defineComponent({
           y: 0,
         })
       );
-    };
-
-    useEvent(el, "mouseenter", onEnter);
-    useEvent(el, "mouseleave", onLeave);
-    useEvent(el, "touchstart", onEnter, {
-      passive: true,
     });
-    useEvent(el, "touchend", onLeave);
   },
 });

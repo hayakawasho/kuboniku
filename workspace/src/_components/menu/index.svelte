@@ -1,12 +1,12 @@
 <script lang="ts">
   import { useDomRef, useSlot, ref, readonly, withSvelte } from "lake";
   import { getContext } from "svelte";
+  import { Tween } from "@/_foundation/tween";
+  import { nextTick } from "@/_foundation/utils";
   import MenuClose from "./close";
   import Menu from "./menu.svelte";
   import MenuToggle from "./toggle";
-  import { Tween } from "../../_foundation/tween";
-  import { nextTick } from "../../_foundation/utils";
-  import type { GlobalContext } from "../../_foundation";
+  import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
   type Refs = {
@@ -33,12 +33,12 @@
     "menuBody",
     "menuMask",
     "menuBg",
-    // 'menuLabel',
-    // 'menuLink',
+    "menuLabel",
+    "menuLink",
     "menuLinks"
   );
 
-  const { rootRef, env } = getContext<Context$<GlobalContext>>("$");
+  const { rootRef, mq } = getContext<Context$<AppContext>>("$");
 
   const drawMenuBg = () => {
     refs.menuBg.style.clipPath = `polygon(
@@ -185,7 +185,7 @@
     current: "WORKS",
   });
 
-  if (env.mq === "sp") {
+  if (mq.value === "sp") {
     // addChild(refs.menuLink, MenuClose, {
     //   onClose,
     // })

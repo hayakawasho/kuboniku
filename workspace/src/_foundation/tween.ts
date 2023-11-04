@@ -1,4 +1,9 @@
 import { gsap, Linear, Quad, Cubic, Quart, Quint, Expo } from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+
+{
+  gsap.registerPlugin(CustomEase);
+}
 
 const EASE = {
   "expo.in": Expo.easeIn,
@@ -7,6 +12,7 @@ const EASE = {
   linear: Linear.easeNone,
   "power1.in": Quad.easeIn,
   "power1.inOut": Quad.easeInOut,
+  opacity: CustomEase.create("opacity", ".26, .06, 0, 1"),
   "power1.out": Quad.easeOut,
   "power2.in": Cubic.easeIn,
   "power2.inOut": Cubic.easeInOut,

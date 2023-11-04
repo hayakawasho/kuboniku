@@ -183,21 +183,42 @@ export const dd = css`
   color: #cbcbcb;
 `;
 
-export const intro__viewLink = css`
-  position: relative;
-  display: inline-block;
-  font-weight: bold;
-  padding-left: 2.6em;
-  font-family: var(--font-en);
-  font-size: 1.2rem;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
+export const intro__desc = css`
+  @media ${mq.pc} {
+    width: calc(5 / 8 * 100%);
+    text-align: right;
+  }
+
+  & > a {
+    display: inline-block;
+    font-weight: bold;
+    padding-left: 2.6em;
+    font-family: var(--font-en);
+    font-size: 1.2rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin-top: 2.4rem;
+
+    @media ${mq.pc} {
+      font-size: 1.4rem;
+      margin-top: 0;
+    }
+  }
+`;
+
+export const introDescription = css`
+  font-size: 1.3rem;
+  line-height: calc(46 / 26);
+  margin-top: 2.4rem;
 
   @media ${mq.pc} {
-    font-size: 1.4rem;
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0;
+    margin-top: 0;
+    font-size: 1.3rem;
+    text-align: left;
+
+    & + a {
+      margin-top: 3.5rem;
+    }
   }
 `;
 

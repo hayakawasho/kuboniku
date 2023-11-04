@@ -128,18 +128,22 @@ class Component {
                     <dd css={styles.dd}>{selectRole(post)}</dd>
                   </dl>
                 </div>
-                {post.siteUrl && (
-                  <a
-                    className="mt-[2rem] | pc:mt-0"
-                    css={styles.intro__viewLink}
-                    href={post.siteUrl}
-                    rel="noopener"
-                    target="_blank"
-                  >
-                    View website
-                    <div css={styles.intro__viewLinkLine} />
-                  </a>
-                )}
+                <div css={styles.intro__desc}>
+                  {post.description && (
+                    <p css={styles.intro__desc}>{post.description}</p>
+                  )}
+                  {post.siteUrl && (
+                    <a
+                      className="relative"
+                      href={post.siteUrl}
+                      rel="noopener"
+                      target="_blank"
+                    >
+                      View website
+                      <div css={styles.intro__viewLinkLine} />
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
 

@@ -38,7 +38,7 @@ export class Bg {
       pc: {
         post: {
           alpha: 0.14,
-          amount: 0.07,
+          amount: 0.08,
           blur: 0.1,
           clouds: true,
           noise: true,
@@ -60,13 +60,17 @@ export class Bg {
     this.#transform(transforms[mq]);
   }
 
-  render = () => {
+  onRender = () => {
     this._renderer.render(this.#post.scene, this.#post.camera);
     this.#post.render();
   };
 
-  resize = () => {
+  onResize = () => {
     this.#setSize();
+  };
+
+  onChangeColorCode = (colorCode: string) => {
+    this.#post.setColorCode(colorCode);
   };
 
   #transform = (transforms: any) => {
