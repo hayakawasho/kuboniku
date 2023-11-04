@@ -60,17 +60,17 @@ export class Bg {
     this.#transform(transforms[mq]);
   }
 
-  onRender = () => {
+  render = () => {
     this._renderer.render(this.#post.scene, this.#post.camera);
     this.#post.render();
   };
 
-  onResize = () => {
+  resize = () => {
     this.#setSize();
   };
 
-  onChangeColorCode = (colorCode: string) => {
-    this.#post.setColorCode(colorCode);
+  setColor = (colorCode: string) => {
+    this.#post.setColor(colorCode);
   };
 
   #transform = (transforms: any) => {

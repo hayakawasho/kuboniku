@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { Tween } from "@/_foundation/tween";
+import { THEME_COLOR } from "@/_foundation/const";
 
 export default class {
   private _transforms: any;
@@ -8,7 +9,7 @@ export default class {
   private _cameraOrtho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   private _mesh: THREE.Mesh;
   private _uniforms: any;
-  private _colorCode = "#1793a9";
+  private _colorCode = THEME_COLOR;
 
   constructor() {
     this._transforms = {};
@@ -136,14 +137,14 @@ export default class {
     this._scene.add(this._mesh);
   }
 
-  setColorCode = (colorCode: string) => {
-    const newColorCode = new THREE.Color(colorCode);
+  setColor = (colorCode: string) => {
+    const newColor = new THREE.Color(colorCode);
 
     Tween.serial(
       Tween.tween(this._uniforms.uCol.value, 1, "opacity", {
-        b: newColorCode.b,
-        g: newColorCode.g,
-        r: newColorCode.r,
+        b: newColor.b,
+        g: newColor.g,
+        r: newColor.r,
       }),
       Tween.immediate(() => {
         this._colorCode = colorCode;

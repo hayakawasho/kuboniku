@@ -1,17 +1,25 @@
 import { defineComponent, useEvent } from "lake";
+import { THEME_COLOR } from "@/_foundation/const";
 import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
   name: "Project",
   setup(el: HTMLElement, context: AppContext) {
-    const { glContext } = context;
-
+    const { glContext, mq } = context;
     // const { refs } = useDomRef();
 
-    const colorPallete = el.dataset.color!;
+    if (mq.value === "sp") {
+      return;
+    }
+
+    const color = el.dataset.color!;
 
     useEvent(el, "mouseenter", (_e) => {
-      glContext.onChangeColorPallete(colorPallete);
+      glContext.onChangeColorPallete(color);
+    });
+
+    useEvent(el, "mouseleave", (_e) => {
+      glContext.onChangeColorPallete(THEME_COLOR);
     });
   },
 });

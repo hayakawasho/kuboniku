@@ -41,9 +41,7 @@ export default defineComponent({
     const camera = new THREE.PerspectiveCamera(FOV, width / height, 0.1, 2000);
     camera.position.z = calcCamDistance(height);
 
-    const bg = new Bg(renderer, camera, {
-      mq: mq.value,
-    });
+    const bg = new Bg(renderer, camera, { mq: mq.value });
 
     const scene = new THREE.Scene();
     const addScene = (child: THREE.Mesh) => scene.add(child);
@@ -55,28 +53,25 @@ export default defineComponent({
       }
 
       renderer.render(scene, camera);
-      bg.onRender();
+      bg.render();
     });
 
     useWindowSize(({ aspect, wh, ww }) => {
       state.resizing = true;
 
       renderer.setSize(ww, wh);
+      bg.resize();
 
       camera.aspect = aspect;
       camera.position.z = calcCamDistance(wh);
       camera.updateProjectionMatrix();
-
-      bg.onResize();
 
       state.resizing = false;
     });
 
     return {
       addScene,
-      onChangeColorPallete: (colorCode: string) => {
-        bg.onChangeColorCode(colorCode);
-      },
+      onChangeColorPallete: (colorCode: string) => bg.setColor(colorCode),
       removeScene,
     };
   },
