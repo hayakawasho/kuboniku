@@ -48,11 +48,11 @@ export class Bg {
       sp: {
         post: {
           alpha: 0.16,
-          amount: 0.03,
-          blur: 0.5,
+          amount: 0.05,
+          blur: 0.1,
           clouds: true,
           noise: true,
-          rad: 0.8,
+          rad: 0.9,
         },
       },
     };
