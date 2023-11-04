@@ -57,7 +57,7 @@ class Component {
         }
       >
         <main data-component="Works">
-          <div className="pt-[10rem] mb-[6rem] pc:mb-[3.6rem]">
+          <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
             <h1 css={styles.heading}>
               Works
               <sup css={styles.heading__total}>{total}</sup>
@@ -67,11 +67,7 @@ class Component {
           <div css={styles.entries} data-ref="index" data-total={total}>
             {posts.map((item, index: number) => {
               return (
-                <article
-                  className="mb-[4rem] pc:mb-[6.4rem]"
-                  css={styles.entryWrap}
-                  key={item.id}
-                >
+                <article css={styles.entryWrap} key={item.id}>
                   <Link
                     css={styles.entry}
                     data-color={item.theme}
@@ -95,7 +91,7 @@ class Component {
                       </figure>
                       <div css={styles.entry__hgroup}>
                         <p
-                          className="mb-[1.2rem] | pc:mb-[2rem]"
+                          className="mb-[1.2rem] | pc:mb-[1.5rem]"
                           css={styles.num}
                         >
                           {zeroPadding(total - index)}

@@ -21,10 +21,12 @@ class Component {
             <i className="icon-logo_sp | pc:hidden" css={styles.logo}></i>
             <div css={styles.container}>
               <div css={styles.container__in}>
-                <div css={styles.hgroup}>
-                  <h2 css={styles.heading}>Nagisa Kubo</h2>
-                  <p>Art Director & Designer</p>
-                </div>
+                <h2 css={styles.heading} className="mb-[.8rem] pc:mb-[.3rem]">
+                  Nagisa Kubo
+                </h2>
+                <p css={styles.sub} className="mb-[2.4rem] pc:mb-[3rem]">
+                  Art Director & Designer
+                </p>
                 <div css={styles.about}>{parse(props.wp.profile)}</div>
               </div>
             </div>

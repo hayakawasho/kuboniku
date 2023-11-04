@@ -43,11 +43,14 @@ export const entries = css`
 `;
 
 export const entryWrap = css`
+  margin-bottom: 4rem;
+
   @media ${mq.pc} {
     width: calc(var(--grid) * 4);
+    margin-bottom: 6.5rem;
 
     &:nth-of-type(2n - 1) {
-      margin-top: 9.6rem;
+      margin-top: 9rem;
       margin-left: 3.4rem;
     }
   }
@@ -85,12 +88,12 @@ export const entry__g = css`
 export const entry__hgroup = css`
   position: absolute;
   bottom: 2rem;
-  left: -1.2rem;
+  left: -1rem;
   z-index: 2;
 
   @media ${mq.pc} {
-    bottom: 4rem;
-    left: -3.6rem;
+    bottom: 4.2rem;
+    left: -3.4rem;
     padding-right: 3.6rem;
   }
 `;

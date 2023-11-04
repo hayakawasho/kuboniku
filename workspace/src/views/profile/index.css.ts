@@ -45,27 +45,24 @@ export const container__in = css`
   }
 `;
 
-export const hgroup = css`
-  margin-bottom: 2.8rem;
-  font-family: var(--font-roboto);
-
-  > p {
-    font-size: 1.2rem;
-    color: #858585;
-
-    @media ${mq.pc} {
-      font-size: 1.4rem;
-    }
-  }
-`;
-
 export const heading = css`
+  font-family: var(--font-roboto);
   font-weight: bold;
   font-size: 2.4rem;
-  line-height: calc(60 / 24);
+  line-height: calc(60 / 48);
 
   @media ${mq.pc} {
     font-size: 3rem;
+  }
+`;
+
+export const sub = css`
+  font-family: var(--font-roboto);
+  font-size: 1.2rem;
+  color: #858585;
+
+  @media ${mq.pc} {
+    font-size: 1.4rem;
   }
 `;
 
