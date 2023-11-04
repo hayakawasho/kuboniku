@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "lake";
+import { defineComponent, ref, useMount } from "lake";
 import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
@@ -13,6 +13,7 @@ export default defineComponent({
 
     const state = {
       resizing: false,
+      active: false,
     };
 
     const [ww] = useWindowSize(() => {
@@ -31,8 +32,13 @@ export default defineComponent({
       sp: 0.2,
     } as const;
 
+    const onReset = () => {
+      state.active = false;
+      ty.value = 0;
+    };
+
     useTick(({ timeRatio }) => {
-      if (state.resizing) {
+      if (state.resizing || !state.active) {
         return;
       }
 
@@ -49,6 +55,14 @@ export default defineComponent({
       ty.value = clamp(skewY, { max: 5, min: -5 });
 
       el.style.transform = `skew(0, ${ty.value}deg) translateZ(0)`;
+    });
+
+    useMount(() => {
+      state.active = true;
+
+      return () => {
+        onReset();
+      };
     });
   },
 });

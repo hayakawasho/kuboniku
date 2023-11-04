@@ -18,7 +18,7 @@ export const PageWithHeader: FC<{
         <div
           aria-hidden="true"
           className="fixed inset-0 w-screen pointer-events-none -z-1 invisible"
-          css={svh}
+          css={vh}
           data-ref="windowSizeWatcher"
         />
         {header}
@@ -60,17 +60,17 @@ export const PageWithHeader: FC<{
   );
 };
 
-const svh = css`
+const vh = css`
   height: var(--vh * 100);
-  height: 100svh;
+  height: 100vh;
 `;
 
 const screen = css`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const ui = css`

@@ -15,6 +15,7 @@ export const Link: FC<{
       hx-select="[data-xhr]"
       hx-swap={`${swap}`}
       hx-target="#main"
+      href={to}
     >
       {children}
     </a>

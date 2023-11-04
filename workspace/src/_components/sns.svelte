@@ -20,10 +20,18 @@
     isOpen = !isOpen;
   });
 
-  $: isOpen === true && _open();
-  $: isOpen === false && _close();
+  $: switch (isOpen) {
+    case true:
+      onOpen();
+      break;
+    case false:
+      onClose();
+      break;
+    default:
+      break;
+  }
 
-  const _open = async () => {
+  const onOpen = async () => {
     rootRef.classList.add("is-animating");
 
     await nextTick();
@@ -48,7 +56,7 @@
     );
   };
 
-  const _close = async () => {
+  const onClose = async () => {
     rootRef.classList.add("is-animating");
 
     await nextTick();

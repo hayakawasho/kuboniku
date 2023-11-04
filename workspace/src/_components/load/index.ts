@@ -80,6 +80,8 @@ export default defineComponent({
       const namespace = to.dataset.xhr;
       document.body.dataset.page = namespace;
 
+      window.scrollTo(0, 0);
+
       onUpdated(to, provides);
     };
 

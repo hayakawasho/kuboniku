@@ -36,6 +36,7 @@ export const heading__total = css`
 
 export const entries = css`
   padding: 0 calc(var(--gap) * 2);
+  padding-bottom: 6.5rem;
 
   @media ${mq.pc} {
     display: flex;
@@ -44,6 +45,7 @@ export const entries = css`
     margin: 0 auto;
     padding: 0;
     width: calc(var(--grid) * 10);
+    padding-bottom: 17.5rem;
   }
 `;
 

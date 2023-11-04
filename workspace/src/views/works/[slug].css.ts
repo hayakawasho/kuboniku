@@ -223,5 +223,6 @@ export const captchaItems = css`
   @media ${mq.pc} {
     width: calc(var(--grid) * 10);
     padding: 0;
+    max-width: 154.4rem;
   }
 `;

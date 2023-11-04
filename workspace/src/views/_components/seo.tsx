@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
-const SITE_TITLE = "KUBONIKU.COM | WEB DESIGNER";
-const DESCRIPTION = "WEB DESIGNER NAGISA KUBO 久保渚 portfolio site";
+const SITE_TITLE = "Kuboniku.com | Web designer";
+const DESCRIPTION = "Web designer Nagisa Kubo 久保渚 portfolio site";
 const SITE_URL = "https://kuboniku.com";
 
 export const Seo: FC<{

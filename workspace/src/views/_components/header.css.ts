@@ -15,8 +15,8 @@ export const brandLogo = css`
 
   @media ${mq.pc} {
     font-size: 3.7rem;
-    top: 2.2rem;
-    left: 2.2rem;
+    top: 2.5rem;
+    left: 2.5rem;
   }
 `;
 
@@ -246,8 +246,8 @@ export const plus = css`
   backface-visibility: hidden;
 
   @media ${mq.pc} {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.3rem;
+    height: 2.3rem;
     padding: 0;
     box-sizing: border-box;
   }
