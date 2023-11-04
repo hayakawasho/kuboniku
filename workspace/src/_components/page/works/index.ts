@@ -7,7 +7,7 @@ import {
 } from "lake";
 import { Tween } from "@/_foundation/tween";
 import Project from "./project";
-import SkewScrollContainer from "../skew-scroll";
+import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {

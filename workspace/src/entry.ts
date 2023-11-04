@@ -5,10 +5,10 @@ import Cursor from "./_components/cursor/index.svelte";
 import Load from "./_components/load";
 import Menu from "./_components/menu/index.svelte";
 import Noop from "./_components/noop.svelte";
-import Profile from "./_components/profile";
+import Profile from "./_components/page/profile";
+import Work from "./_components/page/work";
+import Works from "./_components/page/works";
 import Sns from "./_components/sns.svelte";
-import Work from "./_components/work";
-import Works from "./_components/works";
 import { qsa } from "./_foundation/utils";
 import type { IComponent, ComponentContext } from "lake";
 

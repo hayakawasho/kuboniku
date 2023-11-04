@@ -28,7 +28,7 @@ export default defineComponent({
     const ty = ref(y.value);
 
     const EASE = {
-      pc: 0.14,
+      pc: 0.12,
       sp: 0.2,
     } as const;
 
@@ -52,7 +52,7 @@ export default defineComponent({
       }
 
       const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
-      ty.value = clamp(skewY, { max: 5, min: -5 });
+      ty.value = clamp(skewY, { max: 6, min: -6 });
 
       el.style.transform = `skew(0, ${ty.value}deg) translateZ(0)`;
     });

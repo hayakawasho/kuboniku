@@ -15,11 +15,11 @@ export default defineComponent({
     const color = el.dataset.color!;
 
     useEvent(el, "mouseenter", (_e) => {
-      glContext.onChangeColorPallete(color);
+      glContext.onChangeColorPalette(color);
     });
 
     useEvent(el, "mouseleave", (_e) => {
-      glContext.onChangeColorPallete(THEME_COLOR);
+      glContext.onChangeColorPalette(THEME_COLOR);
     });
   },
 });

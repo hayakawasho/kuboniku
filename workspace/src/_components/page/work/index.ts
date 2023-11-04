@@ -1,6 +1,6 @@
 import { defineComponent, useSlot, useMount, useDomRef } from "lake";
 import { Tween } from "@/_foundation/tween";
-import SkewScrollContainer from "../skew-scroll";
+import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {};
@@ -14,7 +14,7 @@ export default defineComponent({
     const { addChild } = useSlot();
 
     const colorPallete = el.dataset.color!;
-    glContext.onChangeColorPallete(colorPallete);
+    glContext.onChangeColorPalette(colorPallete);
 
     addChild(el, SkewScrollContainer, context);
 

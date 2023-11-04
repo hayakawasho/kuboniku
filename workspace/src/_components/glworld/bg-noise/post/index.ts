@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { Tween } from "@/_foundation/tween";
 import { THEME_COLOR } from "@/_foundation/const";
+import { Tween } from "@/_foundation/tween";
 
 export default class {
   private _transforms: any;
