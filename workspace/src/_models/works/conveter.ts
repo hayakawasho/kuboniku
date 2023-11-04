@@ -4,7 +4,7 @@ import type { WorkMetadata } from ".";
 export const convertWorkFromCMS = (raw: any): WorkMetadata => {
   return {
     category: raw.acf.category.name,
-    createAt: new Date(raw.createAt),
+    createAt: new Date(raw.date),
     id: raw.id,
     role: raw.acf.role.map((j: any) => j.name),
     screenshots:

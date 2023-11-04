@@ -15,8 +15,8 @@ export const brandLogo = css`
 
   @media ${mq.pc} {
     font-size: 3.7rem;
-    top: 2.5rem;
-    left: 2.5rem;
+    top: 2.2rem;
+    left: 2.2rem;
   }
 `;
 
@@ -202,12 +202,13 @@ export const drawPlus = keyframes`
 export const sns = css`
   position: fixed;
   text-align: center;
-  bottom: 1rem;
+  bottom: 1.5rem;
   left: 2rem;
   z-index: 99;
 
   @media ${mq.pc} {
-    bottom: 2.5rem;
+    // bottom: 2.5rem;　// コピーライトと天地中央に揃える数値
+    bottom: 4rem;
     left: 4rem;
   }
 `;

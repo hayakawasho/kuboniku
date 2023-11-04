@@ -135,7 +135,7 @@ export const body = css`
 export const introLayout = css`
   position: relative;
   width: 100%;
-  padding: 0 calc(var(--gap) * 2);
+  padding: 0 3rem;
 
   @media ${mq.pc} {
     margin-left: auto;
@@ -164,29 +164,23 @@ export const intro__info = css`
 export const dl = css`
   display: flex;
   gap: 0.5rem;
-  font-size: 1.2rem;
-  font-family: var(--font-roboto);
 `;
 
 export const dt = css`
+  font-size: 1.2rem;
+  font-family: var(--font-roboto);
   color: var(--color-text-primary);
   line-height: calc(52 / 24);
   white-space: nowrap;
-
-  @media ${mq.pc} {
-    font-size: 1.1rem;
-  }
 `;
 
 export const dd = css`
+  font-size: 1.2rem;
+  font-family: var(--font-roboto);
   font-weight: 300;
   line-height: calc(52 / 24);
   letter-spacing: 0.08em;
   color: #cbcbcb;
-
-  @media ${mq.pc} {
-    font-size: 1.3rem;
-  }
 `;
 
 export const intro__viewLink = css`
@@ -224,7 +218,7 @@ export const intro__viewLinkLine = css`
 `;
 
 export const captchaItems = css`
-  padding: 0 var(--gap);
+  padding: 0 1.5rem;
 
   @media ${mq.pc} {
     width: calc(var(--grid) * 10);

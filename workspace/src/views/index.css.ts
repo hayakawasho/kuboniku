@@ -20,13 +20,18 @@ export const heading = css`
 
 export const heading__total = css`
   position: absolute;
-  top: 0.5em;
-  margin-left: 0.5em;
+  top: 0.75em;
+  margin-left: 1em;
   font-family: var(--font-en);
   font-size: calc(26.6 / 106.4 * 100%);
+  font-size: 1rem;
   font-weight: 500;
   color: var(--color-text-primary);
   letter-spacing: 0.41em;
+
+  @media ${mq.pc} {
+    font-size: 1.5rem;
+  }
 `;
 
 export const entries = css`
@@ -99,23 +104,25 @@ export const entry__hgroup = css`
 `;
 
 export const num = css`
-  font-family: var(--font-en);
-  font-size: 1.5rem;
+  font-family: var(
+    --font-en
+  ); // デザインデータとフォントが違うため、実際のフォントサイズより小さめに指定する
+  font-size: 1.2rem;
   font-weight: bold;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
   line-height: 1;
 
   @media ${mq.pc} {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
   }
 
   > span {
-    font-size: 1rem;
+    font-size: calc(20 / 30 * 100%);
     letter-spacing: 0.02em;
 
     @media ${mq.pc} {
-      font-size: 1.3rem;
+      font-size: calc(26 / 38 * 100%);
     }
   }
 `;
