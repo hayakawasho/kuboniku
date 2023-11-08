@@ -6,11 +6,12 @@ const SITE_URL = "https://kuboniku.com";
 
 export const Seo: FC<{
   title: string;
+  description?: string;
   permalink: string;
   prepend?: React.ReactNode;
 }> = (props) => {
   const title = props.title ? props.title + " | " + SITE_TITLE : SITE_TITLE;
-  const description = DESCRIPTION;
+  const description = props.description || DESCRIPTION;
 
   return (
     <>

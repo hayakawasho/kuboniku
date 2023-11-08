@@ -19,6 +19,7 @@ export const Head: FC<{
       {!idDev && (
         <link
           as="style"
+          crossOrigin=""
           href="/assets/entry.css"
           onLoad={`this.onload=null;this.rel='stylesheet';` as any}
           rel="preload"

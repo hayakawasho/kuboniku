@@ -1,14 +1,21 @@
 import { renderToStaticMarkup as r } from "react-dom/server";
 import { zeroPadding } from "@/_foundation/utils";
-import { cloudinaryApiConverter } from "@/_models/image/conveter";
+import { cloudinaryImgAPIConverter } from "@/_models/image/conveter";
 import { selectTitle } from "@/_models/works/selector";
 import { Header } from "./_components/header";
 import { PageWithHeader } from "./_components/page-with-header";
 import { Seo } from "./_components/seo";
-import { ImagePreloader } from "./_components/ui/image-preloader";
 import { Link } from "./_components/ui/link";
 import * as styles from "./index.css";
 import type { WorkMetadata } from "@/_models/works";
+import type { EleventyProps } from "./_components/const";
+
+type Props = EleventyProps<WorkMetadata[]> & {
+  posts: WorkMetadata[];
+  wp: {
+    totalCount: number;
+  };
+};
 
 class Component {
   data() {
@@ -22,8 +29,7 @@ class Component {
     };
   }
 
-  render(props: any) {
-    const posts = props.posts as WorkMetadata[];
+  render({ posts, ...props }: Props) {
     const total = props.wp.totalCount;
 
     return `<!DOCTYPE html>
@@ -36,15 +42,19 @@ class Component {
             permalink=""
             prepend={
               <>
-                <ImagePreloader
-                  href={cloudinaryApiConverter(
+                <link
+                  rel="preload"
+                  as="image"
+                  href={cloudinaryImgAPIConverter(
                     posts[0].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   key={posts[0].id}
                 />
-                <ImagePreloader
-                  href={cloudinaryApiConverter(
+                <link
+                  rel="preload"
+                  as="image"
+                  href={cloudinaryImgAPIConverter(
                     posts[1].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
@@ -82,7 +92,7 @@ class Component {
                           className="_img"
                           decoding="auto"
                           height={item.thumb["pc"].height}
-                          src={cloudinaryApiConverter(
+                          src={cloudinaryImgAPIConverter(
                             item.thumb["pc"].url,
                             "f_auto,q_auto,w_750"
                           )}

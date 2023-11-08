@@ -1,5 +1,5 @@
 import * as styles from "./header.css";
-import { Link } from "../_components/ui/link";
+import { Link } from "../ui/link";
 
 type Props = {
   current: "WORKS" | "WORKS_DETAIL" | "PROFILE";

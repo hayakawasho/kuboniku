@@ -1,6 +1,5 @@
 import { css, keyframes } from "@emotion/react";
 import { mq } from "@/_foundation/mq";
-// import { Link } from "../_components/ui/link";
 
 export const brandLogo = css`
   font-size: 2.6rem;
