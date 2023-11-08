@@ -29,7 +29,7 @@ export default defineComponent({
 
     const EASE = {
       pc: 0.12,
-      sp: 0.2,
+      sp: 0.16,
     } as const;
 
     const onReset = () => {

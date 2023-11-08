@@ -37,7 +37,7 @@ export class Bg {
     const transforms = {
       pc: {
         post: {
-          alpha: 0.14,
+          alpha: 0.16,
           amount: 0.08,
           blur: 0.1,
           clouds: true,
