@@ -12,7 +12,7 @@ import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
   index: HTMLElement;
-  project: HTMLElement[];
+  projectItem: HTMLElement[];
 };
 
 export default defineComponent({
@@ -21,12 +21,12 @@ export default defineComponent({
     const { once, history, mq } = context;
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "project");
+    const { refs } = useDomRef<Refs>("index", "projectItem");
 
     addChild(el, SkewScrollContainer, context);
 
     if (mq.value === "pc") {
-      addChild(refs.project, ProjectItem, context);
+      addChild(refs.projectItem, ProjectItem, context);
     }
 
     useMount(() => {

@@ -1,7 +1,7 @@
 import { useMount } from "lake";
 import { debounce } from "@/_foundation/utils";
 
-export const useResizeWatch = <T extends Element>(
+export const useElementSize = <T extends Element>(
   targetOrTargets: T | T[],
   callback: (payload: {
     aspect: number;

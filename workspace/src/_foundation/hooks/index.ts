@@ -1,2 +1,2 @@
 export * from "./use-tick";
-export * from "./use-resize-watch";
+export * from "./use-element-size";

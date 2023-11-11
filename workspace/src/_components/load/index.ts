@@ -9,7 +9,7 @@ import {
   readonly,
 } from "lake";
 import { wideQuery } from "@/_foundation/env";
-import { useResizeWatch } from "@/_foundation/hooks";
+import { useElementSize } from "@/_foundation/hooks";
 import { scrollPosMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
 import Gl from "../glworld";
@@ -38,7 +38,7 @@ export default defineComponent({
 
     const [glContext] = addChild(refs.glWorld, Gl, { mq });
 
-    useResizeWatch(refs.windowSizeWatcher, ({ width, height }) => {
+    useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
       windowSizeMutators({ height, width });
     });
 

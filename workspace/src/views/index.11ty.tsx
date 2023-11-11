@@ -81,12 +81,12 @@ class Component {
                   <Link
                     css={styles.entry}
                     data-color={item.theme}
-                    data-ref="project"
+                    data-ref="projectItem"
                     to={`./works/${item.slug}/`}
                   >
                     <div css={styles.aspect}></div>
                     <div css={styles.entry__g}>
-                      <figure css={styles.eyecatch}>
+                      <figure css={styles.eyecatch} data-ref="eyecatch">
                         <img
                           alt=""
                           className="_img"
@@ -99,7 +99,7 @@ class Component {
                           width={item.thumb["pc"].width}
                         />
                       </figure>
-                      <div css={styles.entry__hgroup}>
+                      <div css={styles.entry__hgroup} data-ref="hgroup">
                         <p
                           className="mb-[1.2rem] | pc:mb-[1.5rem]"
                           css={styles.num}
