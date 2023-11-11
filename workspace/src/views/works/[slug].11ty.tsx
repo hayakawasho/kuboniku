@@ -9,8 +9,8 @@ import { PageWithHeader } from "../_components/page-with-header";
 import { Seo } from "../_components/seo";
 import { Link } from "../_components/ui/link";
 import { ResponsiveImage } from "../_components/ui/responsive-image";
-import type { WorkMetadata } from "@/_models/works";
 import type { EleventyProps } from "../_components/const";
+import type { WorkMetadata } from "@/_models/works";
 
 type Props = EleventyProps<WorkMetadata> & {
   post: WorkMetadata;
@@ -53,21 +53,21 @@ class Component {
               <>
                 <link
                   as="image"
-                  rel="preload"
                   href={cloudinaryImgAPIConverter(
                     post.thumb["pc"].url,
                     "f_auto,q_auto,w_1680"
                   )}
                   media={mq.pc}
+                  rel="preload"
                 />
                 <link
                   as="image"
-                  rel="preload"
                   href={cloudinaryImgAPIConverter(
                     post.thumb["sp"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   media={mq.sp}
+                  rel="preload"
                 />
               </>
             }
@@ -75,6 +75,8 @@ class Component {
           />
         }
       >
+        <div data-ref="scrollbar"></div>
+
         <main data-color={post.theme} data-component="Work">
           <div data-ref="progressBar"></div>
           <div css={styles.kv}>

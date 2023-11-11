@@ -1,11 +1,9 @@
-import {
-  withSvelte as _,
-  defineComponent,
-  useSlot,
-  useDomRef,
-  useMount,
-} from "lake";
+import { defineComponent, useSlot, useDomRef, useMount } from "lake";
+import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
+import { useScrollPos } from "@/_states/scroll";
+import { useScrollbarProgress } from "@/_states/scrollbar-progress";
+import { useWindowSize } from "@/_states/window-size";
 import ProjectItem from "./project";
 import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
@@ -13,6 +11,7 @@ import type { AppContext } from "@/_foundation/type";
 type Refs = {
   index: HTMLElement;
   projectItem: HTMLElement[];
+  h1: HTMLElement;
 };
 
 export default defineComponent({
@@ -21,7 +20,7 @@ export default defineComponent({
     const { once, history, mq } = context;
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "projectItem");
+    const { refs } = useDomRef<Refs>("index", "projectItem", "h1");
 
     addChild(el, SkewScrollContainer, context);
 
@@ -29,11 +28,33 @@ export default defineComponent({
       addChild(refs.projectItem, ProjectItem, context);
     }
 
+    const state = {
+      height: el.getBoundingClientRect().height,
+      resizing: false,
+    };
+
+    const { onProgressMutate } = useScrollbarProgress();
+    const [y] = useScrollPos();
+    const [_ww, wh] = useWindowSize();
+
+    useElementSize(el, ({ height }) => {
+      state.resizing = true;
+      state.height = height;
+      state.resizing = false;
+    });
+
+    useTick(() => {
+      if (state.resizing) {
+        return;
+      }
+      onProgressMutate(y.value, wh.value, state.height);
+    });
+
     useMount(() => {
       if (!once && history.value === "push") {
         Tween.serial(
           Tween.wait(0.2),
-          Tween.tween(el, 0.55, "power3.out", {
+          Tween.tween([refs.projectItem, refs.h1], 0.55, "power3.out", {
             opacity: 1,
           })
         );
@@ -44,7 +65,7 @@ export default defineComponent({
           return;
         }
 
-        Tween.tween(el, 0.55, "power3.out", {
+        Tween.tween([refs.projectItem, refs.h1], 0.55, "power3.out", {
           opacity: 0,
         });
       };

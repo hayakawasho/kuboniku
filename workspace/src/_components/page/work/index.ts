@@ -1,5 +1,9 @@
 import { defineComponent, useSlot, useMount, useDomRef } from "lake";
+import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
+import { useScrollPos } from "@/_states/scroll";
+import { useScrollbarProgress } from "@/_states/scrollbar-progress";
+import { useWindowSize } from "@/_states/window-size";
 import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
@@ -17,6 +21,28 @@ export default defineComponent({
     glContext.onChangeColorPalette(colorPallete);
 
     addChild(el, SkewScrollContainer, context);
+
+    const state = {
+      height: el.getBoundingClientRect().height,
+      resizing: false,
+    };
+
+    const { onProgressMutate } = useScrollbarProgress();
+    const [y] = useScrollPos();
+    const [_ww, wh] = useWindowSize();
+
+    useElementSize(el, ({ height }) => {
+      state.resizing = true;
+      state.height = height;
+      state.resizing = false;
+    });
+
+    useTick(() => {
+      if (state.resizing) {
+        return;
+      }
+      onProgressMutate(y.value, wh.value, state.height);
+    });
 
     useMount(() => {
       if (!once && history.value === "push") {

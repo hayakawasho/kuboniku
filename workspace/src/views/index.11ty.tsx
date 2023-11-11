@@ -7,8 +7,8 @@ import { PageWithHeader } from "./_components/page-with-header";
 import { Seo } from "./_components/seo";
 import { Link } from "./_components/ui/link";
 import * as styles from "./index.css";
-import type { WorkMetadata } from "@/_models/works";
 import type { EleventyProps } from "./_components/const";
+import type { WorkMetadata } from "@/_models/works";
 
 type Props = EleventyProps<WorkMetadata[]> & {
   posts: WorkMetadata[];
@@ -43,22 +43,22 @@ class Component {
             prepend={
               <>
                 <link
-                  rel="preload"
                   as="image"
                   href={cloudinaryImgAPIConverter(
                     posts[0].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   key={posts[0].id}
+                  rel="preload"
                 />
                 <link
-                  rel="preload"
                   as="image"
                   href={cloudinaryImgAPIConverter(
                     posts[1].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   key={posts[1].id}
+                  rel="preload"
                 />
               </>
             }
@@ -68,7 +68,7 @@ class Component {
       >
         <main data-component="Works">
           <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
-            <h1 css={styles.heading}>
+            <h1 css={styles.heading} data-ref="h1">
               Works
               <sup css={styles.heading__total}>{total}</sup>
             </h1>

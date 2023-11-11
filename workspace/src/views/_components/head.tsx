@@ -1,4 +1,5 @@
 import { Global, css } from "@emotion/react";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { mq } from "@/_foundation/mq";
 import type { FC, ReactNode } from "react";
 
@@ -69,7 +70,7 @@ const base = css`
 
     --color-text: #e3e3e3;
     --color-text-primary: #858585;
-    --color-theme: #1793a9;
+    --color-theme: ${SITE_THEME_COLOR};
 
     --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
 

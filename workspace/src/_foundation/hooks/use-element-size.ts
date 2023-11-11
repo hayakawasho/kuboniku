@@ -1,5 +1,5 @@
 import { useMount } from "lake";
-import { debounce } from "@/_foundation/utils";
+import { debounce, noop } from "@/_foundation/utils";
 
 export const useElementSize = <T extends Element>(
   targetOrTargets: T | T[],
@@ -7,7 +7,7 @@ export const useElementSize = <T extends Element>(
     aspect: number;
     width: number;
     height: number;
-  }) => void,
+  }) => void = noop,
   debounceTime = 200
 ) => {
   const ro = new ResizeObserver(
@@ -45,5 +45,5 @@ export const useElementSize = <T extends Element>(
 
   return {
     unwatch,
-  };
+  } as const;
 };

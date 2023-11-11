@@ -41,6 +41,7 @@ export const PageWithHeader: FC<{
           </div>
         </div>
         <div css={ui}>
+          <div data-component="Scrollbar" />
           <div className="hidden" data-component="Cursor" />
         </div>
         {idDev && (
