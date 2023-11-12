@@ -36,6 +36,10 @@
     margin-top: calc(var(--vh) * 50);
     margin-top: 50svh;
     pointer-events: none;
+
+    @media (min-width: 640px) {
+      right: 4rem;
+    }
   }
 
   .scrollbar {
@@ -47,26 +51,27 @@
     background: currentColor;
     transform: translateY(-50%);
     overflow: hidden;
+
+    @media (min-width: 640px) {
+      height: 4rem;
+      scale: 1.5 1;
+    }
   }
 
   .scrollbar__progress {
     position: absolute;
     top: 0;
-    display: block;
+    width: 100%;
     height: 100%;
     transform-origin: top center;
     transform: scaleY(0);
 
     &:before {
       display: block;
-      width: 1px;
+      width: 100%;
       height: 100%;
       content: "";
       background-color: var(--color-theme);
-
-      @media (min-width: 640px) {
-        width: 2px;
-      }
     }
   }
 </style>

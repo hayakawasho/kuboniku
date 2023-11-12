@@ -13,7 +13,7 @@ export const Header = ({ current }: Props) => {
       <header className="">
         <Link css={styles.brandLogo} to="/">
           <i className="icon-logo"></i>
-          <span className="sr-only">KuboNiku.com</span>
+          <span className="sr-only">Kuboniku.com</span>
         </Link>
 
         <button
