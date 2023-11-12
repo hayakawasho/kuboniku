@@ -1,47 +1,31 @@
 <script lang="ts">
   import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 
-  let valuenow = 0;
+  let valueNow = 0;
   let progress = 0;
 
   useScrollbarProgress(({ percentage, track }) => {
-    valuenow = percentage;
+    valueNow = percentage;
     progress = track;
   });
 </script>
 
-<div class="scrollbarLayout">
-  <div class="relative w-full h-full">
-    <div class="scrollbar">
-      <div
-        class="scrollbar__progress"
-        aria-controls="main"
-        role="scrollbar"
-        aria-orientation="vertical"
-        aria-valuemax={100}
-        aria-valuemin={0}
-        aria-valuenow={valuenow}
-        style="transform: scaleY({progress}) translateZ(0)"
-      />
-    </div>
+<div class="relative w-full h-full">
+  <div class="scrollbar">
+    <div
+      class="scrollbar__progress"
+      aria-controls="main"
+      role="scrollbar"
+      aria-orientation="vertical"
+      aria-valuemax={100}
+      aria-valuemin={0}
+      aria-valuenow={valueNow}
+      style="transform: scaleY({progress}) translateZ(0)"
+    />
   </div>
 </div>
 
 <style lang="postcss">
-  .scrollbarLayout {
-    position: fixed;
-    top: 0;
-    right: 3.2rem;
-    z-index: 2;
-    margin-top: calc(var(--vh) * 50);
-    margin-top: 50svh;
-    pointer-events: none;
-
-    @media (min-width: 640px) {
-      right: 4rem;
-    }
-  }
-
   .scrollbar {
     position: relative;
     display: inline-block;

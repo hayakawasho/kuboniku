@@ -1,4 +1,4 @@
-import { defineComponent, useSlot, useMount, useDomRef } from "lake";
+import { defineComponent, useSlot, useMount, useDomRef as _ } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useScrollPos } from "@/_states/scroll";
@@ -7,14 +7,14 @@ import { useWindowSize } from "@/_states/window-size";
 import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
-type Refs = {};
+// type Refs = {};
 
 export default defineComponent({
   name: "WorksDetail",
   setup(el, context: AppContext) {
     const { once, history, glContext } = context;
 
-    const { refs } = useDomRef<Refs>();
+    // const { refs } = useDomRef<Refs>();
     const { addChild } = useSlot();
 
     const colorPallete = el.dataset.color!;
@@ -23,7 +23,7 @@ export default defineComponent({
     addChild(el, SkewScrollContainer, context);
 
     const state = {
-      height: el.getBoundingClientRect().height,
+      offsetHeight: el.getBoundingClientRect().height,
       resizing: false,
     };
 
@@ -33,7 +33,7 @@ export default defineComponent({
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
-      state.height = height;
+      state.offsetHeight = height;
       state.resizing = false;
     });
 
@@ -41,7 +41,7 @@ export default defineComponent({
       if (state.resizing) {
         return;
       }
-      onProgressMutate(y.value, wh.value, state.height);
+      onProgressMutate(y.value, wh.value, state.offsetHeight);
     });
 
     useMount(() => {

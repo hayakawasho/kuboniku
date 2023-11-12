@@ -29,7 +29,7 @@ export default defineComponent({
     }
 
     const state = {
-      height: el.getBoundingClientRect().height,
+      offsetHeight: el.getBoundingClientRect().height,
       resizing: false,
     };
 
@@ -39,7 +39,7 @@ export default defineComponent({
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
-      state.height = height;
+      state.offsetHeight = height;
       state.resizing = false;
     });
 
@@ -47,7 +47,7 @@ export default defineComponent({
       if (state.resizing) {
         return;
       }
-      onProgressMutate(y.value, wh.value, state.height);
+      onProgressMutate(y.value, wh.value, state.offsetHeight);
     });
 
     useMount(() => {

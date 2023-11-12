@@ -1,17 +1,14 @@
 <script lang="ts">
   import { useTick } from "@/_foundation/hooks";
   import { lerp } from "@/_foundation/math";
-
-  let cursor: HTMLElement;
+  import { mousePosMutators } from "@/_states/mouse";
 
   let isRunning = false;
   let timer: number;
 
-  const now = {
-    x: 0,
-    y: 0,
-  };
-  const last = {
+  const state = {
+    lastX: 0,
+    lastY: 0,
     x: 0,
     y: 0,
   };
@@ -21,8 +18,13 @@
 
     isRunning = true;
 
-    now.x = e.clientX;
-    now.y = e.clientY;
+    state.x = e.clientX;
+    state.y = e.clientY;
+
+    mousePosMutators({
+      x: state.x,
+      y: state.y,
+    });
 
     timer = window.setTimeout(() => {
       isRunning = false;
@@ -36,14 +38,15 @@
 
     const easeVal = 1 - (1 - 0.2) ** timeRatio;
 
-    last.x = lerp(last.x, now.x, easeVal);
-    last.y = lerp(last.y, now.y, easeVal);
-
-    cursor.style.transform = `transition3d(last.x, last.y, 0)`;
+    state.lastX = lerp(state.lastX, state.x, easeVal);
+    state.lastY = lerp(state.lastY, state.y, easeVal);
   });
 </script>
 
-<div class="cursor" bind:this={cursor}>
+<div
+  class="cursor"
+  style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
+>
   <div class="w-full h-full relative">
     <div class="circle" />
   </div>
@@ -54,12 +57,12 @@
 <style>
   .cursor {
     position: fixed;
-    top: -2rem;
-    left: -2rem;
+    top: -1rem;
+    left: -1rem;
     pointer-events: none;
     z-index: 1000;
-    height: 4rem;
-    width: 4rem;
+    height: 2rem;
+    width: 2rem;
     backface-visibility: hidden;
   }
 

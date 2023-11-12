@@ -3,6 +3,7 @@
   import { getContext } from "svelte";
   import { Tween } from "@/_foundation/tween";
   import { nextTick } from "@/_foundation/utils";
+  import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
   type Refs = {
@@ -14,7 +15,7 @@
     snsLabel: HTMLAnchorElement[];
   };
 
-  const { rootRef } = getContext<Context$>("$");
+  const { rootRef, ...context } = getContext<Context$<AppContext>>("$");
   const { refs } = useDomRef<Refs>(
     "plus",
     "frontPlusX",
@@ -32,7 +33,7 @@
   });
 
   useEvent(refs.plus, "mouseenter", (_e) => {
-    if (isOpen) {
+    if (isOpen || context.mq.value === "sp") {
       return;
     }
 
@@ -86,8 +87,8 @@
   }
 
   const onOpen = async () => {
-    rootRef.classList.add("is-animating");
     rootRef.setAttribute("open", "true");
+    rootRef.classList.add("is-animating");
 
     await nextTick();
 

@@ -1,19 +1,29 @@
-import { map, atom } from "nanostores";
+import { useUnmount, ref, readonly } from "lake";
+import { map } from "nanostores";
+import type { Point } from "@/_foundation/type";
 
-type Parameters = {
-  x: number;
-  y: number;
-};
+type MousePos = Point;
 
-const xy = map<Parameters>({
+const pos = map<MousePos>({
   x: 0,
   y: 0,
 });
 
-export const mousePosGetters = () => xy.get();
-export const mousePosMutators = (update: Parameters) => xy.set(update);
+export const useMousePos = () => {
+  const { x, y } = pos.get();
+  const currentX = ref(x);
+  const currentY = ref(y);
 
-const running = atom(false);
-export const mousemoveRunningGetters = () => running.get();
-export const mousemoveRunningMutators = (update: boolean) =>
-  running.set(update);
+  const unbind = pos.listen(({ x, y }) => {
+    currentX.value = x;
+    currentY.value = y;
+  });
+
+  useUnmount(() => {
+    unbind();
+  });
+
+  return [readonly(currentX), readonly(currentY)] as const;
+};
+
+export const mousePosMutators = (update: MousePos) => pos.set(update);

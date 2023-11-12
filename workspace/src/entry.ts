@@ -1,7 +1,7 @@
 import "virtual:windi.css";
 import "ress";
 import { create, withSvelte } from "lake";
-import Cursor from "./_components/cursor/index.svelte";
+import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import Menu from "./_components/menu/index.svelte";
 import Noop from "./_components/noop.svelte";

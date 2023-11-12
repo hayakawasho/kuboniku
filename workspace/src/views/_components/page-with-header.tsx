@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { mq } from "@/_foundation/mq";
 import { Head } from "./head";
 import type { FC, ReactNode } from "react";
 
@@ -41,8 +42,8 @@ export const PageWithHeader: FC<{
           </div>
         </div>
         <div css={ui}>
-          <div data-component="Scrollbar" />
-          <div className="hidden" data-component="Cursor" />
+          <div css={scrollbar} data-component="Scrollbar" />
+          <div className="sp:hidden" data-component="Cursor" />
         </div>
         {idDev && (
           <script
@@ -74,4 +75,18 @@ const ui = css`
   ${screen}
   pointer-events: none;
   z-index: 999;
+`;
+
+const scrollbar = css`
+  position: sticky;
+  top: 50vh;
+  width: 100%;
+  pointer-events: none;
+  margin-left: auto;
+  margin-right: 0;
+  width: 3.2rem;
+
+  @media ${mq.pc} {
+    width: 4rem;
+  }
 `;
