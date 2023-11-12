@@ -5,7 +5,7 @@
   let progress = 0;
 
   useScrollbarProgress(({ percentage, track }) => {
-    valueNow = percentage;
+    valueNow = Math.round(percentage);
     progress = track;
   });
 </script>

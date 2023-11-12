@@ -33,18 +33,18 @@ export const Sns = () => {
         <div className="relative w-full h-full">
           <div css={plus__front}>
             <div css={plus__x}>
-              <span data-ref="frontPlusX"></span>
+              <span className="origin-right" data-ref="frontPlusX"></span>
             </div>
             <div css={plus__y}>
-              <span data-ref="frontPlusY"></span>
+              <span className="origin-left" data-ref="frontPlusY"></span>
             </div>
           </div>
           <div css={plus__back}>
             <div css={plus__x}>
-              <span data-ref="backPlusX"></span>
+              <span className="origin-left" data-ref="backPlusX"></span>
             </div>
             <div css={plus__y}>
-              <span data-ref="backPlusY"></span>
+              <span className="origin-right" data-ref="backPlusY"></span>
             </div>
           </div>
         </div>
@@ -96,6 +96,7 @@ const plus__front = css`
   position: relative;
   width: 100%;
   height: 100%;
+  transform: translateZ(0px);
 `;
 
 const plus__back = css`
@@ -104,6 +105,7 @@ const plus__back = css`
   height: 100%;
   top: 0;
   left: 0;
+  transform: translateZ(0px);
 `;
 
 const plus__x = css`
@@ -112,14 +114,14 @@ const plus__x = css`
   left: 0;
   width: var(--size);
   height: 1px;
-  backface-visibility: hidden;
-  transform-origin: right;
+  transform: translateZ(0px);
 
   > span {
     background-color: var(--color-text-primary);
     width: 100%;
     height: 100%;
     display: block;
+    backface-visibility: hidden;
   }
 `;
 
@@ -133,12 +135,14 @@ const plus__y = css`
   backface-visibility: hidden;
   rotate: 90deg;
   transform-origin: center;
+  transform: translateZ(0px);
 
   > span {
     background-color: var(--color-text-primary);
     width: 100%;
     height: 100%;
     display: block;
+    backface-visibility: hidden;
   }
 `;
 

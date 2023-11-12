@@ -11,19 +11,19 @@ const pos = map<MousePos>({
 
 export const useMousePos = () => {
   const { x, y } = pos.get();
-  const currentX = ref(x);
-  const currentY = ref(y);
+  const posX = ref(x);
+  const posY = ref(y);
 
   const unbind = pos.listen(({ x, y }) => {
-    currentX.value = x;
-    currentY.value = y;
+    posX.value = x;
+    posY.value = y;
   });
 
   useUnmount(() => {
     unbind();
   });
 
-  return [readonly(currentX), readonly(currentY)] as const;
+  return [readonly(posX), readonly(posY)] as const;
 };
 
 export const mousePosMutators = (update: MousePos) => pos.set(update);

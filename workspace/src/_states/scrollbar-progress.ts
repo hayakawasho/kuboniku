@@ -13,10 +13,14 @@ const progress = map<{
 export const useScrollbarProgress = (
   callback: (payload: { percentage: number; track: number }) => void = noop
 ) => {
-  const onProgressMutate = (value: number, min: number, max: number) => {
+  const onProgressMutate = (
+    value: number,
+    screenHeight: number,
+    offsetHeight: number
+  ) => {
     progress.set({
-      percentage: Math.round((value / (max - min)) * 100),
-      track: (value + min) / max,
+      percentage: (value / (offsetHeight - screenHeight)) * 100,
+      track: (value + screenHeight) / offsetHeight,
     });
   };
 

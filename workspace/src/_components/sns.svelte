@@ -15,7 +15,7 @@
     snsLabel: HTMLAnchorElement[];
   };
 
-  const { rootRef, ...context } = getContext<Context$<AppContext>>("$");
+  const { rootRef, mq } = getContext<Context$<AppContext>>("$");
   const { refs } = useDomRef<Refs>(
     "plus",
     "frontPlusX",
@@ -32,23 +32,21 @@
     isOpen = !isOpen;
   });
 
-  useEvent(refs.plus, "mouseenter", (_e) => {
-    if (isOpen || context.mq.value === "sp") {
+  useEvent(refs.plus, "mouseenter", async (_e) => {
+    if (isOpen || mq.value === "sp") {
       return;
     }
 
-    Tween.prop([refs.frontPlusX, refs.backPlusY], {
-      transformOrigin: "100% 0%",
-    });
-    Tween.prop([refs.frontPlusY, refs.backPlusX], {
-      transformOrigin: "0% 0%",
-    });
     Tween.prop([refs.frontPlusX, refs.frontPlusY], {
       scaleX: 1,
+      willChange: "transform",
     });
     Tween.prop([refs.backPlusX, refs.backPlusY], {
       scaleX: 0,
+      willChange: "transform",
     });
+
+    await nextTick();
 
     Tween.serial(
       Tween.parallel(
@@ -68,7 +66,7 @@
         Tween.prop(
           [refs.frontPlusX, refs.frontPlusY, refs.backPlusX, refs.backPlusY],
           {
-            clearProps: "transform",
+            clearProps: "will-change,transform",
           }
         );
       })
@@ -101,7 +99,7 @@
     Tween.serial(
       Tween.parallel(
         Tween.tween(refs.plus, 0.7, "power3.inOut", {
-          rotation: -90,
+          rotationZ: -90,
         }),
         Tween.tween(refs.snsLabel, 0.55, "power2.inOut", {
           opacity: 1,
@@ -123,7 +121,7 @@
     Tween.serial(
       Tween.parallel(
         Tween.tween(refs.plus, 0.7, "power3.inOut", {
-          rotation: 0,
+          rotationZ: 0,
         }),
         Tween.tween(refs.snsLabel, 0.55, "power2.in", {
           opacity: 0,
