@@ -6,9 +6,9 @@
   import type { Context$ } from "lake";
 
   type Refs = {
-    plus: HTMLButtonElement;
-    plusX: HTMLElement;
-    plusY: HTMLElement;
+    plus: HTMLElement;
+    frontPlusX: HTMLElement;
+    frontPlusY: HTMLElement;
     backPlusX: HTMLElement;
     backPlusY: HTMLElement;
     snsLabel: HTMLAnchorElement[];
@@ -17,8 +17,8 @@
   const { rootRef } = getContext<Context$>("$");
   const { refs } = useDomRef<Refs>(
     "plus",
-    "plusX",
-    "plusY",
+    "frontPlusX",
+    "frontPlusY",
     "backPlusX",
     "backPlusY",
     "snsLabel"
@@ -36,55 +36,40 @@
       return;
     }
 
-    Tween.kill(
-      [refs.plusX, refs.plusY, refs.backPlusX, refs.backPlusY],
-      "trasnform"
-    );
+    Tween.prop([refs.frontPlusX, refs.backPlusY], {
+      transformOrigin: "100% 0%",
+    });
+    Tween.prop([refs.frontPlusY, refs.backPlusX], {
+      transformOrigin: "0% 0%",
+    });
+    Tween.prop([refs.frontPlusX, refs.frontPlusY], {
+      scaleX: 1,
+    });
+    Tween.prop([refs.backPlusX, refs.backPlusY], {
+      scaleX: 0,
+    });
 
     Tween.serial(
-      Tween.prop(refs.plusX, {
-        transformOrigin: "100% 0%",
-      }),
-      Tween.prop(refs.plusY, {
-        transformOrigin: "0% 0%",
-      }),
-      Tween.prop([refs.plusX, refs.plusY], {
-        scaleX: 1,
-      }),
-      Tween.prop([refs.backPlusX, refs.backPlusY], {
-        scaleX: 0,
-      }),
       Tween.parallel(
-        Tween.tween(refs.plusX, 0.5, "power3.in", {
+        Tween.tween([refs.frontPlusX, refs.frontPlusY], 0.5, "power3.in", {
           scaleX: 0,
-        }),
-        Tween.tween(refs.plusY, 0.5, "power3.in", {
-          scaleX: 0,
-          delay: 0.07,
+          stagger: 0.07,
         }),
         Tween.serial(
           Tween.wait(0.5),
-          Tween.prop(refs.backPlusX, {
-            transformOrigin: "0% 0%",
-          }),
-          Tween.prop(refs.backPlusY, {
-            transformOrigin: "100% 0%",
-          }),
-          Tween.parallel(
-            Tween.tween(refs.backPlusX, 0.45, "power3.out", {
-              scaleX: 1,
-            }),
-            Tween.tween(refs.backPlusY, 0.45, "power3.out", {
-              scaleX: 1,
-              delay: 0.07,
-            })
-          )
+          Tween.tween([refs.backPlusX, refs.backPlusY], 0.45, "power3.out", {
+            scaleX: 1,
+            stagger: 0.07,
+          })
         )
       ),
       Tween.immediate(() => {
-        Tween.prop([refs.plusX, refs.plusY, refs.backPlusX, refs.backPlusY], {
-          clearProps: "transform",
-        });
+        Tween.prop(
+          [refs.frontPlusX, refs.frontPlusY, refs.backPlusX, refs.backPlusY],
+          {
+            clearProps: "transform",
+          }
+        );
       })
     );
   });
@@ -102,18 +87,20 @@
 
   const onOpen = async () => {
     rootRef.classList.add("is-animating");
+    rootRef.setAttribute("open", "true");
 
     await nextTick();
 
+    Tween.prop(refs.snsLabel, {
+      opacity: 0,
+      visibility: "visible",
+      y: 20,
+    });
+
     Tween.serial(
-      Tween.prop(refs.snsLabel, {
-        opacity: 0,
-        visibility: "visible",
-        y: 20,
-      }),
       Tween.parallel(
         Tween.tween(refs.plus, 0.7, "power3.inOut", {
-          rotation: 90,
+          rotation: -90,
         }),
         Tween.tween(refs.snsLabel, 0.55, "power2.inOut", {
           opacity: 1,
@@ -121,7 +108,9 @@
           y: 0,
         })
       ),
-      Tween.immediate(() => rootRef.classList.remove("is-animating"))
+      Tween.immediate(() => {
+        rootRef.classList.remove("is-animating");
+      })
     );
   };
 
@@ -149,7 +138,10 @@
         visibility: "hidden",
         y: 20,
       }),
-      Tween.immediate(() => rootRef.classList.remove("is-animating"))
+      Tween.immediate(() => {
+        rootRef.classList.remove("is-animating");
+        rootRef.removeAttribute("open");
+      })
     );
   };
 </script>

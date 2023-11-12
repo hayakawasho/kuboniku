@@ -3,7 +3,7 @@ import { mq } from "@/_foundation/mq";
 
 export const Sns = () => {
   return (
-    <div css={sns} data-component="Sns">
+    <details css={sns} data-component="Sns">
       <ul className="mb-[2rem] pc:mb-[3rem] text-center">
         <li className="overflow-hidden mb-[2rem]">
           <a
@@ -29,39 +29,46 @@ export const Sns = () => {
         </li>
       </ul>
 
-      <button aria-label="sns" css={plus} data-ref="plus">
-        <div css={plus__front}>
-          <div css={plus__x}>
-            <span data-ref="plusX"></span>
+      <summary css={plus} data-ref="plus">
+        <div className="relative w-full h-full">
+          <div css={plus__front}>
+            <div css={plus__x}>
+              <span data-ref="frontPlusX"></span>
+            </div>
+            <div css={plus__y}>
+              <span data-ref="frontPlusY"></span>
+            </div>
           </div>
-          <div css={plus__y}>
-            <span data-ref="plusY"></span>
+          <div css={plus__back}>
+            <div css={plus__x}>
+              <span data-ref="backPlusX"></span>
+            </div>
+            <div css={plus__y}>
+              <span data-ref="backPlusY"></span>
+            </div>
           </div>
         </div>
-        <div css={plus__back}>
-          <div css={plus__x}>
-            <span data-ref="backPlusX"></span>
-          </div>
-          <div css={plus__y}>
-            <span data-ref="backPlusY"></span>
-          </div>
-        </div>
-      </button>
-    </div>
+      </summary>
+    </details>
   );
 };
 
 const sns = css`
+  --size: 1.6rem;
+
   position: fixed;
   text-align: center;
   bottom: 1.5rem;
   left: 2rem;
   z-index: 99;
+  padding-bottom: calc(var(--size) + 2rem);
+  width: calc(var(--size) + 2rem);
 
   @media ${mq.pc} {
-    // bottom: 2.5rem;　// コピーライトと天地中央に揃える数値
-    bottom: 4rem;
-    left: 4rem;
+    --size: 2.3rem;
+
+    bottom: 3rem;
+    left: 3rem;
   }
 `;
 
@@ -102,16 +109,11 @@ const plus__back = css`
 const plus__x = css`
   position: absolute;
   top: 50%;
-  width: 1.6rem;
+  left: 0;
+  width: var(--size);
   height: 1px;
   backface-visibility: hidden;
   transform-origin: right;
-
-  @media ${mq.pc} {
-    width: 2.5rem;
-    left: 0;
-    margin-left: 0;
-  }
 
   > span {
     background-color: var(--color-text-primary);
@@ -124,18 +126,13 @@ const plus__x = css`
 const plus__y = css`
   position: absolute;
   top: 50%;
-  width: 1.6rem;
+  left: 0;
+  width: var(--size);
   height: 1px;
   content: "";
   backface-visibility: hidden;
   rotate: 90deg;
   transform-origin: center;
-
-  @media ${mq.pc} {
-    width: 2.5rem;
-    left: 0;
-    margin-left: 0;
-  }
 
   > span {
     background-color: var(--color-text-primary);
@@ -146,21 +143,15 @@ const plus__y = css`
 `;
 
 const plus = css`
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   z-index: 2;
   display: inline-block;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: var(--size);
+  height: var(--size);
   pointer-events: auto;
   cursor: pointer;
   padding: 1rem;
-  box-sizing: content-box;
   backface-visibility: hidden;
-
-  @media ${mq.pc} {
-    width: 2.3rem;
-    height: 2.3rem;
-    padding: 0;
-    box-sizing: border-box;
-  }
 `;

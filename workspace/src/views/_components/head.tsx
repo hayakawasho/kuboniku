@@ -168,6 +168,15 @@ const base = css`
     display: block;
   }
 
+  summary {
+    display: block;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
   @font-face {
     font-family: "kuboniku";
     src: url("/assets/kuboniku.woff") format("woff");
