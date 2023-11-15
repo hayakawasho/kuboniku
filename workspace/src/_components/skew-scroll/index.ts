@@ -2,7 +2,7 @@ import { defineComponent, ref, useMount } from "lake";
 import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
-import { useScrollPos } from "@/_states/scroll";
+import { useScrollPosY } from "@/_states/scroll";
 import { useWindowSize } from "@/_states/window-size";
 import type { AppContext } from "@/_foundation/type";
 
@@ -22,14 +22,14 @@ export default defineComponent({
       state.resizing = false;
     });
 
-    const [y] = useScrollPos();
+    const [y] = useScrollPosY();
 
     const lastY = ref(y.value);
     const ty = ref(y.value);
 
     const EASE = {
-      pc: 0.14,
-      sp: 0.2,
+      pc: 0.12,
+      sp: 0.16,
     } as const;
 
     const onReset = () => {
@@ -52,7 +52,7 @@ export default defineComponent({
       }
 
       const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
-      ty.value = clamp(skewY, { max: 5, min: -5 });
+      ty.value = clamp(skewY, { max: 6, min: -6 });
 
       el.style.transform = `skew(0, ${ty.value}deg) translateZ(0)`;
     });

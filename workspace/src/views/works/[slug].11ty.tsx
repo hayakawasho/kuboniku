@@ -1,16 +1,23 @@
 import { renderToStaticMarkup as r } from "react-dom/server";
 import { mq } from "@/_foundation/mq";
 import { zeroPadding } from "@/_foundation/utils";
-import { cloudinaryApiConverter } from "@/_models/image/conveter";
+import { cloudinaryImgAPIConverter } from "@/_models/image/conveter";
 import { selectRole, selectYear, selectTitle } from "@/_models/works/selector";
 import * as styles from "./[slug].css";
 import { Header } from "../_components/header";
 import { PageWithHeader } from "../_components/page-with-header";
 import { Seo } from "../_components/seo";
-import { ImagePreloader } from "../_components/ui/image-preloader";
 import { Link } from "../_components/ui/link";
 import { ResponsiveImage } from "../_components/ui/responsive-image";
+import type { EleventyProps } from "../_components/const";
 import type { WorkMetadata } from "@/_models/works";
+
+type Props = EleventyProps<WorkMetadata> & {
+  post: WorkMetadata;
+  wp: {
+    totalCount: number;
+  };
+};
 
 class Component {
   data() {
@@ -25,17 +32,14 @@ class Component {
     };
   }
 
-  render(props: any) {
-    const post: WorkMetadata = props.post;
-    const totalCount = props.wp.totalCount as number;
+  render({ post, ...props }: Props) {
+    const total = props.wp.totalCount;
 
     const { page, pageNumber } = props.pagination;
+    const next = page.last.id === post.id ? page.first : page.next;
 
-    const next: WorkMetadata =
-      page.last.id === post.id ? { ...page.first } : { ...page.next };
-
-    const projectNumber = totalCount - pageNumber;
-    const pageTitle = selectTitle(post) as string;
+    const projectNumber = total - pageNumber;
+    const pageTitle = selectTitle(post);
 
     return `<!DOCTYPE html>
     ${r(
@@ -47,19 +51,23 @@ class Component {
             permalink={`/works/${post.slug}/`}
             prepend={
               <>
-                <ImagePreloader
-                  href={cloudinaryApiConverter(
+                <link
+                  as="image"
+                  href={cloudinaryImgAPIConverter(
                     post.thumb["pc"].url,
                     "f_auto,q_auto,w_1680"
                   )}
                   media={mq.pc}
+                  rel="preload"
                 />
-                <ImagePreloader
-                  href={cloudinaryApiConverter(
+                <link
+                  as="image"
+                  href={cloudinaryImgAPIConverter(
                     post.thumb["sp"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   media={mq.sp}
+                  rel="preload"
                 />
               </>
             }
@@ -67,6 +75,8 @@ class Component {
           />
         }
       >
+        <div data-ref="scrollbar"></div>
+
         <main data-color={post.theme} data-component="Work">
           <div data-ref="progressBar"></div>
           <div css={styles.kv}>
@@ -91,13 +101,13 @@ class Component {
             <ResponsiveImage
               alt=""
               className="opacity-40 object-cover fit2parent"
-              mob={cloudinaryApiConverter(
+              mob={cloudinaryImgAPIConverter(
                 post.thumb["sp"].url,
                 "f_auto,q_auto,w_750"
               )}
               mobSize={[post.thumb["sp"].width, post.thumb["sp"].height]}
               size={[post.thumb["pc"].width, post.thumb["pc"].height]}
-              src={cloudinaryApiConverter(
+              src={cloudinaryImgAPIConverter(
                 post.thumb["pc"].url,
                 "f_auto,q_auto,w_1680"
               )}
@@ -114,7 +124,7 @@ class Component {
 
           <div css={styles.body}>
             <div
-              className="my-[6rem] | pc:mt-[10rem] pc:mb-[9rem]"
+              className="my-[6rem] pc:mt-[10rem] pc:mb-[9rem]"
               css={styles.introLayout}
             >
               <div css={styles.intro}>
@@ -147,48 +157,46 @@ class Component {
               </div>
             </div>
 
-            {
-              <div
-                className="mb-[10.5rem] | pc:mx-auto pc:mb-[18.2rem]"
-                css={styles.captchaItems}
-              >
-                {post.screenshots && (
-                  <ul>
-                    {post.screenshots.map((item, index: number) => {
-                      return (
-                        <li className="mb-[2rem] pc:mb-[6rem]" key={index}>
-                          <ResponsiveImage
-                            alt=""
-                            className="w-full"
-                            mob={cloudinaryApiConverter(
-                              item.url,
-                              "f_auto,q_auto,w_750"
-                            )}
-                            mobSize={[item.width, item.height]}
-                            size={[item.width, item.height]}
-                            src={cloudinaryApiConverter(
-                              item.url,
-                              "f_auto,q_auto,w_1440"
-                            )}
-                          />
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-                {post.showreel && (
-                  <video
-                    autoPlay
-                    className="w-full"
-                    loop
-                    muted
-                    playsInline
-                    preload="none"
-                    src={post.showreel.url}
-                  ></video>
-                )}
-              </div>
-            }
+            <div
+              className="mb-[10.5rem] pc:mx-auto pc:mb-[18.2rem]"
+              css={styles.captchaItems}
+            >
+              {post.screenshots && (
+                <ul>
+                  {post.screenshots.map((item, index: number) => {
+                    return (
+                      <li className="mb-[2rem] pc:mb-[6rem]" key={index}>
+                        <ResponsiveImage
+                          alt=""
+                          className="w-full"
+                          mob={cloudinaryImgAPIConverter(
+                            item.url,
+                            "f_auto,q_auto,w_750"
+                          )}
+                          mobSize={[item.width, item.height]}
+                          size={[item.width, item.height]}
+                          src={cloudinaryImgAPIConverter(
+                            item.url,
+                            "f_auto,q_auto,w_1440"
+                          )}
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+              {post.showreel && (
+                <video
+                  autoPlay
+                  className="w-full"
+                  loop
+                  muted
+                  playsInline
+                  preload="none"
+                  src={post.showreel.url}
+                ></video>
+              )}
+            </div>
 
             <aside css={[styles.kv, styles.kvNext]}>
               <Link className="fit2parent z-10" to={`../${next.slug}/`}>
@@ -207,13 +215,13 @@ class Component {
                 <ResponsiveImage
                   alt=""
                   className="opacity-40 filter grayscale-100 object-cover fit2parent"
-                  mob={cloudinaryApiConverter(
+                  mob={cloudinaryImgAPIConverter(
                     next.thumb["sp"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   mobSize={[next.thumb["sp"].width, next.thumb["sp"].height]}
                   size={[next.thumb["pc"].width, next.thumb["pc"].height]}
-                  src={cloudinaryApiConverter(
+                  src={cloudinaryImgAPIConverter(
                     next.thumb["pc"].url,
                     "f_auto,q_auto,w_1440"
                   )}

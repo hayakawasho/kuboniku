@@ -71,7 +71,7 @@ export default defineComponent({
 
     return {
       addScene,
-      onChangeColorPallete: (colorCode: string) => bg.setColor(colorCode),
+      onChangeColorPalette: (colorCode: string) => bg.setColor(colorCode),
       removeScene,
     };
   },

@@ -9,7 +9,7 @@ import {
   readonly,
 } from "lake";
 import { wideQuery } from "@/_foundation/env";
-import { debounce } from "@/_foundation/utils";
+import { useElementSize } from "@/_foundation/hooks";
 import { scrollPosMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
 import Gl from "../glworld";
@@ -38,22 +38,14 @@ export default defineComponent({
 
     const [glContext] = addChild(refs.glWorld, Gl, { mq });
 
-    const ro = new ResizeObserver(
-      debounce(([entry]) => {
-        const { width, height } = entry.contentRect;
-        windowSizeMutators({
-          height,
-          width,
-        });
-      }, 200)
-    );
+    useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
+      windowSizeMutators({ height, width });
+    });
 
     useEvent(
       window as any,
       "scroll",
-      () => {
-        scrollPosMutators({ y: window.scrollY });
-      },
+      () => scrollPosMutators({ y: window.scrollY }),
       {
         passive: true,
       }
@@ -67,7 +59,6 @@ export default defineComponent({
 
     useMount(() => {
       onCreated(provides);
-      ro.observe(refs.windowSizeWatcher);
     });
 
     //----------------------------------------------------------------

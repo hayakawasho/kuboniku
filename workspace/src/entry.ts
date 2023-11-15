@@ -1,14 +1,15 @@
 import "virtual:windi.css";
 import "ress";
 import { create, withSvelte } from "lake";
-import Cursor from "./_components/cursor/index.svelte";
+import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import Menu from "./_components/menu/index.svelte";
 import Noop from "./_components/noop.svelte";
-import Profile from "./_components/profile";
+import Profile from "./_components/page/profile";
+import Work from "./_components/page/work";
+import Works from "./_components/page/works";
+import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
-import Work from "./_components/work";
-import Works from "./_components/works";
 import { qsa } from "./_foundation/utils";
 import type { IComponent, ComponentContext } from "lake";
 
@@ -20,6 +21,7 @@ const init = () => {
     Menu: withSvelte(Menu, "Menu"),
     Noop: withSvelte(Noop),
     Profile,
+    Scrollbar: withSvelte(Scrollbar, "Scrollbar"),
     Sns: withSvelte(Sns, "Sns"),
     Work,
     Works,
@@ -50,16 +52,10 @@ const init = () => {
       unmount(qsa<HTMLElement>("[data-component]", scope));
     },
     onCreated: (context?: Record<string, unknown>) => {
-      mountComponents(html, {
-        ...context,
-        once: true,
-      });
+      mountComponents(html, { ...context, once: true });
     },
     onUpdated: (scope: HTMLElement, context: Record<string, unknown>) => {
-      mountComponents(scope, {
-        ...context,
-        once: false,
-      });
+      mountComponents(scope, { ...context, once: false });
     },
   });
 };

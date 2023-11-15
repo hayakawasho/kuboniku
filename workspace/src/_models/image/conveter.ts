@@ -9,12 +9,12 @@ export const convertRawMediaToImg = (raw: any): ImageMetadata => {
 };
 
 const IMG_ROOT = "https://res.cloudinary.com/dxydwpqwv/images/";
-const IMG_API = "f_auto,q_auto";
+const DEFAULT_IMG_API = "f_auto,q_auto";
 
-export const cloudinaryApiConverter = (
+export const cloudinaryImgAPIConverter = (
   cloudinaryUrl = "",
-  api = "f_auto,q_auto"
-): string => {
-  const path = cloudinaryUrl.replace(IMG_ROOT + IMG_API, "");
-  return IMG_ROOT + api + path;
+  api = DEFAULT_IMG_API
+) => {
+  const resource = cloudinaryUrl.replace(IMG_ROOT + DEFAULT_IMG_API, "");
+  return IMG_ROOT + api + resource;
 };

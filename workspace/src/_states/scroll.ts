@@ -2,13 +2,15 @@ import { useUnmount, ref, readonly } from "lake";
 import { map } from "nanostores";
 import { noop } from "@/_foundation/utils";
 
-const pos = map<{
+type ScrollPos = {
   y: number;
-}>({
+};
+
+const pos = map<ScrollPos>({
   y: 0,
 });
 
-export const useScrollPos = (
+export const useScrollPosY = (
   callback: (payload: { currentY: number; oldY: number }) => void = noop
 ) => {
   const { y } = pos.get();
@@ -32,5 +34,4 @@ export const useScrollPos = (
   return [readonly(currentY)] as const;
 };
 
-export const scrollPosMutators = (update: { y: number }) =>
-  pos.set({ y: update.y });
+export const scrollPosMutators = (update: ScrollPos) => pos.set(update);

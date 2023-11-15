@@ -1,4 +1,5 @@
 import { Global, css } from "@emotion/react";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { mq } from "@/_foundation/mq";
 import type { FC, ReactNode } from "react";
 
@@ -19,6 +20,7 @@ export const Head: FC<{
       {!idDev && (
         <link
           as="style"
+          crossOrigin=""
           href="/assets/entry.css"
           onLoad={`this.onload=null;this.rel='stylesheet';` as any}
           rel="preload"
@@ -68,7 +70,7 @@ const base = css`
 
     --color-text: #e3e3e3;
     --color-text-primary: #858585;
-    --color-theme: #1793a9;
+    --color-theme: ${SITE_THEME_COLOR};
 
     --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
 
@@ -164,6 +166,15 @@ const base = css`
 
   picture {
     display: block;
+  }
+
+  summary {
+    display: block;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
   }
 
   @font-face {

@@ -1,6 +1,6 @@
 import * as THREE from "three";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
-import { THEME_COLOR } from "@/_foundation/const";
 
 export default class {
   private _transforms: any;
@@ -9,7 +9,7 @@ export default class {
   private _cameraOrtho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   private _mesh: THREE.Mesh;
   private _uniforms: any;
-  private _colorCode = THEME_COLOR;
+  private _colorCode = SITE_THEME_COLOR;
 
   constructor() {
     this._transforms = {};
