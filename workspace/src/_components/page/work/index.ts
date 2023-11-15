@@ -1,9 +1,8 @@
 import { defineComponent, useSlot, useMount, useDomRef as _ } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
-import { useScrollPos } from "@/_states/scroll";
+import { useScrollPosY } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import { useWindowSize } from "@/_states/window-size";
 import SkewScrollContainer from "../../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
@@ -28,8 +27,7 @@ export default defineComponent({
     };
 
     const { onProgressMutate } = useScrollbarProgress();
-    const [y] = useScrollPos();
-    const [_ww, wh] = useWindowSize();
+    const [y] = useScrollPosY();
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -41,7 +39,7 @@ export default defineComponent({
       if (state.resizing) {
         return;
       }
-      onProgressMutate(y.value, wh.value, state.offsetHeight);
+      onProgressMutate(y.value, state.offsetHeight);
     });
 
     useMount(() => {

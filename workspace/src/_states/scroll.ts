@@ -10,7 +10,7 @@ const pos = map<ScrollPos>({
   y: 0,
 });
 
-export const useScrollPos = (
+export const useScrollPosY = (
   callback: (payload: { currentY: number; oldY: number }) => void = noop
 ) => {
   const { y } = pos.get();

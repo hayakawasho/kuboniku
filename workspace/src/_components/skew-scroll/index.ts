@@ -2,7 +2,7 @@ import { defineComponent, ref, useMount } from "lake";
 import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
-import { useScrollPos } from "@/_states/scroll";
+import { useScrollPosY } from "@/_states/scroll";
 import { useWindowSize } from "@/_states/window-size";
 import type { AppContext } from "@/_foundation/type";
 
@@ -22,7 +22,7 @@ export default defineComponent({
       state.resizing = false;
     });
 
-    const [y] = useScrollPos();
+    const [y] = useScrollPosY();
 
     const lastY = ref(y.value);
     const ty = ref(y.value);
