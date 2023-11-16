@@ -1,12 +1,14 @@
 <script lang="ts">
   import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 
-  let valueNow = 0;
-  let progress = 0;
+  const state = {
+    valueNow: 0,
+    progressY: 0,
+  };
 
   useScrollbarProgress(({ percentage, track }) => {
-    valueNow = Math.round(percentage);
-    progress = track;
+    state.valueNow = Math.round(percentage);
+    state.progressY = track;
   });
 </script>
 
@@ -19,8 +21,8 @@
       aria-orientation="vertical"
       aria-valuemax={100}
       aria-valuemin={0}
-      aria-valuenow={valueNow}
-      style="transform: scaleY({progress}) translateZ(0)"
+      aria-valuenow={state.valueNow}
+      style="transform: scaleY({state.progressY}) translateZ(0)"
     />
   </div>
 </div>

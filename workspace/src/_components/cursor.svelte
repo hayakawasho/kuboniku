@@ -3,10 +3,10 @@
   import { lerp } from "@/_foundation/math";
   import { mousePosMutators } from "@/_states/mouse";
 
-  let isRunning = false;
   let timer: number;
 
   const state = {
+    isRunning: false,
     lastX: 0,
     lastY: 0,
     x: 0,
@@ -16,7 +16,7 @@
   const onMousemove = (e: MouseEvent) => {
     clearTimeout(timer);
 
-    isRunning = true;
+    state.isRunning = true;
 
     state.x = e.clientX;
     state.y = e.clientY;
@@ -27,12 +27,12 @@
     });
 
     timer = window.setTimeout(() => {
-      isRunning = false;
+      state.isRunning = false;
     }, 300);
   };
 
   useTick(({ timeRatio }) => {
-    if (!isRunning) {
+    if (!state.isRunning) {
       return;
     }
 

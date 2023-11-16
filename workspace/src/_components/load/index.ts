@@ -45,7 +45,9 @@ export default defineComponent({
     useEvent(
       window as any,
       "scroll",
-      () => scrollPosMutators({ y: window.scrollY }),
+      () => {
+        scrollPosMutators({ y: window.scrollY });
+      },
       {
         passive: true,
       }
