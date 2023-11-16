@@ -10,7 +10,7 @@ import {
 } from "lake";
 import { wideQuery } from "@/_foundation/env";
 import { useElementSize } from "@/_foundation/hooks";
-import { scrollPosMutators } from "@/_states/scroll";
+import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
 import Gl from "../glworld";
 import type { AppContext } from "@/_foundation/type";
@@ -38,26 +38,6 @@ export default defineComponent({
 
     const [glContext] = addChild(refs.glWorld, Gl, { mq });
 
-    useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
-      windowSizeMutators({
-        height,
-        width,
-      });
-    });
-
-    useEvent(
-      window as any,
-      "scroll",
-      () => {
-        scrollPosMutators({
-          y: window.scrollY,
-        });
-      },
-      {
-        passive: true,
-      }
-    );
-
     const provides = {
       glContext: glContext.current,
       history: readonly(history),
@@ -67,6 +47,35 @@ export default defineComponent({
     useMount(() => {
       onCreated(provides);
     });
+
+    //----------------------------------------------------------------
+
+    useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
+      windowSizeMutators({
+        height,
+        width,
+      });
+    });
+
+    let timer: number;
+
+    useEvent(
+      window as any,
+      "scroll",
+      () => {
+        clearTimeout(timer);
+
+        isScrollingMutators(true);
+        scrollPosMutators(window.scrollY);
+
+        timer = window.setTimeout(() => {
+          isScrollingMutators(false);
+        }, 500);
+      },
+      {
+        passive: true,
+      }
+    );
 
     //----------------------------------------------------------------
 
@@ -125,8 +134,10 @@ export default defineComponent({
 
     htmx.on("htmx:xhr:progress", (e) => {
       const { detail } = e as CustomEvent;
-      const progress = Math.floor((detail.loaded / detail.total) * 1000) / 1000;
-      console.log(progress);
+      const loadProgress =
+        Math.floor((detail.loaded / detail.total) * 1000) / 1000;
+
+      console.log(loadProgress);
     });
   },
 });

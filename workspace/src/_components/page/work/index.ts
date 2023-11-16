@@ -27,7 +27,7 @@ export default defineComponent({
     };
 
     const { onProgressMutate } = useScrollbarProgress();
-    const [y] = useScrollPosY();
+    const [y, { isScrolling }] = useScrollPosY();
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -36,7 +36,7 @@ export default defineComponent({
     });
 
     useTick(() => {
-      if (state.resizing) {
+      if (state.resizing || !isScrolling.value) {
         return;
       }
       onProgressMutate(y.value, state.offsetHeight);

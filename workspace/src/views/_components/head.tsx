@@ -130,12 +130,12 @@ const base = css`
 
     & ::-moz-selection {
       color: #fff;
-      background: #101010;
+      background: var(--color-theme);
     }
 
     & ::selection {
       color: #fff;
-      background: #101010;
+      background: var(--color-theme);
     }
 
     @media (min-resolution: 1.5dppx) {

@@ -36,7 +36,7 @@
       return;
     }
 
-    const easeVal = 1 - (1 - 0.2) ** timeRatio;
+    const easeVal = 1 - (1 - 0.24) ** timeRatio;
 
     state.lastX = lerp(state.lastX, state.x, easeVal);
     state.lastY = lerp(state.lastY, state.y, easeVal);

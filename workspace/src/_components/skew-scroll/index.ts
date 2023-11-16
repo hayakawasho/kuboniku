@@ -16,7 +16,7 @@ export default defineComponent({
     };
 
     const [ww] = useWindowSize();
-    const [y] = useScrollPosY();
+    const [y, { isScrolling }] = useScrollPosY();
 
     const lastY = ref(0);
 
@@ -31,12 +31,11 @@ export default defineComponent({
     };
 
     useTick(({ timeRatio }) => {
-      if (!state.active) {
+      if (!state.active || !isScrolling.value) {
         return;
       }
 
       const currentY = y.value;
-
       const easeVal = 1 - (1 - EASE[mq.value]) ** timeRatio;
       lastY.value = lerp(lastY.value, currentY, easeVal);
 
@@ -46,7 +45,6 @@ export default defineComponent({
 
       const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
       const ty = clamp(skewY, { max: 6, min: -6 });
-
       el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
 
