@@ -13,19 +13,12 @@ export default defineComponent({
 
     const state = {
       active: false,
-      resizing: false,
     };
 
-    const [ww] = useWindowSize(() => {
-      state.resizing = true;
-      //
-      state.resizing = false;
-    });
-
+    const [ww] = useWindowSize();
     const [y] = useScrollPosY();
 
-    const lastY = ref(y.value);
-    const ty = ref(y.value);
+    const lastY = ref(0);
 
     const EASE = {
       pc: 0.12,
@@ -33,12 +26,12 @@ export default defineComponent({
     } as const;
 
     const onReset = () => {
+      lastY.value = 0;
       state.active = false;
-      ty.value = 0;
     };
 
     useTick(({ timeRatio }) => {
-      if (state.resizing || !state.active) {
+      if (!state.active) {
         return;
       }
 
@@ -52,9 +45,9 @@ export default defineComponent({
       }
 
       const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
-      ty.value = clamp(skewY, { max: 6, min: -6 });
+      const ty = clamp(skewY, { max: 6, min: -6 });
 
-      el.style.transform = `skew(0, ${ty.value}deg) translateZ(0)`;
+      el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
 
     useMount(() => {

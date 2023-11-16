@@ -84,7 +84,7 @@ class Component {
                     data-ref="projectItem"
                     to={`./works/${item.slug}/`}
                   >
-                    <div css={styles.aspect} aria-hidden="true"></div>
+                    <div aria-hidden="true" css={styles.aspect}></div>
                     <div css={styles.entry__g}>
                       <figure css={styles.eyecatch} data-ref="eyecatch">
                         <img

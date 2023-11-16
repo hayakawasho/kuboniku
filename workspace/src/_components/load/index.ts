@@ -39,14 +39,19 @@ export default defineComponent({
     const [glContext] = addChild(refs.glWorld, Gl, { mq });
 
     useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
-      windowSizeMutators({ height, width });
+      windowSizeMutators({
+        height,
+        width,
+      });
     });
 
     useEvent(
       window as any,
       "scroll",
       () => {
-        scrollPosMutators({ y: window.scrollY });
+        scrollPosMutators({
+          y: window.scrollY,
+        });
       },
       {
         passive: true,
@@ -74,7 +79,6 @@ export default defineComponent({
       document.body.dataset.page = namespace;
 
       window.scrollTo(0, 0);
-
       onUpdated(to, provides);
     };
 
@@ -82,7 +86,7 @@ export default defineComponent({
       htmx.find(refs.main, "[data-xhr]") as HTMLElement
     );
 
-    htmx.config.historyCacheSize = 1;
+    // htmx.config.historyCacheSize = 1;
 
     htmx.on("htmx:historyRestore", (e) => {
       history.value = "pop";
@@ -91,7 +95,6 @@ export default defineComponent({
 
       const { detail } = e as CustomEvent;
       const newContainer = htmx.find(detail.elt, "[data-xhr]") as HTMLElement;
-
       onEnter(newContainer);
     });
 
@@ -103,7 +106,6 @@ export default defineComponent({
       ) as HTMLElement;
 
       onLeave(oldContainer);
-
       fromContainer.value = oldContainer;
     });
 
