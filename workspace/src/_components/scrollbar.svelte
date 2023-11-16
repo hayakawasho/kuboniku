@@ -4,25 +4,23 @@
   let progressY = 0;
   let valueNow = 0;
 
-  useScrollbarProgress(({ percentage, track }) => {
-    progressY = track;
-    valueNow = Math.round(percentage);
+  useScrollbarProgress(({ pos, now }) => {
+    progressY = pos;
+    valueNow = now;
   });
 </script>
 
-<div class="relative w-full h-full">
-  <div class="scrollbar">
-    <div
-      class="scrollbar__progress"
-      aria-controls="main"
-      role="scrollbar"
-      aria-orientation="vertical"
-      aria-valuemax={100}
-      aria-valuemin={0}
-      aria-valuenow={valueNow}
-      style="transform: scaleY({progressY}) translateZ(0)"
-    />
-  </div>
+<div class="scrollbar">
+  <div
+    class="scrollbar__progress"
+    aria-controls="main"
+    role="scrollbar"
+    aria-orientation="vertical"
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={Math.floor(valueNow)}
+    style="transform: scaleY({progressY}) translateZ(0)"
+  />
 </div>
 
 <style lang="postcss">

@@ -32,8 +32,10 @@ export default defineComponent({
       resizing: false,
     };
 
-    const { onProgressMutate } = useScrollbarProgress();
+    const { onScrollProgressMutate } = useScrollbarProgress();
     const [y, { isScrolling }] = useScrollPosY();
+
+    onScrollProgressMutate(y.value, state.offsetHeight);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -42,10 +44,11 @@ export default defineComponent({
     });
 
     useTick(() => {
-      if (state.resizing || !isScrolling.value) {
+      if (state.resizing || isScrolling.value === false) {
         return;
       }
-      onProgressMutate(y.value, state.offsetHeight);
+
+      onScrollProgressMutate(y.value, state.offsetHeight);
     });
 
     useMount(() => {

@@ -30,6 +30,7 @@ export const PageWithHeader: FC<{
         >
           <canvas className="w-screen h-screen" data-ref="canvas"></canvas>
         </div>
+        <div css={scrollbar} data-component="Scrollbar" />
         <div
           aria-live="polite"
           className="relative backface-hidden"
@@ -42,7 +43,6 @@ export const PageWithHeader: FC<{
           </div>
         </div>
         <div css={ui}>
-          <div css={scrollbar} data-component="Scrollbar" />
           <div className="sp:hidden" data-component="Cursor" />
         </div>
         {idDev && (
@@ -78,15 +78,17 @@ const ui = css`
 `;
 
 const scrollbar = css`
-  position: sticky;
+  position: fixed;
   top: 50vh;
-  width: 100%;
+  right: 3.2rem;
+  z-index: 99;
   pointer-events: none;
-  margin-left: auto;
-  margin-right: 0;
-  width: 3.2rem;
+  // margin-left: auto;
+  // margin-right: 0;
+  // width: 3.2rem;
 
   @media ${mq.pc} {
-    width: 4rem;
+    right: 4rem;
+    // width: 4rem;
   }
 `;

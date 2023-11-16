@@ -4,29 +4,29 @@ import { noop } from "@/_foundation/utils";
 import { useWindowSize } from "@/_states/window-size";
 
 const progress = map<{
-  percentage: number;
-  track: number;
+  now: number;
+  pos: number;
 }>({
-  percentage: 0,
-  track: 0,
+  now: 0,
+  pos: 0,
 });
 
 export const useScrollbarProgress = (
-  callback: (payload: { percentage: number; track: number }) => void = noop
+  callback: (payload: { now: number; pos: number }) => void = noop
 ) => {
   const [_wh, wh] = useWindowSize();
 
-  const onProgressMutate = (value: number, offsetHeight: number) => {
+  const onScrollProgressMutate = (val: number, offset: number) => {
     progress.set({
-      percentage: (value / (offsetHeight - wh.value)) * 100,
-      track: (value + wh.value) / offsetHeight,
+      now: (val / (offset - wh.value)) * 100,
+      pos: (val + wh.value) / offset,
     });
   };
 
-  const unbind = progress.listen(({ percentage, track }) => {
+  const unbind = progress.listen(({ now, pos }) => {
     callback({
-      percentage,
-      track,
+      now,
+      pos,
     });
   });
 
@@ -35,6 +35,6 @@ export const useScrollbarProgress = (
   });
 
   return {
-    onProgressMutate,
+    onScrollProgressMutate,
   } as const;
 };

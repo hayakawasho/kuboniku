@@ -16,18 +16,20 @@ export default defineComponent({
     // const { refs } = useDomRef<Refs>();
     const { addChild } = useSlot();
 
+    addChild(el, SkewScrollContainer, context);
+
     const colorPallete = el.dataset.color!;
     glContext.onChangeColorPalette(colorPallete);
-
-    addChild(el, SkewScrollContainer, context);
 
     const state = {
       offsetHeight: el.getBoundingClientRect().height,
       resizing: false,
     };
 
-    const { onProgressMutate } = useScrollbarProgress();
+    const { onScrollProgressMutate } = useScrollbarProgress();
     const [y, { isScrolling }] = useScrollPosY();
+
+    onScrollProgressMutate(y.value, state.offsetHeight);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -36,10 +38,11 @@ export default defineComponent({
     });
 
     useTick(() => {
-      if (state.resizing || !isScrolling.value) {
+      if (state.resizing || isScrolling.value === false) {
         return;
       }
-      onProgressMutate(y.value, state.offsetHeight);
+
+      onScrollProgressMutate(y.value, state.offsetHeight);
     });
 
     useMount(() => {
