@@ -7,8 +7,8 @@
 
   const state = {
     isRunning: false,
-    lastX: 0,
-    lastY: 0,
+    lastX: -20,
+    lastY: -20,
     x: 0,
     y: 0,
   };
@@ -28,7 +28,7 @@
 
     timer = window.setTimeout(() => {
       state.isRunning = false;
-    }, 300);
+    }, 500);
   };
 
   useTick(({ timeRatio }) => {
