@@ -79,6 +79,7 @@
     letter-spacing: 0.41em;
     color: #fff;
     overflow: hidden;
+    transition: 0.4s opacity var(--ease-power3-inOut);
 
     @media (min-width: 640px) {
       font-size: 1.3rem;
@@ -88,7 +89,8 @@
     }
 
     &[aria-current="page"] {
-      color: #858585;
+      opacity: 0.5;
+      /* color: #858585; */
       pointer-events: none !important;
     }
   }

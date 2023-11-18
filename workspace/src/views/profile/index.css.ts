@@ -28,6 +28,7 @@ export const container = css`
 
   @media ${mq.pc} {
     text-align: left;
+    margin: 0;
   }
 `;
 
@@ -41,7 +42,7 @@ export const container__in = css`
   @media ${mq.pc} {
     left: 50%;
     text-align: left;
-    // mix-blend-mode: difference;
+    width: calc(var(--grid) * 5);
   }
 `;
 
