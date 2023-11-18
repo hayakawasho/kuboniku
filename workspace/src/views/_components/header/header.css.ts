@@ -39,55 +39,6 @@ export const copyright = css`
   }
 `;
 
-/*
-export const link = css`
-  display: inline-block;
-  vertical-align: top;
-  font-family: var(--font-en);
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: calc(86 / 28);
-  letter-spacing: 0.41em;
-  color: #fff;
-  overflow: hidden;
-
-  @media ${mq.pc} {
-    font-size: 1.3rem;
-    line-height: calc(52 / 26);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  &[aria-current='page'] {
-    color: #858585;
-    pointer-events: none !important;
-  }
-
-  > span {
-    line-height: 1;
-    display: inline-block;
-  }
-
-  .isMenuOpen & {
-    pointer-events: auto;
-  }
-`
-
-export const linkLabel = css`
-  display: inline-block;
-  transform: translateY(100%);
-  transform-origin: left;
-
-  @media ${mq.pc} {
-    transform: none;
-  }
-
-  .isMenuAnimating & {
-    will-change: transform, opacity;
-  }
-`
-*/
-
 export const burger = css`
   position: fixed;
   top: 0.8rem;
@@ -96,10 +47,6 @@ export const burger = css`
   height: 4rem;
   z-index: 101;
   pointer-events: auto;
-
-  .isMenuAnimating & {
-    will-change: transform;
-  }
 `;
 
 export const burger__line = css`
@@ -112,8 +59,60 @@ export const burger__line = css`
     margin: 5px 0 0;
     transform: scaleX(calc(32 / 40));
   }
+`;
 
-  .isMenuAnimating & {
-    will-change: transform;
+export const menu = css`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overscroll-behavior: contain;
+
+  &.is-menu-open {
+    pointer-events: all;
+  }
+`;
+
+export const menu__mask = css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  background-color: #000000;
+`;
+
+export const menu__bg = css`
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  width: calc(46rem * 0.5);
+  background-color: #000;
+  clip-path: polygon(100% 0px, 100% 0px, 100% 100vh, 100% 100vh);
+  clip-path: polygon(100% 0px, 100% 0px, 100% 100svh, 100% 100svh);
+  backface-visibility: hidden;
+`;
+
+export const menu__links = css`
+  position: absolute;
+  height: 100vh;
+  height: 100dvh;
+  top: 0;
+  right: 0;
+  text-align: right;
+  width: calc(46rem * 0.5);
+  padding-top: 7rem;
+  padding-right: 3rem;
+
+  @media ${mq.pc} {
+    padding-top: 3.2rem;
+    padding-right: 4rem;
   }
 `;
