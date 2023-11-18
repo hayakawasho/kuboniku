@@ -142,10 +142,6 @@ const base = css`
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
-    &.isMenuOpen {
-      overflow: hidden;
-    }
   }
 
   :any-link {

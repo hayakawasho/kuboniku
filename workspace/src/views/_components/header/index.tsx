@@ -1,15 +1,15 @@
 import * as styles from "./header.css";
-import { NavMenu } from "./nav-menu";
 import { Sns } from "./sns";
 import { Link } from "../ui/link";
+import type { RouteName } from "@/_foundation/type";
 
 type Props = {
-  current: "WORKS" | "WORKS_DETAIL" | "PROFILE";
+  current: RouteName;
 };
 
 export const Header = ({ current }: Props) => {
   return (
-    <>
+    <div data-component="NavMenu">
       <header className="">
         <Link css={styles.brandLogo} to="/">
           <i className="icon-logo"></i>
@@ -34,7 +34,17 @@ export const Header = ({ current }: Props) => {
         <small css={styles.copyright}>@KuboNiku.com</small>
       </header>
 
-      <NavMenu current={current} />
-    </>
+      <nav css={styles.menu} data-ref="menu">
+        <div className="w-full h-full relative">
+          <div className="pc:hidden" css={styles.menu__mask} data-ref="mask" />
+          <div className="pc:hidden" css={styles.menu__bg} data-ref="menuBg" />
+          <ul
+            css={styles.menu__links}
+            data-current={current}
+            data-ref="menuLinks"
+          ></ul>
+        </div>
+      </nav>
+    </div>
   );
 };

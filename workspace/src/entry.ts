@@ -3,7 +3,7 @@ import "ress";
 import { create, withSvelte } from "lake";
 import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
-import Menu from "./_components/menu/index.svelte";
+import NavMenu from "./_components/menu";
 import Noop from "./_components/noop.svelte";
 import Profile from "./_components/page/profile";
 import Work from "./_components/page/work";
@@ -18,7 +18,7 @@ const init = () => {
 
   const table: Record<string, IComponent> = {
     Cursor: withSvelte(Cursor, "Cursor"),
-    Menu: withSvelte(Menu, "Menu"),
+    NavMenu,
     Noop: withSvelte(Noop),
     Profile,
     Scrollbar: withSvelte(Scrollbar, "Scrollbar"),

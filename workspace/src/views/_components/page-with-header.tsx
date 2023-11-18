@@ -83,12 +83,8 @@ const scrollbar = css`
   right: 3.2rem;
   z-index: 99;
   pointer-events: none;
-  // margin-left: auto;
-  // margin-right: 0;
-  // width: 3.2rem;
 
   @media ${mq.pc} {
     right: 4rem;
-    // width: 4rem;
   }
 `;

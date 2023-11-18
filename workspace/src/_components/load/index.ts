@@ -10,10 +10,11 @@ import {
 } from "lake";
 import { wideQuery } from "@/_foundation/env";
 import { useElementSize } from "@/_foundation/hooks";
+import { routeMutators } from "@/_states/route";
 import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
 import Gl from "../glworld";
-import type { AppContext } from "@/_foundation/type";
+import type { AppContext, RouteName } from "@/_foundation/type";
 
 type Props = {
   onCreated: (props?: Omit<AppContext, "once">) => void;
@@ -84,14 +85,18 @@ export default defineComponent({
     };
 
     const onEnter = (to: HTMLElement) => {
-      const namespace = to.dataset.xhr;
+      const namespace = to.dataset.xhr as RouteName;
       document.body.dataset.page = namespace;
 
-      window.scrollTo(0, 0);
       onUpdated(to, provides);
+      window.scrollTo(0, 0);
+
+      routeMutators({
+        name: namespace,
+      });
     };
 
-    const fromContainer = ref<HTMLElement>(
+    const fromContainer = ref(
       htmx.find(refs.main, "[data-xhr]") as HTMLElement
     );
 

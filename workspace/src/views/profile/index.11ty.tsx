@@ -10,8 +10,8 @@ class Component {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        header={<Header current="PROFILE" />}
-        namespace="PROFILE"
+        header={<Header current="profile" />}
+        namespace="profile"
         seo={<Seo permalink="/profile/" prepend={<></>} title="Profile" />}
       >
         <main className="overflow-hidden" data-component="Profile">

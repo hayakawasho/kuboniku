@@ -44,8 +44,8 @@ class Component {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        header={<Header current="WORKS_DETAIL" />}
-        namespace="WORKS_DETAIL"
+        header={<Header current="single" />}
+        namespace="single"
         seo={
           <Seo
             permalink={`/works/${post.slug}/`}

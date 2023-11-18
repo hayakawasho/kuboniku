@@ -12,11 +12,8 @@ export const useWindowSize = (
   callback: (payload: { aspect: number; ww: number; wh: number }) => void = noop
 ) => {
   const { width, height } = viewport.get();
-
-  const state = {
-    wh: ref(height),
-    ww: ref(width),
-  };
+  const ww = ref(width);
+  const wh = ref(height);
 
   const unbind = viewport.listen(({ width, height }) => {
     const aspect = width / height;
@@ -27,15 +24,15 @@ export const useWindowSize = (
       ww: width,
     });
 
-    state.ww.value = width;
-    state.wh.value = height;
+    ww.value = width;
+    wh.value = height;
   });
 
   useUnmount(() => {
     unbind();
   });
 
-  return [readonly(state.ww), readonly(state.wh)] as const;
+  return [readonly(ww), readonly(wh)] as const;
 };
 
 export const windowSizeMutators = (update: Size) => viewport.set(update);

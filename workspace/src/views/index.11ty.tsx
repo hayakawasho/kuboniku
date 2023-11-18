@@ -35,8 +35,8 @@ class Component {
     return `<!DOCTYPE html>
     ${r(
       <PageWithHeader
-        header={<Header current="WORKS" />}
-        namespace="WORKS"
+        header={<Header current="works" />}
+        namespace="works"
         seo={
           <Seo
             permalink=""

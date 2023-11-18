@@ -8,6 +8,8 @@ export type AppContext = {
   glContext: ReturnType<(typeof GlContext)["setup"]>;
 };
 
+export type RouteName = "works" | "single" | "profile";
+
 //----------------------------------------------------------------
 
 export type Size = {
