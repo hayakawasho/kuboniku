@@ -1,22 +1,46 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { useRoute } from "@/_states/route";
-  import type { RouteName } from "@/_foundation/type";
+  import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  const context = getContext<Context$<{ current: RouteName }>>("$");
+  const { mq, ...context } = getContext<
+    Context$<
+      AppContext & {
+        current: RouteName;
+        closeMenu: () => void;
+      }
+    >
+  >("$");
+
   let current = context.current;
 
   useRoute(({ name }) => {
     current = name;
   });
+
+  const onCloseMenu = () => {
+    mq.value === "sp" && context.closeMenu();
+  };
+
+  const createLinkProps = (to: string) => {
+    return {
+      ["hx-get"]: to,
+      ["hx-push-url"]: true,
+      ["hx-select"]: "[data-xhr]",
+      ["hx-swap"]: "swap:520ms",
+      ["hx-target"]: "#main",
+    };
+  };
 </script>
 
 <li>
   <a
-    href="/profile/"
-    class="menuLink"
+    {...createLinkProps("/profile/")}
     aria-current={current === "profile" && "page"}
+    class="menuLink"
+    href="/profile/"
+    on:click={onCloseMenu}
   >
     <span class="inline-block overflow-hidden leading-[1]">
       <span class="menuLink__label | js-menuLabel">Profile</span>
@@ -24,7 +48,13 @@
   </a>
 </li>
 <li>
-  <a href="/" class="menuLink" aria-current={current === "works" && "page"}>
+  <a
+    {...createLinkProps("/")}
+    aria-current={current === "works" && "page"}
+    class="menuLink"
+    href="/"
+    on:click={onCloseMenu}
+  >
     <span class="inline-block overflow-hidden leading-[1]">
       <span class="menuLink__label | js-menuLabel">Works</span>
     </span>

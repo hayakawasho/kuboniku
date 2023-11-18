@@ -1,13 +1,5 @@
 <script lang="ts">
-  import {
-    useDomRef,
-    useSlot,
-    ref,
-    readonly,
-    withSvelte,
-    defineComponent,
-    useEvent,
-  } from "lake";
+  import { useDomRef, useSlot, ref, withSvelte, useEvent } from "lake";
   import { getContext } from "svelte";
   import MenuView from "./view.svelte";
   import type { AppContext } from "@/_foundation/type";
@@ -21,7 +13,7 @@
     menu: HTMLElement;
   };
 
-  const { mq, openAnime, closeAnime } = getContext<
+  const context = getContext<
     Context$<
       AppContext & {
         openAnime: () => void;
@@ -29,6 +21,8 @@
       }
     >
   >("$");
+
+  const { openAnime, closeAnime } = context;
 
   const { refs } = useDomRef<Refs>(
     "menuTrigger",
@@ -62,48 +56,15 @@
   };
 
   addChild(refs.menuLinks, withSvelte(MenuView), {
+    ...context,
+    closeMenu,
     current: refs.menuLinks.dataset.current!,
   });
 
-  const readonlyIsOpen = readonly(isOpen);
+  useEvent(refs.mask, "click", closeMenu);
 
-  if (mq.value === "sp") {
-    addChild(
-      refs.menuTrigger,
-      defineComponent({
-        name: "MenuToggle",
-        setup() {
-          useEvent(refs.menuTrigger, "click", (e) => {
-            e.preventDefault();
-            isOpen.value ? closeMenu() : openMenu();
-          });
-        },
-      }),
-      {
-        closeMenu,
-        isOpen: readonlyIsOpen,
-        openMenu,
-      }
-    );
-
-    addChild(
-      refs.mask,
-      defineComponent({
-        name: "MenuMask",
-        setup() {
-          useEvent(refs.mask, "click", closeMenu);
-        },
-      })
-    );
-
-    addChild(
-      refs.menuLink,
-      defineComponent({
-        name: "MenuLink",
-        setup() {
-          useEvent(refs.mask, "click", closeMenu);
-        },
-      })
-    );
-  }
+  useEvent(refs.menuTrigger, "click", (e) => {
+    e.preventDefault();
+    isOpen.value ? closeMenu() : openMenu();
+  });
 </script>

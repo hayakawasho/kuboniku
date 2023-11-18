@@ -48,12 +48,23 @@ export default defineComponent({
     const q = gsap.utils.selector(refs.menuLinks);
 
     const openAnime = async () => {
-      Tween.kill([q(".js-menuLabel"), refs.menuTrigger]);
-      el.classList.add("is-menu-animating");
+      const elMenuLabel = q(".js-menuLabel");
+
+      Tween.kill([elMenuLabel, refs.menuTrigger]);
+
+      Tween.prop(refs.menuBg, {
+        willChange: "clip-path",
+      });
+      Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
+        willChange: "transform",
+      });
+      Tween.prop(elMenuLabel, {
+        willChange: "transform, opacity",
+      });
 
       await nextTick();
 
-      el.classList.add("is-menu-open");
+      refs.menu.classList.add("is-menu-open");
 
       Tween.serial(
         Tween.prop(refs.menuTrigger, {
@@ -74,12 +85,12 @@ export default defineComponent({
             scaleX: 0,
           }),
           Tween.serial(
-            Tween.prop(q(".js-menuLabel"), {
+            Tween.prop(elMenuLabel, {
               opacity: 1,
               rotation: -7,
               y: "200%",
             }),
-            Tween.tween(q(".js-menuLabel"), 0.75, "power2.inOut", {
+            Tween.tween(elMenuLabel, 0.75, "power2.inOut", {
               rotation: 0,
               stagger: 0.065,
               y: "0%",
@@ -99,14 +110,36 @@ export default defineComponent({
           pointerEvents: "auto",
         }),
         Tween.immediate(() => {
-          el.classList.remove("is-menu-animating");
+          Tween.prop(
+            [
+              refs.menuBg,
+              refs.menuTrigger,
+              refs.burgerTL,
+              refs.burgerBL,
+              elMenuLabel,
+            ],
+            {
+              clearProps: "will-change",
+            }
+          );
         })
       );
     };
 
     const closeAnime = async () => {
-      Tween.kill([q(".js-menuLabel"), refs.menuTrigger]);
-      el.classList.add("is-menu-animating");
+      const elMenuLabel = q(".js-menuLabel");
+
+      Tween.kill([elMenuLabel, refs.menuTrigger]);
+
+      Tween.prop(refs.menuBg, {
+        willChange: "clip-path",
+      });
+      Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
+        willChange: "transform",
+      });
+      Tween.prop(elMenuLabel, {
+        willChange: "transform,opacity",
+      });
 
       await nextTick();
 
@@ -129,11 +162,11 @@ export default defineComponent({
             scaleX: 32 / 40,
           }),
           Tween.serial(
-            Tween.prop(q(".js-menuLabel"), {
+            Tween.prop(elMenuLabel, {
               rotation: 0,
               y: "0%",
             }),
-            Tween.tween(q(".js-menuLabel"), 0.65, "power2.inOut", {
+            Tween.tween(elMenuLabel, 0.65, "power2.inOut", {
               rotation: 7,
               stagger: 0.06,
               y: "-200%",
@@ -153,7 +186,19 @@ export default defineComponent({
           pointerEvents: "auto",
         }),
         Tween.immediate(() => {
-          el.classList.remove("is-menu-open", "is-menu-animating");
+          Tween.prop(
+            [
+              refs.menuBg,
+              refs.menuTrigger,
+              refs.burgerTL,
+              refs.burgerBL,
+              elMenuLabel,
+            ],
+            {
+              clearProps: "will-change",
+            }
+          );
+          refs.menu.classList.remove("is-menu-open");
         })
       );
     };
