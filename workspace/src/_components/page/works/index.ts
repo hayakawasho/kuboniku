@@ -54,8 +54,11 @@ export default defineComponent({
     useMount(() => {
       if (!once && history.value === "push") {
         Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
           Tween.wait(0.2),
-          Tween.tween([refs.projectItem, refs.h1], 0.55, "power3.out", {
+          Tween.tween(el, 0.55, "power3.out", {
             opacity: 1,
           })
         );
@@ -66,7 +69,7 @@ export default defineComponent({
           return;
         }
 
-        Tween.tween([refs.projectItem, refs.h1], 0.55, "power3.out", {
+        Tween.tween(el, 0.55, "power3.out", {
           opacity: 0,
         });
       };
