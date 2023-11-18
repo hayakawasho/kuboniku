@@ -11,7 +11,7 @@ export const convertRawMediaToImg = (raw: any): ImageMetadata => {
 const IMG_ROOT = "https://res.cloudinary.com/dxydwpqwv/images/";
 const DEFAULT_IMG_API = "f_auto,q_auto";
 
-export const cloudinaryImgAPIConverter = (
+export const cloudinaryAPIConverter = (
   cloudinaryUrl = "",
   api = DEFAULT_IMG_API
 ) => {

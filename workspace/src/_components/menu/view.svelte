@@ -9,16 +9,12 @@
     closeMenu: () => void;
   };
 
-  const { mq, ...context } = getContext<Context$<Props>>("$");
+  const { mq, closeMenu, ...context } = getContext<Context$<Props>>("$");
   let current = context.current;
 
   useRoute(({ name }) => {
     current = name;
   });
-
-  const onCloseMenu = () => {
-    mq.value === "sp" && context.closeMenu();
-  };
 
   const createLinkProps = (to: string) => {
     return {
@@ -31,41 +27,85 @@
   };
 </script>
 
-<li>
-  <a
-    {...createLinkProps("/profile/")}
-    aria-current={current === "profile" && "page"}
-    class="menuLink"
-    href="/profile/"
-    on:click={onCloseMenu}
-  >
-    <span class="inline-block overflow-hidden leading-[1]">
-      <span class="menuLink__label | js-menuLabel">Profile</span>
-    </span>
-  </a>
-</li>
-<li>
-  <a
-    {...createLinkProps("/")}
-    aria-current={current === "works" && "page"}
-    class="menuLink"
-    href="/"
-    on:click={onCloseMenu}
-  >
-    <span class="inline-block overflow-hidden leading-[1]">
-      <span class="menuLink__label | js-menuLabel">Works</span>
-    </span>
-  </a>
-</li>
-<li>
-  <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink">
-    <span class="inline-block overflow-hidden leading-[1]">
-      <span class="menuLink__label | js-menuLabel">Contact</span>
-    </span>
-  </a>
-</li>
+{#if mq.value === "sp"}
+  <dialog class="menuDialog | js-menu">
+    <nav>
+      <ul>
+        <li>
+          <a
+            {...createLinkProps("/profile/")}
+            aria-current={current === "profile" && "page"}
+            class="menuLink"
+            href="/profile/"
+            on:click={closeMenu}
+          >
+            <span class="inline-block overflow-hidden leading-[1]">
+              <span class="menuLink__label | js-menuLabel">Profile</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            {...createLinkProps("/")}
+            aria-current={current === "works" && "page"}
+            class="menuLink"
+            href="/"
+            on:click={closeMenu}
+          >
+            <span class="inline-block overflow-hidden leading-[1]">
+              <span class="menuLink__label | js-menuLabel">Works</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink">
+            <span class="inline-block overflow-hidden leading-[1]">
+              <span class="menuLink__label | js-menuLabel">Contact</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </dialog>
+{:else}
+  <nav>
+    <ul>
+      <li>
+        <a
+          {...createLinkProps("/profile/")}
+          aria-current={current === "profile" && "page"}
+          class="menuLink"
+          href="/profile/"
+        >
+          Profile
+        </a>
+      </li>
+      <li>
+        <a
+          {...createLinkProps("/")}
+          aria-current={current === "works" && "page"}
+          class="menuLink"
+          href="/"
+        >
+          Works
+        </a>
+      </li>
+      <li>
+        <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink">Contact</a>
+      </li>
+    </ul>
+  </nav>
+{/if}
 
 <style lang="postcss">
+  .menuDialog {
+    max-width: none;
+    max-height: none;
+    background: transparent;
+    margin-left: auto;
+    margin-right: 3rem;
+  }
+
   .menuLink {
     display: inline-block;
     vertical-align: top;
@@ -76,6 +116,7 @@
     letter-spacing: 0.41em;
     overflow: hidden;
     transition: 0.55s opacity var(--ease-opacity);
+    color: var(--color-text);
 
     @media (min-width: 640px) {
       font-size: 1.3rem;

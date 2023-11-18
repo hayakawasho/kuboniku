@@ -6,14 +6,13 @@ import MenuCtrl from "./control.svelte";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
-  menuTrigger: HTMLButtonElement;
   burgerTL: HTMLElement;
   burgerBL: HTMLElement;
   menu: HTMLElement;
+  menuTrigger: HTMLButtonElement;
   mask: HTMLElement;
   menuBg: HTMLElement;
-  menuLinks: HTMLElement;
-  menuLabel: HTMLElement[];
+  menuContent: HTMLElement;
 };
 
 export default defineComponent({
@@ -21,15 +20,16 @@ export default defineComponent({
   setup(el, context: AppContext) {
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>(
-      "menuTrigger",
       "burgerTL",
       "burgerBL",
       "menu",
+      "menuTrigger",
       "mask",
       "menuBg",
-      "menuLink",
-      "menuLinks"
+      "menuContent"
     );
+
+    const q = gsap.utils.selector(refs.menuContent);
 
     const CLIP_PATH = {
       x1: 100,
@@ -45,10 +45,9 @@ export default defineComponent({
       )`;
     };
 
-    const q = gsap.utils.selector(refs.menuLinks);
-
     const openAnime = async () => {
       const elMenuLabel = q(".js-menuLabel");
+      const [elMenuDialog] = q(".js-menu") as [HTMLDialogElement];
 
       Tween.kill([elMenuLabel, refs.menuTrigger]);
 
@@ -64,6 +63,7 @@ export default defineComponent({
 
       await nextTick();
 
+      elMenuDialog.show();
       refs.menu.classList.add("is-menu-open");
 
       Tween.serial(
@@ -128,6 +128,7 @@ export default defineComponent({
 
     const closeAnime = async () => {
       const elMenuLabel = q(".js-menuLabel");
+      const [elMenuDialog] = q(".js-menu") as [HTMLDialogElement];
 
       Tween.kill([elMenuLabel, refs.menuTrigger]);
 
@@ -199,6 +200,7 @@ export default defineComponent({
             }
           );
           refs.menu.classList.remove("is-menu-open");
+          elMenuDialog.close();
         })
       );
     };
