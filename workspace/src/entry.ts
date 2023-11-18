@@ -10,6 +10,7 @@ import Work from "./_components/page/work";
 import Works from "./_components/page/works";
 import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
+import { wideQuery, mediaPrint } from "./_foundation/env";
 import { qsa } from "./_foundation/utils";
 import type { IComponent, ComponentContext } from "lake";
 
@@ -65,6 +66,15 @@ if (document.readyState !== "loading") {
 } else {
   document.addEventListener("DOMContentLoaded", init);
 }
+
+const onChangeBreakpoint = () => location.reload();
+
+wideQuery.addEventListener("change", onChangeBreakpoint);
+mediaPrint.addEventListener("change", (e) => {
+  e.matches
+    ? wideQuery.removeEventListener("change", onChangeBreakpoint)
+    : wideQuery.addEventListener("change", onChangeBreakpoint);
+});
 
 if (process.env.NODE_ENV === "development") {
   const Stats = await (
