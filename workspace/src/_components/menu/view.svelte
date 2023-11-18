@@ -4,15 +4,12 @@
   import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  const { mq, ...context } = getContext<
-    Context$<
-      AppContext & {
-        current: RouteName;
-        closeMenu: () => void;
-      }
-    >
-  >("$");
+  type Props = AppContext & {
+    current: RouteName;
+    closeMenu: () => void;
+  };
 
+  const { mq, ...context } = getContext<Context$<Props>>("$");
   let current = context.current;
 
   useRoute(({ name }) => {
@@ -77,9 +74,8 @@
     font-size: 1.4rem;
     line-height: calc(86 / 28);
     letter-spacing: 0.41em;
-    color: #fff;
     overflow: hidden;
-    transition: 0.4s opacity var(--ease-power3-inOut);
+    transition: 0.55s opacity var(--ease-opacity);
 
     @media (min-width: 640px) {
       font-size: 1.3rem;
@@ -88,9 +84,14 @@
       pointer-events: auto;
     }
 
+    @media (hover: hover) {
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
     &[aria-current="page"] {
       opacity: 0.5;
-      /* color: #858585; */
       pointer-events: none !important;
     }
   }

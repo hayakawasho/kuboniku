@@ -73,6 +73,7 @@ const base = css`
     --color-theme: ${SITE_THEME_COLOR};
 
     --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-opacity: cubic-bezier(0.26, 0.06, 0, 1);
 
     @media ${mq.pc} {
       --gap: calc(40 / 1280 * 100vw);

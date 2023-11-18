@@ -13,7 +13,7 @@ export const Sns = () => {
             rel="noopener"
             target="_blank"
           >
-            Fb
+            <span>Fb</span>
           </a>
         </li>
         <li className="overflow-hidden">
@@ -24,7 +24,7 @@ export const Sns = () => {
             rel="noopener"
             target="_blank"
           >
-            X
+            <span>X</span>
           </a>
         </li>
       </ul>
@@ -85,6 +85,16 @@ const snsLabel = css`
 
   @media ${mq.pc} {
     font-size: 1.3rem;
+  }
+
+  & > span {
+    transition: 0.55s opacity var(--ease-opacity);
+
+    @media (hover: hover) {
+      &:hover {
+        opacity: 0.5;
+      }
+    }
   }
 
   .is-animating & {
