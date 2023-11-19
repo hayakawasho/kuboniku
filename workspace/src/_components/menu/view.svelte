@@ -4,19 +4,22 @@
   import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  type Props = AppContext & {
-    current: RouteName;
-    closeMenu: () => void;
-  };
+  const { mq, closeMenu, ...context } = getContext<
+    Context$<
+      AppContext & {
+        current: RouteName;
+        closeMenu: () => void;
+      }
+    >
+  >("$");
 
-  const { mq, closeMenu, ...context } = getContext<Context$<Props>>("$");
   let current = context.current;
 
   useRoute(({ name }) => {
     current = name;
   });
 
-  const createLinkProps = (to: string) => {
+  const linkProps = (to: string) => {
     return {
       ["hx-get"]: to,
       ["hx-push-url"]: true,
@@ -28,12 +31,12 @@
 </script>
 
 {#if mq.value === "sp"}
-  <dialog class="menuDialog | js-menu">
+  <dialog class="menuDialog | js-menuDialog">
     <nav>
       <ul>
         <li>
           <a
-            {...createLinkProps("/profile/")}
+            {...linkProps("/profile/")}
             aria-current={current === "profile" && "page"}
             class="menuLink"
             href="/profile/"
@@ -46,7 +49,7 @@
         </li>
         <li>
           <a
-            {...createLinkProps("/")}
+            {...linkProps("/")}
             aria-current={current === "works" && "page"}
             class="menuLink"
             href="/"
@@ -72,7 +75,7 @@
     <ul>
       <li>
         <a
-          {...createLinkProps("/profile/")}
+          {...linkProps("/profile/")}
           aria-current={current === "profile" && "page"}
           class="menuLink"
           href="/profile/"
@@ -82,7 +85,7 @@
       </li>
       <li>
         <a
-          {...createLinkProps("/")}
+          {...linkProps("/")}
           aria-current={current === "works" && "page"}
           class="menuLink"
           href="/"

@@ -5,11 +5,11 @@ import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop.svelte";
-import Profile from "./_components/page/profile";
-import Work from "./_components/page/work";
-import Works from "./_components/page/works";
+import Profile from "./_components/profile";
 import Scrollbar from "./_components/scrollbar.svelte";
+import Single from "./_components/single";
 import Sns from "./_components/sns.svelte";
+import Works from "./_components/works";
 import { wideQuery, mediaPrint } from "./_foundation/env";
 import { qsa } from "./_foundation/utils";
 import type { IComponent, ComponentContext } from "lake";
@@ -23,8 +23,8 @@ const init = () => {
     Noop: withSvelte(Noop),
     Profile,
     Scrollbar: withSvelte(Scrollbar, "Scrollbar"),
+    Single,
     Sns: withSvelte(Sns, "Sns"),
-    Work,
     Works,
   } as const;
 

@@ -4,7 +4,7 @@ import { Tween } from "@/_foundation/tween";
 import { useScrollPosY } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 import ProjectItem from "./project";
-import SkewScrollContainer from "../../skew-scroll";
+import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {

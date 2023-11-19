@@ -40,8 +40,8 @@ export const Header = ({ current }: Props) => {
           <div className="pc:hidden" css={styles.menu__bg} data-ref="menuBg" />
           <div
             css={styles.menu__content}
-            data-ref="menuContent"
             data-current={current}
+            data-ref="menuContent"
           />
         </div>
       </div>

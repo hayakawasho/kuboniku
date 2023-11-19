@@ -18,14 +18,12 @@ export default defineComponent({
 
     const themeColor = el.dataset.color!;
 
-    const rect = el.getBoundingClientRect();
-
     const state = {
-      resizing: false,
       active: false,
-      rect,
       offsetX: 0,
       offsetY: 0,
+      rect: el.getBoundingClientRect(),
+      resizing: false,
     };
 
     useEvent(el, "mouseenter", (_e) => {
@@ -53,7 +51,7 @@ export default defineComponent({
         return;
       }
 
-      console.log(x.value, y.value);
+      // console.log(x.value, y.value);
     });
   },
 });

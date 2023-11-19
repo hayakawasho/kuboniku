@@ -46,10 +46,10 @@ export default defineComponent({
     };
 
     const openAnime = async () => {
-      const elMenuLabel = q(".js-menuLabel");
-      const [elMenuDialog] = q(".js-menu") as [HTMLDialogElement];
+      const menuLabelDOM = q(".js-menuLabel");
+      const [menuDialogDOM] = q(".js-menuDialog") as [HTMLDialogElement];
 
-      Tween.kill([elMenuLabel, refs.menuTrigger]);
+      Tween.kill([menuLabelDOM, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -57,13 +57,13 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(elMenuLabel, {
+      Tween.prop(menuLabelDOM, {
         willChange: "transform, opacity",
       });
 
       await nextTick();
 
-      elMenuDialog.show();
+      menuDialogDOM.show();
       refs.menu.classList.add("is-menu-open");
 
       Tween.serial(
@@ -85,12 +85,12 @@ export default defineComponent({
             scaleX: 0,
           }),
           Tween.serial(
-            Tween.prop(elMenuLabel, {
+            Tween.prop(menuLabelDOM, {
               opacity: 1,
               rotation: -7,
               y: "200%",
             }),
-            Tween.tween(elMenuLabel, 0.75, "power2.inOut", {
+            Tween.tween(menuLabelDOM, 0.75, "power2.inOut", {
               rotation: 0,
               stagger: 0.065,
               y: "0%",
@@ -116,7 +116,7 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              elMenuLabel,
+              menuLabelDOM,
             ],
             {
               clearProps: "will-change",
@@ -127,10 +127,10 @@ export default defineComponent({
     };
 
     const closeAnime = async () => {
-      const elMenuLabel = q(".js-menuLabel");
-      const [elMenuDialog] = q(".js-menu") as [HTMLDialogElement];
+      const menuLabelDOM = q(".js-menuLabel");
+      const [menuDialogDOM] = q(".js-menu") as [HTMLDialogElement];
 
-      Tween.kill([elMenuLabel, refs.menuTrigger]);
+      Tween.kill([menuLabelDOM, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -138,7 +138,7 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(elMenuLabel, {
+      Tween.prop(menuLabelDOM, {
         willChange: "transform,opacity",
       });
 
@@ -163,11 +163,11 @@ export default defineComponent({
             scaleX: 32 / 40,
           }),
           Tween.serial(
-            Tween.prop(elMenuLabel, {
+            Tween.prop(menuLabelDOM, {
               rotation: 0,
               y: "0%",
             }),
-            Tween.tween(elMenuLabel, 0.65, "power2.inOut", {
+            Tween.tween(menuLabelDOM, 0.65, "power2.inOut", {
               rotation: 7,
               stagger: 0.06,
               y: "-200%",
@@ -193,14 +193,14 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              elMenuLabel,
+              menuLabelDOM,
             ],
             {
               clearProps: "will-change",
             }
           );
           refs.menu.classList.remove("is-menu-open");
-          elMenuDialog.close();
+          menuDialogDOM.close();
         })
       );
     };

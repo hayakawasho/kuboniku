@@ -75,7 +75,7 @@ class Component {
           />
         }
       >
-        <main data-color={post.theme} data-component="Work">
+        <main data-color={post.theme} data-component="Single">
           <div data-ref="progressBar"></div>
           <div css={styles.kv}>
             <div css={styles.kv__cont}>
