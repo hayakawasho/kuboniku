@@ -13,7 +13,3 @@ export const selectRole = (data: WorkMetadata) => {
 export const selectTitle = (data: WorkMetadata) => {
   return parse(data.title) as string;
 };
-
-export const selectWorksNum = () => {
-  return;
-};

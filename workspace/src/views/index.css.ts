@@ -70,6 +70,21 @@ export const entry = css`
   @media ${mq.pc} {
     margin-left: 0;
   }
+
+  &.-disabled {
+    filter: grayscale(1) !important;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    & ._img {
+      filter: grayscale(1);
+
+      &:hover {
+        filter: grayscale(0);
+      }
+    }
+  }
 `;
 
 export const entry__heading = css`
@@ -146,14 +161,9 @@ export const eyecatch = css`
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: grayscale(1);
     backface-visibility: hidden;
-    transition: filter 0.75s;
+    transition: filter 1s var(--ease-opacity);
     opacity: 0.8;
-
-    .isHover & {
-      filter: grayscale(0);
-    }
   }
 `;
 

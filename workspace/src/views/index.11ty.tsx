@@ -1,7 +1,9 @@
+import { Fragment } from "react";
 import { renderToStaticMarkup as r } from "react-dom/server";
 import { zeroPadding } from "@/_foundation/utils";
 import { cloudinaryAPIConverter } from "@/_models/image/conveter";
 import { selectTitle } from "@/_models/works/selector";
+import { validateHasPermalink } from "@/_models/works/validator";
 import { Header } from "./_components/header";
 import { PageWithHeader } from "./_components/page-with-header";
 import { Seo } from "./_components/seo";
@@ -23,7 +25,7 @@ class Component {
       pagination: {
         addAllPagesToCollections: false,
         alias: "posts",
-        data: "wp.works",
+        data: "wp.allWorks",
         size: 99,
       },
     };
@@ -77,41 +79,31 @@ class Component {
           <div css={styles.entries} data-ref="index" data-total={total}>
             {posts.map((item, index: number) => {
               return (
-                <article css={styles.entryWrap} key={item.id}>
-                  <Link
-                    css={styles.entry}
-                    data-color={item.theme}
-                    data-ref="projectItem"
-                    to={`./works/${item.slug}/`}
-                  >
-                    <div aria-hidden="true" css={styles.aspect}></div>
-                    <div css={styles.entry__g}>
-                      <figure css={styles.eyecatch} data-ref="eyecatch">
-                        <img
-                          alt=""
-                          className="_img"
-                          decoding="auto"
-                          height={item.thumb["pc"].height}
-                          src={cloudinaryAPIConverter(
-                            item.thumb["pc"].url,
-                            "f_auto,q_auto,w_750"
-                          )}
-                          width={item.thumb["pc"].width}
-                        />
-                      </figure>
-                      <div css={styles.entry__hgroup} data-ref="hgroup">
-                        <p
-                          className="mb-[1.2rem] | pc:mb-[1.5rem]"
-                          css={styles.num}
-                        >
-                          {zeroPadding(total - index)}
-                          <span className="ml-[.8em]">Project</span>
-                        </p>
-                        <h2 css={styles.entry__heading}>{selectTitle(item)}</h2>
+                <Fragment key={item.id}>
+                  {validateHasPermalink(item) ? (
+                    <article css={styles.entryWrap}>
+                      <Link
+                        css={styles.entry}
+                        data-color={item.theme}
+                        data-ref="projectItem"
+                        to={`./works/${item.slug}/`}
+                      >
+                        <ProjectItem metadata={item} num={total - index} />
+                      </Link>
+                    </article>
+                  ) : (
+                    <article css={styles.entryWrap}>
+                      <div
+                        className="-disabled"
+                        css={styles.entry}
+                        data-color={item.theme}
+                        data-ref="projectItem"
+                      >
+                        <ProjectItem metadata={item} num={total - index} />
                       </div>
-                    </div>
-                  </Link>
-                </article>
+                    </article>
+                  )}
+                </Fragment>
               );
             })}
           </div>
@@ -120,5 +112,41 @@ class Component {
     )}`;
   }
 }
+
+const ProjectItem = ({
+  metadata,
+  num,
+}: {
+  metadata: WorkMetadata;
+  num: number;
+}) => {
+  return (
+    <>
+      <div aria-hidden="true" css={styles.aspect} />
+      <div css={styles.entry__g}>
+        <figure css={styles.eyecatch} data-ref="eyecatch">
+          <img
+            alt=""
+            className="_img"
+            decoding="auto"
+            height={metadata.thumb["pc"].height}
+            src={cloudinaryAPIConverter(
+              metadata.thumb["pc"].url,
+              "f_auto,q_auto,w_750"
+            )}
+            width={metadata.thumb["pc"].width}
+          />
+        </figure>
+        <div css={styles.entry__hgroup} data-ref="hgroup">
+          <p className="mb-[1.2rem] | pc:mb-[1.5rem]" css={styles.num}>
+            {zeroPadding(num)}
+            <span className="ml-[.8em]">Project</span>
+          </p>
+          <h2 css={styles.entry__heading}>{selectTitle(metadata)}</h2>
+        </div>
+      </div>
+    </>
+  );
+};
 
 module.exports = Component;
