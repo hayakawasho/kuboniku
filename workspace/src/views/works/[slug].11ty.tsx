@@ -16,7 +16,6 @@ type Props = EleventyProps<WorkMetadata> & {
   post: WorkMetadata;
   wp: {
     totalCount: number;
-    allWorks: WorkMetadata[];
   };
 };
 
@@ -34,13 +33,13 @@ class Component {
   }
 
   render({ post, ...props }: Props) {
-    const { totalCount, allWorks } = props.wp;
+    const total = props.wp.totalCount;
 
-    const { page } = props.pagination;
+    const { page, pageNumber } = props.pagination;
     const next = page.last.id === post.id ? page.first : page.next;
 
-    const pageNumber = allWorks.findIndex((item) => item.id === post.id);
-    const projectNumber = totalCount - pageNumber;
+    const projectNumber = total - pageNumber;
+    const pageTitle = selectTitle(post);
 
     return `<!DOCTYPE html>
     ${r(
@@ -72,7 +71,7 @@ class Component {
                 />
               </>
             }
-            title={selectTitle(post)}
+            title={pageTitle}
           />
         }
       >
@@ -85,7 +84,7 @@ class Component {
                 <span className="ml-[.8rem]">Project</span>
               </p>
               <h1 className="pl-[1.1rem] pr-[.5em]" css={styles.heading}>
-                {selectTitle(post)}
+                {pageTitle}
               </h1>
               <p
                 className="pl-[1.3rem] mt-[.8rem] overflow-hidden"
