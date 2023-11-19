@@ -1,5 +1,12 @@
 import { gsap } from "gsap";
-import { defineComponent, useDomRef, useSlot, withSvelte } from "lake";
+import {
+  defineComponent,
+  useDomRef,
+  useSlot,
+  withSvelte,
+  useMount,
+  ref,
+} from "lake";
 import { Tween } from "@/_foundation/tween";
 import { nextTick } from "@/_foundation/utils";
 import MenuCtrl from "./control.svelte";
@@ -31,6 +38,9 @@ export default defineComponent({
 
     const q = gsap.utils.selector(refs.menuContent);
 
+    const refLabelDOM = ref<null | HTMLElement[]>(null);
+    const refDialogDOM = ref<null | HTMLDialogElement>(null);
+
     const CLIP_PATH = {
       x1: 100,
       x2: 100,
@@ -46,10 +56,7 @@ export default defineComponent({
     };
 
     const openAnime = async () => {
-      const menuLabelDOM = q(".js-menuLabel");
-      const [menuDialogDOM] = q(".js-menuDialog") as [HTMLDialogElement];
-
-      Tween.kill([menuLabelDOM, refs.menuTrigger]);
+      Tween.kill([refLabelDOM.value, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -57,13 +64,13 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(menuLabelDOM, {
+      Tween.prop(refLabelDOM.value, {
         willChange: "transform, opacity",
       });
 
       await nextTick();
 
-      menuDialogDOM.show();
+      refDialogDOM.value?.show();
       refs.menu.classList.add("is-menu-open");
 
       Tween.serial(
@@ -85,12 +92,12 @@ export default defineComponent({
             scaleX: 0,
           }),
           Tween.serial(
-            Tween.prop(menuLabelDOM, {
+            Tween.prop(refLabelDOM.value, {
               opacity: 1,
               rotation: -7,
               y: "200%",
             }),
-            Tween.tween(menuLabelDOM, 0.75, "power2.inOut", {
+            Tween.tween(refLabelDOM.value, 0.75, "power2.inOut", {
               rotation: 0,
               stagger: 0.065,
               y: "0%",
@@ -116,7 +123,7 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              menuLabelDOM,
+              refLabelDOM.value,
             ],
             {
               clearProps: "will-change",
@@ -127,10 +134,7 @@ export default defineComponent({
     };
 
     const closeAnime = async () => {
-      const menuLabelDOM = q(".js-menuLabel");
-      const [menuDialogDOM] = q(".js-menu") as [HTMLDialogElement];
-
-      Tween.kill([menuLabelDOM, refs.menuTrigger]);
+      Tween.kill([refLabelDOM.value, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -138,7 +142,7 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(menuLabelDOM, {
+      Tween.prop(refLabelDOM.value, {
         willChange: "transform,opacity",
       });
 
@@ -163,11 +167,11 @@ export default defineComponent({
             scaleX: 32 / 40,
           }),
           Tween.serial(
-            Tween.prop(menuLabelDOM, {
+            Tween.prop(refLabelDOM.value, {
               rotation: 0,
               y: "0%",
             }),
-            Tween.tween(menuLabelDOM, 0.65, "power2.inOut", {
+            Tween.tween(refLabelDOM.value, 0.65, "power2.inOut", {
               rotation: 7,
               stagger: 0.06,
               y: "-200%",
@@ -193,14 +197,14 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              menuLabelDOM,
+              refLabelDOM.value,
             ],
             {
               clearProps: "will-change",
             }
           );
           refs.menu.classList.remove("is-menu-open");
-          menuDialogDOM.close();
+          refDialogDOM.value?.close();
         })
       );
     };
@@ -209,6 +213,11 @@ export default defineComponent({
       ...context,
       closeAnime,
       openAnime,
+    });
+
+    useMount(() => {
+      refLabelDOM.value = q(".js-menuLabel");
+      refDialogDOM.value = q(".js-menuDialog")[0] as HTMLDialogElement;
     });
   },
 });

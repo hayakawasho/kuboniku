@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
+  import { useSlot, useDomRef } from "lake";
   import { useRoute } from "@/_states/route";
+  import MenuLink from "./link";
   import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
@@ -28,6 +30,20 @@
       ["hx-target"]: "#main",
     };
   };
+
+  const { addChild } = useSlot();
+
+  type Refs = {
+    menuLink: HTMLAnchorElement[] | null;
+  };
+
+  onMount(() => {
+    const { refs } = useDomRef<Refs>("menuLink");
+
+    if (refs.menuLink) {
+      addChild(refs.menuLink, MenuLink);
+    }
+  });
 </script>
 
 {#if mq.value === "sp"}
@@ -78,6 +94,7 @@
           {...linkProps("/profile/")}
           aria-current={current === "profile" && "page"}
           class="menuLink"
+          data-ref="menuLink"
           href="/profile/"
         >
           Profile
@@ -88,13 +105,20 @@
           {...linkProps("/")}
           aria-current={current === "works" && "page"}
           class="menuLink"
+          data-ref="menuLink"
           href="/"
         >
           Works
         </a>
       </li>
       <li>
-        <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink">Contact</a>
+        <a
+          href="mailto:k.bo.n10.05@gmail.com"
+          class="menuLink"
+          data-ref="menuLink"
+        >
+          Contact
+        </a>
       </li>
     </ul>
   </nav>

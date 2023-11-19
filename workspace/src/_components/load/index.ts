@@ -35,18 +35,80 @@ export default defineComponent({
     const { refs } = useDomRef<Refs>("glWorld", "main", "windowSizeWatcher");
 
     const history = ref<"push" | "pop">("push");
-    const mq = readonly(ref<"pc" | "sp">(wideQuery.matches ? "pc" : "sp"));
 
-    const [glContext] = addChild(refs.glWorld, Gl, { mq });
+    const mediaQuery = ref<"pc" | "sp">(wideQuery.matches ? "pc" : "sp");
+    const readonlyMediaQuery = readonly(mediaQuery);
+
+    const [glContext] = addChild(refs.glWorld, Gl, { mq: readonlyMediaQuery });
 
     const provides = {
       glContext: glContext.current,
       history: readonly(history),
-      mq,
+      mq: readonlyMediaQuery,
     } as AppContext;
 
     useMount(() => {
       onCreated(provides);
+    });
+
+    const onLeave = (from: HTMLElement) => {
+      onCleanup(from);
+    };
+
+    const body = document.body;
+
+    const onEnter = (to: HTMLElement) => {
+      const namespace = to.dataset.xhr as RouteName;
+      body.dataset.page = namespace;
+
+      onUpdated(to, provides);
+      routeMutators({
+        name: namespace,
+      });
+      window.scrollTo(0, 0);
+    };
+
+    const XHR = "[data-xhr]";
+    const fromContainer = ref(htmx.find(refs.main, XHR) as HTMLElement);
+
+    // htmx.config.historyCacheSize = 1;
+
+    htmx.on("htmx:historyRestore", (e) => {
+      history.value = "pop";
+
+      onLeave(fromContainer.value);
+
+      const { detail } = e as CustomEvent;
+      const newContainer = htmx.find(detail.elt, XHR) as HTMLElement;
+
+      onEnter(newContainer);
+    });
+
+    htmx.on("htmx:beforeHistorySave", (e) => {
+      const { detail } = e as CustomEvent;
+      const oldContainer = htmx.find(detail.historyElt, XHR) as HTMLElement;
+
+      onLeave(oldContainer);
+      fromContainer.value = oldContainer;
+    });
+
+    htmx.on("htmx:beforeSwap", () => {
+      history.value = "push";
+    });
+
+    htmx.on("htmx:afterSwap", (e) => {
+      const { detail } = e as CustomEvent;
+      const newContainer = htmx.find(detail.target, XHR) as HTMLElement;
+
+      onEnter(newContainer);
+    });
+
+    htmx.on("htmx:xhr:progress", (e) => {
+      const { detail } = e as CustomEvent;
+      const loadProgress =
+        Math.floor((detail.loaded / detail.total) * 1000) / 1000;
+
+      console.log(loadProgress);
     });
 
     //----------------------------------------------------------------
@@ -57,6 +119,8 @@ export default defineComponent({
         width,
       });
     });
+
+    //----------------------------------------------------------------
 
     let timer: number;
 
@@ -77,72 +141,5 @@ export default defineComponent({
         passive: true,
       }
     );
-
-    //----------------------------------------------------------------
-
-    const onLeave = (from: HTMLElement) => {
-      onCleanup(from);
-    };
-
-    const onEnter = (to: HTMLElement) => {
-      const namespace = to.dataset.xhr as RouteName;
-      document.body.dataset.page = namespace;
-
-      onUpdated(to, provides);
-      window.scrollTo(0, 0);
-
-      routeMutators({
-        name: namespace,
-      });
-    };
-
-    const fromContainer = ref(
-      htmx.find(refs.main, "[data-xhr]") as HTMLElement
-    );
-
-    // htmx.config.historyCacheSize = 1;
-
-    htmx.on("htmx:historyRestore", (e) => {
-      history.value = "pop";
-
-      onLeave(fromContainer.value);
-
-      const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(detail.elt, "[data-xhr]") as HTMLElement;
-      onEnter(newContainer);
-    });
-
-    htmx.on("htmx:beforeHistorySave", (e) => {
-      const { detail } = e as CustomEvent;
-      const oldContainer = htmx.find(
-        detail.historyElt,
-        "[data-xhr]"
-      ) as HTMLElement;
-
-      onLeave(oldContainer);
-      fromContainer.value = oldContainer;
-    });
-
-    htmx.on("htmx:beforeSwap", () => {
-      history.value = "push";
-    });
-
-    htmx.on("htmx:afterSwap", (e) => {
-      const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(
-        detail.target,
-        "[data-xhr]"
-      ) as HTMLElement;
-
-      onEnter(newContainer);
-    });
-
-    htmx.on("htmx:xhr:progress", (e) => {
-      const { detail } = e as CustomEvent;
-      const loadProgress =
-        Math.floor((detail.loaded / detail.total) * 1000) / 1000;
-
-      console.log(loadProgress);
-    });
   },
 });
