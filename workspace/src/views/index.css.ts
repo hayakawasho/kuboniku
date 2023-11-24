@@ -97,6 +97,8 @@ export const entry__hgroup = css`
   bottom: 2rem;
   left: -1rem;
   z-index: 2;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 
   @media ${mq.pc} {
     bottom: 4.2rem;
@@ -138,6 +140,14 @@ export const eyecatch = css`
   opacity: 0.8;
   backface-visibility: hidden;
 
+  @media (hover: hover) {
+    &:hover {
+      & > ._img {
+        filter: grayscale(0);
+      }
+    }
+  }
+
   & > ._img {
     position: absolute;
     top: 0;
@@ -148,12 +158,8 @@ export const eyecatch = css`
     object-position: center;
     filter: grayscale(1);
     backface-visibility: hidden;
-    transition: filter 0.75s;
+    transition: 1s filter var(--ease-opacity);
     opacity: 0.8;
-
-    .isHover & {
-      filter: grayscale(0);
-    }
   }
 `;
 

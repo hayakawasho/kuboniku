@@ -90,6 +90,7 @@ class Component {
                         <img
                           alt=""
                           className="_img"
+                          data-ref="eyecatchImg"
                           decoding="auto"
                           height={item.thumb["pc"].height}
                           src={cloudinaryAPIConverter(

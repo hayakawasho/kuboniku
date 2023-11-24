@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getContext, onMount } from "svelte";
   import { useSlot, useDomRef } from "lake";
+  import { getContext, onMount } from "svelte";
   import { useRoute } from "@/_states/route";
   import MenuLink from "./link";
   import type { AppContext, RouteName } from "@/_foundation/type";
