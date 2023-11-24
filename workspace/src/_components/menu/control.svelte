@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useDomRef, useSlot, ref, withSvelte, useEvent } from "lake";
+  import { useDomRef, useSlot, withSvelte, useEvent } from "lake";
   import { getContext } from "svelte";
   import MenuView from "./view.svelte";
   import type { AppContext } from "@/_foundation/type";
@@ -8,9 +8,8 @@
   type Refs = {
     menuTrigger: HTMLButtonElement;
     mask: HTMLElement;
-    menuLink: HTMLAnchorElement[];
-    menuLinks: HTMLElement;
     menu: HTMLElement;
+    menuContent: HTMLElement;
   };
 
   const context = getContext<
@@ -24,17 +23,17 @@
 
   const { openAnime, closeAnime } = context;
 
+  const { addChild } = useSlot();
   const { refs } = useDomRef<Refs>(
     "menuTrigger",
     "mask",
-    "menuLink",
-    "menuLinks",
-    "menu"
+    "menu",
+    "menuContent"
   );
 
-  let isOpen = ref<boolean | undefined>(undefined);
+  let isOpen: boolean | undefined = undefined;
 
-  $: switch (isOpen.value) {
+  $: switch (isOpen) {
     case true:
       openAnime();
       break;
@@ -45,26 +44,20 @@
       break;
   }
 
-  const { addChild } = useSlot();
-
-  const openMenu = () => {
-    isOpen.value = true;
-  };
-
   const closeMenu = () => {
-    isOpen.value = false;
+    isOpen = false;
   };
 
-  addChild(refs.menuLinks, withSvelte(MenuView), {
+  addChild(refs.menuContent, withSvelte(MenuView), {
     ...context,
     closeMenu,
-    current: refs.menuLinks.dataset.current!,
+    current: refs.menuContent.dataset.current!,
   });
 
   useEvent(refs.mask, "click", closeMenu);
 
   useEvent(refs.menuTrigger, "click", (e) => {
     e.preventDefault();
-    isOpen.value ? closeMenu() : openMenu();
+    isOpen = !isOpen;
   });
 </script>

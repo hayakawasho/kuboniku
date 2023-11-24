@@ -1,19 +1,25 @@
 import { gsap } from "gsap";
-import { defineComponent, useDomRef, useSlot, withSvelte } from "lake";
+import {
+  defineComponent,
+  useDomRef,
+  useSlot,
+  withSvelte,
+  useMount,
+  ref,
+} from "lake";
 import { Tween } from "@/_foundation/tween";
 import { nextTick } from "@/_foundation/utils";
 import MenuCtrl from "./control.svelte";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
-  menuTrigger: HTMLButtonElement;
   burgerTL: HTMLElement;
   burgerBL: HTMLElement;
   menu: HTMLElement;
+  menuTrigger: HTMLButtonElement;
   mask: HTMLElement;
   menuBg: HTMLElement;
-  menuLinks: HTMLElement;
-  menuLabel: HTMLElement[];
+  menuContent: HTMLElement;
 };
 
 export default defineComponent({
@@ -21,15 +27,19 @@ export default defineComponent({
   setup(el, context: AppContext) {
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>(
-      "menuTrigger",
       "burgerTL",
       "burgerBL",
       "menu",
+      "menuTrigger",
       "mask",
       "menuBg",
-      "menuLink",
-      "menuLinks"
+      "menuContent"
     );
+
+    const q = gsap.utils.selector(refs.menuContent);
+
+    const refLabelDOM = ref<null | HTMLElement[]>(null);
+    const refDialogDOM = ref<null | HTMLDialogElement>(null);
 
     const CLIP_PATH = {
       x1: 100,
@@ -45,12 +55,8 @@ export default defineComponent({
       )`;
     };
 
-    const q = gsap.utils.selector(refs.menuLinks);
-
     const openAnime = async () => {
-      const elMenuLabel = q(".js-menuLabel");
-
-      Tween.kill([elMenuLabel, refs.menuTrigger]);
+      Tween.kill([refLabelDOM.value, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -58,12 +64,13 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(elMenuLabel, {
+      Tween.prop(refLabelDOM.value, {
         willChange: "transform, opacity",
       });
 
       await nextTick();
 
+      refDialogDOM.value?.show();
       refs.menu.classList.add("is-menu-open");
 
       Tween.serial(
@@ -85,12 +92,12 @@ export default defineComponent({
             scaleX: 0,
           }),
           Tween.serial(
-            Tween.prop(elMenuLabel, {
+            Tween.prop(refLabelDOM.value, {
               opacity: 1,
               rotation: -7,
               y: "200%",
             }),
-            Tween.tween(elMenuLabel, 0.75, "power2.inOut", {
+            Tween.tween(refLabelDOM.value, 0.75, "power2.inOut", {
               rotation: 0,
               stagger: 0.065,
               y: "0%",
@@ -116,7 +123,7 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              elMenuLabel,
+              refLabelDOM.value,
             ],
             {
               clearProps: "will-change",
@@ -127,9 +134,7 @@ export default defineComponent({
     };
 
     const closeAnime = async () => {
-      const elMenuLabel = q(".js-menuLabel");
-
-      Tween.kill([elMenuLabel, refs.menuTrigger]);
+      Tween.kill([refLabelDOM.value, refs.menuTrigger]);
 
       Tween.prop(refs.menuBg, {
         willChange: "clip-path",
@@ -137,7 +142,7 @@ export default defineComponent({
       Tween.prop([refs.menuTrigger, refs.burgerTL, refs.burgerBL], {
         willChange: "transform",
       });
-      Tween.prop(elMenuLabel, {
+      Tween.prop(refLabelDOM.value, {
         willChange: "transform,opacity",
       });
 
@@ -162,11 +167,11 @@ export default defineComponent({
             scaleX: 32 / 40,
           }),
           Tween.serial(
-            Tween.prop(elMenuLabel, {
+            Tween.prop(refLabelDOM.value, {
               rotation: 0,
               y: "0%",
             }),
-            Tween.tween(elMenuLabel, 0.65, "power2.inOut", {
+            Tween.tween(refLabelDOM.value, 0.65, "power2.inOut", {
               rotation: 7,
               stagger: 0.06,
               y: "-200%",
@@ -192,13 +197,14 @@ export default defineComponent({
               refs.menuTrigger,
               refs.burgerTL,
               refs.burgerBL,
-              elMenuLabel,
+              refLabelDOM.value,
             ],
             {
               clearProps: "will-change",
             }
           );
           refs.menu.classList.remove("is-menu-open");
+          refDialogDOM.value?.close();
         })
       );
     };
@@ -207,6 +213,11 @@ export default defineComponent({
       ...context,
       closeAnime,
       openAnime,
+    });
+
+    useMount(() => {
+      refLabelDOM.value = q(".js-menuLabel");
+      refDialogDOM.value = q(".js-menuDialog")[0] as HTMLDialogElement;
     });
   },
 });

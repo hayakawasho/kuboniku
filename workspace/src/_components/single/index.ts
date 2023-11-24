@@ -3,13 +3,13 @@ import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useScrollPosY } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import SkewScrollContainer from "../../skew-scroll";
+import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
 // type Refs = {};
 
 export default defineComponent({
-  name: "WorksDetail",
+  name: "Single",
   setup(el, context: AppContext) {
     const { once, history, glContext } = context;
 

@@ -1,7 +1,7 @@
 import { renderToStaticMarkup as r } from "react-dom/server";
 import { mq } from "@/_foundation/mq";
 import { zeroPadding } from "@/_foundation/utils";
-import { cloudinaryImgAPIConverter } from "@/_models/image/conveter";
+import { cloudinaryAPIConverter } from "@/_models/image/conveter";
 import { selectRole, selectYear, selectTitle } from "@/_models/works/selector";
 import * as styles from "./[slug].css";
 import { Header } from "../_components/header";
@@ -53,7 +53,7 @@ class Component {
               <>
                 <link
                   as="image"
-                  href={cloudinaryImgAPIConverter(
+                  href={cloudinaryAPIConverter(
                     post.thumb["pc"].url,
                     "f_auto,q_auto,w_1680"
                   )}
@@ -62,7 +62,7 @@ class Component {
                 />
                 <link
                   as="image"
-                  href={cloudinaryImgAPIConverter(
+                  href={cloudinaryAPIConverter(
                     post.thumb["sp"].url,
                     "f_auto,q_auto,w_750"
                   )}
@@ -75,9 +75,7 @@ class Component {
           />
         }
       >
-        <div data-ref="scrollbar"></div>
-
-        <main data-color={post.theme} data-component="Work">
+        <main data-color={post.theme} data-component="Single">
           <div data-ref="progressBar"></div>
           <div css={styles.kv}>
             <div css={styles.kv__cont}>
@@ -101,13 +99,13 @@ class Component {
             <ResponsiveImage
               alt=""
               className="opacity-40 object-cover fit2parent"
-              mob={cloudinaryImgAPIConverter(
+              mob={cloudinaryAPIConverter(
                 post.thumb["sp"].url,
                 "f_auto,q_auto,w_750"
               )}
               mobSize={[post.thumb["sp"].width, post.thumb["sp"].height]}
               size={[post.thumb["pc"].width, post.thumb["pc"].height]}
-              src={cloudinaryImgAPIConverter(
+              src={cloudinaryAPIConverter(
                 post.thumb["pc"].url,
                 "f_auto,q_auto,w_1680"
               )}
@@ -169,13 +167,13 @@ class Component {
                         <ResponsiveImage
                           alt=""
                           className="w-full"
-                          mob={cloudinaryImgAPIConverter(
+                          mob={cloudinaryAPIConverter(
                             item.url,
                             "f_auto,q_auto,w_750"
                           )}
                           mobSize={[item.width, item.height]}
                           size={[item.width, item.height]}
-                          src={cloudinaryImgAPIConverter(
+                          src={cloudinaryAPIConverter(
                             item.url,
                             "f_auto,q_auto,w_1440"
                           )}
@@ -215,13 +213,13 @@ class Component {
                 <ResponsiveImage
                   alt=""
                   className="opacity-40 filter grayscale-100 object-cover fit2parent"
-                  mob={cloudinaryImgAPIConverter(
+                  mob={cloudinaryAPIConverter(
                     next.thumb["sp"].url,
                     "f_auto,q_auto,w_750"
                   )}
                   mobSize={[next.thumb["sp"].width, next.thumb["sp"].height]}
                   size={[next.thumb["pc"].width, next.thumb["pc"].height]}
-                  src={cloudinaryImgAPIConverter(
+                  src={cloudinaryAPIConverter(
                     next.thumb["pc"].url,
                     "f_auto,q_auto,w_1440"
                   )}

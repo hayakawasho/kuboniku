@@ -34,17 +34,17 @@ export const Header = ({ current }: Props) => {
         <small css={styles.copyright}>@KuboNiku.com</small>
       </header>
 
-      <nav css={styles.menu} data-ref="menu">
+      <div css={styles.menu} data-ref="menu">
         <div className="w-full h-full relative">
           <div className="pc:hidden" css={styles.menu__mask} data-ref="mask" />
           <div className="pc:hidden" css={styles.menu__bg} data-ref="menuBg" />
-          <ul
-            css={styles.menu__links}
+          <div
+            css={styles.menu__content}
             data-current={current}
-            data-ref="menuLinks"
-          ></ul>
+            data-ref="menuContent"
+          />
         </div>
-      </nav>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { renderToStaticMarkup as r } from "react-dom/server";
 import { zeroPadding } from "@/_foundation/utils";
-import { cloudinaryImgAPIConverter } from "@/_models/image/conveter";
+import { cloudinaryAPIConverter } from "@/_models/image/conveter";
 import { selectTitle } from "@/_models/works/selector";
 import { Header } from "./_components/header";
 import { PageWithHeader } from "./_components/page-with-header";
@@ -44,7 +44,7 @@ class Component {
               <>
                 <link
                   as="image"
-                  href={cloudinaryImgAPIConverter(
+                  href={cloudinaryAPIConverter(
                     posts[0].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
@@ -53,7 +53,7 @@ class Component {
                 />
                 <link
                   as="image"
-                  href={cloudinaryImgAPIConverter(
+                  href={cloudinaryAPIConverter(
                     posts[1].thumb["pc"].url,
                     "f_auto,q_auto,w_750"
                   )}
@@ -90,9 +90,10 @@ class Component {
                         <img
                           alt=""
                           className="_img"
+                          data-ref="eyecatchImg"
                           decoding="auto"
                           height={item.thumb["pc"].height}
-                          src={cloudinaryImgAPIConverter(
+                          src={cloudinaryAPIConverter(
                             item.thumb["pc"].url,
                             "f_auto,q_auto,w_750"
                           )}

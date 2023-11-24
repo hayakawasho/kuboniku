@@ -100,7 +100,7 @@ export const menu__bg = css`
   backface-visibility: hidden;
 `;
 
-export const menu__links = css`
+export const menu__content = css`
   position: absolute;
   height: 100vh;
   height: 100dvh;
