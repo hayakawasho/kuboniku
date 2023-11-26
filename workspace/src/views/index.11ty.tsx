@@ -46,7 +46,7 @@ class Component {
                   as="image"
                   href={cloudinaryAPIConverter(
                     posts[0].thumb["pc"].url,
-                    "f_auto,q_auto,w_750"
+                    "f_auto,q_auto,w_630,e_grayscale"
                   )}
                   key={posts[0].id}
                   rel="preload"
@@ -55,7 +55,7 @@ class Component {
                   as="image"
                   href={cloudinaryAPIConverter(
                     posts[1].thumb["pc"].url,
-                    "f_auto,q_auto,w_750"
+                    "f_auto,q_auto,w_630,e_grayscale"
                   )}
                   key={posts[1].id}
                   rel="preload"
@@ -82,20 +82,20 @@ class Component {
                     css={styles.entry}
                     data-color={item.theme}
                     data-ref="projectItem"
-                    to={`./works/${item.slug}/`}
+                    to={`/works/${item.slug}/`}
                   >
                     <div aria-hidden="true" css={styles.aspect}></div>
                     <div css={styles.entry__g}>
-                      <figure css={styles.eyecatch} data-ref="eyecatch">
+                      <figure css={styles.eyecatch}>
                         <img
                           alt=""
                           className="_img"
                           data-ref="eyecatchImg"
-                          decoding="auto"
+                          decoding="async"
                           height={item.thumb["pc"].height}
                           src={cloudinaryAPIConverter(
                             item.thumb["pc"].url,
-                            "f_auto,q_auto,w_750"
+                            "f_auto,q_auto,w_630,e_grayscale"
                           )}
                           width={item.thumb["pc"].width}
                         />

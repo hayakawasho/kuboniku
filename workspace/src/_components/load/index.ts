@@ -39,7 +39,9 @@ export default defineComponent({
     const mediaQuery = ref<"pc" | "sp">(wideQuery.matches ? "pc" : "sp");
     const readonlyMediaQuery = readonly(mediaQuery);
 
-    const [glContext] = addChild(refs.glWorld, Gl, { mq: readonlyMediaQuery });
+    const [glContext] = addChild(refs.glWorld, Gl, {
+      mq: readonlyMediaQuery,
+    });
 
     const provides = {
       glContext: glContext.current,
@@ -51,6 +53,8 @@ export default defineComponent({
       onCreated(provides);
     });
 
+    //----------------------------------------------------------------
+
     const onLeave = (from: HTMLElement) => {
       onCleanup(from);
     };
@@ -61,33 +65,30 @@ export default defineComponent({
       const namespace = to.dataset.xhr as RouteName;
       body.dataset.page = namespace;
 
-      onUpdated(to, provides);
-      routeMutators({
-        name: namespace,
-      });
       window.scrollTo(0, 0);
+      scrollPosMutators(0);
+
+      onUpdated(to, provides);
+      routeMutators({ name: namespace });
     };
 
-    const XHR = "[data-xhr]";
-    const fromContainer = ref(htmx.find(refs.main, XHR) as HTMLElement);
+    const xhr = "[data-xhr]";
+    const fromContainer = ref(htmx.find(refs.main, xhr) as HTMLElement);
 
     // htmx.config.historyCacheSize = 1;
 
     htmx.on("htmx:historyRestore", (e) => {
       history.value = "pop";
-
       onLeave(fromContainer.value);
 
       const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(detail.elt, XHR) as HTMLElement;
-
+      const newContainer = htmx.find(detail.elt, xhr) as HTMLElement;
       onEnter(newContainer);
     });
 
     htmx.on("htmx:beforeHistorySave", (e) => {
       const { detail } = e as CustomEvent;
-      const oldContainer = htmx.find(detail.historyElt, XHR) as HTMLElement;
-
+      const oldContainer = htmx.find(detail.historyElt, xhr) as HTMLElement;
       onLeave(oldContainer);
       fromContainer.value = oldContainer;
     });
@@ -98,8 +99,7 @@ export default defineComponent({
 
     htmx.on("htmx:afterSwap", (e) => {
       const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(detail.target, XHR) as HTMLElement;
-
+      const newContainer = htmx.find(detail.target, xhr) as HTMLElement;
       onEnter(newContainer);
     });
 

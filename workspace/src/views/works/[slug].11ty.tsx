@@ -197,7 +197,7 @@ class Component {
             </div>
 
             <aside css={[styles.kv, styles.kvNext]}>
-              <Link className="fit2parent z-10" to={`../${next.slug}/`}>
+              <Link className="fit2parent z-10" to={`/works/${next.slug}/`}>
                 <div css={styles.kv__cont}>
                   <h2 className="pl-[1.1rem] pr-[.5em]" css={styles.heading}>
                     Next Project

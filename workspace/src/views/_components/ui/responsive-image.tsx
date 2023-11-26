@@ -27,7 +27,7 @@ export function ResponsiveImage(props: Props) {
       <img
         alt={props.alt}
         className={props.className}
-        decoding="auto"
+        decoding="async"
         height={props.mobSize[1]}
         src={props.mob}
         width={props.mobSize[0]}

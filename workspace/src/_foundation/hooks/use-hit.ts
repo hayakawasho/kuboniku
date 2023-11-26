@@ -1,30 +1,50 @@
-import { ref } from "lake";
-import { lerp } from "@/_foundation/math";
-import { useTick } from "@/_foundation/hooks";
+import { useEvent, useMount, ref } from "lake";
 import { useScrollPosY } from "@/_states/scroll";
-import { useMousePos } from "@/_states/mouse";
 import { useWindowSize } from "@/_states/window-size";
 
-export const useHit = <T extends Element>(target: T) => {
+export const useHit = <T extends HTMLElement>(
+  target: T,
+  callback: (payload: { tx: number; ty: number }) => void
+) => {
+  const state = ref({
+    height: 0,
+    offsetX: 0,
+    offsetY: 0,
+    width: 0,
+  });
+
+  const getBounds = (rect: DOMRect, currentY: number) => {
+    return {
+      height: rect.height,
+      offsetX: rect.left,
+      offsetY: currentY + rect.top,
+      width: rect.width,
+    };
+  };
+
   const [offset] = useScrollPosY();
-  const [mouseX, mouseY] = useMousePos();
-  const [ww, wh] = useWindowSize();
 
-  const state = {
-    lastX: 0,
-    lastY: 0,
-    x: 0,
-    y: 0,
-  };
+  useWindowSize(() => {
+    const bounds = target.getBoundingClientRect();
+    state.value = getBounds(bounds, offset.value);
+  });
 
-  const hit = () => {
-    //
-  };
+  useEvent(target, "mousemove", (e) => {
+    const { offsetX, offsetY, width, height } = state.value;
 
-  useTick(({ timeRatio }) => {
-    const easeVal = 1 - (1 - 0.1) ** timeRatio;
+    const dx = e.pageX - offsetX;
+    const dy = e.pageY - offsetY;
+    const tx = dx - width * 0.5;
+    const ty = dy - height * 0.5;
 
-    state.lastX = lerp(state.lastX, state.x, easeVal);
-    state.lastY = lerp(state.lastY, state.y, easeVal);
+    callback({
+      tx,
+      ty,
+    });
+  });
+
+  useMount(() => {
+    const bounds = target.getBoundingClientRect();
+    state.value = getBounds(bounds, offset.value);
   });
 };

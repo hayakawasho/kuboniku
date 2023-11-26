@@ -143,7 +143,7 @@ export const eyecatch = css`
   @media (hover: hover) {
     &:hover {
       & > ._img {
-        filter: grayscale(0);
+        // filter: grayscale(0);
       }
     }
   }
@@ -156,9 +156,9 @@ export const eyecatch = css`
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: grayscale(1);
+    // filter: grayscale(1);
     backface-visibility: hidden;
-    transition: 1s filter var(--ease-opacity);
+    // transition: 1s filter var(--ease-opacity);
     opacity: 0.8;
   }
 `;

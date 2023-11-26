@@ -25,11 +25,6 @@ export default defineComponent({
       sp: 0.16,
     } as const;
 
-    const onReset = () => {
-      lastY.value = 0;
-      state.active = false;
-    };
-
     useTick(({ timeRatio }) => {
       if (!state.active || !isScrolling.value) {
         return;
@@ -43,7 +38,7 @@ export default defineComponent({
         lastY.value = 0;
       }
 
-      const skewY = 7.5 * ((currentY - lastY.value) / ww.value);
+      const skewY = 8 * ((currentY - lastY.value) / ww.value);
       const ty = clamp(skewY, { max: 6, min: -6 });
       el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
@@ -52,7 +47,8 @@ export default defineComponent({
       state.active = true;
 
       return () => {
-        onReset();
+        state.active = false;
+        lastY.value = 0;
       };
     });
   },
