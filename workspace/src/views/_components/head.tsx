@@ -150,6 +150,12 @@ const base = css`
     text-decoration: none;
   }
 
+  :focus-visible {
+    @media not (hover: hover) {
+      outline-style: none;
+    }
+  }
+
   ol,
   ul {
     list-style: none;
