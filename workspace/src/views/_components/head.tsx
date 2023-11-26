@@ -151,8 +151,10 @@ const base = css`
   }
 
   :focus-visible {
-    @media not (hover: hover) {
-      outline-style: none;
+    @media ${mq.sp} {
+      @media not (hover: hover) {
+        outline-style: none;
+      }
     }
   }
 
