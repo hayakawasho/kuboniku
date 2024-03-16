@@ -30,7 +30,7 @@ type Tweens = (gsap.core.Tween | gsap.core.Timeline)[];
 class Tween {
   static serial(...tweens: Tweens) {
     const tl = gsap.timeline();
-    tweens.forEach((tween) => tl.add(tween));
+    tweens.forEach(tween => tl.add(tween));
 
     return tl;
   }

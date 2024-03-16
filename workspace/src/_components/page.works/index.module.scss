@@ -1,0 +1,165 @@
+.heading {
+  position: relative;
+  font-weight: bold;
+  padding: 0 calc(var(--gap) * 2);
+  font-family: var(--font-roboto);
+  font-size: 5.3rem;
+  line-height: 1;
+
+  @media (min-width: 640px) {
+    margin: 0 auto;
+    left: 2rem;
+    width: calc(var(--grid) * 10);
+    padding: 0 0 0 calc(var(--grid) * 0.5 + var(--gutter));
+    font-size: 7.6rem;
+  }
+}
+
+.heading__total {
+  position: absolute;
+  top: 0.75em;
+  margin-left: 1em;
+  font-family: var(--font-en);
+  font-size: calc(26.6 / 106.4 * 100%);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: 0.41em;
+
+  @media (min-width: 640px) {
+    font-size: 1.5rem;
+  }
+}
+
+.entries {
+  padding: 0 calc(var(--gap) * 2);
+  padding-bottom: 6.5rem;
+
+  @media (min-width: 640px) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 0;
+    width: calc(var(--grid) * 10);
+    padding-bottom: 17.5rem;
+  }
+}
+
+.entryWrap {
+  margin-bottom: 4rem;
+
+  @media (min-width: 640px) {
+    width: calc(var(--grid) * 4);
+    margin-bottom: 6.5rem;
+
+    &:nth-of-type(2n - 1) {
+      margin-top: 9rem;
+      margin-left: 3.4rem;
+    }
+  }
+}
+
+.entry {
+  position: relative;
+  display: block;
+
+  @media (min-width: 640px) {
+    margin-left: 0;
+  }
+}
+
+.entry__heading {
+  font-family: var(--font-roboto);
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #e3e3e3;
+
+  @media (min-width: 640px) {
+    font-size: 3rem;
+  }
+}
+
+.entry__g {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.entry__hgroup {
+  position: absolute;
+  bottom: 2rem;
+  left: -1rem;
+  z-index: 2;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  @media (min-width: 640px) {
+    bottom: 4.2rem;
+    left: -3.4rem;
+    padding-right: 3.6rem;
+  }
+}
+
+.num {
+  font-family: var(
+    --font-en
+  ); // デザインデータとフォントが違うため、実際のフォントサイズより小さめに指定する
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+
+  @media (min-width: 640px) {
+    font-size: 1.5rem;
+  }
+
+  > span {
+    font-size: calc(20 / 30 * 100%);
+    letter-spacing: 0.02em;
+
+    @media (min-width: 640px) {
+      font-size: calc(26 / 38 * 100%);
+    }
+  }
+}
+
+.eyecatch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8;
+  backface-visibility: hidden;
+
+  @media (hover: hover) {
+    &:hover {
+      & > ._img {
+        // filter: grayscale(0);
+      }
+    }
+  }
+
+  & > ._img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    // filter: grayscale(1);
+    backface-visibility: hidden;
+    // transition: 1s filter var(--ease-opacity);
+    opacity: 0.8;
+  }
+}
+
+.aspect {
+  aspect-ratio: 1536 / 960;
+}

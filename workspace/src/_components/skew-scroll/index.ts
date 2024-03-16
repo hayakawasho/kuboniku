@@ -2,20 +2,21 @@ import { defineComponent, ref, useMount } from "lake";
 import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
+import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollPosY } from "@/_states/scroll";
-import { useWindowSize } from "@/_states/window-size";
+import { useWindowSizeContext } from "@/_states/window-size";
 import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
   name: "SkewScrollContainer",
-  setup(el: HTMLElement, context: AppContext) {
-    const { mq } = context;
+  setup(el: HTMLElement, _context: AppContext) {
+    const mq = useMediaQueryContext();
 
     const state = {
       active: false,
     };
 
-    const [ww] = useWindowSize();
+    const [ww] = useWindowSizeContext();
     const [y, { isScrolling }] = useScrollPosY();
 
     const lastY = ref(0);
@@ -31,7 +32,7 @@ export default defineComponent({
       }
 
       const currentY = y.value;
-      const easeVal = 1 - (1 - EASE[mq.value]) ** timeRatio;
+      const easeVal = 1 - (1 - EASE[mq.value.device]) ** timeRatio;
       lastY.value = lerp(lastY.value, currentY, easeVal);
 
       if (lastY.value < 0.1) {

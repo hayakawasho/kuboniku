@@ -1,12 +1,13 @@
 <script lang="ts">
   import { useSlot, useDomRef } from "lake";
   import { getContext, onMount } from "svelte";
-  import { useRoute } from "@/_states/route";
+  import { useMediaQueryContext } from "@/_states/mq";
+  import { useRouteContext } from "@/_states/route";
   import MenuLink from "./link";
   import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  const { mq, closeMenu, ...context } = getContext<
+  const { closeMenu, ...context } = getContext<
     Context$<
       AppContext & {
         current: RouteName;
@@ -17,7 +18,9 @@
 
   let current = context.current;
 
-  useRoute(({ name }) => {
+  const mq = useMediaQueryContext();
+
+  useRouteContext(({ name }) => {
     current = name;
   });
 
@@ -46,7 +49,7 @@
   });
 </script>
 
-{#if mq.value === "sp"}
+{#if mq.value.device === "sp"}
   <dialog class="menuDialog | js-menuDialog">
     <nav>
       <ul>
@@ -65,7 +68,7 @@
         </li>
         <li>
           <a
-            {...linkProps("/")}
+            {...linkProps("/works/")}
             aria-current={current === "works" && "page"}
             class="menuLink"
             href="/"
@@ -102,29 +105,23 @@
       </li>
       <li>
         <a
-          {...linkProps("/")}
+          {...linkProps("/works/")}
           aria-current={current === "works" && "page"}
           class="menuLink"
           data-ref="menuLink"
-          href="/"
+          href="/works/"
         >
           Works
         </a>
       </li>
       <li>
-        <a
-          href="mailto:k.bo.n10.05@gmail.com"
-          class="menuLink"
-          data-ref="menuLink"
-        >
-          Contact
-        </a>
+        <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink" data-ref="menuLink"> Contact </a>
       </li>
     </ul>
   </nav>
 {/if}
 
-<style lang="postcss">
+<style lang="scss">
   .menuDialog {
     max-width: none;
     max-height: none;

@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { WebGLRenderer, PerspectiveCamera } from "@/_foundation/three";
 import Post from "./post";
 import Sample from "./visuals/sample";
 
@@ -10,8 +10,8 @@ export class Bg {
   #postactive!: boolean;
 
   constructor(
-    private _renderer: THREE.WebGLRenderer,
-    private _camera: THREE.PerspectiveCamera,
+    private _renderer: WebGLRenderer,
+    private _camera: PerspectiveCamera,
     context: {
       mq: "pc" | "sp";
     }

@@ -8,7 +8,7 @@ const viewport = map<Size>({
   width: window.innerWidth,
 });
 
-export const useWindowSize = (
+export const useWindowSizeContext = (
   callback: (payload: { aspect: number; ww: number; wh: number }) => void = noop
 ) => {
   const { width, height } = viewport.get();

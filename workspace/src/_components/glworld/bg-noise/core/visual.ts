@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Scene, WebGLRenderTarget, LinearFilter, RGBFormat } from "@/_foundation/three";
 
 export default class {
   private _transforms: any;
@@ -14,16 +14,16 @@ export default class {
     this._color = options.color;
     this._camera = options.camera;
 
-    this._scene = new THREE.Scene();
+    this._scene = new Scene();
 
     this._renderTargetParameters = {
-      format: THREE.RGBFormat,
-      magFilter: THREE.LinearFilter,
-      minFilter: THREE.LinearFilter,
+      format: RGBFormat,
+      magFilter: LinearFilter,
+      minFilter: LinearFilter,
       stencilBuffer: false,
     };
 
-    this._fbo = new THREE.WebGLRenderTarget(
+    this._fbo = new WebGLRenderTarget(
       window.innerWidth * this._dpr,
       window.innerHeight * this._dpr,
       this._renderTargetParameters

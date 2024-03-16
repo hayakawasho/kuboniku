@@ -11,11 +11,11 @@ export const useScrollPosY = (
   const currentY = ref(0);
   const isScrolling = ref(false);
 
-  const unbindScrolling = isRunning.listen((running) => {
+  const unbindScrolling = isRunning.listen(running => {
     isScrolling.value = running;
   });
 
-  const unbindPosY = posY.listen((y) => {
+  const unbindPosY = posY.listen(y => {
     const oldY = currentY.value;
 
     callback({
