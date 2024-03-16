@@ -1,7 +1,4 @@
-_site
-/_transpiled
-/_bk
-
+out
 
 # Node dependencies
 node_modules

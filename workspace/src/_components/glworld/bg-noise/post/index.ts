@@ -1,13 +1,22 @@
-import * as THREE from "three";
 import { SITE_THEME_COLOR } from "@/_foundation/const";
+import {
+  Scene,
+  Mesh,
+  Vector2,
+  PlaneBufferGeometry,
+  ShaderMaterial,
+  Color,
+  Clock,
+  OrthographicCamera,
+} from "@/_foundation/three";
 import { Tween } from "@/_foundation/tween";
 
 export default class {
   private _transforms: any;
-  private _scene = new THREE.Scene();
-  private _clock = new THREE.Clock(true);
-  private _cameraOrtho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  private _mesh: THREE.Mesh;
+  private _scene = new Scene();
+  private _clock = new Clock(true);
+  private _cameraOrtho = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  private _mesh: Mesh;
   private _uniforms: any;
   private _colorCode = SITE_THEME_COLOR;
 
@@ -37,7 +46,7 @@ export default class {
       },
       uCol: {
         type: "v3",
-        value: new THREE.Color(this._colorCode),
+        value: new Color(this._colorCode),
       },
       uRad: {
         type: "f",
@@ -45,7 +54,7 @@ export default class {
       },
       uResolution: {
         type: "v2",
-        value: new THREE.Vector2(),
+        value: new Vector2(),
       },
       uSamplerIn: {
         type: "t",
@@ -61,8 +70,8 @@ export default class {
       },
     };
 
-    const geometry = new THREE.PlaneBufferGeometry(2, 2);
-    const material = new THREE.ShaderMaterial({
+    const geometry = new PlaneBufferGeometry(2, 2);
+    const material = new ShaderMaterial({
       fragmentShader: `
         precision highp float;
 
@@ -133,12 +142,12 @@ export default class {
       `,
     });
 
-    this._mesh = new THREE.Mesh(geometry, material);
+    this._mesh = new Mesh(geometry, material);
     this._scene.add(this._mesh);
   }
 
   setColor = (colorCode: string) => {
-    const newColor = new THREE.Color(colorCode);
+    const newColor = new Color(colorCode);
 
     Tween.serial(
       Tween.tween(this._uniforms.uCol.value, 1, "opacity", {

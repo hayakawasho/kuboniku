@@ -7,10 +7,10 @@ type Route = {
 };
 
 const route = map<Route>({
-  name: "works",
+  name: "home",
 });
 
-export const useRoute = (callback: (payload: { name: RouteName }) => void) => {
+export const useRouteContext = (callback: (payload: { name: RouteName }) => void) => {
   const unbind = route.listen(({ name }) => {
     callback({
       name,
@@ -22,4 +22,4 @@ export const useRoute = (callback: (payload: { name: RouteName }) => void) => {
   });
 };
 
-export const routeMutators = (update: Route) => route.set(update);
+export const routeMutators = route.set;

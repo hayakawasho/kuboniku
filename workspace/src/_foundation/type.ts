@@ -4,11 +4,10 @@ import type { ReadonlyRef } from "lake";
 export type AppContext = {
   once: boolean;
   history: ReadonlyRef<"push" | "pop">;
-  mq: ReadonlyRef<"pc" | "sp">;
   glContext: ReturnType<(typeof GlContext)["setup"]>;
 };
 
-export type RouteName = "works" | "single" | "profile";
+export type RouteName = "home" | "works" | "works-single" | "profile";
 
 //----------------------------------------------------------------
 
@@ -21,3 +20,5 @@ export type Point = {
   x: number;
   y: number;
 };
+
+export type valueOf<T> = T[keyof T];

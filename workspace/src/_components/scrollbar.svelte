@@ -23,7 +23,7 @@
   />
 </div>
 
-<style lang="postcss">
+<style lang="scss">
   .scrollbar {
     position: relative;
     display: inline-block;

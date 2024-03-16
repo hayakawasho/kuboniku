@@ -43,10 +43,7 @@
   });
 </script>
 
-<div
-  class="cursor"
-  style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
->
+<div class="cursor" style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)">
   <div class="w-full h-full relative">
     <div class="circle" />
   </div>

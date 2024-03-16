@@ -3,6 +3,7 @@
   import { getContext } from "svelte";
   import { Tween } from "@/_foundation/tween";
   import { nextTick } from "@/_foundation/utils";
+  import { useMediaQueryContext } from "@/_states/mq";
   import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
@@ -15,7 +16,7 @@
     snsLabel: HTMLAnchorElement[];
   };
 
-  const { rootRef, mq } = getContext<Context$<AppContext>>("$");
+  const { rootRef } = getContext<Context$<AppContext>>("$");
   const { refs } = useDomRef<Refs>(
     "plus",
     "frontPlusX",
@@ -27,13 +28,16 @@
 
   let isOpen: boolean | undefined;
 
-  useEvent(refs.plus, "click", (e) => {
+  const mq = useMediaQueryContext();
+  const { anyHover } = mq.value;
+
+  useEvent(refs.plus, "click", e => {
     e.preventDefault();
     isOpen = !isOpen;
   });
 
-  useEvent(refs.plus, "mouseenter", async (_e) => {
-    if (isOpen || mq.value === "sp") {
+  useEvent(refs.plus, "mouseenter", async _e => {
+    if (isOpen || !anyHover) {
       return;
     }
 
@@ -63,12 +67,9 @@
         )
       ),
       Tween.immediate(() => {
-        Tween.prop(
-          [refs.frontPlusX, refs.frontPlusY, refs.backPlusX, refs.backPlusY],
-          {
-            clearProps: "will-change,transform",
-          }
-        );
+        Tween.prop([refs.frontPlusX, refs.frontPlusY, refs.backPlusX, refs.backPlusY], {
+          clearProps: "will-change,transform",
+        });
       })
     );
   });
