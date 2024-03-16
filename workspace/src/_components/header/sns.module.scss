@@ -1,17 +1,15 @@
-.sns {
-  --size: 1.6rem;
+$size: 1.6rem;
 
+.sns {
   position: fixed;
   text-align: center;
   bottom: 1.5rem;
   left: 2rem;
   z-index: 99;
-  padding-bottom: calc(var(--size) + 2rem);
-  width: calc(var(--size) + 2rem);
+  padding-bottom: calc(var(--sns-toggle-size) + 2rem);
+  width: calc(var(--sns-toggle-size) + 2rem);
 
   @media (min-width: 640px) {
-    --size: 2.3rem;
-
     bottom: 3rem;
     left: 3rem;
   }
@@ -67,7 +65,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  width: var(--size);
+  width: var(--sns-toggle-size);
   height: 1px;
   transform: translateZ(0px);
 
@@ -84,7 +82,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  width: var(--size);
+  width: var(--sns-toggle-size);
   height: 1px;
   backface-visibility: hidden;
   rotate: 90deg;
@@ -106,8 +104,8 @@
   left: 0;
   z-index: 2;
   display: inline-block;
-  width: var(--size);
-  height: var(--size);
+  width: var(--sns-toggle-size);
+  height: var(--sns-toggle-size);
   pointer-events: auto;
   cursor: pointer;
   padding: 1rem;
