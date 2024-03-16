@@ -5,6 +5,7 @@ import './_components/page.home/index.module.scss';
 import './_components/page.works/index.module.scss';
 import './_components/page.works-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
+import IconFont from './assets/kuboniku.woff';
 
 export interface Props {
 	title: string;
@@ -27,7 +28,7 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
 <html lang="ja">
 	<head>
     <slot name="prependHead" />
-    <link as="font" crossorigin="" href="/assets/kuboniku.woff" rel="preload" type="font/woff" />
+    <link as="font" crossorigin="" href={IconFont} rel="preload" type="font/woff" />
     {!idDev && (
       <link
         as="style"
@@ -211,7 +212,7 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
 
   @font-face {
     font-family: 'kuboniku';
-    src: url('/assets/kuboniku.woff') format('woff');
+    src: url('./assets/kuboniku.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: block;

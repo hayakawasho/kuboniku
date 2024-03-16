@@ -47,5 +47,5 @@ const { post, next, totalCount, currentIndex } = Astro.props;
     media={mq.pc}
     rel="preload"
   />
-  <WorksDetail post={post} nextPost={next} now={currentIndex} max={totalCount} />
+  <WorksDetail post={post} nextPost={next} projectNumber={totalCount - (currentIndex - 1)} />
 </Layout>

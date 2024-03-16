@@ -1,6 +1,7 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
 import { PageWrapper } from "../page-wrapper/index.view";
+import ImgGrad from "../../assets/grad.jpg";
 
 const Component: React.FC = () => {
   return (
@@ -8,8 +9,18 @@ const Component: React.FC = () => {
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
         <div className="relative">
-          <i className={`${Styles.logo} | icon-logo | sp:hidden`}></i>
-          <i className={`${Styles.logo} | icon-logo_sp | pc:hidden`}></i>
+          <i
+            className={`${Styles.logo} | icon-logo | sp:hidden`}
+            style={{
+              backgroundImage: `url(${ImgGrad.src})`,
+            }}
+          ></i>
+          <i
+            className={`${Styles.logo} | icon-logo_sp | pc:hidden`}
+            style={{
+              backgroundImage: `url(${ImgGrad.src})`,
+            }}
+          ></i>
           <div className={Styles.container}>
             <div className={Styles.container__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] pc:mb-[.3rem]`}>Nagisa Kubo</h2>

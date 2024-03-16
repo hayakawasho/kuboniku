@@ -12,12 +12,11 @@ import type { WorkMetadata } from "@/_components/works";
 type Props = {
   post: WorkMetadata;
   nextPost: WorkMetadata;
-  max: number;
-  now: number;
+  projectNumber: number;
 };
 
 const Component: React.FC<Props> = props => {
-  const { post, nextPost, now, max } = props;
+  const { post, nextPost, projectNumber } = props;
 
   return (
     <PageWrapper header={<Header current="works-single" />} namespace="works-single">
@@ -26,7 +25,7 @@ const Component: React.FC<Props> = props => {
         <div className={Styles.kv}>
           <div className={Styles.kv__cont}>
             <p className={Styles.project}>
-              {zeroPadding(max - now)}
+              {zeroPadding(projectNumber)}
               <span className="ml-[.8rem]">Project</span>
             </p>
             <h1 className={`${Styles.heading} pl-[1.1rem] pr-[.5em]`}>{selectTitle(post)}</h1>
