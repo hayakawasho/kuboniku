@@ -68,7 +68,13 @@ export default defineComponent({
       const y = infiniteScrollContext.wrap(posY.value * SPEED);
 
       plane.updateY(y);
-      plane.uniforms.u_velo.value = diff.value * 0.002 * SPEED;
+      plane.uniforms.u_velo.value =
+        diff.value *
+        {
+          pc: 0.0025,
+          sp: 0.005,
+        }[device] *
+        SPEED;
 
       el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
