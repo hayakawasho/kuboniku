@@ -72,7 +72,7 @@ export default defineComponent({
         diff.value *
         {
           pc: 0.0025,
-          sp: 0.005,
+          sp: 0.004,
         }[device] *
         SPEED;
 
