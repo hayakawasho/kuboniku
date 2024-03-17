@@ -1,5 +1,4 @@
 import { GlObject } from "@/_foundation/glsl/gl-object";
-// import { map } from "@/_foundation/math";
 import {
   Mesh,
   PlaneBufferGeometry,
@@ -14,8 +13,6 @@ const loader = new TextureLoader();
 loader.crossOrigin = "anonymous";
 
 export class Plane extends GlObject {
-  // #offsetY = 0;
-  // #endY = 0;
   #mesh;
   uniforms;
 
@@ -73,11 +70,6 @@ export class Plane extends GlObject {
 
   resize = (size: Size) => {
     const bounds = super.resize(size);
-
-    // const offset = -size.height + bounds.top;
-    // this.#offsetY = offset;
-    // this.#endY = offset + size.height + bounds.height;
-
     this.#mesh.scale.set(bounds.width, bounds.height, 1);
 
     return bounds;
@@ -85,6 +77,5 @@ export class Plane extends GlObject {
 
   updateY = (current: number) => {
     super.updateY(current);
-    // this.uniforms.u_velo.value = diff.value * 0.005 * SPEED;
   };
 }

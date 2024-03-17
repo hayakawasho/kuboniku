@@ -1,7 +1,7 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
-import { useThree } from "../glworld/use-three";
+import { useThree } from "@/_components/glworld/use-three";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
@@ -17,8 +17,6 @@ export default defineComponent({
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("grid", "canvas");
 
-    const frontCanvasContext = useThree(refs.canvas, Math.min(window.devicePixelRatio, 1.5));
-
     const setGridColSize = (aspect: number) => {
       return aspect >= 1.25 ? "large" : aspect >= 0.85 ? "middle" : "small";
     };
@@ -29,10 +27,13 @@ export default defineComponent({
 
     refs.grid.dataset.col = setGridColSize(ww.value / wh.value);
 
+    // const glContext = useThree(refs.canvas, Math.min(window.devicePixelRatio, 1.5));
+    const glContext = useThree(refs.canvas, 1);
+
     addChild(refs.grid, Grid, {
       ...context,
-      addScene: frontCanvasContext.addScene,
-      removeScene: frontCanvasContext.removeScene,
+      addScene: glContext.addScene,
+      removeScene: glContext.removeScene,
     });
 
     useMount(() => {

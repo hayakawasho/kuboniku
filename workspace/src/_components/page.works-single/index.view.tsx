@@ -44,7 +44,7 @@ const Component: React.FC<Props> = props => {
             mob={cloudinaryAPIConverter(post.thumb["sp"].url, "f_auto,q_auto,w_750")}
             mobSize={[post.thumb["sp"].width, post.thumb["sp"].height]}
             size={[post.thumb["pc"].width, post.thumb["pc"].height]}
-            src={cloudinaryAPIConverter(post.thumb["pc"].url, "f_auto,q_auto,w_1680")}
+            src={cloudinaryAPIConverter(post.thumb["pc"].url, "f_auto,q_auto,w_1440")}
           />
           <div className={Styles.kv__scrollDown}>
             <div className="relative w-full h-full overflow-hidden">

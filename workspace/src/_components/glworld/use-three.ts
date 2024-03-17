@@ -1,3 +1,4 @@
+import { useMount } from "lake";
 import { getGPUTier } from "detect-gpu";
 import { useTick } from "@/_foundation/hooks";
 import { WebGLRenderer, PerspectiveCamera, Scene } from "@/_foundation/three";
@@ -30,13 +31,12 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
   };
 
   const camera = new PerspectiveCamera(FOV, width / height, 0.1, 3000);
-  camera.position.z = calcCamDistance(1);
 
   const scene = new Scene();
   const addScene = (child: Object3D) => scene.add(child);
   const removeScene = (child: Object3D) => scene.remove(child);
 
-  useWindowSizeContext(({ ww, wh }) => {
+  const [_, wh] = useWindowSizeContext(({ ww, wh }) => {
     renderer.setSize(ww, wh);
     camera.aspect = ww / wh;
     camera.position.z = calcCamDistance(wh);
@@ -45,6 +45,10 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
 
   useTick(() => {
     renderer.render(scene, camera);
+  });
+
+  useMount(() => {
+    camera.position.z = calcCamDistance(wh.value);
   });
 
   return {

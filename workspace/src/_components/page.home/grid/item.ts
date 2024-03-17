@@ -1,29 +1,35 @@
 import { defineComponent, useMount, useDomRef } from "lake";
-// import { gsap } from "gsap";
 import { useTick } from "@/_foundation/hooks";
-import { Tween } from "@/_foundation/tween";
+// import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
 import type { AppContext } from "@/_foundation/type";
+import type { Object3D, Scene } from "@/_foundation/three";
+import type { useInfiniteScroll } from "../use-infinite-scroll";
 
 type Props = AppContext & {
   geo: PlaneBufferGeometry;
   mat: ShaderMaterial;
-  addScene: any;
-  removeScene: any;
+  addScene: (child: Object3D) => Scene;
+  removeScene: (child: Object3D) => Scene;
+  infiniteScrollContext: ReturnType<typeof useInfiniteScroll>;
 };
 
 type Refs = {
   plane: HTMLImageElement;
-  // link: HTMLAnchorElement;
 };
 
 export default defineComponent({
   name: "GridItem",
-  setup(_el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene } = context;
+  setup(el: HTMLElement, context: Props) {
+    const { geo, mat, addScene, removeScene, infiniteScrollContext } = context;
+    const { posY, diff } = infiniteScrollContext;
+
+    const state = {
+      resizing: false,
+    };
 
     const { refs } = useDomRef<Refs>("plane");
 
@@ -41,30 +47,30 @@ export default defineComponent({
       },
     });
 
-    useTick(() => {
-      // const y = 0;
-      // plane.updateY(y);
-    });
-
-    // WIP:
-    const val = {
-      y: 0,
-    };
-
-    const SPEED = Number(refs.plane.dataset.speed);
-
-    Tween.tween(val, 40, "power2.out", {
-      onUpdate: () => {
-        plane.updateY(val.y * SPEED);
-      },
-      y: 2000,
-    });
-
     useWindowSizeContext(({ ww, wh }) => {
+      state.resizing = true;
+
       plane.resize({
         height: wh,
         width: ww,
       });
+
+      state.resizing = false;
+    });
+
+    const SPEED = Number(refs.plane.dataset.speed);
+
+    useTick(() => {
+      if (state.resizing) {
+        return;
+      }
+
+      const y = infiniteScrollContext.wrap(posY.value * SPEED);
+
+      plane.updateY(y);
+      plane.uniforms.u_velo.value = diff.value * 0.002 * SPEED;
+
+      el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {

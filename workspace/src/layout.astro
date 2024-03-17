@@ -59,7 +59,7 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
     {!idDev && <script defer src="/assets/entry.js" type="module" />}
 	</head>
   <body class="" data-page={props.namespace}>
-    <div aria-hidden="true" class="svh | fixed inset-0 w-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
+    <div aria-hidden="true" class="vh | fixed inset-0 w-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" data-gl data-ref="backCanvas"></canvas>
     <slot />
     <div class="ui">
@@ -250,6 +250,8 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
     position: fixed;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     overflow: clip;
     transform: rotate(.0001deg);
@@ -259,9 +261,9 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
 </style>
 
 <style lang="scss">
-  .svh {
+  .vh {
     height: 100vh;
-    height: 100svh;
+    // height: 100svh;
   }
 
 

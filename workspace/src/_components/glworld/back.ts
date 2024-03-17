@@ -7,9 +7,9 @@ import { useThree } from "./use-three";
 
 export default defineComponent({
   name: "BackCanvas",
-  setup(canvas: HTMLCanvasElement, { resolution = 1 }: { resolution: number }) {
+  setup(canvas: HTMLCanvasElement) {
     const { device } = useMediaQueryContext();
-    const { addScene, removeScene, renderer, camera } = useThree(canvas, resolution);
+    const { addScene, removeScene, renderer, camera } = useThree(canvas, 1);
 
     const bg = new Bg(renderer, camera, { mq: device });
 

@@ -32,6 +32,7 @@
 
 .project__eyecatch {
   position: absolute;
-  inset: 1rem;
+  inset: 0.25rem;
   display: block;
+  will-change: transform;
 }
