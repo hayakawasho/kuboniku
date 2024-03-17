@@ -8,7 +8,7 @@ import { useMediaQueryContext } from "@/_states/mq";
 
 const EASE = {
   pc: 0.12,
-  sp: 0.1,
+  sp: 0.08,
 } as const;
 
 export const useInfiniteScroll = (container: HTMLElement) => {
