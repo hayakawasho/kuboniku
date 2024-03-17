@@ -11,6 +11,7 @@ export const Sns = () => {
             href="https://www.facebook.com/k.b.nagisa"
             rel="noopener"
             target="_blank"
+            data-cursor="scale"
           >
             <span>Fb</span>
           </a>
@@ -22,13 +23,14 @@ export const Sns = () => {
             href="https://twitter.com/p3b9lwry"
             rel="noopener"
             target="_blank"
+            data-cursor="scale"
           >
             <span>X</span>
           </a>
         </li>
       </ul>
 
-      <summary className={Styles.plus} data-ref="plus">
+      <summary className={Styles.plus} data-ref="plus" data-cursor="scale">
         <div className="relative w-full h-full">
           <div className={Styles.plus__front}>
             <div className={Styles.plus__x}>

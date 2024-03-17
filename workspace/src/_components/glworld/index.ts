@@ -8,10 +8,10 @@ import { useThree } from "./use-three";
 export default defineComponent({
   name: "GlWorld",
   setup(canvas: HTMLCanvasElement) {
-    const mq = useMediaQueryContext();
+    const { device } = useMediaQueryContext();
     const { addScene, removeScene, renderer, camera } = useThree(canvas, 1);
 
-    const bg = new Bg(renderer, camera, { mq: mq.value.device });
+    const bg = new Bg(renderer, camera, { mq: device });
 
     useTick(({ timestamp: _ }) => {
       bg.render();

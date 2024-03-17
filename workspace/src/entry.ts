@@ -1,9 +1,9 @@
-import "ress";
 import { create, withSvelte } from "lake";
 import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";
+import Home from "./_components/page.home";
 import Profile from "./_components/page.profile";
 import Works from "./_components/page.works";
 import WorksSingle from "./_components/page.works-single";
@@ -17,6 +17,7 @@ bootstrap(() => {
 
   const table: Record<string, IComponent> = {
     Cursor: withSvelte(Cursor, "Cursor"),
+    Home,
     NavMenu,
     Noop,
     Profile,

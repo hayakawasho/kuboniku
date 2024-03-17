@@ -2,6 +2,7 @@
   import { useDomRef, useSlot, withSvelte, useEvent } from "lake";
   import { getContext } from "svelte";
   import MenuView from "./view.svelte";
+  import scrollLock from "scroll-lock";
   import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
@@ -24,20 +25,17 @@
   const { openAnime, closeAnime } = context;
 
   const { addChild } = useSlot();
-  const { refs } = useDomRef<Refs>(
-    "menuTrigger",
-    "mask",
-    "menu",
-    "menuContent"
-  );
+  const { refs } = useDomRef<Refs>("menuTrigger", "mask", "menu", "menuContent");
 
   let isOpen: boolean | undefined = undefined;
 
   $: switch (isOpen) {
     case true:
+      scrollLock.disablePageScroll();
       openAnime();
       break;
     case false:
+      scrollLock.enablePageScroll();
       closeAnime();
       break;
     default:
@@ -56,7 +54,7 @@
 
   useEvent(refs.mask, "click", closeMenu);
 
-  useEvent(refs.menuTrigger, "click", (e) => {
+  useEvent(refs.menuTrigger, "click", e => {
     e.preventDefault();
     isOpen = !isOpen;
   });
