@@ -28,8 +28,7 @@
 
   let isOpen: boolean | undefined;
 
-  const mq = useMediaQueryContext();
-  const { anyHover } = mq.value;
+  const { anyHover } = useMediaQueryContext();
 
   useEvent(refs.plus, "click", e => {
     e.preventDefault();

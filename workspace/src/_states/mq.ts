@@ -24,7 +24,7 @@ export const useMediaQueryContext = (callback: (payload: MediaQuery) => void = n
     unbind();
   });
 
-  return readonly(mq);
+  return readonly(mq).value;
 };
 
 export const mediaQueryMutators = mqState.set;

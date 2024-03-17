@@ -10,12 +10,11 @@ import type { AppContext } from "@/_foundation/type";
 export default defineComponent({
   name: "SkewScrollContainer",
   setup(el: HTMLElement, _context: AppContext) {
-    const mq = useMediaQueryContext();
-
     const state = {
       active: false,
     };
 
+    const { device } = useMediaQueryContext();
     const [ww] = useWindowSizeContext();
     const [y, { isScrolling }] = useScrollPosY();
 
@@ -32,7 +31,7 @@ export default defineComponent({
       }
 
       const currentY = y.value;
-      const easeVal = 1 - (1 - EASE[mq.value.device]) ** timeRatio;
+      const easeVal = 1 - (1 - EASE[device]) ** timeRatio;
       lastY.value = lerp(lastY.value, currentY, easeVal);
 
       if (lastY.value < 0.1) {

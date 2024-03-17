@@ -21,11 +21,11 @@ export default defineComponent({
 
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("index", "projectItem", "h1");
-    const mq = useMediaQueryContext();
+    const { device } = useMediaQueryContext();
 
     addChild(el, SkewScrollContainer, context);
 
-    if (mq.value.device === "pc") {
+    if (device === "pc") {
       addChild(refs.projectItem, ProjectItem, context);
     }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useTick } from "@/_foundation/hooks";
+  import { useTick, useDelegate } from "@/_foundation/hooks";
   import { lerp } from "@/_foundation/math";
   import { mousePosMutators } from "@/_states/mouse";
 
@@ -12,6 +12,10 @@
     x: 0,
     y: 0,
   };
+
+  useDelegate("[data-cursor]", "mouseenter", e => {
+    console.log(e);
+  });
 
   const onMousemove = (e: MouseEvent) => {
     clearTimeout(timer);

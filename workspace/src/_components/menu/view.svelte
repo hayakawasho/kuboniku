@@ -18,7 +18,7 @@
 
   let current = context.current;
 
-  const mq = useMediaQueryContext();
+  const { device } = useMediaQueryContext();
 
   useRouteContext(({ name }) => {
     current = name;
@@ -49,7 +49,7 @@
   });
 </script>
 
-{#if mq.value.device === "sp"}
+{#if device === "sp"}
   <dialog class="menuDialog | js-menuDialog">
     <nav>
       <ul>
@@ -141,12 +141,12 @@
     overflow: hidden;
     transition: 0.55s opacity var(--ease-opacity);
     color: var(--color-text);
+    pointer-events: auto;
 
     @media (min-width: 640px) {
       font-size: 1.3rem;
       line-height: calc(52 / 26);
       opacity: 1;
-      pointer-events: auto;
     }
 
     @media (hover: hover) {

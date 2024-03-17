@@ -14,7 +14,12 @@
   right: -110%;
   pointer-events: none;
 
-  @media (min-width: 640px) {
+  &[data-col="middle"] {
+    left: -40%;
+    right: -40%;
+  }
+
+  &[data-col="large"] {
     left: -7.5%;
     right: -7.5%;
   }
