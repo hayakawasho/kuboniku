@@ -22,7 +22,7 @@
   font-family: var(--font-en);
   font-style: italic;
   font-size: calc(26.6 / 106.4 * 100%);
-  font-size: 1rem;
+  font-size: 1.6rem;
   font-weight: 400;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
@@ -108,7 +108,7 @@
 .num {
   font-family: var(--font-en);
   font-style: italic;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
   line-height: 1;
@@ -118,12 +118,8 @@
   }
 
   > span {
-    font-size: calc(20 / 30 * 100%);
+    font-size: calc(26 / 38 * 100%);
     letter-spacing: 0.02em;
-
-    @media (min-width: 640px) {
-      font-size: calc(26 / 38 * 100%);
-    }
   }
 }
 

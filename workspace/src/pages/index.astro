@@ -17,3 +17,13 @@ const result = await repo.findMany({
 <Layout title="" permalink='' namespace='home'>
   <Home posts={result.works} namespace='home' perPage={10} />
 </Layout>
+
+<style lang="scss">
+  body[data-page="home"] {
+    overscroll-behavior-y: none;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+</style>

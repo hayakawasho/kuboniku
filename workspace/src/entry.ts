@@ -1,3 +1,4 @@
+import "./global.scss";
 import { create, withSvelte } from "lake";
 import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
