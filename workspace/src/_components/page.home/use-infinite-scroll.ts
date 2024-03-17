@@ -7,8 +7,8 @@ import { useWindowSizeContext } from "@/_states/window-size";
 import { useMediaQueryContext } from "@/_states/mq";
 
 const EASE = {
-  pc: 0.08,
-  sp: 0.08,
+  pc: 0.12,
+  sp: 0.1,
 } as const;
 
 export const useInfiniteScroll = (container: HTMLElement) => {
