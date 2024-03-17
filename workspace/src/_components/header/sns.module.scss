@@ -8,7 +8,6 @@
   z-index: 99;
   padding-bottom: calc(var(--size) + 2rem);
   width: calc(var(--size) + 2rem);
-  box-sizing: content-box;
 
   @media (min-width: 640px) {
     --size: 2.3rem;
@@ -113,4 +112,5 @@
   cursor: pointer;
   padding: 1rem;
   backface-visibility: hidden;
+  box-sizing: content-box;
 }

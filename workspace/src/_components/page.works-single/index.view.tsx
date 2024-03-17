@@ -32,7 +32,7 @@ const Component: React.FC<Props> = props => {
             <p className={`${Styles.sub} pl-[1.3rem] mt-[.8rem] overflow-hidden`}>
               <span className="inline-block origin-right">
                 {post.category}
-                <i className="icon-arrow_right ml-[.8rem]" />
+                <i className="icon-arrow_right | ml-[.8rem] align-bottom" />
               </span>
             </p>
           </div>
@@ -70,7 +70,13 @@ const Component: React.FC<Props> = props => {
               <div className={Styles.intro__desc}>
                 {post.description && <p className={Styles.intro__desc}>{post.description}</p>}
                 {post.siteUrl && (
-                  <a className="relative" href={post.siteUrl} rel="noopener" target="_blank">
+                  <a
+                    className="relative"
+                    href={post.siteUrl}
+                    rel="noopener"
+                    target="_blank"
+                    data-cursor="scale"
+                  >
                     View website
                     <div className={Styles.intro__viewLinkLine} />
                   </a>
@@ -117,7 +123,7 @@ const Component: React.FC<Props> = props => {
                 <h2 className={`${Styles.heading} pl-[1.1rem] pr-[.5em]`}>Next Project</h2>
                 <p className={`${Styles.sub} pl-[1.3rem] mt-[.8rem] overflow-hidden`}>
                   {selectTitle(nextPost)}
-                  <i className="icon-arrow_right ml-[.8rem]" />
+                  <i className="icon-arrow_right | ml-[.8rem] align-bottom" />
                 </p>
               </div>
               <ResponsiveImage

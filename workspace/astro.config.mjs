@@ -2,10 +2,11 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
+import prefetch from "@astrojs/prefetch";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind(), critters()],
+  integrations: [react(), tailwind(), critters(), prefetch()],
   devToolbar: {
     enabled: false,
   },

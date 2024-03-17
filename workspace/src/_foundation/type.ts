@@ -9,8 +9,6 @@ export type AppContext = {
 
 export type RouteName = "home" | "works" | "works-single" | "profile";
 
-//----------------------------------------------------------------
-
 export type Size = {
   width: number;
   height: number;
