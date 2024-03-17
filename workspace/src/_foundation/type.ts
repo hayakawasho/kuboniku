@@ -1,10 +1,10 @@
-import type GlContext from "../_components/glworld";
+import type BackCanvasContext from "../_components/glworld/back";
 import type { ReadonlyRef } from "lake";
 
 export type AppContext = {
   once: boolean;
   history: ReadonlyRef<"push" | "pop">;
-  glContext: ReturnType<(typeof GlContext)["setup"]>;
+  backCanvasContext: ReturnType<(typeof BackCanvasContext)["setup"]>;
 };
 
 export type RouteName = "home" | "works" | "works-single" | "profile";

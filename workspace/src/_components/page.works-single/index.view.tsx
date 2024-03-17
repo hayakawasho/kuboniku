@@ -8,18 +8,20 @@ import { zeroPadding } from "@/_foundation/utils";
 import Styles from "./index.module.scss";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { WorkMetadata } from "@/_components/works";
+import type { RouteName } from "@/_foundation/type";
 
 type Props = {
   post: WorkMetadata;
   nextPost: WorkMetadata;
   projectNumber: number;
+  namespace: RouteName;
 };
 
 const Component: React.FC<Props> = props => {
-  const { post, nextPost, projectNumber } = props;
+  const { post, nextPost, projectNumber, namespace } = props;
 
   return (
-    <PageWrapper header={<Header current="works-single" />} namespace="works-single">
+    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main data-color={post.theme} data-component="WorksSingle">
         <div data-ref="progressBar"></div>
         <div className={Styles.kv}>
@@ -32,7 +34,7 @@ const Component: React.FC<Props> = props => {
             <p className={`${Styles.sub} pl-[1.3rem] mt-[.8rem] overflow-hidden`}>
               <span className="inline-block origin-right">
                 {post.category}
-                <i className="icon-arrow_right | ml-[.8rem] align-bottom" />
+                <i className="icon-arrow_right | ml-[.8rem]" />
               </span>
             </p>
           </div>
@@ -72,10 +74,10 @@ const Component: React.FC<Props> = props => {
                 {post.siteUrl && (
                   <a
                     className="relative"
+                    data-cursor="scale"
                     href={post.siteUrl}
                     rel="noopener"
                     target="_blank"
-                    data-cursor="scale"
                   >
                     View website
                     <div className={Styles.intro__viewLinkLine} />
@@ -123,7 +125,7 @@ const Component: React.FC<Props> = props => {
                 <h2 className={`${Styles.heading} pl-[1.1rem] pr-[.5em]`}>Next Project</h2>
                 <p className={`${Styles.sub} pl-[1.3rem] mt-[.8rem] overflow-hidden`}>
                   {selectTitle(nextPost)}
-                  <i className="icon-arrow_right | ml-[.8rem] align-bottom" />
+                  <i className="icon-arrow_right | ml-[.8rem]" />
                 </p>
               </div>
               <ResponsiveImage

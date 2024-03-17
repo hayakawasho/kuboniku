@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useDomRef, useSlot, withSvelte, useEvent } from "lake";
+  import scrollLock from "scroll-lock";
   import { getContext } from "svelte";
   import MenuView from "./view.svelte";
-  import scrollLock from "scroll-lock";
   import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 

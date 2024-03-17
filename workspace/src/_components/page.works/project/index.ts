@@ -12,17 +12,17 @@ type Refs = {
 export default defineComponent({
   name: "ProjectItem",
   setup(el: HTMLElement, context: AppContext) {
-    const { glContext } = context;
+    const { backCanvasContext } = context;
     const { refs } = useDomRef<Refs>("eyecatchImg", "hgroup");
 
     const themeColor = el.dataset.color!;
 
     useEvent(el, "mouseenter", _e => {
-      glContext.onChangeColorPalette(themeColor);
+      backCanvasContext.onChangeColorPalette(themeColor);
     });
 
     useEvent(el, "mouseleave", _e => {
-      glContext.onChangeColorPalette(SITE_THEME_COLOR);
+      backCanvasContext.onChangeColorPalette(SITE_THEME_COLOR);
 
       Tween.parallel(
         Tween.tween([refs.eyecatchImg, refs.hgroup], 1.2, "expo.out", {

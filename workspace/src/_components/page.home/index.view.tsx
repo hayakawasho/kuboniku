@@ -1,21 +1,24 @@
 import { Header } from "@/_components/header/index.view";
 import { PageWrapper } from "@/_components/page-wrapper/index.view";
-import { Link } from "@/_components/ui/link";
+// import { Link } from "@/_components/ui/link";
 import Styles from "./index.module.scss";
 import type { WorkMetadata } from "@/_components/works";
+import type { RouteName } from "@/_foundation/type";
 
 type Props = {
   posts: WorkMetadata[];
+  namespace: RouteName;
 };
 
-const PER_PAGE = 10;
+const PER_PAGE = 13;
 
 const Component: React.FC<Props> = props => {
-  const { posts } = props;
+  const { posts, namespace } = props;
 
   return (
-    <PageWrapper header={<Header current="home" />} namespace="home">
+    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="h-full" data-component="Home">
+        <canvas aria-hidden="true" className="opacity-80" data-gl="" data-ref="canvas"></canvas>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">
@@ -34,21 +37,6 @@ const Component: React.FC<Props> = props => {
                 <Thumbnail index={index + PER_PAGE * 2} post={post} />
               </li>
             ))}
-            {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + PER_PAGE * 3} post={post} />
-              </li>
-            ))}
-            {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + PER_PAGE * 4} post={post} />
-              </li>
-            ))}
-            {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + PER_PAGE * 5} post={post} />
-              </li>
-            ))}
           </ul>
         </div>
       </main>
@@ -58,16 +46,18 @@ const Component: React.FC<Props> = props => {
 
 const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
   const speed = {
-    0: 0.8,
-    1: 1,
-    2: 0.8,
-  }[index % 3];
+    0: 0.7,
+    1: 0.85,
+    2: 1,
+    3: 0.85,
+    4: 0.7,
+  }[index % 5];
 
   return (
     <div className={Styles.project__eyecatch} data-ref="gridItem">
       <img
         alt=""
-        className="w-full h-full"
+        className="w-full h-full invisible"
         data-h={post.thumb["pc"].height}
         data-ref="plane"
         data-speed={speed}
@@ -76,13 +66,15 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
         height={post.thumb["pc"].height}
         width={post.thumb["pc"].width}
       />
-      <Link
-        className="absolute inset-0 block pointer-events-auto"
-        data-ref="link"
-        to={`/works/${post.id}/`}
-      >
-        <span className="sr-only">{post.title}</span>
-      </Link>
+      {/*
+        <Link
+          className="absolute inset-0 block pointer-events-auto"
+          data-ref="link"
+          to={`/works/${post.slug}/`}
+        >
+          <span className="sr-only">{post.title}</span>
+        </Link>
+       */}
     </div>
   );
 };

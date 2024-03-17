@@ -6,10 +6,10 @@ import { Bg } from "./bg-noise/core";
 import { useThree } from "./use-three";
 
 export default defineComponent({
-  name: "GlWorld",
-  setup(canvas: HTMLCanvasElement) {
+  name: "BackCanvas",
+  setup(canvas: HTMLCanvasElement, { resolution = 1 }: { resolution: number }) {
     const { device } = useMediaQueryContext();
-    const { addScene, removeScene, renderer, camera } = useThree(canvas, 1);
+    const { addScene, removeScene, renderer, camera } = useThree(canvas, resolution);
 
     const bg = new Bg(renderer, camera, { mq: device });
 

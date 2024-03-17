@@ -1,10 +1,7 @@
 precision mediump float;
 
-#pragma glslify: PI = require('./../../../_foundation/glsl/pi')
-
-uniform float u_velo;
-
 varying vec2 vUv;
+uniform float u_velo;
 
 void main() {
   vec4 pos = modelViewMatrix * vec4(position, 1.0);

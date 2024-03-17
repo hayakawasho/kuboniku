@@ -1,6 +1,6 @@
 precision mediump float;
 
-#pragma glslify: cover = require('./../../../_foundation/glsl/cover');
+#pragma glslify: cover = require('../../../_foundation/glsl/cover');
 
 uniform sampler2D u_texture;
 uniform vec2 u_mesh_size;
@@ -32,5 +32,6 @@ void main() {
     tex.b = texture2D(u_texture, texScale).b;
   }
 
+  tex.a = u_alpha;
   gl_FragColor = tex;
 }

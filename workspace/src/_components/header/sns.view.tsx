@@ -7,11 +7,11 @@ export const Sns = () => {
         <li className="overflow-hidden mb-[2rem]">
           <a
             className={Styles.snsLabel}
+            data-cursor="scale"
             data-ref="snsLabel"
             href="https://www.facebook.com/k.b.nagisa"
             rel="noopener"
             target="_blank"
-            data-cursor="scale"
           >
             <span>Fb</span>
           </a>
@@ -19,18 +19,18 @@ export const Sns = () => {
         <li className="overflow-hidden">
           <a
             className={Styles.snsLabel}
+            data-cursor="scale"
             data-ref="snsLabel"
             href="https://twitter.com/p3b9lwry"
             rel="noopener"
             target="_blank"
-            data-cursor="scale"
           >
             <span>X</span>
           </a>
         </li>
       </ul>
 
-      <summary className={Styles.plus} data-ref="plus" data-cursor="scale">
+      <summary className={Styles.plus} data-cursor="scale" data-ref="plus">
         <div className="relative w-full h-full">
           <div className={Styles.plus__front}>
             <div className={Styles.plus__x}>

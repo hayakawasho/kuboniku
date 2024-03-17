@@ -47,6 +47,10 @@
   letter-spacing: 0.02em;
   color: var(--color-text-primary);
 
+  @media (min-width: 640px) {
+    font-size: 1.9rem;
+  }
+
   > span {
     font-size: 70%;
     letter-spacing: 0.02em;
@@ -60,7 +64,11 @@
   color: var(--color-text-primary);
   letter-spacing: 0.02em;
 
-  .icon-arrow_right {
+  @media (min-width: 640px) {
+    font-size: 1.9rem;
+  }
+
+  :global(.icon-arrow_right) {
     font-size: 1rem;
     transform: scale(0.7);
     transform-origin: left;

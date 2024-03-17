@@ -1,11 +1,14 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
-import { PageWrapper } from "../page-wrapper/index.view";
 import ImgGrad from "../../assets/grad.jpg";
+import { PageWrapper } from "../page-wrapper/index.view";
+import type { RouteName } from "@/_foundation/type";
 
-const Component: React.FC = () => {
+const Component: React.FC<{
+  namespace: RouteName;
+}> = ({ namespace }) => {
   return (
-    <PageWrapper header={<Header current="profile" />} namespace="profile">
+    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
         <div className="relative">

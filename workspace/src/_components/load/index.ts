@@ -6,7 +6,7 @@ import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
 import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
-import Gl from "../glworld";
+import BackCanvas from "../glworld/back";
 import type { AppContext, RouteName } from "@/_foundation/type";
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
 type Refs = {
   main: HTMLElement;
   backCanvas: HTMLCanvasElement;
-  // frontCanvas: HTMLCanvasElement;
+  frontCanvas: HTMLCanvasElement;
   windowSizeWatcher: HTMLElement;
 };
 
@@ -26,7 +26,7 @@ export default defineComponent({
   name: "Load",
   setup(_el, { onCreated, onUpdated, onCleanup }: Props) {
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("backCanvas", "main", "windowSizeWatcher");
+    const { refs } = useDomRef<Refs>("backCanvas", "frontCanvas", "main", "windowSizeWatcher");
 
     const history = ref<"push" | "pop">("push");
 
@@ -35,10 +35,10 @@ export default defineComponent({
       device: window.matchMedia(mq.pc).matches ? "pc" : "sp",
     });
 
-    const [backCanvasContext] = addChild(refs.backCanvas, Gl);
+    const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
 
     const provides = {
-      glContext: backCanvasContext.current,
+      backCanvasContext: backCanvasContext.current,
       history: readonly(history),
     } as AppContext;
 

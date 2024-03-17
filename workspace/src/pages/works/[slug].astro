@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 const { post, next, totalCount, currentIndex } = Astro.props;
 ---
 
-<Layout title={post.title} permalink={`/works/${post.slug}/`}>
+<Layout title={post.title} permalink={`/works/${post.slug}/`} namespace='works-single'>
   <link
     slot="prependHead"
     as="image"
@@ -47,5 +47,5 @@ const { post, next, totalCount, currentIndex } = Astro.props;
     media={mq.pc}
     rel="preload"
   />
-  <WorksDetail post={post} nextPost={next} projectNumber={totalCount - (currentIndex - 1)} />
+  <WorksDetail post={post} nextPost={next} projectNumber={totalCount - (currentIndex - 1)} namespace="works-single" />
 </Layout>

@@ -11,7 +11,7 @@ import type { AppContext } from "@/_foundation/type";
 export default defineComponent({
   name: "WirksSingle",
   setup(el, context: AppContext) {
-    const { once, history, glContext } = context;
+    const { once, history, backCanvasContext } = context;
 
     // const { refs } = useDomRef<Refs>();
     const { addChild } = useSlot();
@@ -19,7 +19,7 @@ export default defineComponent({
     addChild(el, SkewScrollContainer, context);
 
     const colorPallete = el.dataset.color!;
-    glContext.onChangeColorPalette(colorPallete);
+    backCanvasContext.onChangeColorPalette(colorPallete);
 
     const state = {
       offsetHeight: el.getBoundingClientRect().height,

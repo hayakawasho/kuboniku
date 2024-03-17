@@ -6,10 +6,12 @@ import './_components/page.works/index.module.scss';
 import './_components/page.works-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
 import IconFont from './assets/kuboniku.woff';
+import type { RouteName } from "@/_foundation/type";
 
 export interface Props {
 	title: string;
   permalink: string;
+  namespace: RouteName;
 }
 
 const { props } = Astro;
@@ -56,23 +58,10 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
     )}
     {!idDev && <script defer src="/assets/entry.js" type="module" />}
 	</head>
-  <body class="">
-    <div
-      aria-hidden="true"
-      class="svh | fixed inset-0 w-screen pointer-events-none -z-1 invisible"
-      data-ref="windowSizeWatcher"
-    ></div>
-    <canvas
-      aria-hidden="true"
-      class="fixed inset-0 w-screen h-screen pointer-events-none"
-      data-ref="backCanvas"
-    ></canvas>
+  <body class="" data-page={props.namespace}>
+    <div aria-hidden="true" class="svh | fixed inset-0 w-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
+    <canvas aria-hidden="true" data-gl data-ref="backCanvas"></canvas>
     <slot />
-    <canvas
-      aria-hidden="true"
-      class="fixed inset-0 w-screen h-full pointer-events-none"
-      data-ref="frontCanvas"
-    ></canvas>
     <div class="ui">
       <div class="sp:hidden" data-component="Cursor"></div>
     </div>
@@ -252,6 +241,20 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
 
   .icon-logo:before {
     content: '\e903';
+  }
+
+  [data-gl] {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    contain: strict;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    overflow: clip;
+    transform: rotate(.0001deg);
+    pointer-events: none;
+    user-select: none;
   }
 </style>
 

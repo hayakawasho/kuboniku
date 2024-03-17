@@ -6,17 +6,19 @@ import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import { zeroPadding } from "@/_foundation/utils";
 import Styles from "./index.module.scss";
 import type { WorkMetadata } from "@/_components/works";
+import type { RouteName } from "@/_foundation/type";
 
 type Props = {
   posts: WorkMetadata[];
   total: number;
+  namespace: RouteName;
 };
 
 const Component: React.FC<Props> = props => {
-  const { posts, total } = props;
+  const { posts, total, namespace } = props;
 
   return (
-    <PageWrapper header={<Header current="works" />} namespace="works">
+    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main data-component="Works">
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
           <h1 className={Styles.heading} data-ref="h1">
