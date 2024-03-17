@@ -52,7 +52,7 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
     <meta content={SITE_TITLE} property="og:site_name" />
     <meta content={SITE_URL + '/ogp.jpg'} property="og:image" />
 		<link rel="icon" href="/favicon.ico" />
-    <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Condensed:wght@300;400;700&display=swap" />
+    <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Noto+Sans+JP:wght@400&family=Roboto+Condensed:wght@300;700&display=swap" />
     {idDev && (
       <script defer src={`http://${LOCAL_IP_ADDR}:5173/src/entry.ts`} type="module" />
     )}
@@ -71,7 +71,7 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
 <style lang="scss" is:global>
   :root {
     --font: 'Noto Sans JP', sans-serif;
-    --font-en: 'Montserrat', sans-serif;
+    --font-en: 'Playfair Display', serif;
     --font-roboto: 'Roboto Condensed', sans-serif;
 
     --grid: calc(1 / 12 * 100vw);
@@ -87,16 +87,12 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
     --color-text-primary: #858585;
     --color-theme: #1793a9;
 
-    --size-sns-toggle: 1.6rem;
-
     --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
     --ease-opacity: cubic-bezier(0.26, 0.06, 0, 1);
 
     @media (min-width: 640px) {
       --gap: calc(40 / 1280 * 100vw);
       --gutter: calc(16 / 1280 * 100vw);
-
-      --size-sns-toggle: 2.3rem;
     }
   }
 

@@ -134,18 +134,16 @@
     display: inline-block;
     vertical-align: top;
     font-family: var(--font-en);
-    font-weight: 500;
     font-size: 1.4rem;
     line-height: calc(86 / 28);
-    letter-spacing: 0.41em;
     overflow: hidden;
     transition: 0.55s opacity var(--ease-opacity);
     color: var(--color-text);
     pointer-events: auto;
 
     @media (min-width: 640px) {
-      font-size: 1.3rem;
-      line-height: calc(52 / 26);
+      font-size: 1.5rem;
+      line-height: calc(62 / 30);
       opacity: 1;
     }
 

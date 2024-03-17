@@ -26,13 +26,15 @@ const Component: React.FC<{
           ></i>
           <div className={Styles.container}>
             <div className={Styles.container__in}>
-              <h2 className={`${Styles.heading} mb-[.8rem] pc:mb-[.3rem]`}>Nagisa Kubo</h2>
+              <h2 className={`${Styles.heading} mb-[.8rem]`}>Nagisa Kubo</h2>
               <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>Art Director & Designer</p>
               <div className={Styles.about}>
                 <p>
-                  1989年10月5日生まれ。京丹後という海近くで生まれる。
-                  <br />
-                  辻製菓専門学校卒。パティシエとして東京に就職するもその3年後、2013年より都内のweb制作会社へ就職。そして2016年、今の株式会社パノラマに就職。主にアートディレクション、web/logoデザインの制作を担う。自分の武器としてはスピードに加え、コーポレートサイト/ブランドサイト/ゲームサイトなど幅広い分野にて100%の課題解決を目指したデザインをお客様へ提供すること。お肉がとにかく好き。焼肉を食べることと、お笑い、アニメを見ることがライフワーク。
+                  アートディレクター、Webデザイナー久保渚のポートフォリオサイトです。
+                  <br className="sp:hidden" />
+                  最高の価値体験を実現するために、私はデジタルデザインを通じて製品を作ることに情熱を注いでいます。株式会社パノラマでは、主にアートディレクション、Web/Logoデザインの制作を担っており、自分の武器としてはスピードに加え、コーポレートサイト/ブランドサイト/ゲームサイトなど幅広い分野にて100%以上の課題解決を目指したデザインをお客様へ提供することです。また、デザインチームのマネジメントも行っております。
+                  <br className="sp:hidden" />
+                  お肉がとにかく好き。焼肉を食べることと、お笑い、アニメを見ることがライフワーク。
                 </p>
               </div>
             </div>
