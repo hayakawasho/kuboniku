@@ -134,6 +134,7 @@
     display: inline-block;
     vertical-align: top;
     font-family: var(--font-en);
+    font-style: italic;
     font-size: 1.4rem;
     line-height: calc(86 / 28);
     overflow: hidden;

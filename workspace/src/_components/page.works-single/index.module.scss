@@ -42,6 +42,7 @@
   top: calc(-1em - 2rem);
   font-weight: bold;
   font-family: var(--font-en);
+  font-style: italic;
   font-size: 1.3rem;
   letter-spacing: 0.02em;
   color: var(--color-text-primary);
@@ -58,6 +59,7 @@
 
 .sub {
   font-family: var(--font-en);
+  font-style: italic;
   font-size: 1.3rem;
   line-height: 1;
   color: var(--color-text-primary);
@@ -82,8 +84,8 @@
   bottom: 5rem;
   overflow: hidden;
   transform: translateX(-50%);
-  font-weight: bold;
   font-family: var(--font-en);
+  font-style: italic;
   font-size: 1rem;
   line-height: 1;
   color: #e3e3e3;
@@ -174,6 +176,7 @@
 .dt {
   font-size: 1.2rem;
   font-family: var(--font-en);
+  font-style: italic;
   color: var(--color-text-primary);
   line-height: calc(52 / 24);
   white-space: nowrap;
@@ -182,7 +185,8 @@
 .dd {
   font-size: 1.2rem;
   font-family: var(--font-en);
-  font-weight: 300;
+  font-style: italic;
+  // font-weight: 300;
   line-height: calc(52 / 24);
   letter-spacing: 0.08em;
   color: #cbcbcb;
@@ -199,6 +203,7 @@
     font-weight: 400;
     padding-left: 2.6em;
     font-family: var(--font-en);
+    font-style: italic;
     font-size: 1.2rem;
     line-height: 1.5;
     letter-spacing: 0.02em;
