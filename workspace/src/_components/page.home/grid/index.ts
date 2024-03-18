@@ -26,8 +26,8 @@ export default defineComponent({
 
     addChild(refs.gridItem, GridItem, {
       ...context,
-      infiniteScrollContext,
       geo,
+      infiniteScrollContext,
       mat,
     });
   },

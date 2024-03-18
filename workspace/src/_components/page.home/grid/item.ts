@@ -4,10 +4,9 @@ import { useTick } from "@/_foundation/hooks";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
-import type { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
-import type { AppContext } from "@/_foundation/type";
-import type { Object3D, Scene } from "@/_foundation/three";
 import type { useInfiniteScroll } from "../use-infinite-scroll";
+import type { PlaneBufferGeometry, ShaderMaterial , Object3D, Scene } from "@/_foundation/three";
+import type { AppContext } from "@/_foundation/type";
 
 type Props = AppContext & {
   geo: PlaneBufferGeometry;

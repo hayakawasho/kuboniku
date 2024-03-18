@@ -3,8 +3,8 @@ import { ref, readonly, useEvent, useMount } from "lake";
 import NormalizeWheel from "normalize-wheel";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
-import { useWindowSizeContext } from "@/_states/window-size";
 import { useMediaQueryContext } from "@/_states/mq";
+import { useWindowSizeContext } from "@/_states/window-size";
 
 const EASE = {
   pc: 0.12,

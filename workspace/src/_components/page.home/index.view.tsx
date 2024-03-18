@@ -70,9 +70,9 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
 
   return (
     <Link
-      to={`/works/${post.slug}/`}
       className={`${Styles.project__eyecatch} pointer-events-auto`}
       data-ref="gridItem"
+      to={`/works/${post.slug}/`}
     >
       <img
         alt=""
