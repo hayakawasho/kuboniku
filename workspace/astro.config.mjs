@@ -3,6 +3,7 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
 import prefetch from "@astrojs/prefetch";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,4 +27,6 @@ export default defineConfig({
     },
     plugins: [],
   },
+  output: "server",
+  adapter: cloudflare(),
 });
