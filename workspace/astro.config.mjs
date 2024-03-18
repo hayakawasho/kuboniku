@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
 import prefetch from "@astrojs/prefetch";
 import cloudflare from "@astrojs/cloudflare";
+// import nodejs from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -27,6 +28,9 @@ export default defineConfig({
     },
     plugins: [],
   },
-  output: "server",
+  output: "hybrid",
   adapter: cloudflare(),
+  // adapter: nodejs({
+  //   mode: "standalone",
+  // }),
 });
