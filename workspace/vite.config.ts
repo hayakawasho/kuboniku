@@ -6,7 +6,7 @@ import { glslify } from "vite-plugin-glslify";
 import viteCompression from "vite-plugin-compression";
 
 const isDev = process.env.NODE_ENV !== "production";
-const SSR_MODE = "/dist/client/";
+// const SSR_MODE = "/dist/client/";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,7 +29,7 @@ export default defineConfig({
     splitVendorChunkPlugin(),
   ],
   build: {
-    outDir: `./out/${SSR_MODE}assets`,
+    outDir: `./out/assets`,
     sourcemap: isDev,
     manifest: true,
     rollupOptions: {
