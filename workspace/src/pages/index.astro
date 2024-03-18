@@ -1,10 +1,7 @@
 ---
-import dotenv from 'dotenv';
 import Home from '../_components/page.home/index.view';
 import { createWorksRepository } from '../_repositories/works/index';
 import Layout from '../layout.astro';
-
-dotenv.config();
 
 const repo = createWorksRepository();
 const result = await repo.findMany({
