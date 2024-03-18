@@ -15,5 +15,5 @@ const result = await repo.findMany({
 ---
 
 <Layout title="" permalink='' namespace='home'>
-  <Home posts={result.works} namespace='home' perPage={10} />
+  <Home posts={result.works} namespace='home' perPage={result.works.length} />
 </Layout>

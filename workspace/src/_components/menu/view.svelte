@@ -135,7 +135,7 @@
     vertical-align: top;
     font-family: var(--font-en);
     font-style: italic;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: calc(86 / 28);
     overflow: hidden;
     transition: 0.55s opacity var(--ease-opacity);

@@ -82,6 +82,7 @@
   left: 0;
   opacity: 0;
   background-color: #000000;
+  pointer-events: auto;
 }
 
 .menu__bg {
@@ -95,6 +96,7 @@
   clip-path: polygon(100% 0px, 100% 0px, 100% 100vh, 100% 100vh);
   clip-path: polygon(100% 0px, 100% 0px, 100% 100svh, 100% 100svh);
   backface-visibility: hidden;
+  pointer-events: auto;
 }
 
 .menu__content {
