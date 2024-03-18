@@ -1,7 +1,8 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
+import { useThree } from "@/_components/glworld/use-three";
+import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
-import { useThree } from "@/_components/glworld/use-three";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
@@ -11,8 +12,8 @@ type Refs = {
 
 export default defineComponent({
   name: "Home",
-  setup(_el, context: AppContext) {
-    const { history } = context;
+  setup(el, context: AppContext) {
+    const { history, once } = context;
 
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("grid", "canvas");
@@ -37,14 +38,26 @@ export default defineComponent({
     });
 
     useMount(() => {
-      if (history.value === "push") {
-        //
+      if (!once && history.value === "push") {
+        Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 1,
+          })
+        );
       }
 
-      return async () => {
+      return () => {
         if (history.value === "pop") {
           return;
         }
+
+        Tween.tween(el, 0.55, "power3.out", {
+          opacity: 0,
+        });
       };
     });
   },
