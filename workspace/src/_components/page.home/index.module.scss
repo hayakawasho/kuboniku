@@ -32,7 +32,11 @@
 
 .project__eyecatch {
   position: absolute;
-  inset: 0.25rem;
+  inset: 0.5rem;
   display: block;
   will-change: transform;
+
+  @media (min-width: 640px) {
+    inset: 0.8rem;
+  }
 }

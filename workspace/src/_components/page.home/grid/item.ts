@@ -5,7 +5,7 @@ import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { useInfiniteScroll } from "../use-infinite-scroll";
-import type { PlaneBufferGeometry, ShaderMaterial , Object3D, Scene } from "@/_foundation/three";
+import type { PlaneBufferGeometry, ShaderMaterial, Object3D, Scene } from "@/_foundation/three";
 import type { AppContext } from "@/_foundation/type";
 
 type Props = AppContext & {
@@ -70,7 +70,7 @@ export default defineComponent({
       plane.uniforms.u_velo.value =
         diff.value *
         {
-          pc: 0.0025,
+          pc: 0.004,
           sp: 0.005,
         }[device] *
         SPEED;
