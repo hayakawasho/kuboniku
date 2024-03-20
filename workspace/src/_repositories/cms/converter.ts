@@ -26,7 +26,12 @@ export const convertWorkFromCMS = (raw: any): WorkMetadata => {
     siteUrl: raw.acf.url,
     slug: raw.slug,
     theme: raw.acf.theme_color,
-    thumb: {
+    eyecatch: raw.featured_image && {
+      height: raw.featured_image.height,
+      url: raw.featured_image.src,
+      width: raw.featured_image.width,
+    },
+    mv: {
       pc: convertRawMediaToImg(raw.acf.eyecatch),
       sp: convertRawMediaToImg(raw.acf.eyecatch_mobile),
     },

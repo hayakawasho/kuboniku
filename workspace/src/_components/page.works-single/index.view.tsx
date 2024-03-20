@@ -41,10 +41,10 @@ const Component: React.FC<Props> = props => {
           <ResponsiveImage
             alt=""
             className="opacity-40 object-cover h-full absolute inset-0 m-auto"
-            mob={cloudinaryAPIConverter(post.thumb["sp"].url, "f_auto,q_auto,w_750")}
-            mobSize={[post.thumb["sp"].width, post.thumb["sp"].height]}
-            size={[post.thumb["pc"].width, post.thumb["pc"].height]}
-            src={cloudinaryAPIConverter(post.thumb["pc"].url, "f_auto,q_auto,w_1440")}
+            mob={cloudinaryAPIConverter(post.mv["sp"].url, "f_auto,q_auto,w_750")}
+            mobSize={[post.mv["sp"].width, post.mv["sp"].height]}
+            size={[post.mv["pc"].width, post.mv["pc"].height]}
+            src={cloudinaryAPIConverter(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
           />
           <div className={Styles.kv__scrollDown}>
             <div className="relative w-full h-full overflow-hidden">
@@ -131,10 +131,10 @@ const Component: React.FC<Props> = props => {
               <ResponsiveImage
                 alt=""
                 className="opacity-40 filter grayscale-100 object-cover h-full absolute inset-0 m-auto"
-                mob={cloudinaryAPIConverter(nextPost.thumb["sp"].url, "f_auto,q_auto,w_750")}
-                mobSize={[nextPost.thumb["sp"].width, nextPost.thumb["sp"].height]}
-                size={[nextPost.thumb["pc"].width, nextPost.thumb["pc"].height]}
-                src={cloudinaryAPIConverter(nextPost.thumb["pc"].url, "f_auto,q_auto,w_1440")}
+                mob={cloudinaryAPIConverter(nextPost.mv["sp"].url, "f_auto,q_auto,w_750")}
+                mobSize={[nextPost.mv["sp"].width, nextPost.mv["sp"].height]}
+                size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
+                src={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
               />
             </Link>
           </aside>

@@ -68,6 +68,8 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
     4: 0.7,
   }[index % 5];
 
+  const texture = post.eyecatch ? post.eyecatch : post.mv["pc"];
+
   return (
     <Link
       className={`${Styles.project__eyecatch} pointer-events-auto`}
@@ -77,13 +79,13 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
       <img
         alt=""
         className="w-full h-full invisible"
-        data-h={post.thumb["pc"].height}
+        data-h={texture.height}
         data-ref="plane"
         data-speed={speed}
-        data-src={cloudinaryAPIConverter(post.thumb["pc"].url, "f_auto,q_auto,w_1440")}
-        data-w={post.thumb["pc"].width}
-        height={post.thumb["pc"].height}
-        width={post.thumb["pc"].width}
+        data-src={cloudinaryAPIConverter(texture.url, "f_auto,q_auto:best,w_840")}
+        data-w={texture.width}
+        height={texture.height}
+        width={texture.width}
       />
       <span className="sr-only">{post.title}</span>
     </Link>
