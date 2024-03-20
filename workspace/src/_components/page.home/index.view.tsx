@@ -42,16 +42,6 @@ const Component: React.FC<Props> = props => {
                 <Thumbnail index={index + perPage * 3} post={post} />
               </li>
             ))}
-            {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + perPage * 4} post={post} />
-              </li>
-            ))}
-            {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + perPage * 5} post={post} />
-              </li>
-            ))}
           </ul>
         </div>
       </main>
@@ -68,7 +58,7 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
     4: 0.7,
   }[index % 5];
 
-  const texture = post.eyecatch ? post.eyecatch : post.mv["pc"];
+  const eyecatch = post.eyecatch!;
 
   return (
     <Link
@@ -79,13 +69,13 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
       <img
         alt=""
         className="w-full h-full invisible"
-        data-h={texture.height}
+        data-h={eyecatch.height}
         data-ref="plane"
         data-speed={speed}
-        data-src={cloudinaryAPIConverter(texture.url, "f_auto,q_auto,w_840")}
-        data-w={texture.width}
-        height={texture.height}
-        width={texture.width}
+        data-src={cloudinaryAPIConverter(eyecatch.url, "f_auto,q_auto,w_840")}
+        data-w={eyecatch.width}
+        height={eyecatch.height}
+        width={eyecatch.width}
       />
       <span className="sr-only">{post.title}</span>
     </Link>

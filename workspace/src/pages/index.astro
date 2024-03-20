@@ -1,13 +1,10 @@
 ---
 import Home from '../_components/page.home/index.view';
-import { createWorksRepository } from '../_repositories/cms/works';
+import { createTopElementsRepository } from '../_repositories/cms';
 import Layout from '../layout.astro';
 
-const repo = createWorksRepository();
-const result = await repo.findMany({
-  order: "desc",
-  per_page: 10,
-});
+const repo = createTopElementsRepository();
+const result = await repo.find();
 
 export const prerender = true;
 ---
