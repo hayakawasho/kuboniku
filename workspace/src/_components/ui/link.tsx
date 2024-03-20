@@ -10,6 +10,7 @@ export const Link: FC<{
     <a
       {...props}
       className={`${className} cursor-pointer`}
+      data-astro-prefetch="hover"
       data-cursor="scale"
       href={to}
       hx-get={to}

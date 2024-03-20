@@ -2,7 +2,7 @@
 import WorksIndex from '../../_components/page.works/index.view';
 import { mq } from '../../_foundation/mq';
 import { cloudinaryAPIConverter } from '../../_foundation/converter';
-import { createWorksRepository } from '../../_repositories/works/index';
+import { createWorksRepository } from '../../_repositories/cms/works';
 import Layout from '../../layout.astro';
 
 const repo = createWorksRepository();
@@ -11,6 +11,7 @@ const result = await repo.findMany({
   per_page: 99,
 });
 
+// export const prerender = false;
 ---
 
 <Layout title="Works" permalink='/works/' namespace='works'>
@@ -18,7 +19,7 @@ const result = await repo.findMany({
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.works[0].thumb["sp"].url, "f_auto,q_auto,w_1680")}
+    href={cloudinaryAPIConverter(result.works[0].mv["sp"].url, "f_auto,q_auto,w_1680")}
     media={mq.sp}
     rel="preload"
   />
@@ -26,7 +27,7 @@ const result = await repo.findMany({
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.works[1].thumb["pc"].url, "f_auto,q_auto,w_1680")}
+    href={cloudinaryAPIConverter(result.works[1].mv["pc"].url, "f_auto,q_auto,w_1680")}
     media={mq.pc}
     rel="preload"
   />

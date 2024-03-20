@@ -5,7 +5,7 @@ import { Tween } from "@/_foundation/tween";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
-  eyecatchImg: HTMLImageElement;
+  thumb: HTMLImageElement;
   hgroup: HTMLElement;
 };
 
@@ -13,7 +13,7 @@ export default defineComponent({
   name: "ProjectItem",
   setup(el: HTMLElement, context: AppContext) {
     const { backCanvasContext } = context;
-    const { refs } = useDomRef<Refs>("eyecatchImg", "hgroup");
+    const { refs } = useDomRef<Refs>("thumb", "hgroup");
 
     const themeColor = el.dataset.color!;
 
@@ -25,7 +25,7 @@ export default defineComponent({
       backCanvasContext.onChangeColorPalette(SITE_THEME_COLOR);
 
       Tween.parallel(
-        Tween.tween([refs.eyecatchImg, refs.hgroup], 1.2, "expo.out", {
+        Tween.tween([refs.thumb, refs.hgroup], 1.2, "expo.out", {
           x: 0,
           y: 0,
         })

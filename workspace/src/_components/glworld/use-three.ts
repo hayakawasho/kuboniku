@@ -1,5 +1,5 @@
-import { useMount } from "lake";
 import { getGPUTier } from "detect-gpu";
+import { useMount } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { WebGLRenderer, PerspectiveCamera, Scene } from "@/_foundation/three";
 import { useWindowSizeContext } from "@/_states/window-size";

@@ -18,7 +18,7 @@ const Component: React.FC<Props> = props => {
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="h-full" data-component="Home">
-        <canvas aria-hidden="true" className="opacity-75" data-gl="" data-ref="canvas"></canvas>
+        <canvas aria-hidden="true" className="opacity-90" data-gl="" data-ref="canvas"></canvas>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">
@@ -68,22 +68,24 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
     4: 0.7,
   }[index % 5];
 
+  const texture = post.eyecatch ? post.eyecatch : post.mv["pc"];
+
   return (
     <Link
-      to={`/works/${post.slug}/`}
       className={`${Styles.project__eyecatch} pointer-events-auto`}
       data-ref="gridItem"
+      to={`/works/${post.slug}/`}
     >
       <img
         alt=""
         className="w-full h-full invisible"
-        data-h={post.thumb["pc"].height}
+        data-h={texture.height}
         data-ref="plane"
         data-speed={speed}
-        data-src={cloudinaryAPIConverter(post.thumb["pc"].url, "f_auto,q_auto,w_1440")}
-        data-w={post.thumb["pc"].width}
-        height={post.thumb["pc"].height}
-        width={post.thumb["pc"].width}
+        data-src={cloudinaryAPIConverter(texture.url, "f_auto,q_auto,w_840")}
+        data-w={texture.width}
+        height={texture.height}
+        width={texture.width}
       />
       <span className="sr-only">{post.title}</span>
     </Link>

@@ -1,10 +1,7 @@
 ---
-import dotenv from 'dotenv';
 import Home from '../_components/page.home/index.view';
-import { createWorksRepository } from '../_repositories/works/index';
+import { createWorksRepository } from '../_repositories/cms/works';
 import Layout from '../layout.astro';
-
-dotenv.config();
 
 const repo = createWorksRepository();
 const result = await repo.findMany({
@@ -12,8 +9,9 @@ const result = await repo.findMany({
   per_page: 10,
 });
 
+export const prerender = true;
 ---
 
-<Layout title="" permalink='' namespace='home'>
+<Layout title='' permalink='' namespace='home'>
   <Home posts={result.works} namespace='home' perPage={result.works.length} />
 </Layout>

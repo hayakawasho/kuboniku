@@ -10,7 +10,7 @@ export const PageWrapper: FC<{
       {header}
       <div
         aria-live="polite"
-        className="relative backface-hidden"
+        className="relative h-full backface-hidden"
         data-ref="main"
         hx-history-elt=""
         id="main"
