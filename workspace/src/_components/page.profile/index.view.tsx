@@ -26,7 +26,7 @@ const Component: React.FC<{
           ></i>
           <div className={Styles.container}>
             <div className={Styles.container__in}>
-              <h2 className={`${Styles.heading} mb-[.8rem]`}>Nagisa Kubo</h2>
+              <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>
               <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>Art Director & Designer</p>
               <div className={Styles.about}>
                 <p>
