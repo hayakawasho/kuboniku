@@ -39,11 +39,11 @@ const Component: React.FC<Props> = props => {
                 >
                   <div aria-hidden="true" className={Styles.aspect}></div>
                   <div className={Styles.entry__g}>
-                    <figure className={Styles.eyecatch}>
+                    <figure className={Styles.thumb}>
                       <img
                         alt=""
                         className="_img"
-                        data-ref="eyecatchImg"
+                        data-ref="thumb"
                         decoding="async"
                         height={item.mv["pc"].height}
                         src={cloudinaryAPIConverter(
