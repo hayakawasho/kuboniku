@@ -2,13 +2,13 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
-import prefetch from "@astrojs/prefetch";
 import cloudflare from "@astrojs/cloudflare";
 // import nodejs from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind(), critters(), prefetch()],
+  prefetch: true,
+  integrations: [react(), tailwind(), critters()],
   devToolbar: {
     enabled: false,
   },
@@ -27,6 +27,9 @@ export default defineConfig({
       // cssCodeSplit: false,
     },
     plugins: [],
+  },
+  image: {
+    service: {},
   },
   output: "hybrid",
   adapter: cloudflare(),

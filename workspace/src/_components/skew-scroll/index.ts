@@ -22,7 +22,7 @@ export default defineComponent({
 
     const EASE = {
       pc: 0.1,
-      sp: 0.16,
+      sp: 0.15,
     } as const;
 
     useTick(({ timeRatio }) => {

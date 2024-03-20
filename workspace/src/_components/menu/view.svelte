@@ -7,14 +7,12 @@
   import type { AppContext, RouteName } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  const { closeMenu, ...context } = getContext<
-    Context$<
-      AppContext & {
-        current: RouteName;
-        closeMenu: () => void;
-      }
-    >
-  >("$");
+  type Props = AppContext & {
+    current: RouteName;
+    closeMenu: () => void;
+  };
+
+  const { closeMenu, ...context } = getContext<Context$<Props>>("$");
 
   let current = context.current;
 
@@ -58,6 +56,7 @@
             {...linkProps("/profile/")}
             aria-current={current === "profile" && "page"}
             class="menuLink"
+            data-astro-prefetch="tap"
             href="/profile/"
             on:click={closeMenu}
           >
@@ -71,6 +70,7 @@
             {...linkProps("/works/")}
             aria-current={current === "works" && "page"}
             class="menuLink"
+            data-astro-prefetch="tap"
             href="/"
             on:click={closeMenu}
           >
@@ -97,6 +97,7 @@
           {...linkProps("/profile/")}
           aria-current={current === "profile" && "page"}
           class="menuLink"
+          data-astro-prefetch="hover"
           data-ref="menuLink"
           href="/profile/"
         >
@@ -108,6 +109,7 @@
           {...linkProps("/works/")}
           aria-current={current === "works" && "page"}
           class="menuLink"
+          data-astro-prefetch="hover"
           data-ref="menuLink"
           href="/works/"
         >

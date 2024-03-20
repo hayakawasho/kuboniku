@@ -65,7 +65,6 @@
     "@astrojs/check": "^0.5.9",
     "@astrojs/cloudflare": "^9.1.0",
     "@astrojs/node": "^8.2.3",
-    "@astrojs/prefetch": "^0.4.1",
     "@astrojs/react": "^3.1.0",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.5.5",
