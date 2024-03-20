@@ -7,6 +7,7 @@ import viteCompression from "vite-plugin-compression";
 
 const isDev = process.env.NODE_ENV !== "production";
 // const SSR_MODE = "/dist/client/";
+const SSR_MODE = "";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,7 +30,7 @@ export default defineConfig({
     splitVendorChunkPlugin(),
   ],
   build: {
-    outDir: `./out/assets`,
+    outDir: `./out/${SSR_MODE}assets`,
     sourcemap: isDev,
     manifest: true,
     rollupOptions: {

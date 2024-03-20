@@ -12,6 +12,6 @@ const result = await repo.findMany({
 export const prerender = true;
 ---
 
-<Layout title="" permalink='' namespace='home'>
+<Layout title='' permalink='' namespace='home'>
   <Home posts={result.works} namespace='home' perPage={result.works.length} />
 </Layout>
