@@ -18,7 +18,7 @@ const Component: React.FC<Props> = props => {
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="h-full" data-component="Home">
-        <canvas aria-hidden="true" className="opacity-75" data-gl="" data-ref="canvas"></canvas>
+        <canvas aria-hidden="true" className="opacity-90" data-gl="" data-ref="canvas"></canvas>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">
@@ -82,7 +82,7 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
         data-h={texture.height}
         data-ref="plane"
         data-speed={speed}
-        data-src={cloudinaryAPIConverter(texture.url, "f_auto,q_auto:best,w_840")}
+        data-src={cloudinaryAPIConverter(texture.url, "f_auto,q_auto,w_840")}
         data-w={texture.width}
         height={texture.height}
         width={texture.width}
