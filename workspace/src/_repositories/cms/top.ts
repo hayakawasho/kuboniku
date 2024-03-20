@@ -1,13 +1,6 @@
 import axios from "redaxios";
+import { convertGraphqlRawMediaToImg } from "./converter";
 import type { WorkMetadata } from "../../_components/works";
-
-const convertRawImgToImg = (raw: any) => {
-  return {
-    url: raw.sourceUrl,
-    width: raw.mediaDetails.width,
-    height: raw.mediaDetails.height,
-  };
-};
 
 export const createTopElementsRepository = () => ({
   find: async (): Promise<{ works: WorkMetadata[] }> => {
@@ -15,7 +8,7 @@ export const createTopElementsRepository = () => ({
       data: {
         query: `query {
           page(id: "972", idType: DATABASE_ID) {
-            acf {
+            topAcf {
               works {
                 nodes {
                   ... on Post {
@@ -31,7 +24,7 @@ export const createTopElementsRepository = () => ({
                         }
                       }
                     }
-                    acf {
+                    worksAcf {
                       eyecatch {
                         node {
                           sourceUrl
@@ -57,14 +50,14 @@ export const createTopElementsRepository = () => ({
     });
 
     return {
-      works: res.data.data.page.acf.works.nodes.map((item: any) => {
+      works: res.data.data.page.topAcf.works.nodes.map((item: any) => {
         return {
           id: item.id,
           slug: item.slug,
           title: item.title,
           eyecatch: item.featuredImage
-            ? convertRawImgToImg(item.featuredImage.node)
-            : convertRawImgToImg(item.acf.eyecatch.node),
+            ? convertGraphqlRawMediaToImg(item.featuredImage.node)
+            : convertGraphqlRawMediaToImg(item.acf.eyecatch.node),
         };
       }),
     };

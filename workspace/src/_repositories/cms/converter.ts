@@ -38,3 +38,11 @@ export const convertWorkFromCMS = (raw: any): WorkMetadata => {
     title: raw.title.rendered,
   } as const;
 };
+
+export const convertGraphqlRawMediaToImg = (raw: any) => {
+  return {
+    url: raw.sourceUrl,
+    width: raw.mediaDetails.width,
+    height: raw.mediaDetails.height,
+  };
+};

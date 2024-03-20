@@ -6,10 +6,7 @@ import { createWorksRepository } from '../../_repositories/cms';
 import Layout from '../../layout.astro';
 
 const repo = createWorksRepository();
-const result = await repo.findMany({
-  order: "desc",
-  per_page: 99,
-});
+const result = await repo.findList();
 
 // export const prerender = false;
 ---
@@ -19,7 +16,7 @@ const result = await repo.findMany({
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.works[0].mv["sp"].url, "f_auto,q_auto,w_1680")}
+    href={cloudinaryAPIConverter(result.works[0].mv["pc"].url, "f_auto,q_auto,w_1680")}
     media={mq.sp}
     rel="preload"
   />
