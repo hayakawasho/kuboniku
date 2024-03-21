@@ -1,5 +1,5 @@
 import axios from "redaxios";
-import { convertWorkFromCMS, convertGraphqlRawMediaToImg } from "./converter";
+import { convertGraphqlRawMediaToImg } from "./converter";
 import type { WorkMetadata } from "../../_components/works";
 
 export const createWorksRepository = () => ({
@@ -54,26 +54,96 @@ export const createWorksRepository = () => ({
     };
   },
 
-  findMany: async (
-    q: any
-  ): Promise<{
-    totalCount: number;
-    works: WorkMetadata[];
-  }> => {
+  findItem: async ({ slug }: { slug: string }): Promise<WorkMetadata> => {
     const res = await axios<any>({
+      data: {
+        query: `query {
+          post(id: "${slug}", idType: SLUG) {
+            id
+            title
+            date
+            worksAcf {
+              eyecatch {
+                node {
+                  sourceUrl
+                  mediaDetails {
+                    height
+                    width
+                  }
+                }
+              }
+              eyecatchMobile {
+                node {
+                  sourceUrl
+                  mediaDetails {
+                    height
+                    width
+                  }
+                }
+              }
+              themeColor
+              url
+              category {
+                nodes {
+                  name
+                }
+              }
+              role {
+                nodes {
+                  name
+                }
+              }
+              description
+              gallery {
+                nodes {
+                  sourceUrl
+                  mediaDetails {
+                    height
+                    width
+                  }
+                }
+              }
+              showreel {
+                node {
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }`,
+      },
       headers: {
         "Content-Type": "application/json",
       },
-      method: "GET",
-      params: {
-        ...q,
-      },
-      url: `https://wp.kuboniku.com/wp-json/wp/v2/posts`,
+      method: "POST",
+      url: `https://wp.kuboniku.com/graphql`,
     });
 
+    const raw = res.data.data.post;
+
     return {
-      totalCount: Number(res.headers.get("x-wp-total")),
-      works: res.data.map(convertWorkFromCMS),
+      id: raw.id,
+      slug,
+      title: raw.title,
+      createAt: new Date(raw.date),
+      theme: raw.worksAcf.themeColor,
+      mv: {
+        pc: convertGraphqlRawMediaToImg(raw.worksAcf.eyecatch.node),
+        sp: (raw.worksAcf.eyecatchMobile &&
+          convertGraphqlRawMediaToImg(raw.worksAcf.eyecatchMobile.node)) ?? {
+          width: undefined,
+          height: undefined,
+          url: undefined,
+        },
+      },
+      category: raw.worksAcf.category.nodes.map((j: any) => j.name),
+      description: raw.worksAcf.description,
+      siteUrl: raw.worksAcf.url,
+      role: raw.worksAcf.role.nodes.map((j: any) => j.name),
+      screenshots: raw.worksAcf.gallery?.nodes.map((i: any) => convertGraphqlRawMediaToImg(i)),
+      showreel: raw.worksAcf.showreel && {
+        url: raw.worksAcf.showreel.node.sourceUrl,
+      },
     };
   },
 });

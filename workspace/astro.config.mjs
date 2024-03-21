@@ -14,9 +14,9 @@ export default defineConfig({
   },
   outDir: "./out/",
   compressHTML: true,
-  build: {
-    // inlineStylesheets: "never",
-  },
+  // build: {
+  //   inlineStylesheets: "never",
+  // },
   server: {
     host: "0.0.0.0",
     port: 3000,
@@ -31,7 +31,7 @@ export default defineConfig({
   image: {
     service: {},
   },
-  output: "server",
+  output: "hybrid",
   // adapter: cloudflare(),
   adapter: nodejs({
     mode: "standalone",

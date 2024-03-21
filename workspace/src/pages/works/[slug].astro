@@ -5,49 +5,24 @@ import WorksDetail from '../../_components/page.works-single/index.view';
 import { createWorksRepository } from '../../_repositories/cms';
 import Layout from '../../layout.astro';
 
-export async function getStaticPaths() {
-  const repo = createWorksRepository();
-  const result = await repo.findMany({
-    order: "desc",
-    per_page: 99,
-  });
+const { slug } = Astro.params;
 
-  const last = result.works[result.works.length - 1]
+const repo = createWorksRepository()
+const result = await repo.findItem({
+  slug: slug!,
+})
 
-  return result.works.map((item, index) => ({
-    params: {
-      slug: item.slug,
-    },
-    props: {
-      post: item,
-      next: last.id === item.id ? result.works[0] : result.works[index + 1],
-      totalCount: result.totalCount,
-      currentIndex: index + 1
-    },
-  }));
-}
-
-const { post, next, totalCount, currentIndex } = Astro.props;
-
-export const prerender = true;
+export const prerender = false;
 ---
 
-<Layout title={post.title} permalink={`/works/${post.slug}/`} namespace='works-single'>
+<Layout title={result.title} permalink={`/works/${result.slug}/`} namespace='works-single'>
   <link
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={cloudinaryAPIConverter(post.mv["sp"].url, "f_auto,q_auto,w_1680")}
-    media={mq.sp}
-    rel="preload"
-  />
-  <link
-    slot="prependHead"
-    as="image"
-    crossorigin="anonymous"
-    href={cloudinaryAPIConverter(post.mv["pc"].url, "f_auto,q_auto,w_1680")}
+    href={cloudinaryAPIConverter(result.mv["pc"].url, "f_auto,q_auto,w_1680")}
     media={mq.pc}
     rel="preload"
   />
-  <WorksDetail post={post} nextPost={next} projectNumber={totalCount - (currentIndex - 1)} namespace="works-single" />
+  <WorksDetail post={result} nextPost={result} projectNumber={1} namespace='works-single' />
 </Layout>

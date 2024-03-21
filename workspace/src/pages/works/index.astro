@@ -7,6 +7,8 @@ import Layout from '../../layout.astro';
 
 const repo = createWorksRepository();
 const result = await repo.findList();
+
+export const prerender = false;
 ---
 
 <Layout title="Works" permalink='/works/' namespace='works'>
