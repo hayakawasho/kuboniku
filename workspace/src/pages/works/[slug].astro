@@ -28,6 +28,8 @@ export async function getStaticPaths() {
 }
 
 const { post, next, totalCount, currentIndex } = Astro.props;
+
+export const prerender = true;
 ---
 
 <Layout title={post.title} permalink={`/works/${post.slug}/`} namespace='works-single'>

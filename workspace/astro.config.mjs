@@ -31,7 +31,7 @@ export default defineConfig({
   image: {
     service: {},
   },
-  output: "hybrid",
+  output: "server",
   adapter: cloudflare(),
   // adapter: nodejs({
   //   mode: "standalone",
