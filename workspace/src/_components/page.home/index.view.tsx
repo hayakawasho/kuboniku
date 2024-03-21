@@ -18,6 +18,10 @@ const Component: React.FC<Props> = props => {
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="h-full" data-component="Home">
+        <div
+          className="pointer-events-auto fixed inset-0 m-auto w-full h-full"
+          data-ref="splash"
+        ></div>
         <canvas aria-hidden="true" className="opacity-90" data-gl="" data-ref="canvas"></canvas>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
@@ -64,7 +68,7 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
     <Link
       className={`${Styles.project__eyecatch} pointer-events-auto`}
       data-ref="gridItem"
-      to={`/works/${post.slug}/`}
+      to={`/work/${post.slug}/`}
     >
       <img
         alt=""
