@@ -8,13 +8,18 @@ export default defineComponent({
   setup(el, context: AppContext) {
     const { addChild } = useSlot();
 
-    addChild(el, withSvelte(Splash), context);
+    const images = el.dataset.images!.split(", ");
+
+    addChild(el, withSvelte(Splash), {
+      ...context,
+      images,
+    });
 
     const start = () => {
       return new Promise<void>(resolve => {
         Tween.serial(
           Tween.parallel(
-            Tween.wait(5, () => {
+            Tween.wait(1, () => {
               resolve();
             })
           )
@@ -22,7 +27,12 @@ export default defineComponent({
       });
     };
 
+    const done = () => {
+      //
+    };
+
     return {
+      done,
       start,
     };
   },

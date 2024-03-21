@@ -1,4 +1,4 @@
-import { defineComponent, useSlot, useDomRef, useMount, withSvelte } from "lake";
+import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { useThree } from "@/_components/glworld/use-three";
 import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
@@ -10,6 +10,7 @@ type Refs = {
   grid: HTMLElement;
   canvas: HTMLCanvasElement;
   splash: HTMLElement;
+  // mask: HTMLElement;
 };
 
 export default defineComponent({
@@ -33,30 +34,31 @@ export default defineComponent({
     useMount(() => {
       refs.grid.dataset.col = setGridColSize(ww.value / wh.value);
 
-      switch (once) {
-        case true:
-          const [splashContext] = addChild(refs.splash, Splash, context);
+      if (once) {
+        const [splashContext] = addChild(refs.splash, Splash, context);
 
-          (async () => {
-            await splashContext.current.start();
+        const done = () => {
+          splashContext.current.done();
+          removeChild([splashContext]);
+        };
 
-            addChild(refs.grid, Grid, {
-              ...context,
-              addScene,
-              removeScene,
-            });
-          })();
-          break;
-        case false:
-          addChild(refs.grid, Grid, {
+        (async () => {
+          await splashContext.current.start();
+          done();
+
+          const [_gridContext] = addChild(refs.grid, Grid, {
             ...context,
             addScene,
             removeScene,
           });
-          break;
-      }
+        })();
+      } else if (!once && history.value === "push") {
+        const [_gridContext] = addChild(refs.grid, Grid, {
+          ...context,
+          addScene,
+          removeScene,
+        });
 
-      if (!once && history.value === "push") {
         Tween.serial(
           Tween.prop(el, {
             opacity: 0,
@@ -66,6 +68,12 @@ export default defineComponent({
             opacity: 1,
           })
         );
+      } else {
+        addChild(refs.grid, Grid, {
+          ...context,
+          addScene,
+          removeScene,
+        });
       }
 
       return () => {

@@ -1,6 +1,6 @@
 import axios from "redaxios";
 import { convertGraphqlRawMediaToImg } from "./converter";
-import type { WorkMetadata } from "../../_components/works";
+import type { WorkMetadata } from "@/_components/work";
 
 export const createTopElementsRepository = () => ({
   find: async (): Promise<{ works: WorkMetadata[] }> => {
@@ -52,12 +52,12 @@ export const createTopElementsRepository = () => ({
     return {
       works: res.data.data.page.topAcf.works.nodes.map((item: any) => {
         return {
-          id: item.id,
-          slug: item.slug,
-          title: item.title,
           eyecatch: item.featuredImage
             ? convertGraphqlRawMediaToImg(item.featuredImage.node)
             : convertGraphqlRawMediaToImg(item.acf.eyecatch.node),
+          id: item.id,
+          slug: item.slug,
+          title: item.title,
         };
       }),
     };

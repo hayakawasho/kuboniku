@@ -68,7 +68,7 @@ export default defineComponent({
     const xhr = "[data-xhr]";
     const fromContainer = ref(htmx.find(refs.main, xhr) as HTMLElement);
 
-    // htmx.config.historyCacheSize = 1;
+    htmx.config.historyCacheSize = 1;
 
     htmx.on("htmx:historyRestore", e => {
       history.value = "pop";

@@ -1,11 +1,11 @@
 import { Header } from "@/_components/header/index.view";
 import { PageWrapper } from "@/_components/page-wrapper/index.view";
 import { Link } from "@/_components/ui/link";
-import { selectTitle } from "@/_components/works/selector";
+import { selectTitle } from "@/_components/work/selector";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import { zeroPadding } from "@/_foundation/utils";
 import Styles from "./index.module.scss";
-import type { WorkMetadata } from "@/_components/works";
+import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
 
 type Props = {

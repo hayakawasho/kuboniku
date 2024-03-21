@@ -19,13 +19,11 @@ export default defineComponent({
       }
 
       return () => {
-        if (history.value === "pop") {
-          return;
+        if (history.value === "push") {
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
-
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 0,
-        });
       };
     });
   },

@@ -57,23 +57,18 @@ export default defineComponent({
       state.resizing = false;
     });
 
-    const SPEED = Number(refs.plane.dataset.speed);
+    const speed = Number(refs.plane.dataset.speed);
+    const acc = { pc: 0.0045, sp: 0.005 }[device] * speed;
 
     useTick(() => {
       if (state.resizing) {
         return;
       }
 
-      const y = infiniteScrollContext.wrap(posY.value * SPEED);
+      const y = infiniteScrollContext.wrap(posY.value * speed);
 
       plane.updateY(y);
-      plane.uniforms.u_velo.value =
-        diff.value *
-        {
-          pc: 0.004,
-          sp: 0.005,
-        }[device] *
-        SPEED;
+      plane.uniforms.u_velo.value = diff.value * acc;
 
       el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });

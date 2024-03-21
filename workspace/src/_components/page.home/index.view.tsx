@@ -3,7 +3,7 @@ import { PageWrapper } from "@/_components/page-wrapper/index.view";
 import { Link } from "@/_components/ui/link";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import Styles from "./index.module.scss";
-import type { WorkMetadata } from "@/_components/works";
+import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
 
 type Props = {
@@ -15,12 +15,18 @@ type Props = {
 const Component: React.FC<Props> = props => {
   const { posts, namespace, perPage } = props;
 
+  const images = posts.map((post, index) => {
+    const separator = index > 0 ? " " : "";
+    return separator + cloudinaryAPIConverter(post.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
+  });
+
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="h-full" data-component="Home">
         <div
           className="pointer-events-auto fixed inset-0 m-auto w-full h-full"
           data-ref="splash"
+          data-images={`${images}`}
         ></div>
         <canvas aria-hidden="true" className="opacity-90" data-gl="" data-ref="canvas"></canvas>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
@@ -73,13 +79,13 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
       <img
         alt=""
         className="w-full h-full invisible"
-        data-h={eyecatch.height}
+        data-h={1050}
         data-ref="plane"
         data-speed={speed}
-        data-src={cloudinaryAPIConverter(eyecatch.url, "f_auto,q_auto,w_840")}
-        data-w={eyecatch.width}
-        height={eyecatch.height}
-        width={eyecatch.width}
+        data-src={cloudinaryAPIConverter(eyecatch.url, "f_auto,q_auto,w_840,h_1050")}
+        data-w={840}
+        height={1050}
+        width={1050}
       />
       <span className="sr-only">{post.title}</span>
     </Link>

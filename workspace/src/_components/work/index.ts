@@ -1,8 +1,4 @@
-type Image = {
-  width: number;
-  height: number;
-  url: string;
-};
+import type { Image } from "../image";
 
 export type WorkMetadata = {
   id: string;

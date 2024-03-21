@@ -1,20 +1,34 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { cloudinaryAPIConverter } from "@/_foundation/converter";
+  import { getContext } from "svelte";
+  import type { Context$ } from "lake";
+  import type { AppContext } from "@/_foundation/type";
+
+  const { images } = getContext<
+    Context$<
+      AppContext & {
+        images: string[];
+      }
+    >
+  >("$");
 </script>
 
 <div class="w-full h-full flex items-center justify-center">
-  <div class="imgs">
-    <img
-      src="https://res.cloudinary.com/dxydwpqwv/images/f_auto,q_auto,w_840/v1710857940/kuboniku_assets/top_jma/top_jma.png?_i=AA"
-      alt=""
-      class="absolute w-full h-full top-0 left-0 opacity-100 object-cover grayscale"
-    />
+  <div class="g">
+    {#each images as image}
+      <img
+        src={image}
+        alt=""
+        class="absolute w-full h-full top-0 left-0 opacity-100 object-cover grayscale"
+        width="840"
+        height="1050"
+        decoding="async"
+      />
+    {/each}
   </div>
 </div>
 
 <style>
-  .imgs {
+  .g {
     width: 16rem;
     height: 20rem;
     position: relative;

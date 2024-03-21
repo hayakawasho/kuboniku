@@ -9,7 +9,7 @@ import type { AppContext } from "@/_foundation/type";
 // type Refs = {};
 
 export default defineComponent({
-  name: "WirksSingle",
+  name: "WorksSingle",
   setup(el, context: AppContext) {
     const { once, history, backCanvasContext } = context;
 
@@ -18,18 +18,15 @@ export default defineComponent({
 
     addChild(el, SkewScrollContainer, context);
 
-    const colorPallete = el.dataset.color!;
-    backCanvasContext.onChangeColorPalette(colorPallete);
-
     const state = {
       offsetHeight: el.getBoundingClientRect().height,
       resizing: false,
     };
 
-    const { onScrollProgressMutate } = useScrollbarProgress();
+    const { onMutateScrollProgress } = useScrollbarProgress();
     const [y, { isScrolling }] = useScrollPosY();
 
-    onScrollProgressMutate(y.value, state.offsetHeight);
+    onMutateScrollProgress(y.value, state.offsetHeight);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -41,11 +38,12 @@ export default defineComponent({
       if (state.resizing || isScrolling.value === false) {
         return;
       }
-
-      onScrollProgressMutate(y.value, state.offsetHeight);
+      onMutateScrollProgress(y.value, state.offsetHeight);
     });
 
     useMount(() => {
+      backCanvasContext.onChangeColorPalette(el.dataset.color!);
+
       if (!once && history.value === "push") {
         Tween.serial(
           Tween.prop(el, {
@@ -59,13 +57,11 @@ export default defineComponent({
       }
 
       return () => {
-        if (history.value === "pop") {
-          return;
+        if (history.value === "push") {
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
-
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 0,
-        });
       };
     });
   },

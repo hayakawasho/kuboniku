@@ -11,7 +11,7 @@ const result = await repo.findList();
 export const prerender = false;
 ---
 
-<Layout title="Works" permalink='/work/' namespace='works'>
+<Layout title="Work" permalink="/work/" namespace="works">
   <link
     slot="prependHead"
     as="image"
@@ -28,5 +28,5 @@ export const prerender = false;
     media={mq.pc}
     rel="preload"
   />
-  <WorksIndex posts={result.works} total={Number(result.totalCount)} namespace='works' />
+  <WorksIndex posts={result.works} total={Number(result.totalCount)} namespace="works" />
 </Layout>
