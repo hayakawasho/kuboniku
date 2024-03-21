@@ -78,32 +78,30 @@ const LOCAL_IP_ADDR = process.env.LOCAL_IP_ADDR || 'localhost';
   font-style: normal;
   font-display: block;
 }
-</style>
 
-<style lang="scss">
-  .ui-scrollbar {
-    position: fixed;
-    top: 50vh;
-    right: 3.2rem;
-    z-index: 99;
-    pointer-events: none;
+.ui-scrollbar {
+  position: fixed;
+  top: 50vh;
+  right: 3.2rem;
+  z-index: 99;
+  pointer-events: none;
 
-    @media (min-width: 640px) {
-      right: 4rem;
-    }
+  @media (min-width: 640px) {
+    right: 4rem;
   }
+}
 
-  .ui-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 999;
+.ui-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
 
-    @media not (hover: hover) {
-      display: none;
-    }
+  @media not (hover: hover) {
+    display: none;
   }
+}
 </style>

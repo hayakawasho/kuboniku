@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
-import cloudflare from "@astrojs/cloudflare";
-// import nodejs from "@astrojs/node";
+// import cloudflare from "@astrojs/cloudflare";
+import nodejs from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -32,8 +32,8 @@ export default defineConfig({
     service: {},
   },
   output: "server",
-  adapter: cloudflare(),
-  // adapter: nodejs({
-  //   mode: "standalone",
-  // }),
+  // adapter: cloudflare(),
+  adapter: nodejs({
+    mode: "standalone",
+  }),
 });
