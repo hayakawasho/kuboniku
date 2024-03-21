@@ -120,7 +120,7 @@ const Component: React.FC<Props> = props => {
           </div>
 
           <aside className={`${Styles.kv} !h-screen`}>
-            <Link className="h-full absolute inset-0 m-auto z-10" to={`/works/${nextPost.slug}/`}>
+            <Link className="h-full absolute inset-0 m-auto z-10" to={`/work/${nextPost.slug}/`}>
               <div className={Styles.kv__cont}>
                 <h2 className={`${Styles.heading} pl-[1.1rem] pr-[.5em]`}>Next Project</h2>
                 <p className={`${Styles.sub} pl-[1.3rem] mt-[.8rem] overflow-hidden`}>

@@ -22,7 +22,7 @@ const Component: React.FC<Props> = props => {
       <main data-component="Works">
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
           <h1 className={Styles.heading} data-ref="h1">
-            Works
+            Work
             <sup className={Styles.heading__total}>{total}</sup>
           </h1>
         </div>
@@ -35,7 +35,7 @@ const Component: React.FC<Props> = props => {
                   className={Styles.entry}
                   data-color={item.theme}
                   data-ref="projectItem"
-                  to={`/works/${item.slug}/`}
+                  to={`/work/${item.slug}/`}
                 >
                   <div aria-hidden="true" className={Styles.aspect}></div>
                   <div className={Styles.entry__g}>

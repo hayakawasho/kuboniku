@@ -67,15 +67,15 @@
         </li>
         <li>
           <a
-            {...linkProps("/works/")}
+            {...linkProps("/work/")}
             aria-current={current === "works" && "page"}
             class="menuLink"
             data-astro-prefetch="tap"
-            href="/"
+            href="/work/"
             on:click={closeMenu}
           >
             <span class="inline-block overflow-hidden leading-[1]">
-              <span class="menuLink__label | js-menuLabel">Works</span>
+              <span class="menuLink__label | js-menuLabel">Work</span>
             </span>
           </a>
         </li>
@@ -106,14 +106,14 @@
       </li>
       <li>
         <a
-          {...linkProps("/works/")}
+          {...linkProps("/work/")}
           aria-current={current === "works" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
           data-ref="menuLink"
-          href="/works/"
+          href="/work/"
         >
-          Works
+          Work
         </a>
       </li>
       <li>
