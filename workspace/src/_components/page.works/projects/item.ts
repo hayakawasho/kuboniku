@@ -1,40 +1,49 @@
-import { defineComponent, useMount, useDomRef } from "lake";
+import { defineComponent, useMount, useDomRef, useEvent } from "lake";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
-// import { Tween } from "@/_foundation/tween";
+import { Tween } from "@/_foundation/tween";
+import { useScrollPosY } from "@/_states/scroll";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
-import type { useInfiniteScroll } from "../use-infinite-scroll";
-import type { PlaneBufferGeometry, ShaderMaterial, Object3D, Scene } from "@/_foundation/three";
+import type { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
 import type { AppContext, ParentScene } from "@/_foundation/type";
 
 type Props = AppContext &
   ParentScene & {
     geo: PlaneBufferGeometry;
     mat: ShaderMaterial;
-    infiniteScrollContext: ReturnType<typeof useInfiniteScroll>;
   };
 
 type Refs = {
-  plane: HTMLImageElement;
+  thumb: HTMLImageElement;
+  title: HTMLElement;
 };
 
 export default defineComponent({
-  name: "GridItem",
+  name: "ProjectItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, infiniteScrollContext } = context;
-    const { posY, diff } = infiniteScrollContext;
+    const { geo, mat, backCanvasContext, addScene, removeScene } = context;
 
+    const themeColor = el.dataset.color!;
     const state = {
       resizing: false,
+      ty: 0,
     };
 
-    const { refs } = useDomRef<Refs>("plane");
-
+    const { refs } = useDomRef<Refs>("thumb", "title");
     const { device } = useMediaQueryContext();
     const [ww, wh] = useWindowSizeContext();
 
-    const plane = new Plane(refs.plane, {
+    useEvent(el, "mouseenter", _e => {
+      backCanvasContext.onChangeColorPalette(themeColor);
+    });
+
+    useEvent(el, "mouseleave", _e => {
+      backCanvasContext.onChangeColorPalette(SITE_THEME_COLOR);
+    });
+
+    const plane = new Plane(refs.thumb, {
       currentY: 0,
       device,
       geo,
@@ -45,31 +54,28 @@ export default defineComponent({
       },
     });
 
+    useScrollPosY(({ currentY }) => {
+      Tween.tween(state, 0.1, "expo.out", {
+        ty: currentY,
+        onUpdate: () => {
+          plane.updateY(state.ty);
+        },
+      });
+    });
+
     useWindowSizeContext(({ ww, wh }) => {
       state.resizing = true;
-
       plane.resize({
         height: wh,
         width: ww,
       });
-
       state.resizing = false;
     });
-
-    const speed = Number(refs.plane.dataset.speed);
-    const acc = { pc: 0.0045, sp: 0.005 }[device] * speed;
 
     useTick(() => {
       if (state.resizing) {
         return;
       }
-
-      const y = infiniteScrollContext.wrap(posY.value * speed);
-
-      plane.updateY(y);
-      plane.uniforms.u_velo.value = diff.value * acc;
-
-      el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {

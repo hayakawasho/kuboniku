@@ -11,7 +11,7 @@ export default defineComponent({
     const { device } = useMediaQueryContext();
     const { addScene, removeScene, renderer, camera } = useThree(canvas, 1);
 
-    const bg = new Bg(renderer, camera, { mq: device });
+    const bg = new Bg(renderer, camera, { device });
 
     useTick(({ timestamp: _ }) => {
       bg.render();

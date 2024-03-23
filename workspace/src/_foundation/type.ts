@@ -1,5 +1,6 @@
 import type BackCanvasContext from "../_components/glworld/back";
 import type { ReadonlyRef } from "lake";
+import type { Object3D, Scene } from "@/_foundation/three";
 
 export type AppContext = {
   once: boolean;
@@ -8,6 +9,11 @@ export type AppContext = {
 };
 
 export type RouteName = "home" | "works" | "works-single" | "profile";
+
+export type ParentScene = {
+  addScene: (child: Object3D) => Scene;
+  removeScene: (child: Object3D) => Scene;
+};
 
 export type Size = {
   width: number;

@@ -10,10 +10,9 @@ import Works from "./_components/page.works";
 import WorksSingle from "./_components/page.works-single";
 import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
-import { bootstrap } from "./bootstrap";
 import type { IComponent, ComponentContext } from "lake";
 
-bootstrap(() => {
+(() => {
   const { component, unmount } = create();
 
   const table: Record<string, IComponent> = {
@@ -63,7 +62,7 @@ bootstrap(() => {
       });
     },
   });
-});
+})();
 
 if (process.env.NODE_ENV === "development") {
   const Stats = await ((await import("https://cdn.skypack.dev/stats.js.fps?dts")) as any).default;

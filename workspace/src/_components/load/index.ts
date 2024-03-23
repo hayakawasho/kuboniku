@@ -30,10 +30,11 @@ export default defineComponent({
 
     const history = ref<"push" | "pop">("push");
 
-    mediaQueryMutators({
+    const wideQuery = window.matchMedia(mq.pc);
+    const mediaQuery = {
       anyHover: window.matchMedia("(any-hover:hover)").matches,
-      device: window.matchMedia(mq.pc).matches ? "pc" : "sp",
-    });
+      device: wideQuery.matches ? "pc" : "sp",
+    } as const;
 
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
 
@@ -43,7 +44,12 @@ export default defineComponent({
     } as AppContext;
 
     useMount(() => {
+      mediaQueryMutators(mediaQuery);
       onCreated(provides);
+    });
+
+    wideQuery.addEventListener("change", () => location.reload(), {
+      once: true,
     });
 
     //----------------------------------------------------------------
@@ -52,11 +58,9 @@ export default defineComponent({
       onCleanup(from);
     };
 
-    const body = document.body;
-
     const onEnter = (to: HTMLElement) => {
       const namespace = to.dataset.xhr as RouteName;
-      body.dataset.page = namespace;
+      document.body.dataset.page = namespace;
 
       window.scrollTo(0, 0);
       scrollPosMutators(0);

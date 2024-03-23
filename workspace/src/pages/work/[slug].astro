@@ -12,6 +12,13 @@ const result = await repo.findItem({
   slug: slug!,
 })
 
+if (!result) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+
 export const prerender = false;
 ---
 

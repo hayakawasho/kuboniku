@@ -20,13 +20,18 @@ const Component: React.FC<Props> = props => {
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main data-component="Works">
+        <canvas
+          aria-hidden="true"
+          className="opacity-80 backface-hidden"
+          data-gl=""
+          data-ref="canvas"
+        ></canvas>
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
           <h1 className={Styles.heading} data-ref="h1">
             Work
             <sup className={Styles.heading__total}>{total}</sup>
           </h1>
         </div>
-
         <div className={Styles.entries} data-ref="index" data-total={total}>
           {posts.map((item, index: number) => {
             return (
@@ -39,12 +44,20 @@ const Component: React.FC<Props> = props => {
                 >
                   <div aria-hidden="true" className={Styles.aspect}></div>
                   <div className={Styles.entry__g}>
-                    <figure className={Styles.thumb}>
+                    <picture className={Styles.thumb}>
+                      <source
+                        srcSet="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                        media="(min-width: 640px)"
+                        width={1}
+                        height={1}
+                      />
                       <img
                         alt=""
-                        className="_img"
+                        className="absolute top-0 left-0 object-cover w-full h-full backface-hidden"
                         data-ref="thumb"
-                        decoding="async"
+                        data-src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_630")}
+                        data-h={item.mv["pc"].height}
+                        data-w={item.mv["pc"].width}
                         height={item.mv["pc"].height}
                         src={cloudinaryAPIConverter(
                           item.mv["pc"].url,
@@ -52,13 +65,15 @@ const Component: React.FC<Props> = props => {
                         )}
                         width={item.mv["pc"].width}
                       />
-                    </figure>
-                    <div className={Styles.entry__hgroup} data-ref="hgroup">
-                      <p className={`${Styles.num} | mb-[1.2rem] | pc:mb-[1.5rem]`}>
+                    </picture>
+                    <div className={Styles.entry__hgroup}>
+                      <p className={`${Styles.num} mb-[1.2rem] pc:mb-[1.5rem] italic`}>
                         {zeroPadding(total - index)}
-                        <span className="ml-[.8em]">Project</span>
+                        <span className={`${Styles.num__txt} ml-[.8em]`}>Project</span>
                       </p>
-                      <h2 className={Styles.entry__heading}>{selectTitle(item)}</h2>
+                      <h2 className={Styles.entry__heading} data-ref="title">
+                        {selectTitle(item)}
+                      </h2>
                     </div>
                   </div>
                 </Link>

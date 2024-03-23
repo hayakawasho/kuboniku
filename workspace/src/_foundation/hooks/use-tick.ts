@@ -3,7 +3,7 @@ import { useUnmount } from "lake";
 const FPS_60_SEC = 1000 / 60;
 
 export const useTick = (
-  callback: (payload: { timestamp: number; timeRatio: number }) => void
+  callback: (payload: { deltaTime: number; timestamp: number; timeRatio: number }) => void
 ) => {
   let then = 0;
 
@@ -21,6 +21,7 @@ export const useTick = (
     const timeRatio = dTime / FPS_60_SEC;
 
     callback({
+      deltaTime: dTime,
       timeRatio,
       timestamp,
     });

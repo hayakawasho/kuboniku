@@ -13,10 +13,10 @@ export class Bg {
     private _renderer: WebGLRenderer,
     private _camera: PerspectiveCamera,
     context: {
-      mq: "pc" | "sp";
+      device: "pc" | "sp";
     }
   ) {
-    const { mq } = context;
+    const { device } = context;
 
     this.#visuals = [
       new Sample({
@@ -38,8 +38,8 @@ export class Bg {
       pc: {
         post: {
           alpha: 0.18,
-          amount: 0.08,
-          blur: 0.1,
+          amount: 0.06,
+          blur: 0.4,
           clouds: true,
           noise: true,
           rad: 0.6,
@@ -47,9 +47,9 @@ export class Bg {
       },
       sp: {
         post: {
-          alpha: 0.16,
+          alpha: 0.15,
           amount: 0.05,
-          blur: 0.1,
+          blur: 0.3,
           clouds: true,
           noise: true,
           rad: 0.9,
@@ -57,7 +57,7 @@ export class Bg {
       },
     };
 
-    this.#transform(transforms[mq]);
+    this.#transform(transforms[device]);
   }
 
   render = () => {
