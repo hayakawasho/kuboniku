@@ -3,7 +3,6 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 import critters from "astro-critters";
 import cloudflare from "@astrojs/cloudflare";
-// import nodejs from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +11,7 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  outDir: "./out/",
+  outDir: "./dist/",
   compressHTML: true,
   // build: {
   //   inlineStylesheets: "never",
@@ -33,7 +32,4 @@ export default defineConfig({
   },
   output: "hybrid",
   adapter: cloudflare(),
-  // adapter: nodejs({
-  //   mode: "standalone",
-  // }),
 });

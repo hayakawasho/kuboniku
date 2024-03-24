@@ -46,17 +46,17 @@ const Component: React.FC<Props> = props => {
                   <div className={Styles.entry__g}>
                     <picture className={Styles.thumb}>
                       <source
-                        srcSet="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
-                        media="(min-width: 640px)"
-                        width={1}
                         height={1}
+                        media="(min-width: 640px)"
+                        srcSet="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                        width={1}
                       />
                       <img
                         alt=""
                         className="absolute top-0 left-0 object-cover w-full h-full backface-hidden"
+                        data-h={item.mv["pc"].height}
                         data-ref="thumb"
                         data-src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_630")}
-                        data-h={item.mv["pc"].height}
                         data-w={item.mv["pc"].width}
                         height={item.mv["pc"].height}
                         src={cloudinaryAPIConverter(

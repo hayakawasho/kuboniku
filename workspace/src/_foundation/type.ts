@@ -1,6 +1,6 @@
 import type BackCanvasContext from "../_components/glworld/back";
-import type { ReadonlyRef } from "lake";
 import type { Object3D, Scene } from "@/_foundation/three";
+import type { ReadonlyRef } from "lake";
 
 export type AppContext = {
   once: boolean;
@@ -8,7 +8,7 @@ export type AppContext = {
   backCanvasContext: ReturnType<(typeof BackCanvasContext)["setup"]>;
 };
 
-export type RouteName = "home" | "works" | "works-single" | "profile";
+export type RouteName = "404" | "home" | "works" | "works-single" | "profile";
 
 export type ParentScene = {
   addScene: (child: Object3D) => Scene;

@@ -11,7 +11,6 @@ export const Link: FC<{
       {...props}
       className={`${className} cursor-pointer`}
       data-astro-prefetch="hover"
-      data-cursor="scale"
       href={to}
       hx-get={to}
       hx-push-url="true"

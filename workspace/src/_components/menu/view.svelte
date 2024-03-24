@@ -98,11 +98,10 @@
           aria-current={current === "profile" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
+          data-cursor="scale"
           data-ref="menuLink"
-          href="/profile/"
+          href="/profile/">Profile</a
         >
-          Profile
-        </a>
       </li>
       <li>
         <a
@@ -110,14 +109,18 @@
           aria-current={current === "works" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
+          data-cursor="scale"
           data-ref="menuLink"
-          href="/work/"
+          href="/work/">Work</a
         >
-          Work
-        </a>
       </li>
       <li>
-        <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink" data-ref="menuLink"> Contact </a>
+        <a
+          href="mailto:k.bo.n10.05@gmail.com"
+          class="menuLink"
+          data-ref="menuLink"
+          data-cursor="scale">Contact</a
+        >
       </li>
     </ul>
   </nav>

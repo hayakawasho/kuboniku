@@ -5,7 +5,7 @@ import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { useInfiniteScroll } from "../use-infinite-scroll";
-import type { PlaneBufferGeometry, ShaderMaterial, Object3D, Scene } from "@/_foundation/three";
+import type { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
 import type { AppContext, ParentScene } from "@/_foundation/type";
 
 type Props = AppContext &
@@ -30,7 +30,6 @@ export default defineComponent({
     };
 
     const { refs } = useDomRef<Refs>("plane");
-
     const { device } = useMediaQueryContext();
     const [ww, wh] = useWindowSizeContext();
 
@@ -47,17 +46,15 @@ export default defineComponent({
 
     useWindowSizeContext(({ ww, wh }) => {
       state.resizing = true;
-
       plane.resize({
         height: wh,
         width: ww,
       });
-
       state.resizing = false;
     });
 
     const speed = Number(refs.plane.dataset.speed);
-    const acc = { pc: 0.0045, sp: 0.005 }[device] * speed;
+    const acc = { pc: 0.0035, sp: 0.005 }[device] * speed;
 
     useTick(() => {
       if (state.resizing) {

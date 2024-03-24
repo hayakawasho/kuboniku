@@ -11,16 +11,11 @@ export const Header = ({ current }: Props) => {
   return (
     <div data-component="NavMenu">
       <header className="">
-        <Link className={Styles.brandLogo} to="/">
+        <Link className={Styles.brandLogo} data-cursor="scale" to="/">
           <i className="icon-logo"></i>
           <span className="sr-only">Kuboniku.com</span>
         </Link>
-        <button
-          aria-label="menu"
-          className={`${Styles.burger} | pc:hidden`}
-          data-ref="menuTrigger"
-          id="js-menu__onOff"
-        >
+        <button aria-label="menu" className={`${Styles.burger} | pc:hidden`} data-ref="menuTrigger">
           <div className="w-full h-full relative my-0 mx-auto transform-gpu flex items-center justify-center flex-col z-10">
             <div className={Styles.burger__line} data-ref="burgerTL"></div>
             <div className={Styles.burger__line} data-ref="burgerBL"></div>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from "svelte";
-  import type { Context$ } from "lake";
   import type { AppContext } from "@/_foundation/type";
+  import type { Context$ } from "lake";
 
   const { images } = getContext<
     Context$<
@@ -29,13 +29,12 @@
 
 <style>
   .g {
-    width: 16rem;
-    height: 20rem;
+    width: calc((320% + -5.6rem) / 5);
+    aspect-ratio: 4 / 3;
     position: relative;
 
     @media (min-width: 640px) {
-      width: 30rem;
-      height: 20rem;
+      width: calc((115% + -3rem) / 5);
     }
   }
 </style>
