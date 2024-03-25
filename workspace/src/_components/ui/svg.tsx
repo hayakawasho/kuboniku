@@ -7,8 +7,8 @@ export const Svg: FC<{
   return (
     <>
       <svg
-        className={`${className} w-full h-full pointer-events-none absolute top-0 left-0 fill-current`}
         aria-hidden="true"
+        className={`${className} w-full h-full pointer-events-none absolute top-0 left-0 fill-current`}
       >
         <use xlinkHref={`#${name}`}></use>
       </svg>

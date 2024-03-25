@@ -1,6 +1,5 @@
 import "./global.scss";
 import { create, withSvelte } from "lake";
-import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";
@@ -16,7 +15,6 @@ import type { IComponent, ComponentContext } from "lake";
   const { component, unmount } = create();
 
   const table: Record<string, IComponent> = {
-    Cursor: withSvelte(Cursor, "Cursor"),
     Home,
     NavMenu,
     Noop,

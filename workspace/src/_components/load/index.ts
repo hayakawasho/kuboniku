@@ -1,11 +1,21 @@
 import htmx from "htmx.org";
-import { defineComponent, useDomRef, useSlot, useMount, useEvent, ref, readonly } from "lake";
+import {
+  defineComponent,
+  useDomRef,
+  useSlot,
+  useMount,
+  useEvent,
+  ref,
+  readonly,
+  withSvelte,
+} from "lake";
 import { useElementSize } from "@/_foundation/hooks";
 import { mq } from "@/_foundation/mq";
 import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
 import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
+import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld/back";
 import type { AppContext, RouteName } from "@/_foundation/type";
 
@@ -20,13 +30,20 @@ type Refs = {
   backCanvas: HTMLCanvasElement;
   frontCanvas: HTMLCanvasElement;
   windowSizeWatcher: HTMLElement;
+  cursor: HTMLElement;
 };
 
 export default defineComponent({
   name: "Load",
   setup(_el, { onCreated, onUpdated, onCleanup }: Props) {
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("backCanvas", "frontCanvas", "main", "windowSizeWatcher");
+    const { refs } = useDomRef<Refs>(
+      "backCanvas",
+      "frontCanvas",
+      "main",
+      "windowSizeWatcher",
+      "cursor"
+    );
 
     const history = ref<"push" | "pop">("push");
 
@@ -42,15 +59,6 @@ export default defineComponent({
       backCanvasContext: backCanvasContext.current,
       history: readonly(history),
     } as AppContext;
-
-    useMount(() => {
-      mediaQueryMutators(mediaQuery);
-      onCreated(provides);
-    });
-
-    wideQuery.addEventListener("change", () => location.reload(), {
-      once: true,
-    });
 
     //----------------------------------------------------------------
 
@@ -100,13 +108,27 @@ export default defineComponent({
       onEnter(newContainer);
     });
 
-    htmx.on("htmx:xhr:progress", e => {
-      // const { detail } = e as CustomEvent;
-      // const loadProgress = Math.floor((detail.loaded / detail.total) * 1000) / 1000;
-      // console.log(loadProgress);
-    });
+    // htmx.on("htmx:xhr:progress", e => {
+    //   const { detail } = e as CustomEvent;
+    //   const loadProgress = Math.floor((detail.loaded / detail.total) * 1000) / 1000;
+    //   console.log(loadProgress);
+    // });
 
     //----------------------------------------------------------------
+
+    useMount(() => {
+      mediaQueryMutators(mediaQuery);
+
+      if (mediaQuery.device === "pc") {
+        addChild(refs.cursor, withSvelte(Cursor, "Cursor"));
+      }
+
+      onCreated(provides);
+    });
+
+    wideQuery.addEventListener("change", () => location.reload(), {
+      once: true,
+    });
 
     useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
       windowSizeMutators({
@@ -114,8 +136,6 @@ export default defineComponent({
         width,
       });
     });
-
-    //----------------------------------------------------------------
 
     let timer: number;
 

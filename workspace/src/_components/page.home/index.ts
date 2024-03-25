@@ -1,6 +1,7 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { useThree } from "@/_components/glworld/use-three";
 import { Tween } from "@/_foundation/tween";
+import { sleep } from "@/_foundation/utils";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
 import Splash from "./splash";
@@ -10,7 +11,6 @@ type Refs = {
   grid: HTMLElement;
   canvas: HTMLCanvasElement;
   splash: HTMLElement;
-  // mask: HTMLElement;
 };
 
 export default defineComponent({
@@ -37,20 +37,21 @@ export default defineComponent({
       if (once) {
         const [splashContext] = addChild(refs.splash, Splash, context);
 
-        const done = () => {
-          splashContext.current.done();
-          removeChild([splashContext]);
-        };
-
-        (async () => {
-          await splashContext.current.start();
-          done();
-
+        const done = async () => {
           const [_gridContext] = addChild(refs.grid, Grid, {
             ...context,
             addScene,
             removeScene,
           });
+          await splashContext.current.done();
+          removeChild([splashContext]);
+        };
+
+        (async () => {
+          await sleep(0.2);
+          await splashContext.current.start();
+          await sleep(0.2);
+          done();
         })();
       } else if (!once && history.value === "push") {
         const [_gridContext] = addChild(refs.grid, Grid, {

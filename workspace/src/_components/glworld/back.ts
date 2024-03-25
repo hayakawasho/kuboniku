@@ -23,6 +23,7 @@ export default defineComponent({
 
     return {
       addScene,
+      canvas,
       onChangeColorPalette: (colorCode: string) => bg.setColor(colorCode),
       removeScene,
     };
