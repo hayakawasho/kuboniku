@@ -31,7 +31,7 @@ const Component: React.FC<Props> = props => {
         ></div>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
-          <ul className={Styles.projects} data-ref="grid">
+          <ul className={Styles.projects} data-ref="grid" data-cursor="drag">
             {posts.map((post, index) => (
               <li className={Styles.project} key={post.id}>
                 <Thumbnail index={index} post={post} />
@@ -71,12 +71,7 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
   const eyecatch = post.eyecatch!;
 
   return (
-    <Link
-      className={`${Styles.project__eyecatch}`}
-      data-cursor="drag"
-      data-ref="gridItem"
-      to={`/work/${post.slug}/`}
-    >
+    <Link className={`${Styles.project__eyecatch}`} data-ref="gridItem" to={`/work/${post.slug}/`}>
       <img
         alt=""
         className="w-full h-full invisible"

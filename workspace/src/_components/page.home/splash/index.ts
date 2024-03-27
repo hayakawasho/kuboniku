@@ -93,7 +93,7 @@ export default defineComponent({
       ctx.drawImage(backCanvasContext.canvas, 0, 0);
     };
 
-    const setCanvasSize2World = () => {
+    const setCanvasSize = () => {
       canvas.width = backCanvasContext.canvas.width;
       canvas.height = backCanvasContext.canvas.height;
     };
@@ -109,12 +109,12 @@ export default defineComponent({
       Tween.prop(refs.splashImage[0], {
         opacity: 1,
       });
-      setCanvasSize2World();
+      setCanvasSize();
     });
 
     useWindowSizeContext(() => {
       state.resizing = true;
-      setCanvasSize2World();
+      setCanvasSize();
       state.resizing = false;
     });
 

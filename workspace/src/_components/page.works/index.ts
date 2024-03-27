@@ -1,6 +1,6 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
-import { useThree } from "@/_components/glworld/use-three";
 import { useTick, useElementSize } from "@/_foundation/hooks";
+import { useThree } from "@/_foundation/hooks/use-three";
 import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollPosY } from "@/_states/scroll";

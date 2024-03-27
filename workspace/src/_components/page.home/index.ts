@@ -1,5 +1,5 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
-import { useThree } from "@/_components/glworld/use-three";
+import { useThree } from "@/_foundation/hooks/use-three";
 import { Tween } from "@/_foundation/tween";
 import { sleep } from "@/_foundation/utils";
 import { useWindowSizeContext } from "@/_states/window-size";
@@ -48,7 +48,6 @@ export default defineComponent({
         };
 
         (async () => {
-          await sleep(0.2);
           await splashContext.current.start();
           await sleep(0.2);
           done();
