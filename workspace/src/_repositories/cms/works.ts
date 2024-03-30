@@ -1,12 +1,12 @@
-import axios from "redaxios";
+import { apiClient } from "@/_foundation/api";
 import { convertGraphqlRawMediaToImg } from "./converter";
 import type { WorkMetadata } from "@/_components/work";
 
 export const createWorksRepository = () => ({
   findItem: async ({ slug }: { slug: string }): Promise<WorkMetadata | undefined> => {
     try {
-      const res = await axios<any>({
-        data: {
+      const res = await apiClient.post<any>("https://wp.kuboniku.com/graphql", {
+        body: {
           query: `query {
             post(id: "${slug}", idType: SLUG) {
               id
@@ -65,8 +65,6 @@ export const createWorksRepository = () => ({
         headers: {
           "Content-Type": "application/json",
         },
-        method: "POST",
-        url: `https://wp.kuboniku.com/graphql`,
       });
 
       const rawPost = res.data.data.post;
@@ -104,8 +102,8 @@ export const createWorksRepository = () => ({
     totalCount: number;
     works: WorkMetadata[];
   }> => {
-    const res = await axios<any>({
-      data: {
+    const res = await apiClient.post<any>("https://wp.kuboniku.com/graphql", {
+      body: {
         query: `query {
           posts(first: 99) {
             nodes {
@@ -131,8 +129,6 @@ export const createWorksRepository = () => ({
       headers: {
         "Content-Type": "application/json",
       },
-      method: "POST",
-      url: `https://wp.kuboniku.com/graphql`,
     });
 
     const rawPosts = res.data.data.posts.nodes;

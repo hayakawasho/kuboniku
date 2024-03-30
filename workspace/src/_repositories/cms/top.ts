@@ -1,11 +1,11 @@
-import axios from "redaxios";
+import { apiClient } from "@/_foundation/api";
 import { convertGraphqlRawMediaToImg } from "./converter";
 import type { WorkMetadata } from "@/_components/work";
 
 export const createTopElementsRepository = () => ({
   find: async (): Promise<{ works: WorkMetadata[] }> => {
-    const res = await axios<any>({
-      data: {
+    const res = await apiClient.post<any>("https://wp.kuboniku.com/graphql", {
+      body: {
         query: `query {
           page(id: "972", idType: DATABASE_ID) {
             topAcf {
@@ -45,8 +45,6 @@ export const createTopElementsRepository = () => ({
       headers: {
         "Content-Type": "application/json",
       },
-      method: "POST",
-      url: `https://wp.kuboniku.com/graphql`,
     });
 
     return {
