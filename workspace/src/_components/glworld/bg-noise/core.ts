@@ -1,4 +1,4 @@
-import { WebGLRenderer, PerspectiveCamera } from "@/_foundation/three";
+import { WebGLRenderer, PerspectiveCamera } from "@/_gl/three";
 import Post from "./post";
 import Sample from "./visuals/sample";
 

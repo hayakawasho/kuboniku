@@ -12,7 +12,7 @@
   >("$");
 </script>
 
-<div class="w-full h-full flex items-center justify-center">
+<div class="w-full h-full flex items-center justify-center pointer-events-auto">
   <div class="g">
     <div class="relative w-full h-full" data-ref="splashImages">
       {#each images as image}

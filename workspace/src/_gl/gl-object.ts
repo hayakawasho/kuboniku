@@ -1,4 +1,4 @@
-import { Object3D } from "@/_foundation/three";
+import { Object3D } from "./three";
 import type { Point, Size } from "@/_foundation/type";
 
 export class GlObject extends Object3D {

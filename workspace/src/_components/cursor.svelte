@@ -1,13 +1,18 @@
 <script lang="ts">
   import { useTick, useDelegate } from "@/_foundation/hooks";
   import { lerp } from "@/_foundation/math";
+  import { Tween } from "@/_foundation/tween";
   import { mousePosMutators } from "@/_states/mouse";
   import { useRouteContext } from "@/_states/route";
-
-  type CursorType = "default" | "hide" | "loading" | "scale";
+  import { useCursorTypeContext, cursorTypeMutators } from "@/_states/cusor";
+  import type { CursorType } from "@/_states/cusor";
 
   let timer: number;
-  let cursorType: CursorType = "default";
+
+  let refDragArrowTop: SVGElement;
+  let refDragArrowBottom: SVGElement;
+  let refProgressCircle: SVGElement;
+  let refProgressCirclePath: SVGElement;
 
   const state = {
     isRunning: false,
@@ -17,17 +22,30 @@
     y: 0,
   };
 
+  let cursorType: CursorType = "default";
+
+   useCursorTypeContext((payload)=> {
+    cursorType = payload
+  })
+
+  useRouteContext((payload) => {
+    switch (payload.name) {
+      case 'home':
+        cursorTypeMutators("drag")
+        break;
+      default:
+        cursorTypeMutators("default")
+        break;
+    }
+  });
+
   useDelegate("[data-cursor]", "mouseenter", e => {
     const target = e.target as HTMLAnchorElement;
-    cursorType = target.dataset.cursor as CursorType;
+    cursorTypeMutators(target.dataset.cursor as CursorType)
   });
 
-  useDelegate("[data-cursor]", "mouseleave", e => {
-    cursorType = "default";
-  });
-
-  useRouteContext(() => {
-    cursorType = "default";
+  useDelegate("[data-cursor]", "mouseleave", _e => {
+    cursorTypeMutators("default")
   });
 
   const onMousemove = (e: MouseEvent) => {
@@ -53,29 +71,38 @@
       return;
     }
 
-    const easeVal = 1 - (1 - 0.24) ** timeRatio;
+    const easeVal = 1 - (1 - 0.35) ** timeRatio;
 
     state.lastX = lerp(state.lastX, state.x, easeVal);
     state.lastY = lerp(state.lastY, state.y, easeVal);
   });
 
   $: switch (cursorType) {
-    case "default":
+    case "drag":
+      Tween.kill(refProgressCirclePath);
+      Tween.prop(refProgressCirclePath, {
+        strokeDashoffset: 188.5220947265625,
+      })
+      Tween.tween(refProgressCirclePath, .9, 'expo.out', {
+        strokeDashoffset: 0,
+      })
       break;
-    case "hide":
-      break;
-    case "loading":
-      break;
-    case "scale":
+    case "drag.scale":
+      Tween.kill(refProgressCirclePath);
       break;
     default:
+      Tween.kill(refProgressCirclePath)
+      Tween.prop(refProgressCirclePath, {
+        strokeDashoffset: 188.5220947265625,
+      })
       break;
   }
 </script>
 
 <div
-  class="cursor -{cursorType}"
+  class="cursor"
   style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
+  data-cursor-type="{cursorType}"
 >
   <div class="w-full h-full relative">
     <div class="circle" />
@@ -88,16 +115,18 @@
       viewBox="0 0 6 3"
       xml:space="preserve"
       class="dragArrow dragArrow--top"
+      bind:this={refDragArrowTop}
     >
       <path d="M3,0l3,3H0L3,0z" />
     </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" class="progressCircleSvg">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" class="progressCircle" bind:this={refProgressCircle}>
       <path
         d="M34,4A30,30,0,1,0,64,34,30,30,0,0,0,34,4Z"
         stroke-dasharray="188.5220947265625"
         stroke-dashoffset="188.5220947265625"
         data-svg-origin="38 38"
         transform="matrix(1,0,0,1,0,0)"
+        bind:this={refProgressCirclePath}
       />
     </svg>
     <svg
@@ -109,11 +138,11 @@
       viewBox="0 0 6 3"
       xml:space="preserve"
       class="dragArrow dragArrow--bottom"
+      bind:this={refDragArrowBottom}
     >
       <path d="M3,3L0,0h6L3,3z" />
     </svg>
   </div>
-  <div class="clickAndHoldCursor | hidden">Click & Drag</div>
 </div>
 
 <svelte:body on:mousemove|passive={onMousemove} />
@@ -130,15 +159,31 @@
     backface-visibility: hidden;
     color: var(--color-theme);
 
-    &.-scale {
+    &[data-cursor-type="scale"] {
       & .circle {
         transform: scale(1);
       }
     }
 
-    &.-drag {
-      & .dragArrow, .progressCircleSvg {
+    &[data-cursor-type="drag"] {
+
+      // & .dragArrow,
+      // .progressCircle {
+      //   opacity: 1;
+      // }
+
+      & .progressCircle {
+        scale: 1;
+      }
+
+      & .dragArrow--top {
         opacity: 1;
+        transform: translateX(-50%);
+      }
+
+      & .dragArrow--bottom {
+        opacity: 1;
+        transform: translateX(-50%);
       }
 
       & .circle {
@@ -147,11 +192,41 @@
       }
     }
 
-    &.-hide {
+    &[data-cursor-type="drag.scale"] {
+      & .dragArrow,
+      .progressCircle {
+        opacity: .5;
+      }
+
+      & .circle {
+        transform: scale(1);
+        opacity: .5;
+      }
+    }
+
+    &[data-cursor-type="hide"] {
       & .circle {
         transform: scale(0);
         opacity: 0;
       }
+    }
+
+    &[data-cursor-type="loading"] {
+      & .circle {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      & .progressCircle {
+        opacity: 1;
+
+        & > path {
+          animation: cursorLoader 2s ease-out infinite;
+          stroke-dasharray: 188;
+          stroke-dashoffset: 188;
+        }
+      }
+
     }
   }
 
@@ -170,7 +245,8 @@
   .dragArrow {
     opacity: 0;
     position: absolute;
-    width: .8rem;
+    width: 0.8rem;
+    // transition: transform 0.35s ease, opacity 0.9s var(--ease-opacity);
     transition: transform 0.35s ease, opacity 0.35s ease;
 
     & > path {
@@ -180,25 +256,23 @@
 
   .dragArrow--top {
     left: 50%;
-    top: -.9rem;
-    transform: translateX(-50%);
+    top: -0.9rem;
+    transform: translateX(-50%) translateY(1rem);
   }
 
   .dragArrow--bottom {
-    bottom: -.9rem;
+    bottom: -0.9rem;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(-1rem);
   }
 
-  .progressCircleSvg {
-    opacity: 0;
+  .progressCircle {
     height: 4rem;
     left: 50%;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 4rem;
-    opacity: .5;
 
     & > path {
       fill: none;
@@ -208,28 +282,6 @@
       transform: rotate(0deg);
       transform-origin: center;
       stroke-dashoffset: 0;
-    }
-  }
-
-  .loaderSvg {
-    height: 3.7rem;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 3.7rem;
-
-    & > path {
-      fill: none;
-      stroke: currentColor;
-      stroke-miterlimit: 10;
-      stroke-width: 2px;
-      transform: rotate(0deg);
-      transform-origin: center;
-      // animation: cursorLoader 2.5s ease-out infinite;
-      // stroke-dasharray: 188;
-      // stroke-dashoffset: 188;
-      // stroke-width: 3px;
     }
   }
 

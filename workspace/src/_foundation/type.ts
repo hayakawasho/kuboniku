@@ -1,5 +1,5 @@
 import type BackCanvasContext from "../_components/glworld/back";
-import type { Object3D, Scene } from "@/_foundation/three";
+import type { Object3D, Scene } from "@/_gl/three";
 import type { ReadonlyRef } from "lake";
 
 export type AppContext = {

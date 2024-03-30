@@ -1,7 +1,8 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
-import { useThree } from "@/_foundation/hooks/use-three";
 import { Tween } from "@/_foundation/tween";
 import { sleep } from "@/_foundation/utils";
+import { useThree } from "@/_gl/use-three";
+import { cursorTypeMutators } from "@/_states/cusor";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
 import Splash from "./splash";
@@ -35,6 +36,8 @@ export default defineComponent({
       refs.grid.dataset.col = setGridColSize(ww.value / wh.value);
 
       if (once) {
+        cursorTypeMutators("loading");
+
         const [splashContext] = addChild(refs.splash, Splash, context);
 
         const done = async () => {
@@ -45,6 +48,7 @@ export default defineComponent({
           });
           await splashContext.current.done();
           removeChild([splashContext]);
+          cursorTypeMutators("drag");
         };
 
         (async () => {

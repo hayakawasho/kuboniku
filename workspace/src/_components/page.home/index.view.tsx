@@ -25,13 +25,13 @@ const Component: React.FC<Props> = props => {
       <main className="h-full" data-component="Home">
         <canvas aria-hidden="true" className="opacity-90" data-gl="" data-ref="canvas"></canvas>
         <div
-          className="pointer-events-none fixed inset-0 m-auto w-full h-full"
+          className="pointer-events-none fixed inset-0 m-auto w-full h-full z-10"
           data-images={`${images}`}
           data-ref="splash"
         ></div>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
-          <ul className={Styles.projects} data-ref="grid" data-cursor="drag">
+          <ul className={Styles.projects} data-cursor="drag" data-ref="grid">
             {posts.map((post, index) => (
               <li className={Styles.project} key={post.id}>
                 <Thumbnail index={index} post={post} />
@@ -71,7 +71,12 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
   const eyecatch = post.eyecatch!;
 
   return (
-    <Link className={`${Styles.project__eyecatch}`} data-ref="gridItem" to={`/work/${post.slug}/`}>
+    <Link
+      className={`${Styles.project__eyecatch}`}
+      data-ref="gridItem"
+      // data-cursor="drag.scale"
+      to={`/work/${post.slug}/`}
+    >
       <img
         alt=""
         className="w-full h-full invisible"

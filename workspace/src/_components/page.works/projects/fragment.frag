@@ -1,6 +1,6 @@
 precision mediump float;
 
-#pragma glslify: cover = require('../../../_foundation/glsl/cover');
+#pragma glslify: cover = require('../../../_gl/cover');
 
 uniform sampler2D u_texture;
 uniform vec2 u_mesh_size;

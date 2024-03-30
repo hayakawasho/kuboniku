@@ -5,8 +5,8 @@ import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { useInfiniteScroll } from "../use-infinite-scroll";
-import type { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
 import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 
 type Props = AppContext &
   ParentScene & {

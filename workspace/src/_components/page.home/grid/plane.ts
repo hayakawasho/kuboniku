@@ -1,4 +1,4 @@
-import { GlObject } from "@/_foundation/glsl/gl-object";
+import { GlObject } from "@/_gl/gl-object";
 import {
   Mesh,
   PlaneBufferGeometry,
@@ -6,7 +6,7 @@ import {
   TextureLoader,
   LinearFilter,
   Vector2,
-} from "@/_foundation/three";
+} from "@/_gl/three";
 import type { Size } from "@/_foundation/type";
 
 export class Plane extends GlObject {

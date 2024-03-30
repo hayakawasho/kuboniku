@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderTarget, LinearFilter, RGBFormat } from "@/_foundation/three";
+import { Scene, WebGLRenderTarget, LinearFilter, RGBFormat } from "@/_gl/three";
 
 export default class {
   private _transforms: any;

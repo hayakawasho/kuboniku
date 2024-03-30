@@ -1,7 +1,7 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
-import { useThree } from "@/_foundation/hooks/use-three";
 import { Tween } from "@/_foundation/tween";
+import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollPosY } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";

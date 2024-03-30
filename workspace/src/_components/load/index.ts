@@ -15,6 +15,7 @@ import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
 import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
 import { windowSizeMutators } from "@/_states/window-size";
+import { cursorTypeMutators } from "@/_states/cusor";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld/back";
 import type { AppContext, RouteName } from "@/_foundation/type";
@@ -74,6 +75,7 @@ export default defineComponent({
       scrollPosMutators(0);
 
       onUpdated(to, provides);
+      cursorTypeMutators("default");
       routeMutators({ name: namespace });
     };
 
@@ -108,10 +110,16 @@ export default defineComponent({
       onEnter(newContainer);
     });
 
+    htmx.on("htmx:xhr:loadstart", _e => {
+      cursorTypeMutators("loading");
+    });
+
+    // htmx.on("htmx:xhr:loadend", _e => {
+    // });
+
     // htmx.on("htmx:xhr:progress", e => {
     //   const { detail } = e as CustomEvent;
     //   const loadProgress = Math.floor((detail.loaded / detail.total) * 1000) / 1000;
-    //   console.log(loadProgress);
     // });
 
     //----------------------------------------------------------------

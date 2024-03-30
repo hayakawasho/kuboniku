@@ -41,6 +41,7 @@ const Component: React.FC<Props> = props => {
                   data-color={item.theme}
                   data-ref="projectItem"
                   to={`/work/${item.slug}/`}
+                  data-cursor="scale"
                 >
                   <div aria-hidden="true" className={Styles.aspect}></div>
                   <div className={Styles.entry__g}>

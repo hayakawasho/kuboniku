@@ -1,6 +1,6 @@
 import { defineComponent } from "lake";
 import { useTick } from "@/_foundation/hooks";
-import { useThree } from "@/_foundation/hooks/use-three";
+import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Bg } from "./bg-noise/core";

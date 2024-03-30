@@ -1,4 +1,5 @@
 import { SITE_THEME_COLOR } from "@/_foundation/const";
+import { Tween } from "@/_foundation/tween";
 import {
   Scene,
   Mesh,
@@ -8,8 +9,7 @@ import {
   Color,
   Clock,
   OrthographicCamera,
-} from "@/_foundation/three";
-import { Tween } from "@/_foundation/tween";
+} from "@/_gl/three";
 
 export default class {
   private _transforms: any;
