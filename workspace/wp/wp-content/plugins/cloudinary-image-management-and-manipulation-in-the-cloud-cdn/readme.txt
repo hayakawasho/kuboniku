@@ -2,9 +2,9 @@
 Contributors: Cloudinary, XWP, Automattic
 Tags: image-optimizer, crop, core-web-vitals, responsive, resize, product-gallery, performance
 Requires at least: 4.7
-Tested up to: 6.2.2
+Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 3.1.3
+Stable tag: 3.1.8
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,9 @@ Use Cloudinary's plugin to efficiently create, manage and deliver images, videos
 
 Cloudinary’s [award-winning plugin](https://www.businesswire.com/news/home/20200923005566/en/Cloudinary-Wins-2020-MarTech-Breakthrough-Award-for-Best-WordPress-Plugin)  makes automating your image, video, and visual media workflows easy, offering a variety of features. From image and video upload through management, transformation, optimization, and global CDN delivery, all features are offered within the plugin. Users can get started in minutes with a true plug-and-play solution paired with an intuitive onboarding wizard helping deliver optimized and responsive media out-of-the-box.
 
-https://youtu.be/B1Jx5hB1Ijk
+https://youtu.be/AMVS_O_VEss
+
+> Know more on at the [Cloudinary Academy - Introduction to Cloudinary for WordPress Administrators](https://training.cloudinary.com/courses/introduction-to-cloudinary-for-wordpress-administrators-70-minute-course-zf3x)
 
 On top of that, users can also leverage a dashboard giving insights into optimization metrics and data usage so there are never any surprises. No matter if your use case is for personal use or business needs, the Cloudinary plugin offers enterprise quality and architecture for all.
 
@@ -76,6 +78,7 @@ Read more about Cloudinary:
 * [Image transformations documentation](http://cloudinary.com/documentation/image_transformations)
 * [Video transformations documentation](https://cloudinary.com/documentation/video_manipulation_and_delivery)
 * [Cloudinary FAQ](http://cloudinary.com/faq)
+* **[Cloudinary Academy - Introduction to Cloudinary for WordPress Administrators](https://training.cloudinary.com/courses/introduction-to-cloudinary-for-wordpress-administrators-70-minute-course-zf3x)**
 
 == Customer Case Studies ==
 
@@ -85,7 +88,7 @@ Read more about Cloudinary:
 
 == Contributors & Developers ==
 
-“Cloudinary – Dynamic Image and Video Management” is an open source software. The following people have contributed to this plugin:
+`Cloudinary – Dynamic Image and Video Management` is an open source software. The following people have contributed to this plugin:
 [Cloudinary](https://profiles.wordpress.org/cloudinary/)
 [XWP](https://profiles.wordpress.org/xwp/)
 [Automattic](https://profiles.wordpress.org/automattic/)
@@ -95,7 +98,7 @@ Read more about Cloudinary:
 = Install from within WordPress =
 * Visit the plugins page within your dashboard and select `Add New`.
 * Search for `Cloudinary`.
-* Select "Cloudinary – Image and Video Optimization, Manipulation, and Delivery" from the list.
+* Select `Cloudinary – Image and Video Optimization, Manipulation, and Delivery` from the list.
 * Activate `Cloudinary` from your Plugins page.
 * Go to `Setting up` below.
 
@@ -106,8 +109,8 @@ Read more about Cloudinary:
 
 = Setting up =
 * Once the plugin is activated, go to the `Cloudinary` settings.
-* You’ll be prompted to “Add your Cloudinary URL”.
-* Enter your “Cloudinary environment variable URL”, the format should be cloudinary://{API_Key}:{API_Secret}@{Cloud_Name} and can be found in the "Account Details" section of the Cloudinary Console Dashboard, then click save.
+* You’ll be prompted to `Add your Cloudinary URL`.
+* Enter your `Cloudinary environment variable URL`, the format should be `cloudinary://{API_Key}:{API_Secret}@{Cloud_Name}` and can be found in the `Account Details` section of the `Cloudinary Console Dashboard`, then click save.
 * After saving, additional settings tabs will be available.
 
 **Note**
@@ -133,6 +136,63 @@ Your site is now setup to start using Cloudinary.
 1. Need help? We’ve got you covered
 
 == Changelog ==
+
+= 3.1.8 (25 March 2024) =
+
+Fixes and Improvements:
+
+* Added the Cloudinary for WordPress Administrators course as part of the plugin need help section
+* Added individual "Need Help? Watch Lessons Here!" call-outs at the top of every section as a tool tip, pointing to specific lessons where that section is covered
+* Updated the FAQ section
+* Upgraded the Cloudinary Video Player to v1.11.1
+* Fixed Cloudinary\\tmpfile() undefined error log when importing assets from Cloudinary
+* Fixed md5() method deprecation warning in PHP 8.2
+
+
+= 3.1.7 (21 February 2024) =
+
+Fixes and Improvements:
+
+* Upgraded the Cloudinary Video Player to v1.10.1
+* Added support for [video analytics](https://cloudinary.com/documentation/video_analytics)
+* Fixed `Uncaught Error: Call to undefined method Cloudinary\Delivery::clean_url()` error message
+* Fixed individual transformations lost when upgrading the plugin version
+
+
+= 3.1.6 (17 JANUARY 2024) =
+
+Fixes and Improvements:
+
+* Added support for video adaptive bitrate streaming protocols, HLS and MPEG-DASH
+* Implemented eagerly generating transformations for auto_formats to ensure faster delivery for both images and videos
+* Enable the Cloudinary video player when using a video URL in the video block
+* Fixed syncing and delivery of SVG files to Cloudinary
+* Resolved the issue of failure in fetching local data as it should appear on the plugin dashboard
+* Fixed a missing comma in the `sizes` attribute
+* Fixed the problem of extra query calls when no frontend URLs are detected
+* Fixed the extension being removed while using f_auto for video delivery
+* Resolved the issue of pushing staging assets to production, resulting in a full resync of the assets
+* Fixed invalid data in the additional settings block when editing the Cloudinary product gallery widget
+* Added a filter for extending eagerly generating transformations formats - `cloudinary_upload_eager_formats`
+* Added a filter for supporting different headless frontend domain - `cloudinary_delivery_searchable_url`
+* Added a filter for supporting different content URLs - `cloudinary_content_url`
+
+
+= 3.1.5 (11 OCTOBER 2023) =
+
+Fixes and Improvements:
+
+* Added a filter for allowing RAW URLs for images - `cloudinary_bypass_seo_url`
+* Added a filter for better control of the SEO URL - `cloudinary_seo_public_id`
+* Fixed Cloudinary gallery compatibility issue with WooCommerce v7.8 and up
+* Fixed the double extension on RAW files
+
+
+= 3.1.4 (23 AUGUST 2023) =
+
+Fixes and Improvements:
+
+* Fixed PHP warnings related to version 8.X
 
 = 3.1.3 (19 JUNE 2023) =
 

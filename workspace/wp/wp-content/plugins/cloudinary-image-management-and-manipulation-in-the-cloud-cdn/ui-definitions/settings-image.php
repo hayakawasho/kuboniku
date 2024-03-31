@@ -150,9 +150,9 @@ $settings = array(
 						'type'           => 'text',
 						'slug'           => 'image_freeform',
 						'title'          => __( 'Additional image transformations', 'cloudinary' ),
-						'default'       => '',
+						'default'        => '',
 						'tooltip_text'   => sprintf(
-						// translators: The link to transformation reference.
+							// translators: The link to transformation reference.
 							__(
 								'A set of additional transformations to apply to all images. Specify your transformations using Cloudinary URL transformation syntax. See %1$sreference%2$s for all available transformations and syntax.',
 								'cloudinary'
@@ -192,7 +192,7 @@ $settings = array(
 						'title'              => __( 'SVG Support', 'cloudinary' ),
 						'optimisation_title' => __( 'SVG Support', 'cloudinary' ),
 						'tooltip_text'       => __(
-							'Enable Cloudinary\'s beta SVG Support.',
+							'Enable Cloudinary\'s SVG Support.',
 							'cloudinary'
 						),
 						'description'        => __( 'Enable SVG support.', 'cloudinary' ),
@@ -238,6 +238,20 @@ $settings = array(
 						'priority' => 10,
 					),
 				),
+			),
+		),
+		array(
+			'type'  => 'info_box',
+			'icon'  => $this->dir_url . 'css/images/academy-icon.svg',
+			'title' => __( 'Need help?', 'cloudinary' ),
+			'text'  => sprintf(
+				// Translators: The HTML for opening and closing link tags.
+				__(
+					'Watch free lessons on how to use the Image Global Settings in the %1$sCloudinary Academy%2$s.',
+					'cloudinary'
+				),
+				'<a href="https://training.cloudinary.com/learn/course/introduction-to-cloudinary-for-wordpress-administrators-70-minute-course-1h85/lessons/transforming-images-and-videos-for-pages-and-posts-1545?page=1" target="_blank" rel="noopener noreferrer">',
+				'</a>'
 			),
 		),
 	),

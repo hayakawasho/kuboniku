@@ -7,8 +7,9 @@
 
 namespace Cloudinary\Connect;
 
+use Cloudinary\Relate\Relationship;
+use Cloudinary\Sync;
 use Cloudinary\Utils;
-use function Cloudinary\get_plugin_instance;
 use Cloudinary\Plugin;
 use Cloudinary\Media;
 
@@ -196,7 +197,19 @@ class Api {
 			$parts[] = $this->credentials['cloud_name'];
 		}
 
-		if ( false === $endpoint && 'image' === $resource && 'upload' === $function ) {
+		/**
+		 * Bypass Cloudinary's SEO URLs.
+		 *
+		 * @hook   cloudinary_bypass_seo_url
+		 * @since  3.1.5
+		 *
+		 * @param $bypass_seo_url {bool} Whether to bypass SEO URLs.
+		 *
+		 * @return {bool}
+		 */
+		$bypass_seo_url = apply_filters( 'cloudinary_bypass_seo_url', false );
+
+		if ( false === $endpoint && 'image' === $resource && 'upload' === $function && ! $bypass_seo_url ) {
 			$parts[] = 'images';
 		} else {
 			$parts[] = $resource;
@@ -214,10 +227,11 @@ class Api {
 	 *
 	 * @param array  $options The transformation options to generate from.
 	 * @param string $type    The asset Type.
+	 * @param string $context The context.
 	 *
 	 * @return string
 	 */
-	public static function generate_transformation_string( array $options, $type = 'image' ) {
+	public static function generate_transformation_string( array $options, $type = 'image', $context = '' ) {
 		if ( ! isset( self::$transformation_index[ $type ] ) ) {
 			return '';
 		}
@@ -243,6 +257,58 @@ class Api {
 			$options
 		);
 
+		// Prepare the eager transformations for the upload.
+		if ( 'upload' === $context ) {
+			foreach ( $transformations as &$transformation ) {
+				if ( 0 <= strpos( $transformation, 'f_auto' ) ) {
+					$parts = explode( ',', $transformation );
+					unset( $parts[ array_search( 'f_auto', $parts, true ) ] );
+					$remaining_transformations = implode( ',', $parts );
+					$formats                   = array();
+
+					if ( 'image' === $type ) {
+						$formats = array(
+							'f_avif',
+							'f_webp',
+							'f_webp,fl_awebp',
+							'f_wdp',
+							'f_jp2',
+						);
+					} elseif ( 'video' === $type ) {
+						$formats = array(
+							'f_webm,vc_vp9',
+							'f_mp4,vc_h265',
+							'f_mp4,vc_h264',
+						);
+					}
+
+					/**
+					 * Filter the upload eager formats.
+					 *
+					 * @hook cloudinary_upload_eager_formats
+					 * @since 3.1.6
+					 *
+					 * @param $formats {array} The default formats.
+					 * @param $type    {string} The asset type.
+					 *
+					 * @return {array}
+					 */
+					$formats = apply_filters( 'cloudinary_upload_eager_formats', $formats, $type );
+
+					array_walk(
+						$formats,
+						static function ( &$i ) use ( $remaining_transformations ) {
+							if ( $remaining_transformations ) {
+								$i .= ",{$remaining_transformations}";
+							}
+						}
+					);
+
+					$transformation = implode( '|', $formats );
+				}
+			}
+		}
+
 		// Clear out empty parts.
 		$transformations = array_filter( $transformations );
 
@@ -252,20 +318,21 @@ class Api {
 	/**
 	 * Generate a Cloudinary URL.
 	 *
-	 * @param string|null $public_id The Public ID to get a url for.
-	 * @param array       $args      Additional args.
-	 * @param array       $size      The WP Size array.
+	 * @param string|null $public_id     The Public ID to get a url for.
+	 * @param array       $args          Additional args.
+	 * @param array       $size          The WP Size array.
+	 * @param int|null    $attachment_id The attachment ID.
 	 *
 	 * @return string
 	 */
-	public function cloudinary_url( $public_id = null, $args = array(), $size = array() ) {
+	public function cloudinary_url( $public_id = null, $args = array(), $size = array(), $attachment_id = null ) {
 
 		if ( null === $public_id ) {
 			return 'https://' . $this->url( null, null );
 		}
 		$defaults = array(
 			'resource_type' => 'image',
-			'delivery_type' => 'upload',
+			'delivery'      => 'upload',
 			'version'       => 'v1',
 		);
 		$args     = wp_parse_args( array_filter( $args ), $defaults );
@@ -277,19 +344,14 @@ class Api {
 
 		// Determine if we're dealing with a fetched.
 		// ...or uploaded image and update the URL accordingly.
-		$asset_endpoint = filter_var( $public_id, FILTER_VALIDATE_URL ) ? 'fetch' : $args['delivery_type'];
+		$asset_endpoint = filter_var( $public_id, FILTER_VALIDATE_URL ) ? 'fetch' : $args['delivery'];
 
 		$url_parts = array(
 			'https:/',
 			$this->url( $args['resource_type'], $asset_endpoint ),
 		);
-		$base      = Utils::pathinfo( $public_id );
-		// Only do dynamic naming and sizes if upload type.
-		if ( 'image' === $args['resource_type'] && 'upload' === $args['delivery_type'] ) {
-			$new_path  = $base['filename'] . '/' . $base['basename'];
-			$public_id = str_replace( $base['basename'], $new_path, $public_id );
-		}
 
+		$base = Utils::pathinfo( $public_id );
 		// Add size.
 		if ( ! empty( $size ) && is_array( $size ) ) {
 			if ( ! empty( $size['transformation'] ) ) {
@@ -302,6 +364,10 @@ class Api {
 		}
 		if ( ! empty( $args['transformation'] ) ) {
 			$url_parts[] = self::generate_transformation_string( $args['transformation'], $args['resource_type'] );
+		}
+
+		if ( $attachment_id ) {
+			$public_id = $this->get_public_id( $attachment_id, $args, $public_id );
 		}
 
 		$url_parts[] = $args['version'];
@@ -389,7 +455,7 @@ class Api {
 			if ( is_wp_error( $result ) ) {
 				break;
 			}
-			$index ++;
+			++$index;
 		}
 		fclose( $src ); //phpcs:ignore
 		unlink( $temp_file_name ); //phpcs:ignore
@@ -398,7 +464,6 @@ class Api {
 		}
 
 		return $result;
-
 	}
 
 	/**
@@ -439,7 +504,20 @@ class Api {
 		$args                = $this->clean_args( $args );
 		$disable_https_fetch = get_transient( '_cld_disable_http_upload' );
 
-		if ( function_exists( 'wp_get_original_image_url' ) && wp_attachment_is_image( $attachment_id ) ) {
+		/**
+		 * Whether to use the original image URL.
+		 *
+		 * @hook    cloudinary_use_original_image
+		 * @since   3.1.8
+		 * @default true
+		 *
+		 * @param $use_original  {bool} The default value.
+		 * @param $attachment_id {int}  The attachment ID.
+		 *
+		 * @return  {bool}
+		 */
+		$use_original = apply_filters( 'cloudinary_use_original_image', true, $attachment_id );
+		if ( $use_original && function_exists( 'wp_get_original_image_url' ) && wp_attachment_is_image( $attachment_id ) ) {
 			$file_url = wp_get_original_image_url( $attachment_id );
 		} else {
 			$file_url = wp_get_attachment_url( $attachment_id );
@@ -469,7 +547,7 @@ class Api {
 			// We should have the file in args at this point, but if the transient was set, it will be defaulting here.
 			if ( empty( $args['file'] ) ) {
 				if ( wp_attachment_is_image( $attachment_id ) ) {
-					$get_path_func = function_exists( 'wp_get_original_image_path' ) ? 'wp_get_original_image_path' : 'get_attached_file';
+					$get_path_func = $use_original && function_exists( 'wp_get_original_image_path' ) ? 'wp_get_original_image_path' : 'get_attached_file';
 					$args['file']  = call_user_func( $get_path_func, $attachment_id );
 				} else {
 					$args['file'] = get_attached_file( $attachment_id );
@@ -525,7 +603,7 @@ class Api {
 			 * it's likely due to CURL or the location does not support URL file attachments.
 			 * In this case, we'll flag and disable it and try again with a local file.
 			 */
-			if ( 404 !== $code && empty( $disable_https_fetch ) && false !== strpos( $error, $args['file'] ) ) {
+			if ( 404 !== $code && empty( $disable_https_fetch ) && false !== strpos( urldecode( $error ), $args['file'] ) ) {
 				// URLS are not remotely available, try again as a file.
 				set_transient( '_cld_disable_http_upload', true, DAY_IN_SECONDS );
 				// Remove URL file.
@@ -781,6 +859,85 @@ class Api {
 	}
 
 	/**
+	 * Get the Cloudinary public_id.
+	 *
+	 * @param int         $attachment_id      The attachment ID.
+	 * @param array       $args               The args.
+	 * @param null|string $original_public_id The original public ID.
+	 *
+	 * @return string
+	 */
+	public function get_public_id( $attachment_id, $args = array(), $original_public_id = null ) {
+
+		$relationship = Relationship::get_relationship( $attachment_id );
+		$public_id    = null;
+
+		if ( $relationship instanceof Relationship ) {
+			$public_id = $relationship->public_id;
+		}
+
+		// On cases like the initial sync, we might not have a relationship, so we need to trust to requested public_id.
+		if ( empty( $public_id ) ) {
+			$public_id = $original_public_id;
+		}
+
+		/**
+		 * Bypass Cloudinary's SEO URLs.
+		 *
+		 * @hook   cloudinary_bypass_seo_url
+		 * @since  3.1.5
+		 *
+		 * @param $bypass_seo_url {bool} Whether to bypass SEO URLs.
+		 *
+		 * @return {bool}
+		 */
+		$bypass_seo_url = apply_filters( 'cloudinary_bypass_seo_url', false );
+
+		if (
+			$public_id
+			&& ! $bypass_seo_url
+			&& (
+				// Get the SEO `public_id` for images with `upload` delivery.
+				(
+					! empty( $args['resource_type'] ) && 'image' === $args['resource_type']
+					&& ! empty( $args['delivery'] ) && 'upload' === $args['delivery']
+				)
+				// Get the SEO `public_id` for PDFs as they are regarded as images.
+				|| (
+					! empty( $args['resource_type'] ) && 'image' === $args['resource_type']
+					&& 'application' === $relationship->asset_type
+				)
+			)
+		) {
+
+			$parts    = explode( '/', $public_id );
+			$filename = end( $parts );
+
+			/**
+			 * Filter the SEO public ID.
+			 *
+			 * @hook   cloudinary_seo_public_id
+			 * @since  3.1.5
+			 *
+			 * @param $sufix          {string}       The public_id suffix.
+			 * @param $relationship  {Relationship} The relationship.
+			 * @param $attachment_id {int}          The attachment ID.
+			 *
+			 * @return {string}
+			 */
+			$suffix = apply_filters( 'cloudinary_seo_public_id', "{$filename}.{$relationship->format}", $relationship, $attachment_id );
+
+			$public_id .= "/{$suffix}";
+		}
+
+		if ( 'video' === $relationship->asset_type ) {
+			$public_id .= ".{$relationship->format}";
+		}
+
+		return $public_id;
+	}
+
+	/**
 	 * Check if a string is a qualified `upload_prefix`.
 	 *
 	 * @param string $upload_prefix Upload prefix to check.
@@ -804,7 +961,7 @@ class Api {
 		$hostname = $upload_prefix;
 
 		if ( filter_var( $upload_prefix, FILTER_VALIDATE_URL ) ) {
-			$hostname = parse_url( $upload_prefix, PHP_URL_HOST );
+			$hostname = wp_parse_url( $upload_prefix, PHP_URL_HOST );
 		}
 
 		return $hostname;
@@ -839,7 +996,16 @@ class Api {
 		}
 
 		// Set a long-ish timeout since uploads can be 20mb+.
-		$args['timeout'] = 60; // phpcs:ignore
+		$args['timeout'] = 90; // phpcs:ignore
+
+		// Adjust timeout for additional eagers if image_freeform or video_freeform is set.
+		if ( ! empty( $args['body']['resource_type'] ) ) {
+			$freeform = $this->media->get_settings()->get_value( $args['body']['resource_type'] . '_freeform' );
+			if ( ! empty( $freeform ) ) {
+				$timeout_multiplier = explode( '/', $freeform );
+				$args['timeout']   += 60 * count( $timeout_multiplier ); // phpcs:ignore
+			}
+		}
 
 		$request = wp_remote_request( $url, $args );
 		if ( is_wp_error( $request ) ) {
@@ -856,5 +1022,4 @@ class Api {
 
 		return $result;
 	}
-
 }

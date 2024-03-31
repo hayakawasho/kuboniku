@@ -30,7 +30,7 @@ final class Plugin {
 	 *
 	 * @since   0.1
 	 *
-	 * @var     Media[]|Sync[]|Admin[]|REST_API[]|Connect[]|Delivery[]
+	 * @var Admin|CLD_Assets|Connect|Dashboard|Deactivation|Delivery|Extensions|Gallery|Lazy_Load|Media|Meta_Box|Relate|Report|Responsive_Breakpoints|REST_API|State|Storage|SVG|Sync|URL|null
 	 */
 	public $components;
 	/**
@@ -81,6 +81,13 @@ final class Plugin {
 	 * @var string
 	 */
 	public $dir_url;
+
+	/**
+	 * The plugin file.
+	 *
+	 * @var string
+	 */
+	public $plugin_file;
 
 	/**
 	 * Directory in plugin containing autoloaded classes.
@@ -166,7 +173,7 @@ final class Plugin {
 	 *
 	 * @param mixed $component The component.
 	 *
-	 * @return Admin|Connect|Delivery|Media|REST_API|String_Replace|Sync|Report|URL|null
+	 * @return Admin|CLD_Assets|Connect|Dashboard|Deactivation|Delivery|Extensions|Gallery|Lazy_Load|Media|Meta_Box|Relate|Report|Responsive_Breakpoints|REST_API|State|Storage|SVG|Sync|URL|null
 	 */
 	public function get_component( $component ) {
 		$return = null;
@@ -190,7 +197,7 @@ final class Plugin {
 
 		foreach ( $parts as $slug => $part ) {
 			if ( file_exists( $this->dir_path . "ui-definitions/settings-{$slug}.php" ) ) {
-				$parts[ $slug ] = include $this->dir_path . "ui-definitions/settings-{$slug}.php";
+				$parts[ $slug ] = include $this->dir_path . "ui-definitions/settings-{$slug}.php"; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 			}
 		}
 
@@ -590,7 +597,7 @@ final class Plugin {
 		 * The Cloudinary Video Player version.
 		 */
 		if ( ! defined( 'CLOUDINARY_ENDPOINTS_VIDEO_PLAYER_VERSION' ) ) {
-			define( 'CLOUDINARY_ENDPOINTS_VIDEO_PLAYER_VERSION', '1.9.0' );
+			define( 'CLOUDINARY_ENDPOINTS_VIDEO_PLAYER_VERSION', '1.11.1' );
 		}
 	}
 
@@ -626,7 +633,7 @@ final class Plugin {
 		$namespace = trim( implode( DIRECTORY_SEPARATOR, $namespace ) );
 
 		// Get the path to our files.
-		$directory = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../php';
+		$directory = __DIR__ . DIRECTORY_SEPARATOR . '../php';
 		if ( ! empty( $namespace ) ) {
 			$directory .= DIRECTORY_SEPARATOR . strtolower( $namespace );
 		}

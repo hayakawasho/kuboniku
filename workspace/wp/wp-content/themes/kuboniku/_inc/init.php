@@ -45,7 +45,7 @@ add_filter('wp_resource_hints', 'remove_dns_prefetch', 10, 2);
 
 add_filter('show_admin_bar', '__return_false');
 
-// add_action('wp_enqueue_scripts', 'dequeue_plugins_style', 10);
+add_action('wp_enqueue_scripts', 'dequeue_plugins_style', 10);
 
 add_image_size('thumbnail', 0, 0);
 add_image_size('medium', 750, 9999);
@@ -56,6 +56,33 @@ add_image_size('2048x2048', 2048, 9999);
 
 add_filter('big_image_size_threshold', '__return_false');
 
+// 
+add_action('rest_api_init', 'register_rest_images' );
+
+function register_rest_images(){
+  register_rest_field( array('post'),
+    'featured_image',
+    array(
+      'get_callback' => 'get_rest_featured_image',
+      'update_callback' => null,
+      'schema' => null,
+    )
+  );
+}
+
+function get_rest_featured_image( $object, $field_name, $request ) {
+  if ($object['featured_media']) {
+    $img = wp_get_attachment_image_src( $object['featured_media'], 'full' );
+
+    return [
+      'src' => $img[0],
+      'width' => $img[1],
+      'height' => $img[2],
+    ];
+  }
+
+  return false;
+}
 
 // function my_customize_rest_cors() {
 // 	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
