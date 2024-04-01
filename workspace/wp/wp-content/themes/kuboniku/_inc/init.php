@@ -56,7 +56,6 @@ add_image_size('2048x2048', 2048, 9999);
 
 add_filter('big_image_size_threshold', '__return_false');
 
-// 
 add_action('rest_api_init', 'register_rest_images' );
 
 function register_rest_images(){
