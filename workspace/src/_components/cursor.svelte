@@ -28,15 +28,17 @@
     cursorType = payload;
   });
 
-  useRouteContext(payload => {
-    switch (payload.name) {
-      case "home":
-        cursorTypeMutators("drag");
-        break;
-      default:
-        cursorTypeMutators("default");
-        break;
-    }
+  useRouteContext(_payload => {
+    cursorTypeMutators("default");
+
+    // switch (payload.name) {
+    //   case "home":
+    //     cursorTypeMutators("drag");
+    //     break;
+    //   default:
+    //     cursorTypeMutators("default");
+    //     break;
+    // }
   });
 
   useDelegate("[data-cursor]", "mouseenter", e => {
@@ -71,25 +73,25 @@
       return;
     }
 
-    const easeVal = 1 - (1 - 0.35) ** timeRatio;
+    const easeVal = 1 - (1 - 0.3) ** timeRatio;
 
     state.lastX = lerp(state.lastX, state.x, easeVal);
     state.lastY = lerp(state.lastY, state.y, easeVal);
   });
 
   $: switch (cursorType) {
-    case "drag":
-      Tween.kill(refProgressCirclePath);
-      Tween.prop(refProgressCirclePath, {
-        strokeDashoffset: 188.5220947265625,
-      });
-      Tween.tween(refProgressCirclePath, 0.9, "expo.out", {
-        strokeDashoffset: 0,
-      });
-      break;
-    case "drag.scale":
-      Tween.kill(refProgressCirclePath);
-      break;
+    // case "drag":
+    //   Tween.kill(refProgressCirclePath);
+    //   Tween.prop(refProgressCirclePath, {
+    //     strokeDashoffset: 188.5220947265625,
+    //   });
+    //   Tween.tween(refProgressCirclePath, 0.9, "expo.out", {
+    //     strokeDashoffset: 0,
+    //   });
+    //   break;
+    // case "drag.scale":
+    //   Tween.kill(refProgressCirclePath);
+    //   break;
     default:
       Tween.kill(refProgressCirclePath);
       Tween.prop(refProgressCirclePath, {

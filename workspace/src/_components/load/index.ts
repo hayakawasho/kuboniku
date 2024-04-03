@@ -11,11 +11,12 @@ import {
 } from "lake";
 import { useElementSize } from "@/_foundation/hooks";
 import { mq } from "@/_foundation/mq";
+import { cursorTypeMutators } from "@/_states/cusor";
 import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
-import { scrollPosMutators, isScrollingMutators } from "@/_states/scroll";
+import { scrollStateYMutators } from "@/_states/scroll";
+import { scrollPositionMutators } from "@/_states/scroll-position";
 import { windowSizeMutators } from "@/_states/window-size";
-import { cursorTypeMutators } from "@/_states/cusor";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld/back";
 import type { AppContext, RouteName } from "@/_foundation/type";
@@ -72,7 +73,7 @@ export default defineComponent({
       document.body.dataset.page = namespace;
 
       window.scrollTo(0, 0);
-      scrollPosMutators(0);
+      scrollPositionMutators(0);
 
       onUpdated(to, provides);
       cursorTypeMutators("default");
@@ -153,11 +154,15 @@ export default defineComponent({
       () => {
         clearTimeout(timer);
 
-        isScrollingMutators(true);
-        scrollPosMutators(window.scrollY);
+        scrollPositionMutators(window.scrollY);
+        scrollStateYMutators({
+          scrolling: true,
+        });
 
         timer = window.setTimeout(() => {
-          isScrollingMutators(false);
+          scrollStateYMutators({
+            scrolling: false,
+          });
         }, 500);
       },
       {

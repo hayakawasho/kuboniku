@@ -48,12 +48,12 @@ export default defineComponent({
           });
           await splashContext.current.done();
           removeChild([splashContext]);
-          cursorTypeMutators("drag");
+          cursorTypeMutators("default");
         };
 
         (async () => {
           await splashContext.current.start();
-          await sleep(0.2);
+          // await sleep(0.2);
           done();
         })();
       } else if (!once && history.value === "push") {

@@ -8,7 +8,7 @@ export type AppContext = {
   backCanvasContext: ReturnType<(typeof BackCanvasContext)["setup"]>;
 };
 
-export type RouteName = "404" | "home" | "works" | "works-single" | "profile";
+export type RouteName = "error" | "home" | "works" | "works-single" | "profile";
 
 export type ParentScene = {
   addScene: (child: Object3D) => Scene;

@@ -43,7 +43,7 @@ export default defineComponent({
             resolve();
           },
           opacity: 1,
-          stagger: 0.2,
+          stagger: 0.14,
         });
       });
     };
