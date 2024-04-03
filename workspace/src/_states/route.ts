@@ -15,6 +15,7 @@ export const useRouteContext = (callback: (payload: { name: RouteName }) => void
 
   const unbind = routeState.listen(({ name }) => {
     route.value.name = name;
+
     callback({
       name,
     });

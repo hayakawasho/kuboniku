@@ -3,7 +3,7 @@ import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
-import { useScrollPosY } from "@/_states/scroll";
+import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { AppContext, ParentScene } from "@/_foundation/type";
@@ -54,7 +54,7 @@ export default defineComponent({
       },
     });
 
-    useScrollPosY(({ currentY }) => {
+    useScrollPositionContext(({ currentY }) => {
       Tween.tween(state, 0.1, "expo.out", {
         onUpdate: () => {
           plane.updateY(state.ty);

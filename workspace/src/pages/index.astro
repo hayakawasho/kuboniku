@@ -1,12 +1,10 @@
 ---
 import Home from '../_components/page.home/index.view';
-import { createTopElementsRepository } from '../_repositories/cms';
+import { createTopElementsRepository } from '../_repositories';
 import Layout from '../layout.astro';
 
 const repo = createTopElementsRepository();
 const result = await repo.find();
-
-export const prerender = true;
 ---
 
 <Layout title="" permalink="" namespace="home">

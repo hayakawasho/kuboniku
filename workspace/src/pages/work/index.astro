@@ -1,32 +1,31 @@
 ---
 import WorksIndex from '../../_components/page.works/index.view';
-import { mq } from '../../_foundation/mq';
-import { cloudinaryAPIConverter } from '../../_foundation/converter';
-import { createWorksRepository } from '../../_repositories/cms';
+import { createWorksRepository } from '../../_repositories';
+import { createAuthRepository } from '../../_repositories';
 import Layout from '../../layout.astro';
 
-const repo = createWorksRepository();
-const result = await repo.findList();
+const { cookies } = Astro
+const { searchParams } = Astro.url
+
+const token = searchParams.get("token");
+
+token && cookies.set("token", token, {
+  httpOnly: true,
+  secure: true,
+  maxAge: 60 * 60 * 24 * 7,
+});
+
+const authRepo = createAuthRepository()
+const isAuth = await authRepo.validate(cookies.get("token")?.value)
+
+!isAuth && cookies.delete("token")
+
+const workRepo = createWorksRepository(cookies.get("token")?.value);
+const result = await workRepo.findList();
 
 export const prerender = false;
 ---
 
 <Layout title="Work" permalink="/work/" namespace="works">
-  <link
-    slot="prependHead"
-    as="image"
-    crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.works[0].mv["pc"].url, "f_auto,q_auto,w_1680")}
-    media={mq.sp}
-    rel="preload"
-  />
-  <link
-    slot="prependHead"
-    as="image"
-    crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.works[1].mv["pc"].url, "f_auto,q_auto,w_1680")}
-    media={mq.pc}
-    rel="preload"
-  />
-  <WorksIndex posts={result.works} total={Number(result.totalCount)} namespace="works" />
+  <WorksIndex posts={result!.works} total={Number(result!.totalCount)} namespace="works" />
 </Layout>

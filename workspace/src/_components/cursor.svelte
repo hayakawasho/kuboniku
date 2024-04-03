@@ -2,9 +2,9 @@
   import { useTick, useDelegate } from "@/_foundation/hooks";
   import { lerp } from "@/_foundation/math";
   import { Tween } from "@/_foundation/tween";
+  import { useCursorTypeContext, cursorTypeMutators } from "@/_states/cusor";
   import { mousePosMutators } from "@/_states/mouse";
   import { useRouteContext } from "@/_states/route";
-  import { useCursorTypeContext, cursorTypeMutators } from "@/_states/cusor";
   import type { CursorType } from "@/_states/cusor";
 
   let timer: number;
@@ -24,28 +24,28 @@
 
   let cursorType: CursorType = "default";
 
-   useCursorTypeContext((payload)=> {
-    cursorType = payload
-  })
+  useCursorTypeContext(payload => {
+    cursorType = payload;
+  });
 
-  useRouteContext((payload) => {
+  useRouteContext(payload => {
     switch (payload.name) {
-      case 'home':
-        cursorTypeMutators("drag")
+      case "home":
+        cursorTypeMutators("drag");
         break;
       default:
-        cursorTypeMutators("default")
+        cursorTypeMutators("default");
         break;
     }
   });
 
   useDelegate("[data-cursor]", "mouseenter", e => {
     const target = e.target as HTMLAnchorElement;
-    cursorTypeMutators(target.dataset.cursor as CursorType)
+    cursorTypeMutators(target.dataset.cursor as CursorType);
   });
 
   useDelegate("[data-cursor]", "mouseleave", _e => {
-    cursorTypeMutators("default")
+    cursorTypeMutators("default");
   });
 
   const onMousemove = (e: MouseEvent) => {
@@ -82,19 +82,19 @@
       Tween.kill(refProgressCirclePath);
       Tween.prop(refProgressCirclePath, {
         strokeDashoffset: 188.5220947265625,
-      })
-      Tween.tween(refProgressCirclePath, .9, 'expo.out', {
+      });
+      Tween.tween(refProgressCirclePath, 0.9, "expo.out", {
         strokeDashoffset: 0,
-      })
+      });
       break;
     case "drag.scale":
       Tween.kill(refProgressCirclePath);
       break;
     default:
-      Tween.kill(refProgressCirclePath)
+      Tween.kill(refProgressCirclePath);
       Tween.prop(refProgressCirclePath, {
         strokeDashoffset: 188.5220947265625,
-      })
+      });
       break;
   }
 </script>
@@ -102,7 +102,7 @@
 <div
   class="cursor"
   style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
-  data-cursor-type="{cursorType}"
+  data-cursor-type={cursorType}
 >
   <div class="w-full h-full relative">
     <div class="circle" />
@@ -119,7 +119,12 @@
     >
       <path d="M3,0l3,3H0L3,0z" />
     </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" class="progressCircle" bind:this={refProgressCircle}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 68 68"
+      class="progressCircle"
+      bind:this={refProgressCircle}
+    >
       <path
         d="M34,4A30,30,0,1,0,64,34,30,30,0,0,0,34,4Z"
         stroke-dasharray="188.5220947265625"
@@ -166,7 +171,6 @@
     }
 
     &[data-cursor-type="drag"] {
-
       // & .dragArrow,
       // .progressCircle {
       //   opacity: 1;
@@ -195,12 +199,12 @@
     &[data-cursor-type="drag.scale"] {
       & .dragArrow,
       .progressCircle {
-        opacity: .5;
+        opacity: 0.5;
       }
 
       & .circle {
         transform: scale(1);
-        opacity: .5;
+        opacity: 0.5;
       }
     }
 
@@ -226,7 +230,6 @@
           stroke-dashoffset: 188;
         }
       }
-
     }
   }
 

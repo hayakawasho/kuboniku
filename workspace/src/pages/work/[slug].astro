@@ -2,34 +2,35 @@
 import { mq } from '../../_foundation/mq';
 import { cloudinaryAPIConverter } from '../../_foundation/converter';
 import WorksDetail from '../../_components/page.works-single/index.view';
-import { createWorksRepository } from '../../_repositories/cms';
+import { createWorksRepository } from '../../_repositories';
 import Layout from '../../layout.astro';
 
 const { slug } = Astro.params;
+const { cookies } = Astro
 
-const repo = createWorksRepository()
-const result = await repo.findItem({
-  slug: slug!,
+const workRepo = createWorksRepository(cookies.get("token")?.value)
+const result = await workRepo.findItem({
+  slug: slug as string,
 })
 
 if (!result) {
   return new Response(null, {
     status: 404,
-    statusText: 'Not found'
+    statusText: "Not found"
   });
 }
 
 export const prerender = false;
 ---
 
-<Layout title={result.title} permalink={`/work/${result.slug}/`} namespace="works-single">
+<Layout title={result.work.title} permalink={`/work/${result.work.slug}/`} namespace="works-single">
   <link
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.mv["pc"].url, "f_auto,q_auto,w_1680")}
+    href={cloudinaryAPIConverter(result.work.mv["pc"].url, "f_auto,q_auto,w_1680")}
     media={mq.pc}
     rel="preload"
   />
-  <WorksDetail post={result} nextPost={result} projectNumber={1} namespace="works-single" />
+  <WorksDetail post={result.work} nextPost={result.work.next} projectNumber={result.work.index} namespace="works-single" />
 </Layout>
