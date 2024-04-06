@@ -5,25 +5,32 @@ import { createAuthRepository } from '../../_repositories';
 import Layout from '../../layout.astro';
 
 const { cookies } = Astro
-const { searchParams } = Astro.url
 
-const token = searchParams.get("token");
+let refreshToken: string | undefined
 
-token && cookies.set("token", token, {
-  httpOnly: true,
-  secure: true,
-  maxAge: 60 * 60 * 24 * 7,
-});
+const val = Astro.url.searchParams.get("token")
+
+if (val) {
+  const maxAge = 60 * 60 * 24 * 7
+  cookies.set("token", val, { httpOnly: true, secure: true, maxAge })
+
+  refreshToken = val
+}
+
+refreshToken = refreshToken ?? cookies.get("token")?.value
 
 const authRepo = createAuthRepository()
-const isAuth = await authRepo.validate(cookies.get("token")?.value)
+const isAuth = await authRepo.validate(refreshToken)
 
-!isAuth && cookies.delete("token")
+if (!isAuth) {
+  cookies.delete("token")
+  refreshToken = undefined
+}
 
-const workRepo = createWorksRepository(cookies.get("token")?.value);
-const result = await workRepo.findList();
+const workRepo = createWorksRepository(refreshToken)
+const result = await workRepo.findList()
 
-export const prerender = false;
+export const prerender = false
 ---
 
 <Layout title="Work" permalink="/work/" namespace="works">
