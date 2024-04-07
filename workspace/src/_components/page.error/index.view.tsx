@@ -15,7 +15,7 @@ const Component: React.FC<{
             data-cursor="scale"
             href="/"
           >
-            Back to top
+            Back to home
           </a>
         </div>
       </main>

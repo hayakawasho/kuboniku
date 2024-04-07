@@ -1,21 +1,23 @@
 ---
-import { mq } from '../../_foundation/mq';
-import { cloudinaryAPIConverter } from '../../_foundation/converter';
-import WorkDetail from '../../_components/page.work-single/index.view';
-import { createWorkRepository } from '../../_repositories';
-import Layout from '../../layout.astro';
+import { mq } from './../_foundation/mq';
+import { cloudinaryAPIConverter } from './../_foundation/converter';
+import WorkDetail from './../_components/page.work-single/index.view';
+import { createWorkRepository } from './../_repositories';
+import Layout from './../layout.astro';
 
-const { slug } = Astro.params;
-const { cookies } = Astro
+const { searchParams } = Astro.url
 
-const refreshToken = cookies.get("token")?.value
+const id = searchParams.get('id')
+const nonce = searchParams.get('nonce')
+
 const headers: Record<string, any> = {
-  "Authorization": refreshToken && `Bearer ${refreshToken}`,
   "Content-Type": "application/json",
+  "X-WP-Nonce": nonce
 }
+
 const workRepo = createWorkRepository(headers)
-const result = await workRepo.findBySlug({
-  slug: slug as string,
+const result = await workRepo.findById({
+  id: id as string,
 })
 
 if (!result) {

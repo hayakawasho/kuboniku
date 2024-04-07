@@ -22,8 +22,7 @@ const Component: React.FC<Props> = props => {
       <main data-component="Works">
         <canvas
           aria-hidden="true"
-          className="opacity-80 backface-hidden"
-          data-gl=""
+          className="glCanvas | opacity-80 backface-hidden"
           data-ref="canvas"
         ></canvas>
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">

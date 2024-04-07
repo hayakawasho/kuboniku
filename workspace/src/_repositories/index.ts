@@ -1,3 +1,3 @@
-export * from "./works";
-export * from "./top";
+export * from "./work";
+export * from "./home";
 export * from "./auth";

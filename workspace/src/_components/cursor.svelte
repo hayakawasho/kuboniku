@@ -9,8 +9,8 @@
 
   let timer: number;
 
-  let refDragArrowTop: SVGElement;
-  let refDragArrowBottom: SVGElement;
+  // let refDragArrowTop: SVGElement;
+  // let refDragArrowBottom: SVGElement;
   let refProgressCircle: SVGElement;
   let refProgressCirclePath: SVGElement;
 
@@ -30,15 +30,6 @@
 
   useRouteContext(_payload => {
     cursorTypeMutators("default");
-
-    // switch (payload.name) {
-    //   case "home":
-    //     cursorTypeMutators("drag");
-    //     break;
-    //   default:
-    //     cursorTypeMutators("default");
-    //     break;
-    // }
   });
 
   useDelegate("[data-cursor]", "mouseenter", e => {
@@ -74,7 +65,6 @@
     }
 
     const easeVal = 1 - (1 - 0.3) ** timeRatio;
-
     state.lastX = lerp(state.lastX, state.x, easeVal);
     state.lastY = lerp(state.lastY, state.y, easeVal);
   });
@@ -93,10 +83,10 @@
     //   Tween.kill(refProgressCirclePath);
     //   break;
     default:
-      Tween.kill(refProgressCirclePath);
-      Tween.prop(refProgressCirclePath, {
-        strokeDashoffset: 188.5220947265625,
-      });
+      // Tween.kill(refProgressCirclePath);
+      // Tween.prop(refProgressCirclePath, {
+      //   strokeDashoffset: 189,
+      // });
       break;
   }
 </script>
@@ -108,7 +98,7 @@
 >
   <div class="w-full h-full relative">
     <div class="circle" />
-    <svg
+    <!--svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -120,7 +110,7 @@
       bind:this={refDragArrowTop}
     >
       <path d="M3,0l3,3H0L3,0z" />
-    </svg>
+    </svg-->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 68 68"
@@ -136,7 +126,7 @@
         bind:this={refProgressCirclePath}
       />
     </svg>
-    <svg
+    <!--svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -148,7 +138,7 @@
       bind:this={refDragArrowBottom}
     >
       <path d="M3,3L0,0h6L3,3z" />
-    </svg>
+    </svg-->
   </div>
 </div>
 
@@ -178,37 +168,36 @@
       //   opacity: 1;
       // }
 
-      & .progressCircle {
-        scale: 1;
-      }
+      // & .progressCircle {
+      //   scale: 1;
+      // }
 
-      & .dragArrow--top {
-        opacity: 1;
-        transform: translateX(-50%);
-      }
+      // & .dragArrow--top {
+      //   opacity: 1;
+      //   transform: translateX(-50%);
+      // }
 
-      & .dragArrow--bottom {
-        opacity: 1;
-        transform: translateX(-50%);
-      }
+      // & .dragArrow--bottom {
+      //   opacity: 1;
+      //   transform: translateX(-50%);
+      // }
 
-      & .circle {
-        transform: scale(0);
-        opacity: 0;
-      }
+      // & .circle {
+      //   transform: scale(0);
+      //   opacity: 0;
+      // }
     }
 
-    &[data-cursor-type="drag.scale"] {
-      & .dragArrow,
-      .progressCircle {
-        opacity: 0.5;
-      }
-
-      & .circle {
-        transform: scale(1);
-        opacity: 0.5;
-      }
-    }
+    // &[data-cursor-type="drag.scale"] {
+    //   & .dragArrow,
+    //   .progressCircle {
+    //     opacity: 0.5;
+    //   }
+    //   & .circle {
+    //     transform: scale(1);
+    //     opacity: 0.5;
+    //   }
+    // }
 
     &[data-cursor-type="hide"] {
       & .circle {
@@ -247,29 +236,26 @@
     opacity: 0.5;
   }
 
-  .dragArrow {
-    opacity: 0;
-    position: absolute;
-    width: 0.8rem;
-    // transition: transform 0.35s ease, opacity 0.9s var(--ease-opacity);
-    transition: transform 0.35s ease, opacity 0.35s ease;
+  //.dragArrow {
+  //  opacity: 0;
+  //  position: absolute;
+  //  width: 0.8rem;
+  //  transition: transform 0.35s ease, opacity 0.35s ease;
+  //  & > path {
+  //    fill: currentColor;
+  //  }
+  //}
+  // .dragArrow--top {
+  //   left: 50%;
+  //   top: -0.9rem;
+  //   transform: translateX(-50%) translateY(1rem);
+  // }
 
-    & > path {
-      fill: currentColor;
-    }
-  }
-
-  .dragArrow--top {
-    left: 50%;
-    top: -0.9rem;
-    transform: translateX(-50%) translateY(1rem);
-  }
-
-  .dragArrow--bottom {
-    bottom: -0.9rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(-1rem);
-  }
+  // .dragArrow--bottom {
+  //   bottom: -0.9rem;
+  //   left: 50%;
+  //   transform: translateX(-50%) translateY(-1rem);
+  // }
 
   .progressCircle {
     height: 4rem;
@@ -286,7 +272,7 @@
       stroke-width: 2px;
       transform: rotate(0deg);
       transform-origin: center;
-      stroke-dashoffset: 0;
+      stroke-dashoffset: 188;
     }
   }
 

@@ -1,4 +1,8 @@
-import type { Image } from "@/_components/image";
+type Image = {
+  width: number;
+  height: number;
+  url: string;
+};
 
 const convertGraphqlRawMediaToImg = (raw: any): Image => {
   return {

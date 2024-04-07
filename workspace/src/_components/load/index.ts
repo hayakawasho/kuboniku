@@ -18,7 +18,7 @@ import { scrollStateYMutators } from "@/_states/scroll";
 import { scrollPositionMutators } from "@/_states/scroll-position";
 import { windowSizeMutators } from "@/_states/window-size";
 import Cursor from "../cursor.svelte";
-import BackCanvas from "../glworld/back";
+import BackCanvas from "../glworld";
 import type { AppContext, RouteName } from "@/_foundation/type";
 
 type Props = {

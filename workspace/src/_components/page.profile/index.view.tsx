@@ -1,6 +1,8 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
-import ImgGrad from "../../assets/grad.jpg";
+import { ResponsiveImage } from "@/_components/ui/responsive-image";
+import ProfileName from "../../assets/profile.png";
+import ProfileNameSp from "../../assets/profile_sp.png";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
 
@@ -12,18 +14,14 @@ const Component: React.FC<{
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
         <div className="relative">
-          <i
-            className={`${Styles.logo} | icon-logo | sp:hidden`}
-            style={{
-              backgroundImage: `url(${ImgGrad.src})`,
-            }}
-          ></i>
-          <i
-            className={`${Styles.logo} | icon-logo_sp | pc:hidden`}
-            style={{
-              backgroundImage: `url(${ImgGrad.src})`,
-            }}
-          ></i>
+          <ResponsiveImage
+            alt="Kuboniku.com"
+            className={`${Styles.logo}`}
+            mob={ProfileNameSp.src}
+            mobSize={[ProfileNameSp.width, ProfileNameSp.height]}
+            size={[ProfileName.width, ProfileName.height]}
+            src={ProfileName.src}
+          />
           <div className={Styles.container}>
             <div className={Styles.container__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>

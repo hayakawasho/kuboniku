@@ -22,7 +22,7 @@ const Component: React.FC<Props> = props => {
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
-      <main data-color={post.theme} data-component="WorksSingle">
+      <main data-color={post.theme} data-component="WorkSingle">
         <div data-ref="progressBar"></div>
         <div className={Styles.kv}>
           <div className={Styles.kv__cont}>
@@ -108,26 +108,28 @@ const Component: React.FC<Props> = props => {
             )}
           </div>
 
-          <aside className={`${Styles.kv} !h-screen`}>
-            <Link
-              className="h-full absolute inset-0 m-auto z-10"
-              data-cursor="scale"
-              to={`/work/${nextPost.slug}/`}
-            >
-              <div className={Styles.kv__cont}>
-                <h2 className={Styles.heading}>Next Project</h2>
-                <p className={Styles.sub}>{selectTitle(nextPost)}</p>
-              </div>
-              <ResponsiveImage
-                alt=""
-                className="opacity-40 filter grayscale-100 object-cover h-full absolute inset-0 m-auto"
-                mob={cloudinaryAPIConverter(nextPost.mv["sp"].url, "f_auto,q_auto,w_750")}
-                mobSize={[nextPost.mv["sp"].width, nextPost.mv["sp"].height]}
-                size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
-                src={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
-              />
-            </Link>
-          </aside>
+          {nextPost && (
+            <aside className={`${Styles.kv} !h-screen`}>
+              <Link
+                className="h-full absolute inset-0 m-auto z-10"
+                data-cursor="scale"
+                to={`/work/${nextPost.slug}/`}
+              >
+                <div className={Styles.kv__cont}>
+                  <h2 className={Styles.heading}>Next Project</h2>
+                  <p className={Styles.sub}>{selectTitle(nextPost)}</p>
+                </div>
+                <ResponsiveImage
+                  alt=""
+                  className="opacity-40 filter grayscale-100 object-cover h-full absolute inset-0 m-auto"
+                  mob={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
+                  mobSize={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
+                  size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
+                  src={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
+                />
+              </Link>
+            </aside>
+          )}
         </div>
       </main>
     </PageWrapper>

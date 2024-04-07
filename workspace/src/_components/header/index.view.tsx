@@ -1,6 +1,7 @@
 import Styles from "./index.module.scss";
 import { Sns } from "./sns.view";
 import { Link } from "../ui/link";
+import Noise from "@/assets/noise.png";
 import type { RouteName } from "@/_foundation/type";
 
 type Props = {
@@ -26,8 +27,13 @@ export const Header = ({ current }: Props) => {
       </header>
       <div className={Styles.menu} data-ref="menu">
         <div className="w-full h-full relative">
-          <div className={`${Styles.menu__mask} | pc:hidden`} data-ref="mask" />
-          <div className={`${Styles.menu__bg} | pc:hidden`} data-ref="menuBg" />
+          <div aria-hidden="true" className={`${Styles.menu__mask} | pc:hidden`} data-ref="mask" />
+          <div aria-hidden="true" className={`${Styles.menu__bg} | pc:hidden`} data-ref="menuBg">
+            <div
+              className="absolute inset-0 opacity-20 bg-repeat"
+              style={{ backgroundImage: `url(${Noise.src})` }}
+            ></div>
+          </div>
           <div className={Styles.menu__content} data-current={current} data-ref="menuContent" />
         </div>
       </div>

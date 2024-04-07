@@ -2,7 +2,7 @@ import axios from "redaxios";
 import { convertRawPost2WorkForTop } from "./converter";
 import type { WorkMetadata } from "@/_components/work";
 
-export const createTopElementsRepository = () => ({
+export const createHomeElementsRepository = () => ({
   find: async (): Promise<{ works: WorkMetadata[] }> => {
     const res = await axios<any>({
       data: {

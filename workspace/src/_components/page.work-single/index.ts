@@ -10,7 +10,7 @@ import type { AppContext } from "@/_foundation/type";
 // type Refs = {};
 
 export default defineComponent({
-  name: "WorksSingle",
+  name: "WorkSingle",
   setup(el, context: AppContext) {
     const { once, history, backCanvasContext } = context;
 

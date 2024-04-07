@@ -1,10 +1,10 @@
 ---
 import Home from '../_components/page.home/index.view';
-import { createTopElementsRepository } from '../_repositories';
+import { createHomeElementsRepository } from '../_repositories';
 import Layout from '../layout.astro';
 
-const repo = createTopElementsRepository();
-const result = await repo.find();
+const homeRepo = createHomeElementsRepository();
+const result = await homeRepo.find();
 ---
 
 <Layout title="" permalink="" namespace="home">

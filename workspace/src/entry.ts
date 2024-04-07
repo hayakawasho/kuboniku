@@ -5,8 +5,8 @@ import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";
 import Home from "./_components/page.home";
 import Profile from "./_components/page.profile";
-import Works from "./_components/page.works";
-import WorksSingle from "./_components/page.works-single";
+import Works from "./_components/page.work";
+import WorkSingle from "./_components/page.work-single";
 import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
 import type { IComponent, ComponentContext } from "lake";
@@ -22,7 +22,7 @@ import type { IComponent, ComponentContext } from "lake";
     Scrollbar: withSvelte(Scrollbar, "Scrollbar"),
     Sns: withSvelte(Sns, "Sns"),
     Works,
-    WorksSingle,
+    WorkSingle,
   } as const;
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
@@ -43,7 +43,7 @@ import type { IComponent, ComponentContext } from "lake";
 
   const html = document.documentElement;
 
-  component(Load)(html, {
+  const loadContext = {
     onCleanup: (scope: HTMLElement) => {
       unmount([...scope.querySelectorAll<HTMLElement>("[data-component]")]);
     },
@@ -59,7 +59,9 @@ import type { IComponent, ComponentContext } from "lake";
         once: false,
       });
     },
-  });
+  };
+
+  component(Load)(html, loadContext);
 })();
 
 if (process.env.NODE_ENV === "development") {

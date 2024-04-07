@@ -2,8 +2,8 @@
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 // import { ClientOnly } from './client-only.tsx';
 import './_components/page.home/index.module.scss';
-import './_components/page.works/index.module.scss';
-import './_components/page.works-single/index.module.scss';
+import './_components/page.work/index.module.scss';
+import './_components/page.work-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
 import IconFont from './assets/kuboniku.woff';
 import type { RouteName } from "./_foundation/type";
@@ -60,7 +60,8 @@ const idDev = process.env.NODE_ENV !== 'production';
 	</head>
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-full h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
-    <canvas aria-hidden="true" data-gl data-ref="backCanvas"></canvas>
+    <canvas aria-hidden="true" class="glCanvas | opacity-15" data-ref="backCanvas"></canvas>
+    <div aria-hidden="true" class="noise"></div>
     <slot />
     <div class="uiCursor" data-ref="cursor"></div>
     { // <ClientOnly client:only="react" />
@@ -75,6 +76,19 @@ const idDev = process.env.NODE_ENV !== 'production';
   font-weight: normal;
   font-style: normal;
   font-display: block;
+}
+
+.noise {
+  background-image: url("./assets/noise.png");
+  background-repeat: repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(0.0001deg);
+  pointer-events: none;
+  opacity: .2;
 }
 
 .uiScrollbar {
@@ -101,5 +115,19 @@ const idDev = process.env.NODE_ENV !== 'production';
   @media not (hover: hover) {
     display: none;
   }
+}
+
+.glCanvas {
+  contain: strict;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow: clip;
+  transform: rotate(0.0001deg);
+  pointer-events: none;
+  user-select: none;
 }
 </style>

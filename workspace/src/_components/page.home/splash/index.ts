@@ -10,7 +10,15 @@ type Refs = {
   splashImage: HTMLImageElement[];
 };
 
-const CANVAS_CLASSLIST = ["fixed", "top-0", "left-0", "w-full", "h-full", "pointer-events-none"];
+const CANVAS_CLASSLIST = [
+  "fixed",
+  "top-0",
+  "left-0",
+  "w-full",
+  "h-full",
+  "pointer-events-none",
+  // "opacity-15",
+];
 
 export default defineComponent({
   name: "Splash",

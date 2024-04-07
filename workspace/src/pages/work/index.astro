@@ -1,6 +1,6 @@
 ---
-import WorksIndex from '../../_components/page.works/index.view';
-import { createWorksRepository } from '../../_repositories';
+import WorkIndex from '../../_components/page.work/index.view';
+import { createWorkRepository } from '../../_repositories';
 import { createAuthRepository } from '../../_repositories';
 import Layout from '../../layout.astro';
 
@@ -27,12 +27,16 @@ if (!isAuth) {
   refreshToken = undefined
 }
 
-const workRepo = createWorksRepository(refreshToken)
+const headers: Record<string, any> = {
+  "Authorization": refreshToken && `Bearer ${refreshToken}`,
+  "Content-Type": "application/json",
+}
+const workRepo = createWorkRepository(headers)
 const result = await workRepo.findList()
 
 export const prerender = false
 ---
 
-<Layout title="Work" permalink="/work/" namespace="works">
-  <WorksIndex posts={result!.works} total={Number(result!.totalCount)} namespace="works" />
+<Layout title="Work" permalink="/work/" namespace="work">
+  <WorkIndex posts={result!.works} total={Number(result!.totalCount)} namespace="work" />
 </Layout>
