@@ -1,12 +1,11 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
-import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import Projects from "./projects";
+import ProjectItem from "./project";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
@@ -14,6 +13,7 @@ type Refs = {
   index: HTMLElement;
   h1: HTMLElement;
   canvas: HTMLCanvasElement;
+  projectItem: HTMLElement[];
 };
 
 export default defineComponent({
@@ -27,21 +27,21 @@ export default defineComponent({
     };
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "projects", "h1", "canvas", "wrap");
+    const { refs } = useDomRef<Refs>("index", "projectItem", "h1", "canvas", "wrap");
     const { device } = useMediaQueryContext();
 
     addChild(refs.h1, SkewScrollContainer, context);
     addChild(refs.index, SkewScrollContainer, context);
 
     if (device === "pc") {
-      const { addScene, removeScene } = useThree(refs.canvas, 1);
+      addChild(refs.projectItem, ProjectItem, context);
 
-      addChild(refs.canvas, SkewScrollContainer, context);
-      addChild(refs.index, Projects, {
-        ...context,
-        addScene,
-        removeScene,
-      });
+      // const { addScene, removeScene } = useThree(refs.canvas, 1);
+      // addChild(refs.index, Projects, {
+      //   ...context,
+      //   addScene,
+      //   removeScene,
+      // });
     }
 
     const { onMutateScrollProgress } = useScrollbarProgress();

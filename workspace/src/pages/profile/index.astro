@@ -1,8 +1,27 @@
 ---
+import { mq } from '../../_foundation/mq';
+import profileNameImg from "../../assets/profile.png";
+import profileNameImgSp from "../../assets/profile_sp.png";
 import Profile from '../../_components/page.profile/index.view';
 import Layout from '../../layout.astro';
 ---
 
 <Layout title="Profile" permalink="/profile/" namespace="profile">
+  <link
+    slot="prependHead"
+    as="image"
+    crossorigin="anonymous"
+    href={profileNameImg.src}
+    media={mq.pc}
+    rel="preload"
+  />
+  <link
+    slot="prependHead"
+    as="image"
+    crossorigin="anonymous"
+    href={profileNameImgSp.src}
+    media={mq.sp}
+    rel="preload"
+  />
   <Profile namespace="profile" />
 </Layout>

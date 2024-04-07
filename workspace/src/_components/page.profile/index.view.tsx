@@ -1,8 +1,8 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
-import ProfileName from "../../assets/profile.png";
-import ProfileNameSp from "../../assets/profile_sp.png";
+import profileNameImg from "../../assets/profile.png";
+import profileNameImgSp from "../../assets/profile_sp.png";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
 
@@ -13,14 +13,14 @@ const Component: React.FC<{
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
-        <div className="relative">
+        <div className="relative z-[2]">
           <ResponsiveImage
             alt="Kuboniku.com"
             className={`${Styles.logo}`}
-            mob={ProfileNameSp.src}
-            mobSize={[ProfileNameSp.width, ProfileNameSp.height]}
-            size={[ProfileName.width, ProfileName.height]}
-            src={ProfileName.src}
+            mob={profileNameImgSp.src}
+            mobSize={[profileNameImgSp.width, profileNameImgSp.height]}
+            size={[profileNameImg.width, profileNameImg.height]}
+            src={profileNameImg.src}
           />
           <div className={Styles.container}>
             <div className={Styles.container__in}>

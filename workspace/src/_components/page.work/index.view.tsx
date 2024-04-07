@@ -44,28 +44,42 @@ const Component: React.FC<Props> = props => {
                 >
                   <div aria-hidden="true" className={Styles.aspect}></div>
                   <div className={Styles.entry__g}>
-                    <picture className={Styles.thumb}>
-                      <source
-                        height={1}
-                        media="(min-width: 640px)"
-                        srcSet="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
-                        width={1}
-                      />
-                      <img
-                        alt=""
-                        className="absolute top-0 left-0 object-cover w-full h-full backface-hidden"
-                        data-h={item.mv["pc"].height}
-                        data-ref="thumb"
-                        data-src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_630")}
-                        data-w={item.mv["pc"].width}
-                        height={item.mv["pc"].height}
-                        src={cloudinaryAPIConverter(
-                          item.mv["pc"].url,
-                          "f_auto,q_auto,w_630,e_grayscale"
-                        )}
-                        width={item.mv["pc"].width}
-                      />
-                    </picture>
+                    {
+                      <div className={Styles.thumb}>
+                        <img
+                          height={item.mv["pc"].height}
+                          width={item.mv["pc"].width}
+                          src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
+                          data-ref="thumb"
+                          alt=""
+                        />
+                      </div>
+                      // <picture className={Styles.thumb}>
+                      //   <source
+                      //     height={1}
+                      //     media="(min-width: 640px)"
+                      //     srcSet="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+                      //     width={1}
+                      //   />
+                      //   <img
+                      //     alt=""
+                      //     className="absolute top-0 left-0 object-cover w-full h-full backface-hidden"
+                      //     data-h={item.mv["pc"].height}
+                      //     data-ref="thumb"
+                      //     data-src={cloudinaryAPIConverter(
+                      //       item.mv["pc"].url,
+                      //       "f_auto,q_auto,w_630"
+                      //     )}
+                      //     data-w={item.mv["pc"].width}
+                      //     height={item.mv["pc"].height}
+                      //     src={cloudinaryAPIConverter(
+                      //       item.mv["pc"].url,
+                      //       "f_auto,q_auto,w_630,e_grayscale"
+                      //     )}
+                      //     width={item.mv["pc"].width}
+                      //   />
+                      // </picture>
+                    }
                     <div className={Styles.entry__hgroup}>
                       <p className={`${Styles.num} mb-[1.2rem] pc:mb-[1.5rem] italic`}>
                         {zeroPadding(total - index)}

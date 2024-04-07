@@ -4,8 +4,8 @@
   left: 50%;
   transform: translate(calc(-50% + 2rem), calc(-100% - 7.5rem));
   width: auto;
-  height: 17rem;
-  // font-size: 17rem;
+  height: 1em;
+  font-size: 17rem;
   // background-size: 100% 160%;
   // background-position: center;
   // background-clip: text;
@@ -13,8 +13,7 @@
   // color: transparent;
 
   @media (min-width: 640px) {
-    // font-size: 31rem;
-    height: 31rem;
+    font-size: 31rem;
     transform: translate(calc(-50% + 7rem), calc(-100% + 0.1em));
   }
 }
