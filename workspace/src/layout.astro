@@ -89,6 +89,10 @@ const idDev = process.env.NODE_ENV !== 'production';
   height: 100%;
   pointer-events: none;
   opacity: .4;
+
+  @media (min-width: 640px) {
+    opacity: .5;
+  }
 }
 
 .uiScrollbar {
