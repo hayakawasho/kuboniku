@@ -30,7 +30,7 @@ export const Header = ({ current }: Props) => {
           <div aria-hidden="true" className={`${Styles.menu__mask} | pc:hidden`} data-ref="mask" />
           <div aria-hidden="true" className={`${Styles.menu__bg} | pc:hidden`} data-ref="menuBg">
             <div
-              className="absolute inset-0 opacity-40 bg-repeat bg-[length:256px_auto]"
+              className="absolute inset-0 opacity-20 bg-repeat bg-[length:256px_auto]"
               style={{ backgroundImage: `url(${noiseImg.src})` }}
             ></div>
           </div>
