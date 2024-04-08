@@ -16,37 +16,36 @@ export default defineComponent({
   setup(_canvas: HTMLCanvasElement, context: Props) {
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
-    const timeOffset = 100 * Math.random();
     const auroraPixelRatio = 0.5;
     const refColorCode = ref(SITE_THEME_COLOR);
 
     const uniforms = {
-      uColor1: {
+      u_color1: {
         value: new Color(refColorCode.value),
       },
-      uColor2: {
+      u_color2: {
         value: new Color(refColorCode.value),
       },
-      uColor3: {
+      u_color3: {
         value: new Color(0),
       },
-      uColor4: {
+      u_color4: {
         value: new Color(0),
       },
-      uLightness: {
+      u_lightness: {
         value: new Vector2(0.5, 0),
       },
-      uNoiseIntensity: {
+      u_noiseIntensity: {
         value: new Vector2(1, 0.5),
       },
-      uNoiseScale: {
-        value: new Vector2(1, 0.32),
+      u_noiseScale: {
+        value: new Vector2(1, 0.48),
       },
-      uResolution: {
+      u_resolution: {
         value: new Vector2(windowWidth.value, windowHeight.value),
       },
-      uTime: {
-        value: timeOffset,
+      u_time: {
+        value: 0,
       },
     };
 
@@ -66,8 +65,10 @@ export default defineComponent({
     useTick(({ deltaTime, timeRatio }) => {
       const t = Math.min(1, 2 * deltaTime * timeRatio);
 
-      uniforms.uLightness.value.x += (1 - uniforms.uLightness.value.x) * t;
-      uniforms.uTime.value += t * 0.01 * lerp(0.6, 0.2, uniforms.uLightness.value.y);
+      uniforms.u_lightness.value.x += (1 - uniforms.u_lightness.value.x) * t;
+      // uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t;
+      // uniforms.u_lightness.value.y += (1 - uniforms.u_lightness.value.y) * t;
+      uniforms.u_time.value -= t * 0.005 * lerp(0.7, 0.2, uniforms.u_lightness.value.y);
     });
 
     useMount(() => {
@@ -83,12 +84,12 @@ export default defineComponent({
 
       Tween.serial(
         Tween.parallel(
-          Tween.tween(uniforms.uColor1.value, 1, "opacity", {
+          Tween.tween(uniforms.u_color1.value, 1, "opacity", {
             b: newColor.b,
             g: newColor.g,
             r: newColor.r,
           }),
-          Tween.tween(uniforms.uColor2.value, 1, "opacity", {
+          Tween.tween(uniforms.u_color2.value, 1, "opacity", {
             b: newColor.b,
             g: newColor.g,
             r: newColor.r,
