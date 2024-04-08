@@ -12,6 +12,7 @@ uniform vec3 u_color4;
 uniform vec2 u_noiseIntensity;
 uniform vec2 u_noiseScale;
 uniform vec2 u_lightness;
+uniform float u_brightness;
 
 varying vec2 vUv;
 
@@ -25,9 +26,9 @@ void main () {
   vec2 aspect = u_resolution / min(u_resolution.x, u_resolution.y);
   st *= aspect;
 
-  float noise1 = snoise3(vec3(st * 1.0 * u_noiseScale.x, time) + 0.1 + time * 0.05) * .25 + .1;
-  float noise2 = snoise3(vec3(st * 2.0 * u_noiseScale.y, time) + 0.1 + time * 0.05) * .25 + .1;
-  float noise3 = snoise3(vec3(st * 2.0 * u_noiseScale.y, time) + 0.2 + time * 0.02) * .25 + .1;
+  float noise1 = snoise3(vec3(st * 1.0 * u_noiseScale.x, time) + 0.1 + time * 0.05) * u_brightness + .1;
+  float noise2 = snoise3(vec3(st * 2.0 * u_noiseScale.y, time) + 0.1 + time * 0.05) * u_brightness + .1;
+  float noise3 = snoise3(vec3(st * 2.0 * u_noiseScale.y, time) + 0.2 + time * 0.02) * u_brightness + .1;
 
   vec3 color1 = mix(u_color4, u_color3, noise1);
   vec3 color2 = mix(u_color1, u_color2, noise2);

@@ -41,9 +41,12 @@ export default defineComponent({
         value: new Vector2(1, 0.5),
       },
       u_noiseScale: {
+        value: new Vector2(1, 0.56)
+      },
+      u_brightness: {
         value: {
-          pc: new Vector2(1, 0.56),
-          sp: new Vector2(1, 0.48),
+          pc: 2.5,
+          sp: 1.5
         }[device]
       },
       u_resolution: {
