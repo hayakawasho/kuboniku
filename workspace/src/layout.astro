@@ -61,7 +61,7 @@ const idDev = process.env.NODE_ENV !== 'production';
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-full h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" class="glCanvas | opacity-100" data-ref="backCanvas"></canvas>
-    <div aria-hidden="true" class="noise"></div>
+    <div aria-hidden="true" class="uiNoise"></div>
     <slot />
     <div class="uiCursor" data-ref="cursor"></div>
     { // <ClientOnly client:only="react" />
@@ -70,30 +70,13 @@ const idDev = process.env.NODE_ENV !== 'production';
 </html>
 
 <style lang="scss" is:global>
-@font-face {
-  font-family: "kuboniku";
-  src: url("./assets/kuboniku.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-.noise {
-  background-image: url("./assets/noise_512x341.png");
-  background-size: 256px auto;
-  background-repeat: repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  pointer-events: none;
-  opacity: .45;
-
-  @media (min-width: 640px) {
-    opacity: .5;
-  }
-}
+// @font-face {
+//   font-family: "kuboniku";
+//   src: url("./assets/kuboniku.woff") format("woff");
+//   font-weight: normal;
+//   font-style: normal;
+//   font-display: block;
+// }
 
 .uiScrollbar {
   position: fixed;
@@ -133,5 +116,30 @@ const idDev = process.env.NODE_ENV !== 'production';
   transform: rotate(0.0001deg);
   pointer-events: none;
   user-select: none;
+}
+
+.uiNoise {
+  background-image: url("./assets/noise_512x341.png");
+  background-size: 256px auto;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  opacity: .45;
+
+  @media (min-width: 640px) {
+    opacity: .5;
+  }
+}
+
+body[data-page="home"] {
+  overscroll-behavior-y: none;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 </style>

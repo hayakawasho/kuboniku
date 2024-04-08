@@ -22,8 +22,9 @@ const Component: React.FC<Props> = props => {
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
+      <div aria-hidden="true" className="uiNoise | !opacity-20 z-[2]"></div>
       <main className="h-full" data-component="Home">
-        <canvas aria-hidden="true" className="glCanvas | opacity-90" data-ref="canvas"></canvas>
+        <canvas aria-hidden="true" className="glCanvas | opacity-100" data-ref="canvas"></canvas>
         <div
           className="pointer-events-none fixed inset-0 m-auto w-full h-full z-10"
           data-images={`${images}`}
