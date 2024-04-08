@@ -45,8 +45,8 @@ export default defineComponent({
       },
       u_brightness: {
         value: {
-          pc: 2.5,
-          sp: 1.5
+          pc: .25,
+          sp: .1
         }[device]
       },
       u_resolution: {
