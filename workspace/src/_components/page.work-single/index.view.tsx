@@ -121,7 +121,7 @@ const Component: React.FC<Props> = props => {
                 </div>
                 <ResponsiveImage
                   alt=""
-                  className="opacity-40 filter grayscale-100 object-cover h-full absolute inset-0 m-auto"
+                  className={Styles.kv__nextImg}
                   mob={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
                   mobSize={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
                   size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
