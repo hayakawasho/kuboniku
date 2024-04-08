@@ -1,6 +1,4 @@
 ---
-import { mq } from './../_foundation/mq';
-import { cloudinaryAPIConverter } from './../_foundation/converter';
 import WorkDetail from './../_components/page.work-single/index.view';
 import { createWorkRepository } from './../_repositories';
 import Layout from './../layout.astro';
@@ -14,7 +12,6 @@ const headers: Record<string, any> = {
   "Content-Type": "application/json",
   "X-WP-Nonce": nonce
 }
-
 const workRepo = createWorkRepository(headers)
 const result = await workRepo.findById({
   id: id as string,
@@ -30,14 +27,6 @@ if (!result) {
 export const prerender = false;
 ---
 
-<Layout title={result.work.title} permalink={`/work/${result.work.slug}/`} namespace="work-single">
-  <link
-    slot="prependHead"
-    as="image"
-    crossorigin="anonymous"
-    href={cloudinaryAPIConverter(result.work.mv["pc"].url, "f_auto,q_auto,w_1680")}
-    media={mq.pc}
-    rel="preload"
-  />
+<Layout title={result.work.title} permalink={``} namespace="work-single">
   <WorkDetail post={result.work} nextPost={result.work.next} projectNumber={result.work.index} namespace="work-single" />
 </Layout>
