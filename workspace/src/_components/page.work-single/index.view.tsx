@@ -23,7 +23,6 @@ const Component: React.FC<Props> = props => {
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main data-color={post.theme} data-component="WorkSingle">
-        <div data-ref="progressBar"></div>
         <div className={Styles.kv}>
           <div className={Styles.kv__cont}>
             <p className={Styles.project}>
@@ -110,15 +109,15 @@ const Component: React.FC<Props> = props => {
 
           {nextPost && (
             <aside className={`${Styles.kv} !h-screen`}>
-              <Link
-                className="h-full absolute inset-0 m-auto z-10"
-                data-cursor="scale"
-                to={`/work/${nextPost.slug}/`}
-              >
-                <div className={Styles.kv__cont}>
+              <div className="h-full absolute inset-0 m-auto z-10">
+                <Link
+                  data-cursor="scale"
+                  className={Styles.kv__cont}
+                  to={`/work/${nextPost.slug}/`}
+                >
                   <h2 className={Styles.heading}>Next Project</h2>
                   <p className={Styles.sub}>{selectTitle(nextPost)}</p>
-                </div>
+                </Link>
                 <ResponsiveImage
                   alt=""
                   className={Styles.kv__nextImg}
@@ -127,7 +126,7 @@ const Component: React.FC<Props> = props => {
                   size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
                   src={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
                 />
-              </Link>
+              </div>
             </aside>
           )}
         </div>

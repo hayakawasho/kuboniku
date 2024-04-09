@@ -64,6 +64,7 @@ const idDev = process.env.NODE_ENV !== 'production';
     <canvas aria-hidden="true" class="glCanvas | opacity-100" data-ref="backCanvas"></canvas>
     <div aria-hidden="true" class="uiNoise"></div>
     <slot />
+    <div class="uiProgressbar" data-component="Scrollbar" />
     <div class="uiCursor" data-ref="cursor"></div>
     { // <ClientOnly client:only="react" />
     }
@@ -79,7 +80,7 @@ const idDev = process.env.NODE_ENV !== 'production';
 //   font-display: block;
 // }
 
-.uiScrollbar {
+.uiProgressbar {
   position: fixed;
   top: 50vh;
   right: 3.2rem;

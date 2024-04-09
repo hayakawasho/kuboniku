@@ -52,6 +52,7 @@ const Component: React.FC<Props> = props => {
                           src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
                           data-ref="thumb"
                           alt=""
+                          loading="lazy"
                         />
                       </div>
                       // <picture className={Styles.thumb}>
