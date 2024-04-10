@@ -5,16 +5,15 @@ import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
 import type { useInfiniteScroll } from "../use-infinite-scroll";
-import type { PlaneBufferGeometry, ShaderMaterial, Object3D, Scene } from "@/_foundation/three";
-import type { AppContext } from "@/_foundation/type";
+import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 
-type Props = AppContext & {
-  geo: PlaneBufferGeometry;
-  mat: ShaderMaterial;
-  addScene: (child: Object3D) => Scene;
-  removeScene: (child: Object3D) => Scene;
-  infiniteScrollContext: ReturnType<typeof useInfiniteScroll>;
-};
+type Props = AppContext &
+  ParentScene & {
+    geo: PlaneBufferGeometry;
+    mat: ShaderMaterial;
+    infiniteScrollContext: ReturnType<typeof useInfiniteScroll>;
+  };
 
 type Refs = {
   plane: HTMLImageElement;
@@ -31,7 +30,6 @@ export default defineComponent({
     };
 
     const { refs } = useDomRef<Refs>("plane");
-
     const { device } = useMediaQueryContext();
     const [ww, wh] = useWindowSizeContext();
 
@@ -48,32 +46,25 @@ export default defineComponent({
 
     useWindowSizeContext(({ ww, wh }) => {
       state.resizing = true;
-
       plane.resize({
         height: wh,
         width: ww,
       });
-
       state.resizing = false;
     });
 
-    const SPEED = Number(refs.plane.dataset.speed);
+    const speed = Number(refs.plane.dataset.speed);
+    const acc = { pc: 0.0035, sp: 0.005 }[device] * speed;
 
     useTick(() => {
       if (state.resizing) {
         return;
       }
 
-      const y = infiniteScrollContext.wrap(posY.value * SPEED);
+      const y = infiniteScrollContext.wrap(posY.value * speed);
 
       plane.updateY(y);
-      plane.uniforms.u_velo.value =
-        diff.value *
-        {
-          pc: 0.004,
-          sp: 0.005,
-        }[device] *
-        SPEED;
+      plane.uniforms.u_velo.value = diff.value * acc;
 
       el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });

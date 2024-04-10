@@ -1,0 +1,42 @@
+---
+import WorkIndex from '../../_components/page.work/index.view';
+import { createWorkRepository } from '../../_repositories';
+import { createAuthRepository } from '../../_repositories';
+import Layout from '../../layout.astro';
+
+const { cookies } = Astro
+
+let refreshToken: string | undefined
+
+const val = Astro.url.searchParams.get("token")
+
+if (val) {
+  const maxAge = 60 * 60 * 24 * 7
+  cookies.set("token", val, { httpOnly: true, secure: true, maxAge })
+
+  refreshToken = val
+}
+
+refreshToken = refreshToken ?? cookies.get("token")?.value
+
+const authRepo = createAuthRepository()
+const isAuth = await authRepo.validate(refreshToken)
+
+if (!isAuth) {
+  cookies.delete("token")
+  refreshToken = undefined
+}
+
+const headers: Record<string, any> = {
+  "Authorization": refreshToken && `Bearer ${refreshToken}`,
+  "Content-Type": "application/json",
+}
+const workRepo = createWorkRepository(headers)
+const result = await workRepo.findList()
+
+export const prerender = false
+---
+
+<Layout title="Work" permalink="/work/" namespace="work">
+  <WorkIndex posts={result!.works} total={Number(result!.totalCount)} namespace="work" />
+</Layout>

@@ -1,4 +1,4 @@
-import { useUnmount } from "lake";
+import { useUnmount, ref, readonly } from "lake";
 import { map } from "nanostores";
 import type { RouteName } from "@/_foundation/type";
 
@@ -6,12 +6,16 @@ type Route = {
   name: RouteName;
 };
 
-const route = map<Route>({
+const routeState = map<Route>({
   name: "home",
 });
 
 export const useRouteContext = (callback: (payload: { name: RouteName }) => void) => {
-  const unbind = route.listen(({ name }) => {
+  const route = ref<Route>(routeState.get());
+
+  const unbind = routeState.listen(({ name }) => {
+    route.value.name = name;
+
     callback({
       name,
     });
@@ -20,6 +24,8 @@ export const useRouteContext = (callback: (payload: { name: RouteName }) => void
   useUnmount(() => {
     unbind();
   });
+
+  return readonly(route);
 };
 
-export const routeMutators = route.set;
+export const routeMutators = routeState.set;

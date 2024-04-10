@@ -16,7 +16,7 @@ export const useScrollbarProgress = (
 ) => {
   const [_wh, wh] = useWindowSizeContext();
 
-  const onScrollProgressMutate = (val: number, offset: number) => {
+  const onMutateScrollProgress = (val: number, offset: number) => {
     progress.set({
       now: (val / (offset - wh.value)) * 100,
       pos: (val + wh.value) / offset,
@@ -35,6 +35,6 @@ export const useScrollbarProgress = (
   });
 
   return {
-    onScrollProgressMutate,
+    onMutateScrollProgress,
   } as const;
 };

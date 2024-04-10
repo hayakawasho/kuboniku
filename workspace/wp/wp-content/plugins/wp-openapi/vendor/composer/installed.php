@@ -3,7 +3,7 @@
         'name' => 'moon0326/wp-openapi',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cf7e2e2cb43a6ecde3828c149b241e0c4896ec6f',
+        'reference' => '6161078f69cbc77a51acf27b424480a1ef4fe51c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'moon0326/wp-openapi' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'cf7e2e2cb43a6ecde3828c149b241e0c4896ec6f',
+            'reference' => '6161078f69cbc77a51acf27b424480a1ef4fe51c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

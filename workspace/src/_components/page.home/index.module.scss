@@ -12,7 +12,6 @@
   grid-template-columns: repeat(5, 1fr);
   left: -110%;
   right: -110%;
-  pointer-events: none;
 
   &[data-col="middle"] {
     left: -40%;
@@ -35,6 +34,7 @@
   inset: 0.5rem;
   display: block;
   will-change: transform;
+  cursor: grab;
 
   @media (min-width: 640px) {
     inset: 0.8rem;

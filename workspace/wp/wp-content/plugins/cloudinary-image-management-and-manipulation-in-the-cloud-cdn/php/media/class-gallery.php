@@ -13,6 +13,7 @@ use Cloudinary\Media;
 use Cloudinary\REST_API;
 use Cloudinary\Settings_Component;
 use Cloudinary\Utils;
+use WP_Screen;
 
 /**
  * Class Gallery.
@@ -114,6 +115,11 @@ class Gallery extends Settings_Component {
 	 * @return array
 	 */
 	public function get_config() {
+		$screen = null;
+
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+		}
 
 		$config = ! empty( $this->settings->get_value( 'gallery_config' ) ) ?
 			$this->settings->get_value( 'gallery_config' ) :
@@ -131,6 +137,17 @@ class Gallery extends Settings_Component {
 		 */
 		$config['container'] = apply_filters( 'cloudinary_gallery_html_container', '' );
 
+		$credentials = $this->plugin->components['connect']->get_credentials();
+
+		// Do not use privateCdn and secureDistribution on gallery settings page.
+		if (
+			! empty( $credentials['cname'] )
+			&& ( ! $screen instanceof WP_Screen || 'cloudinary_page_cloudinary_gallery' !== $screen->id )
+		) {
+			$config['secureDistribution'] = $credentials['cname'];
+			$config['privateCdn']         = true;
+		}
+
 		/**
 		 * Filter the gallery configuration.
 		 *
@@ -139,6 +156,11 @@ class Gallery extends Settings_Component {
 		$config = apply_filters( 'cloudinary_gallery_config', $config );
 
 		$config['queryParam'] = 'AA';
+
+		// Make sure custom settings are a json string.
+		if ( ! empty( $config['customSettings'] ) && is_array( $config['customSettings'] ) ) {
+			$config['customSettings'] = wp_json_encode( $config['customSettings'] );
+		}
 
 		return $config;
 	}
@@ -212,7 +234,7 @@ class Gallery extends Settings_Component {
 	 * @return array
 	 */
 	private function get_asset() {
-		$asset = require $this->plugin->dir_path . 'js/gallery.asset.php';
+		$asset = require $this->plugin->dir_path . 'js/gallery.asset.php'; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
 
 		$asset['dependencies'] = array_filter(
 			$asset['dependencies'],
@@ -388,6 +410,21 @@ class Gallery extends Settings_Component {
 			),
 		);
 
+		$panel[] = array(
+			'type'  => 'info_box',
+			'icon'  => $this->plugin->dir_url . 'css/images/academy-icon.svg',
+			'title' => __( 'Need help?', 'cloudinary' ),
+			'text'  => sprintf(
+				// Translators: The HTML for opening and closing link tags.
+				__(
+					'Watch free lessons on how to use the Gallery Settings in the %1$sCloudinary Academy%2$s.',
+					'cloudinary'
+				),
+				'<a href="https://training.cloudinary.com/learn/course/introduction-to-cloudinary-for-wordpress-administrators-70-minute-course-1h85/lessons/using-cloudinary-for-product-galleries-in-woocommerce-and-page-content-906?page=1" target="_blank" rel="noopener noreferrer">',
+				'</a>'
+			),
+		);
+
 		$pages['gallery']['settings'] = array(
 			$panel,
 		);
@@ -440,6 +477,14 @@ class Gallery extends Settings_Component {
 			$attributes['secureDistribution'] = $credentials['cname'];
 			$attributes['privateCdn']         = true;
 		}
+
+		if ( ! empty( $attributes['customSettings'] ) ) {
+			if ( is_string( $attributes['customSettings'] ) && ! is_admin() ) {
+				$attributes['customSettings'] = json_decode( $attributes['customSettings'], true );
+			}
+			$attributes = wp_parse_args( $attributes['customSettings'], $attributes );
+		}
+
 		unset( $attributes['selectedImages'], $attributes['customSettings'] );
 
 		$attributes['queryParam'] = 'AA';

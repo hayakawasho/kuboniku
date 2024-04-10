@@ -3,6 +3,7 @@ import { ref, readonly, useEvent, useMount } from "lake";
 import NormalizeWheel from "normalize-wheel";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
+import { useMousePos } from "@/_states/mouse";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 
@@ -63,6 +64,29 @@ export const useInfiniteScroll = (container: HTMLElement) => {
       passive: true,
     }
   );
+
+  const [_, mouseY] = useMousePos(({ y }) => {
+    if (!state.dragging) {
+      return;
+    }
+
+    const distance = (state.startPos - y) * 2;
+    state.targetPos = state.position + distance;
+  });
+
+  useEvent(container, "mousedown", e => {
+    e.preventDefault();
+
+    state.dragging = true;
+    state.position = posY.value;
+    state.startPos = mouseY.value;
+  });
+
+  useEvent(window as any, "mouseup", _e => {
+    if (state.dragging) {
+      state.dragging = false;
+    }
+  });
 
   useEvent(
     window as any,

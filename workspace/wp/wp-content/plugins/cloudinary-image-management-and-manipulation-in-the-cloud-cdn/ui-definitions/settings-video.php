@@ -84,6 +84,40 @@ $settings = array(
 							'video_player' => 'cld',
 						),
 						array(
+							'slug'         => 'adaptive_streaming',
+							'description'  => __( 'Adaptive bitrate streaming (beta)', 'cloudinary' ),
+							'type'         => 'on_off',
+							'default'      => 'off',
+							'tooltip_text' => sprintf(
+								// translators: Placeholders are <a> tags.
+								__(
+									'Adaptive bitrate streaming is a video delivery technique that adjusts the quality of a video stream in real time according to detected bandwidth and CPU capacity.%1$sRead more about Adaptive bitrate streaming%2$s',
+									'cloudinary'
+								),
+								'<br><a href="https://cloudinary.com/documentation/adaptive_bitrate_streaming" target="_blank">',
+								'</a>'
+							),
+						),
+						array(
+							'slug'      => 'adaptive_streaming_mode',
+							'title'     => __( 'Streaming protocol', 'cloudinary' ),
+							'type'      => 'select',
+							'default'   => 'mpd',
+							'options'   => array(
+								'mpd'  => __( 'Dynamic adaptive streaming over HTTP (MPEG-DASH)', 'cloudinary' ),
+								'm3u8' => __( 'HTTP live streaming (HLS)', 'cloudinary' ),
+							),
+							'condition' => array(
+								'adaptive_streaming' => true,
+							),
+						),
+					),
+					array(
+						'type'      => 'group',
+						'condition' => array(
+							'video_player' => 'cld',
+						),
+						array(
 							'slug'        => 'video_controls',
 							'description' => __( 'Show controls', 'cloudinary' ),
 							'type'        => 'on_off',
@@ -111,7 +145,7 @@ $settings = array(
 									'Please note that when choosing "always", the video will autoplay without sound (muted). This is a built-in browser feature and applies to all major browsers.%1$sRead more about muted autoplay%2$s',
 									'cloudinary'
 								),
-								'<br><a href="https://developers.google.com/web/updates/2016/07/autoplay" target="_blank">',
+								'<br><a href="https://cloudinary.com/glossary/video-autoplay" target="_blank">',
 								'</a>'
 							),
 						),
@@ -202,7 +236,7 @@ $settings = array(
 						'type'           => 'text',
 						'slug'           => 'video_freeform',
 						'title'          => __( 'Additional video transformations', 'cloudinary' ),
-						'default'       => '',
+						'default'        => '',
 						'tooltip_text'   => sprintf(
 							// translators: The link to transformation reference.
 							__(
@@ -252,7 +286,20 @@ $settings = array(
 					),
 				),
 			),
-
+		),
+		array(
+			'type'  => 'info_box',
+			'icon'  => $this->dir_url . 'css/images/academy-icon.svg',
+			'title' => __( 'Need help?', 'cloudinary' ),
+			'text'  => sprintf(
+				// Translators: The HTML for opening and closing link tags.
+				__(
+					'Watch free lessons on how to use the Video Global Settings in the %1$sCloudinary Academy%2$s.',
+					'cloudinary'
+				),
+				'<a href="https://training.cloudinary.com/learn/course/introduction-to-cloudinary-for-wordpress-administrators-70-minute-course-1h85/lessons/transforming-images-and-videos-for-pages-and-posts-1545?page=1" target="_blank" rel="noopener noreferrer">',
+				'</a>'
+			),
 		),
 	),
 );

@@ -33,16 +33,16 @@
     background: currentColor;
     transform: translateY(-50%);
     overflow: hidden;
-    opacity: 1;
-    transition: 0.55s opacity var(--ease-power3-inOut);
+    opacity: 0;
+    transition: 0.55s opacity var(--ease-opacity);
 
     @media (min-width: 640px) {
       height: 4rem;
       scale: 1.5 1;
     }
 
-    :global([data-page="profile"]) & {
-      opacity: 0;
+    :global([data-page="work-single"]) &  {
+      opacity: 1;
     }
   }
 

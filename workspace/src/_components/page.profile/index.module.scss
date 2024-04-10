@@ -3,12 +3,14 @@
   top: 50%;
   left: 50%;
   transform: translate(calc(-50% + 2rem), calc(-100% - 7.5rem));
+  width: auto;
+  height: 1em;
   font-size: 17rem;
-  background-size: 100% 160%;
-  background-position: center;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  // background-size: 100% 160%;
+  // background-position: center;
+  // background-clip: text;
+  // -webkit-background-clip: text;
+  // color: transparent;
 
   @media (min-width: 640px) {
     font-size: 31rem;

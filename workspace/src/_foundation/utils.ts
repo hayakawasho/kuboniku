@@ -7,16 +7,17 @@ export const zeroPadding = (num: number, p = 2) => {
 
 export const sleep = (time: number): Promise<void> => {
   return new Promise(resolve => {
-    gsap.to(
-      {
-        val: 0,
+    const val = {
+      cnt: 0,
+    };
+
+    gsap.to(val, {
+      cnt: 1,
+      duration: time,
+      onComplete: () => {
+        resolve();
       },
-      {
-        duration: time,
-        onComplete: resolve,
-        val: 1,
-      }
-    );
+    });
   });
 };
 

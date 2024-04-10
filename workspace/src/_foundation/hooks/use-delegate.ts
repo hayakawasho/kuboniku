@@ -1,13 +1,15 @@
 // import { useUnmount } from "lake";
-// const delegate = require("delegate");
+import E from "@unseenco/e";
 
-export const useDelegate = (
+type ElementEventListener<K extends keyof HTMLElementEventMap = keyof HTMLElementEventMap> = (
+  this: HTMLElement,
+  ev: HTMLElementEventMap[K]
+) => unknown;
+
+export const useDelegate = <T extends keyof HTMLElementEventMap = keyof HTMLElementEventMap>(
   selectors: string,
-  eventType: keyof HTMLElementEventMap,
-  handler: (event: keyof HTMLElementEventMap & { delegateTarget: HTMLElement }) => void
+  eventType: T,
+  listener: ElementEventListener<T>
 ) => {
-  // const delegation = delegate(selectors, eventType, handler, false);
-  // useUnmount(() => {
-  //   delegation.destroy();
-  // });
+  E.delegate(eventType, selectors, listener);
 };

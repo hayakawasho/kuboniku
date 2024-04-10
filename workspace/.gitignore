@@ -1,4 +1,6 @@
 out
+dist
+!lib/lake/dist
 
 # Node dependencies
 node_modules

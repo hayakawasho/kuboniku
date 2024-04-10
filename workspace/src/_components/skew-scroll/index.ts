@@ -3,7 +3,8 @@ import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
 import { useMediaQueryContext } from "@/_states/mq";
-import { useScrollPosY } from "@/_states/scroll";
+import { useScrollStateContext } from "@/_states/scroll";
+import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useWindowSizeContext } from "@/_states/window-size";
 import type { AppContext } from "@/_foundation/type";
 
@@ -16,7 +17,8 @@ export default defineComponent({
 
     const { device } = useMediaQueryContext();
     const [ww] = useWindowSizeContext();
-    const [y, { isScrolling }] = useScrollPosY();
+    const [posY] = useScrollPositionContext();
+    const { scrolling } = useScrollStateContext();
 
     const lastY = ref(0);
 
@@ -26,11 +28,11 @@ export default defineComponent({
     } as const;
 
     useTick(({ timeRatio }) => {
-      if (!state.active || !isScrolling.value) {
+      if (!state.active || !scrolling.value) {
         return;
       }
 
-      const currentY = y.value;
+      const currentY = posY.value;
       const easeVal = 1 - (1 - EASE[device]) ** timeRatio;
       lastY.value = lerp(lastY.value, currentY, easeVal);
 

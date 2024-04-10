@@ -218,12 +218,19 @@ class Report extends Settings_Component implements Setup {
 		);
 		$meta = array_map( 'maybe_unserialize', $meta );
 
+		if (
+			empty( $meta[ Sync::META_KEYS['local_size'] ] )
+			|| empty( $meta[ Sync::META_KEYS['remote_size'] ] )
+		) {
+			$this->plugin->get_component( 'storage' )->size_sync( $post->ID );
+		}
+
 		$wpdb->cld_table = Utils::get_relationship_table();
 		$prepare         = $wpdb->prepare(
 			"SELECT * FROM {$wpdb->cld_table} WHERE post_id = %d;",
 			$post->ID
 		);
-		$relationship    = $wpdb->get_row( $prepare ); // phpcs:ignore WordPress.DB.PreparedSQL
+		$relationship    = $wpdb->get_row( $prepare ); // phpcs:ignore WordPress.DB.PreparedSQL,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		ksort( $attachment );
 		ksort( $meta );

@@ -4,7 +4,8 @@
 
 $theme_includes = [
   '_inc/init.php',
-  '_inc/register.php'
+  '_inc/register.php',
+  '_inc/jwt.php',
 ];
 
 foreach($theme_includes as $file) {

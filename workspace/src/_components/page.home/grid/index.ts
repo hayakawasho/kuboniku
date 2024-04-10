@@ -1,5 +1,5 @@
 import { defineComponent, useSlot, useDomRef } from "lake";
-import { PlaneBufferGeometry, ShaderMaterial } from "@/_foundation/three";
+import { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 import fragment from "./fragment.frag";
 import GridItem from "./item";
 import vertex from "./vertex.vert";

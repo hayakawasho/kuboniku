@@ -356,6 +356,7 @@ class Media extends Settings_Component implements Setup {
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return false;
 		}
+		// phpcs:disable WordPress.WP.AlternativeFunctions
 		$ch = curl_init( $url );
 		curl_setopt( $ch, CURLOPT_NOBODY, true );
 		curl_exec( $ch );
@@ -368,6 +369,7 @@ class Media extends Settings_Component implements Setup {
 		}
 
 		curl_close( $ch );
+		// phpcs:enable
 
 		return $status;
 	}
@@ -743,7 +745,6 @@ class Media extends Settings_Component implements Setup {
 		}
 
 		return $attachment_id;
-
 	}
 
 	/**
@@ -990,8 +991,8 @@ class Media extends Settings_Component implements Setup {
 	 */
 	public function get_crop_transformations( $attachment_id, $size ) {
 		static $transformations = array();
-		$size_dim = $size['width'] . 'x' . $size['height'];
-		$key      = $attachment_id . $size_dim;
+		$size_dim               = $size['width'] . 'x' . $size['height'];
+		$key                    = $attachment_id . $size_dim;
 		if ( empty( $transformations[ $key ] ) ) {
 
 			if ( empty( $size['transformation'] ) ) {
@@ -1228,6 +1229,7 @@ class Media extends Settings_Component implements Setup {
 		}
 		// Base image level.
 		$new_transformations = array(
+			'video'  => array(),
 			'image'  => Api::generate_transformation_string( $transformations, $type ),
 			'tax'    => array(),
 			'global' => array(),
@@ -1265,6 +1267,13 @@ class Media extends Settings_Component implements Setup {
 				$new_transformations['global'] = implode( '/', $freeform[ $type ] );
 			}
 		}
+
+		$streaming = $this->get_settings()->get_value( 'adaptive_streaming', 'adaptive_streaming_mode' );
+
+		if ( 'video' === $type && 'on' === $streaming['adaptive_streaming'] ) {
+			unset( $new_transformations['qf'] );
+		}
+
 		// Clean out empty parts, and join into a sectioned string.
 		$new_transformations = array_filter( $new_transformations );
 		$new_transformations = implode( '/', $new_transformations );
@@ -1360,6 +1369,12 @@ class Media extends Settings_Component implements Setup {
 			}
 		}
 
+		$public_id = $this->get_post_meta( $attachment_id, Sync::META_KEYS['public_id'], true );
+
+		if ( ! empty( $public_id ) ) {
+			$cloudinary_id = $public_id;
+		}
+
 		$args = array(
 			$attachment_id,
 			$size,
@@ -1381,7 +1396,7 @@ class Media extends Settings_Component implements Setup {
 			'secure'        => is_ssl(),
 			'version'       => $this->get_cloudinary_version( $attachment_id ),
 			'resource_type' => $resource_type,
-			'delivery_type' => $delivery,
+			'delivery'      => $delivery,
 		);
 		$set_size = array();
 		if ( 'upload' === $delivery ) {
@@ -1395,7 +1410,7 @@ class Media extends Settings_Component implements Setup {
 
 		// Make a copy as not to destroy the options in \Cloudinary::cloudinary_url().
 		$args = $pre_args;
-		$url  = $this->plugin->components['connect']->api->cloudinary_url( $cloudinary_id, $args, $set_size );
+		$url  = $this->plugin->components['connect']->api->cloudinary_url( $cloudinary_id, $args, $set_size, $attachment_id );
 
 		// Check if this type is a preview only type. i.e PDF.
 		if ( ! empty( $set_size ) && $this->is_preview_only( $attachment_id ) ) {
@@ -2415,6 +2430,12 @@ class Media extends Settings_Component implements Setup {
 						'state' => 'success',
 						'note'  => esc_html__( 'Synced', 'cloudinary' ),
 					);
+
+					if ( wp_attachment_is_image( $attachment_id ) ) {
+						if ( empty( get_post_meta( $attachment_id, Sync::META_KEYS['remote_size'], true ) ) ) {
+							$this->plugin->get_component( 'storage' )->size_sync( $attachment_id );
+						}
+					}
 				}
 				// filter status.
 				$status = apply_filters( 'cloudinary_media_status', $status, $attachment_id );
@@ -2739,7 +2760,7 @@ class Media extends Settings_Component implements Setup {
 		$media_library_context = array(
 			'caption' => esc_attr( $caption ),
 			'alt'     => get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ),
-			'guid'    => md5( get_the_guid( $attachment_id ) ),
+			'guid'    => md5( Utils::get_path_from_url( get_the_guid( $attachment_id ), true ) ),
 		);
 		$context_options       = array(
 			'cld_wp_plugin' => 1,
@@ -2797,11 +2818,12 @@ class Media extends Settings_Component implements Setup {
 	/**
 	 * Get the media upload options as connected to Cloudinary.
 	 *
-	 * @param int $attachment_id The attachment ID.
+	 * @param int    $attachment_id The attachment ID.
+	 * @param string $context       The context to use.
 	 *
 	 * @return array
 	 */
-	public function get_upload_options( $attachment_id ) {
+	public function get_upload_options( $attachment_id, $context = '' ) {
 
 		// Prepare upload options.
 		$public_id = $this->get_public_id( $attachment_id, true );
@@ -2815,7 +2837,7 @@ class Media extends Settings_Component implements Setup {
 		);
 
 		if ( 'image' === $options['resource_type'] || 'video' === $options['resource_type'] ) {
-			$options['eager']       = Api::generate_transformation_string( $this->apply_default_transformations( array(), $attachment_id ) );
+			$options['eager']       = Api::generate_transformation_string( $this->apply_default_transformations( array(), $attachment_id ), $options['resource_type'], $context );
 			$options['eager_async'] = 'video' === $options['resource_type'];
 		}
 		/**
@@ -3033,13 +3055,15 @@ class Media extends Settings_Component implements Setup {
 			if ( SYNC::META_KEYS['unsynced'] === $request ) {
 				global $wpdb;
 				$wpdb->cld_table = Utils::get_relationship_table();
-				$result          = $wpdb->get_col( "SELECT post_id FROM $wpdb->cld_table WHERE public_id IS NULL" );
+				$result          = $wpdb->get_col( "SELECT post_id FROM $wpdb->cld_table WHERE public_id IS NULL" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 
+				// phpcs:disable WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 				if ( ! empty( $result ) ) {
 					$query->set( 'post__in', $result );
 				} else {
 					$query->set( 'post__in', array( 0 ) );
 				}
+				// phpcs:enable
 			}
 		}
 	}
@@ -3212,6 +3236,5 @@ class Media extends Settings_Component implements Setup {
 			// Save to DB.
 			$setting->save_value();
 		}
-
 	}
 }

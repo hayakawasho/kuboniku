@@ -1,6 +1,8 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
-import ImgGrad from "../../assets/grad.jpg";
+import { ResponsiveImage } from "@/_components/ui/responsive-image";
+import profileNameImg from "../../assets/profile.png";
+import profileNameImgSp from "../../assets/profile_sp.png";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
 
@@ -11,23 +13,19 @@ const Component: React.FC<{
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
-        <div className="relative">
-          <i
-            className={`${Styles.logo} | icon-logo | sp:hidden`}
-            style={{
-              backgroundImage: `url(${ImgGrad.src})`,
-            }}
-          ></i>
-          <i
-            className={`${Styles.logo} | icon-logo_sp | pc:hidden`}
-            style={{
-              backgroundImage: `url(${ImgGrad.src})`,
-            }}
-          ></i>
+        <div className="relative z-[2]">
+          <ResponsiveImage
+            alt="Kuboniku.com"
+            className={`${Styles.logo}`}
+            mob={profileNameImgSp.src}
+            mobSize={[profileNameImgSp.width, profileNameImgSp.height]}
+            size={[profileNameImg.width, profileNameImg.height]}
+            src={profileNameImg.src}
+          />
           <div className={Styles.container}>
             <div className={Styles.container__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>
-              <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>Art Director & Designer</p>
+              <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>Art Director & Designer & Management</p>
               <div className={Styles.about}>
                 <p>
                   アートディレクター、Webデザイナー久保渚のポートフォリオサイトです。

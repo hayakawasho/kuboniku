@@ -161,14 +161,14 @@ class Utils {
 	/**
 	 * Get the depth of an array.
 	 *
-	 * @param array $array The array to check.
+	 * @param array $data The array to check.
 	 *
 	 * @return int
 	 */
-	public static function array_depth( array $array ) {
+	public static function array_depth( array $data ) {
 		$depth = 0;
 
-		foreach ( $array as $value ) {
+		foreach ( $data as $value ) {
 			if ( is_array( $value ) ) {
 				$level = self::array_depth( $value ) + 1;
 
@@ -205,15 +205,15 @@ class Utils {
 		 *
 		 * // Enforce `manage_options` to download an asset from Cloudinary.
 		 * add_filter(
-		 * 	'cloudinary_task_capability_manage_assets',
-		 * 	function( $task, $context ) {
-		 * 		if ( 'download' === $context ) {
-		 * 			$capability = 'manage_options';
-		 * 		}
-		 * 		return $capability;
-		 * 	},
-		 * 	10,
-		 * 	2
+		 *     'cloudinary_task_capability_manage_assets',
+		 *     function( $task, $context ) {
+		 *         if ( 'download' === $context ) {
+		 *             $capability = 'manage_options';
+		 *         }
+		 *         return $capability;
+		 *     },
+		 *     10,
+		 *     2
 		 * );
 		 *
 		 * @param $capability {string} The capability.
@@ -223,7 +223,7 @@ class Utils {
 		 * @default 'manage_options'
 		 * @return  {string}
 		 */
-		$capability = apply_filters( "cloudinary_task_capability_{$task}", $capability, $context, $args );
+		$capability = apply_filters( "cloudinary_task_capability_{$task}", $capability, $context, ...$args );
 
 		/**
 		 * Filter the capability required for Cloudinary tasks.
@@ -236,15 +236,15 @@ class Utils {
 		 *
 		 * // Enforce `manage_options` to download an asset from Cloudinary.
 		 * add_filter(
-		 * 	'cloudinary_task_capability',
-		 * 	function( $capability, $task, $context ) {
-		 * 		if ( 'manage_assets' === $task && 'download' === $context ) {
-		 * 			$capability = 'manage_options';
-		 * 		}
-		 * 		return $capability;
-		 * 	},
-		 * 	10,
-		 * 	3
+		 *     'cloudinary_task_capability',
+		 *     function( $capability, $task, $context ) {
+		 *         if ( 'manage_assets' === $task && 'download' === $context ) {
+		 *             $capability = 'manage_options';
+		 *         }
+		 *         return $capability;
+		 *     },
+		 *     10,
+		 *     3
 		 * );
 		 *
 		 * @param $capability {string} The current capability for the task.
@@ -254,10 +254,10 @@ class Utils {
 		 *
 		 * @return  {string}
 		 */
-		$capability = apply_filters( 'cloudinary_task_capability', $capability, $task, $context, $args );
+		$capability = apply_filters( 'cloudinary_task_capability', $capability, $task, $context, ...$args );
 		// phpcs:enable WordPress.WhiteSpace.DisallowInlineTabs.NonIndentTabsUsed
 
-		return current_user_can( $capability, $args );
+		return current_user_can( $capability, ...$args );
 	}
 
 	/**
@@ -415,7 +415,6 @@ class Utils {
 
 		// Set DB Version.
 		update_option( Sync::META_KEYS['db_version'], get_plugin_instance()->version );
-
 	}
 
 	/**
@@ -469,19 +468,19 @@ class Utils {
 
 		$javascript = "\n" . trim( $javascript, "\n\r " ) . "\n";
 
-		echo sprintf( "<script type='text/javascript'>%s</script>\n", $javascript ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( "<script type='text/javascript'>%s</script>\n", $javascript ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Get a sanitized input text field.
 	 *
-	 * @param string $var  The value to get.
-	 * @param int    $type The type to get.
+	 * @param string $var_name The value to get.
+	 * @param int    $type     The type to get.
 	 *
 	 * @return mixed
 	 */
-	public static function get_sanitized_text( $var, $type = INPUT_GET ) {
-		return filter_input( $type, $var, FILTER_CALLBACK, array( 'options' => 'sanitize_text_field' ) );
+	public static function get_sanitized_text( $var_name, $type = INPUT_GET ) {
+		return filter_input( $type, $var_name, FILTER_CALLBACK, array( 'options' => 'sanitize_text_field' ) );
 	}
 
 	/**
@@ -500,7 +499,7 @@ class Utils {
 		 *
 		 * @see wp-includes/formatting.php
 		 */
-		$path = str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) );
+		$path = str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.urlencode_urlencode
 
 		$pathinfo = pathinfo( $path, $flags );
 
@@ -581,7 +580,7 @@ class Utils {
 			"#([\"']?)("
 				. '(?:[\w-]+:)?//?'
 				. '[^\s()<>"\']+'
-				. '[.]'
+				. '[.,]'
 				. '(?:'
 					. '\([\w\d]+\)|'
 					. '(?:'
@@ -662,15 +661,16 @@ class Utils {
 	 */
 	public static function download_fragment( $url, $size = 1048576 ) {
 
-		$pointer = tmpfile();
-		$file    = false;
+		$temp_file = wp_tempnam( basename( $url ) );
+		$pointer   = fopen( $temp_file, 'wb' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
+		$file      = false;
 		if ( $pointer ) {
 			// Prep to purge.
 			$index = count( self::$file_fragments );
 			if ( empty( $index ) ) {
 				add_action( 'shutdown', array( __CLASS__, 'purge_fragments' ) );
 			}
-			self::$file_fragments[ $index ] = $pointer;
+			self::$file_fragments[ $index ] = $temp_file;
 			// Get the metadata of the stream.
 			$data = stream_get_meta_data( $pointer );
 			// Stream the content to the temp file.
@@ -825,6 +825,11 @@ class Utils {
 	 * @return void
 	 */
 	public static function clean_up_sync_meta( $attachment_id ) {
+
+		// translators: The attachment ID.
+		$action_message = sprintf( __( 'Clean up sync metadata for %d', 'cloudinary' ), $attachment_id );
+		do_action( '_cloudinary_queue_action', $action_message );
+
 		// remove pending.
 		delete_post_meta( $attachment_id, Sync::META_KEYS['pending'] );
 
@@ -913,5 +918,166 @@ class Utils {
 		 * @hook  cloudinary_registered_sizes
 		 */
 		return apply_filters( 'cloudinary_registered_sizes', $all_sizes );
+	}
+
+	/**
+	 * Get the attachment ID from the attachment URL.
+	 *
+	 * @param string $url The attachment URL.
+	 *
+	 * @return int|null
+	 */
+	public static function attachment_url_to_postid( $url ) {
+		$key = "postid_{$url}";
+
+		if ( function_exists( 'wpcom_vip_attachment_url_to_postid' ) ) {
+			$attachment_id = wpcom_vip_attachment_url_to_postid( $url );
+		} else {
+			$attachment_id = wp_cache_get( $key, 'cloudinary' );
+		}
+
+		if ( empty( $attachment_id ) ) {
+			$attachment_id = attachment_url_to_postid( $url ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.attachment_url_to_postid_attachment_url_to_postid
+			wp_cache_set( $key, $attachment_id, 'cloudinary' );
+		}
+
+		if ( empty( $attachment_id ) ) {
+			$media           = get_plugin_instance()->get_component( 'media' );
+			$maybe_public_id = $media->get_public_id_from_url( $url );
+			$relations       = self::query_relations( array( $maybe_public_id ) );
+			foreach ( $relations as $relation ) {
+				if ( ! empty( $relation['post_id'] ) ) {
+					$attachment_id = (int) $relation['post_id'];
+					wp_cache_set( $key, $attachment_id, 'cloudinary' );
+				}
+			}
+		}
+
+		return $attachment_id;
+	}
+
+	/**
+	 * Run a query with Public_id's and or local urls.
+	 *
+	 * @param array $public_ids List of Public_IDs qo query.
+	 * @param array $urls       List of URLS to query.
+	 *
+	 * @return array
+	 */
+	public static function query_relations( $public_ids, $urls = array() ) {
+		global $wpdb;
+
+		$wheres = array();
+		if ( ! empty( $urls ) ) {
+			// Do the URLS.
+			$list     = implode( ', ', array_fill( 0, count( $urls ), '%s' ) );
+			$wheres[] = "url_hash IN( {$list} )";
+		}
+		if ( ! empty( $public_ids ) ) {
+			// Do the public_ids.
+			$list     = implode( ', ', array_fill( 0, count( $public_ids ), '%s' ) );
+			$wheres[] = "public_hash IN( {$list} )";
+			$urls     = array_merge( $urls, $public_ids );
+		}
+
+		$results = array();
+
+		if ( ! empty( array_filter( $urls ) ) ) {
+			$tablename = self::get_relationship_table();
+			$sql       = "SELECT * from {$tablename} WHERE " . implode( ' OR ', $wheres );
+			$prepared  = $wpdb->prepare( $sql, array_map( 'md5', $urls ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+			$cache_key = md5( $prepared );
+			$results   = wp_cache_get( $cache_key, 'cld_delivery' );
+			if ( empty( $results ) ) {
+				$results = $wpdb->get_results( $prepared, ARRAY_A );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+				wp_cache_add( $cache_key, $results, 'cld_delivery' );
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Clean a url: adds scheme if missing, removes query and fragments.
+	 *
+	 * @param string $url         The URL to clean.
+	 * @param bool   $scheme_less Flag to clean out scheme.
+	 *
+	 * @return string
+	 */
+	public static function clean_url( $url, $scheme_less = true ) {
+		$default = array(
+			'scheme' => '',
+			'host'   => '',
+			'path'   => '',
+			'port'   => '',
+		);
+		$parts   = wp_parse_args( wp_parse_url( $url ), $default );
+		$host    = $parts['host'];
+		if ( ! empty( $parts['port'] ) ) {
+			$host .= ':' . $parts['port'];
+		}
+		$url = '//' . $host . $parts['path'];
+
+		if ( false === $scheme_less ) {
+			$url = $parts['scheme'] . ':' . $url;
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Get the path from a url.
+	 *
+	 * @param string $url            The url.
+	 * @param bool   $bypass_filters Flag to bypass the filters.
+	 *
+	 * @return string
+	 */
+	public static function get_path_from_url( $url, $bypass_filters = false ) {
+		$content_url = content_url();
+
+		if ( ! $bypass_filters ) {
+			$content_url = apply_filters( 'cloudinary_content_url', $content_url );
+		}
+		$path = explode( self::clean_url( $content_url ), $url );
+		$path = end( $path );
+
+		return $path;
+	}
+
+	/**
+	 * Make a scaled version.
+	 *
+	 * @param string $url The url to make scaled.
+	 *
+	 * @return string
+	 */
+	public static function make_scaled_url( $url ) {
+		$file = self::pathinfo( $url );
+		$dash = strrchr( $file['filename'], '-' );
+		if ( '-scaled' === $dash ) {
+			return $url;
+		}
+
+		return $file['dirname'] . '/' . $file['filename'] . '-scaled.' . $file['extension'];
+	}
+
+	/**
+	 * Make a descaled version.
+	 *
+	 * @param string $url The url to descaled.
+	 *
+	 * @return string
+	 */
+	public static function descaled_url( $url ) {
+		$file = self::pathinfo( $url );
+		$dash = strrchr( $file['filename'], '-' );
+		if ( '-scaled' === $dash ) {
+			$file['basename'] = str_replace( '-scaled.', '.', $file['basename'] );
+			$url              = $file['dirname'] . '/' . $file['basename'];
+		}
+
+		return $url;
 	}
 }

@@ -1,23 +1,20 @@
 import "./global.scss";
 import { create, withSvelte } from "lake";
-import Cursor from "./_components/cursor.svelte";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";
 import Home from "./_components/page.home";
 import Profile from "./_components/page.profile";
-import Works from "./_components/page.works";
-import WorksSingle from "./_components/page.works-single";
+import Works from "./_components/page.work";
+import WorkSingle from "./_components/page.work-single";
 import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
-import { bootstrap } from "./bootstrap";
 import type { IComponent, ComponentContext } from "lake";
 
-bootstrap(() => {
+(() => {
   const { component, unmount } = create();
 
   const table: Record<string, IComponent> = {
-    Cursor: withSvelte(Cursor, "Cursor"),
     Home,
     NavMenu,
     Noop,
@@ -25,7 +22,7 @@ bootstrap(() => {
     Scrollbar: withSvelte(Scrollbar, "Scrollbar"),
     Sns: withSvelte(Sns, "Sns"),
     Works,
-    WorksSingle,
+    WorkSingle,
   } as const;
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
@@ -46,7 +43,7 @@ bootstrap(() => {
 
   const html = document.documentElement;
 
-  component(Load)(html, {
+  const loadContext = {
     onCleanup: (scope: HTMLElement) => {
       unmount([...scope.querySelectorAll<HTMLElement>("[data-component]")]);
     },
@@ -62,8 +59,10 @@ bootstrap(() => {
         once: false,
       });
     },
-  });
-});
+  };
+
+  component(Load)(html, loadContext);
+})();
 
 if (process.env.NODE_ENV === "development") {
   const Stats = await ((await import("https://cdn.skypack.dev/stats.js.fps?dts")) as any).default;

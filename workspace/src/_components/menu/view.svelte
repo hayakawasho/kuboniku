@@ -53,6 +53,20 @@
       <ul>
         <li>
           <a
+            {...linkProps("/")}
+            aria-current={current === "home" && "page"}
+            class="menuLink"
+            data-astro-prefetch="tap"
+            href="/"
+            on:click={closeMenu}
+          >
+            <span class="inline-block overflow-hidden leading-[1]">
+              <span class="menuLink__label | js-menuLabel">Top</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
             {...linkProps("/profile/")}
             aria-current={current === "profile" && "page"}
             class="menuLink"
@@ -67,15 +81,15 @@
         </li>
         <li>
           <a
-            {...linkProps("/works/")}
-            aria-current={current === "works" && "page"}
+            {...linkProps("/work/")}
+            aria-current={current === "work" && "page"}
             class="menuLink"
             data-astro-prefetch="tap"
-            href="/"
+            href="/work/"
             on:click={closeMenu}
           >
             <span class="inline-block overflow-hidden leading-[1]">
-              <span class="menuLink__label | js-menuLabel">Works</span>
+              <span class="menuLink__label | js-menuLabel">Work</span>
             </span>
           </a>
         </li>
@@ -94,30 +108,44 @@
     <ul>
       <li>
         <a
+          {...linkProps("/")}
+          aria-current={current === "home" && "page"}
+          class="menuLink"
+          data-astro-prefetch="hover"
+          data-cursor="scale"
+          data-ref="menuLink"
+          href="/"
+        >Top</a>
+      </li>
+      <li>
+        <a
           {...linkProps("/profile/")}
           aria-current={current === "profile" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
+          data-cursor="scale"
           data-ref="menuLink"
           href="/profile/"
-        >
-          Profile
-        </a>
+        >Profile</a>
       </li>
       <li>
         <a
-          {...linkProps("/works/")}
-          aria-current={current === "works" && "page"}
+          {...linkProps("/work/")}
+          aria-current={current === "work" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
+          data-cursor="scale"
           data-ref="menuLink"
-          href="/works/"
-        >
-          Works
-        </a>
+          href="/work/"
+        >Work</a>
       </li>
       <li>
-        <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink" data-ref="menuLink"> Contact </a>
+        <a
+          href="mailto:k.bo.n10.05@gmail.com"
+          class="menuLink"
+          data-ref="menuLink"
+          data-cursor="scale"
+        >Contact</a>
       </li>
     </ul>
   </nav>
