@@ -41,6 +41,15 @@
     cursorTypeMutators("default");
   });
 
+  const calcAngle = (x: number, y: number) => {
+    return (180 * Math.atan2(y, x)) / Math.PI;
+  };
+
+  const calcSqueeze = (x: number, y: number) => {
+    const val = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    return Math.min(val / 200, 0.55);
+  };
+
   const onMousemove = (e: MouseEvent) => {
     clearTimeout(timer);
 
@@ -89,6 +98,9 @@
       // });
       break;
   }
+
+  $: diffX = state.lastX - state.x;
+  $: diffY = state.lastY - state.y;
 </script>
 
 <div
@@ -96,7 +108,7 @@
   style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
   data-cursor-type={cursorType}
 >
-  <div class="w-full h-full relative">
+  <div class="w-full h-full relative" style="transform: rotate({calcAngle(diffX, diffY)}deg) scale({1 + calcSqueeze(diffX, diffY)}, {1 - calcSqueeze(diffX, diffY)}) translateZ(0)">
     <div class="circle" />
     <!--svg
       version="1.1"
