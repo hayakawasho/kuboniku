@@ -108,7 +108,11 @@
   style="transform: translate3d({state.lastX}px, {state.lastY}px, 0px)"
   data-cursor-type={cursorType}
 >
-  <div class="w-full h-full relative" style="transform: rotate({calcAngle(diffX, diffY)}deg) scale({1 + calcSqueeze(diffX, diffY)}, {1 - calcSqueeze(diffX, diffY)}) translateZ(0)">
+  <div
+    class="w-full h-full relative"
+    style="transform: rotate({calcAngle(diffX, diffY)}deg) scale({1 +
+      calcSqueeze(diffX, diffY)}, {1 - calcSqueeze(diffX, diffY)}) translateZ(0)"
+  >
     <div class="circle" />
     <!--svg
       version="1.1"

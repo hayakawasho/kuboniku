@@ -1,11 +1,11 @@
 import { defineComponent, useMount, ref } from "lake";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
 import { Tween } from "@/_foundation/tween";
-import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "@/_gl/three";
-import { useWindowSizeContext } from "@/_states/window-size";
 import { useMediaQueryContext } from "@/_states/mq";
+import { useWindowSizeContext } from "@/_states/window-size";
 import fragment from "./aurora.frag";
 import vertex from "./vertex.vert";
 import type { ParentScene } from "@/_foundation/type";
@@ -22,6 +22,12 @@ export default defineComponent({
     const refColorCode = ref(SITE_THEME_COLOR);
 
     const uniforms = {
+      u_brightness: {
+        value: {
+          pc: .25,
+          sp: .1
+        }[device]
+      },
       u_color1: {
         value: new Color(refColorCode.value),
       },
@@ -44,12 +50,6 @@ export default defineComponent({
         value: {
           pc: new Vector2(1, 0.56),
           sp: new Vector2(1, 0.48)
-        }[device]
-      },
-      u_brightness: {
-        value: {
-          pc: .25,
-          sp: .1
         }[device]
       },
       u_resolution: {

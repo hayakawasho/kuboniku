@@ -1,7 +1,8 @@
+import { Header } from "@/_components/header/index.view";
+import { ResponsiveImage } from "@/_components/ui/responsive-image";
+import profileNameImg from "@/assets/profile.png";
+import profileNameImgSp from "@/assets/profile_sp.png";
 import Styles from "./index.module.scss";
-import { Header } from "../../_components/header/index.view";
-import profileNameImg from "../../assets/profile.png";
-import profileNameImgSp from "../../assets/profile_sp.png";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
 
@@ -15,25 +16,23 @@ const Component: React.FC<{
         <h1 className="sr-only">Profile</h1>
         <div className="relative z-[2]">
           <img
-            alt="Kuboniku.com"
+            alt=""
             className={`${Styles.logo} opacity-0 sp:hidden`}
+            data-h={profileNameImg.height}
             data-ref="profileLogo"
             data-src={profileNameImg.src}
             data-w={profileNameImg.width}
-            data-h={profileNameImg.height}
-            width={profileNameImg.width}
             height={profileNameImg.height}
+            width={profileNameImg.width}
           />
-          <img
-            alt="Kuboniku.com"
-            className={`${Styles.logo} opacity-0 pc:hidden`}
-            data-ref="profileLogoSp"
-            data-src={profileNameImgSp.src}
-            data-w={profileNameImgSp.width}
-            data-h={profileNameImgSp.height}
-            width={profileNameImgSp.width}
-            height={profileNameImgSp.height}
-          />
+          <ResponsiveImage
+            alt=""
+            className={`${Styles.logo} pc:hidden`}
+            mob={profileNameImgSp.src}
+            mobSize={[profileNameImgSp.width, profileNameImgSp.height]}
+            size={[1, 1]}
+            src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
+          ></ResponsiveImage>
           <div className={Styles.textGroup}>
             <div className={Styles.textGroup__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>

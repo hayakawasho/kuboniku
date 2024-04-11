@@ -1,6 +1,6 @@
+import noiseImg from "@/assets/noise_512x341.webp";
 import Styles from "./index.module.scss";
 import { Sns } from "./sns.view";
-import noiseImg from "@/assets/noise_512x341.webp";
 import type { RouteName } from "@/_foundation/type";
 
 type Props = {

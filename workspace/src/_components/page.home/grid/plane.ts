@@ -66,8 +66,8 @@ export class Plane extends GlObject {
     this.add(this.#mesh);
 
     this.resize({
-      width: props.windowWidth,
       height: props.windowHeight,
+      width: props.windowWidth,
     });
     this.updateY(props.currentY);
   }

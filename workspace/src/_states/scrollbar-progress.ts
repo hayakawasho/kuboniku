@@ -1,8 +1,8 @@
 import { useUnmount } from "lake";
 import { map } from "nanostores";
 import { noop } from "@/_foundation/utils";
-import { useWindowSizeContext } from "@/_states/window-size";
 import { useScrollPositionContext } from "@/_states/scroll-position";
+import { useWindowSizeContext } from "@/_states/window-size";
 
 const progress = map<{
   now: number;

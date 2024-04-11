@@ -38,8 +38,8 @@ export default defineComponent({
       device,
       geo,
       mat,
-      windowWidth: windowWidth.value,
       windowHeight: windowHeight.value,
+      windowWidth: windowWidth.value,
     });
 
     useWindowSizeContext(({ ww, wh }) => {

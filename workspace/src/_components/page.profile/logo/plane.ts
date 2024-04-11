@@ -58,20 +58,20 @@ export class Plane extends GlObject {
 
     const geo = new PlaneBufferGeometry(1, 1);
     const mat = new ShaderMaterial({
-      fragmentShader: fragment,
-      vertexShader: vertex,
-      uniforms: this.uniforms,
       depthTest: false,
       depthWrite: false,
+      fragmentShader: fragment,
       transparent: true,
+      uniforms: this.uniforms,
+      vertexShader: vertex,
     });
 
     this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
 
     this.resize({
-      width: props.windowWidth,
       height: props.windowHeight,
+      width: props.windowWidth,
     });
   }
 

@@ -15,14 +15,14 @@ export default defineComponent({
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
     const logoPlane = new Plane(el, {
-      windowWidth: windowWidth.value,
       windowHeight: windowHeight.value,
+      windowWidth: windowWidth.value,
     });
 
     useWindowSizeContext(({ ww, wh }) => {
       logoPlane.resize({
-        width: ww,
         height: wh,
+        width: ww,
       });
     });
 

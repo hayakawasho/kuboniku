@@ -21,8 +21,8 @@ import type { IComponent, ComponentContext } from "lake";
     Profile,
     Scrollbar: withSvelte(Scrollbar, "Scrollbar"),
     Sns: withSvelte(Sns, "Sns"),
-    Works,
     WorkSingle,
+    Works,
   } as const;
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {

@@ -111,8 +111,8 @@ const Component: React.FC<Props> = props => {
             <aside className={`${Styles.kv} !h-screen`}>
               <div className="h-full absolute inset-0 m-auto z-10">
                 <Link
-                  data-cursor="scale"
                   className={Styles.kv__cont}
+                  data-cursor="scale"
                   to={`/work/${nextPost.slug}/`}
                 >
                   <h2 className={Styles.heading}>Next Project</h2>
