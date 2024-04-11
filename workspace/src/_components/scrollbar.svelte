@@ -41,7 +41,7 @@
       scale: 1.5 1;
     }
 
-    :global([data-page="work-single"]) &  {
+    :global([data-page="work-single"]) & {
       opacity: 1;
     }
   }

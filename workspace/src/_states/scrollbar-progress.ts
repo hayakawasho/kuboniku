@@ -2,6 +2,7 @@ import { useUnmount } from "lake";
 import { map } from "nanostores";
 import { noop } from "@/_foundation/utils";
 import { useWindowSizeContext } from "@/_states/window-size";
+import { useScrollPositionContext } from "@/_states/scroll-position";
 
 const progress = map<{
   now: number;
@@ -14,12 +15,13 @@ const progress = map<{
 export const useScrollbarProgress = (
   callback: (payload: { now: number; pos: number }) => void = noop
 ) => {
-  const [_wh, wh] = useWindowSizeContext();
+  const [_, wh] = useWindowSizeContext();
+  const [posY] = useScrollPositionContext();
 
-  const onMutateScrollProgress = (val: number, offset: number) => {
+  const onMutateScrollProgress = (offset: number) => {
     progress.set({
-      now: (val / (offset - wh.value)) * 100,
-      pos: (val + wh.value) / offset,
+      now: (posY.value / (offset - wh.value)) * 100,
+      pos: (posY.value + wh.value) / offset,
     });
   };
 

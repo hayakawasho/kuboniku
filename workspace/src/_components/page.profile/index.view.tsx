@@ -1,6 +1,5 @@
 import Styles from "./index.module.scss";
 import { Header } from "../../_components/header/index.view";
-import { ResponsiveImage } from "@/_components/ui/responsive-image";
 import profileNameImg from "../../assets/profile.png";
 import profileNameImgSp from "../../assets/profile_sp.png";
 import { PageWrapper } from "../page-wrapper/index.view";
@@ -12,20 +11,35 @@ const Component: React.FC<{
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
+        <canvas aria-hidden="true" className="glCanvas" data-ref="canvas"></canvas>
         <h1 className="sr-only">Profile</h1>
         <div className="relative z-[2]">
-          <ResponsiveImage
+          <img
             alt="Kuboniku.com"
-            className={`${Styles.logo}`}
-            mob={profileNameImgSp.src}
-            mobSize={[profileNameImgSp.width, profileNameImgSp.height]}
-            size={[profileNameImg.width, profileNameImg.height]}
-            src={profileNameImg.src}
+            className={`${Styles.logo} opacity-0 sp:hidden`}
+            data-ref="profileLogo"
+            data-src={profileNameImg.src}
+            data-w={profileNameImg.width}
+            data-h={profileNameImg.height}
+            width={profileNameImg.width}
+            height={profileNameImg.height}
           />
-          <div className={Styles.container}>
-            <div className={Styles.container__in}>
+          <img
+            alt="Kuboniku.com"
+            className={`${Styles.logo} opacity-0 pc:hidden`}
+            data-ref="profileLogoSp"
+            data-src={profileNameImgSp.src}
+            data-w={profileNameImgSp.width}
+            data-h={profileNameImgSp.height}
+            width={profileNameImgSp.width}
+            height={profileNameImgSp.height}
+          />
+          <div className={Styles.textGroup}>
+            <div className={Styles.textGroup__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>
-              <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>Art Director & Designer & Management</p>
+              <p className={`${Styles.sub} mb-[2.4rem] pc:mb-[3rem]`}>
+                Art Director & Designer & Management
+              </p>
               <div className={Styles.about}>
                 <p>
                   アートディレクター、Webデザイナー久保渚のポートフォリオサイトです。

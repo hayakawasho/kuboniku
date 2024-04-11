@@ -7,6 +7,8 @@ import {
   LinearFilter,
   Vector2,
 } from "@/_gl/three";
+import fragment from "./fragment.frag";
+import vertex from "./vertex.vert";
 import type { Size } from "@/_foundation/type";
 
 export class Plane extends GlObject {
@@ -16,20 +18,15 @@ export class Plane extends GlObject {
   constructor(
     el: HTMLElement,
     props: {
-      currentY: number;
-      device: "pc" | "sp";
-      geo: PlaneBufferGeometry;
-      mat: ShaderMaterial;
       windowWidth: number;
       windowHeight: number;
     }
   ) {
     super(el);
 
-    const imgSrc = el.dataset.src!;
-
     const loader = new TextureLoader();
-    loader.crossOrigin = "anonymous";
+
+    const imgSrc = el.dataset.src!;
 
     const texture = loader.load(imgSrc, texture => {
       texture.minFilter = LinearFilter;
@@ -59,17 +56,23 @@ export class Plane extends GlObject {
       },
     };
 
-    const mat = props.mat.clone() as ShaderMaterial;
-    mat.uniforms = this.uniforms;
+    const geo = new PlaneBufferGeometry(1, 1);
+    const mat = new ShaderMaterial({
+      fragmentShader: fragment,
+      vertexShader: vertex,
+      uniforms: this.uniforms,
+      depthTest: false,
+      depthWrite: false,
+      transparent: true,
+    });
 
-    this.#mesh = new Mesh(props.geo, mat);
+    this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
 
     this.resize({
       width: props.windowWidth,
       height: props.windowHeight,
     });
-    this.updateY(props.currentY);
   }
 
   resize = (size: Size) => {
@@ -77,9 +80,5 @@ export class Plane extends GlObject {
     this.#mesh.scale.set(bounds.width, bounds.height, 1);
 
     return bounds;
-  };
-
-  updateY = (current: number) => {
-    super.updateY(current);
   };
 }

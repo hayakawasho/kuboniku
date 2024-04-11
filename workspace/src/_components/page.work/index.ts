@@ -3,7 +3,6 @@ import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
-import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 import ProjectItem from "./project";
 import SkewScrollContainer from "../skew-scroll";
@@ -45,10 +44,7 @@ export default defineComponent({
     }
 
     const { onMutateScrollProgress } = useScrollbarProgress();
-    const [posY] = useScrollPositionContext();
     const { scrolling } = useScrollStateContext();
-
-    onMutateScrollProgress(posY.value, state.offsetHeight);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -60,10 +56,12 @@ export default defineComponent({
       if (state.resizing || !scrolling.value) {
         return;
       }
-      onMutateScrollProgress(posY.value, state.offsetHeight);
+      onMutateScrollProgress(state.offsetHeight);
     });
 
     useMount(() => {
+      onMutateScrollProgress(state.offsetHeight);
+
       if (!once && history.value === "push") {
         Tween.serial(
           Tween.prop(el, {

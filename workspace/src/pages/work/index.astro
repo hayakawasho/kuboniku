@@ -27,11 +27,11 @@ if (!isAuth) {
   refreshToken = undefined
 }
 
-const headers: Record<string, any> = {
+const reqHeaders: Record<string, any> = {
   "Authorization": refreshToken && `Bearer ${refreshToken}`,
   "Content-Type": "application/json",
 }
-const workRepo = createWorkRepository(headers)
+const workRepo = createWorkRepository(reqHeaders)
 const result = await workRepo.findList()
 
 export const prerender = false

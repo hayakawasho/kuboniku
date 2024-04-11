@@ -6,11 +6,6 @@
   width: auto;
   height: 1em;
   font-size: 17rem;
-  // background-size: 100% 160%;
-  // background-position: center;
-  // background-clip: text;
-  // -webkit-background-clip: text;
-  // color: transparent;
 
   @media (min-width: 640px) {
     font-size: 31rem;
@@ -18,7 +13,7 @@
   }
 }
 
-.container {
+.textGroup {
   position: relative;
   margin: 0 3rem;
   height: calc(var(--vh) * 100);
@@ -30,7 +25,7 @@
   }
 }
 
-.container__in {
+.textGroup__in {
   position: absolute;
   right: 0;
   text-align: right;

@@ -2,7 +2,6 @@ import { defineComponent, useSlot, useMount, useDomRef as _ } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useScrollStateContext } from "@/_states/scroll";
-import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
@@ -25,10 +24,7 @@ export default defineComponent({
     };
 
     const { onMutateScrollProgress } = useScrollbarProgress();
-    const [posY] = useScrollPositionContext();
     const { scrolling } = useScrollStateContext();
-
-    onMutateScrollProgress(posY.value, state.offsetHeight);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;
@@ -40,11 +36,12 @@ export default defineComponent({
       if (state.resizing || !scrolling.value) {
         return;
       }
-      onMutateScrollProgress(posY.value, state.offsetHeight);
+      onMutateScrollProgress(state.offsetHeight);
     });
 
     useMount(() => {
       backCanvasContext.onChangeColorPalette(el.dataset.color!);
+      onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {
         Tween.serial(
