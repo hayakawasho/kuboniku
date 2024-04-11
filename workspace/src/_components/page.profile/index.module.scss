@@ -3,12 +3,12 @@
   top: 50%;
   left: 50%;
   transform: translate(calc(-50% + 2rem), calc(-100% - 7.5rem));
-  width: auto;
-  height: 1em;
-  font-size: 17rem;
+  width: 34.5rem;
+  height: 17rem;
 
   @media (min-width: 640px) {
-    font-size: 31rem;
+    width: 116rem;
+    height: 31rem;
     transform: translate(calc(-50% + 7rem), calc(-100% + 0.1em));
   }
 }
