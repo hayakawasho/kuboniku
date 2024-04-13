@@ -53,7 +53,7 @@ export default defineComponent({
     useMount(() => {
       refs.grid.dataset.col = setGridSize(ww.value / wh.value);
 
-      const gridProvider = {
+      const gridProvides = {
         ...context,
         addScene,
         removeScene,
@@ -61,27 +61,27 @@ export default defineComponent({
 
       if (once) {
         cursorTypeMutators("loading");
-        const [splashscreenContext] = addChild(refs.splash, Splash, context);
+        const [splashContext] = addChild(refs.splash, Splash, context);
 
         const done = async () => {
-          const [gridContext] = addChild(refs.grid, Grid, gridProvider);
-          await splashscreenContext.current.hideStart();
+          const [gridContext] = addChild(refs.grid, Grid, gridProvides);
+          await splashContext.current.hideStart();
           gridContext.current.start();
-          await splashscreenContext.current.hideEnd();
-          removeChild([splashscreenContext]);
+          await splashContext.current.hideEnd();
+          removeChild([splashContext]);
           cursorTypeMutators("default");
         };
 
         (async () => {
-          await splashscreenContext.current.start();
+          await splashContext.current.start();
           done();
         })();
       } else if (!once && history.value === "push") {
-        const [gridContext] = addChild(refs.grid, Grid, gridProvider);
+        const [gridContext] = addChild(refs.grid, Grid, gridProvides);
         gridContext.current.start();
         onEnter();
       } else {
-        addChild(refs.grid, Grid, gridProvider);
+        addChild(refs.grid, Grid, gridProvides);
       }
 
       return () => {

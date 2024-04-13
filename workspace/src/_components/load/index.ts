@@ -59,7 +59,7 @@ export default defineComponent({
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
     const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
 
-    const provides = {
+    const appProvides = {
       backCanvasContext: backCanvasContext.current,
       frontCanvasContext: frontCanvasContext.current,
       history: readonly(history),
@@ -78,7 +78,7 @@ export default defineComponent({
       window.scrollTo(0, 0);
       scrollPositionMutators(0);
 
-      onUpdated(to, provides);
+      onUpdated(to, appProvides);
       cursorTypeMutators("default");
       routeMutators({ name: namespace });
     };
@@ -118,14 +118,6 @@ export default defineComponent({
       cursorTypeMutators("loading");
     });
 
-    // htmx.on("htmx:xhr:loadend", _e => {
-    // });
-
-    // htmx.on("htmx:xhr:progress", e => {
-    //   const { detail } = e as CustomEvent;
-    //   const loadProgress = Math.floor((detail.loaded / detail.total) * 1000) / 1000;
-    // });
-
     //----------------------------------------------------------------
 
     useMount(() => {
@@ -134,8 +126,7 @@ export default defineComponent({
       if (mediaQuery.device === "pc") {
         addChild(refs.cursor, withSvelte(Cursor, "Cursor"));
       }
-
-      onCreated(provides);
+      onCreated(appProvides);
     });
 
     wideQuery.addEventListener("change", () => location.reload(), {

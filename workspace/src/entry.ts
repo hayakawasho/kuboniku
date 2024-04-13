@@ -42,8 +42,7 @@ import type { IComponent, ComponentContext } from "lake";
   };
 
   const html = document.documentElement;
-
-  const loadProvider = {
+  const loadProvides = {
     onCleanup: (scope: HTMLElement) => {
       unmount([...scope.querySelectorAll<HTMLElement>("[data-component]")]);
     },
@@ -54,8 +53,7 @@ import type { IComponent, ComponentContext } from "lake";
       mountComponents(scope, { ...context, once: false });
     },
   };
-
-  component(Load)(html, loadProvider);
+  component(Load)(html, loadProvides);
 })();
 
 if (process.env.NODE_ENV === "development") {
