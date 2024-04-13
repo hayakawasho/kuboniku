@@ -19,17 +19,17 @@ export class Underline extends GlObject {
     super(el);
 
     this.uniforms = {
-      uProgress: {
-        value: 0,
-      },
       uColor: {
         value: new Color("#fff"),
       },
-      uTime: {
-        value: 0,
-      },
       uMouse: {
         value: new Vector2(0, 0),
+      },
+      uProgress: {
+        value: 0,
+      },
+      uTime: {
+        value: 0,
       },
       uVelo: {
         value: 0,

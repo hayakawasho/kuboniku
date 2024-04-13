@@ -1,6 +1,5 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { Tween } from "@/_foundation/tween";
-import { sleep } from "@/_foundation/utils";
 import { useThree } from "@/_gl/use-three";
 import { cursorTypeMutators } from "@/_states/cusor";
 import { useWindowSizeContext } from "@/_states/window-size";
@@ -21,70 +20,73 @@ export default defineComponent({
 
     const { addChild, removeChild } = useSlot();
     const { refs } = useDomRef<Refs>("grid", "canvas", "splash");
+    const { addScene, removeScene } = useThree(refs.canvas, 1);
 
-    const setGridColSize = (aspect: number) => {
+    const setGridSize = (aspect: number) => {
       return aspect >= 1.25 ? "large" : aspect >= 0.85 ? "middle" : "small";
     };
 
     const [ww, wh] = useWindowSizeContext(({ aspect }) => {
-      refs.grid.dataset.col = setGridColSize(aspect);
+      refs.grid.dataset.col = setGridSize(aspect);
     });
 
-    const { addScene, removeScene } = useThree(refs.canvas, 1);
+    //------------------------------------------------------------------------------
+
+    const onEnter = () => {
+      Tween.serial(
+        Tween.prop(el, {
+          opacity: 0,
+        }),
+        Tween.wait(0.2),
+        Tween.tween(el, 0.55, "power3.out", {
+          opacity: 1,
+        })
+      );
+    };
+
+    const onLeave = () => {
+      Tween.tween(el, 0.55, "power3.out", {
+        opacity: 0,
+      });
+    };
 
     useMount(() => {
-      refs.grid.dataset.col = setGridColSize(ww.value / wh.value);
+      refs.grid.dataset.col = setGridSize(ww.value / wh.value);
+
+      const gridProvider = {
+        ...context,
+        addScene,
+        removeScene,
+      };
 
       if (once) {
         cursorTypeMutators("loading");
-
-        const [splashContext] = addChild(refs.splash, Splash, context);
+        const [splashscreenContext] = addChild(refs.splash, Splash, context);
 
         const done = async () => {
-          const [_gridContext] = addChild(refs.grid, Grid, {
-            ...context,
-            addScene,
-            removeScene,
-          });
-          await splashContext.current.done();
-          removeChild([splashContext]);
+          const [gridContext] = addChild(refs.grid, Grid, gridProvider);
+          await splashscreenContext.current.hideStart();
+          gridContext.current.start();
+          await splashscreenContext.current.hideEnd();
+          removeChild([splashscreenContext]);
           cursorTypeMutators("default");
         };
 
         (async () => {
-          await splashContext.current.start();
-          // await sleep(0.2);
+          await splashscreenContext.current.start();
           done();
         })();
       } else if (!once && history.value === "push") {
-        const [_gridContext] = addChild(refs.grid, Grid, {
-          ...context,
-          addScene,
-          removeScene,
-        });
-
-        Tween.serial(
-          Tween.prop(el, {
-            opacity: 0,
-          }),
-          Tween.wait(0.2),
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 1,
-          })
-        );
+        const [gridContext] = addChild(refs.grid, Grid, gridProvider);
+        gridContext.current.start();
+        onEnter();
       } else {
-        addChild(refs.grid, Grid, {
-          ...context,
-          addScene,
-          removeScene,
-        });
+        addChild(refs.grid, Grid, gridProvider);
       }
 
       return () => {
         if (history.value === "push") {
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 0,
-          });
+          onLeave();
         }
       };
     });

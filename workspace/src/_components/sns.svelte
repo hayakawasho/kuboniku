@@ -120,7 +120,7 @@
 
     Tween.serial(
       Tween.parallel(
-        Tween.tween(refs.plus, .65, "power2.inOut", {
+        Tween.tween(refs.plus, 0.65, "power2.inOut", {
           rotationZ: 0,
         }),
         Tween.tween(refs.snsLabel, 0.55, "power2.in", {

@@ -1,18 +1,20 @@
-import { defineComponent, useMount, useDomRef } from "lake";
+import { gsap } from "gsap";
+import { defineComponent, useMount, useUnmount, useDomRef } from "lake";
 import { useTick } from "@/_foundation/hooks";
-import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
-import type { useInfiniteScroll } from "../use-infinite-scroll";
 import type { AppContext, ParentScene } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
+import type { ReadonlyRef } from "lake";
 
 type Props = AppContext &
   ParentScene & {
     geo: PlaneBufferGeometry;
     mat: ShaderMaterial;
-    infiniteScrollContext: ReturnType<typeof useInfiniteScroll>;
+    diff: ReadonlyRef<number>;
+    posY: ReadonlyRef<number>;
+    maxY: ReadonlyRef<number>;
   };
 
 type Refs = {
@@ -22,12 +24,7 @@ type Refs = {
 export default defineComponent({
   name: "GridItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, infiniteScrollContext } = context;
-    const { posY, diff } = infiniteScrollContext;
-
-    const state = {
-      resizing: false,
-    };
+    const { geo, mat, addScene, removeScene, posY, diff, maxY } = context;
 
     const { refs } = useDomRef<Refs>("plane");
     const { device } = useMediaQueryContext();
@@ -43,14 +40,11 @@ export default defineComponent({
     });
 
     useWindowSizeContext(({ ww, wh }) => {
-      state.resizing = true;
-
-      plane.resize({
+      const windowSize = {
         height: wh,
         width: ww,
-      });
-
-      state.resizing = false;
+      };
+      plane.resize(windowSize);
     });
 
     const speed = Number(refs.plane.dataset.speed);
@@ -61,24 +55,18 @@ export default defineComponent({
       }[device] * speed;
 
     useTick(() => {
-      if (state.resizing) {
-        return;
-      }
-
-      const y = infiniteScrollContext.wrap(posY.value * speed);
-
+      const y = gsap.utils.wrap(0, maxY.value, posY.value * speed);
       plane.updateY(y);
       plane.uniforms.u_velo.value = diff.value * acc;
-
       el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {
       addScene(plane);
+    });
 
-      return () => {
-        removeScene(plane);
-      };
+    useUnmount(() => {
+      removeScene(plane);
     });
   },
 });

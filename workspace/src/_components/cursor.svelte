@@ -1,7 +1,7 @@
 <script lang="ts">
   import { useTick, useDelegate } from "@/_foundation/hooks";
   import { lerp } from "@/_foundation/math";
-  import { Tween } from "@/_foundation/tween";
+  // import { Tween } from "@/_foundation/tween";
   import { useCursorTypeContext, cursorTypeMutators } from "@/_states/cusor";
   import { mousePosMutators } from "@/_states/mouse";
   import { useRouteContext } from "@/_states/route";

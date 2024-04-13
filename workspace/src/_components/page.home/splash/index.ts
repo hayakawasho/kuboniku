@@ -10,30 +10,17 @@ type Refs = {
   splashImage: HTMLImageElement[];
 };
 
-const CANVAS_CLASSLIST = [
-  "fixed",
-  "top-0",
-  "left-0",
-  "w-full",
-  "h-full",
-  "pointer-events-none",
-  // "opacity-15",
-];
+const CANVAS_CLASSLIST = ["fixed", "top-0", "left-0", "w-full", "h-full", "pointer-events-none"];
 
 export default defineComponent({
-  name: "Splash",
+  name: "Splashscreen",
   setup(el, context: AppContext) {
     const { addChild } = useSlot();
     const { backCanvasContext } = context;
 
-    const state = {
-      resizing: false,
-    };
-
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d")!;
     canvas.classList.add(...CANVAS_CLASSLIST);
-
     el.append(canvas);
 
     addChild(el, withSvelte(Splash), {
@@ -43,6 +30,10 @@ export default defineComponent({
 
     // Splashマウント後にフックする
     const { refs } = useDomRef<Refs>("splashImages", "splashImage");
+
+    const retry = () => {
+      //
+    };
 
     const start = () => {
       return new Promise<void>(resolve => {
@@ -56,11 +47,20 @@ export default defineComponent({
       });
     };
 
-    const retry = () => {
-      //
+    const hideStart = () => {
+      return new Promise<void>(resolve => {
+        Tween.parallel(
+          Tween.tween(refs.splashImages, 1.2, "power2.inOut", {
+            y: "-101%",
+          }),
+          Tween.wait(0.55, () => {
+            return resolve();
+          })
+        );
+      });
     };
 
-    const done = () => {
+    const hideEnd = () => {
       return new Promise<void>(resolve => {
         const CLIP_PATH = {
           y1: 100,
@@ -73,21 +73,13 @@ export default defineComponent({
 
         Tween.serial(
           Tween.parallel(
-            Tween.tween(refs.splashImages, 1.2, "power2.inOut", {
-              y: "-101%",
+            Tween.tween(CLIP_PATH, 1, "power2.inOut", {
+              onUpdate: draw,
+              y1: 0,
             }),
-            Tween.serial(
-              Tween.wait(0.55),
-              Tween.parallel(
-                Tween.tween(CLIP_PATH, 1, "power2.inOut", {
-                  onUpdate: draw,
-                  y1: 0,
-                }),
-                Tween.tween(CLIP_PATH, 0.9, "power2.inOut", {
-                  y2: 0,
-                }).delay(0.1)
-              )
-            )
+            Tween.tween(CLIP_PATH, 0.9, "power2.inOut", {
+              y2: 0,
+            }).delay(0.1)
           ),
           Tween.immediate(() => {
             resolve();
@@ -106,10 +98,11 @@ export default defineComponent({
       canvas.height = backCanvasContext.canvas.height;
     };
 
+    useWindowSizeContext(() => {
+      setCanvasSize();
+    });
+
     useTick(() => {
-      if (state.resizing) {
-        return;
-      }
       draw2DCanvas();
     });
 
@@ -120,14 +113,9 @@ export default defineComponent({
       setCanvasSize();
     });
 
-    useWindowSizeContext(() => {
-      state.resizing = true;
-      setCanvasSize();
-      state.resizing = false;
-    });
-
     return {
-      done,
+      hideEnd,
+      hideStart,
       start,
     };
   },

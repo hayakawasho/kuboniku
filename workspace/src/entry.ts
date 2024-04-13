@@ -43,25 +43,19 @@ import type { IComponent, ComponentContext } from "lake";
 
   const html = document.documentElement;
 
-  const loadContext = {
+  const loadProvider = {
     onCleanup: (scope: HTMLElement) => {
       unmount([...scope.querySelectorAll<HTMLElement>("[data-component]")]);
     },
     onCreated: (context?: Record<string, unknown>) => {
-      mountComponents(html, {
-        ...context,
-        once: true,
-      });
+      mountComponents(html, { ...context, once: true });
     },
     onUpdated: (scope: HTMLElement, context: Record<string, unknown>) => {
-      mountComponents(scope, {
-        ...context,
-        once: false,
-      });
+      mountComponents(scope, { ...context, once: false });
     },
   };
 
-  component(Load)(html, loadContext);
+  component(Load)(html, loadProvider);
 })();
 
 if (process.env.NODE_ENV === "development") {
