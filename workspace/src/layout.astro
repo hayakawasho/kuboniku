@@ -61,10 +61,11 @@ const idDev = process.env.NODE_ENV !== 'production';
 	</head>
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-full h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
-    <canvas aria-hidden="true" class="glCanvas | opacity-100" data-ref="backCanvas"></canvas>
+    <canvas aria-hidden="true" class="glCanvas" data-ref="backCanvas"></canvas>
     <div aria-hidden="true" class="uiNoise"></div>
     <div class="uiProgressbar" data-component="Scrollbar" />
     <slot />
+    <canvas aria-hidden="true" class="glCanvas" data-ref="frontCanvas"></canvas>
     <div class="uiCursor" data-ref="cursor"></div>
     { // <ClientOnly client:only="react" />
     }

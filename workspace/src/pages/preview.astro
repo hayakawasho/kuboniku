@@ -8,13 +8,14 @@ const { searchParams } = Astro.url
 const id = searchParams.get('id')
 const nonce = searchParams.get('nonce')
 
-const headers: Record<string, any> = {
+const reqHeaders = {
   "Content-Type": "application/json",
-  "X-WP-Nonce": nonce
+  ...(nonce && { "X-WP-Nonce": nonce })
 }
-const workRepo = createWorkRepository(headers)
+const workRepo = createWorkRepository(reqHeaders)
 const result = await workRepo.findById({
   id: id as string,
+  asPreview: true,
 })
 
 if (!result) {

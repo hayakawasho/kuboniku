@@ -14,12 +14,11 @@
 
   const { closeMenu, ...context } = getContext<Context$<Props>>("$");
 
-  let current = context.current;
-
+  let currentRouteName = context.current;
   const { device } = useMediaQueryContext();
 
   useRouteContext(({ name }) => {
-    current = name;
+    currentRouteName = name;
   });
 
   const linkProps = (to: string) => {
@@ -42,7 +41,7 @@
     const { refs } = useDomRef<Refs>("menuLink");
 
     if (refs.menuLink) {
-      addChild(refs.menuLink, MenuLink);
+      addChild(refs.menuLink, MenuLink, context);
     }
   });
 </script>
@@ -54,7 +53,7 @@
         <li>
           <a
             {...linkProps("/")}
-            aria-current={current === "home" && "page"}
+            aria-current={currentRouteName === "home" && "page"}
             class="menuLink"
             data-astro-prefetch="tap"
             href="/"
@@ -68,7 +67,7 @@
         <li>
           <a
             {...linkProps("/profile/")}
-            aria-current={current === "profile" && "page"}
+            aria-current={currentRouteName === "profile" && "page"}
             class="menuLink"
             data-astro-prefetch="tap"
             href="/profile/"
@@ -82,7 +81,7 @@
         <li>
           <a
             {...linkProps("/work/")}
-            aria-current={current === "work" && "page"}
+            aria-current={currentRouteName === "work" && "page"}
             class="menuLink"
             data-astro-prefetch="tap"
             href="/work/"
@@ -109,35 +108,44 @@
       <li>
         <a
           {...linkProps("/")}
-          aria-current={current === "home" && "page"}
+          aria-current={currentRouteName === "home" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
           data-cursor="scale"
           data-ref="menuLink"
           href="/"
-        >Top</a>
+        >
+          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
+          Top
+        </a>
       </li>
       <li>
         <a
           {...linkProps("/profile/")}
-          aria-current={current === "profile" && "page"}
+          aria-current={currentRouteName === "profile" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
           data-cursor="scale"
           data-ref="menuLink"
           href="/profile/"
-        >Profile</a>
+        >
+          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
+          Profile
+        </a>
       </li>
       <li>
         <a
           {...linkProps("/work/")}
-          aria-current={current === "work" && "page"}
+          aria-current={currentRouteName === "work" && "page"}
           class="menuLink"
           data-astro-prefetch="hover"
           data-cursor="scale"
           data-ref="menuLink"
           href="/work/"
-        >Work</a>
+        >
+          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
+          Work
+        </a>
       </li>
       <li>
         <a
@@ -145,7 +153,10 @@
           class="menuLink"
           data-ref="menuLink"
           data-cursor="scale"
-        >Contact</a>
+        >
+          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
+          Contact
+        </a>
       </li>
     </ul>
   </nav>
@@ -171,6 +182,7 @@
     transition: 0.55s opacity var(--ease-opacity);
     color: var(--color-text);
     pointer-events: auto;
+    position: relative;
 
     @media (min-width: 640px) {
       font-size: 1.5rem;
@@ -198,5 +210,13 @@
     @media (min-width: 640px) {
       transform: none;
     }
+  }
+
+  .glUnderline {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: .075em;
+    bottom: .2em;
   }
 </style>

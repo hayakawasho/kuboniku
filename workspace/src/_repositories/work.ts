@@ -6,117 +6,88 @@ import {
 } from "./converter";
 import type { WorkMetadata } from "@/_components/work";
 
+const getItemQuery = (id: string, asPreview = false) => {
+  return `query {
+    posts(first: 99, where: {stati: [PUBLISH, PRIVATE]}) {
+      nodes {
+        id
+      }
+    }
+    post(id: "${id}", idType: ${asPreview ? "DATABASE_ID" : "SLUG"}, asPreview: ${asPreview}) {
+      id
+      slug
+      title(format: RENDERED)
+      date
+      worksAcf {
+        eyecatch {
+          node {
+            sourceUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+        themeColor
+        url
+        category {
+          nodes {
+            name
+          }
+        }
+        role {
+          nodes {
+            name
+          }
+        }
+        description
+        gallery {
+          nodes {
+            sourceUrl
+            mediaDetails {
+              height
+              width
+            }
+          }
+        }
+        showreel {
+          node {
+            sourceUrl
+          }
+        }
+      }
+      previous {
+        id
+        slug
+        title(format: RENDERED)
+        worksAcf {
+          eyecatch {
+            node {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
+          themeColor
+        }
+      }
+    }
+  }`;
+};
+
 export const createWorkRepository = (
   headers: RequestHeaders = {
     "Content-Type": "application/json",
   }
 ) => ({
-  findBySlug: async ({
-    slug,
-  }: {
-    slug: string;
-  }): Promise<
-    | {
-        work: WorkMetadata & { index: number } & { next: WorkMetadata };
-      }
-    | undefined
-  > => {
-    try {
-      const res = await axios<any>({
-        data: {
-          query: `query {
-            posts(first: 99, where: {stati: [PUBLISH, PRIVATE]}) {
-              nodes {
-                id
-              }
-            }
-            post(id: "${slug}", idType: SLUG) {
-              id
-              slug
-              title(format: RENDERED)
-              date
-              worksAcf {
-                eyecatch {
-                  node {
-                    sourceUrl
-                    mediaDetails {
-                      height
-                      width
-                    }
-                  }
-                }
-                themeColor
-                url
-                category {
-                  nodes {
-                    name
-                  }
-                }
-                role {
-                  nodes {
-                    name
-                  }
-                }
-                description
-                gallery {
-                  nodes {
-                    sourceUrl
-                    mediaDetails {
-                      height
-                      width
-                    }
-                  }
-                }
-                showreel {
-                  node {
-                    sourceUrl
-                  }
-                }
-              }
-              previous {
-                id
-                slug
-                title(format: RENDERED)
-                worksAcf {
-                  eyecatch {
-                    node {
-                      sourceUrl
-                      mediaDetails {
-                        height
-                        width
-                      }
-                    }
-                  }
-                  themeColor
-                }
-              }
-            }
-          }`,
-        },
-        headers,
-        method: "POST",
-        url: `https://wp.kuboniku.com/graphql`,
-      });
-
-      const rawPosts = res.data.data.posts.nodes;
-      const rawPost = res.data.data.post;
-
-      return {
-        work: {
-          ...convertRawPost2Work(rawPost),
-          index: rawPosts.length - rawPosts.findIndex((item: any) => item.id === rawPost.id),
-          next: rawPost.previous && (convertRawPost2NextWork(rawPost.previous) as WorkMetadata),
-        },
-      };
-    } catch (error) {
-      console.error(error);
-    }
-  },
-
   findById: async ({
     id,
+    asPreview = false,
   }: {
     id: string;
+    asPreview?: boolean;
   }): Promise<
     | {
         work: WorkMetadata & { index: number } & { next: WorkMetadata };
@@ -126,74 +97,7 @@ export const createWorkRepository = (
     try {
       const res = await axios<any>({
         data: {
-          query: `query {
-            posts(first: 99, where: {stati: [PUBLISH, PRIVATE]}) {
-              nodes {
-                id
-              }
-            }
-            post(id: "${id}", idType: DATABASE_ID) {
-              id
-              slug
-              title(format: RENDERED)
-              date
-              worksAcf {
-                eyecatch {
-                  node {
-                    sourceUrl
-                    mediaDetails {
-                      height
-                      width
-                    }
-                  }
-                }
-                themeColor
-                url
-                category {
-                  nodes {
-                    name
-                  }
-                }
-                role {
-                  nodes {
-                    name
-                  }
-                }
-                description
-                gallery {
-                  nodes {
-                    sourceUrl
-                    mediaDetails {
-                      height
-                      width
-                    }
-                  }
-                }
-                showreel {
-                  node {
-                    sourceUrl
-                  }
-                }
-              }
-              previous {
-                id
-                slug
-                title(format: RENDERED)
-                worksAcf {
-                  eyecatch {
-                    node {
-                      sourceUrl
-                      mediaDetails {
-                        height
-                        width
-                      }
-                    }
-                  }
-                  themeColor
-                }
-              }
-            }
-          }`,
+          query: getItemQuery(id, asPreview),
         },
         headers,
         method: "POST",

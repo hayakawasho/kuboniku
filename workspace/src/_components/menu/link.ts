@@ -1,9 +1,11 @@
-import { defineComponent } from "lake";
-// import { useHit } from "@/_foundation/hooks";
+import { defineComponent, useSlot } from "lake";
+import Underline from "../underline";
+import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
   name: "MenuLink",
-  setup(el: HTMLAnchorElement) {
-    // useHit(el);
+  setup(el: HTMLAnchorElement, context: AppContext) {
+    const { addChild } = useSlot();
+    addChild(el, Underline, context);
   },
 });

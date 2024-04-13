@@ -19,6 +19,7 @@ import { scrollPositionMutators } from "@/_states/scroll-position";
 import { windowSizeMutators } from "@/_states/window-size";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld";
+import FrontCanvas from "../glworld/front";
 import type { AppContext, RouteName } from "@/_foundation/type";
 
 type Props = {
@@ -56,9 +57,11 @@ export default defineComponent({
     } as const;
 
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
+    const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
 
     const provides = {
       backCanvasContext: backCanvasContext.current,
+      frontCanvasContext: frontCanvasContext.current,
       history: readonly(history),
     } as AppContext;
 

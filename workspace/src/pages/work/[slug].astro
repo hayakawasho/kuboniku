@@ -9,13 +9,13 @@ const { slug } = Astro.params;
 const { cookies } = Astro
 
 const refreshToken = cookies.get("token")?.value
-const reqHeaders: Record<string, any> = {
-  "Authorization": refreshToken && `Bearer ${refreshToken}`,
+const reqHeaders = {
   "Content-Type": "application/json",
+  ...(refreshToken && { "Authorization": `Bearer ${refreshToken}` })
 }
 const workRepo = createWorkRepository(reqHeaders)
-const result = await workRepo.findBySlug({
-  slug: slug as string,
+const result = await workRepo.findById({
+  id: slug as string,
 })
 
 if (!result) {
