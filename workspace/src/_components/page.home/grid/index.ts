@@ -160,12 +160,12 @@ export default defineComponent({
 
     return {
       start: () => {
-        const itemH = refs.gridItem[0].getBoundingClientRect().height;
         const centerY = windowHeight.value / 2;
+        const itemH = refs.gridItem[0].getBoundingClientRect().height;
         const gap = maxY.value - itemH * 4;
         const offset = maxY.value - (centerY + itemH / 2) - gap / 4;
 
-        Tween.tween(state, 3, "power3.out", {
+        Tween.tween(state, 2.8, "power3.out", {
           targetPos: offset,
           onUpdate: () => {
             posY.value = state.targetPos;
