@@ -62,8 +62,8 @@ export default defineComponent({
           unwatch(target);
 
           loadImage(imgSrc).then(_res => {
-            target.dataset.visible = "true";
             target.style.backgroundImage = `url(${imgSrc})`;
+            target.dataset.visible = "true";
           });
         }
       });

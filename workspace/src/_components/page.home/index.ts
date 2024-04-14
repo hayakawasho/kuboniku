@@ -32,24 +32,6 @@ export default defineComponent({
 
     //------------------------------------------------------------------------------
 
-    const onEnter = () => {
-      Tween.serial(
-        Tween.prop(el, {
-          opacity: 0,
-        }),
-        Tween.wait(0.2),
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 1,
-        })
-      );
-    };
-
-    const onLeave = () => {
-      Tween.tween(el, 0.55, "power3.out", {
-        opacity: 0,
-      });
-    };
-
     useMount(() => {
       refs.grid.dataset.col = setGridSize(ww.value / wh.value);
 
@@ -77,16 +59,28 @@ export default defineComponent({
           done();
         })();
       } else if (!once && history.value === "push") {
-        const [gridContext] = addChild(refs.grid, Grid, gridProvides);
-        gridContext.current.start();
-        onEnter();
+        Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
+          Tween.immediate(() => {
+            const [gridContext] = addChild(refs.grid, Grid, gridProvides);
+            gridContext.current.start();
+          }),
+          Tween.wait(0.2),
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 1,
+          })
+        );
       } else {
         addChild(refs.grid, Grid, gridProvides);
       }
 
       return () => {
         if (history.value === "push") {
-          onLeave();
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
       };
     });
