@@ -1,4 +1,5 @@
 ---
+import { cloudinaryAPIConverter } from '../../_foundation/converter';
 import WorkIndex from '../../_components/page.work/index.view';
 import { createWorkRepository } from '../../_repositories';
 import { createAuthRepository } from '../../_repositories';
@@ -38,5 +39,19 @@ export const prerender = false
 ---
 
 <Layout title="Work" permalink="/work/" namespace="work">
+  <link
+    slot="prependHead"
+    as="image"
+    crossorigin="anonymous"
+    href={cloudinaryAPIConverter(result!.works[0].mv["pc"].url, "f_auto,q_auto,w_1440")}
+    rel="preload"
+  />
+  <link
+    slot="prependHead"
+    as="image"
+    crossorigin="anonymous"
+    href={cloudinaryAPIConverter(result!.works[1].mv["pc"].url, "f_auto,q_auto,w_1440")}
+    rel="preload"
+  />
   <WorkIndex posts={result!.works} total={Number(result!.totalCount)} namespace="work" />
 </Layout>

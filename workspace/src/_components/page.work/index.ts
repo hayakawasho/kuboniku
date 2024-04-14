@@ -1,4 +1,3 @@
-import { entries } from "./../../../../_bk/workspace/src/views/index.css";
 import { defineComponent, useSlot, useDomRef, useMount, useIntersectionWatch } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
@@ -62,8 +61,8 @@ export default defineComponent({
         if (entry.isIntersecting) {
           unwatch(target);
 
-          target.dataset.visible = "true";
           loadImage(imgSrc).then(_res => {
+            target.dataset.visible = "true";
             target.style.backgroundImage = `url(${imgSrc})`;
           });
         }
