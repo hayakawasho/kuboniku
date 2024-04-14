@@ -15,7 +15,14 @@ export class Plane extends GlObject {
 
   constructor(
     el: HTMLElement,
-    props: {
+    {
+      currentY,
+      device: _,
+      geo,
+      mat,
+      windowWidth,
+      windowHeight,
+    }: {
       currentY: number;
       device: "pc" | "sp";
       geo: PlaneBufferGeometry;
@@ -59,17 +66,18 @@ export class Plane extends GlObject {
       },
     };
 
-    const mat = props.mat.clone() as ShaderMaterial;
-    mat.uniforms = this.uniforms;
+    const material = mat.clone() as ShaderMaterial;
+    material.uniforms = this.uniforms;
 
-    this.#mesh = new Mesh(props.geo, mat);
+    this.#mesh = new Mesh(geo, material);
     this.add(this.#mesh);
 
     this.resize({
-      height: props.windowHeight,
-      width: props.windowWidth,
+      height: windowHeight,
+      width: windowWidth,
     });
-    this.updateY(props.currentY);
+
+    this.updateY(currentY);
   }
 
   resize = (size: Size) => {

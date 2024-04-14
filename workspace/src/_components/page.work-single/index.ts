@@ -39,27 +39,37 @@ export default defineComponent({
       onMutateScrollProgress(state.offsetHeight);
     });
 
+    //----------------------------------------------------------------
+
+    const onEnter = () => {
+      Tween.serial(
+        Tween.prop(el, {
+          opacity: 0,
+        }),
+        Tween.wait(0.2),
+        Tween.tween(el, 0.55, "power3.out", {
+          opacity: 1,
+        })
+      );
+    };
+
+    const onLeave = () => {
+      Tween.tween(el, 0.55, "power3.out", {
+        opacity: 0,
+      });
+    };
+
     useMount(() => {
       backCanvasContext.onChangeColorPalette(el.dataset.color!);
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {
-        Tween.serial(
-          Tween.prop(el, {
-            opacity: 0,
-          }),
-          Tween.wait(0.2),
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 1,
-          })
-        );
+        onEnter();
       }
 
       return () => {
         if (history.value === "push") {
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 0,
-          });
+          onLeave();
         }
       };
     });

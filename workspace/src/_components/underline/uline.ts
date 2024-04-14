@@ -10,7 +10,11 @@ export class Underline extends GlObject {
 
   constructor(
     el: HTMLElement,
-    props: {
+    {
+      currentY,
+      windowHeight,
+      windowWidth,
+    }: {
       currentY: number;
       windowWidth: number;
       windowHeight: number;
@@ -51,10 +55,11 @@ export class Underline extends GlObject {
     this.add(this.#mesh);
 
     this.resize({
-      height: props.windowHeight,
-      width: props.windowWidth,
+      height: windowHeight,
+      width: windowWidth,
     });
-    this.updateY(props.currentY);
+
+    this.updateY(currentY);
   }
 
   resize = (size: Size) => {

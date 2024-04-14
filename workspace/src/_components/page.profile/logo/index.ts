@@ -2,7 +2,7 @@ import { defineComponent, useMount } from "lake";
 // import { Tween } from "@/_foundation/tween";
 import { useTick } from "@/_foundation/hooks";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { Plane } from "./plane";
+import { Logo } from "./logo";
 import type { AppContext, ParentScene } from "@/_foundation/type";
 
 type Props = AppContext & ParentScene;
@@ -14,7 +14,7 @@ export default defineComponent({
 
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
-    const logoPlane = new Plane(el, {
+    const logoPlane = new Logo(el, {
       windowHeight: windowHeight.value,
       windowWidth: windowWidth.value,
     });

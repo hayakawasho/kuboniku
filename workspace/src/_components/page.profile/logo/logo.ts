@@ -11,23 +11,25 @@ import fragment from "./fragment.frag";
 import vertex from "./vertex.vert";
 import type { Size } from "@/_foundation/type";
 
-export class Plane extends GlObject {
+export class Logo extends GlObject {
   #mesh;
   uniforms;
 
   constructor(
     el: HTMLElement,
-    props: {
+    {
+      windowWidth,
+      windowHeight,
+    }: {
       windowWidth: number;
       windowHeight: number;
     }
   ) {
     super(el);
 
-    const loader = new TextureLoader();
-
     const imgSrc = el.dataset.src!;
 
+    const loader = new TextureLoader();
     const texture = loader.load(imgSrc, texture => {
       texture.minFilter = LinearFilter;
       texture.generateMipmaps = false;
@@ -70,8 +72,8 @@ export class Plane extends GlObject {
     this.add(this.#mesh);
 
     this.resize({
-      height: props.windowHeight,
-      width: props.windowWidth,
+      height: windowHeight,
+      width: windowWidth,
     });
   }
 

@@ -1,9 +1,11 @@
-import { defineComponent, useSlot, useDomRef, useMount } from "lake";
+import { entries } from "./../../../../_bk/workspace/src/views/index.css";
+import { defineComponent, useSlot, useDomRef, useMount, useIntersectionWatch } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
+import { loadImage } from "@/_foundation/utils";
 import ProjectItem from "./project";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
@@ -11,8 +13,8 @@ import type { AppContext } from "@/_foundation/type";
 type Refs = {
   index: HTMLElement;
   h1: HTMLElement;
-  canvas: HTMLCanvasElement;
   projectItem: HTMLElement[];
+  thumb: HTMLElement[];
 };
 
 export default defineComponent({
@@ -26,7 +28,7 @@ export default defineComponent({
     };
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "projectItem", "h1", "canvas", "wrap");
+    const { refs } = useDomRef<Refs>("index", "projectItem", "h1", "thumb");
     const { device } = useMediaQueryContext();
 
     addChild(refs.h1, SkewScrollContainer, context);
@@ -34,13 +36,6 @@ export default defineComponent({
 
     if (device === "pc") {
       addChild(refs.projectItem, ProjectItem, context);
-
-      // const { addScene, removeScene } = useThree(refs.canvas, 1);
-      // addChild(refs.index, Projects, {
-      //   ...context,
-      //   addScene,
-      //   removeScene,
-      // });
     }
 
     const { onMutateScrollProgress } = useScrollbarProgress();
@@ -57,6 +52,22 @@ export default defineComponent({
         return;
       }
       onMutateScrollProgress(state.offsetHeight);
+    });
+
+    const { unwatch } = useIntersectionWatch(refs.thumb, entries => {
+      entries.forEach(entry => {
+        const target = entry.target as HTMLElement;
+        const imgSrc = target.dataset.src as string;
+
+        if (entry.isIntersecting) {
+          unwatch(target);
+
+          target.dataset.visible = "true";
+          loadImage(imgSrc).then(_res => {
+            target.style.backgroundImage = `url(${imgSrc})`;
+          });
+        }
+      });
     });
 
     //------------------------------------------------------------------------------

@@ -73,7 +73,6 @@
     &:hover {
       .thumb {
         filter: none;
-        // transition-duration: 0.3s;
       }
     }
   }
@@ -133,18 +132,31 @@
   letter-spacing: 0.02em;
 }
 
+.poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #111;
+  pointer-events: none;
+}
+
 .thumb {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 0.8;
   backface-visibility: hidden;
   filter: saturate(0) brightness(0.8);
-  transition-property: filter;
-  transition-duration: 1.8s;
-  transition-timing-function: ease;
+  transition: 1.8s filter ease, opacity 0.8s;
+  background-size: cover;
+  opacity: 0;
+
+  &[data-visible="true"] {
+    opacity: 1;
+  }
 }
 
 .aspect {
