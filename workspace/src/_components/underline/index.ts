@@ -1,5 +1,4 @@
 import { defineComponent, useMount, useDomRef, useEvent } from "lake";
-// import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Underline } from "./uline";
@@ -15,6 +14,8 @@ export default defineComponent({
     const { frontCanvasContext } = context;
 
     const { refs } = useDomRef<Refs>("uline");
+
+    const [windowWidth, windowHeight] = useWindowSizeContext();
 
     const uline = new Underline(refs.uline, {
       currentY: 0,
@@ -34,7 +35,7 @@ export default defineComponent({
       });
     });
 
-    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
+    useWindowSizeContext(({ ww, wh }) => {
       uline.resize({
         height: wh,
         width: ww,
@@ -42,11 +43,7 @@ export default defineComponent({
     });
 
     useMount(() => {
-      uline.resize({
-        height: windowHeight.value,
-        width: windowWidth.value,
-      });
-
+      uline.resize({ height: windowHeight.value, width: windowWidth.value });
       frontCanvasContext.addScene(uline);
 
       return () => {

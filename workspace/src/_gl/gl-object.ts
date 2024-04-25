@@ -31,7 +31,8 @@ export class GlObject extends Object3D {
     return bounds;
   }
 
-  updateY(current: number) {
-    this.position.y = current - this.#pos.y;
+  update(y = 0, x = 0) {
+    this.position.x = x + this.#pos.x;
+    this.position.y = y - this.#pos.y;
   }
 }

@@ -1,5 +1,5 @@
 export { WebGLRenderer } from "three/src/renderers/WebGLRenderer";
-// export { WebGLRenderTarget } from "three/src/renderers/WebGLRenderTarget";
+export { WebGLRenderTarget } from "three/src/renderers/WebGLRenderTarget";
 export { Scene } from "three/src/scenes/Scene";
 export { Mesh } from "three/src/objects/Mesh";
 export * from "three/src/geometries/Geometries";

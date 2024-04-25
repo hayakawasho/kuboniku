@@ -53,7 +53,6 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
 
   return {
     addScene,
-    camera,
     removeScene,
     renderer,
   };

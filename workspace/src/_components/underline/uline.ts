@@ -59,7 +59,7 @@ export class Underline extends GlObject {
       width: windowWidth,
     });
 
-    this.updateY(currentY);
+    this.update(currentY);
   }
 
   resize = (size: Size) => {
@@ -67,9 +67,5 @@ export class Underline extends GlObject {
     this.#mesh.scale.set(bounds.width, bounds.height, 1);
 
     return bounds;
-  };
-
-  updateY = (current: number) => {
-    super.updateY(current);
   };
 }

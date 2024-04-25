@@ -25,8 +25,11 @@ export default defineComponent({
     const { refs } = useDomRef<Refs>("gridItem");
     const { device } = useMediaQueryContext();
 
+    const posX = ref(0);
     const posY = ref(0);
-    const diff = ref(0);
+    const diffX = ref(0);
+    const diffY = ref(0);
+    const maxX = ref(0);
     const maxY = ref(0);
 
     const state = {
@@ -34,7 +37,8 @@ export default defineComponent({
       position: 0,
       resizing: false,
       startPos: 0,
-      targetPos: 0,
+      tx: 0,
+      ty: 0,
     };
 
     useEvent(
@@ -86,7 +90,7 @@ export default defineComponent({
 
         const y = e.touches[0].clientY;
         const distance = (state.startPos - y) * 2;
-        state.targetPos = state.position + distance;
+        state.ty = state.position + distance;
       },
       {
         passive: true,
@@ -97,8 +101,9 @@ export default defineComponent({
       if (!state.dragging) {
         return;
       }
+
       const distance = (state.startPos - y) * 2;
-      state.targetPos = state.position + distance;
+      state.ty = state.position + distance;
     });
 
     useEvent(
@@ -108,7 +113,7 @@ export default defineComponent({
         Tween.kill(state);
 
         const { pixelY } = NormalizeWheel(e);
-        state.targetPos += pixelY;
+        state.ty += pixelY;
       },
       {
         passive: true,
@@ -117,7 +122,11 @@ export default defineComponent({
 
     const [__, windowHeight] = useWindowSizeContext(() => {
       state.resizing = true;
-      maxY.value = el.getBoundingClientRect().height / 2;
+
+      const bounds = el.getBoundingClientRect();
+      maxX.value = bounds.width / 2;
+      maxY.value = bounds.height / 2;
+
       state.resizing = false;
     });
 
@@ -131,12 +140,20 @@ export default defineComponent({
         return;
       }
 
+      const oldX = posX.value;
       const oldY = posY.value;
       const p = 1 - (1 - EASE[device]) ** timeRatio;
-      const easeVal = lerp(posY.value, state.targetPos, p);
 
-      posY.value = easeVal;
-      diff.value = oldY - posY.value;
+      const easeValue = {
+        x: lerp(posX.value, state.tx, p),
+        y: lerp(posY.value, state.ty, p),
+      };
+
+      posX.value = easeValue.x;
+      posY.value = easeValue.y;
+
+      diffX.value = oldX - posX.value;
+      diffY.value = oldY - posY.value;
     });
 
     const geo = new PlaneBufferGeometry(1, 1);
@@ -146,14 +163,18 @@ export default defineComponent({
     });
 
     useMount(() => {
-      maxY.value = el.getBoundingClientRect().height / 2;
+      const bounds = el.getBoundingClientRect();
+      maxX.value = bounds.right;
+      maxY.value = bounds.height / 2;
 
       addChild(refs.gridItem, GridItem, {
         ...context,
-        diff: readonly(diff),
+        diff: readonly(diffY),
         geo,
         mat,
+        maxX: readonly(maxX),
         maxY: readonly(maxY),
+        posX: readonly(posX),
         posY: readonly(posY),
       });
     });
@@ -165,13 +186,100 @@ export default defineComponent({
         const gap = maxY.value - itemH * 4;
         const offset = maxY.value - (centerY + itemH / 2) - gap / 4;
 
-        Tween.tween(state, 2.8, "power3.out", {
-          targetPos: offset,
+        Tween.tween(state, 2.7, "power3.out", {
           onUpdate: () => {
-            posY.value = state.targetPos;
+            posY.value = state.ty;
           },
+          ty: offset,
         });
       },
     };
   },
 });
+
+/**
+
+methods: {
+    bindEvents: function() {
+        this.$nuxt.$on("vs", this.onVS),
+        this.$nuxt.$on("tick", this.tick),
+        this.$nuxt.$on("resize", this.resize),
+        this.isMobile || (this.$nuxt.$on("mousedown", this.onMouseDown),
+        this.$nuxt.$on("mouseup", this.onMouseUp),
+        window.addEventListener("mousemove", this.onMouseMove))
+    },
+    unbindEvents: function() {
+        this.$nuxt.$off("vs", this.onVS),
+        this.$nuxt.$off("tick", this.tick),
+        this.$nuxt.$on("resize", this.resize),
+        this.isMobile || (this.$nuxt.$off("mousedown", this.onMouseDown),
+        this.$nuxt.$off("mouseup", this.onMouseUp),
+        window.removeEventListener(this.moveEvent, this.onMouseMove))
+    },
+    setBounds: function() {
+        var t = Object(h.c)(this.$el)
+          , e = t.bottom
+          , n = t.right;
+        this.max.y = e,
+        this.max.x = n
+    },
+    resize: function() {
+        this.setBounds(),
+        this.$nuxt.$emit("resize-reset")
+    },
+    onVS: function(t) {
+        var e = t.dY
+          , n = t.dX;
+        this.tY -= e,
+        this.tX += n
+    },
+    onMouseMove: function(t) {
+        var e = t.clientX
+          , n = t.clientY;
+        this.isDragging && (this.tX = this.on.x + 2.5 * e,
+        this.tY = this.on.y - 2.5 * n)
+    },
+    onMouseDown: function(t) {
+        var e = t.x
+          , n = t.y;
+        t.target.closest(".js-grid") && !this.isDragging && (this.isDragging = !0,
+        this.on.x = this.tX - 2.5 * e,
+        this.on.y = this.tY + 2.5 * n)
+    },
+    onMouseUp: function() {
+        this.isDragging && (this.isDragging = !1)
+    },
+    tick: function(t) {
+        var e = t.ratio;
+        this.yCalc(e),
+        this.xCalc(e),
+        this.e1 = .075 * e,
+        this.e2 = .0825 * e,
+        this.$nuxt.$emit("gl-tick-grid", {
+            y: this.cY,
+            x: this.cX,
+            max: this.max,
+            iy: this.introY
+        })
+    },
+    yCalc: function() {
+        this.cY[0] = l()(this.cY[0], this.tY, .075),
+        this.cY[0] = this.cY[0] + this.introY.a,
+        this.cY[1] = l()(this.cY[1], this.tY, .0825),
+        this.cY[1] = this.cY[1] + this.introY.b
+    },
+    xCalc: function() {
+        this.cX[0] += (this.tX - this.cX[0]) * this.e1,
+        this.cX[0] = Math.round(100 * this.cX[0]) / 100,
+        this.cX[1] += (this.tX - this.cX[1]) * this.e2,
+        this.cX[1] = Math.round(100 * this.cX[1]) / 100
+    },
+    enter: function() {
+        this.bindEvents()
+    },
+    leave: function() {
+        this.unbindEvents()
+    }
+}
+
+ */

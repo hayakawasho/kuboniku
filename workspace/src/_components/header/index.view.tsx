@@ -1,4 +1,4 @@
-import noiseImg from "@/assets/noise_512x341.webp";
+import noiseImg from "@/assets/noise_1100x1100.webp";
 import Styles from "./index.module.scss";
 import { Sns } from "./sns.view";
 import type { RouteName } from "@/_foundation/type";
@@ -25,7 +25,7 @@ export const Header = ({ current }: Props) => {
           <div aria-hidden="true" className={`${Styles.menu__mask} | pc:hidden`} data-ref="mask" />
           <div aria-hidden="true" className={`${Styles.menu__bg} | pc:hidden`} data-ref="menuBg">
             <div
-              className="absolute inset-0 opacity-20 bg-repeat bg-[length:256px_auto]"
+              className="absolute inset-0 opacity-20 bg-repeat bg-[length:550px_550px]"
               style={{ backgroundImage: `url(${noiseImg.src})` }}
             ></div>
           </div>

@@ -16,7 +16,7 @@ export default defineComponent({
   name: "Aurora",
   setup(_canvas: HTMLCanvasElement, context: Props) {
     const [windowWidth, windowHeight] = useWindowSizeContext();
-    const { device } = useMediaQueryContext()
+    const { device } = useMediaQueryContext();
 
     const auroraPixelRatio = 0.5;
     const refColorCode = ref(SITE_THEME_COLOR);
@@ -24,9 +24,9 @@ export default defineComponent({
     const uniforms = {
       u_brightness: {
         value: {
-          pc: .25,
-          sp: .1
-        }[device]
+          pc: 0.35,
+          sp: 0.15,
+        }[device],
       },
       u_color1: {
         value: new Color(refColorCode.value),
@@ -49,8 +49,8 @@ export default defineComponent({
       u_noiseScale: {
         value: {
           pc: new Vector2(1, 0.56),
-          sp: new Vector2(1, 0.48)
-        }[device]
+          sp: new Vector2(1, 0.48),
+        }[device],
       },
       u_resolution: {
         value: new Vector2(windowWidth.value, windowHeight.value),

@@ -20,6 +20,7 @@ import { windowSizeMutators } from "@/_states/window-size";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld";
 import FrontCanvas from "../glworld/front";
+import PageScroll from "../page-scroll";
 import type { AppContext, RouteName } from "@/_foundation/type";
 
 type Props = {
@@ -58,11 +59,13 @@ export default defineComponent({
 
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
     const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
+    const [scrollContext] = addChild(refs.main, PageScroll);
 
     const appProvides = {
       backCanvasContext: backCanvasContext.current,
       frontCanvasContext: frontCanvasContext.current,
       history: readonly(history),
+      scrollContext: scrollContext.current,
     } as AppContext;
 
     //----------------------------------------------------------------
@@ -80,7 +83,9 @@ export default defineComponent({
 
       onUpdated(to, appProvides);
       cursorTypeMutators("default");
-      routeMutators({ name: namespace });
+      routeMutators({
+        name: namespace,
+      });
     };
 
     const xhr = "[data-xhr]";
@@ -92,14 +97,12 @@ export default defineComponent({
       history.value = "pop";
       onLeave(fromContainer.value);
 
-      const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(detail.elt, xhr) as HTMLElement;
+      const newContainer = htmx.find((e as CustomEvent).detail.elt, xhr) as HTMLElement;
       onEnter(newContainer);
     });
 
     htmx.on("htmx:beforeHistorySave", e => {
-      const { detail } = e as CustomEvent;
-      const oldContainer = htmx.find(detail.historyElt, xhr) as HTMLElement;
+      const oldContainer = htmx.find((e as CustomEvent).detail.historyElt, xhr) as HTMLElement;
       onLeave(oldContainer);
       fromContainer.value = oldContainer;
     });
@@ -109,8 +112,7 @@ export default defineComponent({
     });
 
     htmx.on("htmx:afterSwap", e => {
-      const { detail } = e as CustomEvent;
-      const newContainer = htmx.find(detail.target, xhr) as HTMLElement;
+      const newContainer = htmx.find((e as CustomEvent).detail.target, xhr) as HTMLElement;
       onEnter(newContainer);
     });
 
@@ -126,12 +128,23 @@ export default defineComponent({
       if (mediaQuery.device === "pc") {
         addChild(refs.cursor, withSvelte(Cursor, "Cursor"));
       }
+
       onCreated(appProvides);
     });
 
-    wideQuery.addEventListener("change", () => location.reload(), {
-      once: true,
-    });
+    //----------------------------------------------------------------
+
+    wideQuery.addEventListener(
+      "change",
+      () => {
+        location.reload();
+      },
+      {
+        once: true,
+      }
+    );
+
+    //----------------------------------------------------------------
 
     useElementSize(refs.windowSizeWatcher, ({ width, height }) => {
       windowSizeMutators({
@@ -139,6 +152,8 @@ export default defineComponent({
         width,
       });
     });
+
+    //----------------------------------------------------------------
 
     let timer: number;
 

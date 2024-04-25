@@ -6,12 +6,7 @@ export default defineComponent({
   name: "BackCanvas",
   setup(canvas: HTMLCanvasElement, context) {
     const { addChild } = useSlot();
-    const { addScene, removeScene } = useThree(canvas, 1);
-
-    const glContext = {
-      addScene,
-      removeScene,
-    };
+    const glContext = useThree(canvas, 1);
 
     const [auroraContext] = addChild(canvas, Aurora, {
       ...context,

@@ -1,5 +1,6 @@
 import type BackCanvasContext from "../_components/glworld";
 import type FrontCanvasContext from "../_components/glworld/front";
+import type PageScrollContext from "../_components/page-scroll";
 import type { Object3D, Scene } from "@/_gl/three";
 import type { ReadonlyRef } from "lake";
 
@@ -8,6 +9,7 @@ export type AppContext = {
   history: ReadonlyRef<"push" | "pop">;
   backCanvasContext: ReturnType<(typeof BackCanvasContext)["setup"]>;
   frontCanvasContext: ReturnType<(typeof FrontCanvasContext)["setup"]>;
+  scrollContext: ReturnType<(typeof PageScrollContext)["setup"]>;
 };
 
 export type RouteName = "error" | "home" | "work" | "work-single" | "profile";

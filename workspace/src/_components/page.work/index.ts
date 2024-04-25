@@ -1,10 +1,10 @@
 import { defineComponent, useSlot, useDomRef, useMount, useIntersectionWatch } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
+import { loadImage } from "@/_foundation/utils";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import { loadImage } from "@/_foundation/utils";
 import ProjectItem from "./project";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";

@@ -4,12 +4,7 @@ import { useThree } from "@/_gl/use-three";
 export default defineComponent({
   name: "FrontCanvas",
   setup(canvas: HTMLCanvasElement) {
-    const { addScene, removeScene } = useThree(canvas, 1);
-
-    const glContext = {
-      addScene,
-      removeScene,
-    };
+    const glContext = useThree(canvas, 1);
 
     return {
       ...glContext,

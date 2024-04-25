@@ -13,7 +13,9 @@ type Props = AppContext &
     geo: PlaneBufferGeometry;
     mat: ShaderMaterial;
     diff: ReadonlyRef<number>;
+    posX: ReadonlyRef<number>;
     posY: ReadonlyRef<number>;
+    maxX: ReadonlyRef<number>;
     maxY: ReadonlyRef<number>;
   };
 
@@ -24,13 +26,14 @@ type Refs = {
 export default defineComponent({
   name: "GridItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, posY, diff, maxY } = context;
+    const { geo, mat, addScene, removeScene, posX, posY, diff, maxX, maxY } = context;
 
     const { refs } = useDomRef<Refs>("plane");
     const { device } = useMediaQueryContext();
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
     const plane = new Plane(refs.plane, {
+      currentX: 0,
       currentY: 0,
       device,
       geo,
@@ -48,17 +51,19 @@ export default defineComponent({
     });
 
     const speed = Number(refs.plane.dataset.speed);
-    const acc =
-      {
-        pc: 0.0035,
-        sp: 0.005,
-      }[device] * speed;
+    const acc = {
+      pc: 0.0035,
+      sp: 0.005,
+    }[device];
 
     useTick(() => {
+      const x = gsap.utils.wrap(0, maxX.value, posX.value);
       const y = gsap.utils.wrap(0, maxY.value, posY.value * speed);
-      plane.updateY(y);
+
+      plane.update(y, x);
       plane.uniforms.u_velo.value = diff.value * acc;
-      el.style.transform = `translateY(${-y}px) translateZ(0)`;
+
+      el.style.transform = `translateX(${-x}px) translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {
