@@ -23,7 +23,7 @@ export default defineComponent({
       u_brightness: {
         value: {
           pc: 0.6,
-          sp: 0.15,
+          sp: 0.1,
         }[device],
       },
       u_color1: {
@@ -47,7 +47,7 @@ export default defineComponent({
       u_noiseScale: {
         value: {
           pc: new Vector2(1, 0.64),
-          sp: new Vector2(1, 0.48),
+          sp: new Vector2(1, 0.32),
         }[device],
       },
       u_resolution: {
