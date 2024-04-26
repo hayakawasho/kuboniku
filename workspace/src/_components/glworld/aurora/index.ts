@@ -2,7 +2,6 @@ import { defineComponent, useMount, ref } from "lake";
 import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
-import { Tween } from "@/_foundation/tween";
 import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "@/_gl/three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
@@ -19,23 +18,22 @@ export default defineComponent({
     const { device } = useMediaQueryContext();
 
     const auroraPixelRatio = 0.5;
-    const refColorCode = ref(SITE_THEME_COLOR);
 
     const uniforms = {
       u_brightness: {
         value: {
-          pc: 0.35,
+          pc: 0.6,
           sp: 0.15,
         }[device],
       },
       u_color1: {
-        value: new Color(refColorCode.value),
+        value: new Color(SITE_THEME_COLOR),
       },
       u_color2: {
-        value: new Color(refColorCode.value),
+        value: new Color(0),
       },
       u_color3: {
-        value: new Color(0),
+        value: new Color("#b59046"),
       },
       u_color4: {
         value: new Color(0),
@@ -48,7 +46,7 @@ export default defineComponent({
       },
       u_noiseScale: {
         value: {
-          pc: new Vector2(1, 0.56),
+          pc: new Vector2(1, 0.64),
           sp: new Vector2(1, 0.48),
         }[device],
       },
@@ -88,30 +86,8 @@ export default defineComponent({
       };
     });
 
-    const onChangeColorPalette = (colorCode: string) => {
-      const newColor = new Color(colorCode);
-
-      Tween.serial(
-        Tween.parallel(
-          Tween.tween(uniforms.u_color1.value, 1, "opacity", {
-            b: newColor.b,
-            g: newColor.g,
-            r: newColor.r,
-          }),
-          Tween.tween(uniforms.u_color2.value, 1, "opacity", {
-            b: newColor.b,
-            g: newColor.g,
-            r: newColor.r,
-          })
-        ),
-        Tween.immediate(() => {
-          refColorCode.value = colorCode;
-        })
-      );
-    };
-
     return {
-      onChangeColorPalette,
+      uniforms,
     };
   },
 });

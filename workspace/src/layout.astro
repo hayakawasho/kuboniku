@@ -108,8 +108,8 @@ const idDev = process.env.NODE_ENV !== 'production';
 }
 
 .uiNoise {
-  background-image: url("./assets/noise_1100x1100.webp");
-  background-size: 275px 275px;
+  background-image: url("./assets/noise_550x550.png");
+  background-size: 68.75px 68.75px;
   background-repeat: repeat;
   position: fixed;
   top: 0;
@@ -117,7 +117,12 @@ const idDev = process.env.NODE_ENV !== 'production';
   width: 100%;
   height: 100vh;
   pointer-events: none;
-  opacity: .4;
+  opacity: 1;
+
+  @media (min-width: 640px) {
+    background-image: url("./assets/noise_1100x1100.webp");
+    background-size: 137.5px 137.5px;
+  }
 }
 
 .glCanvas {

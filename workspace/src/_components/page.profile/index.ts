@@ -1,4 +1,5 @@
 import { defineComponent, useMount, useDomRef, useSlot } from "lake";
+import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
 import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
@@ -13,7 +14,7 @@ type Refs = {
 export default defineComponent({
   name: "Profile",
   setup(el: HTMLElement, context: AppContext) {
-    const { once, history } = context;
+    const { once, history, backCanvasContext } = context;
 
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("profileLogo", "canvas");
@@ -53,6 +54,13 @@ export default defineComponent({
     };
 
     useMount(() => {
+      backCanvasContext.onChangeColorPalettes(
+        SITE_THEME_COLOR,
+        "#000",
+        SITE_THEME_SECONDARY_COLOR,
+        "#000"
+      );
+
       if (!once && history.value === "push") {
         onEnter();
       }

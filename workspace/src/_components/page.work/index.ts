@@ -1,4 +1,5 @@
 import { defineComponent, useSlot, useDomRef, useMount, useIntersectionWatch } from "lake";
+import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { loadImage } from "@/_foundation/utils";
@@ -19,7 +20,7 @@ type Refs = {
 export default defineComponent({
   name: "Works",
   setup(el, context: AppContext) {
-    const { once, history } = context;
+    const { once, history, backCanvasContext } = context;
 
     const state = {
       offsetHeight: el.getBoundingClientRect().height,
@@ -90,6 +91,8 @@ export default defineComponent({
     };
 
     useMount(() => {
+      backCanvasContext.onChangeColorPalettes(SITE_THEME_COLOR, SITE_THEME_COLOR, "#000", "#000");
+
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {

@@ -1,4 +1,5 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
+import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
 import { useThree } from "@/_gl/use-three";
 import { cursorTypeMutators } from "@/_states/cusor";
@@ -16,7 +17,7 @@ type Refs = {
 export default defineComponent({
   name: "Home",
   setup(el, context: AppContext) {
-    const { history, once } = context;
+    const { history, once, backCanvasContext } = context;
 
     const { addChild, removeChild } = useSlot();
     const { refs } = useDomRef<Refs>("grid", "canvas", "splash");
@@ -33,6 +34,13 @@ export default defineComponent({
     //------------------------------------------------------------------------------
 
     useMount(() => {
+      backCanvasContext.onChangeColorPalettes(
+        SITE_THEME_COLOR,
+        "#000",
+        SITE_THEME_SECONDARY_COLOR,
+        "#000"
+      );
+
       refs.grid.dataset.col = setGridSize(ww.value / wh.value);
 
       const gridProvides = {
