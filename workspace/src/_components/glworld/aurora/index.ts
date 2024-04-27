@@ -1,5 +1,5 @@
 import { defineComponent, useMount, ref } from "lake";
-import { SITE_THEME_COLOR } from "@/_foundation/const";
+import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
 import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "@/_gl/three";
@@ -33,7 +33,7 @@ export default defineComponent({
         value: new Color(0),
       },
       u_color3: {
-        value: new Color("#b59046"),
+        value: new Color(SITE_THEME_SECONDARY_COLOR),
       },
       u_color4: {
         value: new Color(0),
@@ -46,8 +46,8 @@ export default defineComponent({
       },
       u_noiseScale: {
         value: {
-          pc: new Vector2(1, 0.64),
-          sp: new Vector2(1, 0.32),
+          pc: new Vector2(1, 0.56),
+          sp: new Vector2(1, 0.48),
         }[device],
       },
       u_resolution: {
@@ -75,7 +75,7 @@ export default defineComponent({
       const t = Math.min(1, 2 * deltaTime);
 
       uniforms.u_lightness.value.x += (1 - uniforms.u_lightness.value.x) * t * timeRatio;
-      uniforms.u_time.value -= t * timeRatio * 0.005 * lerp(0.7, 0.2, uniforms.u_lightness.value.y);
+      uniforms.u_time.value -= t * timeRatio * 0.005 * lerp(0.6, 0.2, uniforms.u_lightness.value.y);
     });
 
     useMount(() => {
