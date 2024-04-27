@@ -47,7 +47,7 @@ export default defineComponent({
       u_noiseScale: {
         value: {
           pc: new Vector2(1, 0.56),
-          sp: new Vector2(1, 0.48),
+          sp: new Vector2(1, 0.24),
         }[device],
       },
       u_resolution: {
@@ -75,7 +75,18 @@ export default defineComponent({
       const t = Math.min(1, 2 * deltaTime);
 
       uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t * timeRatio;
-      uniforms.u_time.value -= t * timeRatio * 0.005 * lerp(0.7, 0.2, uniforms.u_lightness.value.x);
+      uniforms.u_time.value -=
+        t *
+        timeRatio *
+        0.005 *
+        lerp(
+          0.7,
+          0.2,
+          {
+            pc: uniforms.u_lightness.value.x,
+            sp: uniforms.u_lightness.value.y,
+          }[device]
+        );
     });
 
     useMount(() => {
