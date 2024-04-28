@@ -14,6 +14,8 @@ type Props = ParentScene;
 export default defineComponent({
   name: "Aurora",
   setup(_canvas: HTMLCanvasElement, context: Props) {
+    const { addScene, removeScene } = context;
+
     const [windowWidth, windowHeight] = useWindowSizeContext();
     const { device } = useMediaQueryContext();
 
@@ -54,11 +56,11 @@ export default defineComponent({
         value: new Vector2(windowWidth.value, windowHeight.value),
       },
       u_time: {
-        value: 0,
+        value: 100 * Math.random(),
       },
     };
 
-    const plane_aurora = new Mesh(
+    const planeAurora = new Mesh(
       new PlaneBufferGeometry(2, 2),
       new ShaderMaterial({
         fragmentShader: fragment,
@@ -68,7 +70,7 @@ export default defineComponent({
     );
 
     useWindowSizeContext(({ ww, wh }) => {
-      plane_aurora.scale.set(ww * auroraPixelRatio, wh * auroraPixelRatio, 1);
+      planeAurora.scale.set(ww * auroraPixelRatio, wh * auroraPixelRatio, 1);
     });
 
     useTick(({ deltaTime, timeRatio }) => {
@@ -90,10 +92,10 @@ export default defineComponent({
     });
 
     useMount(() => {
-      context.addScene(plane_aurora);
+      addScene(planeAurora);
 
       return () => {
-        context.removeScene(plane_aurora);
+        removeScene(planeAurora);
       };
     });
 

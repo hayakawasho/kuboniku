@@ -10,7 +10,7 @@ import {
   withSvelte,
 } from "lake";
 import { useElementSize } from "@/_foundation/hooks";
-import { mq } from "@/_foundation/mq";
+import { BREAK_POINTS } from "@/_foundation/mq";
 import { cursorTypeMutators } from "@/_states/cusor";
 import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
@@ -51,7 +51,7 @@ export default defineComponent({
 
     const history = ref<"push" | "pop">("push");
 
-    const wideQuery = window.matchMedia(mq.pc);
+    const wideQuery = window.matchMedia(BREAK_POINTS["pc"]);
     const mediaQuery = {
       anyHover: window.matchMedia("(any-hover:hover)").matches,
       device: wideQuery.matches ? "pc" : "sp",

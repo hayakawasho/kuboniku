@@ -1,7 +1,7 @@
 ---
-import { mq } from '../../_foundation/mq';
+import { BREAK_POINTS } from '../../_foundation/mq';
 import profileNameImg from "../../assets/profile.png";
-import profileNameImgSp from "../../assets/profile_sp.png";
+import profileNameSpImg from "../../assets/profile_sp.png";
 import Profile from '../../_components/page.profile/index.view';
 import Layout from '../../layout.astro';
 ---
@@ -10,17 +10,15 @@ import Layout from '../../layout.astro';
   <link
     slot="prependHead"
     as="image"
-    crossorigin=""
     href={profileNameImg.src}
-    media={mq.pc}
+    media={BREAK_POINTS["pc"]}
     rel="preload"
   />
   <link
     slot="prependHead"
     as="image"
-    crossorigin=""
-    href={profileNameImgSp.src}
-    media={mq.sp}
+    href={profileNameSpImg.src}
+    media={BREAK_POINTS["sp"]}
     rel="preload"
   />
   <Profile namespace="profile" />

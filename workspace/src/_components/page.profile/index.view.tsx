@@ -1,7 +1,7 @@
 import { Header } from "@/_components/header/index.view";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
 import profileNameImg from "@/assets/profile.png";
-import profileNameImgSp from "@/assets/profile_sp.png";
+import profileNameSpImg from "@/assets/profile_sp.png";
 import Styles from "./index.module.scss";
 import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
@@ -28,8 +28,8 @@ const Component: React.FC<{
           <ResponsiveImage
             alt=""
             className={`${Styles.logo} pc:hidden`}
-            mob={profileNameImgSp.src}
-            mobSize={[profileNameImgSp.width, profileNameImgSp.height]}
+            mob={profileNameSpImg.src}
+            mobSize={[profileNameSpImg.width, profileNameSpImg.height]}
             size={[1, 1]}
             src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
           ></ResponsiveImage>

@@ -1,4 +1,4 @@
-export const mq = {
+export const BREAK_POINTS = {
   pc: "(min-width: 640px)",
-  sp: "not screen and (min-width:640px)",
+  sp: "(max-width: 639px)",
 } as const;

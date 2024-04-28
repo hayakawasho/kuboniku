@@ -5,6 +5,9 @@ import './_components/page.home/index.module.scss';
 import './_components/page.work/index.module.scss';
 import './_components/page.work-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
+import { BREAK_POINTS } from './_foundation/mq';
+import noiseImg from './assets/noise_1100x1100.webp';
+import spNoiseImg from './assets/noise_550x550.webp';
 // import IconFont from './assets/kuboniku.woff';
 import type { RouteName } from "./_foundation/type";
 
@@ -28,9 +31,20 @@ const idDev = process.env.NODE_ENV !== 'production';
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <slot name="prependHead" />
-    { // <link as="font" crossorigin="" href={IconFont} rel="preload" type="font/woff" />
-    }
+    <link
+      as="image"
+      href={noiseImg.src}
+      media={BREAK_POINTS["pc"]}
+      rel="preload"
+    />
+    <link
+      as="image"
+      href={spNoiseImg.src}
+      media={BREAK_POINTS["sp"]}
+      rel="preload"
+    />
     {!idDev && (
       <link
         as="style"
@@ -39,9 +53,8 @@ const idDev = process.env.NODE_ENV !== 'production';
         rel="preload"
       />
     )}
-		<meta charset="UTF-8" />
-		<meta name="description" content={DESCRIPTION} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="description" content={DESCRIPTION} />
     <meta name="format-detection" content="telephone=no" />
     <title>{title}</title>
     <meta content={DESCRIPTION} name="description" />
@@ -62,7 +75,8 @@ const idDev = process.env.NODE_ENV !== 'production';
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-full h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" class="glCanvas" data-ref="backCanvas"></canvas>
-    <div aria-hidden="true" class="uiNoise"></div>
+    <div aria-hidden="true" class="uiNoise sp:hidden" style={{ backgroundImage: `url(${noiseImg.src})`}}></div>
+    <div aria-hidden="true" class="uiNoise pc:hidden" style={{ backgroundImage: `url(${spNoiseImg.src})`}}></div>
     <div class="uiProgressbar" data-component="Scrollbar" />
     <slot />
     <canvas aria-hidden="true" class="glCanvas" data-ref="frontCanvas"></canvas>
@@ -117,13 +131,13 @@ const idDev = process.env.NODE_ENV !== 'production';
   pointer-events: none;
 
   @media not screen and (min-width:640px) {
-    background-image: url("./assets/noise_550x550.png");
+    // background-image: url("./assets/noise_550x550.webp");
     background-size: 128px 128px;
     opacity: .8;
   }
 
   @media (min-width: 640px) {
-    background-image: url("./assets/noise_1100x1100.png");
+    // background-image: url("./assets/noise_1100x1100.webp");
     background-size: 192px 192px;
     opacity: .75;
   }
