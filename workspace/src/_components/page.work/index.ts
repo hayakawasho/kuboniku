@@ -91,8 +91,7 @@ export default defineComponent({
     };
 
     useMount(() => {
-      backCanvasContext.onChangeColorPalettes(SITE_THEME_COLOR, SITE_THEME_COLOR, "#000", "#000");
-
+      backCanvasContext.onChangeColorsPalette(SITE_THEME_COLOR, SITE_THEME_COLOR, "#000", "#000");
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {

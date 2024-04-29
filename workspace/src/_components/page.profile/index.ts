@@ -54,7 +54,7 @@ export default defineComponent({
     };
 
     useMount(() => {
-      backCanvasContext.onChangeColorPalettes(
+      backCanvasContext.onChangeColorsPalette(
         SITE_THEME_COLOR,
         "#000",
         SITE_THEME_SECONDARY_COLOR,

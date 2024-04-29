@@ -1,4 +1,4 @@
-import { defineComponent, useMount, ref } from "lake";
+import { defineComponent, useMount } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";

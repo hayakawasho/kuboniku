@@ -18,7 +18,7 @@ export default defineComponent({
     return {
       ...glContext,
       canvas,
-      onChangeColorPalettes: (
+      onChangeColorsPalette: (
         colorCode1: string,
         colorCode2: string,
         colorCode3: string,

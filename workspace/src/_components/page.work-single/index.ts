@@ -61,8 +61,7 @@ export default defineComponent({
 
     useMount(() => {
       const themeColor = el.dataset.color!;
-      backCanvasContext.onChangeColorPalettes(themeColor, themeColor, "#000", "#000");
-
+      backCanvasContext.onChangeColorsPalette(themeColor, themeColor, "#000", "#000");
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {

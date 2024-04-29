@@ -24,30 +24,30 @@ export default defineComponent({
     const { addScene, removeScene } = useThree(refs.canvas, 1);
 
     const setGridSize = (aspect: number) => {
-      return aspect >= 1.25 ? "large" : aspect >= 0.85 ? "middle" : "small";
+      const gridSize = aspect >= 1.25 ? "large" : aspect >= 0.85 ? "middle" : "small";
+      refs.grid.dataset.col = gridSize;
     };
 
     const [ww, wh] = useWindowSizeContext(({ aspect }) => {
-      refs.grid.dataset.col = setGridSize(aspect);
+      setGridSize(aspect);
     });
 
     //------------------------------------------------------------------------------
 
+    const gridProvides = {
+      ...context,
+      addScene,
+      removeScene,
+    };
+
     useMount(() => {
-      backCanvasContext.onChangeColorPalettes(
+      backCanvasContext.onChangeColorsPalette(
         SITE_THEME_COLOR,
         "#000",
         SITE_THEME_SECONDARY_COLOR,
         "#000"
       );
-
-      refs.grid.dataset.col = setGridSize(ww.value / wh.value);
-
-      const gridProvides = {
-        ...context,
-        addScene,
-        removeScene,
-      };
+      setGridSize(ww.value / wh.value);
 
       if (once) {
         cursorTypeMutators("loading");

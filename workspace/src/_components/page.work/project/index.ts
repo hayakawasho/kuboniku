@@ -23,7 +23,7 @@ export default defineComponent({
     const themeColor = el.dataset.color!;
 
     useEvent(el, "mouseenter", _e => {
-      backCanvasContext.onChangeColorPalettes(themeColor, themeColor, "#000", "#000", 1.2);
+      backCanvasContext.onChangeColorsPalette(themeColor, themeColor, "#000", "#000", 1.2);
 
       Tween.tween(refs.thumb, 1.1, "expo.out", {
         scale: 1.05,
@@ -31,7 +31,7 @@ export default defineComponent({
     });
 
     useEvent(el, "mouseleave", _e => {
-      backCanvasContext.onChangeColorPalettes(
+      backCanvasContext.onChangeColorsPalette(
         SITE_THEME_COLOR,
         SITE_THEME_COLOR,
         "#000",
