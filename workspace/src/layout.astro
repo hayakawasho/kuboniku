@@ -7,8 +7,7 @@ import './_components/page.work-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
 import { BREAK_POINTS } from './_foundation/mq';
 import noiseImg from './assets/noise_1100x1100.webp';
-import spNoiseImg from './assets/noise_550x550.webp';
-// import IconFont from './assets/kuboniku.woff';
+import noiseSpImg from './assets/noise_550x550.webp';
 import type { RouteName } from "./_foundation/type";
 
 export interface Props {
@@ -41,7 +40,7 @@ const idDev = process.env.NODE_ENV !== 'production';
     />
     <link
       as="image"
-      href={spNoiseImg.src}
+      href={noiseSpImg.src}
       media={BREAK_POINTS["sp"]}
       rel="preload"
     />
@@ -76,7 +75,7 @@ const idDev = process.env.NODE_ENV !== 'production';
     <div aria-hidden="true" class="fixed inset-0 w-full h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" class="glCanvas" data-ref="backCanvas"></canvas>
     <div aria-hidden="true" class="uiNoise sp:hidden" style={{ backgroundImage: `url(${noiseImg.src})`}}></div>
-    <div aria-hidden="true" class="uiNoise pc:hidden" style={{ backgroundImage: `url(${spNoiseImg.src})`}}></div>
+    <div aria-hidden="true" class="uiNoise pc:hidden" style={{ backgroundImage: `url(${noiseSpImg.src})`}}></div>
     <div class="uiProgressbar" data-component="Scrollbar" />
     <slot />
     <canvas aria-hidden="true" class="glCanvas" data-ref="frontCanvas"></canvas>
@@ -87,14 +86,6 @@ const idDev = process.env.NODE_ENV !== 'production';
 </html>
 
 <style lang="scss" is:global>
-// @font-face {
-//   font-family: "kuboniku";
-//   src: url("./assets/kuboniku.woff") format("woff");
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: block;
-// }
-
 .uiProgressbar {
   position: fixed;
   top: 50vh;

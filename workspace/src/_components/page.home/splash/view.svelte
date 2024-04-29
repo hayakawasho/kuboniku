@@ -3,16 +3,21 @@
   import type { AppContext } from "@/_foundation/type";
   import type { Context$ } from "lake";
 
-  const { images } = getContext<
+  const { images, noiseSrc } = getContext<
     Context$<
       AppContext & {
         images: string[];
+        noiseSrc: string;
       }
     >
   >("$");
 </script>
 
 <div class="w-full h-full flex items-center justify-center pointer-events-auto">
+  <div
+    class="absolute inset-0 bg-repeat bg-[length:128px_128px] opacity-80 | pc:bg-[length:192px_192px] pc:opacity-[.75]"
+    style="background-image: url('{noiseSrc}')"
+  ></div>
   <div class="g">
     <div class="relative w-full h-full" data-ref="splashImages">
       {#each images as image}

@@ -39,29 +39,27 @@ export default defineComponent({
         const newColor3 = new Color(colorCode3);
         const newColor4 = new Color(colorCode4);
 
-        Tween.serial(
-          Tween.parallel(
-            Tween.tween(uniforms.u_color1.value, duration, "opacity", {
-              b: newColor1.b,
-              g: newColor1.g,
-              r: newColor1.r,
-            }),
-            Tween.tween(uniforms.u_color2.value, duration, "opacity", {
-              b: newColor2.b,
-              g: newColor2.g,
-              r: newColor2.r,
-            }),
-            Tween.tween(uniforms.u_color3.value, duration, "opacity", {
-              b: newColor3.b,
-              g: newColor3.g,
-              r: newColor3.r,
-            }),
-            Tween.tween(uniforms.u_color4.value, duration, "opacity", {
-              b: newColor4.b,
-              g: newColor4.g,
-              r: newColor4.r,
-            })
-          )
+        Tween.parallel(
+          Tween.tween(uniforms.u_color1.value, duration, "opacity", {
+            b: newColor1.b,
+            g: newColor1.g,
+            r: newColor1.r,
+          }),
+          Tween.tween(uniforms.u_color2.value, duration, "opacity", {
+            b: newColor2.b,
+            g: newColor2.g,
+            r: newColor2.r,
+          }),
+          Tween.tween(uniforms.u_color3.value, duration, "opacity", {
+            b: newColor3.b,
+            g: newColor3.g,
+            r: newColor3.r,
+          }),
+          Tween.tween(uniforms.u_color4.value, duration, "opacity", {
+            b: newColor4.b,
+            g: newColor4.g,
+            r: newColor4.r,
+          })
         );
       },
     };

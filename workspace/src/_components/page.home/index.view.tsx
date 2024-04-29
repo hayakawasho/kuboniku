@@ -2,6 +2,8 @@ import { Header } from "@/_components/header/index.view";
 import { PageWrapper } from "@/_components/page-wrapper/index.view";
 import { Link } from "@/_components/ui/link";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
+import noiseImg from "@/assets/noise_1100x1100.webp";
+import noiseSpImg from "@/assets/noise_550x550.webp";
 import Styles from "./index.module.scss";
 import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
@@ -27,6 +29,8 @@ const Component: React.FC<Props> = props => {
         <div
           className="pointer-events-none fixed inset-0 m-auto w-full h-full z-10"
           data-images={`${images}`}
+          data-noise={noiseImg.src}
+          data-noise-mob={noiseSpImg.src}
           data-ref="splash"
         ></div>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>

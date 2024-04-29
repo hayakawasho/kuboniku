@@ -1,6 +1,7 @@
 import { defineComponent, useSlot, withSvelte, useDomRef, useMount } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
+import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Splash from "./view.svelte";
 import type { AppContext } from "@/_foundation/type";
@@ -18,6 +19,8 @@ export default defineComponent({
     const { addChild } = useSlot();
     const { backCanvasContext } = context;
 
+    const { device } = useMediaQueryContext();
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d")!;
     canvas.classList.add(...CANVAS_CLASSLIST);
@@ -26,6 +29,10 @@ export default defineComponent({
     addChild(el, withSvelte(Splash), {
       ...context,
       images: el.dataset.images!.split(", "),
+      noiseSrc: {
+        pc: el.dataset.noise!,
+        sp: el.dataset.noiseMob!,
+      }[device],
     });
 
     // Splashマウント後にフックする
