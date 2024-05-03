@@ -1,52 +1,53 @@
-import { ref, useMount, useEvent, defineComponent } from "lake";
+import { useMount, useEvent, defineComponent } from "lake";
+import { clamp } from "remeda";
 import VirtualScroll from "virtual-scroll";
 import { useTick, useElementSize } from "@/_foundation/hooks";
-import { lerp } from "@/_foundation/math";
 import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
+import { Smooth } from "./smooth";
 
 export default defineComponent({
   name: "PageScroll",
-  setup(el: HTMLElement) {
+  setup(content: HTMLElement) {
+    const smooth = new Smooth();
     const vs = new VirtualScroll({
-      firefoxMultiplier: 40,
-      mouseMultiplier: 0.6,
-      touchMultiplier: 2,
+      mouseMultiplier: 0.45,
+      touchMultiplier: 2.5,
+      firefoxMultiplier: 90,
+      passive: true,
+      preventTouch: true,
+      useKeyboard: false,
+      useTouch: true,
     });
 
-    const onVScroll = ({ deltaY, originalEvent, ...vs }: VirtualScroll.VirtualScrollEvent) => {
-      //
-    };
-
-    useEvent(
-      window as any,
-      "scroll",
-      _e => {
-        //
-      },
-      {
-        passive: true,
-      }
-    );
-
-    useTick(({ timestamp, deltaTime }) => {
-      //
+    const [_, windowHeight] = useWindowSizeContext();
+    useElementSize(content, ({ height }) => {
+      smooth.updateHeight(height, windowHeight.value);
     });
 
-    useWindowSizeContext(({ wh }) => {
-      //
+    vs.on(({ deltaY, originalEvent }) => {
+      smooth.onVScroll(originalEvent as KeyboardEvent, { deltaY });
     });
 
-    useElementSize(el, () => {
-      //
+    useEvent(window as any, "scroll", smooth.onNativeScroll, {
+      passive: true,
+    });
+
+    useTick(() => {
+      smooth.tick();
     });
 
     useMount(() => {
-      vs.on(onVScroll);
+      smooth.resume();
 
       return () => {
         vs.destroy();
+        smooth.destroy();
       };
     });
+
+    return {
+      //
+    };
   },
 });

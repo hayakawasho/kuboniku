@@ -1,6 +1,6 @@
 ---
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
-// import { ClientOnly } from './client-only.tsx';
+import { ClientOnly } from './client-only.tsx';
 import './_components/page.home/index.module.scss';
 import './_components/page.work/index.module.scss';
 import './_components/page.work-single/index.module.scss';
@@ -80,8 +80,7 @@ const idDev = process.env.NODE_ENV !== 'production';
     <slot />
     <canvas aria-hidden="true" class="glCanvas" data-ref="frontCanvas"></canvas>
     <div class="uiCursor" data-ref="cursor"></div>
-    { // <ClientOnly client:only="react" />
-    }
+    <ClientOnly client:only="react" />
   </body>
 </html>
 

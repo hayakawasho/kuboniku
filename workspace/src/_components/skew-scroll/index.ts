@@ -40,7 +40,7 @@ export default defineComponent({
         lastY.value = 0;
       }
 
-      const skewY = 8 * ((currentY - lastY.value) / ww.value);
+      const skewY = 14 * ((currentY - lastY.value) / ww.value);
       const ty = clamp(skewY, { max: 7, min: -7 });
       el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
