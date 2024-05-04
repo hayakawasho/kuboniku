@@ -1,4 +1,4 @@
-import { Tween } from "@/_foundation/tween";
+import { lerp } from "@/_foundation/math";
 
 export class Smooth {
   #state;
@@ -6,26 +6,24 @@ export class Smooth {
 
   constructor() {
     this.#state = {
-      stopped: true,
       scrollLimit: 0,
       scrolling: false,
+      stopped: true,
     };
 
     this.#scroll = {
-      target: 0,
       current: 0,
-      last: 0,
+      target: 0,
     };
+
+    this.resume();
   }
 
-  destroy() {
-    this.stop();
+  updateHeight = (contentHeight: number, windowHeight: number) => {
+    this.#state.scrollLimit = contentHeight - windowHeight;
+  };
 
-    (this as any).#state = null;
-    (this as any).#scroll = null;
-  }
-
-  stop = () => {
+  pause = () => {
     this.#state.stopped = true;
   };
 
@@ -37,68 +35,55 @@ export class Smooth {
     window.scrollTo(0, value);
   };
 
-  #roundEx = (value: number, digit: number) => {
-    return Math.round((value * digit) / digit);
-  };
-
   #clamp = (value: number, min: number, max: number) => {
     return Math.min(Math.max(value, min), max);
   };
 
-  tick = () => {
+  tick = ({ deltaTime }: { deltaTime: number; timestamp: number; timeRatio: number }) => {
     if (this.#state.stopped) {
       return;
     }
 
-    if (this.#scroll.current === this.#scroll.target) {
-      this.#scroll.last = this.#scroll.current;
-    }
+    const diff = this.#scroll.target - this.#scroll.current;
+
+    this.#state.scrolling = Math.abs(diff) >= 0.05;
 
     if (this.#state.scrolling) {
-      this.#scroll.current = this.#roundEx(this.#scroll.current, 1000);
+      const d = deltaTime * 0.001;
+      const p = Math.exp(-0.45 * 85 * d);
+      this.#scroll.current = lerp(this.#scroll.current, this.#scroll.target, p);
       this.#setPosY(this.#scroll.current);
     }
-
-    this.#state.scrolling = this.#scroll.current !== this.#roundEx(this.#scroll.target, 1000);
   };
 
-  updateHeight = (contentHeight: number, windowHeight: number) => {
-    this.#state.scrollLimit = contentHeight - windowHeight;
-  };
+  onVScroll = ({ deltaY, originalEvent: evt }: { deltaY: number; originalEvent: Event }) => {
+    if (this.#state.stopped) {
+      return;
+    }
 
-  sync = (value: number) => {
-    this.#scroll.target = this.#scroll.current = this.#scroll.last = value;
+    evt.preventDefault();
+
+    this.#scroll.target += deltaY * -1;
+    this.#scroll.target = this.#clamp(this.#scroll.target, -0, this.#state.scrollLimit);
   };
 
   onNativeScroll = () => {
     if (!this.#state.scrolling) {
-      this.sync(window.scrollY);
+      this.#scroll.target = this.#scroll.current = window.scrollY;
     }
   };
 
-  onVScroll = (evt: KeyboardEvent, { deltaY }: { deltaY: number }) => {
-    if (evt.ctrlKey || evt.code === "ArrowUp" || evt.code === "ArrowDown") {
-      return;
-    }
-
-    const scrollVal = this.#clamp(deltaY, -200, 200);
-    this.#scroll.target -= scrollVal;
-
-    this.tween(this.#scroll.target);
+  reset = () => {
+    this.#scroll.target = this.#scroll.current = 0;
+    this.#setPosY(0);
   };
 
-  tween = (value: number) => {
-    if (this.#state.stopped) {
-      return;
-    }
+  destroy = () => {
+    (this.#state as any) = null;
+    (this.#scroll as any) = null;
+  };
 
-    this.#scroll.target = this.#clamp(value, -0, this.#state.scrollLimit);
-
-    Tween.tween(this.#scroll, 0.45, "expo.out", {
-      current: this.#scroll.target,
-      onComplete: () => {
-        this.sync(this.#scroll.target);
-      },
-    });
+  scrollTop = () => {
+    return this.#scroll.current;
   };
 }

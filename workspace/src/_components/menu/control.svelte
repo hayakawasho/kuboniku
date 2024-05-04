@@ -22,7 +22,7 @@
     >
   >("$");
 
-  const { openAnime, closeAnime } = context;
+  const { openAnime, closeAnime, scrollContext } = context;
 
   const { addChild } = useSlot();
   const { refs } = useDomRef<Refs>("menuTrigger", "mask", "menu", "menuContent");
@@ -31,10 +31,12 @@
 
   $: switch (isOpen) {
     case true:
+      scrollContext.pause()
       scrollLock.disablePageScroll();
       openAnime();
       break;
     case false:
+      scrollContext.resume()
       scrollLock.enablePageScroll();
       closeAnime();
       break;

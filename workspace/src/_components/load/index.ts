@@ -163,7 +163,7 @@ export default defineComponent({
       () => {
         clearTimeout(timer);
 
-        scrollPositionMutators(window.scrollY);
+        scrollPositionMutators(scrollContext.current.scrollTop());
         scrollStateYMutators({
           scrolling: true,
         });
