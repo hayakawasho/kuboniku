@@ -5,7 +5,7 @@ import { useWindowSizeContext } from "@/_states/window-size";
 import { Smooth } from "./smooth";
 
 export const useScrollTween = (el: HTMLElement) => {
-  const { pause, resume, scrollTop, ...smooth } = new Smooth();
+  const { pause, resume, scrollTop, reset, ...smooth } = new Smooth();
 
   const vs = new VirtualScroll({
     firefoxMultiplier: 20,
@@ -45,6 +45,7 @@ export const useScrollTween = (el: HTMLElement) => {
 
   return {
     pause,
+    reset,
     resume,
     scrollTop,
   };

@@ -9,6 +9,7 @@ export default defineComponent({
       ? useScrollTween(content)
       : {
           pause: noop,
+          reset: () => window.scrollTo(0, 0),
           resume: noop,
           scrollTop: () => window.scrollY,
         };

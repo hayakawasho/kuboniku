@@ -80,7 +80,7 @@ export default defineComponent({
       const namespace = to.dataset.xhr as RouteName;
       document.body.dataset.page = namespace;
 
-      window.scrollTo(0, 0);
+      scrollContext.current.reset();
       scrollPositionMutators(0);
 
       onUpdated(to, appProvides);
@@ -127,7 +127,7 @@ export default defineComponent({
     useMount(() => {
       mediaQueryMutators(mediaQuery);
 
-      if (mediaQuery.device === "pc") {
+      if (mediaQuery.anyHover) {
         addChild(refs.cursor, withSvelte(Cursor, "Cursor"));
       }
 
