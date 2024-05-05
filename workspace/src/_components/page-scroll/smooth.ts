@@ -1,6 +1,7 @@
 import { lerp } from "@/_foundation/math";
 
-const log2 = 6.931471805599453;
+// const log2 = 6.931471805599453;
+const ease = 0.6;
 
 export class Smooth {
   #state;
@@ -52,7 +53,7 @@ export class Smooth {
 
     if (this.#state.scrolling) {
       const d = deltaTime * 0.001;
-      const p = Math.exp(-0.6 * log2 * 10 * d);
+      const p = Math.exp(-ease * 85 * d);
       this.#scroll.current = lerp(this.#scroll.current, this.#scroll.target, p);
       this.#setPosY(this.#scroll.current);
     }

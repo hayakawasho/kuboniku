@@ -1,13 +1,10 @@
 import { defineComponent } from "lake";
-import { useScrollTween } from "./use-scroll-tween";
-import { useMediaQueryContext } from "@/_states/mq";
 import { noop } from "@/_foundation/utils";
+import { useScrollTween } from "./use-scroll-tween";
 
 export default defineComponent({
   name: "PageScroll",
-  setup(content: HTMLElement) {
-    const { anyHover } = useMediaQueryContext();
-
+  setup(content: HTMLElement, { anyHover }: { anyHover: boolean }) {
     const scrollContext = anyHover
       ? useScrollTween(content)
       : {

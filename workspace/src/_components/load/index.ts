@@ -59,7 +59,9 @@ export default defineComponent({
 
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
     const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
-    const [scrollContext] = addChild(refs.main, PageScroll);
+    const [scrollContext] = addChild(refs.main, PageScroll, {
+      anyHover: mediaQuery.anyHover,
+    });
 
     const appProvides = {
       backCanvasContext: backCanvasContext.current,
@@ -134,15 +136,9 @@ export default defineComponent({
 
     //----------------------------------------------------------------
 
-    wideQuery.addEventListener(
-      "change",
-      () => {
-        location.reload();
-      },
-      {
-        once: true,
-      }
-    );
+    wideQuery.addEventListener("change", () => location.reload(), {
+      once: true,
+    });
 
     //----------------------------------------------------------------
 

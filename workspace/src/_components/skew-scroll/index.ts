@@ -22,7 +22,7 @@ export default defineComponent({
 
     const lastY = ref(0);
 
-    const EASE = {
+    const ease = {
       pc: 0.1,
       sp: 0.15,
     } as const;
@@ -33,14 +33,19 @@ export default defineComponent({
       }
 
       const currentY = posY.value;
-      const easeVal = 1 - (1 - EASE[device]) ** timeRatio;
-      lastY.value = lerp(lastY.value, currentY, easeVal);
+      const p = 1 - (1 - ease[device]) ** timeRatio;
+      lastY.value = lerp(lastY.value, currentY, p);
 
       if (lastY.value < 0.1) {
         lastY.value = 0;
       }
 
-      const skewY = 14 * ((currentY - lastY.value) / ww.value);
+      const skewY =
+        {
+          pc: 12,
+          sp: 8,
+        }[device] *
+        ((currentY - lastY.value) / ww.value);
       const ty = clamp(skewY, { max: 7, min: -7 });
       el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
