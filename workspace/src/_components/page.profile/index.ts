@@ -35,24 +35,6 @@ export default defineComponent({
 
     //------------------------------------------------------------------------------
 
-    const onEnter = () => {
-      Tween.serial(
-        Tween.prop(el, {
-          opacity: 0,
-        }),
-        Tween.wait(0.2),
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 1,
-        })
-      );
-    };
-
-    const onLeave = () => {
-      Tween.tween(el, 0.55, "power3.out", {
-        opacity: 0,
-      });
-    };
-
     useMount(() => {
       backCanvasContext.onChangeColorsPalette(
         SITE_THEME_COLOR,
@@ -62,12 +44,22 @@ export default defineComponent({
       );
 
       if (!once && history.value === "push") {
-        onEnter();
+        Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 1,
+          })
+        );
       }
 
       return () => {
         if (history.value === "push") {
-          onLeave();
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
       };
     });

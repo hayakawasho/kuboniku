@@ -140,6 +140,10 @@
   bottom: 0;
   background-color: #111;
   pointer-events: none;
+
+  @media (hover: hover) {
+    visibility: hidden;
+  }
 }
 
 .thumb {
@@ -156,6 +160,10 @@
 
   &[data-visible="true"] {
     opacity: 1;
+  }
+
+  @media (hover: hover) {
+    visibility: hidden;
   }
 }
 

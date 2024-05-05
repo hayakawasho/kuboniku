@@ -1,7 +1,7 @@
 import { lerp } from "@/_foundation/math";
 
 // const log2 = 6.931471805599453;
-const ease = 0.6;
+const ease = 0.625;
 
 export class Smooth {
   #state;
@@ -18,6 +18,7 @@ export class Smooth {
 
     this.#scroll = {
       current: y,
+      diff: 0,
       target: y,
     };
   }
@@ -47,9 +48,8 @@ export class Smooth {
       return;
     }
 
-    const diff = this.#scroll.target - this.#scroll.current;
-
-    this.#state.scrolling = Math.abs(diff) >= 0.05;
+    this.#scroll.diff = this.#scroll.target - this.#scroll.current;
+    this.#state.scrolling = Math.abs(this.#scroll.diff) >= 0.05;
 
     if (this.#state.scrolling) {
       const d = deltaTime * 0.001;
@@ -88,5 +88,9 @@ export class Smooth {
 
   scrollTop = () => {
     return this.#scroll.current;
+  };
+
+  diff = () => {
+    return this.#scroll.diff;
   };
 }

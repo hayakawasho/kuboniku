@@ -10,11 +10,9 @@ export class Underline extends GlObject {
   constructor(
     el: HTMLElement,
     {
-      currentY: __,
       windowHeight,
       windowWidth,
     }: {
-      currentY: number;
       windowWidth: number;
       windowHeight: number;
     }

@@ -10,7 +10,8 @@ import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
   name: "SkewScrollContainer",
-  setup(el: HTMLElement, _context: AppContext) {
+  setup(el: HTMLElement, context: AppContext) {
+    const { scrollContext } = context;
     const state = {
       active: false,
     };
@@ -20,7 +21,7 @@ export default defineComponent({
     const [posY] = useScrollPositionContext();
     const { scrolling } = useScrollStateContext();
 
-    const lastY = ref(0);
+    const lastY = ref(scrollContext.scrollTop());
 
     const ease = {
       pc: 0.1,

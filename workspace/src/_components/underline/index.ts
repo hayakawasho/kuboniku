@@ -18,7 +18,6 @@ export default defineComponent({
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
     const uline = new Underline(refs.uline, {
-      currentY: 0,
       windowHeight: 0,
       windowWidth: 0,
     });

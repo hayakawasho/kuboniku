@@ -3,22 +3,23 @@ import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { loadImage } from "@/_foundation/utils";
+import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import ProjectItem from "./project";
+import ProjectItems from "./projects";
 import SkewScrollContainer from "../skew-scroll";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
   index: HTMLElement;
   h1: HTMLElement;
-  projectItem: HTMLElement[];
   thumb: HTMLElement[];
+  canvas: HTMLCanvasElement;
 };
 
 export default defineComponent({
-  name: "Works",
+  name: "Work",
   setup(el, context: AppContext) {
     const { once, history, backCanvasContext } = context;
 
@@ -28,14 +29,39 @@ export default defineComponent({
     };
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "projectItem", "h1", "thumb");
-    const { device } = useMediaQueryContext();
+    const { refs } = useDomRef<Refs>("index", "h1", "thumb", "canvas");
+
+    const { anyHover } = useMediaQueryContext();
 
     addChild(refs.h1, SkewScrollContainer, context);
     addChild(refs.index, SkewScrollContainer, context);
 
-    if (device === "pc") {
-      addChild(refs.projectItem, ProjectItem, context);
+    if (anyHover) {
+      const { addScene, removeScene } = useThree(
+        refs.canvas,
+        Math.min(window.devicePixelRatio, 1.5)
+      );
+
+      addChild(refs.canvas, SkewScrollContainer, context);
+      addChild(refs.index, ProjectItems, {
+        ...context,
+        addScene,
+        removeScene,
+      });
+    } else {
+      const { unwatch } = useIntersectionWatch(refs.thumb, entries => {
+        entries.forEach(async entry => {
+          const target = entry.target as HTMLElement;
+          const imgSrc = target.dataset.src as string;
+
+          if (entry.isIntersecting) {
+            unwatch(target);
+            await loadImage(imgSrc);
+            target.style.backgroundImage = `url(${imgSrc})`;
+            target.dataset.visible = "true";
+          }
+        });
+      });
     }
 
     const { onMutateScrollProgress } = useScrollbarProgress();
@@ -54,53 +80,29 @@ export default defineComponent({
       onMutateScrollProgress(state.offsetHeight);
     });
 
-    const { unwatch } = useIntersectionWatch(refs.thumb, entries => {
-      entries.forEach(entry => {
-        const target = entry.target as HTMLElement;
-        const imgSrc = target.dataset.src as string;
-
-        if (entry.isIntersecting) {
-          unwatch(target);
-
-          loadImage(imgSrc).then(_res => {
-            target.style.backgroundImage = `url(${imgSrc})`;
-            target.dataset.visible = "true";
-          });
-        }
-      });
-    });
-
     //------------------------------------------------------------------------------
-
-    const onEnter = () => {
-      Tween.serial(
-        Tween.prop(el, {
-          opacity: 0,
-        }),
-        Tween.wait(0.2),
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 1,
-        })
-      );
-    };
-
-    const onLeave = () => {
-      Tween.tween(el, 0.55, "power3.out", {
-        opacity: 0,
-      });
-    };
 
     useMount(() => {
       backCanvasContext.onChangeColorsPalette(SITE_THEME_COLOR, SITE_THEME_COLOR, "#000", "#000");
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {
-        onEnter();
+        Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 1,
+          })
+        );
       }
 
       return () => {
         if (history.value === "push") {
-          onLeave();
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
       };
     });

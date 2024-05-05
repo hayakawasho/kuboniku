@@ -19,7 +19,6 @@ export default defineComponent({
     const { backCanvasContext } = context;
 
     const { refs } = useDomRef<Refs>("thumb", "title", "g", "hgroup", "thumbWrapper");
-
     const themeColor = el.dataset.color!;
 
     useEvent(el, "mouseenter", _e => {

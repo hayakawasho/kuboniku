@@ -41,36 +41,28 @@ export default defineComponent({
 
     //----------------------------------------------------------------
 
-    const onEnter = () => {
-      Tween.serial(
-        Tween.prop(el, {
-          opacity: 0,
-        }),
-        Tween.wait(0.2),
-        Tween.tween(el, 0.55, "power3.out", {
-          opacity: 1,
-        })
-      );
-    };
-
-    const onLeave = () => {
-      Tween.tween(el, 0.55, "power3.out", {
-        opacity: 0,
-      });
-    };
-
     useMount(() => {
       const themeColor = el.dataset.color!;
       backCanvasContext.onChangeColorsPalette(themeColor, themeColor, "#000", "#000");
       onMutateScrollProgress(state.offsetHeight);
 
       if (!once && history.value === "push") {
-        onEnter();
+        Tween.serial(
+          Tween.prop(el, {
+            opacity: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 1,
+          })
+        );
       }
 
       return () => {
         if (history.value === "push") {
-          onLeave();
+          Tween.tween(el, 0.55, "power3.out", {
+            opacity: 0,
+          });
         }
       };
     });
