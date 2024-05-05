@@ -2,7 +2,6 @@ import { GlObject } from "@/_gl/gl-object";
 import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2, Color } from "@/_gl/three";
 import fragment from "./fragment.frag";
 import vertex from "./vertex.vert";
-import type { Size } from "@/_foundation/type";
 
 export class Underline extends GlObject {
   #mesh;
@@ -11,7 +10,7 @@ export class Underline extends GlObject {
   constructor(
     el: HTMLElement,
     {
-      currentY,
+      currentY: __,
       windowHeight,
       windowWidth,
     }: {
@@ -58,14 +57,10 @@ export class Underline extends GlObject {
       height: windowHeight,
       width: windowWidth,
     });
-
-    this.update(currentY);
   }
 
-  resize = (size: Size) => {
-    const bounds = super.resize(size);
-    this.#mesh.scale.set(bounds.width, bounds.height, 1);
-
-    return bounds;
+  resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
+    super.resize(newValues);
+    this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
   };
 }

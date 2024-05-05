@@ -9,7 +9,6 @@ import {
 } from "@/_gl/three";
 import fragment from "./fragment.frag";
 import vertex from "./vertex.vert";
-import type { Size } from "@/_foundation/type";
 
 export class Logo extends GlObject {
   #mesh;
@@ -77,10 +76,8 @@ export class Logo extends GlObject {
     });
   }
 
-  resize = (size: Size) => {
-    const bounds = super.resize(size);
-    this.#mesh.scale.set(bounds.width, bounds.height, 1);
-
-    return bounds;
+  resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
+    super.resize(newValues);
+    this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
   };
 }

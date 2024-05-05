@@ -1,5 +1,7 @@
 import { lerp } from "@/_foundation/math";
 
+const log2 = 6.931471805599453;
+
 export class Smooth {
   #state;
   #scroll;
@@ -11,12 +13,12 @@ export class Smooth {
       stopped: true,
     };
 
-    this.#scroll = {
-      current: 0,
-      target: 0,
-    };
+    const y = window.scrollY;
 
-    this.resume();
+    this.#scroll = {
+      current: y,
+      target: y,
+    };
   }
 
   updateHeight = (contentHeight: number, windowHeight: number) => {
@@ -50,7 +52,7 @@ export class Smooth {
 
     if (this.#state.scrolling) {
       const d = deltaTime * 0.001;
-      const p = Math.exp(-0.45 * 85 * d);
+      const p = Math.exp(-0.6 * log2 * 10 * d);
       this.#scroll.current = lerp(this.#scroll.current, this.#scroll.target, p);
       this.#setPosY(this.#scroll.current);
     }

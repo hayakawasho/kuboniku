@@ -1,72 +1,51 @@
-import { ref, useMount, useEvent } from "lake";
-import { clamp } from "remeda";
+import { useMount, useEvent } from "lake";
 import VirtualScroll from "virtual-scroll";
 import { useTick, useElementSize } from "@/_foundation/hooks";
-import { lerp } from "@/_foundation/math";
-import { Tween } from "@/_foundation/tween";
-import { scrollPosYMutators } from "@/_states/scroll";
 import { useWindowSizeContext } from "@/_states/window-size";
+import { Smooth } from "./smooth";
 
-export const useScrollTween = (wrapper: HTMLElement) => {
+export const useScrollTween = (el: HTMLElement) => {
+  const { pause, resume, scrollTop, ...smooth } = new Smooth();
+
   const vs = new VirtualScroll({
-    firefoxMultiplier: 40,
-    mouseMultiplier: 0.6,
+    firefoxMultiplier: 20,
+    mouseMultiplier: 0.375,
+    passive: false,
+    preventTouch: true,
     touchMultiplier: 2,
+    useKeyboard: false,
+    useTouch: true,
   });
 
-  const state = ref({
-    current: 0,
-    currentRounded: 0,
-    resizing: false,
-    scrollLimit: 0,
-    stopped: true,
-    target: 0,
+  const [_, windowHeight] = useWindowSizeContext();
+
+  useElementSize(el, ({ height }) => {
+    smooth.updateHeight(height, windowHeight.value);
   });
 
-  const set = (val: number) => {
-    window.scrollTo(0, val);
-  };
+  vs.on(smooth.onVScroll);
 
-  const scrollTo = () => {
-    //
-  };
-
-  const onVScroll = ({ deltaY, originalEvent }: VirtualScroll.VirtualScrollEvent) => {
-    //
-  };
-
-  useEvent(
-    window as any,
-    "scroll",
-    _e => {
-      //
-    },
-    {
-      passive: true,
-    }
-  );
-
-  useTick(({ timestamp, deltaTime }) => {
-    //
+  useEvent(window as any, "scroll", smooth.onNativeScroll, {
+    passive: true,
   });
 
-  useWindowSizeContext(({ wh }) => {
-    //
-  });
-
-  useElementSize(wrapper, () => {
-    //
+  useTick(payload => {
+    smooth.tick(payload);
   });
 
   useMount(() => {
-    vs.on(onVScroll);
+    resume();
 
     return () => {
+      vs.off(smooth.onVScroll);
       vs.destroy();
+      smooth.destroy();
     };
   });
 
   return {
-    //
+    pause,
+    resume,
+    scrollTop,
   };
 };

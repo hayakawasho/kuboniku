@@ -7,7 +7,6 @@ import {
   LinearFilter,
   Vector2,
 } from "@/_gl/three";
-import type { Size } from "@/_foundation/type";
 
 export class Plane extends GlObject {
   #mesh;
@@ -16,15 +15,13 @@ export class Plane extends GlObject {
   constructor(
     el: HTMLElement,
     {
-      currentX,
-      currentY,
+      currentY: ___,
       device: _,
       geo,
       mat,
       windowWidth,
       windowHeight,
     }: {
-      currentX: number;
       currentY: number;
       device: "pc" | "sp";
       geo: PlaneBufferGeometry;
@@ -78,14 +75,10 @@ export class Plane extends GlObject {
       height: windowHeight,
       width: windowWidth,
     });
-
-    this.update(currentY, currentX);
   }
 
-  resize = (size: Size) => {
-    const bounds = super.resize(size);
-    this.#mesh.scale.set(bounds.width, bounds.height, 1);
-
-    return bounds;
+  resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
+    super.resize(newValues);
+    this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
   };
 }

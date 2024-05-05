@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { defineComponent, useMount, useUnmount, useDomRef } from "lake";
+import { defineComponent, useMount, useDomRef } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
@@ -13,9 +13,7 @@ type Props = AppContext &
     geo: PlaneBufferGeometry;
     mat: ShaderMaterial;
     diff: ReadonlyRef<number>;
-    posX: ReadonlyRef<number>;
     posY: ReadonlyRef<number>;
-    maxX: ReadonlyRef<number>;
     maxY: ReadonlyRef<number>;
   };
 
@@ -26,14 +24,13 @@ type Refs = {
 export default defineComponent({
   name: "GridItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, posX, posY, diff, maxX, maxY } = context;
+    const { geo, mat, addScene, removeScene, posY, diff, maxY } = context;
 
     const { refs } = useDomRef<Refs>("plane");
     const { device } = useMediaQueryContext();
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
     const plane = new Plane(refs.plane, {
-      currentX: 0,
       currentY: 0,
       device,
       geo,
@@ -43,11 +40,10 @@ export default defineComponent({
     });
 
     useWindowSizeContext(({ ww, wh }) => {
-      const windowSize = {
+      plane.resize({
         height: wh,
         width: ww,
-      };
-      plane.resize(windowSize);
+      });
     });
 
     const speed = Number(refs.plane.dataset.speed);
@@ -57,21 +53,20 @@ export default defineComponent({
     }[device];
 
     useTick(() => {
-      const x = gsap.utils.wrap(0, maxX.value, posX.value);
       const y = gsap.utils.wrap(0, maxY.value, posY.value * speed);
 
-      plane.update(y, x);
+      plane.update({ y });
       plane.uniforms.u_velo.value = diff.value * acc;
 
-      el.style.transform = `translateX(${-x}px) translateY(${-y}px) translateZ(0)`;
+      el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {
       addScene(plane);
-    });
 
-    useUnmount(() => {
-      removeScene(plane);
+      return () => {
+        removeScene(plane);
+      };
     });
   },
 });
