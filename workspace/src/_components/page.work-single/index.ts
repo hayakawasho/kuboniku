@@ -3,7 +3,7 @@ import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
-import SkewScrollContainer from "../skew-scroll";
+import ScrollSkewContainer from "../scroll-skew";
 import type { AppContext } from "@/_foundation/type";
 
 // type Refs = {};
@@ -16,7 +16,7 @@ export default defineComponent({
     // const { refs } = useDomRef<Refs>();
     const { addChild } = useSlot();
 
-    addChild(el, SkewScrollContainer, context);
+    addChild(el, ScrollSkewContainer, context);
 
     const state = {
       offsetHeight: el.getBoundingClientRect().height,

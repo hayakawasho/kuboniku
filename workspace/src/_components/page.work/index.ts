@@ -8,7 +8,7 @@ import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 import ProjectItems from "./projects";
-import SkewScrollContainer from "../skew-scroll";
+import ScrollSkewContainer from "../scroll-skew";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
@@ -33,8 +33,8 @@ export default defineComponent({
 
     const { anyHover } = useMediaQueryContext();
 
-    addChild(refs.h1, SkewScrollContainer, context);
-    addChild(refs.index, SkewScrollContainer, context);
+    addChild(refs.h1, ScrollSkewContainer, context);
+    addChild(refs.index, ScrollSkewContainer, context);
 
     if (anyHover) {
       const { addScene, removeScene } = useThree(
@@ -42,7 +42,7 @@ export default defineComponent({
         Math.min(window.devicePixelRatio, 1.5)
       );
 
-      addChild(refs.canvas, SkewScrollContainer, context);
+      addChild(refs.canvas, ScrollSkewContainer, context);
       addChild(refs.index, ProjectItems, {
         ...context,
         addScene,

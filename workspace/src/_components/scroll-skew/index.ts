@@ -1,4 +1,4 @@
-import { defineComponent, ref, useMount } from "lake";
+import { defineComponent, useMount } from "lake";
 import { clamp } from "remeda";
 import { useTick } from "@/_foundation/hooks";
 import { lerp } from "@/_foundation/math";
@@ -9,24 +9,29 @@ import { useWindowSizeContext } from "@/_states/window-size";
 import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
-  name: "SkewScrollContainer",
+  name: "ScrollSkewContainer",
   setup(el: HTMLElement, context: AppContext) {
     const { scrollContext } = context;
+
     const state = {
       active: false,
+      lastY: scrollContext.scrollTop(),
     };
 
     const { device } = useMediaQueryContext();
-    const [ww] = useWindowSizeContext();
+    const [windowWidth] = useWindowSizeContext();
     const [posY] = useScrollPositionContext();
     const { scrolling } = useScrollStateContext();
-
-    const lastY = ref(scrollContext.scrollTop());
 
     const ease = {
       pc: 0.1,
       sp: 0.15,
-    } as const;
+    }[device];
+
+    const f = {
+      pc: 12,
+      sp: 8,
+    }[device];
 
     useTick(({ timeRatio }) => {
       if (!state.active || !scrolling.value) {
@@ -34,19 +39,15 @@ export default defineComponent({
       }
 
       const currentY = posY.value;
-      const p = 1 - (1 - ease[device]) ** timeRatio;
-      lastY.value = lerp(lastY.value, currentY, p);
+      const p = 1 - (1 - ease) ** timeRatio;
+      state.lastY = lerp(state.lastY, currentY, p);
 
-      if (lastY.value < 0.1) {
-        lastY.value = 0;
+      if (state.lastY < 0.1) {
+        state.lastY = 0;
       }
 
-      const skewY =
-        {
-          pc: 12,
-          sp: 8,
-        }[device] *
-        ((currentY - lastY.value) / ww.value);
+      const diff = currentY - state.lastY;
+      const skewY = f * (diff / windowWidth.value);
       const ty = clamp(skewY, { max: 7, min: -7 });
       el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
     });
@@ -56,7 +57,7 @@ export default defineComponent({
 
       return () => {
         state.active = false;
-        lastY.value = 0;
+        state.lastY = 0;
       };
     });
   },
