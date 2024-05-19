@@ -3,35 +3,39 @@ precision mediump float;
 #pragma glslify: cover = require('../../../_gl/cover');
 
 uniform sampler2D u_texture;
+
 uniform vec2 u_mesh_size;
 uniform vec2 u_image_size;
+uniform vec2 u_mouse;
 
-uniform float u_velo;
 uniform float u_scale;
 uniform float u_alpha;
+uniform float u_lightStrength;
 
 varying vec2 vUv;
+
+const vec3 MONO_CHROME_RGB = vec3(0.298912, 0.586611, 0.114478);
 
 void main() {
   vec2 uv = vUv;
 
+  float edge = 1. - distance(uv, vec2(0.5)) - 0.3;
+
+  vec2 mouse = u_mouse;
+  float circle = 1. - distance(vec2(uv.x, (uv.y - 0.5) * (u_mesh_size.y / u_mesh_size.x) + 0.5), mouse);
+  circle = circle * 0.7;
+  circle *= edge;
+  circle *= u_lightStrength;
+
   vec2 texCenter = vec2(0.5);
   vec2 texUv = cover(u_mesh_size, u_image_size, uv);
-  vec2 texScale = (texUv - texCenter) * u_scale + texCenter;
   vec4 tex = texture2D(u_texture, texUv);
 
-  texScale.y += 0.6 * u_velo;
+  float grayScale = dot(tex.rgb, MONO_CHROME_RGB);
+  tex = vec4(vec3(grayScale), 1.0);
 
-  if(uv.y < 1.) {
-    tex.g = texture2D(u_texture, texScale).g;
-  }
+  tex.rgb += circle;
+  tex.a *= u_alpha;
 
-  texScale.y += 0.4 * u_velo;
-
-  if(uv.y < 1.) {
-    tex.b = texture2D(u_texture, texScale).b;
-  }
-
-  tex.a = u_alpha;
   gl_FragColor = tex;
 }

@@ -1,14 +1,12 @@
 import { defineComponent, useMount, useDomRef, useSlot } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
-import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import Logo from "./logo";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
   profileLogo: HTMLImageElement;
-  canvas: HTMLCanvasElement;
 };
 
 export default defineComponent({
@@ -17,20 +15,11 @@ export default defineComponent({
     const { once, history, backCanvasContext } = context;
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("profileLogo", "canvas");
+    const { refs } = useDomRef<Refs>("profileLogo");
     const { device } = useMediaQueryContext();
 
     if (device === "pc") {
-      const { addScene, removeScene } = useThree(
-        refs.canvas,
-        Math.min(window.devicePixelRatio, 1.5)
-      );
-
-      addChild(refs.profileLogo, Logo, {
-        ...context,
-        addScene,
-        removeScene,
-      });
+      addChild(refs.profileLogo, Logo, context);
     }
 
     //------------------------------------------------------------------------------

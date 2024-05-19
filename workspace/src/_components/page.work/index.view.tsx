@@ -19,12 +19,7 @@ const Component: React.FC<Props> = props => {
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
-      <main data-component="Works">
-        <canvas
-          aria-hidden="true"
-          className="glCanvas | opacity-80 backface-hidden"
-          data-ref="canvas"
-        ></canvas>
+      <main className="relative z-[2]" data-component="Works">
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
           <h1 className={Styles.heading} data-ref="h1">
             Work

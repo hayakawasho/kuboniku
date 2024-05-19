@@ -32,6 +32,6 @@ void main() {
     tex.b = texture2D(u_texture, texScale).b;
   }
 
-  tex.a = u_alpha;
+  tex.a *= u_alpha;
   gl_FragColor = tex;
 }

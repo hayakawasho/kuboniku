@@ -1,17 +1,18 @@
 import { defineComponent, useMount, useDomRef, useEvent } from "lake";
 import { SITE_THEME_COLOR } from "@/_foundation/const";
-// import { Tween } from "@/_foundation/tween";
-import { useTick } from "@/_foundation/hooks";
+import { useTick, useScrollSkew } from "@/_foundation/hooks";
+import { norm } from "@/_foundation/math";
+import { Tween } from "@/_foundation/tween";
+import { useMousePos } from "@/_states/mouse";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
-import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { AppContext } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 
-type Props = AppContext &
-  ParentScene & {
-    geo: PlaneBufferGeometry;
-    mat: ShaderMaterial;
-  };
+type Props = AppContext & {
+  geo: PlaneBufferGeometry;
+  mat: ShaderMaterial;
+};
 
 type Refs = {
   thumb: HTMLImageElement;
@@ -20,32 +21,29 @@ type Refs = {
 export default defineComponent({
   name: "ProjectItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, scrollContext, backCanvasContext } = context;
+    const { once, history, geo, mat, scrollContext, backCanvasContext, frontCanvasContext } =
+      context;
 
     const state = {
       resizing: false,
+      hovering: false,
+      mousePos: [0, 0],
     };
 
     const themeColor = el.dataset.color!;
     const { refs } = useDomRef<Refs>("thumb");
 
-    const [windowWidth, windowHeight] = useWindowSizeContext();
+    const imgPlane = new Plane(refs.thumb, { geo, mat });
 
-    const plane = new Plane(refs.thumb, {
-      currentY: scrollContext.scrollTop(),
-      geo,
-      mat,
-      windowHeight: windowHeight.value,
-      windowWidth: windowWidth.value,
-    });
-
-    useWindowSizeContext(({ ww, wh }) => {
+    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
       state.resizing = true;
-      plane.resize({
+
+      imgPlane.resize({
         height: wh,
         width: ww,
         y: scrollContext.scrollTop(),
       });
+
       state.resizing = false;
     });
 
@@ -53,14 +51,37 @@ export default defineComponent({
       if (state.resizing) {
         return;
       }
-      plane.update({ y: scrollContext.scrollTop() });
+
+      imgPlane.update({
+        y: scrollContext.scrollTop(),
+        mouseX: state.mousePos[0],
+        mouseY: state.mousePos[1],
+      });
     });
 
+    useScrollSkew(
+      ({ value }) => {
+        imgPlane.uniforms.u_skewY.value = value * -0.02;
+      },
+      {
+        initialPos: scrollContext.scrollTop(),
+      }
+    );
+
     useEvent(el, "mouseenter", _e => {
+      state.hovering = true;
       backCanvasContext.onChangeColorsPalette(themeColor, themeColor, "#000", "#000", 1.2);
+
+      Tween.parallel(
+        Tween.tween(imgPlane.uniforms.u_lightStrength, 1, "power2.out", {
+          value: 1,
+        })
+      );
     });
 
     useEvent(el, "mouseleave", _e => {
+      state.hovering = false;
+
       backCanvasContext.onChangeColorsPalette(
         SITE_THEME_COLOR,
         SITE_THEME_COLOR,
@@ -68,13 +89,62 @@ export default defineComponent({
         "#000",
         1.2
       );
+
+      Tween.parallel(
+        Tween.tween(imgPlane.uniforms.u_lightStrength, 1, "power1.out", {
+          value: 0,
+        })
+      );
+    });
+
+    useMousePos(({ x, y }) => {
+      if (!state.hovering) {
+        return;
+      }
+
+      const { left, top, width, height } = imgPlane.cache;
+      const offsetX = -left;
+      const offsetY = -(top + scrollContext.scrollTop());
+      const mouseX = norm(offsetX + x, 0, width);
+      const mouseY = -norm(offsetY + y, 0, height) * 2 + 1;
+
+      console.log({
+        y,
+        // top,
+        // scrollTop: scrollContext.scrollTop(),
+        offset: -(top + scrollContext.scrollTop()) + y,
+      });
+
+      state.mousePos = [mouseX, mouseY];
     });
 
     useMount(() => {
-      addScene(plane);
+      imgPlane.resize({
+        height: windowHeight.value,
+        width: windowWidth.value,
+        y: scrollContext.scrollTop(),
+      });
+      frontCanvasContext.addScene(imgPlane);
+
+      if (!once && history.value === "push") {
+        Tween.serial(
+          Tween.prop(imgPlane.uniforms.u_alpha, {
+            value: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
+            value: 1,
+          })
+        );
+      }
 
       return () => {
-        removeScene(plane);
+        Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
+          value: 0,
+          onComplete: () => {
+            frontCanvasContext.removeScene(imgPlane);
+          },
+        });
       };
     });
   },

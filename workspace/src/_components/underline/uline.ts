@@ -7,16 +7,7 @@ export class Underline extends GlObject {
   #mesh;
   uniforms;
 
-  constructor(
-    el: HTMLElement,
-    {
-      windowHeight,
-      windowWidth,
-    }: {
-      windowWidth: number;
-      windowHeight: number;
-    }
-  ) {
+  constructor(el: HTMLElement) {
     super(el);
 
     this.uniforms = {
@@ -48,13 +39,7 @@ export class Underline extends GlObject {
     });
 
     this.#mesh = new Mesh(geo, mat);
-
     this.add(this.#mesh);
-
-    this.resize({
-      height: windowHeight,
-      width: windowWidth,
-    });
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {

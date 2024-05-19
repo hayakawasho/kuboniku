@@ -3,7 +3,7 @@ import type { Point } from "@/_foundation/type";
 
 export class GlObject extends Object3D {
   #pos: Point;
-  protected cache;
+  cache;
 
   constructor(protected el: HTMLElement) {
     super();

@@ -1,16 +1,16 @@
 import { defineComponent, useMount } from "lake";
-// import { Tween } from "@/_foundation/tween";
 import { useTick } from "@/_foundation/hooks";
+import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Logo } from "./logo";
-import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { AppContext } from "@/_foundation/type";
 
-type Props = AppContext & ParentScene;
+type Props = AppContext;
 
 export default defineComponent({
   name: "Logo",
   setup(el: HTMLImageElement, context: Props) {
-    const { addScene, removeScene } = context;
+    const { once, history, frontCanvasContext } = context;
 
     const [windowWidth, windowHeight] = useWindowSizeContext();
 
@@ -26,15 +26,32 @@ export default defineComponent({
       });
     });
 
-    useTick(({ timeRatio }) => {
+    useTick(({ deltaRatio }) => {
       //
     });
 
     useMount(() => {
-      addScene(logoPlane);
+      frontCanvasContext.addScene(logoPlane);
+
+      if (!once && history.value === "push") {
+        Tween.serial(
+          Tween.prop(logoPlane.uniforms.u_alpha, {
+            value: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(logoPlane.uniforms.u_alpha, 0.55, "power3.out", {
+            value: 1,
+          })
+        );
+      }
 
       return () => {
-        removeScene(logoPlane);
+        Tween.tween(logoPlane.uniforms.u_alpha, 0.55, "power3.out", {
+          value: 0,
+          onComplete: () => {
+            frontCanvasContext.removeScene(logoPlane);
+          },
+        });
       };
     });
   },

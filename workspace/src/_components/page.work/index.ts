@@ -3,7 +3,6 @@ import { SITE_THEME_COLOR } from "@/_foundation/const";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { loadImage } from "@/_foundation/utils";
-import { useThree } from "@/_gl/use-three";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useScrollStateContext } from "@/_states/scroll";
 import { useScrollbarProgress } from "@/_states/scrollbar-progress";
@@ -15,7 +14,6 @@ type Refs = {
   index: HTMLElement;
   h1: HTMLElement;
   thumb: HTMLElement[];
-  canvas: HTMLCanvasElement;
 };
 
 export default defineComponent({
@@ -29,25 +27,15 @@ export default defineComponent({
     };
 
     const { addChild } = useSlot();
-    const { refs } = useDomRef<Refs>("index", "h1", "thumb", "canvas");
-
+    const { refs } = useDomRef<Refs>("index", "h1", "thumb");
     const { anyHover } = useMediaQueryContext();
+    const { onMutateScrollProgress } = useScrollbarProgress();
+    const { scrolling } = useScrollStateContext();
 
-    addChild(refs.h1, ScrollSkewContainer, context);
-    addChild(refs.index, ScrollSkewContainer, context);
+    addChild([refs.h1, refs.index], ScrollSkewContainer, context);
 
     if (anyHover) {
-      const { addScene, removeScene } = useThree(
-        refs.canvas,
-        Math.min(window.devicePixelRatio, 1.5)
-      );
-
-      addChild(refs.canvas, ScrollSkewContainer, context);
-      addChild(refs.index, ProjectItems, {
-        ...context,
-        addScene,
-        removeScene,
-      });
+      addChild(refs.index, ProjectItems, context);
     } else {
       const { unwatch } = useIntersectionWatch(refs.thumb, entries => {
         entries.forEach(async entry => {
@@ -63,9 +51,6 @@ export default defineComponent({
         });
       });
     }
-
-    const { onMutateScrollProgress } = useScrollbarProgress();
-    const { scrolling } = useScrollStateContext();
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;

@@ -46,25 +46,18 @@ export class Logo extends GlObject {
       u_mesh_size: {
         value: new Vector2(width, height),
       },
-      u_scale: {
-        value: 1.0,
-      },
       u_texture: {
         value: texture,
-      },
-      u_velo: {
-        value: 0,
       },
     };
 
     const geo = new PlaneBufferGeometry(1, 1);
     const mat = new ShaderMaterial({
-      depthTest: false,
-      depthWrite: false,
       fragmentShader: fragment,
-      transparent: true,
-      uniforms: this.uniforms,
       vertexShader: vertex,
+      uniforms: this.uniforms,
+      transparent: true,
+      alphaTest: 0.5,
     });
 
     this.#mesh = new Mesh(geo, mat);

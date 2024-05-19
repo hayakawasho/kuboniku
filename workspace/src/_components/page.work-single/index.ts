@@ -1,4 +1,4 @@
-import { defineComponent, useSlot, useMount, useDomRef as _ } from "lake";
+import { defineComponent, useSlot, useMount, useDomRef } from "lake";
 import { useTick, useElementSize } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useScrollStateContext } from "@/_states/scroll";
@@ -6,25 +6,27 @@ import { useScrollbarProgress } from "@/_states/scrollbar-progress";
 import ScrollSkewContainer from "../scroll-skew";
 import type { AppContext } from "@/_foundation/type";
 
-// type Refs = {};
+type Refs = {
+  kv: HTMLElement;
+  content: HTMLElement;
+};
 
 export default defineComponent({
   name: "WorkSingle",
   setup(el, context: AppContext) {
     const { once, history, backCanvasContext } = context;
 
-    // const { refs } = useDomRef<Refs>();
-    const { addChild } = useSlot();
-
-    addChild(el, ScrollSkewContainer, context);
-
     const state = {
       offsetHeight: el.getBoundingClientRect().height,
       resizing: false,
     };
 
+    const { refs } = useDomRef<Refs>("kv", "content");
+    const { addChild } = useSlot();
     const { onMutateScrollProgress } = useScrollbarProgress();
     const { scrolling } = useScrollStateContext();
+
+    addChild(refs.content, ScrollSkewContainer, context);
 
     useElementSize(el, ({ height }) => {
       state.resizing = true;

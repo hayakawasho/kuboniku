@@ -1,7 +1,6 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
-import { useThree } from "@/_gl/use-three";
 import { cursorTypeMutators } from "@/_states/cusor";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
@@ -21,7 +20,6 @@ export default defineComponent({
 
     const { addChild, removeChild } = useSlot();
     const { refs } = useDomRef<Refs>("grid", "canvas", "splash");
-    const { addScene, removeScene } = useThree(refs.canvas, 1);
 
     const setGridSize = (aspect: number) => {
       const gridSize = aspect >= 1.25 ? "large" : aspect >= 0.85 ? "middle" : "small";
@@ -33,12 +31,6 @@ export default defineComponent({
     });
 
     //------------------------------------------------------------------------------
-
-    const gridProvides = {
-      ...context,
-      addScene,
-      removeScene,
-    };
 
     useMount(() => {
       backCanvasContext.onChangeColorsPalette(
@@ -54,7 +46,7 @@ export default defineComponent({
         const [splashContext] = addChild(refs.splash, Splash, context);
 
         const done = async () => {
-          const [gridContext] = addChild(refs.grid, Grid, gridProvides);
+          const [gridContext] = addChild(refs.grid, Grid, context);
           await splashContext.current.hideStart();
           gridContext.current.start();
           await splashContext.current.hideEnd();
@@ -72,7 +64,7 @@ export default defineComponent({
             opacity: 0,
           }),
           Tween.immediate(() => {
-            const [gridContext] = addChild(refs.grid, Grid, gridProvides);
+            const [gridContext] = addChild(refs.grid, Grid, context);
             gridContext.current.start();
           }),
           Tween.wait(0.2),
@@ -81,7 +73,7 @@ export default defineComponent({
           })
         );
       } else {
-        addChild(refs.grid, Grid, gridProvides);
+        addChild(refs.grid, Grid, context);
       }
 
       return () => {

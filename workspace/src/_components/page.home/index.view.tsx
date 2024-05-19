@@ -14,13 +14,12 @@ type Props = {
   perPage: number;
 };
 
+const separator = (src: string) => {
+  return " " + src;
+};
+
 const Component: React.FC<Props> = props => {
   const { posts, namespace, perPage } = props;
-
-  const images = posts.map((post, index) => {
-    const separator = index > 0 ? " " : "";
-    return separator + cloudinaryAPIConverter(post.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
-  });
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
@@ -28,7 +27,10 @@ const Component: React.FC<Props> = props => {
         <canvas aria-hidden="true" className="glCanvas | opacity-90" data-ref="canvas"></canvas>
         <div
           className="pointer-events-none fixed inset-0 m-auto w-full h-full z-10"
-          data-images={`${images}`}
+          data-images={`${posts.map((item, i) => {
+            const imgSrc = cloudinaryAPIConverter(item.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
+            return i === 0 ? imgSrc : separator(imgSrc);
+          })}"`}
           data-noise={noiseImg.src}
           data-noise-mob={noiseSpImg.src}
           data-ref="splash"

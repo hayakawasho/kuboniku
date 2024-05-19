@@ -68,14 +68,14 @@
     }, 500);
   };
 
-  useTick(({ timeRatio }) => {
+  useTick(({ deltaRatio }) => {
     if (!state.isRunning) {
       return;
     }
 
-    const easeVal = 1 - (1 - 0.3) ** timeRatio;
-    state.lastX = lerp(state.lastX, state.x, easeVal);
-    state.lastY = lerp(state.lastY, state.y, easeVal);
+    const p = 0.3 * deltaRatio;
+    state.lastX = lerp(state.lastX, state.x, p);
+    state.lastY = lerp(state.lastY, state.y, p);
   });
 
   $: switch (cursorType) {

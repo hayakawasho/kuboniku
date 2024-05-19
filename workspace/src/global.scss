@@ -35,6 +35,8 @@ html {
   min-height: calc(var(--vh) * 100);
   min-height: 100svh;
   font-size: 10px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 
   @media screen and (max-width: 1080px) {
     font-size: 9px;
@@ -89,19 +91,37 @@ body {
   }
 }
 
-:focus-visible {
-  @media (max-width: 639px) and (not (hover: hover)) {
-    outline-style: none;
-  }
+:where(ul, ol) {
+  list-style: none;
+  list-style-type: "";
+  padding: unset;
+}
+
+:where(button, [type="button"], [type="reset"], [type="submit"]) {
+  touch-action: manipulation;
+}
+
+:where(
+    :any-link,
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"],
+    label[for],
+    select,
+    summary,
+    [role="tab"],
+    [role="button"]
+  ) {
+  cursor: pointer;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 :any-link {
   //
-}
-
-ol,
-ul {
-  list-style: none;
 }
 
 img {
@@ -121,4 +141,8 @@ summary {
 
 summary::-webkit-details-marker {
   display: none;
+}
+
+[hidden]:not([hidden="until-found"]) {
+  display: none !important;
 }

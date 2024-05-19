@@ -22,8 +22,8 @@ const Component: React.FC<Props> = props => {
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
-      <main data-color={post.theme} data-component="WorkSingle">
-        <div className={Styles.kv}>
+      <main className="" data-color={post.theme} data-component="WorkSingle">
+        <div className={Styles.kv} data-ref="kv">
           <div className={Styles.kv__cont}>
             <p className={Styles.project}>
               {zeroPadding(projectNumber)}
@@ -36,7 +36,7 @@ const Component: React.FC<Props> = props => {
           </div>
           <ResponsiveImage
             alt=""
-            className="opacity-40 object-cover h-full absolute inset-0 m-auto"
+            className="object-cover h-full absolute inset-0 m-auto opacity-40"
             mob={cloudinaryAPIConverter(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
             mobSize={[post.mv["pc"].width, post.mv["pc"].height]}
             size={[post.mv["pc"].width, post.mv["pc"].height]}
@@ -44,7 +44,7 @@ const Component: React.FC<Props> = props => {
           />
         </div>
 
-        <div className={Styles.body}>
+        <div className={Styles.body} data-ref="content">
           <div className={`${Styles.introLayout} my-[6rem] pc:my-[9rem]`}>
             <div className={Styles.intro}>
               <div className={Styles.intro__info}>
@@ -120,7 +120,7 @@ const Component: React.FC<Props> = props => {
                 </Link>
                 <ResponsiveImage
                   alt=""
-                  className={Styles.kv__nextImg}
+                  className={`${Styles.kv__nextImg}`}
                   mob={cloudinaryAPIConverter(nextPost.mv["pc"].url, "f_auto,q_auto,w_1440")}
                   mobSize={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}
                   size={[nextPost.mv["pc"].width, nextPost.mv["pc"].height]}

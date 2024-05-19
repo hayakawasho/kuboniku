@@ -1,21 +1,21 @@
 import { gsap } from "gsap";
 import { defineComponent, useMount, useDomRef } from "lake";
 import { useTick } from "@/_foundation/hooks";
+import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import { Plane } from "./plane";
-import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { AppContext } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 import type { ReadonlyRef } from "lake";
 
-type Props = AppContext &
-  ParentScene & {
-    geo: PlaneBufferGeometry;
-    mat: ShaderMaterial;
-    diff: ReadonlyRef<number>;
-    posY: ReadonlyRef<number>;
-    maxY: ReadonlyRef<number>;
-  };
+type Props = AppContext & {
+  geo: PlaneBufferGeometry;
+  mat: ShaderMaterial;
+  diff: ReadonlyRef<number>;
+  posY: ReadonlyRef<number>;
+  maxY: ReadonlyRef<number>;
+};
 
 type Refs = {
   plane: HTMLImageElement;
@@ -24,23 +24,19 @@ type Refs = {
 export default defineComponent({
   name: "GridItem",
   setup(el: HTMLElement, context: Props) {
-    const { geo, mat, addScene, removeScene, posY, diff, maxY } = context;
+    const { once, history, geo, mat, posY, diff, maxY, frontCanvasContext } = context;
 
     const { refs } = useDomRef<Refs>("plane");
     const { device } = useMediaQueryContext();
-    const [windowWidth, windowHeight] = useWindowSizeContext();
 
-    const plane = new Plane(refs.plane, {
-      currentY: 0,
+    const imgPlane = new Plane(refs.plane, {
       device,
       geo,
       mat,
-      windowHeight: windowHeight.value,
-      windowWidth: windowWidth.value,
     });
 
-    useWindowSizeContext(({ ww, wh }) => {
-      plane.resize({
+    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
+      imgPlane.resize({
         height: wh,
         width: ww,
       });
@@ -55,17 +51,38 @@ export default defineComponent({
     useTick(() => {
       const y = gsap.utils.wrap(0, maxY.value, posY.value * speed);
 
-      plane.update({ y });
-      plane.uniforms.u_velo.value = diff.value * acc;
+      imgPlane.update({ y });
+      imgPlane.uniforms.u_velo.value = diff.value * acc;
 
       el.style.transform = `translateY(${-y}px) translateZ(0)`;
     });
 
     useMount(() => {
-      addScene(plane);
+      imgPlane.resize({
+        height: windowHeight.value,
+        width: windowWidth.value,
+      });
+      frontCanvasContext.addScene(imgPlane);
+
+      if (!once && history.value === "push") {
+        Tween.serial(
+          Tween.prop(imgPlane.uniforms.u_alpha, {
+            value: 0,
+          }),
+          Tween.wait(0.2),
+          Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
+            value: 0.9,
+          })
+        );
+      }
 
       return () => {
-        removeScene(plane);
+        Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
+          value: 0,
+          onComplete: () => {
+            frontCanvasContext.removeScene(imgPlane);
+          },
+        });
       };
     });
   },

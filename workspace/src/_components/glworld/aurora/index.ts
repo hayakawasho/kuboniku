@@ -73,13 +73,12 @@ export default defineComponent({
       planeAurora.scale.set(ww * auroraPixelRatio, wh * auroraPixelRatio, 1);
     });
 
-    useTick(({ deltaTime, timeRatio }) => {
-      const t = Math.min(1, 2 * deltaTime);
+    useTick(({ deltaTime, deltaRatio }) => {
+      const t = Math.min(1, 2 * deltaTime) * deltaRatio;
 
-      uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t * timeRatio;
+      uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t;
       uniforms.u_time.value -=
         t *
-        timeRatio *
         0.005 *
         lerp(
           0.7,

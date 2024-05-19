@@ -5,7 +5,7 @@ import { useWindowSizeContext } from "@/_states/window-size";
 import { Smooth } from "./smooth";
 
 export const useScrollTween = (el: HTMLElement) => {
-  const { pause, resume, scrollTop, reset, diff, ...smooth } = new Smooth();
+  const { onResize, onNativeScroll, onVScroll, onRaf, destroy, ...smooth } = new Smooth();
 
   const vs = new VirtualScroll({
     firefoxMultiplier: 20,
@@ -19,35 +19,30 @@ export const useScrollTween = (el: HTMLElement) => {
 
   const [_, windowHeight] = useWindowSizeContext();
 
-  useElementSize(el, ({ height }) => {
-    smooth.updateHeight(height, windowHeight.value);
+  useElementSize(el, ({ height: contentH }) => {
+    onResize(contentH, windowHeight.value);
   });
 
-  vs.on(smooth.onVScroll);
+  vs.on(onVScroll);
 
-  useEvent(window as any, "scroll", smooth.onNativeScroll, {
+  useEvent(window as any, "scroll", onNativeScroll, {
     passive: true,
   });
 
-  useTick(payload => {
-    smooth.tick(payload);
-  });
+  useTick(onRaf);
 
   useMount(() => {
-    resume();
+    smooth.resume();
 
     return () => {
-      vs.off(smooth.onVScroll);
+      smooth.pause();
+      vs.off(onVScroll);
       vs.destroy();
-      smooth.destroy();
+      destroy();
     };
   });
 
   return {
-    diff,
-    pause,
-    reset,
-    resume,
-    scrollTop,
+    ...smooth,
   };
 };

@@ -15,12 +15,7 @@ export default defineComponent({
 
     const { refs } = useDomRef<Refs>("uline");
 
-    const [windowWidth, windowHeight] = useWindowSizeContext();
-
-    const uline = new Underline(refs.uline, {
-      windowHeight: 0,
-      windowWidth: 0,
-    });
+    const uline = new Underline(refs.uline);
 
     useEvent(el, "mouseenter", () => {
       Tween.tween(uline.uniforms.uProgress, 0.95, "expo.out", {
@@ -34,7 +29,7 @@ export default defineComponent({
       });
     });
 
-    useWindowSizeContext(({ ww, wh }) => {
+    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
       uline.resize({
         height: wh,
         width: ww,
@@ -42,7 +37,10 @@ export default defineComponent({
     });
 
     useMount(() => {
-      uline.resize({ height: windowHeight.value, width: windowWidth.value });
+      uline.resize({
+        height: windowHeight.value,
+        width: windowWidth.value,
+      });
       frontCanvasContext.addScene(uline);
 
       return () => {

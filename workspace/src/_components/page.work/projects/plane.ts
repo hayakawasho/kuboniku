@@ -1,3 +1,4 @@
+import { lerp } from "@/_foundation/math";
 import { GlObject } from "@/_gl/gl-object";
 import {
   Mesh,
@@ -15,17 +16,11 @@ export class Plane extends GlObject {
   constructor(
     el: HTMLElement,
     {
-      currentY,
       geo,
       mat,
-      windowWidth,
-      windowHeight,
     }: {
-      currentY: number;
       geo: PlaneBufferGeometry;
       mat: ShaderMaterial;
-      windowWidth: number;
-      windowHeight: number;
     }
   ) {
     super(el);
@@ -58,7 +53,13 @@ export class Plane extends GlObject {
       u_texture: {
         value: texture,
       },
-      u_velo: {
+      u_skewY: {
+        value: 0,
+      },
+      u_mouse: {
+        value: new Vector2(0, 0),
+      },
+      u_lightStrength: {
         value: 0,
       },
     };
@@ -68,16 +69,24 @@ export class Plane extends GlObject {
 
     this.#mesh = new Mesh(geo, material);
     this.add(this.#mesh);
-
-    this.resize({
-      height: windowHeight,
-      width: windowWidth,
-      y: currentY,
-    });
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
     super.resize(newValues);
     this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
+  };
+
+  update = ({
+    mouseX,
+    mouseY,
+    ...newValues
+  }: {
+    mouseX: number;
+    mouseY: number;
+  } & Parameters<GlObject["update"]>[0]) => {
+    super.update(newValues);
+
+    this.uniforms.u_mouse.value.x = lerp(this.uniforms.u_mouse.value.x, mouseX, 0.04);
+    this.uniforms.u_mouse.value.y = lerp(this.uniforms.u_mouse.value.y, mouseY, 0.04);
   };
 }

@@ -15,19 +15,13 @@ export class Plane extends GlObject {
   constructor(
     el: HTMLElement,
     {
-      currentY: ___,
       device: _,
       geo,
       mat,
-      windowWidth,
-      windowHeight,
     }: {
-      currentY: number;
       device: "pc" | "sp";
       geo: PlaneBufferGeometry;
       mat: ShaderMaterial;
-      windowWidth: number;
-      windowHeight: number;
     }
   ) {
     super(el);
@@ -70,11 +64,6 @@ export class Plane extends GlObject {
 
     this.#mesh = new Mesh(geo, material);
     this.add(this.#mesh);
-
-    this.resize({
-      height: windowHeight,
-      width: windowWidth,
-    });
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {

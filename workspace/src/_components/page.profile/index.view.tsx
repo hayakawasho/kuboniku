@@ -12,7 +12,6 @@ const Component: React.FC<{
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
-        <canvas aria-hidden="true" className="glCanvas" data-ref="canvas"></canvas>
         <h1 className="sr-only">Profile</h1>
         <div className="relative z-[2]">
           <img

@@ -10,9 +10,9 @@ import { useWindowSizeContext } from "@/_states/window-size";
 import fragment from "./fragment.frag";
 import GridItem from "./item";
 import vertex from "./vertex.vert";
-import type { AppContext, ParentScene } from "@/_foundation/type";
+import type { AppContext } from "@/_foundation/type";
 
-type Props = AppContext & ParentScene;
+type Props = AppContext;
 
 type Refs = {
   gridItem: HTMLImageElement[];
@@ -69,13 +69,11 @@ export default defineComponent({
       state.dragging = false;
     };
 
-    const _window = window as any;
-
-    useEvent(_window, "touchend", onTouchEnd);
-    useEvent(_window, "mouseup", onTouchEnd);
+    useEvent(window as any, "touchend", onTouchEnd);
+    useEvent(window as any, "mouseup", onTouchEnd);
 
     useEvent(
-      _window,
+      window as any,
       "touchmove",
       e => {
         if (!state.dragging) {
@@ -103,7 +101,7 @@ export default defineComponent({
     });
 
     useEvent(
-      _window,
+      window as any,
       "wheel",
       e => {
         Tween.kill(state);
@@ -118,24 +116,25 @@ export default defineComponent({
 
     const [__, windowHeight] = useWindowSizeContext(() => {
       state.resizing = true;
+
       const bounds = el.getBoundingClientRect();
       maxY.value = bounds.height / 2;
+
       state.resizing = false;
     });
 
     const ease = {
       pc: 0.12,
       sp: 0.08,
-    };
+    }[device];
 
-    useTick(({ timeRatio }) => {
+    useTick(({ deltaRatio }) => {
       if (state.resizing) {
         return;
       }
 
       const oldY = posY.value;
-      const p = 1 - (1 - ease[device]) ** timeRatio;
-
+      const p = ease * deltaRatio;
       posY.value = lerp(posY.value, state.ty, p);
       diffY.value = oldY - posY.value;
     });
@@ -144,6 +143,8 @@ export default defineComponent({
     const mat = new ShaderMaterial({
       fragmentShader: fragment,
       vertexShader: vertex,
+      transparent: true,
+      alphaTest: 0.5,
     });
 
     useMount(() => {
@@ -160,20 +161,22 @@ export default defineComponent({
       });
     });
 
-    return {
-      start: () => {
-        const centerY = windowHeight.value / 2;
-        const itemH = refs.gridItem[0].getBoundingClientRect().height;
-        const gap = maxY.value - itemH * 4;
-        const offset = maxY.value - (centerY + itemH / 2) - gap / 4;
+    const start = () => {
+      const centerY = windowHeight.value / 2;
+      const itemH = refs.gridItem[0].getBoundingClientRect().height;
+      const gap = maxY.value - itemH * 4;
+      const offset = maxY.value - (centerY + itemH / 2) - gap / 4;
 
-        Tween.tween(state, 2.7, "power4.out", {
-          onUpdate: () => {
-            posY.value = state.ty;
-          },
-          ty: offset,
-        });
-      },
+      Tween.tween(state, 2.7, "power4.out", {
+        onUpdate: () => {
+          posY.value = state.ty;
+        },
+        ty: offset,
+      });
+    };
+
+    return {
+      start,
     };
   },
 });

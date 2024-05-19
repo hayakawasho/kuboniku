@@ -1,64 +1,17 @@
-import { defineComponent, useMount } from "lake";
-import { clamp } from "remeda";
-import { useTick } from "@/_foundation/hooks";
-import { lerp } from "@/_foundation/math";
-import { useMediaQueryContext } from "@/_states/mq";
-import { useScrollStateContext } from "@/_states/scroll";
-import { useScrollPositionContext } from "@/_states/scroll-position";
-import { useWindowSizeContext } from "@/_states/window-size";
+import { defineComponent } from "lake";
+import { useScrollSkew } from "@/_foundation/hooks";
 import type { AppContext } from "@/_foundation/type";
 
 export default defineComponent({
   name: "ScrollSkewContainer",
-  setup(el: HTMLElement, context: AppContext) {
-    const { scrollContext } = context;
-
-    const state = {
-      active: false,
-      lastY: scrollContext.scrollTop(),
-    };
-
-    const { device } = useMediaQueryContext();
-    const [windowWidth] = useWindowSizeContext();
-    const [posY] = useScrollPositionContext();
-    const { scrolling } = useScrollStateContext();
-
-    const ease = {
-      pc: 0.1,
-      sp: 0.15,
-    }[device];
-
-    const f = {
-      pc: 12,
-      sp: 8,
-    }[device];
-
-    useTick(({ timeRatio }) => {
-      if (!state.active || !scrolling.value) {
-        return;
+  setup(el: HTMLElement, { scrollContext }: AppContext) {
+    useScrollSkew(
+      ({ value }) => {
+        el.style.transform = `skew(0, ${value}deg) translateZ(0)`;
+      },
+      {
+        initialPos: scrollContext.scrollTop(),
       }
-
-      const currentY = posY.value;
-      const p = 1 - (1 - ease) ** timeRatio;
-      state.lastY = lerp(state.lastY, currentY, p);
-
-      if (state.lastY < 0.1) {
-        state.lastY = 0;
-      }
-
-      const diff = currentY - state.lastY;
-      const skewY = f * (diff / windowWidth.value);
-      const ty = clamp(skewY, { max: 7, min: -7 });
-      el.style.transform = `skew(0, ${ty}deg) translateZ(0)`;
-    });
-
-    useMount(() => {
-      state.active = true;
-
-      return () => {
-        state.active = false;
-        state.lastY = 0;
-      };
-    });
+    );
   },
 });
