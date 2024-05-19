@@ -92,6 +92,7 @@ body {
 }
 
 :where(ul, ol) {
+  list-style: none;
   list-style-type: "";
   padding: unset;
 }

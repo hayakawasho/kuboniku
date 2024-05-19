@@ -17,10 +17,10 @@ export const useScrollTween = (el: HTMLElement) => {
     useTouch: true,
   });
 
-  const [_, wh] = useWindowSizeContext();
+  const [_, windowHeight] = useWindowSizeContext();
 
   useElementSize(el, ({ height: contentH }) => {
-    onResize(contentH, wh.value);
+    onResize(contentH, windowHeight.value);
   });
 
   vs.on(onVScroll);

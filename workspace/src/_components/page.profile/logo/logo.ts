@@ -14,7 +14,16 @@ export class Logo extends GlObject {
   #mesh;
   uniforms;
 
-  constructor(el: HTMLElement) {
+  constructor(
+    el: HTMLElement,
+    {
+      windowWidth,
+      windowHeight,
+    }: {
+      windowWidth: number;
+      windowHeight: number;
+    }
+  ) {
     super(el);
 
     const imgSrc = el.dataset.src!;
@@ -53,7 +62,11 @@ export class Logo extends GlObject {
 
     this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
-    this.#mesh.renderOrder = this.order;
+
+    this.resize({
+      height: windowHeight,
+      width: windowWidth,
+    });
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
