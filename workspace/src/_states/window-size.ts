@@ -9,19 +9,19 @@ const viewport = map<Size>({
 });
 
 export const useWindowSizeContext = (
-  callback: (payload: { aspect: number; ww: number; wh: number }) => void = noop
+  callback: (payload: { aspect: number; width: number; height: number }) => void = noop
 ) => {
   const { width, height } = viewport.get();
   const ww = ref(width);
   const wh = ref(height);
 
-  const unbind = viewport.listen(({ width, height }) => {
-    const aspect = width / height;
+  const unbind = viewport.listen(payload => {
+    const aspect = payload.width / payload.height;
 
     callback({
       aspect,
-      wh: height,
-      ww: width,
+      height: payload.height,
+      width: payload.width,
     });
 
     ww.value = width;

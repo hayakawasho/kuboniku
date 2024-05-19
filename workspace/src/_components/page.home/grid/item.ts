@@ -35,11 +35,8 @@ export default defineComponent({
       mat,
     });
 
-    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
-      imgPlane.resize({
-        height: wh,
-        width: ww,
-      });
+    const [ww, wh] = useWindowSizeContext(({ height, width }) => {
+      imgPlane.resize({ height, width });
     });
 
     const speed = Number(refs.plane.dataset.speed);
@@ -58,10 +55,7 @@ export default defineComponent({
     });
 
     useMount(() => {
-      imgPlane.resize({
-        height: windowHeight.value,
-        width: windowWidth.value,
-      });
+      imgPlane.resize({ height: wh.value, width: ww.value });
       frontCanvasContext.addScene(imgPlane);
 
       if (!once && history.value === "push") {

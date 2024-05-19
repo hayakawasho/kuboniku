@@ -8,21 +8,14 @@ import {
   LinearFilter,
   Vector2,
 } from "@/_gl/three";
+import fragment from "./fragment.frag";
+import vertex from "./vertex.vert";
 
 export class Plane extends GlObject {
   #mesh;
   uniforms;
 
-  constructor(
-    el: HTMLElement,
-    {
-      geo,
-      mat,
-    }: {
-      geo: PlaneBufferGeometry;
-      mat: ShaderMaterial;
-    }
-  ) {
+  constructor(el: HTMLElement) {
     super(el);
 
     const imgSrc = el.dataset.src!;
@@ -39,16 +32,13 @@ export class Plane extends GlObject {
 
     this.uniforms = {
       u_alpha: {
-        value: 1,
+        value: 0.4,
       },
       u_image_size: {
         value: new Vector2(Number(el.dataset.w), Number(el.dataset.h)),
       },
       u_mesh_size: {
         value: new Vector2(width, height),
-      },
-      u_scale: {
-        value: 1.0,
       },
       u_texture: {
         value: texture,
@@ -64,10 +54,16 @@ export class Plane extends GlObject {
       },
     };
 
-    const material = mat.clone() as ShaderMaterial;
-    material.uniforms = this.uniforms;
+    const geo = new PlaneBufferGeometry(1, 1);
+    const mat = new ShaderMaterial({
+      fragmentShader: fragment,
+      vertexShader: vertex,
+      uniforms: this.uniforms,
+      transparent: true,
+      alphaTest: 0.5,
+    });
 
-    this.#mesh = new Mesh(geo, material);
+    this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
     this.#mesh.renderOrder = this.order;
   }
@@ -78,16 +74,16 @@ export class Plane extends GlObject {
   };
 
   update = ({
-    mouseX,
-    mouseY,
+    mouseOffsetX,
+    mouseOffsetY,
     ...newValues
   }: {
-    mouseX: number;
-    mouseY: number;
+    mouseOffsetX: number;
+    mouseOffsetY: number;
   } & Parameters<GlObject["update"]>[0]) => {
     super.update(newValues);
 
-    this.uniforms.u_mouse.value.x = lerp(this.uniforms.u_mouse.value.x, mouseX, 0.04);
-    this.uniforms.u_mouse.value.y = lerp(this.uniforms.u_mouse.value.y, mouseY, 0.04);
+    this.uniforms.u_mouse.value.x = lerp(this.uniforms.u_mouse.value.x, mouseOffsetX, 0.04);
+    this.uniforms.u_mouse.value.y = lerp(this.uniforms.u_mouse.value.y, mouseOffsetY, 0.04);
   };
 }

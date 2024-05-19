@@ -35,12 +35,12 @@ export default defineComponent({
 
     const imgPlane = new Plane(refs.thumb, { geo, mat });
 
-    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
+    const [ww, wh] = useWindowSizeContext(({ height, width }) => {
       state.resizing = true;
 
       imgPlane.resize({
-        height: wh,
-        width: ww,
+        height,
+        width,
         y: scrollContext.scrollTop(),
       });
 
@@ -61,7 +61,7 @@ export default defineComponent({
 
     useScrollSkew(
       ({ value }) => {
-        imgPlane.uniforms.u_skewY.value = value * -0.02;
+        imgPlane.uniforms.u_skewY.value = value * -0.015;
       },
       {
         initialPos: scrollContext.scrollTop(),
@@ -120,8 +120,8 @@ export default defineComponent({
 
     useMount(() => {
       imgPlane.resize({
-        height: windowHeight.value,
-        width: windowWidth.value,
+        height: wh.value,
+        width: ww.value,
         y: scrollContext.scrollTop(),
       });
       frontCanvasContext.addScene(imgPlane);

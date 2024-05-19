@@ -29,18 +29,12 @@ export default defineComponent({
       });
     });
 
-    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
-      uline.resize({
-        height: wh,
-        width: ww,
-      });
+    const [ww, wh] = useWindowSizeContext(({ height, width }) => {
+      uline.resize({ height, width });
     });
 
     useMount(() => {
-      uline.resize({
-        height: windowHeight.value,
-        width: windowWidth.value,
-      });
+      uline.resize({ height: wh.value, width: ww.value });
       frontCanvasContext.addScene(uline);
 
       return () => {

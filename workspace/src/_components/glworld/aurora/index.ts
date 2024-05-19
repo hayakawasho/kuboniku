@@ -16,7 +16,7 @@ export default defineComponent({
   setup(_canvas: HTMLCanvasElement, context: Props) {
     const { addScene, removeScene } = context;
 
-    const [windowWidth, windowHeight] = useWindowSizeContext();
+    const [ww, wh] = useWindowSizeContext();
     const { device } = useMediaQueryContext();
 
     const auroraPixelRatio = 0.5;
@@ -53,7 +53,7 @@ export default defineComponent({
         }[device],
       },
       u_resolution: {
-        value: new Vector2(windowWidth.value, windowHeight.value),
+        value: new Vector2(ww.value, wh.value),
       },
       u_time: {
         value: 100 * Math.random(),
@@ -69,8 +69,8 @@ export default defineComponent({
       })
     );
 
-    useWindowSizeContext(({ ww, wh }) => {
-      planeAurora.scale.set(ww * auroraPixelRatio, wh * auroraPixelRatio, 1);
+    useWindowSizeContext(({ width, height }) => {
+      planeAurora.scale.set(width * auroraPixelRatio, height * auroraPixelRatio, 1);
     });
 
     useTick(({ deltaTime, deltaRatio }) => {

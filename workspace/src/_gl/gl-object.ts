@@ -4,6 +4,7 @@ import type { Point } from "@/_foundation/type";
 export class GlObject extends Object3D {
   #pos: Point;
   cache;
+  protected order: number;
 
   constructor(protected el: HTMLElement) {
     super();
@@ -21,6 +22,9 @@ export class GlObject extends Object3D {
       x: 0,
       y: 0,
     };
+
+    const order = this.el.dataset.glOrder || 1;
+    this.order = Number(order);
   }
 
   protected updateCache = (newCache: {
@@ -51,6 +55,7 @@ export class GlObject extends Object3D {
   }) {
     const bounds = this.el.getBoundingClientRect();
     const { left, top, width, height } = bounds;
+    this.updateCache({ height, left, top, width, x, y });
 
     const xOffset = x + left - newValues.width * 0.5 + width * 0.5;
     const yOffset = -(y + top) + newValues.height * 0.5 - height * 0.5;
@@ -60,7 +65,6 @@ export class GlObject extends Object3D {
 
     this.#pos.x = xOffset;
     this.#pos.y = yOffset;
-    this.updateCache({ height, left, top, width, x, y });
   }
 
   update({ x = 0, y = 0 }: { x?: number; y?: number }) {
