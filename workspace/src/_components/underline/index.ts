@@ -29,17 +29,17 @@ export default defineComponent({
       });
     });
 
-    const [windowWidth, windowHeight] = useWindowSizeContext(({ ww, wh }) => {
+    const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
       uline.resize({
-        height: wh,
-        width: ww,
+        height: windowHeight,
+        width: windowWidth,
       });
     });
 
     useMount(() => {
       uline.resize({
-        height: windowHeight.value,
-        width: windowWidth.value,
+        height: wh.value,
+        width: ww.value,
       });
       frontCanvasContext.addScene(uline);
 

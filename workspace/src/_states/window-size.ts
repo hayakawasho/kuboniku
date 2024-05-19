@@ -9,23 +9,23 @@ const viewport = map<Size>({
 });
 
 export const useWindowSizeContext = (
-  callback: (payload: { aspect: number; ww: number; wh: number }) => void = noop
+  callback: (payload: { aspect: number; windowWidth: number; windowHeight: number }) => void = noop
 ) => {
-  const { width, height } = viewport.get();
-  const ww = ref(width);
-  const wh = ref(height);
+  const size = viewport.get();
+  const ww = ref(size.width);
+  const wh = ref(size.height);
 
-  const unbind = viewport.listen(({ width, height }) => {
-    const aspect = width / height;
+  const unbind = viewport.listen(payload => {
+    const aspect = payload.width / payload.height;
 
     callback({
       aspect,
-      wh: height,
-      ww: width,
+      windowHeight: payload.height,
+      windowWidth: payload.width,
     });
 
-    ww.value = width;
-    wh.value = height;
+    ww.value = size.width;
+    wh.value = size.height;
   });
 
   useUnmount(() => {

@@ -12,7 +12,7 @@ export const useScrollSkew = (
   { initialPos = 0 }: { initialPos: number }
 ) => {
   const { device } = useMediaQueryContext();
-  const [windowWidth] = useWindowSizeContext();
+  const [ww] = useWindowSizeContext();
   const [posY] = useScrollPositionContext();
   const { scrolling } = useScrollStateContext();
 
@@ -46,7 +46,7 @@ export const useScrollSkew = (
     }
 
     const diff = currentY - state.lastY;
-    const skewY = f * (diff / windowWidth.value);
+    const skewY = f * (diff / ww.value);
     const ty = clamp(skewY, {
       max: 7,
       min: -7,

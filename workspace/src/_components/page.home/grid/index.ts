@@ -114,7 +114,7 @@ export default defineComponent({
       }
     );
 
-    const [__, windowHeight] = useWindowSizeContext(() => {
+    const [__, wh] = useWindowSizeContext(() => {
       state.resizing = true;
 
       const bounds = el.getBoundingClientRect();
@@ -145,6 +145,7 @@ export default defineComponent({
       vertexShader: vertex,
       transparent: true,
       alphaTest: 0.5,
+      depthTest: false,
     });
 
     useMount(() => {
@@ -162,7 +163,7 @@ export default defineComponent({
     });
 
     const start = () => {
-      const centerY = windowHeight.value / 2;
+      const centerY = wh.value / 2;
       const itemH = refs.gridItem[0].getBoundingClientRect().height;
       const gap = maxY.value - itemH * 4;
       const offset = maxY.value - (centerY + itemH / 2) - gap / 4;

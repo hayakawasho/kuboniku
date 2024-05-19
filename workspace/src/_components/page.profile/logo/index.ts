@@ -12,17 +12,12 @@ export default defineComponent({
   setup(el: HTMLImageElement, context: Props) {
     const { once, history, frontCanvasContext } = context;
 
-    const [windowWidth, windowHeight] = useWindowSizeContext();
+    const logoPlane = new Logo(el);
 
-    const logoPlane = new Logo(el, {
-      windowHeight: windowHeight.value,
-      windowWidth: windowWidth.value,
-    });
-
-    useWindowSizeContext(({ ww, wh }) => {
+    const [ww, wh] = useWindowSizeContext(({ windowWidth, windowHeight }) => {
       logoPlane.resize({
-        height: wh,
-        width: ww,
+        height: windowHeight,
+        width: windowWidth,
       });
     });
 
@@ -31,6 +26,7 @@ export default defineComponent({
     });
 
     useMount(() => {
+      logoPlane.resize({ height: wh.value, width: ww.value });
       frontCanvasContext.addScene(logoPlane);
 
       if (!once && history.value === "push") {

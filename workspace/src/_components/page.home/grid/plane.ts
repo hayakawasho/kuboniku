@@ -64,6 +64,7 @@ export class Plane extends GlObject {
 
     this.#mesh = new Mesh(geo, material);
     this.add(this.#mesh);
+    this.#mesh.renderOrder = this.order;
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {

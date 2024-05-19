@@ -36,10 +36,12 @@ export class Underline extends GlObject {
       fragmentShader: fragment,
       uniforms: this.uniforms,
       vertexShader: vertex,
+      depthTest: false,
     });
 
     this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
+    this.#mesh.renderOrder = 4;
   }
 
   resize = (newValues: Parameters<GlObject["resize"]>[0]) => {

@@ -36,10 +36,10 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
   const addScene = (child: Object3D) => scene.add(child);
   const removeScene = (child: Object3D) => scene.remove(child);
 
-  const [_, wh] = useWindowSizeContext(({ ww, wh }) => {
-    renderer.setSize(ww, wh);
-    camera.aspect = ww / wh;
-    camera.position.z = calcCamDistance(wh);
+  const [_, wh] = useWindowSizeContext(({ windowWidth, windowHeight }) => {
+    renderer.setSize(windowWidth, windowHeight);
+    camera.aspect = windowWidth / windowHeight;
+    camera.position.z = calcCamDistance(windowHeight);
     camera.updateProjectionMatrix();
   });
 
