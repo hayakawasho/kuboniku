@@ -36,7 +36,7 @@ export default defineComponent({
     });
 
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      imgPlane.resize({
+      imgPlane.setSize({
         height: windowHeight,
         width: windowWidth,
       });
@@ -58,7 +58,7 @@ export default defineComponent({
     });
 
     useMount(() => {
-      imgPlane.resize({
+      imgPlane.setSize({
         height: wh.value,
         width: ww.value,
       });

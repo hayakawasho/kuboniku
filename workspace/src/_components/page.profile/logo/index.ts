@@ -15,7 +15,7 @@ export default defineComponent({
     const logoPlane = new Logo(el);
 
     const [ww, wh] = useWindowSizeContext(({ windowWidth, windowHeight }) => {
-      logoPlane.resize({
+      logoPlane.setSize({
         height: windowHeight,
         width: windowWidth,
       });
@@ -26,7 +26,7 @@ export default defineComponent({
     });
 
     useMount(() => {
-      logoPlane.resize({ height: wh.value, width: ww.value });
+      logoPlane.setSize({ height: wh.value, width: ww.value });
       frontCanvasContext.addScene(logoPlane);
 
       if (!once && history.value === "push") {

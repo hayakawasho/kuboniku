@@ -1,6 +1,6 @@
 import { lerp } from "@/_foundation/math";
 
-const ease = 0.725;
+const ease = 0.625;
 
 export class Smooth {
   #state;

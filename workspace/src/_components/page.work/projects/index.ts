@@ -17,7 +17,7 @@ export default defineComponent({
     const { refs } = useDomRef<Refs>("projectItem");
     const { addChild } = useSlot();
 
-    const geo = new PlaneBufferGeometry(1, 1, 4, 20);
+    const geo = new PlaneBufferGeometry(1, 1, 30, 30);
     const mat = new ShaderMaterial({
       fragmentShader: fragment,
       vertexShader: vertex,

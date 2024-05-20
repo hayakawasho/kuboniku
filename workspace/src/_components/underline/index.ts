@@ -30,14 +30,14 @@ export default defineComponent({
     });
 
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      uline.resize({
+      uline.setSize({
         height: windowHeight,
         width: windowWidth,
       });
     });
 
     useMount(() => {
-      uline.resize({
+      uline.setSize({
         height: wh.value,
         width: ww.value,
       });

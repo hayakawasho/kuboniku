@@ -1,7 +1,7 @@
-import { Group } from "./three";
+import { Object3D } from "./three";
 import type { Point } from "@/_foundation/type";
 
-export class GlObject extends Group {
+export class GlObject extends Object3D {
   #pos: Point;
   cache;
   protected order: number;
@@ -43,7 +43,7 @@ export class GlObject extends Group {
     };
   };
 
-  resize({
+  setSize({
     x = 0,
     y = 0,
     ...newValues

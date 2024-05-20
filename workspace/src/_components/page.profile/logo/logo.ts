@@ -57,8 +57,8 @@ export class Logo extends GlObject {
     this.#mesh.renderOrder = this.order;
   }
 
-  resize = (newValues: Parameters<GlObject["resize"]>[0]) => {
-    super.resize(newValues);
+  setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {
+    super.setSize(newValues);
     this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
   };
 }
