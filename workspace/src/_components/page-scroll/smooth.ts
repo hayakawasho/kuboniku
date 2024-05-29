@@ -1,10 +1,13 @@
+import E from "@unseenco/e";
 import { lerp } from "@/_foundation/math";
 
 const ease = 0.625;
+const EVT_ID = "smooth";
 
 export class Smooth {
   #state;
   #scroll;
+  #emitter;
 
   constructor() {
     this.#state = {
@@ -13,13 +16,13 @@ export class Smooth {
       ready: false,
     };
 
-    const y = window.scrollY;
-
     this.#scroll = {
-      current: y,
-      target: y,
+      current: 0,
+      target: 0,
       diff: 0,
     };
+
+    this.#emitter = E;
   }
 
   onResize = (contentHeight: number, windowHeight: number) => {
@@ -42,7 +45,7 @@ export class Smooth {
     return Math.min(Math.max(value, min), max);
   };
 
-  onRaf = ({ deltaTime, deltaRatio }: { deltaTime: number; deltaRatio: number }) => {
+  raf = ({ deltaTime, deltaRatio }: { deltaTime: number; deltaRatio: number }) => {
     if (!this.#state.ready) {
       return;
     }
@@ -58,6 +61,10 @@ export class Smooth {
 
       this.#scroll.current = lerp(this.#scroll.current, this.#scroll.target, p);
       this.#setPosY(this.#scroll.current);
+
+      this.#emitter.emit(EVT_ID, {
+        currentY: this.#scroll.current,
+      });
     }
   };
 
@@ -78,17 +85,28 @@ export class Smooth {
     }
   };
 
-  reset = () => {
-    this.#scroll.target = this.#scroll.current = 0;
-    this.#setPosY(0);
+  on = (cb: Function) => {
+    this.#emitter.on(EVT_ID, cb);
   };
 
-  destroy = () => {
-    (this.#state as any) = null;
-    (this.#scroll as any) = null;
+  off = (cb: Function) => {
+    this.#emitter.off(EVT_ID, undefined, cb);
+  };
+
+  set = (val: number) => {
+    this.#scroll.target = this.#scroll.current = val;
+    this.#setPosY(val);
+  };
+
+  reset = () => {
+    this.set(0);
   };
 
   scrollTop = () => {
     return this.#scroll.current;
+  };
+
+  scrolling = () => {
+    return this.#state.scrolling;
   };
 }

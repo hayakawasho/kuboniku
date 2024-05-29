@@ -2,9 +2,10 @@ import { defineComponent, useSlot, useDomRef, useMount } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "@/_foundation/const";
 import { Tween } from "@/_foundation/tween";
 import { cursorTypeMutators } from "@/_states/cusor";
+import Pool from "@/_states/pool";
 import { useWindowSizeContext } from "@/_states/window-size";
 import Grid from "./grid";
-import Splash from "./splash";
+import Splashscreen from "./splashscreen/splashscreen";
 import type { AppContext } from "@/_foundation/type";
 
 type Refs = {
@@ -41,40 +42,53 @@ export default defineComponent({
       );
       setGridSize(ww.value / wh.value);
 
-      if (once) {
-        cursorTypeMutators("loading");
-        const [splashContext] = addChild(refs.splash, Splash, context);
+      (async () => {
+        const images = el.dataset.images!.split(", ");
+        const manifest = images.map(val => ({ id: val, src: val }));
 
-        const done = async () => {
-          const [gridContext] = addChild(refs.grid, Grid, context);
-          await splashContext.current.hideStart();
-          gridContext.current.start();
-          await splashContext.current.hideEnd();
-          removeChild([splashContext]);
-          cursorTypeMutators("default");
-        };
+        const checkLoaded = Pool.pop<HTMLImageElement>(manifest[0].id);
 
-        (async () => {
+        if (!checkLoaded) {
+          await Pool.loadManifest(manifest);
+        }
+
+        if (once) {
+          cursorTypeMutators("hide");
+
+          const [splashContext] = addChild(el, Splashscreen, {
+            ...context,
+            manifest,
+          });
+
+          const done = async () => {
+            const [gridContext] = addChild(refs.grid, Grid, context);
+            await splashContext.current.hideStart();
+            gridContext.current.start();
+            await splashContext.current.hideEnd();
+            removeChild([splashContext]);
+            cursorTypeMutators("default");
+          };
+
           await splashContext.current.start();
           done();
-        })();
-      } else if (!once && history.value === "push") {
-        Tween.serial(
-          Tween.prop(el, {
-            opacity: 0,
-          }),
-          Tween.immediate(() => {
-            const [gridContext] = addChild(refs.grid, Grid, context);
-            gridContext.current.start();
-          }),
-          Tween.wait(0.2),
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 1,
-          })
-        );
-      } else {
-        addChild(refs.grid, Grid, context);
-      }
+        } else if (!once && history.value === "push") {
+          Tween.serial(
+            Tween.prop(el, {
+              opacity: 0,
+            }),
+            Tween.immediate(() => {
+              const [gridContext] = addChild(refs.grid, Grid, context);
+              gridContext.current.start();
+            }),
+            Tween.wait(0.2),
+            Tween.tween(el, 0.55, "power3.out", {
+              opacity: 1,
+            })
+          );
+        } else {
+          addChild(refs.grid, Grid, context);
+        }
+      })();
 
       return () => {
         if (history.value === "push") {

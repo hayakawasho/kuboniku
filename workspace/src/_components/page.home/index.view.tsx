@@ -23,18 +23,15 @@ const Component: React.FC<Props> = props => {
 
   return (
     <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
-      <main className="h-full" data-component="Home">
-        <canvas aria-hidden="true" className="glCanvas | opacity-90" data-ref="canvas"></canvas>
-        <div
-          className="pointer-events-none fixed inset-0 m-auto w-full h-full z-10"
-          data-images={`${posts.map((item, i) => {
-            const imgSrc = cloudinaryAPIConverter(item.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
-            return i === 0 ? imgSrc : separator(imgSrc);
-          })}"`}
-          data-noise={noiseImg.src}
-          data-noise-mob={noiseSpImg.src}
-          data-ref="splash"
-        ></div>
+      <main
+        className="h-full"
+        data-component="Home"
+        data-images={`${posts.map((item, i) => {
+          const imgSrc = cloudinaryAPIConverter(item.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
+          return i === 0 ? imgSrc : separator(imgSrc);
+        })}`}
+      >
+        <div aria-hidden="true" className={Styles.loader} data-ref="loader"></div>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">

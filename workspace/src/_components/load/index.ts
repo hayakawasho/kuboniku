@@ -18,7 +18,7 @@ import { scrollStateYMutators } from "@/_states/scroll";
 import { scrollPositionMutators } from "@/_states/scroll-position";
 import { windowSizeMutators } from "@/_states/window-size";
 import Cursor from "../cursor.svelte";
-import BackCanvas from "../glworld";
+import BackCanvas from "../glworld/back";
 import FrontCanvas from "../glworld/front";
 import PageScroll from "../page-scroll";
 import type { AppContext, RouteName } from "@/_foundation/type";
@@ -159,7 +159,6 @@ export default defineComponent({
       () => {
         clearTimeout(timer);
 
-        scrollPositionMutators(scrollContext.current.scrollTop());
         scrollStateYMutators({
           scrolling: true,
         });

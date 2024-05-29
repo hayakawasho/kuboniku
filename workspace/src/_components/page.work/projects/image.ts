@@ -1,15 +1,10 @@
 import { lerp } from "@/_foundation/math";
 import { GlObject } from "@/_gl/gl-object";
-import {
-  Mesh,
-  PlaneBufferGeometry,
-  ShaderMaterial,
-  TextureLoader,
-  LinearFilter,
-  Vector2,
-} from "@/_gl/three";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "@/_gl/three";
+import { createTexture } from "@/_gl/texture";
+import Pool from "@/_states/pool";
 
-export class Plane extends GlObject {
+export class ImgPlane extends GlObject {
   #mesh;
   uniforms;
 
@@ -26,15 +21,6 @@ export class Plane extends GlObject {
     super(el);
 
     const imgSrc = el.dataset.src!;
-
-    const loader = new TextureLoader();
-    loader.crossOrigin = "anonymous";
-
-    const texture = loader.load(imgSrc, texture => {
-      texture.minFilter = LinearFilter;
-      texture.generateMipmaps = false;
-    });
-
     const { width, height } = el.getBoundingClientRect();
 
     this.uniforms = {
@@ -51,7 +37,7 @@ export class Plane extends GlObject {
         value: 1.0,
       },
       u_texture: {
-        value: texture,
+        value: 0 as any,
       },
       u_skewY: {
         value: 0,
@@ -64,12 +50,24 @@ export class Plane extends GlObject {
       },
     };
 
+    const tex = createTexture();
+    const checkLoaded = Pool.pop<HTMLImageElement>(imgSrc);
+
+    if (checkLoaded) {
+      tex.image = checkLoaded;
+      this.uniforms.u_texture.value = tex;
+    } else {
+      Pool.loadFile(imgSrc).then(result => {
+        tex.image = result;
+        this.uniforms.u_texture.value = tex;
+      });
+    }
+
     const material = mat.clone() as ShaderMaterial;
     material.uniforms = this.uniforms;
 
     this.#mesh = new Mesh(geo, material);
     this.add(this.#mesh);
-    this.#mesh.renderOrder = this.order;
   }
 
   setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {

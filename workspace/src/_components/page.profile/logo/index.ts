@@ -2,7 +2,7 @@ import { defineComponent, useMount } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { Logo } from "./logo";
+import { LogoPlane } from "./logo";
 import type { AppContext } from "@/_foundation/type";
 
 type Props = AppContext;
@@ -12,7 +12,7 @@ export default defineComponent({
   setup(el: HTMLImageElement, context: Props) {
     const { once, history, frontCanvasContext } = context;
 
-    const logoPlane = new Logo(el);
+    const logoPlane = new LogoPlane(el);
 
     const [ww, wh] = useWindowSizeContext(({ windowWidth, windowHeight }) => {
       logoPlane.setSize({

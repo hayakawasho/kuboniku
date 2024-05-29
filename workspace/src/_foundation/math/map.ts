@@ -1,4 +1,4 @@
-export const map = (
+export const mapRange = (
   val: number,
   inputMin: number,
   inputMax: number,

@@ -1,3 +1,14 @@
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 17rem;
+  height: 22.6rem;
+  margin-top: -8.5rem;
+  margin-left: -11.3rem;
+  pointer-events: none;
+}
+
 .projectsWrap {
   position: fixed;
   width: 100%;

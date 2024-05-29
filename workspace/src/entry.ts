@@ -1,5 +1,6 @@
 import "./global.scss";
 import { create, withSvelte } from "lake";
+import "what-input";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";

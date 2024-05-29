@@ -1,5 +1,5 @@
-import { map } from "./map";
+import { mapRange } from "./map";
 
 export const norm = (val: number, min: number, max: number) => {
-  return map(val, min, max, 0, 1);
+  return mapRange(val, min, max, 0, 1);
 };

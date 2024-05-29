@@ -1,4 +1,4 @@
-import type BackCanvasContext from "../_components/glworld";
+import type BackCanvasContext from "../_components/glworld/back";
 import type FrontCanvasContext from "../_components/glworld/front";
 import type PageScrollContext from "../_components/page-scroll";
 import type { Object3D, Scene } from "@/_gl/three";
@@ -29,4 +29,6 @@ export type Point = {
   y: number;
 };
 
-export type valueOf<T> = T[keyof T];
+export type ValueOf<T> = T[keyof T];
+
+export type UnwrapPromise<T> = T extends Promise<infer R> ? R : never;

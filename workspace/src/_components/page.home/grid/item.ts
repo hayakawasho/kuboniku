@@ -4,7 +4,7 @@ import { useTick } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { Plane } from "./plane";
+import { ImgPlane } from "./image";
 import type { AppContext } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 import type { ReadonlyRef } from "lake";
@@ -29,17 +29,13 @@ export default defineComponent({
     const { refs } = useDomRef<Refs>("plane");
     const { device } = useMediaQueryContext();
 
-    const imgPlane = new Plane(refs.plane, {
-      device,
+    const imgPlane = new ImgPlane(refs.plane, {
       geo,
       mat,
     });
 
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      imgPlane.setSize({
-        height: windowHeight,
-        width: windowWidth,
-      });
+      imgPlane.setSize({ height: windowHeight, width: windowWidth });
     });
 
     const speed = Number(refs.plane.dataset.speed);
@@ -58,10 +54,7 @@ export default defineComponent({
     });
 
     useMount(() => {
-      imgPlane.setSize({
-        height: wh.value,
-        width: ww.value,
-      });
+      imgPlane.setSize({ height: wh.value, width: ww.value });
       frontCanvasContext.addScene(imgPlane);
 
       if (!once && history.value === "push") {

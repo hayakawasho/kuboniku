@@ -91,6 +91,25 @@ body {
   }
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+picture {
+  display: block;
+}
+
+summary {
+  display: block;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
 :where(ul, ol) {
   list-style: none;
   list-style-type: "";
@@ -120,27 +139,12 @@ body {
   outline: none;
 }
 
+[data-whatinput="touch"] :focus {
+  outline: none;
+}
+
 :any-link {
   //
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-picture {
-  display: block;
-}
-
-summary {
-  display: block;
-  list-style: none;
-}
-
-summary::-webkit-details-marker {
-  display: none;
 }
 
 [hidden]:not([hidden="until-found"]) {
