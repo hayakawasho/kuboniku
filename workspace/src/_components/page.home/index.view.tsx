@@ -2,8 +2,7 @@ import { Header } from "@/_components/header/index.view";
 import { PageWrapper } from "@/_components/page-wrapper/index.view";
 import { Link } from "@/_components/ui/link";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
-import noiseImg from "@/assets/noise_1100x1100.webp";
-import noiseSpImg from "@/assets/noise_550x550.webp";
+import { selectYear } from "@/_components/work/selector";
 import Styles from "./index.module.scss";
 import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
@@ -31,7 +30,15 @@ const Component: React.FC<Props> = props => {
           return i === 0 ? imgSrc : separator(imgSrc);
         })}`}
       >
-        <div aria-hidden="true" className={Styles.loader} data-ref="loader"></div>
+        <div aria-hidden="true" className={Styles.splash} data-ref="splash" data-index={-1}>
+          <ul className="relative w-full text-center">
+            {posts.map(post => (
+              <li className={Styles.splash__projectItem} key={post.id}>
+                {post.title} - {selectYear(post)}
+              </li>
+            ))}
+          </ul>
+        </div>
         <h1 className="sr-only">KuboNiku.com Portfolio</h1>
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">

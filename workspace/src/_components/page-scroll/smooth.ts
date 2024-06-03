@@ -1,8 +1,15 @@
 import E from "@unseenco/e";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { lerp } from "@/_foundation/math";
+import NormalizeWheel from "normalize-wheel";
 
-const ease = 0.625;
-const EVT_ID = "smooth";
+{
+  gsap.registerPlugin(ScrollToPlugin);
+}
+
+const ease = 0.725;
+const EVT_ID = "__WHEEL_SMOOTH__";
 
 export class Smooth {
   #state;
@@ -13,7 +20,7 @@ export class Smooth {
     this.#state = {
       scrollLimit: 0,
       scrolling: false,
-      ready: false,
+      active: false,
     };
 
     this.#scroll = {
@@ -30,15 +37,17 @@ export class Smooth {
   };
 
   pause = () => {
-    this.#state.ready = false;
+    this.#state.active = false;
   };
 
   resume = () => {
-    this.#state.ready = true;
+    this.#state.active = true;
   };
 
   #setPosY = (value: number) => {
-    window.scrollTo(0, value);
+    gsap.set(window, {
+      scrollTo: value,
+    });
   };
 
   #clamp = (value: number, min: number, max: number) => {
@@ -46,7 +55,7 @@ export class Smooth {
   };
 
   raf = ({ deltaTime, deltaRatio }: { deltaTime: number; deltaRatio: number }) => {
-    if (!this.#state.ready) {
+    if (!this.#state.active) {
       return;
     }
 
@@ -58,7 +67,6 @@ export class Smooth {
       const d = deltaTime * 0.001;
       const expo = Math.exp(-ease * 85 * d);
       const p = expo * deltaRatio;
-
       this.#scroll.current = lerp(this.#scroll.current, this.#scroll.target, p);
       this.#setPosY(this.#scroll.current);
 
@@ -68,14 +76,15 @@ export class Smooth {
     }
   };
 
-  onVScroll = ({ deltaY, originalEvent: evt }: { deltaY: number; originalEvent: Event }) => {
-    if (!this.#state.ready) {
+  onWheel = (e: WheelEvent) => {
+    if (!this.#state.active) {
       return;
     }
 
-    evt.preventDefault();
+    e.preventDefault();
+    const { pixelY } = NormalizeWheel(e);
 
-    this.#scroll.target += deltaY * -1;
+    this.#scroll.target += pixelY;
     this.#scroll.target = this.#clamp(this.#scroll.target, -0, this.#state.scrollLimit);
   };
 
@@ -104,9 +113,5 @@ export class Smooth {
 
   scrollTop = () => {
     return this.#scroll.current;
-  };
-
-  scrolling = () => {
-    return this.#state.scrolling;
   };
 }

@@ -2,7 +2,7 @@ import { getGPUTier } from "detect-gpu";
 import { useMount } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { WebGLRenderer, PerspectiveCamera, Scene, Group } from "./three";
+import { WebGLRenderer, PerspectiveCamera, Scene } from "./three";
 import type { Object3D } from "./three";
 
 export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {

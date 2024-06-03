@@ -17,7 +17,7 @@ export const useScrollSkew = (
   const { scrolling } = useScrollStateContext();
 
   const state = {
-    ready: false,
+    active: false,
     lastY: initialPos,
   };
 
@@ -32,7 +32,7 @@ export const useScrollSkew = (
   }[device];
 
   useTick(({ deltaRatio }) => {
-    if (!state.ready || !scrolling.value) {
+    if (!state.active || !scrolling.value) {
       return;
     }
 
@@ -58,10 +58,10 @@ export const useScrollSkew = (
   });
 
   useMount(() => {
-    state.ready = true;
+    state.active = true;
 
     return () => {
-      state.ready = false;
+      state.active = false;
       state.lastY = 0;
     };
   });

@@ -21,7 +21,7 @@ type Props = AppContext & {
 };
 
 type Refs = {
-  loader: HTMLElement;
+  splash: HTMLElement;
 };
 
 export default defineComponent({
@@ -29,27 +29,30 @@ export default defineComponent({
   setup(el, context: Props) {
     const { frontCanvasContext, manifest } = context;
 
-    const { refs } = useDomRef<Refs>("loader");
+    const { refs } = useDomRef<Refs>("splash");
     const { anyHover } = useMediaQueryContext();
     const [ww, wh] = useWindowSizeContext();
 
     const state = {
-      loaderCount: 0,
+      count: 0,
       cx: ww.value / 2,
       cy: wh.value / 2,
       tx: ww.value / 2,
       ty: wh.value / 2,
+      stopped: true,
     };
 
     const textures: Texture[] = [];
-    const imgPlane = new ImgPlane(refs.loader);
+    const imgPlane = new ImgPlane(refs.splash);
+    const maskPlane = new ImgPlane(refs.splash);
 
     useWindowSizeContext(({ windowWidth, windowHeight }) => {
       imgPlane.setSize({ width: windowWidth, height: windowHeight });
+      maskPlane.setSize({ width: windowWidth, height: windowHeight });
     });
 
     useMousePos(({ x, y }) => {
-      if (!anyHover) {
+      if (!anyHover || state.stopped) {
         return;
       }
       state.tx = x;
@@ -57,6 +60,10 @@ export default defineComponent({
     });
 
     useTick(({ deltaRatio }) => {
+      if (!anyHover) {
+        return;
+      }
+
       const p1 = 0.2 * deltaRatio;
       state.cx = lerp(state.cx, state.tx, p1);
       state.cy = lerp(state.cy, state.ty, p1);
@@ -70,9 +77,15 @@ export default defineComponent({
       imgPlane.uniforms.u_bend.value.x = lerp(imgPlane.uniforms.u_bend.value.x, clampX, p2);
       imgPlane.uniforms.u_bend.value.y = lerp(imgPlane.uniforms.u_bend.value.y, clampY, p2);
 
+      maskPlane.uniforms.u_bend.value.x = lerp(maskPlane.uniforms.u_bend.value.x, clampX, p2);
+      maskPlane.uniforms.u_bend.value.y = lerp(maskPlane.uniforms.u_bend.value.y, clampY, p2);
+
       const centerX = state.cx - ww.value * 0.5;
       const centerY = -(state.cy - wh.value * 0.5);
+
       imgPlane.update({ x: centerX, y: centerY });
+      maskPlane.update({ x: centerX, y: centerY });
+      refs.splash.style.transform = `translate(-50%, -50%) translate(${centerX}px, ${-centerY}px) translateZ(0)`;
     });
 
     useMount(() => {
@@ -87,15 +100,22 @@ export default defineComponent({
       imgPlane.uniforms.u_texture.value = textures[0];
       imgPlane.setSize({ width: ww.value, height: wh.value });
 
+      maskPlane.uniforms.u_alpha.value = 0.4;
+      maskPlane.setSize({ width: ww.value, height: wh.value });
+
       frontCanvasContext.addScene(imgPlane);
+      frontCanvasContext.addScene(maskPlane);
     });
 
     const start = () => {
       return new Promise<void>(resolve => {
-        Tween.tween(state, 2, "power1.out", {
-          loaderCount: manifest.length - 1,
+        state.stopped = false;
+
+        Tween.tween(state, 1.85, "power1.out", {
+          count: manifest.length - 1,
           onUpdate: () => {
-            const index = Math.floor(state.loaderCount);
+            const index = Math.floor(state.count);
+            refs.splash.dataset.index = index + "";
             imgPlane.uniforms.u_texture.value = textures[index];
           },
           onComplete: () => {
@@ -107,12 +127,35 @@ export default defineComponent({
 
     const hideStart = () => {
       return new Promise<void>(resolve => {
-        Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "expo.out", {
-          value: 0,
-          onComplete: () => {
+        state.stopped = true;
+
+        Tween.serial(
+          Tween.parallel(
+            Tween.tween(imgPlane.uniforms.u_alpha, 1.1, "power3.inOut", {
+              value: 0,
+              delay: 0.01,
+            }),
+            Tween.tween(imgPlane.position, 1.1, "power3.inOut", {
+              y: imgPlane.position.y + wh.value * 0.17,
+              delay: 0.01,
+            }),
+            Tween.tween(maskPlane.uniforms.u_alpha, 1.1, "power3.inOut", {
+              value: 0,
+              delay: 0.01,
+            }),
+            Tween.tween(maskPlane.position, 1.1, "power3.inOut", {
+              y: maskPlane.position.y + wh.value * 0.17,
+              delay: 0.01,
+            }),
+            Tween.tween(refs.splash, 1.1, "power3.inOut", {
+              opacity: 0,
+              marginTop: -wh.value * 0.17,
+            })
+          ),
+          Tween.immediate(() => {
             resolve();
-          },
-        });
+          })
+        );
       });
     };
 

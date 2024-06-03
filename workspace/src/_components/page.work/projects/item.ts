@@ -5,7 +5,7 @@ import { norm } from "@/_foundation/math";
 import { Tween } from "@/_foundation/tween";
 import { useMousePos } from "@/_states/mouse";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { Plane } from "./plane";
+import { ImgPlane } from "./image";
 import type { AppContext } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 
@@ -30,18 +30,24 @@ export default defineComponent({
       mousePos: [0, 0],
     };
 
+    const cache = {
+      posY: scrollContext.scrollTop(),
+    };
+
     const themeColor = el.dataset.color!;
     const { refs } = useDomRef<Refs>("thumb");
 
-    const imgPlane = new Plane(refs.thumb, { geo, mat });
+    const imgPlane = new ImgPlane(refs.thumb, { geo, mat });
 
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
       state.resizing = true;
 
+      cache.posY = scrollContext.scrollTop();
+
       imgPlane.setSize({
         height: windowHeight,
         width: windowWidth,
-        y: scrollContext.scrollTop(),
+        y: cache.posY,
       });
 
       state.resizing = false;
@@ -64,7 +70,7 @@ export default defineComponent({
         imgPlane.uniforms.u_skewY.value = value * -0.015;
       },
       {
-        initialPos: scrollContext.scrollTop(),
+        initialPos: cache.posY,
       }
     );
 
@@ -97,22 +103,22 @@ export default defineComponent({
       );
     });
 
-    useMousePos(({ x, y }) => {
+    useMousePos(payload => {
       if (!state.hovering) {
         return;
       }
 
       const { left, top, width, height } = imgPlane.cache;
-      const offsetX = -left;
-      const offsetY = -(top + scrollContext.scrollTop());
-      const mouseX = norm(offsetX + x, 0, width);
-      const mouseY = -norm(offsetY + y, 0, height) * 2 + 1;
+      const x = -left;
+      const y = -(top + cache.posY);
+      const mouseX = norm(x + payload.x, 0, width);
+      const mouseY = -norm(y + payload.y, 0, height) + 1;
 
       console.log({
+        posY: cache.posY,
+        top,
         y,
-        // top,
-        // scrollTop: scrollContext.scrollTop(),
-        offset: -(top + scrollContext.scrollTop()) + y,
+        mouseY,
       });
 
       state.mousePos = [mouseX, mouseY];

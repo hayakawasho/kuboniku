@@ -1,21 +1,10 @@
 import htmx from "htmx.org";
-import {
-  defineComponent,
-  useDomRef,
-  useSlot,
-  useMount,
-  useEvent,
-  ref,
-  readonly,
-  withSvelte,
-} from "lake";
+import { defineComponent, useDomRef, useSlot, useMount, ref, readonly, withSvelte } from "lake";
 import { useElementSize } from "@/_foundation/hooks";
 import { BREAK_POINTS } from "@/_foundation/mq";
 import { cursorTypeMutators } from "@/_states/cusor";
 import { mediaQueryMutators } from "@/_states/mq";
 import { routeMutators } from "@/_states/route";
-import { scrollStateYMutators } from "@/_states/scroll";
-import { scrollPositionMutators } from "@/_states/scroll-position";
 import { windowSizeMutators } from "@/_states/window-size";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld/back";
@@ -57,11 +46,11 @@ export default defineComponent({
       device: wideQuery.matches ? "pc" : "sp",
     } as const;
 
-    const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
-    const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
     const [scrollContext] = addChild(refs.main, PageScroll, {
       anyHover: mediaQuery.anyHover,
     });
+    const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
+    const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
 
     const appProvides = {
       backCanvasContext: backCanvasContext.current,
@@ -81,7 +70,6 @@ export default defineComponent({
       document.body.dataset.page = namespace;
 
       scrollContext.current.reset();
-      scrollPositionMutators(0);
 
       onUpdated(to, appProvides);
       cursorTypeMutators("default");
@@ -148,30 +136,5 @@ export default defineComponent({
         width,
       });
     });
-
-    //----------------------------------------------------------------
-
-    let timer: number;
-
-    useEvent(
-      window as any,
-      "scroll",
-      () => {
-        clearTimeout(timer);
-
-        scrollStateYMutators({
-          scrolling: true,
-        });
-
-        timer = window.setTimeout(() => {
-          scrollStateYMutators({
-            scrolling: false,
-          });
-        }, 500);
-      },
-      {
-        passive: true,
-      }
-    );
   },
 });

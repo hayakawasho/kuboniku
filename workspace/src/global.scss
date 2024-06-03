@@ -37,6 +37,8 @@ html {
   font-size: 10px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 
   @media screen and (max-width: 1080px) {
     font-size: 9px;
@@ -64,9 +66,12 @@ html {
 }
 
 body {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--color-text);
   background: #191918;
-  overflow-x: hidden;
   font-family: var(--font);
   overflow-wrap: break-word;
   -webkit-text-size-adjust: 100%;
@@ -141,6 +146,10 @@ summary::-webkit-details-marker {
 
 [data-whatinput="touch"] :focus {
   outline: none;
+}
+
+:focus {
+  outline-color: var(--color-theme);
 }
 
 :any-link {
