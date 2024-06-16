@@ -7,9 +7,9 @@ import { useMousePos } from "@/_states/mouse";
 import { useMediaQueryContext } from "@/_states/mq";
 import Pool from "@/_states/pool";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { ImgPlane } from "./image";
-import type { Texture } from "@/_gl/three";
+import { ImgPlane } from "./plane";
 import type { AppContext } from "@/_foundation/type";
+import type { Texture } from "@/_gl/three";
 
 type ManifestItem = {
   src: string;
@@ -27,7 +27,7 @@ type Refs = {
 export default defineComponent({
   name: "Splashscreen",
   setup(el, context: Props) {
-    const { frontCanvasContext, manifest } = context;
+    const { backCanvasContext, manifest } = context;
 
     const { refs } = useDomRef<Refs>("splash");
     const { anyHover } = useMediaQueryContext();
@@ -64,21 +64,21 @@ export default defineComponent({
         return;
       }
 
-      const p1 = 0.2 * deltaRatio;
-      state.cx = lerp(state.cx, state.tx, p1);
-      state.cy = lerp(state.cy, state.ty, p1);
+      const alpha1 = 0.2 * deltaRatio;
+      state.cx = lerp(state.cx, state.tx, alpha1);
+      state.cy = lerp(state.cy, state.ty, alpha1);
 
       const diffX = state.cx - state.tx;
       const diffY = state.cy - state.ty;
       const clampX = mapRange(diffX, -300, 300, -0.75, 0.75);
       const clampY = mapRange(diffY, -300, 300, -1, 1);
 
-      const p2 = 0.16 * deltaRatio;
-      imgPlane.uniforms.u_bend.value.x = lerp(imgPlane.uniforms.u_bend.value.x, clampX, p2);
-      imgPlane.uniforms.u_bend.value.y = lerp(imgPlane.uniforms.u_bend.value.y, clampY, p2);
+      const alpha2 = 0.16 * deltaRatio;
+      imgPlane.uniforms.u_bend.value.x = lerp(imgPlane.uniforms.u_bend.value.x, clampX, alpha2);
+      imgPlane.uniforms.u_bend.value.y = lerp(imgPlane.uniforms.u_bend.value.y, clampY, alpha2);
 
-      maskPlane.uniforms.u_bend.value.x = lerp(maskPlane.uniforms.u_bend.value.x, clampX, p2);
-      maskPlane.uniforms.u_bend.value.y = lerp(maskPlane.uniforms.u_bend.value.y, clampY, p2);
+      maskPlane.uniforms.u_bend.value.x = lerp(maskPlane.uniforms.u_bend.value.x, clampX, alpha2);
+      maskPlane.uniforms.u_bend.value.y = lerp(maskPlane.uniforms.u_bend.value.y, clampY, alpha2);
 
       const centerX = state.cx - ww.value * 0.5;
       const centerY = -(state.cy - wh.value * 0.5);
@@ -103,8 +103,8 @@ export default defineComponent({
       maskPlane.uniforms.u_alpha.value = 0.4;
       maskPlane.setSize({ width: ww.value, height: wh.value });
 
-      frontCanvasContext.addScene(imgPlane);
-      frontCanvasContext.addScene(maskPlane);
+      backCanvasContext.addScene(imgPlane);
+      backCanvasContext.addScene(maskPlane);
     });
 
     const start = () => {
@@ -162,7 +162,7 @@ export default defineComponent({
     const hideEnd = () => {
       return new Promise<void>(resolve => {
         el.classList.remove("pointer-events-none");
-        frontCanvasContext.removeScene(imgPlane);
+        backCanvasContext.removeScene(imgPlane);
         resolve();
       });
     };

@@ -45,11 +45,13 @@ export default defineComponent({
       }
 
       return () => {
-        if (history.value === "push") {
-          Tween.tween(el, 0.55, "power3.out", {
-            opacity: 0,
-          });
+        if (history.value !== "push") {
+          return;
         }
+
+        Tween.tween(el, 0.55, "power3.out", {
+          opacity: 0,
+        });
       };
     });
   },

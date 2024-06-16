@@ -1,11 +1,12 @@
 import { defineComponent, useMount, useDomRef, useEvent } from "lake";
 import { SITE_THEME_COLOR } from "@/_foundation/const";
-import { useTick, useScrollSkew } from "@/_foundation/hooks";
+import { useScrollSkew } from "@/_foundation/hooks";
 import { norm } from "@/_foundation/math";
 import { Tween } from "@/_foundation/tween";
 import { useMousePos } from "@/_states/mouse";
+import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { ImgPlane } from "./image";
+import { ImgPlane } from "./plane";
 import type { AppContext } from "@/_foundation/type";
 import type { PlaneBufferGeometry, ShaderMaterial } from "@/_gl/three";
 
@@ -21,8 +22,7 @@ type Refs = {
 export default defineComponent({
   name: "ProjectItem",
   setup(el: HTMLElement, context: Props) {
-    const { once, history, geo, mat, scrollContext, backCanvasContext, frontCanvasContext } =
-      context;
+    const { once, history, geo, mat, scrollContext, backCanvasContext } = context;
 
     const state = {
       resizing: false,
@@ -39,29 +39,20 @@ export default defineComponent({
 
     const imgPlane = new ImgPlane(refs.thumb, { geo, mat });
 
+    useScrollPositionContext(({ currentY }) => {
+      imgPlane.update({
+        y: currentY,
+        mouseX: state.mousePos[0],
+        mouseY: state.mousePos[1],
+      });
+    });
+
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      state.resizing = true;
-
       cache.posY = scrollContext.scrollTop();
-
       imgPlane.setSize({
         height: windowHeight,
         width: windowWidth,
         y: cache.posY,
-      });
-
-      state.resizing = false;
-    });
-
-    useTick(() => {
-      if (state.resizing) {
-        return;
-      }
-
-      imgPlane.update({
-        y: scrollContext.scrollTop(),
-        mouseX: state.mousePos[0],
-        mouseY: state.mousePos[1],
       });
     });
 
@@ -70,7 +61,7 @@ export default defineComponent({
         imgPlane.uniforms.u_skewY.value = value * -0.015;
       },
       {
-        initialPos: cache.posY,
+        initialPos: scrollContext.scrollTop(),
       }
     );
 
@@ -130,7 +121,7 @@ export default defineComponent({
         width: ww.value,
         y: scrollContext.scrollTop(),
       });
-      frontCanvasContext.addScene(imgPlane);
+      backCanvasContext.addScene(imgPlane);
 
       if (!once && history.value === "push") {
         Tween.serial(
@@ -139,16 +130,21 @@ export default defineComponent({
           }),
           Tween.wait(0.2),
           Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
-            value: 1,
+            value: 0.9,
           })
         );
       }
 
       return () => {
+        if (history.value !== "push") {
+          backCanvasContext.removeScene(imgPlane);
+          return;
+        }
+
         Tween.tween(imgPlane.uniforms.u_alpha, 0.55, "power3.out", {
           value: 0,
           onComplete: () => {
-            frontCanvasContext.removeScene(imgPlane);
+            backCanvasContext.removeScene(imgPlane);
           },
         });
       };

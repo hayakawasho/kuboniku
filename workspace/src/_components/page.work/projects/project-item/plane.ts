@@ -1,7 +1,7 @@
 import { lerp } from "@/_foundation/math";
 import { GlObject } from "@/_gl/gl-object";
-import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "@/_gl/three";
 import { createTexture } from "@/_gl/texture";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "@/_gl/three";
 import Pool from "@/_states/pool";
 
 export class ImgPlane extends GlObject {
@@ -25,7 +25,7 @@ export class ImgPlane extends GlObject {
 
     this.uniforms = {
       u_alpha: {
-        value: 1,
+        value: 0.9,
       },
       u_image_size: {
         value: new Vector2(Number(el.dataset.w), Number(el.dataset.h)),
@@ -44,6 +44,12 @@ export class ImgPlane extends GlObject {
       },
       u_mouse: {
         value: new Vector2(0, 0),
+      },
+      u_ripple: {
+        value: 0,
+      },
+      u_scaleProgress: {
+        value: 0,
       },
       u_lightStrength: {
         value: 0,
@@ -73,6 +79,8 @@ export class ImgPlane extends GlObject {
   setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {
     super.setSize(newValues);
     this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
+
+    super.update({ ...newValues });
   };
 
   update = ({

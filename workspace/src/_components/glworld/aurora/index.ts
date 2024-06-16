@@ -60,7 +60,7 @@ export default defineComponent({
       },
     };
 
-    const planeAurora = new Mesh(
+    const auroraPlane = new Mesh(
       new PlaneBufferGeometry(2, 2),
       new ShaderMaterial({
         fragmentShader: fragment,
@@ -70,13 +70,13 @@ export default defineComponent({
     );
 
     useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      planeAurora.scale.set(windowWidth * auroraPixelRatio, windowHeight * auroraPixelRatio, 1);
+      auroraPlane.scale.set(windowWidth * auroraPixelRatio, windowHeight * auroraPixelRatio, 1);
     });
 
     useTick(({ deltaTime, deltaRatio }) => {
-      const t = Math.min(1, 2 * deltaTime) * deltaRatio;
+      const t = Math.min(1, 2 * deltaTime);
 
-      uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t;
+      uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t * deltaRatio;
       uniforms.u_time.value -=
         t *
         0.005 *
@@ -84,17 +84,17 @@ export default defineComponent({
           0.7,
           0.2,
           {
-            pc: uniforms.u_lightness.value.x,
-            sp: uniforms.u_lightness.value.y,
+            pc: uniforms.u_lightness.value.x * deltaRatio,
+            sp: uniforms.u_lightness.value.y * deltaRatio,
           }[device]
         );
     });
 
     useMount(() => {
-      addScene(planeAurora);
+      addScene(auroraPlane);
 
       return () => {
-        removeScene(planeAurora);
+        removeScene(auroraPlane);
       };
     });
 

@@ -20,6 +20,10 @@
   margin-left: var(--grid);
   color: var(--color-text);
   display: inline-block;
+
+  @media (min-width: 640px) {
+    width: 100%;
+  }
 }
 
 .kv__nextImg {

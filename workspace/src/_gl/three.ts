@@ -5,6 +5,7 @@ export { Mesh } from "three/src/objects/Mesh";
 export * from "three/src/geometries/Geometries";
 export * from "three/src/materials/Materials";
 export { Texture } from "three/src/textures/Texture";
+export { TextureLoader } from "three/src/loaders/TextureLoader";
 // export { Cache } from "three/src/loaders/Cache";
 export { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 // export { OrthographicCamera } from "three/src/cameras/OrthographicCamera";

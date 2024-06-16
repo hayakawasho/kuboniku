@@ -27,7 +27,7 @@ export const useScrollSkew = (
   }[device];
 
   const f = {
-    pc: 12,
+    pc: 14,
     sp: 8,
   }[device];
 
@@ -37,9 +37,7 @@ export const useScrollSkew = (
     }
 
     const currentY = posY.value;
-    const p = ease * deltaRatio;
-
-    state.lastY = lerp(state.lastY, currentY, p);
+    state.lastY = lerp(state.lastY, currentY, ease * deltaRatio);
 
     if (state.lastY < 0.1) {
       state.lastY = 0;
@@ -62,7 +60,6 @@ export const useScrollSkew = (
 
     return () => {
       state.active = false;
-      state.lastY = 0;
     };
   });
 };

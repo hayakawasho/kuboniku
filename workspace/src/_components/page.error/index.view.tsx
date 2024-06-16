@@ -1,6 +1,5 @@
 import Styles from "./index.module.scss";
-// import { Header } from "../header/index.view";
-import { PageWrapper } from "../page-wrapper/index.view";
+import { PageWrapper } from "../page-wrapper.view";
 
 const Component: React.FC<{
   message: string;

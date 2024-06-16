@@ -1,6 +1,6 @@
 import { GlObject } from "@/_gl/gl-object";
-import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "@/_gl/three";
 import { createTexture } from "@/_gl/texture";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "@/_gl/three";
 import Pool from "@/_states/pool";
 import fragment from "./fragment.frag";
 import vertex from "./vertex.vert";
@@ -14,13 +14,15 @@ export class LogoPlane extends GlObject {
 
     const imgSrc = el.dataset.src!;
     const { width, height } = el.getBoundingClientRect();
+    const imgWidth = Number(el.dataset.width);
+    const imgHeight = Number(el.dataset.height);
 
     this.uniforms = {
       u_alpha: {
         value: 1,
       },
       u_image_size: {
-        value: new Vector2(Number(el.dataset.w), Number(el.dataset.h)),
+        value: new Vector2(imgWidth, imgHeight),
       },
       u_mesh_size: {
         value: new Vector2(width, height),
@@ -55,7 +57,6 @@ export class LogoPlane extends GlObject {
 
     this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
-    this.#mesh.renderOrder = this.order;
   }
 
   setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {

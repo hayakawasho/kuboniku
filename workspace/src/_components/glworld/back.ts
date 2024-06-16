@@ -3,16 +3,23 @@ import { Tween } from "@/_foundation/tween";
 import { Color } from "@/_gl/three";
 import { useThree } from "@/_gl/use-three";
 import Aurora from "./aurora";
+import RepeatNoise from "./repeat-noise";
 
 export default defineComponent({
   name: "BackCanvas",
-  setup(canvas: HTMLCanvasElement, context) {
+  setup(canvas: HTMLCanvasElement, { dpr, ...context }: { dpr: number }) {
     const { addChild } = useSlot();
-    const glContext = useThree(canvas, 1);
+    const glContext = useThree(canvas, dpr);
 
     const [auroraContext] = addChild(canvas, Aurora, {
       ...context,
       ...glContext,
+    });
+
+    addChild(canvas, RepeatNoise, {
+      ...context,
+      ...glContext,
+      dpr,
     });
 
     return {
@@ -62,6 +69,6 @@ export default defineComponent({
           })
         );
       },
-    };
+    } as const;
   },
 });

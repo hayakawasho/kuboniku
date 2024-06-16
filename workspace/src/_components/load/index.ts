@@ -49,8 +49,10 @@ export default defineComponent({
     const [scrollContext] = addChild(refs.main, PageScroll, {
       anyHover: mediaQuery.anyHover,
     });
-    const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas);
-    const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas);
+
+    const dpr = Math.min(window.devicePixelRatio, 1.5);
+    const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas, { dpr });
+    const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas, { dpr });
 
     const appProvides = {
       backCanvasContext: backCanvasContext.current,
@@ -71,11 +73,9 @@ export default defineComponent({
 
       scrollContext.current.reset();
 
+      routeMutators({ name: namespace });
       onUpdated(to, appProvides);
       cursorTypeMutators("default");
-      routeMutators({
-        name: namespace,
-      });
     };
 
     const xhr = "[data-xhr]";

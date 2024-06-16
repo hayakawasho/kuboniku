@@ -1,4 +1,5 @@
 import React from "react";
+import { PageWrapper } from "@/_components/page-wrapper.view";
 import { Header } from "@/_components/header/index.view";
 import { Link } from "@/_components/ui/link";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
@@ -6,7 +7,6 @@ import { selectRole, selectYear, selectTitle } from "@/_components/work/selector
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import { zeroPadding } from "@/_foundation/utils";
 import Styles from "./index.module.scss";
-import { PageWrapper } from "../page-wrapper/index.view";
 import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
 

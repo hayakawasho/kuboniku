@@ -2,7 +2,7 @@ import { defineComponent, useMount } from "lake";
 import { useTick } from "@/_foundation/hooks";
 import { Tween } from "@/_foundation/tween";
 import { useWindowSizeContext } from "@/_states/window-size";
-import { LogoPlane } from "./logo";
+import { LogoPlane } from "./plane";
 import type { AppContext } from "@/_foundation/type";
 
 type Props = AppContext;
@@ -10,7 +10,7 @@ type Props = AppContext;
 export default defineComponent({
   name: "Logo",
   setup(el: HTMLImageElement, context: Props) {
-    const { once, history, frontCanvasContext } = context;
+    const { once, history, backCanvasContext } = context;
 
     const logoPlane = new LogoPlane(el);
 
@@ -27,7 +27,7 @@ export default defineComponent({
 
     useMount(() => {
       logoPlane.setSize({ height: wh.value, width: ww.value });
-      frontCanvasContext.addScene(logoPlane);
+      backCanvasContext.addScene(logoPlane);
 
       if (!once && history.value === "push") {
         Tween.serial(
@@ -42,10 +42,15 @@ export default defineComponent({
       }
 
       return () => {
+        if (history.value !== "push") {
+          backCanvasContext.removeScene(logoPlane);
+          return;
+        }
+
         Tween.tween(logoPlane.uniforms.u_alpha, 0.55, "power3.out", {
           value: 0,
           onComplete: () => {
-            frontCanvasContext.removeScene(logoPlane);
+            backCanvasContext.removeScene(logoPlane);
           },
         });
       };

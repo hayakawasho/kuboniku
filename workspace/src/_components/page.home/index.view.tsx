@@ -1,8 +1,8 @@
 import { Header } from "@/_components/header/index.view";
-import { PageWrapper } from "@/_components/page-wrapper/index.view";
+import { PageWrapper } from "@/_components/page-wrapper.view";
 import { Link } from "@/_components/ui/link";
-import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import { selectYear } from "@/_components/work/selector";
+import { cloudinaryAPIConverter } from "@/_foundation/converter";
 import Styles from "./index.module.scss";
 import type { WorkMetadata } from "@/_components/work";
 import type { RouteName } from "@/_foundation/type";
@@ -30,7 +30,7 @@ const Component: React.FC<Props> = props => {
           return i === 0 ? imgSrc : separator(imgSrc);
         })}`}
       >
-        <div aria-hidden="true" className={Styles.splash} data-ref="splash" data-index={-1}>
+        <div aria-hidden="true" className={Styles.splash} data-index={-1} data-ref="splash">
           <ul className="relative w-full text-center">
             {posts.map(post => (
               <li className={Styles.splash__projectItem} key={post.id}>
@@ -43,24 +43,16 @@ const Component: React.FC<Props> = props => {
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">
             {posts.map((post, index) => (
-              <li className={Styles.project} key={post.id}>
-                <Thumbnail index={index} post={post} />
-              </li>
+              <Thumbnail index={index} post={post} />
             ))}
             {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + perPage} post={post} />
-              </li>
+              <Thumbnail aria-hidden="true" index={index + perPage} post={post} />
             ))}
             {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + perPage * 2} post={post} />
-              </li>
+              <Thumbnail aria-hidden="true" index={index + perPage * 2} post={post} />
             ))}
             {posts.map((post, index) => (
-              <li aria-hidden="true" className={Styles.project} key={post.id}>
-                <Thumbnail index={index + perPage * 3} post={post} />
-              </li>
+              <Thumbnail aria-hidden="true" index={index + perPage * 3} post={post} />
             ))}
           </ul>
         </div>
@@ -81,25 +73,27 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
   const eyecatch = post.eyecatch!;
 
   return (
-    <Link
-      className={`${Styles.project__eyecatch}`}
-      data-cursor="scale"
-      data-ref="gridItem"
-      to={`/work/${post.slug}/`}
-    >
-      <img
-        alt=""
-        className="w-full h-full invisible"
-        data-h={1050}
-        data-ref="plane"
-        data-speed={speed}
-        data-src={cloudinaryAPIConverter(eyecatch.url, "f_auto,q_auto,w_840,h_1050")}
-        data-w={840}
-        height={1050}
-        width={1050}
-      />
-      <span className="sr-only">{post.title}</span>
-    </Link>
+    <li className={Styles.project} data-ref="scrollItem" data-speed={speed}>
+      <Link
+        className={`${Styles.project__eyecatch}`}
+        data-cursor="scale"
+        data-ref="gridItem"
+        to={`/work/${post.slug}/`}
+      >
+        <img
+          alt=""
+          className="w-full h-full _invisible"
+          data-height={1050}
+          data-ref="plane"
+          data-speed={speed}
+          data-width={840}
+          height={1050}
+          src={cloudinaryAPIConverter(eyecatch.url, "f_auto,q_auto,w_840,h_1050")}
+          width={1050}
+        />
+        <span className="sr-only">{post.title}</span>
+      </Link>
+    </li>
   );
 };
 

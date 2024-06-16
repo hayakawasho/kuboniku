@@ -1,9 +1,9 @@
 import { Header } from "@/_components/header/index.view";
+import { PageWrapper } from "@/_components/page-wrapper.view";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
 import profileNameImg from "@/assets/profile.png";
 import profileNameSpImg from "@/assets/profile_sp.png";
 import Styles from "./index.module.scss";
-import { PageWrapper } from "../page-wrapper/index.view";
 import type { RouteName } from "@/_foundation/type";
 
 const Component: React.FC<{
@@ -17,10 +17,10 @@ const Component: React.FC<{
           <img
             alt=""
             className={`${Styles.logo} opacity-0 sp:hidden`}
-            data-h={profileNameImg.height}
+            data-height={profileNameImg.height}
             data-ref="profileLogo"
             data-src={profileNameImg.src}
-            data-w={profileNameImg.width}
+            data-width={profileNameImg.width}
             height={profileNameImg.height}
             width={profileNameImg.width}
           />

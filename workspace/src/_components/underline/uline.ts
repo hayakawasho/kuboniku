@@ -41,7 +41,6 @@ export class Underline extends GlObject {
 
     this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
-    this.#mesh.renderOrder = 4;
   }
 
   setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {

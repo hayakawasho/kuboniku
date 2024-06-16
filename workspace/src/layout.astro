@@ -5,7 +5,7 @@ import './_components/page.home/index.module.scss';
 import './_components/page.work/index.module.scss';
 import './_components/page.work-single/index.module.scss';
 import './_components/page.profile/index.module.scss';
-import { BREAK_POINTS } from './_foundation/mq';
+// import { BREAK_POINTS } from './_foundation/mq';
 import noiseImg from './assets/noise_1100x1100.webp';
 import noiseSpImg from './assets/noise_550x550.webp';
 import type { RouteName } from "./_foundation/type";
@@ -32,18 +32,20 @@ const idDev = process.env.NODE_ENV !== 'production';
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <slot name="prependHead" />
-    <link
-      as="image"
-      href={noiseImg.src}
-      media={BREAK_POINTS["pc"]}
-      rel="preload"
-    />
-    <link
-      as="image"
-      href={noiseSpImg.src}
-      media={BREAK_POINTS["sp"]}
-      rel="preload"
-    />
+    {
+      // <link
+      //   as="image"
+      //   href={noiseImg.src}
+      //   media={BREAK_POINTS["pc"]}
+      //   rel="preload"
+      // />
+      // <link
+      //   as="image"
+      //   href={noiseSpImg.src}
+      //   media={BREAK_POINTS["sp"]}
+      //   rel="preload"
+      // />
+    }
     {!idDev && (
       <link
         as="style"
@@ -75,14 +77,12 @@ const idDev = process.env.NODE_ENV !== 'production';
 	</head>
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-screen h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
-    <canvas aria-hidden="true" class="glCanvas" data-ref="backCanvas"></canvas>
-    <div aria-hidden="true" class="uiNoise sp:hidden" style={{ backgroundImage: `url(${noiseImg.src})`}}></div>
-    <div aria-hidden="true" class="uiNoise pc:hidden" style={{ backgroundImage: `url(${noiseSpImg.src})`}}></div>
+    <canvas aria-hidden="true" class="glCanvas" data-ref="backCanvas" data-pc={noiseImg.src} data-mob={noiseSpImg.src}></canvas>
     <div class="uiProgressbar" data-component="Scrollbar" />
     <slot />
     <canvas aria-hidden="true" class="glCanvas" data-ref="frontCanvas"></canvas>
     <div class="uiCursor" data-ref="cursor"></div>
-    { // <ClientOnly client:only="react" />
+    {//<ClientOnly client:only="react" />
     }
   </body>
 </html>
@@ -111,26 +111,6 @@ const idDev = process.env.NODE_ENV !== 'production';
 
   @media not (hover: hover) {
     display: none;
-  }
-}
-
-.uiNoise {
-  background-repeat: repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  pointer-events: none;
-
-  @media not screen and (min-width:640px) {
-    background-size: 128px 128px;
-    opacity: .8;
-  }
-
-  @media (min-width: 640px) {
-    background-size: 192px 192px;
-    opacity: .75;
   }
 }
 

@@ -1,5 +1,5 @@
 import { Header } from "@/_components/header/index.view";
-import { PageWrapper } from "@/_components/page-wrapper/index.view";
+import { PageWrapper } from "@/_components/page-wrapper.view";
 import { Link } from "@/_components/ui/link";
 import { selectTitle } from "@/_components/work/selector";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
