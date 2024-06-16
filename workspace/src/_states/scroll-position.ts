@@ -1,16 +1,18 @@
 import { useUnmount, ref, readonly } from "lake";
-import { atom } from "nanostores";
+import { atom, createStore } from "jotai";
 import { noop } from "@/_foundation/utils";
 
-const posYState = atom(0);
+const store = createStore();
+const yAtom = atom(0);
 
 export const useScrollPositionContext = (
   callback: (payload: { currentY: number; oldY: number; diff: number }) => void = noop
 ) => {
-  const currentY = ref(0);
+  const currentY = ref(store.get(yAtom));
 
-  const unbind = posYState.listen(y => {
+  const unsub = store.sub(yAtom, () => {
     const oldY = currentY.value;
+    const y = store.get(yAtom);
     const diff = y - oldY;
 
     callback({
@@ -23,10 +25,10 @@ export const useScrollPositionContext = (
   });
 
   useUnmount(() => {
-    unbind();
+    unsub();
   });
 
   return [readonly(currentY)] as const;
 };
 
-export const scrollPositionMutators = posYState.set;
+export const scrollPositionMutators = (val: number) => store.set(yAtom, val);

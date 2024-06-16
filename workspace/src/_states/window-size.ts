@@ -1,9 +1,10 @@
 import { ref, readonly, useUnmount } from "lake";
-import { map } from "nanostores";
+import { atom, createStore } from "jotai";
 import { noop } from "@/_foundation/utils";
 import type { Size } from "@/_foundation/type";
 
-const viewport = map<Size>({
+const store = createStore();
+const viewportAtom = atom<Size>({
   height: window.innerHeight,
   width: window.innerWidth,
 });
@@ -11,28 +12,28 @@ const viewport = map<Size>({
 export const useWindowSizeContext = (
   callback: (payload: { aspect: number; windowWidth: number; windowHeight: number }) => void = noop
 ) => {
-  const size = viewport.get();
-  const ww = ref(size.width);
-  const wh = ref(size.height);
+  const { width, height } = store.get(viewportAtom);
+  const ww = ref(width);
+  const wh = ref(height);
 
-  const unbind = viewport.listen(payload => {
-    const aspect = payload.width / payload.height;
+  const unsub = store.sub(viewportAtom, () => {
+    const { width: windowWidth, height: windowHeight } = store.get(viewportAtom);
+    const aspect = windowWidth / windowHeight;
+    ww.value = windowWidth;
+    wh.value = windowHeight;
 
     callback({
       aspect,
-      windowHeight: payload.height,
-      windowWidth: payload.width,
+      windowHeight,
+      windowWidth,
     });
-
-    ww.value = size.width;
-    wh.value = size.height;
   });
 
   useUnmount(() => {
-    unbind();
+    unsub();
   });
 
   return [readonly(ww), readonly(wh)] as const;
 };
 
-export const windowSizeMutators = (update: Size) => viewport.set(update);
+export const windowSizeMutators = (val: Size) => store.set(viewportAtom, val);

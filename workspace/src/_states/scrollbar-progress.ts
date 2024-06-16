@@ -1,13 +1,16 @@
 import { useUnmount } from "lake";
-import { map } from "nanostores";
+import { atom, createStore } from "jotai";
 import { noop } from "@/_foundation/utils";
 import { useScrollPositionContext } from "@/_states/scroll-position";
 import { useWindowSizeContext } from "@/_states/window-size";
 
-const progress = map<{
+type ScrollProgress = {
   now: number;
   pos: number;
-}>({
+};
+
+const store = createStore();
+const progressAtom = atom<ScrollProgress>({
   now: 0,
   pos: 0,
 });
@@ -19,21 +22,20 @@ export const useScrollbarProgress = (
   const [posY] = useScrollPositionContext();
 
   const onMutateScrollProgress = (offset: number) => {
-    progress.set({
+    store.set(progressAtom, {
       now: (posY.value / (offset - wh.value)) * 100,
       pos: (posY.value + wh.value) / offset,
     });
   };
 
-  const unbind = progress.listen(({ now, pos }) => {
+  const unsub = store.sub(progressAtom, () => {
     callback({
-      now,
-      pos,
+      ...store.get(progressAtom),
     });
   });
 
   useUnmount(() => {
-    unbind();
+    unsub();
   });
 
   return {
