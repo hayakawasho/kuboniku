@@ -1,5 +1,5 @@
 import { Header } from "@/_components/header/index.view";
-import { PageWrapper } from "@/_components/page-wrapper.view";
+import { PageLayout } from "@/_components/layout.view";
 import { Link } from "@/_components/ui/link";
 import { selectTitle } from "@/_components/work/selector";
 import { cloudinaryAPIConverter } from "@/_foundation/converter";
@@ -18,7 +18,7 @@ const Component: React.FC<Props> = props => {
   const { posts, total, namespace } = props;
 
   return (
-    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
+    <PageLayout header={<Header current={namespace} />} namespace={namespace}>
       <main className="relative z-[2]" data-component="Works">
         <div className="pt-[10rem] mb-[6rem] pc:pt-[14.4rem] pc:mb-[3rem]">
           <h1 className={Styles.heading} data-ref="h1">
@@ -66,7 +66,7 @@ const Component: React.FC<Props> = props => {
           })}
         </div>
       </main>
-    </PageWrapper>
+    </PageLayout>
   );
 };
 

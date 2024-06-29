@@ -8,7 +8,7 @@ import { useMousePos } from "@/_states/mouse";
 import { useMediaQueryContext } from "@/_states/mq";
 import { useWindowSizeContext } from "@/_states/window-size";
 import fragment from "./fragment.frag";
-import GridItem from "./item";
+// import GridItem from "./item";
 import vertex from "./vertex.vert";
 import type { AppContext } from "@/_foundation/type";
 
@@ -152,14 +152,14 @@ export default defineComponent({
       const bounds = el.getBoundingClientRect();
       maxY.value = bounds.height / 2;
 
-      addChild(refs.gridItem, GridItem, {
-        ...context,
-        diff: readonly(diffY),
-        geo,
-        mat,
-        maxY: readonly(maxY),
-        posY: readonly(posY),
-      });
+      // addChild(refs.gridItem, GridItem, {
+      //   ...context,
+      //   diff: readonly(diffY),
+      //   geo,
+      //   mat,
+      //   maxY: readonly(maxY),
+      //   posY: readonly(posY),
+      // });
     });
 
     const start = () => {

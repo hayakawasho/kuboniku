@@ -4,10 +4,10 @@ import "what-input";
 import Load from "./_components/load";
 import NavMenu from "./_components/menu";
 import Noop from "./_components/noop";
-import Home from "./_components/page.home";
-import Profile from "./_components/page.profile";
-import Works from "./_components/page.work";
-import WorkSingle from "./_components/page.work-single";
+import Home from "./_components/(page.home)";
+import Profile from "./_components/(page.profile)";
+import Works from "./_components/(page.work)";
+import WorkSingle from "./_components/(page.work-single)";
 import Scrollbar from "./_components/scrollbar.svelte";
 import Sns from "./_components/sns.svelte";
 import type { IComponent, ComponentContext } from "lake";
@@ -34,7 +34,7 @@ import type { IComponent, ComponentContext } from "lake";
           const mount = component(table[`${name}`]);
           acc.push(mount(el, props));
         } catch (e) {
-          console.error(e);
+          console.error(e, { el, name });
         }
         return acc;
       },

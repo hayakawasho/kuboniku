@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "@/_components/header/index.view";
-import { PageWrapper } from "@/_components/page-wrapper.view";
+import { PageLayout } from "@/_components/layout.view";
 import { Link } from "@/_components/ui/link";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
 import { selectRole, selectYear, selectTitle } from "@/_components/work/selector";
@@ -21,7 +21,7 @@ const Component: React.FC<Props> = props => {
   const { post, nextPost, projectNumber, namespace } = props;
 
   return (
-    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
+    <PageLayout header={<Header current={namespace} />} namespace={namespace}>
       <main className="" data-color={post.theme} data-component="WorkSingle">
         <div className={Styles.kv} data-ref="kv">
           <div className={Styles.kv__cont}>
@@ -131,7 +131,7 @@ const Component: React.FC<Props> = props => {
           )}
         </div>
       </main>
-    </PageWrapper>
+    </PageLayout>
   );
 };
 

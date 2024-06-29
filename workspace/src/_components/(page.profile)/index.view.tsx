@@ -1,5 +1,5 @@
 import { Header } from "@/_components/header/index.view";
-import { PageWrapper } from "@/_components/page-wrapper.view";
+import { PageLayout } from "@/_components/layout.view";
 import { ResponsiveImage } from "@/_components/ui/responsive-image";
 import profileNameImg from "@/assets/profile.png";
 import profileNameSpImg from "@/assets/profile_sp.png";
@@ -10,7 +10,7 @@ const Component: React.FC<{
   namespace: RouteName;
 }> = ({ namespace }) => {
   return (
-    <PageWrapper header={<Header current={namespace} />} namespace={namespace}>
+    <PageLayout header={<Header current={namespace} />} namespace={namespace}>
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
         <div className="relative z-[2]">
@@ -51,7 +51,7 @@ const Component: React.FC<{
           </div>
         </div>
       </main>
-    </PageWrapper>
+    </PageLayout>
   );
 };
 

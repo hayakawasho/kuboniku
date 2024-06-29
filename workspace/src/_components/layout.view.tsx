@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 
-export const PageWrapper: FC<{
+export const PageLayout: FC<{
   namespace: string;
   header: ReactNode;
   children: ReactNode;

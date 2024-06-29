@@ -4,7 +4,7 @@ import { Tween } from "@/_foundation/tween";
 import { cursorTypeMutators } from "@/_states/cusor";
 import Pool from "@/_states/pool";
 import { useWindowSizeContext } from "@/_states/window-size";
-import Grid from "./grid";
+// import Grid from "./grid";
 import Splashscreen from "./splashscreen/splashscreen";
 import type { AppContext } from "@/_foundation/type";
 
@@ -61,12 +61,12 @@ export default defineComponent({
           });
 
           const done = async () => {
-            const [gridContext] = addChild(refs.grid, Grid, context);
-            await splashContext.current.hideStart();
-            gridContext.current.start();
-            await splashContext.current.hideEnd();
-            removeChild([splashContext]);
-            cursorTypeMutators("default");
+            // const [gridContext] = addChild(refs.grid, Grid, context);
+            // await splashContext.current.hideStart();
+            // gridContext.current.start();
+            // await splashContext.current.hideEnd();
+            // removeChild([splashContext]);
+            // cursorTypeMutators("default");
           };
 
           await splashContext.current.start();
@@ -77,8 +77,8 @@ export default defineComponent({
               opacity: 0,
             }),
             Tween.immediate(() => {
-              const [gridContext] = addChild(refs.grid, Grid, context);
-              gridContext.current.start();
+              // const [gridContext] = addChild(refs.grid, Grid, context);
+              // gridContext.current.start();
             }),
             Tween.wait(0.2),
             Tween.tween(el, 0.55, "power3.out", {
@@ -86,7 +86,7 @@ export default defineComponent({
             })
           );
         } else {
-          addChild(refs.grid, Grid, context);
+          // addChild(refs.grid, Grid, context);
         }
       })();
 

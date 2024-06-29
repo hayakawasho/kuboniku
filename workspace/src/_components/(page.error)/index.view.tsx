@@ -1,11 +1,11 @@
 import Styles from "./index.module.scss";
-import { PageWrapper } from "../page-wrapper.view";
+import { PageLayout } from "../layout.view";
 
 const Component: React.FC<{
   message: string;
 }> = ({ message }) => {
   return (
-    <PageWrapper header={<></>} namespace={"error"}>
+    <PageLayout header={<></>} namespace={"error"}>
       <main className="flex items-center justify-center h-svh">
         <div className="text-center">
           <h1 className={Styles.heading}>{message}</h1>
@@ -18,7 +18,7 @@ const Component: React.FC<{
           </a>
         </div>
       </main>
-    </PageWrapper>
+    </PageLayout>
   );
 };
 
