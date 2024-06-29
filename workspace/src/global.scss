@@ -8,6 +8,12 @@
   --grid-gutter: 1.6rem;
 
   --vh: 1vh;
+  --100vw: 100vw;
+
+  --window-width: tan(atan2(var(--100vw), 1px));
+  --px: calc(1px * max(1280, var(--window-width)) / 1280);
+  --rem: calc(1rem * max(1280, var(--window-width)) / 1280);
+  --_px: calc(1px * var(--window-width) / 1280);
 
   --gap: calc(30 / 750 * 100vw);
   --aspect: 100%;
@@ -25,6 +31,12 @@
   }
 }
 
+@property --100vw {
+  syntax: "<length>";
+  initial-value: 0px;
+  inherits: false;
+}
+
 *,
 *::before,
 *::after {
@@ -35,34 +47,35 @@ html {
   width: 100%;
   min-height: calc(var(--vh) * 100);
   min-height: 100svh;
-  font-size: 10px;
-  -webkit-text-size-adjust: 100%;
+  font-size: calc(10 / 16 * 100%);
   text-size-adjust: 100%;
-  -webkit-overflow-scrolling: touch;
-  overflow-y: scroll;
 
   @media screen and (max-width: 1080px) {
-    font-size: 9px;
+    font-size: calc(9 / 16 * 100%);
   }
 
   @media screen and (max-width: 960px) {
-    font-size: 8px;
+    font-size: calc(8 / 16 * 100%);
   }
 
   @media screen and (max-width: 854px) {
-    font-size: 7px;
+    font-size: calc(7 / 16 * 100%);
   }
 
   @media screen and (max-width: 767px) {
-    font-size: 6px;
+    font-size: calc(6 / 16 * 100%);
   }
 
   @media screen and (max-width: 639px) {
-    font-size: 10px;
+    font-size: calc(10 / 16 * 100%);
   }
 
   @media (min-width: 1680px) {
-    font-size: 12px;
+    font-size: calc(12 / 16 * 100%);
+  }
+
+  @media (any-hover: hover) {
+    overflow-y: scroll;
   }
 }
 
@@ -141,17 +154,27 @@ summary::-webkit-details-marker {
   cursor: pointer;
 }
 
-:focus:not(:focus-visible) {
+:where(:focus-visible) {
   outline: none;
-}
-
-[data-whatinput="touch"] :focus {
-  outline: none;
+  box-shadow: none;
+  outline-offset: 0;
 }
 
 :focus {
   outline-color: var(--color-theme);
 }
+
+[data-whatinput="keyboard"] *:focus {
+  outline: 2px solid Canvas;
+}
+
+// :focus:not(:focus-visible) {
+//   outline: none;
+// }
+//
+// [data-whatinput="touch"] :focus {
+//   outline: none;
+// }
 
 :any-link {
   //

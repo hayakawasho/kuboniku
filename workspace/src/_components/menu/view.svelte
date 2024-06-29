@@ -21,16 +21,6 @@
     currentRouteName = name;
   });
 
-  const linkProps = (to: string) => {
-    return {
-      ["hx-get"]: to,
-      ["hx-push-url"]: true,
-      ["hx-select"]: "[data-xhr]",
-      ["hx-swap"]: "swap:520ms",
-      ["hx-target"]: "#main",
-    };
-  };
-
   const { addChild } = useSlot();
 
   type Refs = {
@@ -44,54 +34,45 @@
       addChild(refs.menuLink, MenuLink, context);
     }
   });
+
+  const linkProps = (to: string) => {
+    return {
+      ["hx-get"]: to,
+      ["hx-push-url"]: true,
+      ["hx-select"]: "[data-xhr]",
+      ["hx-swap"]: "swap:520ms",
+      ["hx-target"]: "#main",
+    };
+  };
+
+  const menuItems = [
+    ['/', 'home', 'Top'],
+    ['/profile/', 'profile', 'Profile'],
+    ['/work/', 'work', 'Work'],
+  ]
 </script>
 
 {#if device === "sp"}
   <dialog class="menuDialog | js-menuDialog">
     <nav>
       <ul>
-        <li>
-          <a
-            {...linkProps("/")}
-            aria-current={currentRouteName === "home" && "page"}
-            class="menuLink"
-            data-astro-prefetch="tap"
-            href="/"
-            on:click={closeMenu}
-          >
-            <span class="inline-block overflow-hidden leading-[1]">
-              <span class="menuLink__label | js-menuLabel">Top</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a
-            {...linkProps("/profile/")}
-            aria-current={currentRouteName === "profile" && "page"}
-            class="menuLink"
-            data-astro-prefetch="tap"
-            href="/profile/"
-            on:click={closeMenu}
-          >
-            <span class="inline-block overflow-hidden leading-[1]">
-              <span class="menuLink__label | js-menuLabel">Profile</span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a
-            {...linkProps("/work/")}
-            aria-current={currentRouteName === "work" && "page"}
-            class="menuLink"
-            data-astro-prefetch="tap"
-            href="/work/"
-            on:click={closeMenu}
-          >
-            <span class="inline-block overflow-hidden leading-[1]">
-              <span class="menuLink__label | js-menuLabel">Work</span>
-            </span>
-          </a>
-        </li>
+        {#each menuItems as item}
+          <li>
+            <a
+              {...linkProps(item[0])}
+              aria-current={currentRouteName === item[1] && "page"}
+              class="menuLink"
+              data-astro-prefetch="tap"
+              href={item[0]}
+              tabindex={currentRouteName === item[1] ? -1 : undefined}
+              on:click={closeMenu}
+            >
+              <span class="inline-block overflow-hidden leading-[1]">
+                <span class="menuLink__label | js-menuLabel">{item[2]}</span>
+              </span>
+            </a>
+          </li>
+        {/each}
         <li>
           <a href="mailto:k.bo.n10.05@gmail.com" class="menuLink">
             <span class="inline-block overflow-hidden leading-[1]">
@@ -105,48 +86,23 @@
 {:else}
   <nav>
     <ul>
-      <li>
-        <a
-          {...linkProps("/")}
-          aria-current={currentRouteName === "home" && "page"}
-          class="menuLink"
-          data-astro-prefetch="hover"
-          data-cursor="scale"
-          data-ref="menuLink"
-          href="/"
-        >
-          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
-          Top
-        </a>
-      </li>
-      <li>
-        <a
-          {...linkProps("/profile/")}
-          aria-current={currentRouteName === "profile" && "page"}
-          class="menuLink"
-          data-astro-prefetch="hover"
-          data-cursor="scale"
-          data-ref="menuLink"
-          href="/profile/"
-        >
-          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
-          Profile
-        </a>
-      </li>
-      <li>
-        <a
-          {...linkProps("/work/")}
-          aria-current={currentRouteName === "work" && "page"}
-          class="menuLink"
-          data-astro-prefetch="hover"
-          data-cursor="scale"
-          data-ref="menuLink"
-          href="/work/"
-        >
-          <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
-          Work
-        </a>
-      </li>
+      {#each menuItems as item}
+        <li>
+          <a
+            {...linkProps(item[0])}
+            aria-current={currentRouteName === item[1] && "page"}
+            class="menuLink"
+            data-astro-prefetch="hover"
+            data-cursor="scale"
+            data-ref="menuLink"
+            tabindex={currentRouteName === item[1] ? -1 : undefined}
+            href={item[0]}
+          >
+            <span aria-hidden="true" class="glUnderline" data-ref="uline"></span>
+            {item[2]}
+          </a>
+        </li>
+      {/each}
       <li>
         <a
           href="mailto:k.bo.n10.05@gmail.com"

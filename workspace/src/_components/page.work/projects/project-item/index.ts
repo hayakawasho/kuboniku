@@ -24,6 +24,9 @@ export default defineComponent({
   setup(el: HTMLElement, context: Props) {
     const { once, history, geo, mat, scrollContext, backCanvasContext } = context;
 
+    const themeColor = el.dataset.color!;
+    const { refs } = useDomRef<Refs>("thumb");
+
     const state = {
       resizing: false,
       hovering: false,
@@ -31,11 +34,8 @@ export default defineComponent({
     };
 
     const cache = {
-      posY: scrollContext.scrollTop(),
+      scrollY: scrollContext.scrollTop(),
     };
-
-    const themeColor = el.dataset.color!;
-    const { refs } = useDomRef<Refs>("thumb");
 
     const imgPlane = new ImgPlane(refs.thumb, { geo, mat });
 
@@ -48,11 +48,12 @@ export default defineComponent({
     });
 
     const [ww, wh] = useWindowSizeContext(({ windowHeight, windowWidth }) => {
-      cache.posY = scrollContext.scrollTop();
+      cache.scrollY = scrollContext.scrollTop();
+
       imgPlane.setSize({
         height: windowHeight,
         width: windowWidth,
-        y: cache.posY,
+        y: cache.scrollY,
       });
     });
 
@@ -101,12 +102,12 @@ export default defineComponent({
 
       const { left, top, width, height } = imgPlane.cache;
       const x = -left;
-      const y = -(top + cache.posY);
+      const y = -(top + cache.scrollY);
       const mouseX = norm(x + payload.x, 0, width);
       const mouseY = -norm(y + payload.y, 0, height) + 1;
 
       console.log({
-        posY: cache.posY,
+        posY: cache.scrollY,
         top,
         y,
         mouseY,
@@ -119,7 +120,7 @@ export default defineComponent({
       imgPlane.setSize({
         height: wh.value,
         width: ww.value,
-        y: scrollContext.scrollTop(),
+        y: cache.scrollY,
       });
       backCanvasContext.addScene(imgPlane);
 

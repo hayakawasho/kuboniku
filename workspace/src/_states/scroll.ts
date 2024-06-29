@@ -1,5 +1,5 @@
-import { useUnmount, ref, readonly } from "lake";
 import { atom, createStore } from "jotai";
+import { useUnmount, ref, readonly } from "lake";
 
 type ScrollState = {
   scrolling: boolean;

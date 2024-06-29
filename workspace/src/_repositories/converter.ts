@@ -12,6 +12,12 @@ const convertGraphqlRawMediaToImg = (raw: any): Image => {
   };
 };
 
+const nullImgMetadata = {
+  height: undefined,
+  url: undefined,
+  width: undefined,
+};
+
 export const convertRawPost2Work = (rawPost: any) => {
   return {
     category: rawPost.worksAcf.category.nodes.map((j: any) => j.name),
@@ -20,12 +26,9 @@ export const convertRawPost2Work = (rawPost: any) => {
     id: rawPost.id,
     mv: {
       pc: convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatch.node),
-      sp: (rawPost.worksAcf.eyecatchMobile &&
-        convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)) ?? {
-        height: undefined,
-        url: undefined,
-        width: undefined,
-      },
+      sp: rawPost.worksAcf.eyecatchMobile
+        ? convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)
+        : nullImgMetadata,
     },
     role: rawPost.worksAcf.role.nodes.map((j: any) => j.name),
     screenshots: rawPost.worksAcf.gallery?.nodes.map(convertGraphqlRawMediaToImg),
@@ -44,12 +47,9 @@ export const convertRawPost2NextWork = (rawPost: any) => {
     id: rawPost.id,
     mv: {
       pc: convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatch.node),
-      sp: (rawPost.worksAcf.eyecatchMobile &&
-        convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)) ?? {
-        height: undefined,
-        url: undefined,
-        width: undefined,
-      },
+      sp: rawPost.worksAcf.eyecatchMobile
+        ? convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)
+        : nullImgMetadata,
     },
     slug: rawPost.slug,
     title: rawPost.title,

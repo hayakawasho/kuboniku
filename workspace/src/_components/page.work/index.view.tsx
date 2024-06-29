@@ -41,10 +41,13 @@ const Component: React.FC<Props> = props => {
                   <div className={Styles.entry__g}>
                     <div aria-hidden="true" className={Styles.poster}></div>
                     <div
+                      aria-label=""
                       className={Styles.thumb}
+                      data-height={item.mv["pc"].height}
                       data-ref="thumb"
                       data-src={cloudinaryAPIConverter(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
                       data-visible="false"
+                      data-width={item.mv["pc"].width}
                       role="img"
                     ></div>
                     <div className={Styles.entry__hgroup}>

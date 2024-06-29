@@ -1,5 +1,5 @@
-import { useUnmount } from "lake";
 import { atom, createStore } from "jotai";
+import { useUnmount } from "lake";
 import { noop } from "@/_foundation/utils";
 
 export type CursorType = "default" | "hide" | "loading" | "scale" | "drag" | "drag.scale";

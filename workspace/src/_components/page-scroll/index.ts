@@ -10,7 +10,7 @@ import PageScroll from "./page-scroll";
 }
 
 export default defineComponent({
-  name: "ScrollController",
+  name: "PageScrollParent",
   setup(content: HTMLElement, context: { anyHover: boolean }) {
     const { addChild, removeChild: _ } = useSlot();
 

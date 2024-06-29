@@ -43,16 +43,16 @@ const Component: React.FC<Props> = props => {
         <div className={Styles.projectsWrap}>
           <ul className={Styles.projects} data-ref="grid">
             {posts.map((post, index) => (
-              <Thumbnail index={index} post={post} />
+              <Thumbnail index={index} post={post} key={post.id} />
             ))}
             {posts.map((post, index) => (
-              <Thumbnail aria-hidden="true" index={index + perPage} post={post} />
+              <Thumbnail aria-hidden="true" index={index + perPage} post={post} key={post.id} />
             ))}
             {posts.map((post, index) => (
-              <Thumbnail aria-hidden="true" index={index + perPage * 2} post={post} />
+              <Thumbnail aria-hidden="true" index={index + perPage * 2} post={post} key={post.id} />
             ))}
             {posts.map((post, index) => (
-              <Thumbnail aria-hidden="true" index={index + perPage * 3} post={post} />
+              <Thumbnail aria-hidden="true" index={index + perPage * 3} post={post} key={post.id} />
             ))}
           </ul>
         </div>
