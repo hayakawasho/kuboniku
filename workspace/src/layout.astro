@@ -30,6 +30,7 @@ const idDev = process.env.NODE_ENV !== 'production';
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
+    <meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <slot name="prependHead" />
     {
@@ -55,7 +56,6 @@ const idDev = process.env.NODE_ENV !== 'production';
       />
     )}
     <link rel="preload" href="https://code.createjs.com/1.0.0/preloadjs.min.js" as="script">
-    <meta charset="UTF-8" />
     <meta name="format-detection" content="telephone=no" />
     <title>{title}</title>
     <meta content={DESCRIPTION} name="description" />

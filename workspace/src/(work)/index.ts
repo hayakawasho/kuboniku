@@ -10,10 +10,10 @@ export type WorkMetadata = {
   slug: string;
   createAt: Date;
   category: string;
-  eyecatch?: Image;
+  eyecatch?: Partial<Image>;
   mv: {
     pc: Image;
-    sp: Image;
+    sp: Partial<Image>;
   };
   theme: string;
   description?: string;

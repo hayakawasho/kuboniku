@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-// import parse from "html-react-parser";
 import type { WorkMetadata } from ".";
 
 export const selectYear = (data: WorkMetadata) => {
