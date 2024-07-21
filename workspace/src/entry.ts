@@ -1,15 +1,14 @@
-import "./global.scss";
 import { create, withSvelte } from "lake";
 import "what-input";
-import Load from "./_components/load";
-import NavMenu from "./_components/menu";
-import Noop from "./_components/noop";
-import Home from "./_components/page.home";
-import Profile from "./_components/page.profile";
-import Works from "./_components/page.work";
-import WorkSingle from "./_components/page.work-single";
-import Scrollbar from "./_components/scrollbar.svelte";
-import Sns from "./_components/sns.svelte";
+import Home from "./_components/page/home";
+import Profile from "./_components/page/profile";
+import Works from "./_components/page/work";
+import WorkSingle from "./_components/page/work-single";
+import Load from "./_components/ui/load";
+import NavMenu from "./_components/ui/menu";
+import Noop from "./_components/ui/noop";
+import Scrollbar from "./_components/ui/scrollbar.svelte";
+import Sns from "./_components/ui/sns.svelte";
 import type { IComponent, ComponentContext } from "lake";
 
 (() => {
@@ -27,19 +26,16 @@ import type { IComponent, ComponentContext } from "lake";
   } as const;
 
   const mountComponents = (scope: HTMLElement, props: Record<string, unknown>) => {
-    return [...scope.querySelectorAll<HTMLElement>("[data-component]")].reduce<ComponentContext[]>(
-      (acc, el) => {
-        const name = el.dataset.component || "Noop";
-        try {
-          const mount = component(table[`${name}`]);
-          acc.push(mount(el, props));
-        } catch (e) {
-          console.error(e, { el, name });
-        }
-        return acc;
-      },
-      []
-    );
+    return [...scope.querySelectorAll<HTMLElement>("[data-component]")].reduce<ComponentContext[]>((acc, el) => {
+      const name = el.dataset.component || "Noop";
+      try {
+        const mount = component(table[`${name}`]);
+        acc.push(mount(el, props));
+      } catch (e) {
+        console.error(e, { el, name });
+      }
+      return acc;
+    }, []);
   };
 
   const html = document.documentElement;

@@ -1,13 +1,9 @@
 import { useMount } from "lake";
-import { debounce, noop } from "@/_foundation/utils";
+import { debounce, noop } from "~/_foundation/utils";
 
 export const useElementSize = <T extends Element>(
   targetOrTargets: T | T[],
-  callback: (payload: {
-    aspect: number;
-    width: number;
-    height: number;
-  }) => void = noop,
+  callback: (payload: { aspect: number; width: number; height: number }) => void = noop,
   debounceTime = 200
 ) => {
   const ro = new ResizeObserver(
@@ -25,7 +21,7 @@ export const useElementSize = <T extends Element>(
 
   const watch = (targetOrTargets: T | T[]) => {
     if (Array.isArray(targetOrTargets)) {
-      targetOrTargets.forEach((el) => ro.observe(el));
+      targetOrTargets.forEach(el => ro.observe(el));
     } else {
       ro.observe(targetOrTargets);
     }

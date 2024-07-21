@@ -1,7 +1,7 @@
 import { atom, createStore } from "jotai";
 import { ref, readonly, useUnmount } from "lake";
-import { noop } from "@/_foundation/utils";
-import type { Size } from "@/_foundation/type";
+import { noop } from "~/_foundation/utils";
+import type { Size } from "~/_foundation/types";
 
 const store = createStore();
 const viewportAtom = atom<Size>({
@@ -9,7 +9,7 @@ const viewportAtom = atom<Size>({
   width: window.innerWidth,
 });
 
-export const useWindowSizeContext = (
+export const useWindowSizeState = (
   callback: (payload: { aspect: number; windowWidth: number; windowHeight: number }) => void = noop
 ) => {
   const { width, height } = store.get(viewportAtom);

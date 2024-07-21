@@ -1,7 +1,7 @@
 import { getGPUTier } from "detect-gpu";
 import { useMount } from "lake";
-import { useTick } from "@/_foundation/hooks";
-import { useWindowSizeContext } from "@/_states/window-size";
+import { useTick } from "~/_foundation/hooks";
+import { useWindowSizeState } from "~/_states/window-size";
 import { WebGLRenderer, PerspectiveCamera, Scene } from "./three";
 import type { Object3D } from "./three";
 
@@ -37,7 +37,7 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
 
   const camera = new PerspectiveCamera(FOV, width / height, 0.1, 3000);
 
-  const [_, wh] = useWindowSizeContext(({ windowWidth, windowHeight }) => {
+  const [_, wh] = useWindowSizeState(({ windowWidth, windowHeight }) => {
     renderer.setSize(windowWidth, windowHeight);
     camera.aspect = windowWidth / windowHeight;
     camera.position.z = calcCamDistance(windowHeight);

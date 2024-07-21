@@ -1,6 +1,6 @@
 import { atom, createStore } from "jotai";
 import { useUnmount, ref, readonly } from "lake";
-import type { RouteName } from "@/_foundation/type";
+import type { RouteName } from "~/_foundation/types";
 
 type Route = {
   name: RouteName;
@@ -11,7 +11,7 @@ const routeAtom = atom<Route>({
   name: "home",
 });
 
-export const useRouteContext = (callback: (payload: { name: RouteName }) => void) => {
+export const useRouteState = (callback: (payload: { name: RouteName }) => void) => {
   const route = ref<Route>(store.get(routeAtom));
 
   const unsub = store.sub(routeAtom, () => {

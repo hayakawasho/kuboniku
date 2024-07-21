@@ -1,7 +1,7 @@
 ---
-import Home from '../_components/page.home/index.view';
-import { createTopElementsRepository } from '../_repositories';
-import Layout from '../layout.astro';
+import Home from "../_components/page/home/index.view";
+import { createTopElementsRepository } from "../_repositories";
+import Layout from "../layout.astro";
 
 const repo = createTopElementsRepository();
 const result = await repo.find();

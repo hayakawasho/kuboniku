@@ -1,25 +1,19 @@
-import { useMount } from "lake";
+import { useMount, ref } from "lake";
 import { clamp } from "remeda";
-import { useTick } from "@/_foundation/hooks";
-import { lerp } from "@/_foundation/math";
-import { useMediaQueryContext } from "@/_states/mq";
-import { useScrollStateContext } from "@/_states/scroll";
-import { useScrollPositionContext } from "@/_states/scroll-position";
-import { useWindowSizeContext } from "@/_states/window-size";
+import { useTick } from "~/_foundation/hooks";
+import { lerp } from "~/_foundation/math";
+import { useMediaQueryState } from "~/_states/mq";
+import { useScrollState } from "~/_states/scroll";
+import { useScrollPositionState } from "~/_states/scroll-position";
+import { useWindowSizeState } from "~/_states/window-size";
 
-export const useScrollSkew = (
-  callback: (payload: { value: number }) => void,
-  { initialPos = 0 }: { initialPos: number }
-) => {
-  const { device } = useMediaQueryContext();
-  const [ww] = useWindowSizeContext();
-  const [posY] = useScrollPositionContext();
-  const { scrolling } = useScrollStateContext();
-
-  const state = {
-    active: false,
-    lastY: initialPos,
-  };
+export const useScrollSkew = (initialPos: number, callback: (payload: { value: number }) => void) => {
+  const { device } = useMediaQueryState();
+  const [ww] = useWindowSizeState();
+  const [posY] = useScrollPositionState();
+  const { scrolling } = useScrollState();
+  const isActive = ref(false);
+  const lastY = ref(initialPos);
 
   const ease = {
     pc: 0.1,
@@ -32,18 +26,18 @@ export const useScrollSkew = (
   }[device];
 
   useTick(({ deltaRatio }) => {
-    if (!state.active || !scrolling.value) {
+    if (!isActive.value || !scrolling.value) {
       return;
     }
 
     const currentY = posY.value;
-    state.lastY = lerp(state.lastY, currentY, ease * deltaRatio);
+    lastY.value = lerp(lastY.value, currentY, ease * deltaRatio);
 
-    if (state.lastY < 0.1) {
-      state.lastY = 0;
+    if (lastY.value < 0.1) {
+      lastY.value = 0;
     }
 
-    const diff = currentY - state.lastY;
+    const diff = currentY - lastY.value;
     const skewY = f * (diff / ww.value);
     const ty = clamp(skewY, {
       max: 7,
@@ -56,10 +50,10 @@ export const useScrollSkew = (
   });
 
   useMount(() => {
-    state.active = true;
+    isActive.value = true;
 
     return () => {
-      state.active = false;
+      isActive.value = false;
     };
   });
 };

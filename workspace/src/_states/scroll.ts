@@ -10,7 +10,7 @@ const scrollAtom = atom<ScrollState>({
   scrolling: false,
 });
 
-export const useScrollStateContext = () => {
+export const useScrollState = () => {
   const scrolling = ref(false);
 
   const unsub = store.sub(scrollAtom, () => {

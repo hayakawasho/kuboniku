@@ -1,11 +1,11 @@
 import { atom, createStore } from "jotai";
 import { useUnmount, ref, readonly } from "lake";
-import { noop } from "@/_foundation/utils";
+import { noop } from "~/_foundation/utils";
 
 const store = createStore();
 const yAtom = atom(0);
 
-export const useScrollPositionContext = (
+export const useScrollPositionState = (
   callback: (payload: { currentY: number; oldY: number; diff: number }) => void = noop
 ) => {
   const currentY = ref(store.get(yAtom));

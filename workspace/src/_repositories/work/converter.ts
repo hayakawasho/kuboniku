@@ -1,4 +1,4 @@
-import { convertGraphqlRawMediaToImg, nullImgMetadata } from "../converter";
+import { convertGraphqlRawMediaToImg, makeImgUndefinedSeeder } from "../converter";
 
 export const convertRawPost2Work = (rawPost: any) => {
   return {
@@ -10,7 +10,7 @@ export const convertRawPost2Work = (rawPost: any) => {
       pc: convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatch.node),
       sp: rawPost.worksAcf.eyecatchMobile
         ? convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)
-        : nullImgMetadata,
+        : makeImgUndefinedSeeder(),
     },
     role: rawPost.worksAcf.role.nodes.map((j: any) => j.name),
     screenshots: rawPost.worksAcf.gallery?.nodes.map(convertGraphqlRawMediaToImg),
@@ -31,7 +31,7 @@ export const convertRawPost2NextWork = (rawPost: any) => {
       pc: convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatch.node),
       sp: rawPost.worksAcf.eyecatchMobile
         ? convertGraphqlRawMediaToImg(rawPost.worksAcf.eyecatchMobile.node)
-        : nullImgMetadata,
+        : makeImgUndefinedSeeder(),
     },
     slug: rawPost.slug,
     title: rawPost.title,

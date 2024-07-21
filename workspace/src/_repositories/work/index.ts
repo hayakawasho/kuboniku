@@ -1,10 +1,6 @@
 import axios, { type RequestHeaders } from "redaxios";
-import {
-  convertRawPost2Work,
-  convertRawPost2NextWork,
-  convertRawPost2WorkForIndex,
-} from "./converter";
-import type { WorkMetadata } from "@/(work)";
+import { convertRawPost2Work, convertRawPost2NextWork, convertRawPost2WorkForIndex } from "./converter";
+import type { WorkMetadata } from "~/(work)/model";
 
 const getItemQuery = (id: string, asPreview = false) => {
   return `query {

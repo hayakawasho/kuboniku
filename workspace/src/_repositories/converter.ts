@@ -1,8 +1,4 @@
-type Image = {
-  width: number;
-  height: number;
-  url: string;
-};
+import type { Image } from "~/_foundation/models/image";
 
 export const convertGraphqlRawMediaToImg = (raw: any): Image => {
   return {
@@ -12,8 +8,10 @@ export const convertGraphqlRawMediaToImg = (raw: any): Image => {
   };
 };
 
-export const nullImgMetadata = {
-  height: undefined,
-  url: undefined,
-  width: undefined,
+export const makeImgUndefinedSeeder = () => {
+  return {
+    height: undefined,
+    url: undefined,
+    width: undefined,
+  };
 };

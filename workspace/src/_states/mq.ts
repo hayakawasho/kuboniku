@@ -1,6 +1,6 @@
 import { atom, createStore } from "jotai";
 import { useUnmount, ref, readonly } from "lake";
-import { noop } from "@/_foundation/utils";
+import { noop } from "~/_foundation/utils";
 
 type MediaQuery = {
   device: "pc" | "sp";
@@ -13,7 +13,7 @@ const mqAtom = atom<MediaQuery>({
   device: "pc",
 });
 
-export const useMediaQueryContext = (callback: (payload: MediaQuery) => void = noop) => {
+export const useMediaQueryState = (callback: (payload: MediaQuery) => void = noop) => {
   const mq = ref(store.get(mqAtom));
 
   const unsub = store.sub(mqAtom, () => {

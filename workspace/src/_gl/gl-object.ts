@@ -1,5 +1,5 @@
 import { Object3D } from "./three";
-import type { Point } from "@/_foundation/type";
+import type { Point } from "~/_foundation/types";
 
 export class GlObject extends Object3D {
   #pos: Point;
@@ -43,16 +43,7 @@ export class GlObject extends Object3D {
     };
   };
 
-  setSize({
-    x = 0,
-    y = 0,
-    ...newValues
-  }: {
-    x?: number;
-    y?: number;
-    width: number;
-    height: number;
-  }) {
+  setSize({ x = 0, y = 0, ...newValues }: { x?: number; y?: number; width: number; height: number }) {
     const bounds = this.el.getBoundingClientRect();
     const { left, top, width, height } = bounds;
     this.updateCache({ height, left, top, width, x, y });

@@ -1,4 +1,4 @@
-import { Texture, LinearFilter } from "@/_gl/three";
+import { Texture, LinearFilter } from "~/_gl/three";
 
 export const createTexture = () => {
   const tex = new Texture();
