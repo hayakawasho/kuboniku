@@ -3,7 +3,7 @@ import { Header } from "~/_components/ui/header";
 import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
 import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
-import Styles from "./index.module.scss";
+import Styles from "./style.module.scss";
 import type { WorkMetadata } from "~/(work)/model";
 import type { RouteName } from "~/_foundation/types";
 
