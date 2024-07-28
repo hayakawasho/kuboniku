@@ -1,6 +1,6 @@
-import { selectWorkTitle } from "~/(work)/model/selector";
-import { Header } from "~/_components/ui/header/index.view";
-import { PageLayout } from "~/_components/ui/layout.view";
+import { mapWorkTitle } from "~/(work)/model/mapper";
+import { Header } from "~/_components/ui/header";
+import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
 import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
 import { zeroPadding } from "~/_foundation/utils";
@@ -56,7 +56,7 @@ const Component: React.FC<Props> = props => {
                         <span className={`${Styles.num__txt} ml-[.8em]`}>Project</span>
                       </p>
                       <h2 className={Styles.entry__heading} data-ref="title">
-                        {selectWorkTitle(item)}
+                        {mapWorkTitle(item)}
                       </h2>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
-import { PageLayout } from "~/_components/ui/layout.view";
-import Styles from "./index.module.scss";
+import { PageLayout } from "~/_components/ui/layout";
+import Styles from "./error.module.scss";
 
-const Component: React.FC<{
+export const Component: React.FC<{
   message: string;
 }> = ({ message }) => {
   return (

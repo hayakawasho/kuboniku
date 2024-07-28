@@ -1,9 +1,9 @@
 ---
-import WorkDetail from "../../_components/page/work-single/index.view";
+import WorkSingle from "../../_components/page/work-single/view";
 import { BREAK_POINTS } from "../../_foundation/const/mq";
 import { formatCloudinaryAPI } from "../../_foundation/cloudinary"
 import { createWorkRepository } from "../../_repositories";
-import Layout from "../../layout.astro";
+import DefalutLayout from "../../layout.astro";
 
 const { slug } = Astro.params;
 const { cookies } = Astro
@@ -28,7 +28,7 @@ if (!result) {
 export const prerender = false;
 ---
 
-<Layout title={result.work.title} permalink={`/work/${result.work.slug}/`} namespace="work-single">
+<DefalutLayout title={result.work.title} permalink={`/work/${result.work.slug}/`} namespace="work-single">
   <link
     slot="prependHead"
     as="image"
@@ -37,5 +37,5 @@ export const prerender = false;
     media={BREAK_POINTS["pc"]}
     rel="preload"
   />
-  <WorkDetail post={result.work} nextPost={result.work.next} projectNumber={result.work.index} namespace="work-single" />
-</Layout>
+  <WorkSingle post={result.work} nextPost={result.work.next} projectNumber={result.work.index} namespace="work-single" />
+</DefalutLayout>

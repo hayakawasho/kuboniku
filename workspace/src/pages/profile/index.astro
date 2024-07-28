@@ -1,12 +1,12 @@
 ---
-import Profile from "../../_components/page/profile/index.view";
+import Profile from "../../_components/page/profile/view";
 import { BREAK_POINTS } from "../../_foundation/const/mq";
 import profileNameImg from "../../assets/profile.png";
 import profileNameSpImg from "../../assets/profile_sp.png";
-import Layout from "../../layout.astro";
+import DefalutLayout from "../../layout.astro";
 ---
 
-<Layout title="Profile" permalink="/profile/" namespace="profile">
+<DefalutLayout title="Profile" permalink="/profile/" namespace="profile">
   <link
     slot="prependHead"
     as="image"
@@ -22,4 +22,4 @@ import Layout from "../../layout.astro";
     rel="preload"
   />
   <Profile namespace="profile" />
-</Layout>
+</DefalutLayout>

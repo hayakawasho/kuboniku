@@ -1,7 +1,7 @@
 ---
 import "./tailwind.css";
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
-// import { ClientOnly } from './client-only.tsx';
+import { ClientOnly } from './client-only.tsx';
 import "./_components/page/home/index.module.scss";
 import "./_components/page/work/index.module.scss";
 import "./_components/page/work-single/index.module.scss";
@@ -75,17 +75,16 @@ const idDev = process.env.NODE_ENV !== 'production';
   <body class="" data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-screen h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" class="canvas" data-ref="backCanvas" data-pc={noiseImg.src} data-mob={noiseSpImg.src}></canvas>
-    <div class="UIProgressbar" data-component="Scrollbar" />
+    <div class="ui-progressbar" data-component="Scrollbar" />
     <slot />
     <canvas aria-hidden="true" class="canvas" data-ref="frontCanvas"></canvas>
-    <div class="UICursor" data-ref="cursor"></div>
-    { // <ClientOnly client:only="react" />
-    }
+    <div class="ui-cursor" data-ref="cursor"></div>
+    <ClientOnly client:only="react" />
   </body>
 </html>
 
 <style lang="scss">
-.UIProgressbar {
+.ui-progressbar {
   position: fixed;
   top: 50vh;
   right: 3.2rem;
@@ -97,7 +96,7 @@ const idDev = process.env.NODE_ENV !== 'production';
   }
 }
 
-.UICursor {
+.ui-cursor {
   position: fixed;
   top: 0;
   left: 0;

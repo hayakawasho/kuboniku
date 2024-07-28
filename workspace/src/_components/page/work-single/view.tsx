@@ -1,10 +1,10 @@
 import React from "react";
-import { selectWorkTitle } from "~/(work)/model/selector";
+import { mapWorkTitle } from "~/(work)/model/mapper";
 import { WorkIntro } from "~/_components/model/work/work-intro";
 import { WorkKv } from "~/_components/model/work/work-kv";
 import { WorkScreenshots } from "~/_components/model/work/work-screenshots";
-import { Header } from "~/_components/ui/header/index.view";
-import { PageLayout } from "~/_components/ui/layout.view";
+import { Header } from "~/_components/ui/header";
+import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
 import { zeroPadding } from "~/_foundation/utils";
 import Styles from "./index.module.scss";
@@ -30,7 +30,7 @@ const Component: React.FC<Props> = props => {
               {zeroPadding(projectNumber)}
               <span className="ml-[.8rem]">Project</span>
             </p>
-            <h1 className={Styles.heading}>{selectWorkTitle(post)}</h1>
+            <h1 className={Styles.heading}>{mapWorkTitle(post)}</h1>
             <p className={Styles.sub}>
               <span className="inline-block origin-right">{post.category}</span>
             </p>
@@ -55,7 +55,7 @@ const Component: React.FC<Props> = props => {
               <div className="h-full absolute inset-0 m-auto z-10">
                 <Link className={Styles.kv__cont} data-cursor="scale" to={`/work/${nextPost.slug}/`}>
                   <h2 className={Styles.heading}>Next Project</h2>
-                  <p className={Styles.sub}>{selectWorkTitle(nextPost)}</p>
+                  <p className={Styles.sub}>{mapWorkTitle(nextPost)}</p>
                 </Link>
                 <WorkKv className="saturate-0 brightness-[0.8]" mv={nextPost.mv} />
               </div>

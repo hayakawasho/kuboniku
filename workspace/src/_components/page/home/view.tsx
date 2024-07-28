@@ -1,6 +1,6 @@
-import { selectWorkCreateAt } from "~/(work)/model/selector";
-import { Header } from "~/_components/ui/header/index.view";
-import { PageLayout } from "~/_components/ui/layout.view";
+import { mapWorkCreateAt } from "~/(work)/model/mapper";
+import { Header } from "~/_components/ui/header";
+import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
 import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
 import Styles from "./index.module.scss";
@@ -34,7 +34,7 @@ const Component: React.FC<Props> = props => {
           <ul className="relative w-full text-center">
             {posts.map(post => (
               <li className={Styles.splash__projectItem} key={post.id}>
-                {post.title} - {selectWorkCreateAt(post)}
+                {post.title} - {mapWorkCreateAt(post)}
               </li>
             ))}
           </ul>

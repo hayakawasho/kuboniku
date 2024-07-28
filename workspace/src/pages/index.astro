@@ -1,12 +1,12 @@
 ---
-import Home from "../_components/page/home/index.view";
+import Home from "../_components/page/home/view";
 import { createTopElementsRepository } from "../_repositories";
-import Layout from "../layout.astro";
+import DefalutLayout from "../layout.astro";
 
 const repo = createTopElementsRepository();
 const result = await repo.find();
 ---
 
-<Layout title="" permalink="" namespace="home">
+<DefalutLayout title="" permalink="" namespace="home">
   <Home posts={result.works} namespace="home" perPage={result.works.length} />
-</Layout>
+</DefalutLayout>

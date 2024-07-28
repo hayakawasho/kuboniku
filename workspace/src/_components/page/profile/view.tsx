@@ -1,8 +1,8 @@
-import profileNameImg from "@/assets/profile.png";
-import profileNameSpImg from "@/assets/profile_sp.png";
-import { Header } from "~/_components/ui/header/index.view";
-import { PageLayout } from "~/_components/ui/layout.view";
+import { Header } from "~/_components/ui/header";
+import { PageLayout } from "~/_components/ui/layout";
 import { ResponsiveImage } from "~/_components/ui/responsive-image";
+import profileNameImg from "~/assets/profile.png";
+import profileNameSpImg from "~/assets/profile_sp.png";
 import Styles from "./index.module.scss";
 import type { RouteName } from "~/_foundation/types";
 

@@ -1,8 +1,8 @@
 ---
-import WorkIndex from "../../_components/page/work/index.view";
+import WorkIndex from "../../_components/page/work/view";
 import { formatCloudinaryAPI } from "../../_foundation/cloudinary";
 import { createWorkRepository, createAuthRepository } from "../../_repositories";
-import Layout from "../../layout.astro";
+import DefalutLayout from "../../layout.astro";
 
 const { cookies } = Astro
 
@@ -37,7 +37,7 @@ const result = await workRepo.findList()
 export const prerender = false
 ---
 
-<Layout title="Work" permalink="/work/" namespace="work">
+<DefalutLayout title="Work" permalink="/work/" namespace="work">
   <link
     slot="prependHead"
     as="image"
@@ -53,4 +53,4 @@ export const prerender = false
     rel="preload"
   />
   <WorkIndex posts={result!.works} total={Number(result!.totalCount)} namespace="work" />
-</Layout>
+</DefalutLayout>
