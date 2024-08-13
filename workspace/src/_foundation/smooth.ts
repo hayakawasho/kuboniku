@@ -1,6 +1,6 @@
 import NormalizeWheel from "normalize-wheel";
-import { createEmitter } from "./emitter";
-import { SpringTween } from "./spring";
+import { createEmitter } from "./utils/emitter";
+import { SpringTween } from "./utils/spring";
 
 export class Smooth {
   protected state;

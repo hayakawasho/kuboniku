@@ -1,7 +1,7 @@
 precision mediump float;
 
-#pragma glslify: cover = require('../../../../_gl/cover');
-#pragma glslify: MONO_CHROME_RGB = require('../../../../_gl/monochome');
+#pragma glslify: cover = require('../../../../_foundation/gl/cover');
+#pragma glslify: MONO_CHROME_RGB = require('../../../../_foundation/gl/monochome');
 
 uniform sampler2D u_texture;
 uniform vec2 u_mesh_size;

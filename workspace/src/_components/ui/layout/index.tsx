@@ -1,9 +1,7 @@
-import type { FC, ReactNode } from "react";
-
-export const PageLayout: FC<{
+export const PageLayout: React.FC<{
   namespace: string;
-  header: ReactNode;
-  children: ReactNode;
+  header: React.ReactNode;
+  children: React.ReactNode;
 }> = ({ header, children, namespace }) => {
   return (
     <>

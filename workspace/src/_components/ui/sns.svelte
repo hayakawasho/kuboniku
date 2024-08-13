@@ -3,7 +3,7 @@
   import { getContext } from "svelte";
   import { Tween } from "~/_foundation/libs/tween";
   import { waitFrame } from "~/_foundation/utils";
-  import { useMediaQueryState } from "~/_states/mq";
+  import { useMediaQuery } from "~/_states/mq";
   import type { Context$ } from "lake";
   import type { AppContext } from "~/_foundation/types";
 
@@ -18,10 +18,9 @@
 
   const { rootRef } = getContext<Context$<AppContext>>("$");
   const { refs } = useDomRef<Refs>("plus", "frontPlusX", "frontPlusY", "backPlusX", "backPlusY", "snsLabel");
+  const { anyHover } = useMediaQuery();
 
   let isOpen: boolean | undefined;
-
-  const { anyHover } = useMediaQueryState();
 
   useEvent(refs.plus, "click", e => {
     e.preventDefault();
@@ -68,16 +67,16 @@
 
   $: switch (isOpen) {
     case true:
-      onOpen();
+      openSns();
       break;
     case false:
-      onClose();
+      closeSns();
       break;
     default:
       break;
   }
 
-  const onOpen = async () => {
+  const openSns = async () => {
     rootRef.setAttribute("open", "true");
     rootRef.classList.add("is-animating");
 
@@ -106,7 +105,7 @@
     );
   };
 
-  const onClose = async () => {
+  const closeSns = async () => {
     rootRef.classList.add("is-animating");
 
     await waitFrame();

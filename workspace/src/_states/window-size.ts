@@ -9,23 +9,26 @@ const viewportAtom = atom<Size>({
   width: window.innerWidth,
 });
 
-export const useWindowSizeState = (
-  callback: (payload: { aspect: number; windowWidth: number; windowHeight: number }) => void = noop
-) => {
+export const useWindowSize = (callback: (payload: { aspect: number; windowSize: Size }) => void = noop) => {
   const { width, height } = store.get(viewportAtom);
   const ww = ref(width);
   const wh = ref(height);
 
   const unsub = store.sub(viewportAtom, () => {
-    const { width: windowWidth, height: windowHeight } = store.get(viewportAtom);
-    const aspect = windowWidth / windowHeight;
-    ww.value = windowWidth;
-    wh.value = windowHeight;
+    const { width, height } = store.get(viewportAtom);
+    const aspect = width / width;
+
+    ww.value = width;
+    wh.value = height;
+
+    const windowSize = {
+      width,
+      height,
+    };
 
     callback({
       aspect,
-      windowHeight,
-      windowWidth,
+      windowSize,
     });
   });
 

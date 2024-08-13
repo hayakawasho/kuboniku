@@ -1,9 +1,9 @@
 import { gsap } from "gsap";
-import { useMount, useEvent } from "lake";
-import { useTick, useElementSize } from "~/_foundation/hooks";
-import { Smooth } from "~/_foundation/utils";
+import { useMount } from "lake";
+import { useTick, useElementSize, useWindowEvent } from "~/_foundation/hooks";
+import { Smooth } from "~/_foundation/smooth";
 import { scrollPositionMutators } from "~/_states/scroll-position";
-import { useWindowSizeState } from "~/_states/window-size";
+import { useWindowSize } from "~/_states/window-size";
 
 export const useNativeScrollTween = (el: HTMLElement) => {
   const smooth = new Smooth({
@@ -12,17 +12,17 @@ export const useNativeScrollTween = (el: HTMLElement) => {
     mass: 1,
   });
 
-  const [_, wh] = useWindowSizeState();
+  const [_, wh] = useWindowSize();
 
-  useElementSize(el, ({ height: contentH }) => {
-    smooth.onResize(contentH, wh.value);
+  useElementSize(el, ({ height }) => {
+    smooth.onResize(height, wh.value);
   });
 
-  useEvent(window as any, "scroll", smooth.onNativeScroll, {
+  useWindowEvent("scroll", smooth.onNativeScroll, {
     passive: true,
   });
 
-  useEvent(window as any, "wheel", smooth.onWheel, {
+  useWindowEvent("wheel", smooth.onWheel, {
     passive: false,
   });
 

@@ -1,22 +1,15 @@
+import { GlObject } from "~/_foundation/gl/gl-object";
+import { createTexture } from "~/_foundation/gl/texture";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "~/_foundation/libs/three";
 import Pool from "~/_foundation/pool";
-import { GlObject } from "~/_gl/gl-object";
-import { createTexture } from "~/_gl/texture";
-import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "~/_gl/three";
+import fragment from "./fragment.frag";
+import vertex from "./vertex.vert";
 
-export class ImgPlane extends GlObject {
+export class LogoPlane extends GlObject {
   #mesh;
   uniforms;
 
-  constructor(
-    el: HTMLElement,
-    {
-      geo,
-      mat,
-    }: {
-      geo: PlaneBufferGeometry;
-      mat: ShaderMaterial;
-    }
-  ) {
+  constructor(el: HTMLElement) {
     super(el);
 
     const imgSrc = el.dataset.src!;
@@ -24,31 +17,16 @@ export class ImgPlane extends GlObject {
 
     this.uniforms = {
       u_alpha: {
-        value: 0.9,
+        value: 1,
       },
       u_image_size: {
-        value: new Vector2(Number(el.dataset.w), Number(el.dataset.h)),
+        value: new Vector2(Number(el.dataset.width), Number(el.dataset.height)),
       },
       u_mesh_size: {
         value: new Vector2(width, height),
       },
       u_texture: {
         value: 0 as any,
-      },
-      u_skewY: {
-        value: 0,
-      },
-      u_mouse: {
-        value: new Vector2(0, 0),
-      },
-      u_curviness: {
-        value: 0,
-      },
-      u_ripple: {
-        value: 0,
-      },
-      u_scaleProgress: {
-        value: 0,
       },
     };
 
@@ -65,17 +43,22 @@ export class ImgPlane extends GlObject {
       });
     }
 
-    const material = mat.clone() as ShaderMaterial;
-    material.uniforms = this.uniforms;
+    const geo = new PlaneBufferGeometry(1, 1, 30, 30);
+    const mat = new ShaderMaterial({
+      fragmentShader: fragment,
+      vertexShader: vertex,
+      uniforms: this.uniforms,
+      transparent: true,
+      alphaTest: 0.5,
+      depthTest: false,
+    });
 
-    this.#mesh = new Mesh(geo, material);
+    this.#mesh = new Mesh(geo, mat);
     this.add(this.#mesh);
   }
 
   setSize = (newValues: Parameters<GlObject["setSize"]>[0]) => {
     super.setSize(newValues);
     this.#mesh.scale.set(this.cache.width, this.cache.height, 1);
-
-    super.update({ ...newValues });
   };
 }

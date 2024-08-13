@@ -1,9 +1,7 @@
+import { ProfileLogo } from "~/_components/model/profile/profile-logo";
 import { Header } from "~/_components/ui/header";
 import { PageLayout } from "~/_components/ui/layout";
-import { ResponsiveImage } from "~/_components/ui/responsive-image";
-import profileNameImg from "~/assets/profile.png";
-import profileNameSpImg from "~/assets/profile_sp.png";
-import Styles from "./style.module.scss";
+import Styles from "./index.module.scss";
 import type { RouteName } from "~/_foundation/types";
 
 const Component: React.FC<{
@@ -14,24 +12,7 @@ const Component: React.FC<{
       <main className="overflow-hidden" data-component="Profile">
         <h1 className="sr-only">Profile</h1>
         <div className="relative z-[2]">
-          <img
-            alt=""
-            className={`${Styles.logo} opacity-0 sp:hidden`}
-            data-height={profileNameImg.height}
-            data-ref="profileLogo"
-            data-src={profileNameImg.src}
-            data-width={profileNameImg.width}
-            height={profileNameImg.height}
-            width={profileNameImg.width}
-          />
-          <ResponsiveImage
-            alt=""
-            className={`${Styles.logo} pc:hidden`}
-            mob={profileNameSpImg.src}
-            mobSize={[profileNameSpImg.width, profileNameSpImg.height]}
-            size={[1, 1]}
-            src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
-          ></ResponsiveImage>
+          <ProfileLogo />
           <div className={Styles.textGroup}>
             <div className={Styles.textGroup__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>

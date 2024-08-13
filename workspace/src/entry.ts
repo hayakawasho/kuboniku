@@ -1,9 +1,8 @@
 import { create, withSvelte } from "lake";
-import "what-input";
-import Home from "./_components/page/home";
-import Profile from "./_components/page/profile";
-import Works from "./_components/page/work";
-import WorkSingle from "./_components/page/work-single";
+import Home from "./_components/page/home/home";
+import Profile from "./_components/page/profile/profile";
+import Works from "./_components/page/work/work";
+import WorkSingle from "./_components/page/work-single/work-single";
 import Load from "./_components/ui/load";
 import NavMenu from "./_components/ui/menu";
 import Noop from "./_components/ui/noop";
@@ -52,18 +51,3 @@ import type { IComponent, ComponentContext } from "lake";
   };
   component(Load)(html, loadProvides);
 })();
-
-if (process.env.NODE_ENV === "development") {
-  const Stats = await ((await import("https://cdn.skypack.dev/stats.js.fps?dts")) as any).default;
-  const stats = new Stats();
-  stats.showPanel(0);
-
-  document.body.appendChild(stats.dom);
-
-  const loop = () => {
-    stats.update();
-    requestAnimationFrame(loop);
-  };
-
-  loop();
-}

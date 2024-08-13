@@ -1,10 +1,10 @@
 ---
 import "./tailwind.css";
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
-import "./_components/page/home/style.module.scss";
-import "./_components/page/work/style.module.scss";
-import "./_components/page/work-single/style.module.scss";
-import "./_components/page/profile/style.module.scss";
+import "./_components/page/home/index.module.scss";
+import "./_components/page/work/index.module.scss";
+import "./_components/page/work-single/index.module.scss";
+import "./_components/page/profile/index.module.scss";
 import { BREAK_POINTS } from "./_foundation/const/mq";
 import noiseImg from "./assets/noise_1100x1100.webp";
 import noiseSpImg from "./assets/noise_550x550.webp";
@@ -71,18 +71,37 @@ const idDev = process.env.NODE_ENV !== 'production';
     )}
     {!idDev && <script src="/assets/entry.js" type="module" />}
 	</head>
-  <body class="" data-page={props.namespace}>
+  <body data-page={props.namespace}>
     <div aria-hidden="true" class="fixed inset-0 w-screen h-screen pointer-events-none -z-1 invisible" data-ref="windowSizeWatcher"></div>
     <canvas aria-hidden="true" class="canvas" data-ref="backCanvas" data-pc={noiseImg.src} data-mob={noiseSpImg.src}></canvas>
-    <div class="ui-progressbar" data-component="Scrollbar" />
+    <div class="progressbar" data-component="Scrollbar" />
     <slot />
     <canvas aria-hidden="true" class="canvas" data-ref="frontCanvas"></canvas>
-    <div class="ui-cursor" data-ref="cursor"></div>
+    <div class="cursor" data-ref="cursor"></div>
   </body>
 </html>
 
+<script>
+import "what-input";
+
+if (process.env.NODE_ENV === "development") {
+  const Stats = await ((await import("https://cdn.skypack.dev/stats.js.fps?dts")) as any).default;
+  const stats = new Stats();
+  stats.showPanel(0);
+
+  document.body.appendChild(stats.dom);
+
+  const loop = () => {
+    stats.update();
+    requestAnimationFrame(loop);
+  };
+
+  loop();
+}
+</script>
+
 <style lang="scss">
-.ui-progressbar {
+.progressbar {
   position: fixed;
   top: 50vh;
   right: 3.2rem;
@@ -94,7 +113,7 @@ const idDev = process.env.NODE_ENV !== 'production';
   }
 }
 
-.ui-cursor {
+.cursor {
   position: fixed;
   top: 0;
   left: 0;

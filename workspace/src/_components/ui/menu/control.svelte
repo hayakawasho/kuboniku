@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useDomRef, useSlot, withSvelte, useEvent } from "lake";
   import scrollLock from "scroll-lock";
-  import { getContext } from "svelte";
-  import MenuView from "./view.svelte";
+  import { getContext, onMount } from "svelte";
+  import Menu from "./index.svelte";
   import type { Context$ } from "lake";
   import type { AppContext } from "~/_foundation/types";
 
@@ -13,19 +13,13 @@
     menuContent: HTMLElement;
   };
 
-  const context = getContext<
-    Context$<
-      AppContext & {
-        openAnime: () => void;
-        closeAnime: () => void;
-      }
-    >
-  >("$");
+  type Props = AppContext & {
+    openMenu: () => void;
+    closeMenu: () => void;
+  };
 
-  const { openAnime, closeAnime, scrollContext } = context;
-
-  const { addChild } = useSlot();
-  const { refs } = useDomRef<Refs>("menuTrigger", "mask", "menu", "menuContent");
+  const context = getContext<Context$<Props>>("$");
+  const { openMenu, closeMenu, scrollContext, ...restContext } = context;
 
   let isOpen: boolean | undefined = undefined;
 
@@ -33,31 +27,36 @@
     case true:
       scrollContext.pause();
       scrollLock.disablePageScroll();
-      openAnime();
+      openMenu();
       break;
     case false:
       scrollContext.resume();
       scrollLock.enablePageScroll();
-      closeAnime();
+      closeMenu();
       break;
     default:
       break;
   }
 
-  const closeMenu = () => {
+  const onClose = () => {
     isOpen = false;
   };
 
-  addChild(refs.menuContent, withSvelte(MenuView), {
-    ...context,
-    closeMenu,
-    current: refs.menuContent.dataset.current!,
-  });
+  onMount(() => {
+    const { addChild } = useSlot();
+    const { refs } = useDomRef<Refs>("menuTrigger", "mask", "menu", "menuContent");
 
-  useEvent(refs.mask, "click", closeMenu);
+    useEvent(refs.mask, "click", onClose);
 
-  useEvent(refs.menuTrigger, "click", e => {
-    e.preventDefault();
-    isOpen = !isOpen;
+    useEvent(refs.menuTrigger, "click", e => {
+      e.preventDefault();
+      isOpen = !isOpen;
+    });
+
+    addChild(refs.menuContent, withSvelte(Menu), {
+      ...restContext,
+      onClose,
+      currentRoute: refs.menuContent.dataset.current!,
+    });
   });
 </script>

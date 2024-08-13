@@ -5,7 +5,7 @@ import { noop } from "~/_foundation/utils";
 const store = createStore();
 const yAtom = atom(0);
 
-export const useScrollPositionState = (
+export const useWindowScroll = (
   callback: (payload: { currentY: number; oldY: number; diff: number }) => void = noop
 ) => {
   const currentY = ref(store.get(yAtom));

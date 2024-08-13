@@ -1,9 +1,9 @@
 ---
-import WorkSingle from "../../_components/page/work-single/view";
-import { BREAK_POINTS } from "../../_foundation/const/mq";
-import { formatCloudinaryAPI } from "../../_foundation/cloudinary"
-import { createWorkRepository } from "../../_repositories";
-import DefalutLayout from "../../layout.astro";
+import WorkSingle from "../../_components/page/work-single"
+import { formatCloudinary } from "../../_foundation/cloudinary"
+import { BREAK_POINTS } from "../../_foundation/const/mq"
+import { createWorkRepository } from "../../_repositories"
+import DefalutLayout from "../../layout.astro"
 
 const { slug } = Astro.params;
 const { cookies } = Astro
@@ -33,7 +33,7 @@ export const prerender = false;
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={formatCloudinaryAPI(result.work.mv["pc"].url, "f_auto,q_auto,w_1680")}
+    href={formatCloudinary(result.work.mv["pc"].url, "f_auto,q_auto,w_1680")}
     media={BREAK_POINTS["pc"]}
     rel="preload"
   />

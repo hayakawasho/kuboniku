@@ -7,10 +7,9 @@ export type CursorType = "default" | "hide" | "loading" | "scale" | "drag" | "dr
 const store = createStore();
 const cursorTypeAtom = atom<CursorType>("default");
 
-export const useCursorTypeState = (callback: (payload: CursorType) => void = noop) => {
+export const useCursorTypeContext = (callback: (payload: CursorType) => void = noop) => {
   const unsub = store.sub(cursorTypeAtom, () => {
     const cursorType = store.get(cursorTypeAtom);
-
     callback(cursorType);
   });
 

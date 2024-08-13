@@ -1,23 +1,21 @@
 import { defineComponent, useDomRef, useMount } from "lake";
+import { createTexture } from "~/_foundation/gl/texture";
 import { useTick } from "~/_foundation/hooks";
 import { Tween } from "~/_foundation/libs/tween";
 import { lerp, mapRange } from "~/_foundation/math";
 import Pool from "~/_foundation/pool";
-import { createTexture } from "~/_gl/texture";
 import { useMousePositionState } from "~/_states/mouse";
 import { useMediaQueryState } from "~/_states/mq";
 import { useWindowSizeState } from "~/_states/window-size";
 import { ImgPlane } from "./plane";
+import type { Texture } from "~/_foundation/libs/three";
 import type { AppContext } from "~/_foundation/types";
-import type { Texture } from "~/_gl/three";
-
-type ManifestItem = {
-  src: string;
-  id: string;
-};
 
 type Props = AppContext & {
-  manifest: ManifestItem[];
+  manifest: {
+    src: string;
+    id: string;
+  }[];
 };
 
 type Refs = {
@@ -43,11 +41,11 @@ export default defineComponent({
     };
 
     const textures: Texture[] = [];
-    const imgPlane = new ImgPlane(refs.splash);
+    const plane = new ImgPlane(refs.splash);
     const maskPlane = new ImgPlane(refs.splash);
 
     useWindowSizeState(({ windowWidth, windowHeight }) => {
-      imgPlane.setSize({ width: windowWidth, height: windowHeight });
+      plane.setSize({ width: windowWidth, height: windowHeight });
       maskPlane.setSize({ width: windowWidth, height: windowHeight });
     });
 
@@ -74,8 +72,8 @@ export default defineComponent({
       const clampY = mapRange(diffY, -300, 300, -1, 1);
 
       const alpha2 = 0.16 * deltaRatio;
-      imgPlane.uniforms.u_bend.value.x = lerp(imgPlane.uniforms.u_bend.value.x, clampX, alpha2);
-      imgPlane.uniforms.u_bend.value.y = lerp(imgPlane.uniforms.u_bend.value.y, clampY, alpha2);
+      plane.uniforms.u_bend.value.x = lerp(plane.uniforms.u_bend.value.x, clampX, alpha2);
+      plane.uniforms.u_bend.value.y = lerp(plane.uniforms.u_bend.value.y, clampY, alpha2);
 
       maskPlane.uniforms.u_bend.value.x = lerp(maskPlane.uniforms.u_bend.value.x, clampX, alpha2);
       maskPlane.uniforms.u_bend.value.y = lerp(maskPlane.uniforms.u_bend.value.y, clampY, alpha2);
@@ -83,7 +81,7 @@ export default defineComponent({
       const centerX = state.cx - ww.value * 0.5;
       const centerY = -(state.cy - wh.value * 0.5);
 
-      imgPlane.update({ x: centerX, y: centerY });
+      plane.update({ x: centerX, y: centerY });
       maskPlane.update({ x: centerX, y: centerY });
       refs.splash.style.transform = `translate(-50%, -50%) translate(${centerX}px, ${-centerY}px) translateZ(0)`;
     });
@@ -97,13 +95,13 @@ export default defineComponent({
         textures.push(tex);
       });
 
-      imgPlane.uniforms.u_texture.value = textures[0];
-      imgPlane.setSize({ width: ww.value, height: wh.value });
+      plane.uniforms.u_texture.value = textures[0];
+      plane.setSize({ width: ww.value, height: wh.value });
 
       maskPlane.uniforms.u_alpha.value = 0.4;
       maskPlane.setSize({ width: ww.value, height: wh.value });
 
-      backCanvasContext.addScene(imgPlane);
+      backCanvasContext.addScene(plane);
       backCanvasContext.addScene(maskPlane);
     });
 
@@ -116,7 +114,7 @@ export default defineComponent({
           onUpdate: () => {
             const index = Math.floor(state.count);
             refs.splash.dataset.index = index + "";
-            imgPlane.uniforms.u_texture.value = textures[index];
+            plane.uniforms.u_texture.value = textures[index];
           },
           onComplete: () => {
             resolve();
@@ -131,12 +129,12 @@ export default defineComponent({
 
         Tween.serial(
           Tween.parallel(
-            Tween.tween(imgPlane.uniforms.u_alpha, 1.1, "power3.inOut", {
+            Tween.tween(plane.uniforms.u_alpha, 1.1, "power3.inOut", {
               value: 0,
               delay: 0.01,
             }),
-            Tween.tween(imgPlane.position, 1.1, "power3.inOut", {
-              y: imgPlane.position.y + wh.value * 0.17,
+            Tween.tween(plane.position, 1.1, "power3.inOut", {
+              y: plane.position.y + wh.value * 0.17,
               delay: 0.01,
             }),
             Tween.tween(maskPlane.uniforms.u_alpha, 1.1, "power3.inOut", {
@@ -162,7 +160,7 @@ export default defineComponent({
     const hideEnd = () => {
       return new Promise<void>(resolve => {
         el.classList.remove("pointer-events-none");
-        backCanvasContext.removeScene(imgPlane);
+        backCanvasContext.removeScene(plane);
         resolve();
       });
     };

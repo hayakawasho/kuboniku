@@ -9,7 +9,7 @@ const mousePosAtom = atom<Point>({
   y: 0,
 });
 
-export const useMousePositionState = (callback: (payload: { x: number; y: number }) => void = noop) => {
+export const useMouse = (callback: (payload: { x: number; y: number }) => void = noop) => {
   const { x, y } = store.get(mousePosAtom);
   const posX = ref(x);
   const posY = ref(y);
@@ -32,4 +32,4 @@ export const useMousePositionState = (callback: (payload: { x: number; y: number
   return [readonly(posX), readonly(posY)] as const;
 };
 
-export const mousePosMutators = (val: Point) => store.set(mousePosAtom, val);
+export const mousePositionMutators = (val: Point) => store.set(mousePosAtom, val);

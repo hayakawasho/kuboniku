@@ -1,25 +1,25 @@
 import { defineComponent, useDomRef, useSlot, useIntersectionWatch } from "lake";
+import { PlaneBufferGeometry, ShaderMaterial } from "~/_foundation/libs/three";
 import { loadImage } from "~/_foundation/utils";
-import { PlaneBufferGeometry, ShaderMaterial } from "~/_gl/three";
-import { useMediaQueryState } from "~/_states/mq";
+import { useMediaQueryContext } from "~/_states/mq";
 import fragment from "./fragment.frag";
-import ProjectItem from "./project-item";
 import vertex from "./vertex.vert";
+import WorkItem from "./work-item";
 import type { AppContext } from "~/_foundation/types";
 
 type Props = AppContext;
 
 type Refs = {
-  projectItem: HTMLElement[];
+  workItem: HTMLElement[];
   thumb: HTMLElement[];
 };
 
 export default defineComponent({
-  name: "ProjectItems",
+  name: "WorkList",
   setup(_el: HTMLElement, context: Props) {
-    const { refs } = useDomRef<Refs>("projectItem", "thumb");
+    const { refs } = useDomRef<Refs>("workItem", "thumb");
     const { addChild } = useSlot();
-    const { anyHover } = useMediaQueryState();
+    const { anyHover } = useMediaQueryContext();
 
     if (anyHover) {
       const geo = new PlaneBufferGeometry(1, 1, 30, 30);
@@ -31,7 +31,7 @@ export default defineComponent({
         alphaTest: 0.5,
       });
 
-      addChild(refs.projectItem, ProjectItem, {
+      addChild(refs.workItem, WorkItem, {
         ...context,
         geo,
         mat,

@@ -84,12 +84,9 @@ export const createWorkRepository = (
   }: {
     id: string;
     asPreview?: boolean;
-  }): Promise<
-    | {
-        work: WorkMetadata & { index: number } & { next: WorkMetadata };
-      }
-    | undefined
-  > => {
+  }): Promise<{
+    work: WorkMetadata & { index: number } & { next: WorkMetadata };
+  }> => {
     try {
       const res = await axios<any>({
         data: {
@@ -111,17 +108,22 @@ export const createWorkRepository = (
         },
       };
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        throw new Error(error.message, {
+          cause: error,
+        });
+      }
+
+      throw new Error("予期せぬエラーが発生しました", {
+        cause: error,
+      });
     }
   },
 
-  findList: async (): Promise<
-    | {
-        totalCount: number;
-        works: WorkMetadata[];
-      }
-    | undefined
-  > => {
+  findList: async (): Promise<{
+    totalCount: number;
+    works: WorkMetadata[];
+  }> => {
     try {
       const res = await axios<any>({
         data: {
@@ -159,7 +161,15 @@ export const createWorkRepository = (
         works: rawPosts.map(convertRawPost2WorkForIndex),
       };
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) {
+        throw new Error(error.message, {
+          cause: error,
+        });
+      }
+
+      throw new Error("予期せぬエラーが発生しました", {
+        cause: error,
+      });
     }
   },
 });

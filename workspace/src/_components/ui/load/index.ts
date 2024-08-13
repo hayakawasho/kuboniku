@@ -1,4 +1,3 @@
-import htmx from "htmx.org";
 import { defineComponent, useDomRef, useSlot, useMount, ref, readonly, withSvelte } from "lake";
 import { BREAK_POINTS } from "~/_foundation/const";
 import { useElementSize } from "~/_foundation/hooks";
@@ -6,6 +5,7 @@ import { cursorTypeMutators } from "~/_states/cusor";
 import { mediaQueryMutators } from "~/_states/mq";
 import { routeMutators } from "~/_states/route";
 import { windowSizeMutators } from "~/_states/window-size";
+import { useHtmx } from "./htmx";
 import Cursor from "../cursor.svelte";
 import BackCanvas from "../glworld/back";
 import FrontCanvas from "../glworld/front";
@@ -48,7 +48,7 @@ export default defineComponent({
     const [backCanvasContext] = addChild(refs.backCanvas, BackCanvas, { dpr });
     const [frontCanvasContext] = addChild(refs.frontCanvas, FrontCanvas, { dpr });
 
-    const appProvides = {
+    const provides = {
       backCanvasContext: backCanvasContext.current,
       frontCanvasContext: frontCanvasContext.current,
       history: readonly(history),
@@ -57,51 +57,22 @@ export default defineComponent({
 
     //----------------------------------------------------------------
 
-    const onLeave = (from: HTMLElement) => {
-      onCleanup(from);
-    };
+    useHtmx({
+      from: refs.main,
+      history,
+      onEnter(to: HTMLElement) {
+        const namespace = to.dataset.xhr as RouteName;
+        document.body.dataset.page = namespace;
 
-    const onEnter = (to: HTMLElement) => {
-      const namespace = to.dataset.xhr as RouteName;
-      document.body.dataset.page = namespace;
+        scrollContext.current.reset();
 
-      scrollContext.current.reset();
-
-      routeMutators({ name: namespace });
-      onUpdated(to, appProvides);
-      cursorTypeMutators("default");
-    };
-
-    const xhr = "[data-xhr]";
-    const fromContainer = ref(htmx.find(refs.main, xhr) as HTMLElement);
-
-    htmx.config.historyCacheSize = 1;
-
-    htmx.on("htmx:historyRestore", e => {
-      history.value = "pop";
-      onLeave(fromContainer.value);
-
-      const newContainer = htmx.find((e as CustomEvent).detail.elt, xhr) as HTMLElement;
-      onEnter(newContainer);
-    });
-
-    htmx.on("htmx:beforeHistorySave", e => {
-      const oldContainer = htmx.find((e as CustomEvent).detail.historyElt, xhr) as HTMLElement;
-      onLeave(oldContainer);
-      fromContainer.value = oldContainer;
-    });
-
-    htmx.on("htmx:beforeSwap", () => {
-      history.value = "push";
-    });
-
-    htmx.on("htmx:afterSwap", e => {
-      const newContainer = htmx.find((e as CustomEvent).detail.target, xhr) as HTMLElement;
-      onEnter(newContainer);
-    });
-
-    htmx.on("htmx:xhr:loadstart", _e => {
-      cursorTypeMutators("loading");
+        routeMutators({ name: namespace });
+        onUpdated(to, provides);
+        cursorTypeMutators("default");
+      },
+      onLeave(from: HTMLElement) {
+        onCleanup(from);
+      },
     });
 
     //----------------------------------------------------------------
@@ -113,7 +84,7 @@ export default defineComponent({
         addChild(refs.cursor, withSvelte(Cursor, "Cursor"));
       }
 
-      onCreated(appProvides);
+      onCreated(provides);
     });
 
     //----------------------------------------------------------------

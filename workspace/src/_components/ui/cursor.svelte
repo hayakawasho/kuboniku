@@ -2,9 +2,9 @@
   import { useTick, useDelegate } from "~/_foundation/hooks";
   import { lerp } from "~/_foundation/math";
   // import { Tween } from "~/_foundation/tween";
-  import { useCursorTypeState, cursorTypeMutators } from "~/_states/cusor";
-  import { mousePosMutators } from "~/_states/mouse";
-  import { useRouteState } from "~/_states/route";
+  import { useCursorTypeContext, cursorTypeMutators } from "~/_states/cusor";
+  import { mousePositionMutators } from "~/_states/mouse";
+  import { useRoute } from "~/_states/route";
   import type { CursorType } from "~/_states/cusor";
 
   let timer: number;
@@ -24,11 +24,11 @@
 
   let cursorType: CursorType = "default";
 
-  useCursorTypeState(payload => {
+  useCursorTypeContext(payload => {
     cursorType = payload;
   });
 
-  useRouteState(_payload => {
+  useRoute(_payload => {
     cursorTypeMutators("default");
   });
 
@@ -58,7 +58,7 @@
     state.x = e.clientX;
     state.y = e.clientY;
 
-    mousePosMutators({
+    mousePositionMutators({
       x: state.x,
       y: state.y,
     });

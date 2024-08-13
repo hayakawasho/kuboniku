@@ -1,18 +1,16 @@
-import type { FC } from "react";
-
-export const Link: FC<{
-  className?: string;
+type Props = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: React.ReactNode;
   swap?: string;
-  to: string;
-}> = ({ className = "", to, children, swap = "swap:520ms", ...props }) => {
+  href: string;
+};
+
+export const Link: React.FC<Props> = ({ className = "", href, children, swap = "swap:520ms", ...props }) => {
   return (
     <a
       {...props}
       className={`${className} cursor-pointer`}
       data-astro-prefetch="hover"
-      href={to}
-      hx-get={to}
+      hx-get={href}
       hx-push-url="true"
       hx-select="[data-xhr]"
       hx-swap={`${swap}`}

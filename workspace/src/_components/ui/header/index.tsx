@@ -7,7 +7,7 @@ type Props = {
   current: RouteName;
 };
 
-export const Header = ({ current }: Props) => {
+export const Header: React.FC<Props> = ({ current }) => {
   return (
     <div data-component="NavMenu">
       <header className="">

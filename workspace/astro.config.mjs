@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import critters from "astro-critters";
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
@@ -12,16 +11,16 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    critters(),
+    // (await import("astro-critters")).default(),
   ],
   devToolbar: {
     enabled: false,
   },
   outDir: "./dist/",
   compressHTML: true,
-  // build: {
-  //   inlineStylesheets: "never",
-  // },
+  build: {
+    inlineStylesheets: "never",
+  },
   server: {
     host: "0.0.0.0",
     port: 3000,
@@ -29,7 +28,7 @@ export default defineConfig({
   prefetch: true,
   vite: {
     build: {
-      // cssCodeSplit: false,
+      cssCodeSplit: false,
     },
     plugins: [],
   },

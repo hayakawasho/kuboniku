@@ -1,5 +1,5 @@
 import { defineComponent } from "lake";
-import { useThree } from "~/_gl/use-three";
+import { useThree } from "./use-three";
 
 export default defineComponent({
   name: "FrontCanvas",

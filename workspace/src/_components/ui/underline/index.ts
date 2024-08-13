@@ -1,6 +1,6 @@
 import { defineComponent, useMount, useDomRef, useEvent } from "lake";
 import { Tween } from "~/_foundation/libs/tween";
-import { useWindowSizeState } from "~/_states/window-size";
+import { useWindowSize } from "~/_states/window-size";
 import { Underline } from "./uline";
 import type { AppContext } from "~/_foundation/types";
 
@@ -29,11 +29,8 @@ export default defineComponent({
       });
     });
 
-    const [ww, wh] = useWindowSizeState(({ windowHeight, windowWidth }) => {
-      uline.setSize({
-        height: windowHeight,
-        width: windowWidth,
-      });
+    const [ww, wh] = useWindowSize(({ windowSize }) => {
+      uline.setSize(windowSize);
     });
 
     useMount(() => {

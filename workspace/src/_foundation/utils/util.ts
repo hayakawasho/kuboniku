@@ -1,11 +1,4 @@
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import type { ClassValue } from "clsx";
 import type { RefElement } from "lake";
-
-export function cn(...inputs: ClassValue[]): string {
-  return twMerge(clsx(inputs));
-}
 
 export const zeroPadding = (num: number, p = 2) => {
   return num.toString().padStart(p, "0");

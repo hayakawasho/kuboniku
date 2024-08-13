@@ -1,34 +1,33 @@
 <script lang="ts">
   import { useSlot, useDomRef } from "lake";
   import { getContext, onMount } from "svelte";
-  import { useMediaQueryState } from "~/_states/mq";
-  import { useRouteState } from "~/_states/route";
+  import { useMediaQuery } from "~/_states/mq";
+  import { useRoute } from "~/_states/route";
   import MenuLink from "./link";
   import type { Context$ } from "lake";
   import type { AppContext, RouteName } from "~/_foundation/types";
-
-  type Props = AppContext & {
-    current: RouteName;
-    closeMenu: () => void;
-  };
-
-  const { closeMenu, ...context } = getContext<Context$<Props>>("$");
-
-  let currentRouteName = context.current;
-  const { device } = useMediaQueryState();
-
-  useRouteState(({ name }) => {
-    currentRouteName = name;
-  });
-
-  const { addChild } = useSlot();
 
   type Refs = {
     menuLink: HTMLAnchorElement[] | null;
   };
 
+  type Props = AppContext & {
+    currentRoute: RouteName;
+    onClose: () => void;
+  };
+
+  const { onClose, currentRoute, ...context } = getContext<Context$<Props>>("$");
+
+  let currentRouteName = currentRoute;
+  const { device } = useMediaQuery();
+
   onMount(() => {
     const { refs } = useDomRef<Refs>("menuLink");
+    const { addChild } = useSlot();
+
+    useRoute(({ name }) => {
+      currentRouteName = name;
+    });
 
     if (refs.menuLink) {
       addChild(refs.menuLink, MenuLink, context);
@@ -65,7 +64,7 @@
               data-astro-prefetch="tap"
               href={item[0]}
               tabindex={currentRouteName === item[1] ? -1 : undefined}
-              on:click={closeMenu}
+              on:click={onClose}
             >
               <span class="inline-block overflow-hidden leading-[1]">
                 <span class="menuLink__label | js-menuLabel">{item[2]}</span>

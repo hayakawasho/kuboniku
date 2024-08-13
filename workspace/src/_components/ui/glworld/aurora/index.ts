@@ -1,10 +1,10 @@
 import { defineComponent, useMount } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "~/_foundation/const";
 import { useTick } from "~/_foundation/hooks";
+import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "~/_foundation/libs/three";
 import { lerp } from "~/_foundation/math";
-import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "~/_gl/three";
-import { useMediaQueryState } from "~/_states/mq";
-import { useWindowSizeState } from "~/_states/window-size";
+import { useMediaQuery } from "~/_states/mq";
+import { useWindowSize } from "~/_states/window-size";
 import fragment from "./aurora.frag";
 import vertex from "./vertex.vert";
 import type { ParentScene } from "~/_foundation/types";
@@ -16,12 +16,12 @@ export default defineComponent({
   setup(_canvas: HTMLCanvasElement, context: Props) {
     const { addScene, removeScene } = context;
 
-    const [ww, wh] = useWindowSizeState();
-    const { device } = useMediaQueryState();
+    const [ww, wh] = useWindowSize();
+    const { device } = useMediaQuery();
 
     const auroraPixelRatio = 0.5;
 
-    const brightnessValue = {
+    const brightnessVal = {
       pc: 0.6,
       sp: 0.1,
     };
@@ -29,10 +29,9 @@ export default defineComponent({
       pc: new Vector2(1, 0.56),
       sp: new Vector2(1, 0.24),
     };
-
     const uniforms = {
       u_brightness: {
-        value: brightnessValue[device],
+        value: brightnessVal[device],
       },
       u_color1: {
         value: new Color(SITE_THEME_COLOR),
@@ -72,8 +71,8 @@ export default defineComponent({
       })
     );
 
-    useWindowSizeState(({ windowHeight, windowWidth }) => {
-      auroraPlane.scale.set(windowWidth * auroraPixelRatio, windowHeight * auroraPixelRatio, 1);
+    useWindowSize(({ windowSize }) => {
+      auroraPlane.scale.set(windowSize.width * auroraPixelRatio, windowSize.height * auroraPixelRatio, 1);
     });
 
     useTick(({ deltaTime, deltaRatio }) => {

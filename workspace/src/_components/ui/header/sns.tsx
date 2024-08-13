@@ -1,6 +1,6 @@
 import Styles from "./sns.module.scss";
 
-export const Sns = () => {
+export const Sns: React.FC = () => {
   return (
     <details className={Styles.sns} data-component="Sns">
       <ul className="mb-[2rem] pc:mb-[3rem] text-center">
@@ -29,7 +29,6 @@ export const Sns = () => {
           </a>
         </li>
       </ul>
-
       <summary className={Styles.plus} data-cursor="scale" data-ref="plus">
         <div className="relative w-full h-full">
           <div className={Styles.plus__front}>

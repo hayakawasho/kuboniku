@@ -1,5 +1,5 @@
-import { GlObject } from "~/_gl/gl-object";
-import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "~/_gl/three";
+import { GlObject } from "~/_foundation/gl/gl-object";
+import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "~/_foundation/libs/three";
 import fragmentShader from "./fragment.frag";
 import vertexShader from "./vertex.vert";
 

@@ -1,6 +1,6 @@
 ---
-import WorkIndex from "../../_components/page/work/view";
-import { formatCloudinaryAPI } from "../../_foundation/cloudinary";
+import WorkIndex from "../../_components/page/work"
+import { formatCloudinary } from "../../_foundation/cloudinary";
 import { createWorkRepository, createAuthRepository } from "../../_repositories";
 import DefalutLayout from "../../layout.astro";
 
@@ -42,15 +42,15 @@ export const prerender = false
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={formatCloudinaryAPI(result!.works[0].mv["pc"].url, "f_auto,q_auto,w_1440")}
+    href={formatCloudinary(result.works[0].mv["pc"].url, "f_auto,q_auto,w_1440")}
     rel="preload"
   />
   <link
     slot="prependHead"
     as="image"
     crossorigin="anonymous"
-    href={formatCloudinaryAPI(result!.works[1].mv["pc"].url, "f_auto,q_auto,w_1440")}
+    href={formatCloudinary(result.works[1].mv["pc"].url, "f_auto,q_auto,w_1440")}
     rel="preload"
   />
-  <WorkIndex posts={result!.works} total={Number(result!.totalCount)} namespace="work" />
+  <WorkIndex posts={result.works} total={Number(result.totalCount)} namespace="work" />
 </DefalutLayout>

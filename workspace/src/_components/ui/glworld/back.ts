@@ -1,9 +1,9 @@
 import { defineComponent, useSlot } from "lake";
+import { Color } from "~/_foundation/libs/three";
 import { Tween } from "~/_foundation/libs/tween";
-import { Color } from "~/_gl/three";
-import { useThree } from "~/_gl/use-three";
 import Aurora from "./aurora";
 import RepeatNoise from "./repeat-noise";
+import { useThree } from "./use-three";
 
 export default defineComponent({
   name: "BackCanvas",

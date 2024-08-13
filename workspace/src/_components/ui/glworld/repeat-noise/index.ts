@@ -1,8 +1,8 @@
 import { defineComponent, useMount } from "lake";
 import { RepeatWrapping } from "three";
-import { PlaneBufferGeometry, ShaderMaterial, Mesh, TextureLoader, LinearFilter } from "~/_gl/three";
-import { useMediaQueryState } from "~/_states/mq";
-import { useWindowSizeState } from "~/_states/window-size";
+import { PlaneBufferGeometry, ShaderMaterial, Mesh, TextureLoader, LinearFilter } from "~/_foundation/libs/three";
+import { useMediaQuery } from "~/_states/mq";
+import { useWindowSize } from "~/_states/window-size";
 import fragment from "./fragment.frag";
 import vertex from "./vertex.vert";
 import type { ParentScene } from "~/_foundation/types";
@@ -16,31 +16,30 @@ export default defineComponent({
   setup(canvas: HTMLCanvasElement, context: Props) {
     const { addScene, removeScene, dpr } = context;
 
-    const { device } = useMediaQueryState();
+    const { device } = useMediaQuery();
 
     const noisePixelRatio = 0.5;
+
     const { pc, mob } = canvas.dataset;
-
     const loader = new TextureLoader();
-    const texture = loader.load(
-      {
-        pc: pc!,
-        sp: mob!,
-      }[device],
-      tex => {
-        tex.needsUpdate = true;
-        tex.minFilter = LinearFilter;
-        tex.generateMipmaps = false;
-        tex.wrapS = tex.wrapT = RepeatWrapping;
-      }
-    );
+    const textSrc = {
+      pc: pc!,
+      sp: mob!,
+    };
+    const texture = loader.load(textSrc[device], tex => {
+      tex.needsUpdate = true;
+      tex.minFilter = LinearFilter;
+      tex.generateMipmaps = false;
+      tex.wrapS = tex.wrapT = RepeatWrapping;
+    });
 
+    const repeatVal = {
+      pc: (1100 / 198) * dpr,
+      sp: (1100 / 128) * dpr,
+    };
     const uniforms = {
       u_repeat: {
-        value: {
-          pc: (1100 / 198) * dpr,
-          sp: (1100 / 128) * dpr,
-        }[device],
+        value: repeatVal[device],
       },
       u_noiseTex: {
         value: texture,
@@ -62,9 +61,9 @@ export default defineComponent({
       })
     );
 
-    const [ww, wh] = useWindowSizeState(({ windowHeight, windowWidth }) => {
-      noisePlane.scale.x = windowWidth * noisePixelRatio;
-      noisePlane.scale.y = windowHeight * noisePixelRatio;
+    const [ww, wh] = useWindowSize(({ windowSize }) => {
+      noisePlane.scale.x = windowSize.width * noisePixelRatio;
+      noisePlane.scale.y = windowSize.height * noisePixelRatio;
     });
 
     useMount(() => {

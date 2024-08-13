@@ -11,7 +11,7 @@ const routeAtom = atom<Route>({
   name: "home",
 });
 
-export const useRouteState = (callback: (payload: { name: RouteName }) => void) => {
+export const useRoute = (callback: (payload: { name: RouteName }) => void) => {
   const route = ref<Route>(store.get(routeAtom));
 
   const unsub = store.sub(routeAtom, () => {

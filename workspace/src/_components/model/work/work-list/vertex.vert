@@ -1,6 +1,6 @@
 precision mediump float;
 
-#pragma glslify: sheerY = require('../../../../_gl/sheer');
+#pragma glslify: sheerY = require('../../../../_foundation/gl/sheer');
 
 varying vec2 vUv;
 uniform float u_skewY;

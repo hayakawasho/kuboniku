@@ -1,6 +1,6 @@
 precision mediump float;
 
-#pragma glslify: PI = require('../../../../_gl/pi');
+#pragma glslify: PI = require('../../../../_foundation/gl/pi');
 
 uniform vec2 u_bend;
 

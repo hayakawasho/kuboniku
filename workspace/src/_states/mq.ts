@@ -13,7 +13,7 @@ const mqAtom = atom<MediaQuery>({
   device: "pc",
 });
 
-export const useMediaQueryState = (callback: (payload: MediaQuery) => void = noop) => {
+export const useMediaQuery = (callback: (payload: MediaQuery) => void = noop) => {
   const mq = ref(store.get(mqAtom));
 
   const unsub = store.sub(mqAtom, () => {
