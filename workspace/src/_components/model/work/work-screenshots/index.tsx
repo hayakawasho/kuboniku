@@ -1,5 +1,5 @@
 import { ResponsiveImage } from "~/_components/ui/responsive-image";
-import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
+import { formatCloudinary } from "~/_foundation/cloudinary";
 import type { WorkMetadata } from "~/(work)/model";
 
 export const WorkScreenshots: React.FC<{
@@ -13,10 +13,10 @@ export const WorkScreenshots: React.FC<{
             <ResponsiveImage
               alt=""
               className="w-full"
-              mob={formatCloudinaryAPI(item.url, "f_auto,q_auto,w_750")}
+              mob={formatCloudinary(item.url, "f_auto,q_auto,w_750")}
               mobSize={[item.width, item.height]}
               size={[item.width, item.height]}
-              src={formatCloudinaryAPI(item.url, "f_auto,q_auto,w_1440")}
+              src={formatCloudinary(item.url, "f_auto,q_auto,w_1440")}
             />
           </li>
         );

@@ -2,7 +2,7 @@ import { mapWorkCreateAt } from "~/(work)/model/mapper";
 import { Header } from "~/_components/ui/header";
 import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
-import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
+import { formatCloudinary } from "~/_foundation/cloudinary";
 import Styles from "./style.module.scss";
 import type { WorkMetadata } from "~/(work)/model";
 import type { RouteName } from "~/_foundation/types";
@@ -26,7 +26,7 @@ const Component: React.FC<Props> = props => {
         className="h-full"
         data-component="Home"
         data-images={`${posts.map((item, i) => {
-          const imgSrc = formatCloudinaryAPI(item.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
+          const imgSrc = formatCloudinary(item.eyecatch!.url, "f_auto,q_auto,w_840,h_1050");
           return i === 0 ? imgSrc : separator(imgSrc);
         })}`}
       >
@@ -88,7 +88,7 @@ const Thumbnail = ({ post, index }: { post: WorkMetadata; index: number }) => {
           data-speed={speed}
           data-width={840}
           height={1050}
-          src={formatCloudinaryAPI(eyecatch.url, "f_auto,q_auto,w_840,h_1050")}
+          src={formatCloudinary(eyecatch.url, "f_auto,q_auto,w_840,h_1050")}
           width={1050}
         />
         <span className="sr-only">{post.title}</span>

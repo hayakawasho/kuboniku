@@ -1,6 +1,6 @@
 import { mapWorkTitle } from "~/(work)/model/mapper";
 import { ResponsiveImage } from "~/_components/ui/responsive-image";
-import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
+import { formatCloudinary } from "~/_foundation/cloudinary";
 import { zeroPadding } from "~/_foundation/utils";
 import Styles from "./style.module.scss";
 import type { WorkMetadata } from "~/(work)/model";
@@ -24,10 +24,10 @@ export const WorkKv: React.FC<{
       <ResponsiveImage
         alt=""
         className="object-cover h-full absolute inset-0 m-auto opacity-40"
-        mob={formatCloudinaryAPI(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
+        mob={formatCloudinary(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
         mobSize={[post.mv["pc"].width, post.mv["pc"].height]}
         size={[post.mv["pc"].width, post.mv["pc"].height]}
-        src={formatCloudinaryAPI(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
+        src={formatCloudinary(post.mv["pc"].url, "f_auto,q_auto,w_1440")}
       />
     </div>
   );

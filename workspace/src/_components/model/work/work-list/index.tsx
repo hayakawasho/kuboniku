@@ -1,6 +1,6 @@
 import { mapWorkTitle } from "~/(work)/model/mapper";
 import { Link } from "~/_components/ui/link";
-import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
+import { formatCloudinary } from "~/_foundation/cloudinary";
 import { zeroPadding } from "~/_foundation/utils";
 import Styles from "./style.module.scss";
 import type { WorkMetadata } from "~/(work)/model";
@@ -29,7 +29,7 @@ export const WorkList: React.FC<{
                   className={Styles.thumb}
                   data-height={item.mv["pc"].height}
                   data-ref="thumb"
-                  data-src={formatCloudinaryAPI(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
+                  data-src={formatCloudinary(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
                   data-visible="false"
                   data-width={item.mv["pc"].width}
                   role="img"
