@@ -2,9 +2,9 @@
   import { useTick, useDelegate } from "~/_foundation/hooks";
   import { lerp } from "~/_foundation/math";
   // import { Tween } from "~/_foundation/tween";
-  import { useCursorTypeState, cursorTypeMutators } from "~/_states/cusor";
-  import { mousePosMutators } from "~/_states/mouse";
-  import { useRouteState } from "~/_states/route";
+  import { useCursorType, cursorTypeMutators } from "~/_states/cusor";
+  import { mousePositionMutators } from "~/_states/mouse";
+  import { useRoute } from "~/_states/route";
   import type { CursorType } from "~/_states/cusor";
 
   let timer: number;
@@ -24,11 +24,11 @@
 
   let cursorType: CursorType = "default";
 
-  useCursorTypeState(payload => {
+  useCursorType(payload => {
     cursorType = payload;
   });
 
-  useRouteState(_payload => {
+  useRoute(_payload => {
     cursorTypeMutators("default");
   });
 
@@ -58,7 +58,7 @@
     state.x = e.clientX;
     state.y = e.clientY;
 
-    mousePosMutators({
+    mousePositionMutators({
       x: state.x,
       y: state.y,
     });
@@ -169,31 +169,27 @@
       }
     }
 
-    &[data-cursor-type="drag"] {
-      // & .dragArrow,
-      // .progressCircle {
-      //   opacity: 1;
-      // }
-
-      // & .progressCircle {
-      //   scale: 1;
-      // }
-
-      // & .dragArrow--top {
-      //   opacity: 1;
-      //   transform: translateX(-50%);
-      // }
-
-      // & .dragArrow--bottom {
-      //   opacity: 1;
-      //   transform: translateX(-50%);
-      // }
-
-      // & .circle {
-      //   transform: scale(0);
-      //   opacity: 0;
-      // }
-    }
+    // &[data-cursor-type="drag"] {
+    //  & .dragArrow,
+    //  .progressCircle {
+    //    opacity: 1;
+    //  }
+    //  & .progressCircle {
+    //    scale: 1;
+    //  }
+    //  & .dragArrow--top {
+    //    opacity: 1;
+    //    transform: translateX(-50%);
+    //  }
+    //  & .dragArrow--bottom {
+    //    opacity: 1;
+    //    transform: translateX(-50%);
+    //  }
+    //  & .circle {
+    //    transform: scale(0);
+    //    opacity: 0;
+    //  }
+    // }
 
     // &[data-cursor-type="drag.scale"] {
     //   & .dragArrow,

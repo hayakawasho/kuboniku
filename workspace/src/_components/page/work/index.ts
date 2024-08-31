@@ -1,8 +1,8 @@
 import { defineComponent, useSlot, useDomRef, useMount } from "lake";
-import ScrollSkewContainer from "~/_components/ui/scroll-skew";
+import ScrollSkew from "~/_components/ui/scroll-skew";
 import { SITE_THEME_COLOR } from "~/_foundation/const";
 import { Tween } from "~/_foundation/libs/tween";
-import ProjectItems from "./projects";
+import WorkItems from "./work-items";
 import type { AppContext } from "~/_foundation/types";
 
 type Refs = {
@@ -18,10 +18,8 @@ export default defineComponent({
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("index", "h1");
 
-    addChild([refs.h1, refs.index], ScrollSkewContainer, context);
-    addChild(refs.index, ProjectItems, context);
-
-    //------------------------------------------------------------------------------
+    addChild([refs.h1, refs.index], ScrollSkew, context);
+    addChild(refs.index, WorkItems, context);
 
     useMount(() => {
       backCanvasContext.onChangeColorsPalette(SITE_THEME_COLOR, SITE_THEME_COLOR, "#000", "#000");

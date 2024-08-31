@@ -2,9 +2,7 @@ import { useUnmount } from "lake";
 
 const FPS_60_SEC = 1000 / 60;
 
-export const useTick = (
-  callback: (payload: { deltaTime: number; deltaRatio: number; timestamp: number }) => void
-) => {
+export const useTick = (callback: (payload: { deltaTime: number; deltaRatio: number; timestamp: number }) => void) => {
   let then = 0;
 
   const loop = (timestamp: number) => {

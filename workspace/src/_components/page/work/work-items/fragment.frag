@@ -13,6 +13,7 @@ varying vec2 vUv;
 void main() {
   vec2 uv = vUv;
 
+  vec2 texCenter = vec2(0.5);
   vec2 texUv = cover(uMeshSize, uImageSize, uv);
   vec4 tex = texture2D(uTexture, texUv);
 

@@ -1,17 +1,22 @@
+import { useDomRef } from "lake";
 import { GlImage } from "~/_foundation/gl/gl-object";
 import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2, LinearFilter } from "~/_foundation/libs/three";
 import { useWindowSize } from "~/_states/window-size";
-import fragmentShader from "./fragment.frag";
-import vertexShader from "./vertex.vert";
 
-export const useLogo = (el: HTMLElement) => {
-  const scene = new GlImage(el);
-  const naturalWidth = Number(el.dataset.width);
-  const naturalHeight = Number(el.dataset.height);
+type Refs = {
+  plane: HTMLImageElement;
+};
+
+export const useWorkItem = (geo: PlaneBufferGeometry, mat: ShaderMaterial) => {
+  const { refs } = useDomRef<Refs>("plane");
+
+  const scene = new GlImage(refs.plane);
+  const naturalWidth = Number(refs.plane.dataset.width);
+  const naturalHeight = Number(refs.plane.dataset.height);
 
   const uniforms = {
     uAlpha: {
-      value: 1,
+      value: 0.9,
     },
     uImageSize: {
       value: new Vector2(naturalWidth, naturalHeight),
@@ -22,24 +27,29 @@ export const useLogo = (el: HTMLElement) => {
     uTexture: {
       value: 0 as any,
     },
+    uSkewY: {
+      value: 0,
+    },
+    uMouse: {
+      value: new Vector2(0, 0),
+    },
+    uCurviness: {
+      value: 0,
+    },
+    uRipple: {
+      value: 0,
+    },
+    uScaleProgress: {
+      value: 0,
+    },
   };
 
-  scene.loadTexture(el.dataset.src as string).then(texture => {
+  scene.loadTexture(refs.plane.dataset.src as string).then(texture => {
     texture.needsUpdate = true;
     texture.minFilter = LinearFilter;
     texture.generateMipmaps = false;
 
     uniforms.uTexture.value = texture;
-  });
-
-  const geo = new PlaneBufferGeometry(1, 1, 30, 30);
-  const mat = new ShaderMaterial({
-    fragmentShader,
-    vertexShader,
-    uniforms,
-    transparent: true,
-    alphaTest: 0.5,
-    depthTest: false,
   });
 
   const [windowW, windowH] = useWindowSize(({ windowSize }) => {
@@ -48,7 +58,8 @@ export const useLogo = (el: HTMLElement) => {
     mesh.scale.y = scene.cache.bounds.height;
   });
 
-  const mesh = new Mesh(geo, mat);
+  const material = mat.clone() as ShaderMaterial;
+  const mesh = new Mesh(geo, material);
   mesh.scale.set(scene.cache.bounds.width, scene.cache.bounds.height, 1);
 
   scene.resize(windowW.value, windowH.value);

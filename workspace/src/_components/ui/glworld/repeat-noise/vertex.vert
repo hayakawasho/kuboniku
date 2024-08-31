@@ -1,9 +1,9 @@
 precision mediump float;
 
 varying vec2 vUv;
-uniform float u_repeat;
+uniform float uRepeat;
 
 void main() {
-  vUv = uv * u_repeat;
+  vUv = uv * uRepeat;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }

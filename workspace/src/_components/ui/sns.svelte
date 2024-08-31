@@ -3,7 +3,7 @@
   import { getContext } from "svelte";
   import { Tween } from "~/_foundation/libs/tween";
   import { waitFrame } from "~/_foundation/utils";
-  import { useMediaQueryState } from "~/_states/mq";
+  import { useMediaQuery } from "~/_states/mq";
   import type { Context$ } from "lake";
   import type { AppContext } from "~/_foundation/types";
 
@@ -21,7 +21,7 @@
 
   let isOpen: boolean | undefined;
 
-  const { anyHover } = useMediaQueryState();
+  const { anyHover } = useMediaQuery();
 
   useEvent(refs.plus, "click", e => {
     e.preventDefault();

@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { defineComponent, useSlot } from "lake";
-import { useRouteState } from "~/_states/route";
+import { useRoute } from "~/_states/route";
 import { useScrollState as _ } from "~/_states/scroll";
 import PageScroll from "./page-scroll";
 
@@ -14,7 +14,7 @@ export default defineComponent({
   setup(content: HTMLElement, context: { anyHover: boolean }) {
     const { addChild, removeChild: _ } = useSlot();
 
-    useRouteState(({ name }) => {
+    useRoute(({ name }) => {
       switch (name) {
         case "home":
         case "profile":

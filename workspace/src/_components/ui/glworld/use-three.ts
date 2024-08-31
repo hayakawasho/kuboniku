@@ -1,9 +1,9 @@
 import { getGPUTier } from "detect-gpu";
 import { useMount } from "lake";
 import { useTick } from "~/_foundation/hooks";
-import { useWindowSizeState } from "~/_states/window-size";
-import { WebGLRenderer, PerspectiveCamera, Scene } from "./three";
-import type { Object3D } from "./three";
+import { WebGLRenderer, PerspectiveCamera, Scene } from "~/_foundation/libs/three";
+import { useWindowSize } from "~/_states/window-size";
+import type { Object3D } from "~/_foundation/libs/three";
 
 export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
   const { width, height } = canvas.getBoundingClientRect();
@@ -37,10 +37,10 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
 
   const camera = new PerspectiveCamera(FOV, width / height, 0.1, 3000);
 
-  const [_, wh] = useWindowSizeState(({ windowWidth, windowHeight }) => {
-    renderer.setSize(windowWidth, windowHeight);
-    camera.aspect = windowWidth / windowHeight;
-    camera.position.z = calcCamDistance(windowHeight);
+  const [_, windowH] = useWindowSize(({ windowSize, aspect }) => {
+    renderer.setSize(windowSize.width, windowSize.height);
+    camera.aspect = aspect;
+    camera.position.z = calcCamDistance(windowSize.height);
     camera.updateProjectionMatrix();
   });
 
@@ -49,7 +49,7 @@ export const useThree = (canvas: HTMLCanvasElement, resolution: number) => {
   });
 
   useMount(() => {
-    camera.position.z = calcCamDistance(wh.value);
+    camera.position.z = calcCamDistance(windowH.value);
   });
 
   return {

@@ -9,27 +9,23 @@ const mousePosAtom = atom<Point>({
   y: 0,
 });
 
-export const useMousePositionState = (callback: (payload: { x: number; y: number }) => void = noop) => {
-  const { x, y } = store.get(mousePosAtom);
-  const posX = ref(x);
-  const posY = ref(y);
+export const useMousePosition = (callback: (payload: { x: number; y: number }) => void = noop) => {
+  const refX = ref(0);
+  const refY = ref(0);
 
   const unsub = store.sub(mousePosAtom, () => {
-    const { x, y } = store.get(mousePosAtom);
-    posX.value = x;
-    posY.value = y;
+    const coordinate = store.get(mousePosAtom);
+    refX.value = coordinate.x;
+    refY.value = coordinate.y;
 
-    callback({
-      x,
-      y,
-    });
+    callback(coordinate);
   });
 
   useUnmount(() => {
     unsub();
   });
 
-  return [readonly(posX), readonly(posY)] as const;
+  return [readonly(refX), readonly(refY)] as const;
 };
 
-export const mousePosMutators = (val: Point) => store.set(mousePosAtom, val);
+export const mousePositionMutators = (val: Point) => store.set(mousePosAtom, val);

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { useSlot, useDomRef } from "lake";
   import { getContext, onMount } from "svelte";
-  import { useMediaQueryState } from "~/_states/mq";
-  import { useRouteState } from "~/_states/route";
+  import { useMediaQuery } from "~/_states/mq";
+  import { useRoute } from "~/_states/route";
   import MenuLink from "./link";
   import type { Context$ } from "lake";
   import type { AppContext, RouteName } from "~/_foundation/types";
@@ -15,9 +15,9 @@
   const { closeMenu, ...context } = getContext<Context$<Props>>("$");
 
   let currentRouteName = context.current;
-  const { device } = useMediaQueryState();
+  const { device } = useMediaQuery();
 
-  useRouteState(({ name }) => {
+  useRoute(({ name }) => {
     currentRouteName = name;
   });
 

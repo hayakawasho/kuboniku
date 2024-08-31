@@ -5,27 +5,23 @@ import type { Size } from "~/_foundation/types";
 
 const store = createStore();
 const viewportAtom = atom<Size>({
-  height: window.innerHeight,
-  width: window.innerWidth,
+  height: 0,
+  width: 0,
 });
 
-export const useWindowSizeState = (
-  callback: (payload: { aspect: number; windowWidth: number; windowHeight: number }) => void = noop
-) => {
-  const { width, height } = store.get(viewportAtom);
-  const ww = ref(width);
-  const wh = ref(height);
+export const useWindowSize = (callback: (payload: { aspect: number; windowSize: Size }) => void = noop) => {
+  const refWindowW = ref(0);
+  const refWindowH = ref(0);
 
   const unsub = store.sub(viewportAtom, () => {
-    const { width: windowWidth, height: windowHeight } = store.get(viewportAtom);
-    const aspect = windowWidth / windowHeight;
-    ww.value = windowWidth;
-    wh.value = windowHeight;
+    const windowSize = store.get(viewportAtom);
+    const aspect = windowSize.width / windowSize.height;
+    refWindowW.value = windowSize.width;
+    refWindowH.value = windowSize.height;
 
     callback({
       aspect,
-      windowHeight,
-      windowWidth,
+      windowSize,
     });
   });
 
@@ -33,7 +29,7 @@ export const useWindowSizeState = (
     unsub();
   });
 
-  return [readonly(ww), readonly(wh)] as const;
+  return [readonly(refWindowW), readonly(refWindowH)] as const;
 };
 
 export const windowSizeMutators = (val: Size) => store.set(viewportAtom, val);

@@ -5,7 +5,9 @@ import type { AppContext } from "~/_foundation/types";
 export default defineComponent({
   name: "ScrollSkewContainer",
   setup(el: HTMLElement, { scrollContext }: AppContext) {
-    useScrollSkew(scrollContext.scrollTop(), ({ value }) => {
+    const initialY = scrollContext.scrollOffset();
+
+    useScrollSkew(initialY, value => {
       el.style.transform = `skew(0, ${value}deg) translateZ(0)`;
     });
   },

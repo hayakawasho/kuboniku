@@ -1,7 +1,7 @@
 import { defineComponent, useMount, useDomRef, useSlot } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "~/_foundation/const";
 import { Tween } from "~/_foundation/libs/tween";
-import { useMediaQueryState } from "~/_states/mq";
+import { useMediaQuery } from "~/_states/mq";
 import Logo from "./logo";
 import type { AppContext } from "~/_foundation/types";
 
@@ -16,7 +16,7 @@ export default defineComponent({
 
     const { addChild } = useSlot();
     const { refs } = useDomRef<Refs>("profileLogo");
-    const { device } = useMediaQueryState();
+    const { device } = useMediaQuery();
 
     if (device === "pc") {
       addChild(refs.profileLogo, Logo, context);

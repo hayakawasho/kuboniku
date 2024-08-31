@@ -5,30 +5,30 @@ import { noop } from "~/_foundation/utils";
 const store = createStore();
 const yAtom = atom(0);
 
-export const useScrollPositionState = (
+export const useWindowScroll = (
   callback: (payload: { currentY: number; oldY: number; diff: number }) => void = noop
 ) => {
-  const currentY = ref(store.get(yAtom));
+  const refY = ref(0);
 
   const unsub = store.sub(yAtom, () => {
-    const oldY = currentY.value;
-    const y = store.get(yAtom);
-    const diff = y - oldY;
+    const oldY = refY.value;
+    const currentY = store.get(yAtom);
+    const diff = currentY - oldY;
 
     callback({
-      currentY: y,
+      currentY,
       oldY,
       diff,
     });
 
-    currentY.value = y;
+    refY.value = currentY;
   });
 
   useUnmount(() => {
     unsub();
   });
 
-  return [readonly(currentY)] as const;
+  return [readonly(refY)] as const;
 };
 
-export const scrollPositionMutators = (val: number) => store.set(yAtom, val);
+export const windowScrollMutators = (val: number) => store.set(yAtom, val);

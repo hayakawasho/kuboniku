@@ -18,22 +18,20 @@ export const WorkList: React.FC<{
               className={Styles.entry}
               data-color={item.theme}
               data-cursor="scale"
-              data-ref="projectItem"
+              data-ref="workItem"
               to={`/work/${item.slug}/`}
             >
               <div aria-hidden="true" className={Styles.aspect}></div>
               <div className={Styles.entry__g}>
                 <div aria-hidden="true" className={Styles.poster}></div>
                 <div
-                  aria-label=""
                   className={Styles.thumb}
                   data-height={item.mv["pc"].height}
-                  data-ref="thumb"
+                  data-ref="plane"
                   data-src={formatCloudinary(item.mv["pc"].url, "f_auto,q_auto,w_1440")}
                   data-visible="false"
                   data-width={item.mv["pc"].width}
-                  role="img"
-                ></div>
+                />
                 <div className={Styles.entry__hgroup}>
                   <p className={`${Styles.num} mb-[1.2rem] pc:mb-[1.5rem] italic`}>
                     {zeroPadding(total - index)}

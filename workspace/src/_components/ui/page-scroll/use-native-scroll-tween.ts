@@ -1,33 +1,29 @@
 import { gsap } from "gsap";
 import { useMount, useEvent } from "lake";
 import { useTick, useElementSize } from "~/_foundation/hooks";
-import { Smooth } from "~/_foundation/utils";
-import { scrollPositionMutators } from "~/_states/scroll-position";
-import { useWindowSizeState } from "~/_states/window-size";
+import { createSmoother } from "~/_foundation/smoother";
+import { windowScrollMutators } from "~/_states/scroll-position";
+import { useWindowSize } from "~/_states/window-size";
 
 export const useNativeScrollTween = (el: HTMLElement) => {
-  const smooth = new Smooth({
-    stiffness: 0.35,
-    damping: 1.2,
-    mass: 1,
+  const smoother = createSmoother();
+
+  const [_, windowH] = useWindowSize();
+
+  useElementSize(el, ({ height }) => {
+    smoother.resize(height, windowH.value);
   });
 
-  const [_, wh] = useWindowSizeState();
-
-  useElementSize(el, ({ height: contentH }) => {
-    smooth.onResize(contentH, wh.value);
-  });
-
-  useEvent(window as any, "scroll", smooth.onNativeScroll, {
+  useEvent(window as any, "scroll", smoother.onNativeScroll, {
     passive: true,
   });
 
-  useEvent(window as any, "wheel", smooth.onWheel, {
+  useEvent(window as any, "wheel", smoother.onWheel, {
     passive: false,
   });
 
-  useTick(({ deltaRatio, deltaTime }) => {
-    smooth.raf({ deltaRatio, deltaTime });
+  useTick(({ deltaRatio }) => {
+    smoother.raf({ deltaRatio });
   });
 
   const scrollTo = (val: number) => {
@@ -43,27 +39,31 @@ export const useNativeScrollTween = (el: HTMLElement) => {
   useMount(() => {
     const onSmooth = ({ currentY = 0 }) => {
       scrollTo(currentY);
-      scrollPositionMutators(currentY);
+      windowScrollMutators(currentY);
     };
-    smooth.on(onSmooth);
-    smooth.set(window.scrollY);
-    smooth.resume();
+
+    smoother.on(onSmooth);
+    smoother.set(window.scrollY);
+    smoother.resume();
 
     return () => {
-      smooth.pause();
-      smooth.off(onSmooth);
+      smoother.pause();
+      smoother.off(onSmooth);
     };
   });
 
+  const set = (val: number) => {
+    smoother.set(val);
+    scrollTo(val);
+  };
+
+  const reset = () => {
+    set(0);
+  };
+
   return {
-    ...smooth,
-    reset: () => {
-      smooth.reset();
-      scrollTo(0);
-    },
-    set: (val: number) => {
-      smooth.set(val);
-      scrollTo(val);
-    },
+    ...smoother,
+    reset,
+    set,
   };
 };

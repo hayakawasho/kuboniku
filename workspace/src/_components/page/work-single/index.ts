@@ -2,7 +2,7 @@ import { defineComponent, useSlot, useMount, useDomRef } from "lake";
 import ScrollSkewContainer from "~/_components/ui/scroll-skew";
 import { useElementSize } from "~/_foundation/hooks";
 import { Tween } from "~/_foundation/libs/tween";
-import { useScrollPositionState } from "~/_states/scroll-position";
+import { useWindowScroll } from "~/_states/scroll-position";
 import { useScrollbarProgress } from "~/_states/scrollbar-progress";
 import type { AppContext } from "~/_foundation/types";
 
@@ -30,7 +30,7 @@ export default defineComponent({
       cache.offset = height;
     });
 
-    useScrollPositionState(() => {
+    useWindowScroll(() => {
       onMutateScrollProgress(cache.offset);
     });
 

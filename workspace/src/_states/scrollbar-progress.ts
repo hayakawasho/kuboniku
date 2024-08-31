@@ -1,8 +1,8 @@
 import { atom, createStore } from "jotai";
 import { useUnmount } from "lake";
 import { noop } from "~/_foundation/utils";
-import { useScrollPositionState } from "~/_states/scroll-position";
-import { useWindowSizeState } from "~/_states/window-size";
+import { useWindowScroll } from "~/_states/scroll-position";
+import { useWindowSize } from "~/_states/window-size";
 
 type ScrollProgress = {
   now: number;
@@ -16,13 +16,13 @@ const progressAtom = atom<ScrollProgress>({
 });
 
 export const useScrollbarProgress = (callback: (payload: { now: number; pos: number }) => void = noop) => {
-  const [_, wh] = useWindowSizeState();
-  const [posY] = useScrollPositionState();
+  const [_, windowH] = useWindowSize();
+  const [currentY] = useWindowScroll();
 
   const onMutateScrollProgress = (offset: number) => {
     store.set(progressAtom, {
-      now: (posY.value / (offset - wh.value)) * 100,
-      pos: (posY.value + wh.value) / offset,
+      now: (currentY.value / (offset - windowH.value)) * 100,
+      pos: (currentY.value + windowH.value) / offset,
     });
   };
 

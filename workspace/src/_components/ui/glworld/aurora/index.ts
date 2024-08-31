@@ -1,10 +1,10 @@
 import { defineComponent, useMount } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "~/_foundation/const";
 import { useTick } from "~/_foundation/hooks";
+import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "~/_foundation/libs/three";
 import { lerp } from "~/_foundation/math";
-import { PlaneBufferGeometry, ShaderMaterial, Mesh, Color, Vector2 } from "~/_gl/three";
-import { useMediaQueryState } from "~/_states/mq";
-import { useWindowSizeState } from "~/_states/window-size";
+import { useMediaQuery } from "~/_states/mq";
+import { useWindowSize } from "~/_states/window-size";
 import fragment from "./aurora.frag";
 import vertex from "./vertex.vert";
 import type { ParentScene } from "~/_foundation/types";
@@ -16,76 +16,76 @@ export default defineComponent({
   setup(_canvas: HTMLCanvasElement, context: Props) {
     const { addScene, removeScene } = context;
 
-    const [ww, wh] = useWindowSizeState();
-    const { device } = useMediaQueryState();
+    const { device } = useMediaQuery();
 
     const auroraPixelRatio = 0.5;
 
-    const brightnessValue = {
-      pc: 0.6,
-      sp: 0.1,
-    };
-    const noiseScaleValue = {
-      pc: new Vector2(1, 0.56),
-      sp: new Vector2(1, 0.24),
-    };
+    const [windowW, windowH] = useWindowSize(({ windowSize }) => {
+      auroraPlane.scale.x = windowSize.width * auroraPixelRatio;
+      auroraPlane.scale.y = windowSize.height * auroraPixelRatio;
+      uniforms.uResolution.value.x = windowSize.width;
+      uniforms.uResolution.value.y = windowSize.height;
+    });
 
     const uniforms = {
-      u_brightness: {
-        value: brightnessValue[device],
+      uBrightness: {
+        value: {
+          pc: 0.6,
+          sp: 0.1,
+        }[device],
       },
-      u_color1: {
+      uColor1: {
         value: new Color(SITE_THEME_COLOR),
       },
-      u_color2: {
+      uColor2: {
         value: new Color(0),
       },
-      u_color3: {
+      uColor3: {
         value: new Color(SITE_THEME_SECONDARY_COLOR),
       },
-      u_color4: {
+      uColor4: {
         value: new Color(0),
       },
-      u_lightness: {
+      uLightness: {
         value: new Vector2(0.5, 0),
       },
-      u_noiseIntensity: {
+      uNoiseIntensity: {
         value: new Vector2(1, 0.5),
       },
-      u_noiseScale: {
-        value: noiseScaleValue[device],
+      uNoiseScale: {
+        value: {
+          pc: new Vector2(1, 0.56),
+          sp: new Vector2(1, 0.24),
+        }[device],
       },
-      u_resolution: {
-        value: new Vector2(ww.value, wh.value),
+      uResolution: {
+        value: new Vector2(windowW.value, windowH.value),
       },
-      u_time: {
+      uTime: {
         value: 100 * Math.random(),
       },
     };
 
-    const auroraPlane = new Mesh(
-      new PlaneBufferGeometry(2, 2),
-      new ShaderMaterial({
-        fragmentShader: fragment,
-        uniforms,
-        vertexShader: vertex,
-      })
-    );
-
-    useWindowSizeState(({ windowHeight, windowWidth }) => {
-      auroraPlane.scale.set(windowWidth * auroraPixelRatio, windowHeight * auroraPixelRatio, 1);
+    const geo = new PlaneBufferGeometry(2, 2);
+    const mat = new ShaderMaterial({
+      fragmentShader: fragment,
+      uniforms,
+      vertexShader: vertex,
     });
+
+    const auroraPlane = new Mesh(geo, mat);
+    auroraPlane.scale.set(windowW.value * auroraPixelRatio, windowH.value * auroraPixelRatio, 1);
 
     useTick(({ deltaTime, deltaRatio }) => {
       const t = Math.min(1, 2 * deltaTime);
 
-      uniforms.u_lightness.value.x += (0 - uniforms.u_lightness.value.x) * t * deltaRatio;
+      uniforms.uLightness.value.x += (0 - uniforms.uLightness.value.x) * t * deltaRatio;
 
       const alpha = {
-        pc: uniforms.u_lightness.value.x,
-        sp: uniforms.u_lightness.value.y,
+        pc: uniforms.uLightness.value.x,
+        sp: uniforms.uLightness.value.y,
       };
-      uniforms.u_time.value -= t * 0.005 * lerp(0.7, 0.2, alpha[device]) * deltaRatio;
+      uniforms.uTime.value -= t * 0.005 * lerp(0.7, 0.2, alpha[device]) * deltaRatio;
     });
 
     useMount(() => {

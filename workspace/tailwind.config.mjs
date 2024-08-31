@@ -14,6 +14,7 @@ export default {
       fontFamily: {
         montserrat: ["Montserrat"],
         roboto: ["Roboto Condensed"],
+        en: ["Playfair Display"],
       },
     },
   },

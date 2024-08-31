@@ -10,15 +10,15 @@
     --grid: calc(1 / 12 * 100vw);
     --gutter: 0;
     --grid-gutter: 1.6rem;
-
-    --vh: 1vh;
-
     --gap: calc(30 / 750 * 100vw);
-    --aspect: 100%;
 
     --color-text: #e3e3e3;
     --color-text-primary: #858585;
     --color-theme: #1793a9;
+
+    --vh: 1vh;
+    --leading-trim: calc((1em - 1lh) / 2);
+    --aspect: 100%;
 
     --ease-power3-inOut: cubic-bezier(0.77, 0, 0.175, 1);
     --ease-opacity: cubic-bezier(0.26, 0.06, 0, 1);
@@ -26,6 +26,12 @@
     @media (min-width: 640px) {
       --gap: calc(40 / 1280 * 100vw);
       --gutter: calc(16 / 1280 * 100vw);
+    }
+  }
+
+  @supports not (top: 1lh) {
+    :root {
+      --leading-trim: 0px;
     }
   }
 
