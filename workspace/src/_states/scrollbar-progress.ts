@@ -1,7 +1,7 @@
 import { atom, createStore } from "jotai";
 import { useUnmount } from "lake";
 import { noop } from "~/_foundation/utils";
-import { useWindowScroll } from "~/_states/scroll-position";
+import { useWindowScroll } from "~/_states/window-scroll";
 import { useWindowSize } from "~/_states/window-size";
 
 type ScrollProgress = {
@@ -10,6 +10,7 @@ type ScrollProgress = {
 };
 
 const store = createStore();
+
 const progressAtom = atom<ScrollProgress>({
   now: 0,
   pos: 0,

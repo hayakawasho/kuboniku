@@ -1,14 +1,16 @@
 import { atom, createStore } from "jotai";
 import { useUnmount, ref, readonly } from "lake";
 import { noop } from "~/_foundation/utils";
+import globalStore from ".";
 
 const store = createStore();
-const yAtom = atom(0);
+const yAtom = atom(globalStore.offsetY);
 
 export const useWindowScroll = (
   callback: (payload: { currentY: number; oldY: number; diff: number }) => void = noop
 ) => {
-  const refY = ref(0);
+  const initialY = store.get(yAtom);
+  const refY = ref(initialY);
 
   const unsub = store.sub(yAtom, () => {
     const oldY = refY.value;
@@ -21,7 +23,7 @@ export const useWindowScroll = (
       diff,
     });
 
-    refY.value = currentY;
+    refY.value = globalStore.offsetY = currentY;
   });
 
   useUnmount(() => {

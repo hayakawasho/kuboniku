@@ -1,6 +1,6 @@
-import { defineComponent, useEvent } from "lake";
-import { scrollStateYMutators, useScrollState as _ } from "~/_states/scroll";
+import { defineComponent } from "lake";
 import { useWindowEvent } from "~/_foundation/hooks";
+import { scrollStateYMutators, useScrollState as _ } from "~/_states/scroll";
 import { useNativeScroll } from "./use-native-scroll";
 import { useNativeScrollTween } from "./use-native-scroll-tween";
 

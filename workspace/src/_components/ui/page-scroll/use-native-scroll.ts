@@ -1,6 +1,6 @@
 import { useTick } from "~/_foundation/hooks";
 import { noop } from "~/_foundation/utils";
-import { windowScrollMutators } from "~/_states/scroll-position";
+import { windowScrollMutators } from "~/_states/window-scroll";
 
 export const useNativeScroll = () => {
   const scrollOffset = () => window.scrollY;

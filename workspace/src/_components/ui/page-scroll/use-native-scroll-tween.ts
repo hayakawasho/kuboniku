@@ -1,9 +1,8 @@
 import { gsap } from "gsap";
 import { useMount } from "lake";
-import { useTick, useElementSize } from "~/_foundation/hooks";
+import { useTick, useElementSize, useWindowEvent } from "~/_foundation/hooks";
 import { createSmoother } from "~/_foundation/smoother";
-import { useWindowEvent } from "~/_foundation/hooks";
-import { windowScrollMutators } from "~/_states/scroll-position";
+import { windowScrollMutators } from "~/_states/window-scroll";
 import { useWindowSize } from "~/_states/window-size";
 
 export const useNativeScrollTween = (el: HTMLElement) => {

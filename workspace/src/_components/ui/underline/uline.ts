@@ -42,16 +42,14 @@ export const useUnderline = () => {
     depthTest: false,
   });
 
-  const [windowW, windowH] = useWindowSize(({ windowSize }) => {
-    scene.resize(windowSize.width, windowSize.height);
+  useWindowSize(() => {
+    scene.resize();
     mesh.scale.x = scene.cache.bounds.width;
     mesh.scale.y = scene.cache.bounds.height;
   });
 
   const mesh = new Mesh(geo, mat);
   mesh.scale.set(scene.cache.bounds.width, scene.cache.bounds.height, 1);
-
-  scene.resize(windowW.value, windowH.value);
   scene.add(mesh);
 
   return {
