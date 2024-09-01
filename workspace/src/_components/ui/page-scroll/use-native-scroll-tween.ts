@@ -1,7 +1,8 @@
 import { gsap } from "gsap";
-import { useMount, useEvent } from "lake";
+import { useMount } from "lake";
 import { useTick, useElementSize } from "~/_foundation/hooks";
 import { createSmoother } from "~/_foundation/smoother";
+import { useWindowEvent } from "~/_foundation/hooks";
 import { windowScrollMutators } from "~/_states/scroll-position";
 import { useWindowSize } from "~/_states/window-size";
 
@@ -14,11 +15,11 @@ export const useNativeScrollTween = (el: HTMLElement) => {
     smoother.resize(height, windowH.value);
   });
 
-  useEvent(window as any, "scroll", smoother.onNativeScroll, {
+  useWindowEvent("scroll", smoother.onNativeScroll, {
     passive: true,
   });
 
-  useEvent(window as any, "wheel", smoother.onWheel, {
+  useWindowEvent("wheel", smoother.onWheel, {
     passive: false,
   });
 

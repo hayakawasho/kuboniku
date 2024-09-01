@@ -31,3 +31,142 @@
     font-size: 2.4rem;
   }
 }
+
+.entries {
+  padding: 0 calc(var(--gap) * 2);
+  padding-bottom: 6.5rem;
+
+  @media (min-width: 640px) {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 0;
+    width: calc(var(--grid) * 10);
+    padding-bottom: 17.5rem;
+  }
+}
+
+.entryWrap {
+  margin-bottom: 4rem;
+
+  @media (min-width: 640px) {
+    width: calc(var(--grid) * 4);
+    margin-bottom: 6.5rem;
+
+    &:nth-of-type(2n - 1) {
+      margin-top: 9rem;
+      margin-left: 3.4rem;
+    }
+  }
+}
+
+.entry {
+  position: relative;
+  display: block;
+
+  @media (min-width: 640px) {
+    margin-left: 0;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      .thumb {
+        filter: none;
+      }
+    }
+  }
+}
+
+.entry__heading {
+  font-family: var(--font-roboto);
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #e3e3e3;
+
+  @media (min-width: 640px) {
+    font-size: 3rem;
+  }
+}
+
+.entry__g {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.entry__hgroup {
+  position: absolute;
+  bottom: 2rem;
+  left: -1rem;
+  z-index: 2;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+
+  @media (min-width: 640px) {
+    bottom: 4.2rem;
+    left: -3.4rem;
+    padding-right: 3.6rem;
+  }
+}
+
+.num {
+  font-family: var(--font-en);
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  position: relative;
+
+  @media (min-width: 640px) {
+    font-size: 1.9rem;
+  }
+}
+
+.num__txt {
+  font-size: calc(26 / 38 * 100%);
+  letter-spacing: 0.02em;
+}
+
+.poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #111;
+  pointer-events: none;
+
+  @media (hover: hover) {
+    visibility: hidden;
+  }
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backface-visibility: hidden;
+  filter: saturate(0) brightness(0.8);
+  transition: 1.8s filter ease, opacity 1s;
+  background-size: cover;
+  opacity: 0;
+
+  &[data-visible="true"] {
+    opacity: 1;
+  }
+
+  @media (hover: hover) {
+    visibility: hidden;
+  }
+}
+
+.aspect {
+  aspect-ratio: 1536 / 960;
+}

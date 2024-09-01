@@ -1,8 +1,8 @@
 import { GlImage } from "~/_foundation/gl/gl-object";
 import { Mesh, PlaneBufferGeometry, ShaderMaterial, Vector2 } from "~/_foundation/libs/three";
+import { useWindowSize } from "~/_states/window-size";
 import fragmentShader from "./fragment.frag";
 import vertexShader from "./vertex.vert";
-import { useWindowSize } from "~/_states/window-size";
 
 export const useSplashscreen = (el: HTMLElement) => {
   const scene = new GlImage(el);

@@ -1,7 +1,7 @@
-import { Group, Texture } from "~/_foundation/libs/three";
-import Pool from "~/_foundation/pool";
+import { Object3D, Texture } from "~/_foundation/libs/three";
+import { loadAsset } from "~/_foundation/load-asset";
 
-class GlObject extends Group {
+class GlObject extends Object3D {
   #pos = {
     x: 0,
     y: 0,
@@ -44,21 +44,11 @@ class GlObject extends Group {
 }
 
 class GlImage extends GlObject {
-  loadTexture = (src: string) => {
-    return new Promise<Texture>(resolve => {
-      const texture = new Texture();
-      const checkLoaded = Pool.pop<HTMLImageElement>(src);
-
-      if (checkLoaded) {
-        texture.image = checkLoaded;
-        resolve(texture);
-      } else {
-        Pool.loadFile(src).then(result => {
-          texture.image = result;
-          resolve(texture);
-        });
-      }
-    });
+  loadTexture = async (src: string) => {
+    const result = await loadAsset<HTMLImageElement>(src);
+    const texture = new Texture();
+    texture.image = result;
+    return texture;
   };
 }
 

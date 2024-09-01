@@ -31,7 +31,7 @@ const Component: React.FC<{
             mobSize={[profileNameSpImg.width, profileNameSpImg.height]}
             size={[1, 1]}
             src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7"
-          ></ResponsiveImage>
+          />
           <div className={Styles.textGroup}>
             <div className={Styles.textGroup__in}>
               <h2 className={`${Styles.heading} mb-[.8rem] | sp:mr-[-.4em]`}>Nagisa Kubo</h2>

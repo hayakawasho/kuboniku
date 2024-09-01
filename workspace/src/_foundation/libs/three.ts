@@ -13,7 +13,7 @@ export { PerspectiveCamera } from "three/src/cameras/PerspectiveCamera";
 export { BufferGeometry } from "three/src/core/BufferGeometry";
 export * from "three/src/core/BufferAttribute";
 export { Object3D } from "three/src/core/Object3D";
-export { Group } from "three/src/objects/Group";
+// export { Group } from "three/src/objects/Group";
 // export { _Math } from 'three/src/math/Math';
 export { Vector2 } from "three/src/math/Vector2";
 export { Vector3 } from "three/src/math/Vector3";

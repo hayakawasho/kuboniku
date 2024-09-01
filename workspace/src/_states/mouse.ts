@@ -9,7 +9,7 @@ const mousePosAtom = atom<Point>({
   y: 0,
 });
 
-export const useMousePosition = (callback: (payload: { x: number; y: number }) => void = noop) => {
+export const useMousePosition = (callback: (payload: Point) => void = noop) => {
   const refX = ref(0);
   const refY = ref(0);
 

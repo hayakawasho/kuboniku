@@ -10,7 +10,7 @@ export const Svg: FC<{
         aria-hidden="true"
         className={`${className} w-full h-full pointer-events-none absolute top-0 left-0 fill-current`}
       >
-        <use xlinkHref={`#${name}`}></use>
+        <use href={`#${name}`}></use>
       </svg>
     </>
   );

@@ -1,6 +1,7 @@
 import { defineComponent, useMount } from "lake";
 // import { useTick } from "~/_foundation/hooks";
 import { Tween } from "~/_foundation/libs/tween";
+import { useMousePosition } from "~/_states/mouse";
 import { useLogo } from "./plane";
 import type { AppContext } from "~/_foundation/types";
 
@@ -12,6 +13,10 @@ export default defineComponent({
     const { once, history, backCanvasContext } = context;
 
     const { scene, uniforms } = useLogo(el);
+
+    useMousePosition(({ x, y }) => {
+      //
+    });
 
     // useTick(({ deltaRatio }) => {
     //

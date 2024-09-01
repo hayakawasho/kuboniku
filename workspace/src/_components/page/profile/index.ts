@@ -2,7 +2,7 @@ import { defineComponent, useMount, useDomRef, useSlot } from "lake";
 import { SITE_THEME_COLOR, SITE_THEME_SECONDARY_COLOR } from "~/_foundation/const";
 import { Tween } from "~/_foundation/libs/tween";
 import { useMediaQuery } from "~/_states/mq";
-import Logo from "./logo";
+import Logo from "./profile-logo";
 import type { AppContext } from "~/_foundation/types";
 
 type Refs = {
@@ -21,8 +21,6 @@ export default defineComponent({
     if (device === "pc") {
       addChild(refs.profileLogo, Logo, context);
     }
-
-    //------------------------------------------------------------------------------
 
     useMount(() => {
       backCanvasContext.onChangeColorsPalette(SITE_THEME_COLOR, "#000", SITE_THEME_SECONDARY_COLOR, "#000");

@@ -1,5 +1,6 @@
 import { defineComponent, useEvent } from "lake";
 import { scrollStateYMutators, useScrollState as _ } from "~/_states/scroll";
+import { useWindowEvent } from "~/_foundation/hooks";
 import { useNativeScroll } from "./use-native-scroll";
 import { useNativeScrollTween } from "./use-native-scroll-tween";
 
@@ -8,8 +9,7 @@ export default defineComponent({
   setup(content: HTMLElement, { anyHover }: { anyHover: boolean }) {
     let timer = 0;
 
-    useEvent(
-      window as any,
+    useWindowEvent(
       "scroll",
       () => {
         clearTimeout(timer);

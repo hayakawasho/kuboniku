@@ -7,7 +7,7 @@ export const WorkScreenshots: React.FC<{
 }> = ({ screenshots }) => {
   return (
     <ul>
-      {screenshots!.map((item, index: number) => {
+      {screenshots.map((item, index: number) => {
         return (
           <li className="mb-[2rem] pc:mb-[6rem]" key={index}>
             <ResponsiveImage

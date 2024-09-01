@@ -3,7 +3,7 @@ import { useScrollSkew } from "~/_foundation/hooks";
 import type { AppContext } from "~/_foundation/types";
 
 export default defineComponent({
-  name: "ScrollSkewContainer",
+  name: "ScrollSkew",
   setup(el: HTMLElement, { scrollContext }: AppContext) {
     const initialY = scrollContext.scrollOffset();
 

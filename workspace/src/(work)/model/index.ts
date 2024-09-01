@@ -18,5 +18,5 @@ export type WorkMetadata = {
     url: string;
   };
   role: string[];
-  screenshots?: Image[];
+  screenshots: Image[];
 };
