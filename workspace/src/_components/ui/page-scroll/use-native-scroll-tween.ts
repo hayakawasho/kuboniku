@@ -7,9 +7,9 @@ import { useWindowSizeState } from "~/_states/window-size";
 
 export const useNativeScrollTween = (el: HTMLElement) => {
   const smooth = new Smooth({
-    stiffness: 0.35,
+    stiffness: 0.5,
     damping: 1.2,
-    mass: 1,
+    mass: .9,
   });
 
   const [_, wh] = useWindowSizeState();

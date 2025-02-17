@@ -3,7 +3,7 @@ import { PageLayout } from "~/_components/ui/layout";
 import { ResponsiveImage } from "~/_components/ui/responsive-image";
 import profileNameImg from "~/assets/profile.png";
 import profileNameSpImg from "~/assets/profile_sp.png";
-import Styles from "./index.module.scss";
+import Styles from "./style.module.scss";
 import type { RouteName } from "~/_foundation/types";
 
 const Component: React.FC<{

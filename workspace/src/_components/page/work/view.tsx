@@ -4,7 +4,7 @@ import { PageLayout } from "~/_components/ui/layout";
 import { Link } from "~/_components/ui/link";
 import { formatCloudinaryAPI } from "~/_foundation/cloudinary";
 import { zeroPadding } from "~/_foundation/utils";
-import Styles from "./index.module.scss";
+import Styles from "./style.module.scss";
 import type { WorkMetadata } from "~/(work)/model";
 import type { RouteName } from "~/_foundation/types";
 
