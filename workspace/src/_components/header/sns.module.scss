@@ -1,0 +1,116 @@
+.sns {
+  --size: 1.6rem;
+
+  position: fixed;
+  text-align: center;
+  bottom: 1.5rem;
+  left: 2rem;
+  z-index: 99;
+  padding-bottom: calc(var(--size) + 2rem);
+  width: calc(var(--size) + 2rem);
+
+  @media (min-width: 640px) {
+    --size: 2.3rem;
+
+    bottom: 3rem;
+    left: 3rem;
+  }
+}
+
+.snsLabel {
+  display: inline-block;
+  pointer-events: auto;
+  visibility: hidden;
+  opacity: 0;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  backface-visibility: hidden;
+
+  @media (min-width: 640px) {
+    font-size: 1.3rem;
+  }
+
+  & > span {
+    transition: 0.55s opacity var(--ease-opacity);
+
+    @media (hover: hover) {
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .is-animating & {
+    will-change: transform, opacity;
+  }
+}
+
+.plus__front {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: translateZ(0px);
+}
+
+.plus__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateZ(0px);
+}
+
+.plus__x {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--size);
+  height: 1px;
+  transform: translateZ(0px);
+
+  > span {
+    background-color: var(--color-text-primary);
+    width: 100%;
+    height: 100%;
+    display: block;
+    backface-visibility: hidden;
+  }
+}
+
+.plus__y {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--size);
+  height: 1px;
+  backface-visibility: hidden;
+  rotate: 90deg;
+  transform-origin: center;
+  transform: translateZ(0px);
+
+  > span {
+    background-color: var(--color-text-primary);
+    width: 100%;
+    height: 100%;
+    display: block;
+    backface-visibility: hidden;
+  }
+}
+
+.plus {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 1rem;
+  backface-visibility: hidden;
+  box-sizing: content-box;
+}

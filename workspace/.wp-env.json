@@ -1,0 +1,15 @@
+{
+  "core": "https://ja.wordpress.org/latest-ja.zip",
+  "phpVersion": "8.3",
+  "themes": ["./wp/wp-content/themes/kuboniku"],
+  "plugins": [],
+  "mappings": {
+    "php.ini": "./php.ini",
+    "wp-content/plugins": "./wp/wp-content/plugins",
+    "wp-content/uploads": "./wp/wp-content/uploads",
+    "static": "./public/static"
+  },
+  "config": {
+    "GRAPHQL_JWT_AUTH_SECRET_KEY": "your-secret-token"
+  }
+}

@@ -1,5 +1,0 @@
-.next
-.gitignore
-vendors/**/*
-public/
-src/__generated__

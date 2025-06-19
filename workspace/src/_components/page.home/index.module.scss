@@ -1,0 +1,42 @@
+.projectsWrap {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  cursor: ns-resize;
+}
+
+.projects {
+  position: absolute;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  left: -110%;
+  right: -110%;
+
+  &[data-col="middle"] {
+    left: -40%;
+    right: -40%;
+  }
+
+  &[data-col="large"] {
+    left: -7.5%;
+    right: -7.5%;
+  }
+}
+
+.project {
+  position: relative;
+  padding-top: 125%;
+}
+
+.project__eyecatch {
+  position: absolute;
+  inset: 0.5rem;
+  display: block;
+  will-change: transform;
+  cursor: grab;
+
+  @media (min-width: 640px) {
+    inset: 0.8rem;
+  }
+}

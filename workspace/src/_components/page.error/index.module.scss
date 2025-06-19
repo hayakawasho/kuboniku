@@ -1,0 +1,23 @@
+.heading {
+  font-family: var(--font-roboto);
+  font-weight: 300;
+  font-size: 2.4rem;
+  line-height: calc(60 / 48);
+  letter-spacing: 0.4em;
+  line-height: 1;
+
+  @media (min-width: 640px) {
+    font-size: 3rem;
+  }
+}
+
+.sub {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #858585;
+
+  @media (min-width: 640px) {
+    font-size: 1.4rem;
+  }
+}
